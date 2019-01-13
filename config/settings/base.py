@@ -71,6 +71,8 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     'pinner.users.apps.UsersAppConfig',
+    'imagekit',
+    'graphene_django',
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -245,7 +247,3 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_ADAPTER = 'pinner.users.adapters.AccountAdapter'
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 SOCIALACCOUNT_ADAPTER = 'pinner.users.adapters.SocialAccountAdapter'
-
-
-# Your stuff...
-# ------------------------------------------------------------------------------
