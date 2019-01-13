@@ -67,10 +67,11 @@ THIRD_PARTY_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'rest_framework',
+    'rest_framework', 
 ]
 LOCAL_APPS = [
     'pinner.users.apps.UsersAppConfig',
+    'pinner.cards.apps.CardsConfig',
     'imagekit',
     'graphene_django',
     # Your stuff: custom apps go here
