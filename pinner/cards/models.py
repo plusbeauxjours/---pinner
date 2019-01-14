@@ -8,6 +8,9 @@ class Location(models.Model):
 
     city = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.city
+
 class TimeStampedModel(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -21,7 +24,7 @@ class Card(TimeStampedModel):
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, related_name='location')
     caption = models.TextField()
     creator = models.ForeignKey(user_models.User, on_delete=models.SET_NULL, null=True, related_name='cards')
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     @property
     def like_count(self):
@@ -48,12 +51,12 @@ class Comment(TimeStampedModel):
     card = models.ForeignKey(Card, on_delete=models.SET_NULL, null=True, related_name='comments')
 
     def __str__(self):
-        return self.message
+        return f"{self.creator.username}: {self.message}"
 
 class Like(TimeStampedModel):
     
     creator = models.ForeignKey(user_models.User, on_delete=models.SET_NULL, null=True)
     card = models.ForeignKey(Card, on_delete=models.SET_NULL, null=True )
 
-    def __str(self):
+    def __str__(self):
         return 'User: {} - Card Caption: {}'.format(self.creator.username, self.card.caption)

@@ -1,6 +1,12 @@
 from django.contrib import admin
 from . import models
 
+@admin.register(models.Location)
+class LocationAdmin(admin.ModelAdmin):
+    list_display = (
+        'city',
+    )
+
 @admin.register(models.Card)
 class CardAdmin(admin.ModelAdmin):
 

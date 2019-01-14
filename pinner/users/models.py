@@ -19,7 +19,8 @@ class User(AbstractUser):
 
     # First Name and Last Name do not cover name patterns
     # around the globe.
-    profile_image = ProcessedImageField(
+    avatar = ProcessedImageField(
+        upload_to='avatars',
         processors = [ResizeToFill(200, 200)],
         format = 'JPEG',
         options = {'quality':100}
@@ -49,6 +50,6 @@ class User(AbstractUser):
         return self.following.all().count()
 
 @receiver(post_delete, sender=User)
-def delete_attached_profile_image(sender, **kwargs): 
+def delete_attached_avatar(sender, **kwargs): 
     instance = kwargs.pop('instance')  
-    instance.profile_image.delete(save=False)
+    instance.avatar.delete(save=False)
