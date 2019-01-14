@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class UsersAppConfig(AppConfig):
+class UsersConfig(AppConfig):
 
     name = "pinner.users"
     verbose_name = "Users"

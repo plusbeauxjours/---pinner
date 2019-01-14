@@ -70,7 +70,7 @@ THIRD_PARTY_APPS = [
     'rest_framework', 
 ]
 LOCAL_APPS = [
-    'pinner.users.apps.UsersAppConfig',
+    'pinner.users.apps.UsersConfig',
     'pinner.cards.apps.CardsConfig',
     'imagekit',
     'graphene_django',
