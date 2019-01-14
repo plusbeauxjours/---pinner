@@ -23,7 +23,8 @@ class User(AbstractUser):
         upload_to='avatars',
         processors = [ResizeToFill(200, 200)],
         format = 'JPEG',
-        options = {'quality':100}
+        options = {'quality':100},
+        blank=True
     )
     name = models.CharField(_('Name of User'), blank=True, max_length=255)
     website = models.URLField(null=True, blank=True)

@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
+from graphene_django.views import GraphQLView
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
@@ -20,7 +21,7 @@ urlpatterns = [
         include("pinner.users.urls", namespace="users"),
     ),
     path("accounts/", include("allauth.urls")),
-    # Your stuff: custom urls includes go here
+    path("graphql", GraphQLView.as_view(graphiql=True))
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )

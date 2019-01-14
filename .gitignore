@@ -168,3 +168,4 @@ typings/
 node_modules/**/*
 .expo/**/*
 Pipfile.lock
+migrations

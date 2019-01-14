@@ -249,3 +249,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_ADAPTER = 'pinner.users.adapters.AccountAdapter'
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 SOCIALACCOUNT_ADAPTER = 'pinner.users.adapters.SocialAccountAdapter'
+
+GRAPHENE = {
+	    'SCHEMA': 'config.schema.schema'
+	}
