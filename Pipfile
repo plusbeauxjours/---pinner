@@ -41,6 +41,8 @@ graphene-django = "*"
 django-graphql-jwt = "*"
 "autopep8" = "*"
 pylint = "*"
+django-taggit = "*"
+django-taggit-serializer = "*"
 
 
 [dev-packages]

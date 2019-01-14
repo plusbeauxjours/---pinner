@@ -12,8 +12,8 @@ from django.dispatch import receiver
 class User(AbstractUser):
 
     GENDER_CHOICES = (
-        ('male', 'Male'),
-        ('female', 'Female'),
+        ('M', 'Male'),
+        ('F', 'Female'),
         ('not-specified', 'Not specified'),
     )
 
