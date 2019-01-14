@@ -68,13 +68,13 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework', 
-    'taggit'
+    'taggit',
+    'imagekit',
+    'graphene_django',
 ]
 LOCAL_APPS = [
     'pinner.users.apps.UsersConfig',
     'pinner.cards.apps.CardsConfig',
-    'imagekit',
-    'graphene_django',
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
