@@ -49,3 +49,4 @@ django-taggit-serializer = "*"
 
 "autopep8" = "*"
 yapf = "*"
+black = "*"
