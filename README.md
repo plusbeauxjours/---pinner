@@ -3,8 +3,8 @@
 - [x] Get Feed
 - [ ] Comment on Photo
 - [ ] Delete Comment on Photo
-- [ ] Like Photo
-- [ ] Unlike Photo
+- [x] Like Photo
+- [x] Unlike Photo
 - [ ] See Photo's Likes
 - [ ] See User Profile
 - [ ] See User Followers

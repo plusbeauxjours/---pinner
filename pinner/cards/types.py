@@ -1,6 +1,8 @@
 import graphene
 from graphene_django.types import DjangoObjectType
 from . import models, types
+from users import types as user_types
+from config import types as config_types
 
 class CardType(DjangoObjectType):
     like_count = graphene.Int(source='like_count')
@@ -19,7 +21,5 @@ class CommentType(DjangoObjectType):
     class Meta:
         model = models.Comment
 
-class FeedResponse(graphene.ObjectType):
-    ok = graphene.Boolean(required=True)
+class FeedResponse(graphene.ObjectType, config_types.ResponseFields):
     cards = graphene.List(types.ImageType)
-    error = graphene.String()

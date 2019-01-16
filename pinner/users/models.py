@@ -31,8 +31,10 @@ class User(AbstractUser):
     bio = models.TextField(null=True, blank=True)
     phone = models.CharField(max_length=140, null=True)
     gender = models.CharField(max_length=80, choices=GENDER_CHOICES, null=True)
-    followers = models.ManyToManyField('self', blank=True)
-    following = models.ManyToManyField('self', blank=True)
+    followers = models.ManyToManyField(
+        'self', blank=True, symmetrical=False, related_name='following_users')
+    following = models.ManyToManyField(
+        'self', blank=True, symmetrical=False, related_name='follwed_by')
     push_token = models.TextField(default='')
 
     def __str__(self): 
