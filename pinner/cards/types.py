@@ -1,8 +1,10 @@
-import graphen
+import graphene
 from graphene_django.types import DjangoObjectType
-from . import moedls, types
+from . import models, types
 
 class CardType(DjangoObjectType):
+    like_count = graphene.Int(source='like_count')
+    comment_count = graphene.Int(source='comment_count')
 
     class Meta: 
         model = models.Image

@@ -4,4 +4,5 @@ from . import models
 
 class CardType(DjangoObjectType):
 
-    pass
+    class Meta: 
+        model = models.User

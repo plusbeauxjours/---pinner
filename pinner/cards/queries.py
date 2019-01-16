@@ -8,7 +8,7 @@ def resolve_feed(self, info):
 
     if user.is_authenticated:
 
-        followoing_users = user.profile.following.all()
+        followoing_users = user.user.following.all()
 
         cards_list = []
 
