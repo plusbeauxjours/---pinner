@@ -1,13 +1,12 @@
 import graphene
-from . import models
+from . import models, types
 
 class LikeCard(graphene.Mutation):
 
     class Arguments: 
-        cardId = graphen.Int(required=True)
+        cardId = graphene.Int(required=True)
 
-        ok = graphene.Boolean(required=True)
-        error = graphen.String()
+        Output = types.LikeCardResponse
 
     def mutate(self, info, **kwargs):
         id = kwargs.get('cardId')
@@ -34,5 +33,7 @@ class LikeCard(graphene.Mutation):
                 ok = False
                 error = "ID is mandatory"
                 return LikeCard(ok=ok, error=error)
-        ok = Falseerror = "You need to log in"
-        return LikeCard(ok=ok, error=error)
+        else: 
+            ok = False
+            error = 'You need to log in'
+            return LikeCard(ok=ok, error=error)

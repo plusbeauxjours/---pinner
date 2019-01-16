@@ -23,3 +23,6 @@ class CommentType(DjangoObjectType):
 
 class FeedResponse(graphene.ObjectType, config_types.ResponseFields):
     cards = graphene.List(types.ImageType)
+
+class LikeCardResponse(graphene.ObjectType, config_types.ResponseFields):
+    pass
