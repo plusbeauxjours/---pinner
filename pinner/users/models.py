@@ -8,8 +8,10 @@ from imagekit.processors import ResizeToFill
 from django.db.models.signals import post_delete 
 from django.dispatch import receiver
 
+from config import models as config_models
+
 @python_2_unicode_compatible
-class User(AbstractUser):
+class User(config_models.TimeStampedModel, AbstractUser):
 
     GENDER_CHOICES = (
         ('M', 'Male'),

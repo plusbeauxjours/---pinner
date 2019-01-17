@@ -2,12 +2,22 @@
 Base settings to build other settings files upon.
 """
 
+import os
 import environ
+from os.path import join, dirname
+from dotenv import load_dotenv
+
+dotenv_path = join(dirname(__file__), '.env')
+
+env = environ.Env()
+
+load_dotenv(dotenv_path)
 
 ROOT_DIR = environ.Path(__file__) - 3  # (pinner/config/settings/base.py - 3 = pinner/)
 APPS_DIR = ROOT_DIR.path('pinner')
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-env = environ.Env()
+
 
 READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
 if READ_DOT_ENV_FILE:

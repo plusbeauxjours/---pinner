@@ -1,7 +1,7 @@
 ## Resolvers
 
 - [x] Get Feed
-- [ ] Comment on Photo
+- [x] Comment on Photo
 - [ ] Delete Comment on Photo
 - [x] Like Photo
 - [x] Unlike Photo

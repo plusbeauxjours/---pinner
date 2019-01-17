@@ -1,4 +1,5 @@
 import graphene
+from django.db import IntegrityError
 from . import models, types
 
 class LikeCard(graphene.Mutation):
@@ -9,31 +10,60 @@ class LikeCard(graphene.Mutation):
         Output = types.LikeCardResponse
 
     def mutate(self, info, **kwargs):
-        id = kwargs.get('cardId')
+        cardId = kwargs.get('cardId')
         user = info.context.user
+        ok = True
+        error = ''
         if user.is_authenticated: 
-            if id is not None:
+            try:
+                card = models.Card.objects.get(id=cardId)
                 try: 
-                    card = models.Card.objects.get(id=id)
-                    try: 
-                        like = models.Like.objects.get(
-                            creator=user, card=card)
-                        like.delete()
-                    except models.Like.DoesNotExist: 
-                        like = models.Like.objects.create(
-                            creator=user, card=card)
-                        like.save()
-                    ok = True
-                    return LikeCard(ok=ok)
-                except models.Card.DoesNotExist:
-                    ok = False
-                    error = "Card Not Found"
-                    return LikeCard(ok=ok, error=error)
-            else:
+                    like = models.Like.objects.get(
+                        creator=user, card=card)
+                    like.delete()
+                except models.Like.DoesNotExist: 
+                    like = models.Like.objects.create(
+                        creator=user, card=card)
+                    like.save()
+                ok = True
+            except models.Card.DoesNotExist:
                 ok = False
-                error = "ID is mandatory"
-                return LikeCard(ok=ok, error=error)
+                error = "Card Not Found"
         else: 
             ok = False
             error = 'You need to log in'
-            return LikeCard(ok=ok, error=error)
+        return types.LikeCardResponse(ok=ok, error=error)
+
+class AddComment(graphene.Mutation):
+
+    class Arguments: 
+        imageId = graphene.Int(required=True)
+        mesage = graphene.String(required=True)
+
+    Output = types.AddCommentResponse
+
+    def mutate(self, info, **kwargs):
+        cardId = kwargs.get('cardId')
+        message = kwargs.get('message')
+
+        user = info.context.user
+
+        ok = True
+        error = ''
+        comment = None
+
+        if user.is_authenticated:
+            try: 
+                card = models.Image.objects.get(id=cardId)
+                try:
+                    comment = models.Comment.objects.create(
+                        mesage=message, card=card, creator=user) 
+                except IntegrityError:
+                    ok = False
+                    error = "Can't create the comment"
+            except models.Card.DoesNotExist:
+                ok = Falseerror = "Image Not Found"
+        else: 
+            ok = False
+            error = "You need to log in"
+        return types.AddCommentResponse(ok=ok, error=error, comment=comment)

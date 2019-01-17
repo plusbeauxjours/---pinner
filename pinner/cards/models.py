@@ -1,8 +1,8 @@
 from django.db import models
-from pinner.users import models as user_models
+from users import models as user_models
 from taggit.managers import TaggableManager
 from django.contrib.humanize.templatetags.humanize import naturaltime
-
+from config import models as config_models
 
 class Location(models.Model):
 
@@ -11,7 +11,7 @@ class Location(models.Model):
     def __str__(self):
         return self.city
 
-class TimeStampedModel(models.Model):
+class TimeStampedModel(config_models.TimeStampedModel):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -19,7 +19,7 @@ class TimeStampedModel(models.Model):
     class Meta: 
         abstract=True
 
-class Card(TimeStampedModel):
+class Card(config_models.TimeStampedModel):
 
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, related_name='location')
     caption = models.TextField()
@@ -44,7 +44,7 @@ class Card(TimeStampedModel):
     class Meta:
         ordering = ['-created_at']
 
-class Comment(TimeStampedModel):
+class Comment(config_models.TimeStampedModel):
     
     message = models.TextField()
     creator = models.ForeignKey(user_models.User, on_delete=models.SET_NULL, null=True)
@@ -53,7 +53,7 @@ class Comment(TimeStampedModel):
     def __str__(self):
         return 'User: {} - Comment: {}'.format(self.creator.username, self.message)
 
-class Like(TimeStampedModel):
+class Like(config_models.TimeStampedModel):
     
     creator = models.ForeignKey(user_models.User, on_delete=models.SET_NULL, null=True)
     card = models.ForeignKey(Card, on_delete=models.SET_NULL, null=True )
