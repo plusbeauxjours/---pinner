@@ -29,3 +29,6 @@ class LikeCardResponse(graphene.ObjectType, config_types.ResponseFields):
 
 class AddCommentResponse(graphene.ObjectType, config_types.ResponseFields):
     comment = graphene.Field(CommentType)
+
+class DeleteCommentResponse(graphene.ObjectType, config_types.ResponseFields):
+    pass
