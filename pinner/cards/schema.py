@@ -4,6 +4,9 @@ from . import types, queries, mutations
 class Query(object):
 
     feed = graphene.Field(types.FeedResponse, resolver=queries.resolve_feed)
+    card_likes = graphene.Field(
+        types.CardLikeResponse, resolver=queries.resolve_card_likes, cardId=graphene.Int(required=True)
+    )
 
 class Mutation(object):
 

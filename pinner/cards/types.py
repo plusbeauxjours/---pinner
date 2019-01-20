@@ -9,7 +9,7 @@ class CardType(DjangoObjectType):
     comment_count = graphene.Int(source='comment_count')
 
     class Meta: 
-        model = models.Image
+        model = models.Card
 
 class LikeType(DjangoObjectType):
 
@@ -32,3 +32,6 @@ class AddCommentResponse(graphene.ObjectType, config_types.ResponseFields):
 
 class DeleteCommentResponse(graphene.ObjectType, config_types.ResponseFields):
     pass
+
+class CardLikeResponse(graphene.ObjectType, config_types.ResponseFields):
+    likes = graphene.List(LikeType)
