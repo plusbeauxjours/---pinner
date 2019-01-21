@@ -4,7 +4,7 @@ from taggit.managers import TaggableManager
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from config import models as config_models
 
-class Location(models.Model):
+class Location(config_models.TimeStampedModel):
 
     city = models.CharField(max_length=30)
 
