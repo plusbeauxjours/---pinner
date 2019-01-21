@@ -6,7 +6,7 @@
 - [x] Unlike Photo
 - [x] Delete Comment on Photo
 - [x] See Photo's Likes
-- [ ] See User Profile
+- [x] See User Profile
 - [ ] See User Followers
 - [ ] See User Following
 - [ ] Follow User

@@ -2,7 +2,7 @@ import graphene
 from graphene_django.types import DjangoObjectType
 from . import models
 from django.contrib.auth.models import User
-from confit import types as config_types
+from config import types as config_types
 
 class CardType(DjangoObjectType):
 
