@@ -7,8 +7,8 @@
 - [x] Delete Comment on Photo
 - [x] See Photo's Likes
 - [x] See User Profile
-- [ ] See User Followers
-- [ ] See User Following
+- [x] See User Followers
+- [x] See User Following
 - [ ] Follow User
 - [ ] Unfollow User
 - [ ] See One Photo

@@ -15,3 +15,5 @@ class UserType(DjangoObjectType):
 class UserProfileResponse(graphene.ObjectType, config_types.ResponseFields):
     user = graphene.Field(UserType)
     
+class FollowUnfollowResponse(graphene.ObjectType, config_types.ResponseFields):
+    pass
