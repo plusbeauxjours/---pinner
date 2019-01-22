@@ -4,10 +4,14 @@ from . import models
 from django.contrib.auth.models import User
 from config import types as config_types
 
-class CardType(DjangoObjectType):
+class UserType(DjangoObjectType):
+
+    following_count = graphene.Int(source='follwers_count')
+    follwoers_count = graphene.Int(source='follwing_count')
 
     class Meta: 
-        model = User
+        model = models.User
 
 class UserProfileResponse(graphene.ObjectType, config_types.ResponseFields):
     user = graphene.Field(UserType)
+    
