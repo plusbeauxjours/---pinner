@@ -71,6 +71,7 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
     # 'django.contrib.humanize', # Handy template tags
     'django.contrib.admin',
+
 ]
 THIRD_PARTY_APPS = [
     'crispy_forms',
@@ -78,14 +79,13 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework', 
-    'taggit',
     'imagekit',
     'graphene_django',
 ]
 LOCAL_APPS = [
-    'pinner.users.apps.UsersConfig',
-    'pinner.cards.apps.CardsConfig',
-    # Your stuff: custom apps go here
+    'users.apps.UsersConfig',
+    'cards.apps.CardsConfig',
+        # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

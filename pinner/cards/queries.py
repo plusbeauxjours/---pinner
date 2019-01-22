@@ -2,13 +2,32 @@ import graphene
 from django.db import IntegrityError
 from . import types, models
 
+def resolve_location(self, info):
+
+    user = info.context.user
+
+    ok = True
+    error = None
+
+    if user.is_authenticated:
+            
+        try: 
+            location = models.Location.objects.all()
+        except models.Location.DoesNotExist:
+            error = 'Location Not Found'
+            return types.LocationResponse(ok=not ok, error=error)
+
+    else:
+        error = 'You nees to be authenticated'
+        return types.LocationResponse(ok=not ok, error=error)
+
 def resolve_feed(self, info):
 
     user = info.context.user
 
     if user.is_authenticated:
 
-        followoing_users = user.user.following.all()
+        followoing_users = user.following.all()
 
         cards_list = []
 

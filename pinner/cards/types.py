@@ -4,6 +4,11 @@ from . import models
 from users import types as user_types
 from config import types as config_types
 
+class LocationType(DjangoObjectType):
+
+    class Meta:
+        model = models.Location
+
 class CardType(DjangoObjectType):
     
     like_count = graphene.Int(source='like_count')
@@ -21,6 +26,10 @@ class CommentType(DjangoObjectType):
     
     class Meta:
         model = models.Comment
+
+class LocationResponse(graphene.ObjectType, config_types.ResponseFields):
+
+    locations = graphene.List(LocationType)
 
 class FeedResponse(graphene.ObjectType, config_types.ResponseFields):
     

@@ -1,6 +1,5 @@
 from django.db import models
 from users import models as user_models
-from taggit.managers import TaggableManager
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from config import models as config_models
 
@@ -24,7 +23,6 @@ class Card(config_models.TimeStampedModel):
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, related_name='location')
     caption = models.TextField()
     creator = models.ForeignKey(user_models.User, on_delete=models.SET_NULL, null=True, related_name='cards')
-    tags = TaggableManager(blank=True)
 
     @property
     def like_count(self):
