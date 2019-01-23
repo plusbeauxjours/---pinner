@@ -6,6 +6,8 @@ class Query(object):
     user_profile = graphene.Field(
         types.UserProfileResponse, resolver=queries.resolve_profile, required=True, userId=graphene.Int(required=True))
 
+    me = graphene.Field(types.UserProfileResponse, resolver=queries.resolve_me, required=True)
+
 
 class Mutation(object):
 
