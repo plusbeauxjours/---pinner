@@ -8,6 +8,7 @@ class Query(object):
     card_likes = graphene.Field(
         types.CardLikeResponse, resolver=queries.resolve_card_likes, required=True, cardId=graphene.Int(required=True)
     )
+    card_detail = graphene.Field(types.CardDetailResponse, resolver=queries.resolve_card_detail, required=True, cardId=graphene.Int(required=True))
 
 class Mutation(object):
 

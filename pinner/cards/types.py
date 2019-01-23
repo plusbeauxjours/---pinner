@@ -48,3 +48,7 @@ class DeleteCommentResponse(graphene.ObjectType, config_types.ResponseFields):
 class CardLikeResponse(graphene.ObjectType, config_types.ResponseFields):
     
     likes = graphene.List(LikeType)
+
+class CardDetailResponse(graphene.ObjectType, config_types.ResponseFields):
+
+    card = graphene.Field(CardType)

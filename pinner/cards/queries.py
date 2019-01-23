@@ -83,3 +83,26 @@ def resolve_card_likes(self, info, **kwargs):
     else:
         error = 'You nees to be authenticated'
         return types.CardLikeResponse(ok=not ok, error=error)
+
+def resolve_card_detail(self, info, **kwargs):
+
+    cardId = kwargs.get('cardId')
+    user = info.contxt.user
+
+    ok = True
+    error = None
+
+    if user.is_authenticated:
+
+        try:
+            card = models.Card.objects.get(id=cardId)
+        except models.Card.DoesNotExist:
+            error = 'Card Not Found'
+            return types.CardDetailResponse(ok=not ok, error=error)
+        
+        return types.CardDetailResponse(ok=ok, error=error, card=card)
+
+    else:
+
+        error = 'You need to be authenticated'
+        return types.CardDetailResponse(ok=not ok, error=error)
