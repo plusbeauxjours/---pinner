@@ -13,11 +13,12 @@
 - [x] Unfollow User
 - [x] See One Photo
 - [x] See My Profile
-- [ ] Edit My Profile
+- [x] Edit My Profile
 - [ ] Upload Photo (AWS with Boto)
 - [ ] Edit Photo
 - [ ] Delete Photo
 - [ ] Search Photos
 - [ ] Search Users
+- [ ] Check Username
 - [ ] Log In
 - [ ] Log Out

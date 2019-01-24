@@ -34,7 +34,7 @@ def resolve_me(self, info, **kwargs):
 
     if user.is_authenticated:
 
-        return types.UserProfileResponse(ok=ok, error=error, user=usre)
+        return types.UserProfileResponse(ok=ok, error=error, user=user)
 
     else:
 

@@ -21,13 +21,7 @@ class User(config_models.TimeStampedModel, AbstractUser):
 
     # First Name and Last Name do not cover name patterns
     # around the globe.
-    avatar = ProcessedImageField(
-        upload_to='avatars',
-        processors = [ResizeToFill(200, 200)],
-        format = 'JPEG',
-        options = {'quality':100},
-        blank=True
-    )
+    avatar = models.URLField(blank=True)
     name = models.CharField(_('Name of User'), blank=True, max_length=255)
     website = models.URLField(null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
