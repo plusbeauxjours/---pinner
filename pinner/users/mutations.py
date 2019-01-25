@@ -1,7 +1,7 @@
 import graphene
 from . import models, types
 from django.contrib.auth.models import User
-from django.db import IntergrityError
+from django.db import IntegrityError
 
 class FollowUser(graphene.Mutation):
 
@@ -98,7 +98,7 @@ class EditProfile(graphene.Mutation):
         if user.is_authenticated and profile is not None:
 
             bio = kwargs.get('bio', user.profile.bio)
-            userId = kwargs.get('website', user.profile.website)
+            website = kwargs.get('website', user.profile.website)
             gender = kwargs.get('gender', user.profile.gender)
             avatar = kwargs.get('avatar', user.profile.avatar)
             first_name = kwargs.get('first_name', user.first_name)
