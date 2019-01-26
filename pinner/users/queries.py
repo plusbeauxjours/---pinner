@@ -1,6 +1,6 @@
 import graphene
-from django.contrib.auth.models import User
 from . import types, models
+from .models import User
 
 def resolve_profile(self, info, **kwargs):
 
@@ -13,12 +13,12 @@ def resolve_profile(self, info, **kwargs):
     if user.is_authenticated:
 
         try:
-            user = User.objects.get(id=userId)
-        except User.DoesnotExist:
+            profile = User.objects.get(id=userId)
+        except User.DoesNotExist:
             error = 'User Not Found'
             return types.UserProfileResponse(ok=not ok, error=error)
 
-        return types.UserProfileResponse(ok=ok, error=error, user=user)
+        return types.UserProfileResponse(ok=ok, error=error, user=profile)
 
     else: 
         

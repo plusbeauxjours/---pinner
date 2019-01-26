@@ -1,6 +1,6 @@
 import graphene
 from . import models, types
-from django.contrib.auth.models import User
+from .models import User
 from django.db import IntegrityError
 
 class FollowUser(graphene.Mutation):

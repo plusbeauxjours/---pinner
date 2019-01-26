@@ -1,6 +1,7 @@
 import graphene
 from django.db import IntegrityError
 from . import types, models
+from .models import Location
 
 def resolve_location(self, info):
 
@@ -12,10 +13,12 @@ def resolve_location(self, info):
     if user.is_authenticated:
             
         try: 
-            location = models.Location.objects.all()
-        except models.Location.DoesNotExist:
+            locations = Location.objects.all()
+        except Location.DoesNotExist:
             error = 'Location Not Found'
             return types.LocationResponse(ok=not ok, error=error)
+
+        return types.LocationResponse(ok=ok, error=error, locations=locations)
 
     else:
         error = 'You nees to be authenticated'
@@ -87,7 +90,7 @@ def resolve_card_likes(self, info, **kwargs):
 def resolve_card_detail(self, info, **kwargs):
 
     cardId = kwargs.get('cardId')
-    user = info.contxt.user
+    user = info.context.user
 
     ok = True
     error = None
