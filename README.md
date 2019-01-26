@@ -14,6 +14,7 @@
 - [x] See One Photo
 - [x] See My Profile
 - [x] Edit My Profile
+- [x] Update Password
 - [ ] Upload Photo (AWS with Boto)
 - [ ] Edit Photo
 - [ ] Delete Photo
