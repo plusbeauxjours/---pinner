@@ -7,7 +7,8 @@ class Query(object):
         types.UserProfileResponse, resolver=queries.resolve_profile, required=True, args={'userId':graphene.Int(required=True)})
 
     me = graphene.Field(types.UserProfileResponse, resolver=queries.resolve_me, required=True)
-
+    search_users = graphene.Field(types.SearchUsersResponse, resolver=queries.resolve_search_users, required=True, args={
+        'term': graphene.String(required=True)})
 
 class Mutation(object):
 

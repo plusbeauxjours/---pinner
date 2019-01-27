@@ -19,7 +19,7 @@
 - [x] Delete Card
 - [x] Upload Card
 - [x] Search Photos
-- [ ] Search Users
+- [x] Search Users
 - [ ] Check Username
 - [ ] Log In
 - [ ] Log Out
