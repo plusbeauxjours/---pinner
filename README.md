@@ -18,7 +18,7 @@
 - [x] Edit Card
 - [x] Delete Card
 - [x] Upload Card
-- [ ] Search Photos
+- [x] Search Photos
 - [ ] Search Users
 - [ ] Check Username
 - [ ] Log In

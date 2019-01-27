@@ -109,3 +109,29 @@ def resolve_card_detail(self, info, **kwargs):
 
         error = 'You need to be authenticated'
         return types.CardDetailResponse(ok=not ok, error=error)
+
+def resolve_search_cards(self, info, **kwargs):
+
+    user = info.context.user
+    term = kwargs.get('term')
+
+    ok = True
+    error = None
+
+    if user.is_authenticated:
+
+        if len(term) < 4:
+
+            error = "Search Term is Too Short"
+            return types.SearchCardsResponse(ok=not ok, error=error)
+
+        else:
+
+            cards = models.Card.objects.filter(caption__icontains=term)
+
+            return types.SearchCardsResponse(ok=ok, error=error, cards=cards)
+    
+    else:
+
+        error = "Unauthorized"
+        return types.SearchCardsResponse(ok=not ok, error=error)

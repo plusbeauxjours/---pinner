@@ -9,6 +9,8 @@ class Query(object):
         types.CardLikeResponse, resolver=queries.resolve_card_likes, required=True, args={'cardId':graphene.Int(required=True)})
     card_detail = graphene.Field(
         types.CardDetailResponse, resolver=queries.resolve_card_detail, required=True, args={'cardId':graphene.Int(required=True)})
+    search_cards = graphene.Field(types.SearchCardsResponse, resolver=queries.resolve_search_cards, required=True, args={
+        'term': graphene.String(required=True)})
 
 class Mutation(object):
 

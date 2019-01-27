@@ -26,3 +26,7 @@ class GenderEnums(graphene.Enum):
     FEMALE = 'F'
 class ChangePasswordResponse(graphene.ObjectType, config_types.ResponseFields):
     pass
+
+class SearchUserResponse(graphene.ObjectTypem, config_types.ResponseFields):
+
+    users = graphene.List(UserType)
