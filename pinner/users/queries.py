@@ -25,7 +25,7 @@ def resolve_profile(self, info, **kwargs):
         error = "You need to be authenticated"
         return types.UserProfileResponse(ok=not ok, error=error)
     
-def resolve_me(self, info, **kwargs):
+def resolve_me(self, info):
 
     user = info.context.user 
 

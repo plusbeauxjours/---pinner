@@ -36,7 +36,7 @@ def resolve_feed(self, info):
 
         for following_user in followoing_users:
 
-            user_cards = following_user.user.cards.all()[:2]
+            user_cards = following_user.cards.all()[:2]
 
             for card in user_cards:
 

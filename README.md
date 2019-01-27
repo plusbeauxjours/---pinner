@@ -15,11 +15,11 @@
 - [x] See My Profile
 - [x] Edit My Profile
 - [x] Update Password
-- [ ] Upload Photo (AWS with Boto)
-- [ ] Edit Photo
+- [x] Edit Photo
 - [ ] Delete Photo
 - [ ] Search Photos
 - [ ] Search Users
 - [ ] Check Username
+- [ ] Upload Photo (AWS with Boto)
 - [ ] Log In
 - [ ] Log Out
