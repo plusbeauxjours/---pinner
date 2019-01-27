@@ -20,9 +20,10 @@ class TimeStampedModel(config_models.TimeStampedModel):
 
 class Card(config_models.TimeStampedModel):
 
-    location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, related_name='location')
-    caption = models.TextField()
     creator = models.ForeignKey(user_models.User, on_delete=models.SET_NULL, null=True, related_name='cards')
+    caption = models.TextField()
+    location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, related_name='location')
+    file = models.URLField()
 
     @property
     def like_count(self):

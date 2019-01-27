@@ -17,9 +17,9 @@
 - [x] Update Password
 - [x] Edit Card
 - [x] Delete Card
+- [x] Upload Card
 - [ ] Search Photos
 - [ ] Search Users
 - [ ] Check Username
-- [ ] Upload Card (AWS with Boto)
 - [ ] Log In
 - [ ] Log Out

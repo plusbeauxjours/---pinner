@@ -210,3 +210,39 @@ class DeleteCard(graphene.Mutation):
         else:
             error = "You need to log in"
             return types.EditCardResponse(ok=not ok, error=error)
+
+class UploadCard(graphene.Mutation):
+
+    class Arguments:
+        fileUrl = graphene.String(required=True)
+        caption = graphene.String(required=True)
+        location = graphene.String()
+
+    Output = types.UploadCardResponse
+
+    def mutate(self, info, **kwargs):
+
+        user = info.context.user
+
+        ok = True
+        error = None
+
+        fileUrl = kwargs.get('fileUrl')
+        caption = kwargs.get('caption')
+        location = kwargs.get('location')
+
+        if user.is_authenticated:
+
+            try: 
+                card = models.Card.objects.create(
+                    creator=user, caption=caption, location=location, file=fileUrl)
+                return types.UploadCardResponse(ok=ok, error=error, card=card)
+            except IntegrityError as e:
+                print(e)
+                error = "Can't Create Card"
+                return types.UploadCardResponse(ok=not ok, error=error)
+            
+        else:
+
+            error = "Unauthorized"
+            return types.UploadCardResponse(ok=not ok, error=error)
