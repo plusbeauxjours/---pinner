@@ -56,3 +56,6 @@ class CardDetailResponse(graphene.ObjectType, config_types.ResponseFields):
 class EditCardResponse(graphene.ObjectType, config_types.ResponseFields):
 
     card = graphene.Field(CardType)
+
+class DeleteCardResponse(graphene.ObjectType, config_types.ResponseFields):
+    pass

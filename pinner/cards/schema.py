@@ -16,3 +16,4 @@ class Mutation(object):
     add_comment = mutations.AddComment.Field(required=True)
     delete_comment = mutations.DeleteComment.Field(required=True)
     edit_card = mutations.EditCard.Field(required=True)
+    delete_card = mutations.DeleteCard.Field(required=True)

@@ -129,7 +129,7 @@ class EditCard(graphene.Mutation):
         caption = graphene.String()
         location = graphene.String()
 
-    Output = types.EditImageResponse
+    Output = types.EditCardResponse
 
     def mutate(self, info, **kwargs):
 
@@ -168,6 +168,44 @@ class EditCard(graphene.Mutation):
                 except IntegrityError:
                     error = "Can't Save Card"
                     return types.EditCardResponse(ok=not ok, error=error)
+
+        else:
+            error = "You need to log in"
+            return types.EditCardResponse(ok=not ok, error=error)
+
+
+class DeleteCard(graphene.Mutation):
+
+    class Arguments:
+        cardId = graphene.Int(required=True)
+
+    Output = types.DeleteCardResponse
+
+    def mutate(self, info, **kwargs):
+
+        user = info.context.user
+        cardId = kwargs.get('cardId')
+
+        ok = True
+        error = None
+
+        if user.is_authenticated:
+
+            try:
+                card = models.Card.objects.get(id=cardId)
+            except models.Card.DoesNotExist:
+                error = "Card Not Found"
+                return types.EditCardResponse(ok=not ok, error=error)
+
+            if card.creator.id == user.id:
+
+                card.delete()
+                return types.DeleteCardResponse(ok=ok, error=error)
+
+            else:
+
+                error = "Unauthorized"
+                return types.EditCardResponse(ok=not ok, error=error)
 
         else:
             error = "You need to log in"
