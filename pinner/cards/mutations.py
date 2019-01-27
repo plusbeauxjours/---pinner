@@ -121,3 +121,54 @@ class DeleteComment(graphene.Mutation):
         else:
             error = 'You need to log in'
             return types.DeleteCommentResponse(ok=not ok, error=error)
+
+class EditCard(graphene.Mutation):
+
+    class Arguments:
+        cardId = graphene.Int(required=True)
+        caption = graphene.String()
+        location = graphene.String()
+
+    Output = types.EditImageResponse
+
+    def mutate(self, info, **kwargs):
+
+        user = info.context.user
+        cardId = kwargs.get('cardId')
+
+        ok = True
+        error = None
+
+        if user.is_authenticated:
+
+            try:
+                card = models.Card.objects.get(id=cardId)
+            except models.Card.DoesNotExist:
+                error = "Card Not Found"
+                return types.EditCardResponse(ok=not ok, error=error)
+
+            if card.creator.id != user.id:
+
+                error = "Unauthorized"
+                return types.EditCardResponse(ok=not ok, error=error)
+
+            else:
+
+                try:
+
+                    caption = kwargs.get('caption', card.caption)
+                    location = kwargs.get('location', card.location)
+
+                    card.caption = caption
+                    card.location = location
+
+                    card.save()
+                    return types.EditCardResponse(ok=ok, error=error, card=card)
+
+                except IntegrityError:
+                    error = "Can't Save Card"
+                    return types.EditCardResponse(ok=not ok, error=error)
+
+        else:
+            error = "You need to log in"
+            return types.EditCardResponse(ok=not ok, error=error)

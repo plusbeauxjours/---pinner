@@ -15,3 +15,4 @@ class Mutation(object):
     like_card = mutations.LikeCard.Field(required=True)
     add_comment = mutations.AddComment.Field(required=True)
     delete_comment = mutations.DeleteComment.Field(required=True)
+    edit_card = mutations.EditCard.Field(required=True)
