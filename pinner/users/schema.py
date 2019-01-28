@@ -9,6 +9,9 @@ class Query(object):
     me = graphene.Field(types.UserProfileResponse, resolver=queries.resolve_me, required=True)
     search_users = graphene.Field(types.SearchUsersResponse, resolver=queries.resolve_search_users, required=True, args={
         'term': graphene.String(required=True)})
+    check_username = graphene.Field(types.CheckUsernameResponse, resolver=queries.resolve_check_username, required=True, args={
+        'username': graphene.String(required=True)
+    })
 
 class Mutation(object):
 

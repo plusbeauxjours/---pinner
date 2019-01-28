@@ -30,3 +30,6 @@ class ChangePasswordResponse(graphene.ObjectType, config_types.ResponseFields):
 class SearchUsersResponse(graphene.ObjectTypem, config_types.ResponseFields):
 
     users = graphene.List(UserType)
+
+class CheckUsernameResponse(graphene.ObjectType, config_types.ResponseFields):
+    pass
