@@ -36,7 +36,8 @@ class LikeCard(graphene.Mutation):
                     creator=user, card=card)
                 like.save()
                 return types.LikeCardResponse(ok=ok, error=error)
-            except IntegrityError:
+            except IntegrityError as e:
+                print(e)
                 error = "Can't Like Card"
                 return types.LikeCardResponse(ok=not ok, error=error)
         else: 
@@ -74,7 +75,8 @@ class AddComment(graphene.Mutation):
                 comment = models.Comment.objects.create(
                     message=message, card=card, creator=user)
                 return types.AddCommentResponse(ok=ok, error=error, comment=comment)
-            except IntegrityError:
+            except IntegrityError as e:
+                print(e)
                 error = "Can't create the comment"
                 return types.AddCommentResponse(ok=not ok, error=error, comment=comment)
         else: 
@@ -164,8 +166,8 @@ class EditCard(graphene.Mutation):
 
                     card.save()
                     return types.EditCardResponse(ok=ok, error=error, card=card)
-
-                except IntegrityError:
+                except IntegrityError as e:
+                    print(e)
                     error = "Can't Save Card"
                     return types.EditCardResponse(ok=not ok, error=error)
 
