@@ -22,4 +22,5 @@
 - [x] Search Users
 - [x] Check Username
 - [x] Log In
+- [x] Create Account
 - [ ] Log Out
