@@ -21,5 +21,5 @@
 - [x] Search Photos
 - [x] Search Users
 - [x] Check Username
-- [ ] Log In
+- [x] Log In
 - [ ] Log Out
