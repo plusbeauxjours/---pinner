@@ -17,11 +17,11 @@ def sign_s3(request):
         s3 = boto3.resource('s3')
 
         upload = s3.Bucket(
-            'pinner').upload_fileobj(file, file_name)
+            'pinner').upload_fileobj(file, file_name, {'ACL': 'public-read'})
 
-        # upload = client.put_object(ACL='public-read', Bucket='nomadgram-reloaded', Key=str(uuid.uuid4()), Body=file)
+        url = f'https://s3-ap-northeast-1.amazonaws.com/pinner/{file_name}'
 
-        return JsonResponse({'ok': True, 'upload': upload})
+        return JsonResponse({'ok': True, 'URL': url})
     
     except Exception as e:
 
