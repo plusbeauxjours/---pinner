@@ -44,6 +44,7 @@ pylint = "*"
 django-taggit = "*"
 django-taggit-serializer = "*"
 django-cors-headers = "*"
+"boto3" = "*"
 
 
 [dev-packages]

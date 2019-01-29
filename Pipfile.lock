@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "06fc5c6f6eeccb1750b24f53483fd7ab4b94402a45a7b4bcf8001cf0154f644d"
+            "sha256": "c4e685b5f9c588ce625ddd2f712b025dd26c5c50c1c0140adfba7613e35f5313"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -124,6 +124,20 @@
                 "sha256:359501dfc9d40632edc9fac890e19542db1a287bbcfa58175b66658392018061"
             ],
             "version": "==0.4.4"
+        },
+        "boto3": {
+            "hashes": [
+                "sha256:d1338582bc58741f54bd6b43488de6097a82ea45cebed0a3fd936981eadbb3a5",
+                "sha256:63cd957ba663f5c10ff48ed904575eaa701314f79f18dbc59bd050311cd5f809"
+            ],
+            "version": "==1.9.86"
+        },
+        "botocore": {
+            "hashes": [
+                "sha256:5b01a16f02c3da55068b3aacfa1c37dd8e17141551e1702424b38dd21fa1c792",
+                "sha256:24444e7580f0114c3e9fff5d2032c6f0cfbf88691b1be3ba27c6922507a902ec"
+            ],
+            "version": "==1.12.86"
         },
         "certifi": {
             "hashes": [
@@ -503,6 +517,13 @@
                 "sha256:d14eaa4d315e7688daa4969f616f226614350c48730bfa1692d2caebd8c90d40"
             ],
             "version": "==0.2.0"
+        },
+        "jmespath": {
+            "hashes": [
+                "sha256:f11b4461f425740a1d908e9a3f7365c3d2e569f6ca68a2ff8bc5bcd9676edd63",
+                "sha256:6a81d4c9aa62caf061cb517b4d9ad1dd300374cd4706997aff9cd6aedd61fc64"
+            ],
+            "version": "==0.9.3"
         },
         "lazy-object-proxy": {
             "hashes": [
@@ -909,6 +930,13 @@
             ],
             "version": "==1.6.1"
         },
+        "s3transfer": {
+            "hashes": [
+                "sha256:c7a9ec356982d5e9ab2d4b46391a7d6a950e2b04c472419f5fdec70cc0ada72f",
+                "sha256:90dc18e028989c609146e241ea153250be451e05ecc0c2832565231dacdf59c1"
+            ],
+            "version": "==0.1.13"
+        },
         "singledispatch": {
             "hashes": [
                 "sha256:833b46966687b3de7f438c761ac475213e53b306740f1abfaa86e1d1aae56aa8",
@@ -995,6 +1023,7 @@
                 "sha256:cb1c7e5b3195103f5a784db7969fc55463cfae9b354e3b97cc219d32293d5e65",
                 "sha256:4304399ff89452871348f6fb7a7112454cd508fbe3eb49b5ed711cce9b99fe9e"
             ],
+            "markers": "python_version < '3.7' and implementation_name == 'cpython'",
             "version": "==1.1.2"
         },
         "unidecode": {
