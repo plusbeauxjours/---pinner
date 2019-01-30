@@ -24,3 +24,7 @@
 - [x] Log In
 - [x] Create Account
 - [ ] Log Out
+- [ ] See Users to Follow
+- [ ] See Latest Images
+- [ ] Get Notifications
+- [ ] Mark Notification as Read
