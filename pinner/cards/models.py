@@ -10,14 +10,6 @@ class Location(config_models.TimeStampedModel):
     def __str__(self):
         return self.city
 
-class TimeStampedModel(config_models.TimeStampedModel):
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta: 
-        abstract=True
-
 class Card(config_models.TimeStampedModel):
 
     creator = models.ForeignKey(user_models.User, on_delete=models.SET_NULL, null=True, related_name='cards')

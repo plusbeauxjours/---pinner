@@ -85,6 +85,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     'users.apps.UsersConfig',
     'cards.apps.CardsConfig',
+    'notifications.apps.NotificationsConfig'
         # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
