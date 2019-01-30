@@ -170,3 +170,4 @@ node_modules/**/*
 Pipfile.lock
 migrations
 uploads
+.*

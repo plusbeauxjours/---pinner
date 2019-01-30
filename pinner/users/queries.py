@@ -1,4 +1,5 @@
 import graphene
+from graphql_jwt.decorators import login_required
 from . import types, models
 from .models import User
 
@@ -66,23 +67,15 @@ def resolve_search_users(self, info, **kwargs):
 
         error = "Unauthorized"
         return types.SearchUsersResponse(ok=not ok, error=error)
-    
+
+@login_required
 def resolve_check_username(self, info, **kwargs):
 
     user = info.context.user
     username = kwargs.get('username')
 
-    ok = True
-    error = None
-
-    if user.is_authenticated:
-
-        try:
-            existing_username = User.objects.get(username=username)
-            error = "Username is taken"
-            return types.CheckUsernameResponse(ok=not ok, error=error)
-
-    else:
-
-        error = "Unauthorized"
-        return types.CheckUsernameResponse(ok=not ok, error=error)
+    try:
+        existing_username = User.objects.get(username=username)
+        raise Exception("Username is taken")
+    except User.DoesNotExist:
+        return types.CheckUsernameResponse(ok=True)
