@@ -12,9 +12,9 @@ class Notification(config_models.TimeStampedModel):
         ('follow', 'Follow')
     )
 
-    creator = models.ForeignKey(user_models.User, on_delete=models.CASCADE)
+    actor = models.ForeignKey(user_models.User, on_delete=models.CASCADE, related_name='actor')
     target = models.ForeignKey(
-        user_models.User, on_delete=models.CASCADE, related_name='notifications')
+        user_models.User, on_delete=models.CASCADE, related_name='target')
     verb = models.CharField(max_length=10, choices=VERBS)
     payload = models.ForeignKey(
         card_models.Card, on_delete=models.CASCADE, null=True)
@@ -23,4 +23,4 @@ class Notification(config_models.TimeStampedModel):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"{self.creator.username} {self.verb} 👉🏻 {self.target.username}"
+        return 'From: {} {} 👉🏻 To: {}'.format(self.actor.username, self.verb, self.target.username)

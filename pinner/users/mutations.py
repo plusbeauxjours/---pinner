@@ -34,7 +34,7 @@ class FollowUser(graphene.Mutation):
 
             try:
                 notification_models.Notification.objects.create(
-                    creator=user, target=target, verb="follow"
+                    actor=user, target=target, verb="follow"
                 )
             except IntegrityError as e:
                 print(e)
@@ -77,7 +77,7 @@ class UnfollowUser(graphene.Mutation):
 
             try:
                 notification = notification_models.Notification.objects.get(
-                    creator=user, target=target, verb='follow'
+                    actor=user, target=target, verb='follow'
                 )
                 notification.delete()
             except notification_models.Notification.DoesNotExist as e:
