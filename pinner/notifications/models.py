@@ -19,5 +19,8 @@ class Notification(config_models.TimeStampedModel):
     payload = models.ForeignKey(
         card_models.Card, on_delete=models.CASCADE, null=True)
 
+    class Meta:
+        ordering = ['-created_at']
+
     def __str__(self):
         return f"{self.creator.username} {self.verb} 👉🏻 {self.target.username}"
