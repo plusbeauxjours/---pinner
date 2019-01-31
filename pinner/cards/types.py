@@ -38,6 +38,9 @@ class FeedResponse(graphene.ObjectType, config_types.ResponseFields):
 class LikeCardResponse(graphene.ObjectType, config_types.ResponseFields):
     pass
 
+class UnlikeCardResponse(graphene.ObjectType, config_types.ResponseFields):
+    pass
+
 class AddCommentResponse(graphene.ObjectType, config_types.ResponseFields):
     
     comment = graphene.Field(CommentType)

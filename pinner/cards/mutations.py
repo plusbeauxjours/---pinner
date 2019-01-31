@@ -1,10 +1,11 @@
 import graphene
 from django.db import IntegrityError
 from . import models, types
+from notifications import models as notification_models
 
 class LikeCard(graphene.Mutation):
 
-    """ Like an Card """
+    """ Like a Card """
 
     class Arguments: 
         cardId = graphene.Int(required=True)
@@ -24,14 +25,6 @@ class LikeCard(graphene.Mutation):
                 return types.LikeCardResponse(ok=not ok, error=error)
 
             try:
-                like = models.Like.objects.get(
-                    creator=user, card=card)
-                like.delete()
-                return types.LikeCardResponse(ok=ok, error=error)
-            except models.Like.DoesNotExist:
-                pass
-
-            try:
                 like = models.Like.objects.create(
                     creator=user, card=card)
                 like.save()
@@ -43,6 +36,40 @@ class LikeCard(graphene.Mutation):
         else: 
             error = 'You need to log in'
             return types.LikeCardResponse(ok=not ok, error=error)
+
+class UnlikeCard(graphene.Mutation):
+
+    """ Unlike a Card """
+
+    class Arguments:
+        cardId = graphene.Int(required=True)
+
+    Output = types.UnlikeCardResponse
+
+    def mutate(self, info, **kwargs):
+        cardId = kwargs.get('cardId')
+        user = info.context.user
+        
+        ok = True
+        error = None
+
+        if user.is_authenticated:
+            try:
+                card = models.Card.objects.get(id=cardId)
+            except models.Card.DoesNotExist:
+                error = 'Card Not Found'
+                return types.UnlikeCardResponse(ok=not ok, error=error)
+
+            try:
+                like = models.Like.objects.get(creator=user, card=card)
+                like.delete()
+                return types.UnlikeCardResponse(ok=ok, error=error)
+            except models.Like.DoesNotExist:
+                pass
+        
+        else:
+            error = "You need to log in"
+            return types.UnlikeCardResponse(ok=not ok, error=error)
 
 class AddComment(graphene.Mutation):
 
