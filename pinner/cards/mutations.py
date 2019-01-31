@@ -33,6 +33,14 @@ class LikeCard(graphene.Mutation):
                 print(e)
                 error = "Can't Like Card"
                 return types.LikeCardResponse(ok=not ok, error=error)
+
+            try:
+                notification_models.Notification.objects.create(
+                    creator=user, target=card.creator, verb="like", payload=card)
+            except IntegrityError as e:
+                print(e)
+                pass
+                
         else: 
             error = 'You need to log in'
             return types.LikeCardResponse(ok=not ok, error=error)
@@ -66,7 +74,14 @@ class UnlikeCard(graphene.Mutation):
                 return types.UnlikeCardResponse(ok=ok, error=error)
             except models.Like.DoesNotExist:
                 pass
-        
+
+            try:
+                notification = notification_models.Notification.objects.get(
+                    creator=user, target=card.creator, verb="like", payload=card)
+                notification.delete()
+            except notification_models.Notification.DoesNotExist:
+                pass
+	
         else:
             error = "You need to log in"
             return types.UnlikeCardResponse(ok=not ok, error=error)
