@@ -23,9 +23,10 @@ def resolve_location(self, info):
         error = 'You nees to be authenticated'
         return types.LocationResponse(ok=not ok, error=error)
 
-def resolve_feed(self, info):
+def resolve_feed(self, info, **kwargs):
 
     user = info.context.user
+    page = kwargs.get('page', 0)
 
     if user.is_authenticated:
 
@@ -35,13 +36,15 @@ def resolve_feed(self, info):
 
         for following_user in followoing_users:
 
-            user_cards = following_user.cards.all()[:2]
+            print(page)
+
+            user_cards = following_user.cards.all()[2 * page:2]
 
             for card in user_cards:
 
                 cards_list.append(card)
 
-        my_cards = user.cards.all()[:2]
+        my_cards = user.cards.all()[2 * page:2]
 
         for card in my_cards: 
 

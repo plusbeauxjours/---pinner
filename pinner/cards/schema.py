@@ -3,14 +3,34 @@ from . import types, queries, mutations
 
 class Query(object):
 
-    location = graphene.Field(types.LocationResponse, resolver=queries.resolve_location,)
-    feed = graphene.Field(types.FeedResponse, resolver=queries.resolve_feed, required=True)
+    location = graphene.Field(
+        types.LocationResponse, 
+        resolver=queries.resolve_location
+        )
+    feed = graphene.Field(
+        types.FeedResponse, 
+        resolver=queries.resolve_feed, 
+        required=True,
+        args={'page': graphene.Int()}
+        )
     card_likes = graphene.Field(
-        types.CardLikeResponse, resolver=queries.resolve_card_likes, required=True, args={'cardId':graphene.Int(required=True)})
+        types.CardLikeResponse, 
+        resolver=queries.resolve_card_likes, 
+        required=True, 
+        args={'cardId':graphene.Int(required=True)}
+        )
     card_detail = graphene.Field(
-        types.CardDetailResponse, resolver=queries.resolve_card_detail, required=True, args={'cardId':graphene.Int(required=True)})
-    search_cards = graphene.Field(types.SearchCardsResponse, resolver=queries.resolve_search_cards, required=True, args={
-        'term': graphene.String(required=True)})
+        types.CardDetailResponse, 
+        resolver=queries.resolve_card_detail, 
+        required=True, 
+        args={'cardId':graphene.Int(required=True)}
+        )
+    search_cards = graphene.Field(
+        types.SearchCardsResponse, 
+        resolver=queries.resolve_search_cards, 
+        required=True, 
+        args={'term': graphene.String(required=True)}
+        )
 
 class Mutation(object):
 
