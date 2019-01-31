@@ -15,76 +15,38 @@ class LikeCard(graphene.Mutation):
     def mutate(self, info, **kwargs):
         cardId = kwargs.get('cardId')
         user = info.context.user
-        ok = True
-        error = None
+
         if user.is_authenticated: 
             try:
                 card = models.Card.objects.get(id=cardId)
             except models.Card.DoesNotExist:
-                error = 'Card Not Found'
-                return types.LikeCardResponse(ok=not ok, error=error)
+                raise Exception("Card Not Found")
+
+            try:
+                like = models.Like.objects.get(
+                    creator=user, card=card)
+                like.delete()
+                return types.LikeCardResponse(ok=True)
+            except models.Like.DoesNotExist:
+                pass
 
             try:
                 like = models.Like.objects.create(
                     creator=user, card=card)
-                like.save()
-                return types.LikeCardResponse(ok=ok, error=error)
+                return types.LikeCardResponse(ok=True)
             except IntegrityError as e:
-                print(e)
-                error = "Can't Like Card"
-                return types.LikeCardResponse(ok=not ok, error=error)
+                raise Exception("Can't Like Card")
 
             try:
                 notification_models.Notification.objects.create(
-                    creator=user, target=card.creator, verb="like", payload=card)
+                    creator=user, target=card.creator, verb="like")
             except IntegrityError as e:
                 print(e)
                 pass
                 
         else: 
             error = 'You need to log in'
-            return types.LikeCardResponse(ok=not ok, error=error)
-
-class UnlikeCard(graphene.Mutation):
-
-    """ Unlike a Card """
-
-    class Arguments:
-        cardId = graphene.Int(required=True)
-
-    Output = types.UnlikeCardResponse
-
-    def mutate(self, info, **kwargs):
-        cardId = kwargs.get('cardId')
-        user = info.context.user
-        
-        ok = True
-        error = None
-
-        if user.is_authenticated:
-            try:
-                card = models.Card.objects.get(id=cardId)
-            except models.Card.DoesNotExist:
-                error = 'Card Not Found'
-                return types.UnlikeCardResponse(ok=not ok, error=error)
-
-            try:
-                like = models.Like.objects.get(creator=user, card=card)
-                like.delete()
-                return types.UnlikeCardResponse(ok=ok, error=error)
-            except models.Like.DoesNotExist:
-                pass
-
-            try:
-                notification = notification_models.Notification.objects.get(
-                    creator=user, target=card.creator, verb="like", payload=card)
-                notification.delete()
-            except notification_models.Notification.DoesNotExist:
-                pass
-	
-        else:
-            error = "You need to log in"
-            return types.UnlikeCardResponse(ok=not ok, error=error)
+            return types.LikeCardResponse(ok=False)
 
 class AddComment(graphene.Mutation):
 
@@ -102,28 +64,33 @@ class AddComment(graphene.Mutation):
 
         user = info.context.user
 
-        ok = True
-        error = None
         comment = None
 
         if user.is_authenticated:
             try: 
                 card = models.Card.objects.get(id=cardId)
             except models.Card.DoesNotExist:
-                error = 'Card Not Found'
-                return types.AddCommentResponse(ok=not ok, error=error, comment=comment)
+                raise Exception('Card Not Found')
 
             try: 
                 comment = models.Comment.objects.create(
                     message=message, card=card, creator=user)
-                return types.AddCommentResponse(ok=ok, error=error, comment=comment)
+                return types.AddCommentResponse(ok=True,comment=comment)
             except IntegrityError as e:
                 print(e)
-                error = "Can't create the comment"
-                return types.AddCommentResponse(ok=not ok, error=error, comment=comment)
+                raise Exception("Can't create the comment")
+            
+            try:
+                notification_models.Notification.objects.create(
+                    crator=user, target=card.creator, verb="comment", payload=card
+                )
+            except IntegrityError as e:
+                print(e)
+                pass
+
         else: 
             error = 'You need to log in'
-            return types.AddCommentResponse(ok=not ok, error=error, comment=comment)
+            return types.AddCommentResponse(ok=False, comment=comment)
 
 class DeleteComment(graphene.Mutation):
 
@@ -158,9 +125,18 @@ class DeleteComment(graphene.Mutation):
 
             if comment.creator.id == user.id or card.creator.id == user.id:
                 comment.delete()
+                return types.DeleteCommentResponse(ok=ok, error=error)
             else: 
                 error = "Can't Delete Comment"
             return types.DeleteCommentResponse(ok=not ok, error=error)
+
+            try:
+                notification = notification_models.Notification.objects.get(
+                    creator=user, target=card.creator, verb="comment", payload=card
+                )
+                notification.delete()
+            except notification_models.Notification.DoesNotExist:
+                pass
 
         else:
             error = 'You need to log in'

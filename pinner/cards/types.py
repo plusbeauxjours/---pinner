@@ -10,7 +10,6 @@ class LocationType(DjangoObjectType):
         model = models.Location
 
 class CardType(DjangoObjectType):
-    
     like_count = graphene.Int(source='like_count')
     comment_count = graphene.Int(source='comment_count')
 
@@ -28,45 +27,35 @@ class CommentType(DjangoObjectType):
         model = models.Comment
 
 class LocationResponse(graphene.ObjectType, config_types.ResponseFields):
-
     locations = graphene.List(LocationType)
 
 class FeedResponse(graphene.ObjectType, config_types.ResponseFields):
-    
     cards = graphene.List(CardType)
 
 class LikeCardResponse(graphene.ObjectType, config_types.ResponseFields):
-    pass
-
-class UnlikeCardResponse(graphene.ObjectType, config_types.ResponseFields):
-    pass
+    ok = graphene.Boolean()
 
 class AddCommentResponse(graphene.ObjectType, config_types.ResponseFields):
-    
+    ok = graphene.Boolean()
     comment = graphene.Field(CommentType)
 
 class DeleteCommentResponse(graphene.ObjectType, config_types.ResponseFields):
     pass
 
 class CardLikeResponse(graphene.ObjectType, config_types.ResponseFields):
-    
     likes = graphene.List(LikeType)
 
 class CardDetailResponse(graphene.ObjectType, config_types.ResponseFields):
-
     card = graphene.Field(CardType)
 
 class EditCardResponse(graphene.ObjectType, config_types.ResponseFields):
-
     card = graphene.Field(CardType)
 
 class DeleteCardResponse(graphene.ObjectType, config_types.ResponseFields):
     pass
 
 class UploadCardResponse(graphene.ObjectType, config_types.ResponseFields):
-
     card = graphene.Field(CardType)
 
 class SearchCardsResponse(graphene.ObjectType, config_types.ResponseFields):
-
     card = graphene.List(CardType)

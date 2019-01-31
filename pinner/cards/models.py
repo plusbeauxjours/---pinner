@@ -47,7 +47,7 @@ class Comment(config_models.TimeStampedModel):
 class Like(config_models.TimeStampedModel):
     
     creator = models.ForeignKey(user_models.User, on_delete=models.SET_NULL, null=True)
-    card = models.ForeignKey(Card, on_delete=models.SET_NULL, null=True )
+    card = models.ForeignKey(Card, on_delete=models.SET_NULL, null=True, related_name='likes')
 
     def __str__(self):
         return 'User: {} - Card Caption: {}'.format(self.creator.username, self.card.caption)
