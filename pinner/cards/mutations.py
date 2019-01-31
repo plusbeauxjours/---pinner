@@ -120,11 +120,6 @@ class DeleteComment(graphene.Mutation):
 
             if comment.creator.id == user.id or card.creator.id == user.id:
                 comment.delete()
-                notification = notification_models.Notification.objects.get(
-                actor=user, target=card.creator, verb="comment", payload=card
-                )
-                notification.delete()
-                return types.DeleteCommentResponse(ok=ok, error=error)
             else: 
                 error = "Can't Delete Comment"
             return types.DeleteCommentResponse(ok=not ok, error=error)

@@ -1,7 +1,6 @@
 import graphene
 from graphene_django.types import DjangoObjectType
 from . import models
-from users import types as user_types
 from config import types as config_types
 
 class LocationType(DjangoObjectType):

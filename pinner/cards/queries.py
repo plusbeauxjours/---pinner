@@ -1,4 +1,3 @@
-import graphene
 from django.db import IntegrityError
 from . import types, models
 from .models import Location
