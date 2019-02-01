@@ -1,5 +1,5 @@
 import graphene
-from . import types, queries
+from . import types, queries, mutations
 
 class Query(object):
 
@@ -9,3 +9,7 @@ class Query(object):
         required=True, 
         args={'page': graphene.Int()}
     )
+
+class Mutation(object):
+
+    mark_as_read = mutations.MarkAsRead.Field(required=True)

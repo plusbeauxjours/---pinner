@@ -96,11 +96,10 @@ class DeleteComment(graphene.Mutation):
     Output = types.DeleteCommentResponse
 
     def mutate(self, info, **kwargs):
+
         cardId = kwargs.get('cardId')
         commentId = kwargs.get('commentId')
-
         user = info.context.user
-
         ok = True
         error = None
 
@@ -141,7 +140,6 @@ class EditCard(graphene.Mutation):
 
         user = info.context.user
         cardId = kwargs.get('cardId')
-
         ok = True
         error = None
 
@@ -191,7 +189,6 @@ class DeleteCard(graphene.Mutation):
 
         user = info.context.user
         cardId = kwargs.get('cardId')
-
         ok = True
         error = None
 
@@ -229,10 +226,8 @@ class UploadCard(graphene.Mutation):
     def mutate(self, info, **kwargs):
 
         user = info.context.user
-
         ok = True
         error = None
-
         fileUrl = kwargs.get('fileUrl')
         caption = kwargs.get('caption')
         location = kwargs.get('location')

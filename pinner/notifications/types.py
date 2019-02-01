@@ -10,3 +10,6 @@ class NotificationType(DjangoObjectType):
 
 class GetNotificationsResponse(graphene.ObjectType, config_types.ResponseFields):
     notifications = graphene.List(NotificationType)
+
+class MarkAsReadResponse(graphene.ObjectType, config_types.ResponseFields):
+    pass

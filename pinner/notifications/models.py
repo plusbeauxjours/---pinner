@@ -18,6 +18,7 @@ class Notification(config_models.TimeStampedModel):
     verb = models.CharField(max_length=10, choices=VERBS)
     payload = models.ForeignKey(
         card_models.Card, on_delete=models.CASCADE, null=True)
+    read = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-created_at']
