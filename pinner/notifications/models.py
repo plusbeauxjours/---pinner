@@ -24,4 +24,4 @@ class Notification(config_models.TimeStampedModel):
         ordering = ['-created_at']
 
     def __str__(self):
-        return 'From: {} {} 👉🏻 To: {}'.format(self.actor.username, self.verb, self.target.username)
+        return '{} From: {} {} 👉🏻 To: {}'.format(self.id, self.actor.username, self.verb, self.target.username)

@@ -11,7 +11,7 @@ class MarkAsRead(graphene.Mutation):
     def mutate(self, info, **kwargs):
 
         notificationId = kwargs.get('notificationId')
-        user = info.contex.user
+        user = info.context.user
         ok = True
         error = None
 

@@ -81,6 +81,7 @@ THIRD_PARTY_APPS = [
     'rest_framework', 
     'imagekit',
     'graphene_django',
+    'corsheaders',
 ]
 LOCAL_APPS = [
     'users.apps.UsersConfig',
