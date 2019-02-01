@@ -147,7 +147,7 @@ def resolve_latest_cards(self, info):
 
     if user.is_authenticated:
 
-        cards = models.Card.objects.filteer().order_by('-created_at')[:10]
+        cards = models.Card.objects.filter().order_by('-created_at')[:10]
         return types.LatestCardsResponse(ok=ok, cards=cards)
 
     else:

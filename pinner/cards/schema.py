@@ -32,7 +32,7 @@ class Query(object):
         args={'term': graphene.String(required=True)}
         )
     latest_cards = graphene.Field(
-        types.LatesCardResponse, 
+        types.LatestCardsResponse, 
         resolver=queries.resolve_latest_cards, 
         required=True
         )

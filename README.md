@@ -24,9 +24,8 @@
 - [x] Log In
 - [x] Create Account
 - [ ] Log Out
-- [ ] See Users to Follow
-- [ ] See Latest Images
+- [x] See New Users to Follow
 - [x] Get Notifications
 - [ ] See New Users to Follow
-- [ ] Mark Notification as Read
+- [x] Mark Notification as Read
 - [x] See Latest Cards

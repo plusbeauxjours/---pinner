@@ -59,5 +59,5 @@ class UploadCardResponse(graphene.ObjectType, config_types.ResponseFields):
 class SearchCardsResponse(graphene.ObjectType, config_types.ResponseFields):
     cards = graphene.List(CardType)
 
-class LatesCardResponse(graphene.ObjectType, config_types.ResponseFields):
+class LatestCardsResponse(graphene.ObjectType, config_types.ResponseFields):
     cards = graphene.List(CardType)
