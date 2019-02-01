@@ -137,3 +137,20 @@ def resolve_search_cards(self, info, **kwargs):
 
         error = "Unauthorized"
         return types.SearchCardsResponse(ok=not ok, error=error)
+
+def resolve_latest_cards(self, info):
+
+    user = info.context.user
+
+    ok = True
+    error = None
+
+    if user.is_authenticated:
+
+        cards = models.Card.objects.filteer().order_by('-created_at')[:10]
+        return types.LatestCardsResponse(ok=ok, cards=cards)
+
+    else:
+
+        error = "Unauthorized"
+        return types.LatesCardResponse(ok=not ok, error=error)

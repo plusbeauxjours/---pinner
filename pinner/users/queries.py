@@ -79,3 +79,20 @@ def resolve_check_username(self, info, **kwargs):
         raise Exception("Username is taken")
     except User.DoesNotExist:
         return types.CheckUsernameResponse(ok=True)
+
+def resolve_latest_users(self, info):
+
+    user = info.context.user
+
+    ok = True
+    error = None
+
+    if user.is_authenticated:
+
+        users = User.objects.filter().order_by('-date_joined')[:10]
+        return types.LatestUserResponse(ok=ok, error=error, users=users)
+
+    else:
+
+        error = "Unauthorized"
+        return types.LatestUserResponse(ok=not ok, error=error)
