@@ -31,6 +31,11 @@ class Query(object):
         required=True, 
         args={'term': graphene.String(required=True)}
         )
+    latest_cards = graphene.Field(
+        types.LatesCardResponse, 
+        resolver=queries.resolve_latest_cards, 
+        required=True
+        )
 
 class Mutation(object):
 

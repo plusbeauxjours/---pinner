@@ -26,5 +26,7 @@
 - [ ] Log Out
 - [ ] See Users to Follow
 - [ ] See Latest Images
-- [ ] Get Notifications
+- [x] Get Notifications
+- [ ] See New Users to Follow
 - [ ] Mark Notification as Read
+- [x] See Latest Cards

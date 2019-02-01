@@ -38,3 +38,6 @@ class CheckUsernameResponse(graphene.ObjectType, config_types.ResponseFields):
 
 class CreateAccountResponse(graphene.ObjectType, config_types.ResponseFields):
     pass
+
+class LatestUserResponse(graphene.ObjectType, config_types.ResponseFields):
+    users = graphene.List(UserType)
