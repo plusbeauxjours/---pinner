@@ -23,10 +23,11 @@ class MarkAsRead(graphene.Mutation):
                 )
                 notification.read=True
                 notification.save()
+                return types.MarkAsReadResponse(ok=ok, error=error)
             except models.Notification.DoesNotExist:
                 error = "Notification Not Found"
                 return types.MarkAsReadResponse(ok=not ok, error=error)
                 
         else:
             error = "Unauthorized"
-            return types.MarkAsResadResponse(ok=not ok, error=error)
+            return types.MarkAsReadResponse(ok=not ok, error=error)
