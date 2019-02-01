@@ -29,7 +29,7 @@ const authMiddleware = new ApolloLink((operation: Operation, forward: any) => {
 });
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:4000/graphql"
+  uri: "http://localhost:8000/graphql"
 });
 
 const wsLink = new WebSocketLink({
@@ -39,7 +39,7 @@ const wsLink = new WebSocketLink({
     },
     reconnect: true
   },
-  uri: "ws://localhost:4000/subscription"
+  uri: "ws://localhost:8000/subscription"
 });
 
 const combinedLinks = split(
