@@ -8,6 +8,8 @@ const Container = styled.div`
 
 interface IProps extends RouteComponentProps<any> {}
 
-const LoginPresenter: React.SFC<IProps> = () => <Container />;
+const LoginPresenter: React.SFC<IProps> = () => (
+  <Container>Please Login</Container>
+);
 
 export default LoginPresenter;
