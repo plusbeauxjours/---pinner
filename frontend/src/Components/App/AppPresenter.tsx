@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import Login from "../../Routes/Login";
-// import Auth from "../../Routes/Auth";
+// import Login from "../../Routes/Login";
+import Auth from "../../Routes/Auth";
 import CardDetail from "../../Routes/CardDetail";
 import EditProfile from "../../Routes/EditProfile";
 import Explore from "../../Routes/Explore";
@@ -25,7 +25,7 @@ const AppPresenter: React.SFC<IProps> = ({ isLoggedIn }) => (
 
 const LoggedOutRoutes: React.SFC = () => (
   <Switch>
-    <Route path={"/"} exact={true} component={Login} />
+    <Route path={"/"} exact={true} component={Auth} />
     <Route path={"/phone-login"} component={PhoneLogin} />
     <Route path={"/verify-phone"} component={VerifyPhone} />
     <Route path={"/social-login"} component={SocialLogin} />
