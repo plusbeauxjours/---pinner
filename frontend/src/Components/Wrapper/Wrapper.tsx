@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -8,11 +8,12 @@ const Container = styled.div`
 `;
 
 interface IProps {
-  children: string;
+  children?: ReactNode;
+  className?: string;
 }
 
-const Wrapper: React.SFC<IProps> = ({ children }) => (
-  <Container>{children}</Container>
+const Wrapper: React.SFC<IProps> = ({ children, className }) => (
+  <Container className={className}>{children}</Container>
 );
 
 export default Wrapper;
