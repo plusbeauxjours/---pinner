@@ -1,10 +1,16 @@
 import React from "react";
 import AuthPresenter from "./AuthPresenter";
 
-class AuthContainer extends React.Component<any> {
-  public render() {
-    return <AuthPresenter />;
-  }
+interface IState {
+  logIn: boolean;
 }
 
-export default AuthContainer;
+export default class extends React.Component<any, IState> {
+  public state = {
+    logIn: false
+  };
+  public render() {
+    const { logIn } = this.state;
+    return <AuthPresenter logIn={logIn} />;
+  }
+}

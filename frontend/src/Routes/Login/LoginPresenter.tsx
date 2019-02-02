@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "../../typed-components";
+import styled from "../../Styles/typed-components";
 import { RouteComponentProps } from "react-router";
 
 const Container = styled.div`

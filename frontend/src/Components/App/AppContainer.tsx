@@ -2,11 +2,11 @@ import React from "react";
 import { IS_LOGGED_IN } from "./AppQueries.local";
 import { graphql } from "react-apollo";
 import AppPresenter from "./AppPresenter";
-import { ThemeProvider } from "src/typed-components";
-import theme from "src/theme";
+import { ThemeProvider } from "../../Styles/typed-components";
+import theme from "../../Styles/theme";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import GlobalStyle from "src/global-styles";
+import GlobalStyle from "../../Styles/global-styles";
 
 const AppContainer = ({ data }) => (
   <React.Fragment>

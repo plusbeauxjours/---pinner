@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "src/typed-components";
+import { createGlobalStyle } from "./typed-components";
 import reset from "styled-reset";
 
 const GlobalStyle = createGlobalStyle`
