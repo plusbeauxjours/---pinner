@@ -1,19 +1,13 @@
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 
-export const USER_PROFILE = gql`
-  query userProfile {
-    GetMyProfile {
-      ok
-      error
-      user {
-        id
-        profilePhoto
-        firstName
-        lastName
-        email
-        fullName
-        isDriving
-      }
-    }
+export const LOG_USER_IN = gql`
+  mutation logUserIn($token: String!) {
+    logUserIn(token: $token) @client
+  }
+`;
+
+export const LOG_USER_OUT = gql`
+  mutation logUserOut {
+    logUserOut @client
   }
 `;
