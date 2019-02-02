@@ -1,8 +1,10 @@
 const theme = {
-  blueColor: "#3498db",
-  greyColor: "#7f8c8d",
-  greenColor: "#1abc9c",
-  yellowColor: "#f1c40f"
+  bgColor: "#FAFAFA",
+  greyColor: "#999",
+  blackColor: "#262626",
+  blueColor: "#3897f0",
+  boxBorder: "1px solid #e6e6e6",
+  darkBlueColor: "#003569"
 };
 
 export default theme;
