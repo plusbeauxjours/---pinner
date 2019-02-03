@@ -38,11 +38,7 @@ const LogInPresenter: React.SFC<IProps> = ({
         type="password"
         onChange={onChangeHandler}
       />
-      <Button
-        text={"Log in"}
-        active={username !== "" && password !== ""}
-        onClick={any}
-      />
+      <Button text={"Log in"} onClick={null} />
     </form>
   </Container>
 );

@@ -12,7 +12,7 @@ class AuthContainer extends React.Component {
   public changeMode = () => {
     this.setState(state => {
       return {
-        logIn: !state.logIn
+        logIn: !this.state.logIn
       };
     });
   };

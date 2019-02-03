@@ -1,25 +1,27 @@
 import React from "react";
-import { IS_LOGGED_IN } from "./AppQueries.local";
-import { graphql } from "react-apollo";
+import { Query } from "react-apollo";
+import { ThemeProvider } from "styled-components";
+import { ToastContainer, toast } from "react-toastify";
 import AppPresenter from "./AppPresenter";
-import { ThemeProvider } from "../../Styles/typed-components";
+import GlobalStyles from "../../Styles/global-styles";
 import theme from "../../Styles/theme";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.min.css";
-import GlobalStyle from "../../Styles/global-styles";
-import Footer from "../Footer.ts";
+import { APP_QUERIES } from "./AppQueries";
+import Footer from "../Footer";
+import "react-toastify/dist/ReactToastify.css";
 
-const AppContainer = ({ data }) => (
-  <React.Fragment>
-    <ThemeProvider theme={theme}>
-      <>
-        <AppPresenter isLoggedIn={data.auth.isLoggedIn} />
-        <GlobalStyle />
-        <Footer />
-      </>
-    </ThemeProvider>
-    <ToastContainer draggable={true} position={"bottom-center"} />
-  </React.Fragment>
+export default () => (
+  <ThemeProvider theme={theme}>
+    <>
+      <GlobalStyles />
+      <ToastContainer position={toast.POSITION.BOTTOM_LEFT} />
+      <Query query={APP_QUERIES}>
+        {({
+          data: {
+            auth: { isLoggedIn }
+          }
+        }) => <AppPresenter isLoggedIn={isLoggedIn} />}
+      </Query>
+      <Footer />
+    </>
+  </ThemeProvider>
 );
-
-export default graphql(IS_LOGGED_IN)(AppContainer);

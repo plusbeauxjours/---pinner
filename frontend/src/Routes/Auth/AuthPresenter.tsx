@@ -41,7 +41,12 @@ const FormBox = styled(Box)`
   padding: 40px;
 `;
 
-const FeedPresenter = ({ logIn, changeMode }) => (
+interface IProps {
+  logIn: boolean;
+  changeMode: any;
+}
+
+const FeedPresenter: React.SFC<IProps> = ({ logIn, changeMode }) => (
   <Container>
     <Phone src={PhoneImage} />
     <Column>
@@ -62,8 +67,5 @@ const FeedPresenter = ({ logIn, changeMode }) => (
     </Column>
   </Container>
 );
-FeedPresenter.propTypes = {
-  logIn: PropTypes.bool.isRequired,
-  changeMode: PropTypes.func.isRequired
-};
+
 export default FeedPresenter;
