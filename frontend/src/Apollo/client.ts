@@ -1,22 +1,74 @@
-import ApolloClient from "apollo-boost";
-import { defaults, resolvers } from "./localState";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { ApolloClient } from "apollo-client";
+import { ApolloLink, concat, Operation, split } from "apollo-link";
+import { onError } from "apollo-link-error";
+import { HttpLink } from "apollo-link-http";
+import { WebSocketLink } from "apollo-link-ws";
+import { getMainDefinition } from "apollo-utilities";
 import { toast } from "react-toastify";
+import localStateLink from "./localState";
 
-const client = new ApolloClient({
-  uri: "http://localhost:8000/graphql",
-  clientState: { defaults, resolvers },
-  onError: ({ graphQLErrors }) => {
-    if (graphQLErrors && graphQLErrors.map) {
-      graphQLErrors.forEach(error => toast.error(error.message));
+const getToken = () => {
+  const token = localStorage.getItem("jwt");
+  if (token) {
+    return token;
+  } else {
+    return "";
+  }
+};
+
+const cache = new InMemoryCache();
+
+const authMiddleware = new ApolloLink((operation: Operation, forward: any) => {
+  operation.setContext({
+    headers: {
+      "X-JWT": getToken()
     }
+  });
+  return forward(operation);
+});
+
+const httpLink = new HttpLink({
+  uri: "http://localhost:8000/graphql"
+});
+
+const wsLink = new WebSocketLink({
+  options: {
+    connectionParams: {
+      "X-JWT": getToken()
+    },
+    reconnect: true
   },
-  request: async operation => {
-    operation.setContext({
-      headers: {
-        Authorization: `JWT ${localStorage.getItem("jwt") || ""}`
-      }
+  uri: "ws://localhost:8000/subscription"
+});
+
+const combinedLinks = split(
+  ({ query }) => {
+    const { kind, operation }: any = getMainDefinition(query);
+    return kind === "OperationDefinition" && operation === "subscription";
+  },
+  wsLink,
+  httpLink
+);
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    graphQLErrors.map(({ message }) => {
+      toast.error(`Unexpected error: ${message}`);
     });
   }
+  if (networkError) {
+    toast.error(`Network error: ${networkError}`);
+  }
+});
+
+const client = new ApolloClient({
+  cache,
+  link: ApolloLink.from([
+    errorLink,
+    localStateLink,
+    concat(authMiddleware, combinedLinks)
+  ])
 });
 
 export default client;

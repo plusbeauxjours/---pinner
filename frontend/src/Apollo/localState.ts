@@ -1,28 +1,44 @@
-export const defaults = {
-  auth: {
-    __typename: "Auth",
-    isLoggedIn: Boolean(localStorage.getItem("jwt")) || false
-  }
-};
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { withClientState } from "apollo-link-state";
 
-export const resolvers = {
-  Mutation: {
-    logUserIn: (_, { token }, { cache }) => {
-      localStorage.setItem("jwt", token);
-      cache.writeData({
-        data: {
-          auth: {
-            __typename: "Auth",
-            isLoggedIn: true
+const cache = new InMemoryCache();
+
+const localStateLink = withClientState({
+  cache,
+  defaults: {
+    auth: {
+      __typename: "Auth",
+      isLoggedIn: Boolean(localStorage.getItem("jwt"))
+    }
+  },
+  resolvers: {
+    Mutation: {
+      logUserIn: (_, { token }, { cache: appCache }) => {
+        localStorage.setItem("jwt", token);
+        appCache.writeData({
+          data: {
+            auth: {
+              __typename: "Auth",
+              isLoggedIn: true
+            }
           }
-        }
-      });
-      return null;
-    },
-    logUserOut: (_, __, { cache }) => {
-      localStorage.removeItem("jwt");
-      window.location.reload();
-      return null;
+        });
+        return null;
+      },
+      logUserOut: (_, __, { cache: appCache }) => {
+        localStorage.removeItem("jwt");
+        appCache.writeData({
+          data: {
+            auth: {
+              __typename: "Auth",
+              isLoggedIn: false
+            }
+          }
+        });
+        return null;
+      }
     }
   }
-};
+});
+
+export default localStateLink;
