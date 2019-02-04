@@ -25,6 +25,7 @@ interface IProps {
   name: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
+  required?: boolean;
 }
 
 const Input: React.SFC<IProps> = ({
@@ -33,7 +34,8 @@ const Input: React.SFC<IProps> = ({
   type = "text",
   name = "",
   onChange,
-  className
+  className,
+  required = true
 }) => (
   <Container
     value={value}
@@ -42,6 +44,7 @@ const Input: React.SFC<IProps> = ({
     onChange={onChange}
     name={name}
     className={className}
+    required={required}
   />
 );
 

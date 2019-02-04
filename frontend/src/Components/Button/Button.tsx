@@ -3,27 +3,46 @@ import styled from "src/Styles/typed-components";
 
 const SButton = styled.button`
   border: 0;
-  padding: 7px 0px;
-  color: white;
-  background-color: ${props => props.theme.blueColor};
+  padding: ${props => (props.size === "md" ? "7px" : "5px")};
+  color: ${props => (props.inverted ? props.theme.blackColor : "white")};
+  background-color: ${props =>
+    props.inverted ? "transparent" : props.theme.blueColor};
+  opacity: ${props => (props.active ? 1 : 0.8)};
   font-weight: 600;
   width: 100%;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: ${props => (props.size === "md" ? "14px" : "12px")};
   cursor: pointer;
-  &:disabled {
-    opacity: 0.8;
-    cursor: not-allowed;
-  }
+  border: ${props =>
+    props.inverted ? `1px solid ${props.theme.greyColor}` : "none"};
 `;
 
 interface IProps {
   text: string;
-  onClick: any;
+  active: boolean;
+  onClick?: any;
+  size: any;
+  inverted?: boolean;
+  className?: string;
 }
 
-const Button: React.SFC<IProps> = ({ text, onClick }) => (
-  <SButton onClick={onClick}>{text}</SButton>
+const Button: React.SFC<IProps> = ({
+  text,
+  active,
+  onClick,
+  className,
+  size = "xs",
+  inverted = false
+}) => (
+  <SButton
+    active={active}
+    onClick={onClick}
+    className={className}
+    size={size}
+    inverted={inverted}
+  >
+    {text}
+  </SButton>
 );
 
 export default Button;

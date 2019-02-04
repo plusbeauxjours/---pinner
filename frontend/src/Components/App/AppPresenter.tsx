@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-// import Login from "../../Routes/Login";
 import Auth from "../../Routes/Auth";
 import CardDetail from "../../Routes/CardDetail";
 import EditProfile from "../../Routes/EditProfile";
