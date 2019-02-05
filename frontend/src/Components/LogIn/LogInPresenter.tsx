@@ -2,6 +2,7 @@ import React from "react";
 import styled from "../../Styles/typed-components";
 import Input from "../Input";
 import Button from "../Button";
+import Helmet from "react-helmet";
 
 const Container = styled.div``;
 
@@ -24,6 +25,9 @@ const LogInPresenter: React.SFC<IProps> = ({
   onChangeHandler
 }) => (
   <Container>
+    <Helmet>
+      <title> Log In . Pinner</title>
+    </Helmet>
     <form>
       <SInput
         placeholder="Username"
