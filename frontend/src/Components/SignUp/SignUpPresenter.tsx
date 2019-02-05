@@ -19,6 +19,7 @@ interface IProps {
   lastName: string;
   username: string;
   password: string;
+  canSubmit: boolean;
   onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -28,7 +29,8 @@ const SignUpPresenter: React.SFC<IProps> = ({
   lastName,
   username,
   password,
-  onChangeHandler
+  onChangeHandler,
+  canSubmit
 }) => (
   <Container>
     <Helmet>
@@ -67,16 +69,7 @@ const SignUpPresenter: React.SFC<IProps> = ({
         type="password"
         onChange={onChangeHandler}
       />
-      <Button
-        text={"Sign up"}
-        active={
-          username !== "" &&
-          password !== "" &&
-          email !== "" &&
-          firstName !== "" &&
-          lastName !== ""
-        }
-      />
+      <Button size="md" text={"Sign up"} active={canSubmit} />
     </form>
   </Container>
 );

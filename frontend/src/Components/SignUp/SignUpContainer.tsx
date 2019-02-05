@@ -28,6 +28,13 @@ class SignUpContainer extends React.Component<any, IState> {
         username={username}
         password={password}
         onChangeHandler={this.onChangeHandler}
+        canSubmit={
+          email !== "" &&
+          firstName !== "" &&
+          lastName !== "" &&
+          username !== "" &&
+          password !== ""
+        }
       />
     );
   }

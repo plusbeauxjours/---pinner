@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
 
-const SButton = styled.button`
+const SButton = styled.button<IProps>`
   border: 0;
   padding: ${props => (props.size === "md" ? "7px" : "5px")};
   color: ${props => (props.inverted ? props.theme.blackColor : "white")};
@@ -18,7 +18,7 @@ const SButton = styled.button`
 `;
 
 interface IProps {
-  text: string;
+  text?: string;
   active: boolean;
   onClick?: any;
   size: any;
