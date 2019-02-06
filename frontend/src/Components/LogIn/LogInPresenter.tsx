@@ -19,20 +19,22 @@ interface IProps {
   username: string;
   password: string;
   onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  logIn: MutationFn;
+  logInFn: MutationFn;
+  loading: boolean;
 }
 
 const LogInPresenter: React.SFC<IProps> = ({
   username,
   password,
   onChangeHandler,
-  logIn
+  logInFn,
+  loading
 }) => (
   <Container>
     <Helmet>
       <title> Log In . Pinner</title>
     </Helmet>
-    <Form onSubmit={logIn}>
+    <Form onSubmit={logInFn}>
       <SInput
         placeholder="Username"
         value={username}
@@ -50,7 +52,7 @@ const LogInPresenter: React.SFC<IProps> = ({
         text={"Log in"}
         active={username !== "" && password !== ""}
         size="md"
-        onClick={logIn}
+        onClick={logInFn}
       />
     </Form>
   </Container>

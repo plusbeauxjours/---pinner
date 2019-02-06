@@ -24,12 +24,13 @@ class LogInContainer extends React.Component<any, IState> {
         mutation={LOGIN_MUTATION}
         variables={{ username, password }}
       >
-        {logIn => (
+        {(logInFn, { loading }) => (
           <LogInPresenter
-            logIn={logIn}
+            logInFn={logInFn}
             username={username}
             password={password}
             onChangeHandler={this.onChangeHandler}
+            loading={loading}
           />
         )}
       </LogInMutation>
