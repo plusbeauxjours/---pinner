@@ -205,6 +205,12 @@ class CreateAccount(graphene.Mutation):
         password = kwargs.get('password')
 
         try:
+            existing_user = User.objects.get(username=username)
+            raise Exception("Username is already taken")
+        except User.DoesNotExist:
+            pass
+
+        try:
             user = User.objects.create_user(username, email, password)
             user.first_name = first_name
             user.last_name = last_name

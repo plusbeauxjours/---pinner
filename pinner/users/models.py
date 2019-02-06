@@ -26,7 +26,7 @@ class User(config_models.TimeStampedModel, AbstractUser):
     website = models.URLField(blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     phone = models.CharField(max_length=140, null=True)
-    gender = models.CharField(max_length=80, choices=GENDER_CHOICES, null=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default="M")
     followers = models.ManyToManyField(
         'self', blank=True, symmetrical=False, related_name='following_users')
     following = models.ManyToManyField(
