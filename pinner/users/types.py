@@ -13,11 +13,11 @@ class UserType(DjangoObjectType):
         model = models.User
         exclude_fields = ('password', )
 
-class UserProfileResponse(graphene.ObjectType, config_types.ResponseFields):
+class UserProfileResponse(graphene.ObjectType):
     user = graphene.Field(UserType)
 
-class FollowUnfollowResponse(graphene.ObjectType, config_types.ResponseFields):
-    pass
+class FollowUnfollowResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
 
 class EditProfileResponse(graphene.ObjectType, config_types.ResponseFields):
     user = graphene.Field(UserType)
@@ -29,15 +29,14 @@ class GenderEnums(graphene.Enum):
 class ChangePasswordResponse(graphene.ObjectType, config_types.ResponseFields):
     pass
 
-class SearchUsersResponse(graphene.ObjectType, config_types.ResponseFields):
-
+class SearchUsersResponse(graphene.ObjectType):
     users = graphene.List(UserType)
 
-class CheckUsernameResponse(graphene.ObjectType, config_types.ResponseFields):
-    pass
+class CheckUsernameResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
 
-class CreateAccountResponse(graphene.ObjectType, config_types.ResponseFields):
+class CreateAccountResponse(graphene.ObjectType):
     token=graphene.String()
 
-class LatestUserResponse(graphene.ObjectType, config_types.ResponseFields):
+class LatestUserResponse(graphene.ObjectType):
     users = graphene.List(UserType)
