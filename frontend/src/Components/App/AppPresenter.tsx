@@ -35,11 +35,11 @@ const LoggedOutRoutes: React.SFC = () => (
 const LoggedInRoutes: React.SFC = () => (
   <Switch>
     <Route path={"/"} exact={true} component={Feed} />
-    <Route path={"/p/:id"} component={CardDetail} />
-    <Route path="/edit-profile" component={EditProfile} />
-    <Route path="/search" component={Search} />
-    <Route path="/explore" component={Explore} />
-    <Route path="/:username" component={Profile} />
+    <Route path={"/p/:id"} exact={true} component={CardDetail} />
+    <Route path="/edit-profile" exact={true} component={EditProfile} />
+    <Route path="/search" exact={true} component={Search} />
+    <Route path="/explore" exact={true} component={Explore} />
+    <Route path="/profile/:username" exact={true} component={Profile} />
     <Redirect from={"*"} to={"/"} />
   </Switch>
 );

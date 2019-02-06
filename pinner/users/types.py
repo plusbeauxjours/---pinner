@@ -37,7 +37,7 @@ class CheckUsernameResponse(graphene.ObjectType, config_types.ResponseFields):
     pass
 
 class CreateAccountResponse(graphene.ObjectType, config_types.ResponseFields):
-    pass
+    token=graphene.String()
 
 class LatestUserResponse(graphene.ObjectType, config_types.ResponseFields):
     users = graphene.List(UserType)
