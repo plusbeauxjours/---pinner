@@ -34,7 +34,7 @@ const LogInPresenter: React.SFC<IProps> = ({
     <Helmet>
       <title> Log In . Pinner</title>
     </Helmet>
-    <Form onSubmit={logInFn}>
+    <Form onSubmit={username !== "" && password !== "" ? logInFn : null}>
       <SInput
         placeholder="Username"
         value={username}
@@ -52,7 +52,6 @@ const LogInPresenter: React.SFC<IProps> = ({
         text={"Log in"}
         active={username !== "" && password !== ""}
         size="md"
-        onClick={logInFn}
       />
     </Form>
   </Container>

@@ -3,6 +3,7 @@ import LogInPresenter from "./LogInPresenter";
 import { Mutation, MutationFn } from "react-apollo";
 import { logIn, logInVariables } from "../../types/api";
 import { LOGIN_MUTATION } from "./LogInQueries";
+import { toast } from "react-toastify";
 
 interface IState {
   username: string;
@@ -23,6 +24,7 @@ class LogInContainer extends React.Component<any, IState> {
       <LogInMutation
         mutation={LOGIN_MUTATION}
         variables={{ username, password }}
+        onError={() => toast.error("Wrong Username or Password")}
       >
         {(logInFn, { loading }) => (
           <LogInPresenter

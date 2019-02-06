@@ -1,17 +1,17 @@
 import React from "react";
-import { MutationFn } from "react-apollo";
 
 interface IProps {
-  onSubmit: MutationFn;
+  onSubmit: any;
   className?: string;
 }
 
-const Form: React.SFC<IProps> = ({ children, onSubmit }) => (
+const Form: React.SFC<IProps> = ({ children, onSubmit, className }) => (
   <form
     onSubmit={e => {
       e.preventDefault();
       onSubmit();
     }}
+    className={className}
   >
     {children}
   </form>
