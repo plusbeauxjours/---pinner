@@ -3,6 +3,8 @@ import styled from "../../Styles/typed-components";
 import Input from "../Input";
 import Button from "../Button";
 import Helmet from "react-helmet";
+import Form from "../Form/Form";
+import { MutationFn } from "react-apollo";
 
 const Container = styled.div``;
 
@@ -17,18 +19,20 @@ interface IProps {
   username: string;
   password: string;
   onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  logIn: MutationFn;
 }
 
 const LogInPresenter: React.SFC<IProps> = ({
   username,
   password,
-  onChangeHandler
+  onChangeHandler,
+  logIn
 }) => (
   <Container>
     <Helmet>
       <title> Log In . Pinner</title>
     </Helmet>
-    <form>
+    <Form onSubmit={logIn}>
       <SInput
         placeholder="Username"
         value={username}
@@ -43,11 +47,12 @@ const LogInPresenter: React.SFC<IProps> = ({
         onChange={onChangeHandler}
       />
       <Button
-        size="md"
         text={"Log in"}
         active={username !== "" && password !== ""}
+        size="md"
+        onClick={logIn}
       />
-    </form>
+    </Form>
   </Container>
 );
 

@@ -1,12 +1,18 @@
 import React from "react";
 import LogInPresenter from "./LogInPresenter";
+import { Mutation, MutationFn } from "react-apollo";
+import { logIn, logInVariables } from "../../types/api";
+import { LOGIN_MUTATION } from "./LogInQueries";
 
 interface IState {
   username: string;
   password: string;
 }
 
+class LogInMutation extends Mutation<logIn, logInVariables> {}
+
 class LogInContainer extends React.Component<any, IState> {
+  public LogInMutation: MutationFn;
   public state = {
     username: "",
     password: ""
@@ -14,11 +20,19 @@ class LogInContainer extends React.Component<any, IState> {
   public render() {
     const { username, password } = this.state;
     return (
-      <LogInPresenter
-        username={username}
-        password={password}
-        onChangeHandler={this.onChangeHandler}
-      />
+      <LogInMutation
+        mutation={LOGIN_MUTATION}
+        variables={{ username, password }}
+      >
+        {logIn => (
+          <LogInPresenter
+            logIn={logIn}
+            username={username}
+            password={password}
+            onChangeHandler={this.onChangeHandler}
+          />
+        )}
+      </LogInMutation>
     );
   }
   public onChangeHandler: React.ChangeEventHandler<

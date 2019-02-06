@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import AppPresenter from "./AppPresenter";
 import GlobalStyles from "../../Styles/global-styles";
 import theme from "../../Styles/theme";
-import { APP_QUERIES } from "./AppQueries";
+import { APP_QUERIES } from "./AppQueries.local";
 import Footer from "../Footer";
 import "react-toastify/dist/ReactToastify.css";
 
