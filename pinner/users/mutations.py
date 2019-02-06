@@ -206,25 +206,21 @@ class CreateAccount(graphene.Mutation):
         password = kwargs.get('password')
         gender = kwargs.get('gender')
 
-        ok = True
-        error = None
-
         try:
             user = User.objects.create_user(username, email, password)
             user.first_name = first_name
             user.last_name = last_name
             user.save()
-        except IntegrityError:
-            error = "Can't Create User Account"
-            return types.CreateAccountResponse(ok=not ok, error=error)
+        except IntegrityError as e:
+            print(e)
+            raise Exception("Can't Create Account")
             
         try:
             profile = models.Profile.objects.create(
                 user=user, gender=gender
             )
             token = get_token(user)
-            return types.CreateAccountResponse(ok=ok, error=error, token=token)
+            return types.CreateAccountResponse(token=token)
         except IntegrityError as e:
             print(e)
-            error = "Can't Create User Profile"
-            return types.CreateAccountResponse(ok=not ok, error=error)
+            raise Exception("Can't Create Account")
