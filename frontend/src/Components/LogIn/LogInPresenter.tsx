@@ -3,7 +3,7 @@ import styled from "../../Styles/typed-components";
 import Input from "../Input";
 import Button from "../Button";
 import Helmet from "react-helmet";
-import Form from "../Form/Form";
+import Form from "../Form";
 import { MutationFn } from "react-apollo";
 
 const Container = styled.div``;

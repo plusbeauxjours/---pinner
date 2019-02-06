@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import Helmet from "react-helmet";
+import { MutationFn } from "react-apollo";
+import Form from "../Form";
 
 const Container = styled.div``;
 
@@ -21,6 +23,8 @@ interface IProps {
   password: string;
   canSubmit: boolean;
   onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  signUpFn: MutationFn;
+  loading: boolean;
 }
 
 const SignUpPresenter: React.SFC<IProps> = ({
@@ -30,13 +34,14 @@ const SignUpPresenter: React.SFC<IProps> = ({
   username,
   password,
   onChangeHandler,
-  canSubmit
+  canSubmit,
+  signUpFn
 }) => (
   <Container>
     <Helmet>
       <title>Sign Up . Pinner</title>
     </Helmet>
-    <form>
+    <Form onSubmit={canSubmit ? signUpFn : null}>
       <SInput
         placeholder="Email"
         value={email}
@@ -70,7 +75,7 @@ const SignUpPresenter: React.SFC<IProps> = ({
         onChange={onChangeHandler}
       />
       <Button size="md" text={"Sign up"} active={canSubmit} />
-    </form>
+    </Form>
   </Container>
 );
 

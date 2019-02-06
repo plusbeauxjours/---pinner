@@ -193,7 +193,6 @@ class CreateAccount(graphene.Mutation):
         username = graphene.String(required=True)
         email = graphene.String(required=True)
         password = graphene.String(required=True)
-        gender = graphene.String(required=True)
 
     Output = types.CreateAccountResponse
 
@@ -204,7 +203,6 @@ class CreateAccount(graphene.Mutation):
         username = kwargs.get('username')
         email = kwargs.get('email')
         password = kwargs.get('password')
-        gender = kwargs.get('gender')
 
         try:
             user = User.objects.create_user(username, email, password)
@@ -217,7 +215,7 @@ class CreateAccount(graphene.Mutation):
             
         try:
             profile = models.Profile.objects.create(
-                user=user, gender=gender
+                user=user
             )
             token = get_token(user)
             return types.CreateAccountResponse(token=token)

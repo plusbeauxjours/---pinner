@@ -1,6 +1,6 @@
 import { gql } from "apollo-boost";
 
-export const SIGN_UP = gql`
+export const SIGNUP_MUTATION = gql`
   mutation signUp(
     $email: String!
     $firstName: String!
