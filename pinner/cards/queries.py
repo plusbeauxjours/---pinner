@@ -2,6 +2,7 @@ from django.db import IntegrityError
 from . import types, models
 from .models import Location
 from graphql_jwt.decorators import login_required
+
 def resolve_location(self, info):
 
     user = info.context.user
@@ -26,7 +27,7 @@ def resolve_location(self, info):
 @login_required
 def resolve_feed(self, info, **kwargs):
 
-    user = info.context.user
+    user = info.context
     page = kwargs.get('page', 0)
 
     following_users = user.following.all()

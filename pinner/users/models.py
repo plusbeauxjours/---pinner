@@ -1,45 +1,36 @@
-from django.contrib.auth.models import AbstractUser
-from django.urls import reverse
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
-from django.utils.translation import ugettext_lazy as _
-from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill
-from django.db.models.signals import post_delete 
-from django.dispatch import receiver
-
+from django.contrib.auth.models import User
 from config import models as config_models
 
-@python_2_unicode_compatible
-class User(config_models.TimeStampedModel, AbstractUser):
 
-    GENDER_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('not-specified', 'Not specified'),
+class Profile(config_models.TimeStampedModel):
+
+    """ Profile Model """
+
+    GENDERS = (
+        ('M', 'Masculine'),
+        ('F', 'Feminine')
     )
 
-    # First Name and Last Name do not cover name patterns
-    # around the globe.
-    avatar = models.URLField(blank=True, null=True)
-    name = models.CharField(_('Name of User'), blank=True, max_length=255)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE)
+    bio = models.TextField(default='', blank=True, null=True)
     website = models.URLField(blank=True, null=True)
-    bio = models.TextField(blank=True, null=True)
-    phone = models.CharField(max_length=140, null=True)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default="M")
-    followers = models.ManyToManyField(
-        'self', blank=True, symmetrical=False, related_name='following_users')
+    gender = models.CharField(max_length=1, choices=GENDERS, default='M')
+    avatar = models.URLField(
+        blank=True, default="https://scontent-bog1-1.cdninstagram.com/vp/08b4774c7bdd7a1615e2b66476150437/5CD15391/t51.2885-19/s150x150/33940709_2091657174447047_1561961433825017856_n.jpg?_nc_ht=scontent-bog1-1.cdninstagram.com")
     following = models.ManyToManyField(
-        'self', blank=True, symmetrical=False, related_name='follwed_by')
-    push_token = models.TextField(default='')
+        'self', blank=True, symmetrical=False, related_name='following_users')
+    followers = models.ManyToManyField(
+        'self', blank=True, symmetrical=False, related_name='followed_by')
 
-    def __str__(self): 
-        return self.username
+    def __str__(self):
+        return self.user.username
 
     @property
     def post_count(self):
-        return self.cards.all().count()
-    
+        return self.user.images.all().count()
+
     @property
     def followers_count(self):
         return self.followers.all().count()
@@ -48,7 +39,6 @@ class User(config_models.TimeStampedModel, AbstractUser):
     def following_count(self):
         return self.following.all().count()
 
-@receiver(post_delete, sender=User)
-def delete_attached_avatar(sender, **kwargs): 
-    instance = kwargs.pop('instance')  
-    instance.avatar.delete(save=False)
+    @property
+    def active_stories(self):
+        return self.user.stories.filter(expired=False)

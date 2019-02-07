@@ -25,13 +25,13 @@ class CommentType(DjangoObjectType):
     class Meta:
         model = models.Comment
 
-class LocationResponse(graphene.ObjectType, config_types.ResponseFields):
+class LocationResponse(graphene.ObjectType):
     locations = graphene.List(LocationType)
 
-class FeedResponse(graphene.ObjectType, config_types.ResponseFields):
+class FeedResponse(graphene.ObjectType):
     cards = graphene.List(CardType)
 
-class LikeCardResponse(graphene.ObjectType, config_types.ResponseFields):
+class LikeCardResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
 class AddCommentResponse(graphene.ObjectType, config_types.ResponseFields):
@@ -41,10 +41,10 @@ class AddCommentResponse(graphene.ObjectType, config_types.ResponseFields):
 class DeleteCommentResponse(graphene.ObjectType, config_types.ResponseFields):
     pass
 
-class CardLikeResponse(graphene.ObjectType, config_types.ResponseFields):
+class CardLikeResponse(graphene.ObjectType):
     likes = graphene.List(LikeType)
 
-class CardDetailResponse(graphene.ObjectType, config_types.ResponseFields):
+class CardDetailResponse(graphene.ObjectType):
     card = graphene.Field(CardType)
 
 class EditCardResponse(graphene.ObjectType, config_types.ResponseFields):
@@ -56,8 +56,8 @@ class DeleteCardResponse(graphene.ObjectType, config_types.ResponseFields):
 class UploadCardResponse(graphene.ObjectType, config_types.ResponseFields):
     card = graphene.Field(CardType)
 
-class SearchCardsResponse(graphene.ObjectType, config_types.ResponseFields):
+class SearchCardsResponse(graphene.ObjectType):
     cards = graphene.List(CardType)
 
-class LatestCardsResponse(graphene.ObjectType, config_types.ResponseFields):
+class LatestCardsResponse(graphene.ObjectType):
     cards = graphene.List(CardType)

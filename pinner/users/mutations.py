@@ -1,6 +1,6 @@
 import graphene
 from django.db import IntegrityError
-from .models import User
+from django.contrib.auth.models import User
 from graphql_jwt.decorators import login_required
 from graphql_jwt.shortcuts import get_token
 from . import models, types
@@ -21,77 +21,38 @@ class FollowUser(graphene.Mutation):
         userId = kwargs.get('userId')
         user = info.context.user
 
-        ok = True
-        error = None
+        try:
+            target = User.objects.get(id=userId)
+        except User.DoesNotExist:
+            raise Exception('User Not Found')
 
-        if user.is_authenticated:
+        if target.profile in user.profile.following.all():
 
-            try:
-                target = User.objects.get(id=userId)
-            except User.DoesNotExist:
-                error = 'User Not Found'
-                return types.FollowUnfollowResponse(ok=not ok, error=error)
-
-            user.following.add(target)
-            target.followers.add(user)
-
-            try:
-                notification_models.Notification.objects.create(
-                    actor=user, target=target, verb="follow"
-                )
-            except IntegrityError as e:
-                print(e)
-                pass
-
-            return types.FollowUnfollowResponse(ok=ok, error=error)
-
-        else:
-            error = 'You need to log in'
-            return types.FollowUnfollowResponse(ok=not ok, error=error)
-
-
-class UnfollowUser(graphene.Mutation):
-
-    """ Follow User """
-
-    class Arguments:
-        userId = graphene.Int(required=True)
-
-    Output = types.FollowUnfollowResponse
-
-    def mutate(self, info, **kwargs):
-
-        userId = kwargs.get('userId')
-        user = info.context.user
-
-        ok = True
-        error = None
-
-        if user.is_authenticated:
-
-            try:
-                target = User.objects.get(id=userId)
-            except User.DoesNotExist:
-                error = 'User Not Found'
-                return types.FollowUnfollowResponse(ok=not ok, error=error)
-
-            user.following.remove(target)
-            target.followers.remove(user)
+            user.profile.following.remove(target.profile)
+            target.profile.followers.remove(user.profile)
 
             try:
                 notification = notification_models.Notification.objects.get(
-                    actor=user, target=target, verb='follow'
-                )
+                    actor=user, target=target, verb="follow")
                 notification.delete()
             except notification_models.Notification.DoesNotExist as e:
                 print(e)
                 pass
 
-            return types.FollowUnfollowResponse(ok=ok, error=error)
-
         else:
-            error = 'You need to log in'
-            return types.FollowUnfollowResponse(ok=not ok, error=error)
+
+            user.profile.following.add(target.profile)
+            target.profile.followers.add(user.profile)
+
+            try:
+                notification_models.Notification.objects.create(
+                    actor=user, target=target, verb="follow")
+            except IntegrityError as e:
+                print(e)
+                pass
+
+        return types.FollowUnfollowResponse(ok=True)
+
 
 class EditProfile(graphene.Mutation):
 
@@ -115,7 +76,7 @@ class EditProfile(graphene.Mutation):
         error = None
 
         profile = user.profile
-        
+
         if user.is_authenticated and profile is not None:
 
             bio = kwargs.get('bio', user.profile.bio)
@@ -141,19 +102,22 @@ class EditProfile(graphene.Mutation):
                 user.profile.save()
                 user.save()
 
-            except IntegrityError:
+            except IntegrityError as e:
+                print(e)
                 error = "Can't save"
                 return types.EditProfileResponse(ok=not ok, error=error)
 
             return types.EditProfileResponse(ok=ok, error=error)
 
         else:
-            error = "You need to log in"
+            error = 'You need to log in'
             return types.EditProfileResponse(ok=not ok, error=error)
+
 
 class ChangePassword(graphene.Mutation):
 
     class Arguments:
+
         oldPassword = graphene.String(required=True)
         newPassword = graphene.String(required=True)
 
@@ -168,7 +132,7 @@ class ChangePassword(graphene.Mutation):
         ok = True
         error = None
 
-        if user.is_authendticated:
+        if user.is_authenticated:
 
             if user.check_password(oldPassword):
 
@@ -183,9 +147,10 @@ class ChangePassword(graphene.Mutation):
                 error = 'Current password is wrong'
                 return types.ChangePasswordResponse(ok=not ok, error=error)
 
-        else: 
+        else:
             error = 'You need to log in'
             return types.ChangePasswordResponse(ok=not ok, error=error)
+
 
 class CreateAccount(graphene.Mutation):
 
@@ -205,7 +170,6 @@ class CreateAccount(graphene.Mutation):
         username = kwargs.get('username')
         email = kwargs.get('email')
         password = kwargs.get('password')
-
         try:
             existing_user = User.objects.get(username=username)
             raise Exception("Username is already taken")
@@ -220,9 +184,11 @@ class CreateAccount(graphene.Mutation):
         except IntegrityError as e:
             print(e)
             raise Exception("Can't Create Account")
-            
+
         try:
-            user = User.objects.get(username=username)
+            profile = models.Profile.objects.create(
+                user=user
+            )
             token = get_token(user)
             return types.CreateAccountResponse(token=token)
         except IntegrityError as e:
