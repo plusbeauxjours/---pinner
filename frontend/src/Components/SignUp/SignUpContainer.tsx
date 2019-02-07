@@ -3,6 +3,7 @@ import SignUpPresenter from "./SignUpPresenter";
 import { Mutation, MutationFn } from "react-apollo";
 import { signUp, signUpVariables } from "../../types/api";
 import { SIGNUP_MUTATION } from "./SignUpQueries";
+import { LOG_USER_IN } from "../../sharedQueries.local";
 
 interface IState {
   email: string;
@@ -12,6 +13,7 @@ interface IState {
   password: string;
 }
 
+class LogUserInMutation extends Mutation {}
 class SignUpMutation extends Mutation<signUp, signUpVariables> {}
 
 class SignUpContainer extends React.Component<any, IState> {
@@ -27,30 +29,37 @@ class SignUpContainer extends React.Component<any, IState> {
   public render() {
     const { email, firstName, lastName, username, password } = this.state;
     return (
-      <SignUpMutation
-        mutation={SIGNUP_MUTATION}
-        variables={{ email, firstName, password, username, lastName }}
-      >
-        {(signUpFn, { loading }) => (
-          <SignUpPresenter
-            email={email}
-            firstName={firstName}
-            lastName={lastName}
-            username={username}
-            password={password}
-            onChangeHandler={this.onChangeHandler}
-            canSubmit={
-              email !== "" &&
-              firstName !== "" &&
-              lastName !== "" &&
-              username !== "" &&
-              password !== ""
+      <LogUserInMutation mutation={LOG_USER_IN}>
+        {logUserIn => (
+          <SignUpMutation
+            mutation={SIGNUP_MUTATION}
+            variables={{ email, firstName, password, username, lastName }}
+            onCompleted={({ createAccount: { token } }) =>
+              logUserIn({ variables: { token } })
             }
-            signUpFn={signUpFn}
-            loading={loading}
-          />
+          >
+            {(signUpFn, { loading }) => (
+              <SignUpPresenter
+                email={email}
+                firstName={firstName}
+                lastName={lastName}
+                username={username}
+                password={password}
+                onChangeHandler={this.onChangeHandler}
+                canSubmit={
+                  email !== "" &&
+                  firstName !== "" &&
+                  lastName !== "" &&
+                  username !== "" &&
+                  password !== ""
+                }
+                signUpFn={signUpFn}
+                loading={loading}
+              />
+            )}
+          </SignUpMutation>
         )}
-      </SignUpMutation>
+      </LogUserInMutation>
     );
   }
 

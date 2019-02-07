@@ -11,6 +11,7 @@ interface IState {
   password: string;
 }
 
+class LogUserInMutation extends Mutation {}
 class LogInMutation extends Mutation<logIn, logInVariables> {}
 
 class LogInContainer extends React.Component<any, IState> {
@@ -22,7 +23,7 @@ class LogInContainer extends React.Component<any, IState> {
   public render() {
     const { username, password } = this.state;
     return (
-      <Mutation mutation={LOG_USER_IN}>
+      <LogUserInMutation mutation={LOG_USER_IN}>
         {logUserIn => (
           <LogInMutation
             mutation={LOGIN_MUTATION}
@@ -43,7 +44,7 @@ class LogInContainer extends React.Component<any, IState> {
             )}
           </LogInMutation>
         )}
-      </Mutation>
+      </LogUserInMutation>
     );
   }
   public onChangeHandler: React.ChangeEventHandler<

@@ -220,11 +220,9 @@ class CreateAccount(graphene.Mutation):
             raise Exception("Can't Create Account")
             
         try:
-            profile = models.Profile.objects.create(
-                user=user
-            )
+            user = User.objects.get(username=username)
             token = get_token(user)
             return types.CreateAccountResponse(token=token)
         except IntegrityError as e:
             print(e)
-            raise Exception("Can't Create Account")
+            raise Exception("Can't Create Account!!!")
