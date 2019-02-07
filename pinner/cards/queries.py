@@ -27,33 +27,21 @@ def resolve_location(self, info):
 @login_required
 def resolve_feed(self, info, **kwargs):
 
-    user = info.context
+    user = info.context.user
     page = kwargs.get('page', 0)
+    offset = 5 * page
 
-    following_users = user.following.all()
+    following_profiles = user.profile.following.all()
 
-    card_list = []
+    cards = models.Card.objects.filter(
+        creator__profile__in=following_profiles)
 
-    for following_user in following_users:
+    my_cards = user.cards.all()
 
-        print(page)
+    combined = cards.union(my_cards).order_by(
+        'created_at')[offset:5 + offset]
 
-        user_cards = following_user.user.cards.all()[2 * page:2]
-
-        for card in user_cards:
-
-            card_list.append(card)
-
-    my_cards = user.cards.all()[2 * page:2]
-
-    for card in my_cards:
-
-        card_list.append(card)
-
-    cards = sorted(
-        card_list, key=lambda card: card.created_at, reverse=True)
-
-    return types.FeedResponse(cards=cards)
+    return types.FeedResponse(cards=combined)
 
 
 @login_required
