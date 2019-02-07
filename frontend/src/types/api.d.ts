@@ -46,6 +46,69 @@ export interface signUpVariables {
   username: string;
 }
 
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: feed
+// ====================================================
+
+export interface feed_feed_cards_location {
+  __typename: "LocationType";
+  city: string;
+}
+
+export interface feed_feed_cards_comments_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface feed_feed_cards_comments {
+  __typename: "CommentType";
+  message: string;
+  creator: feed_feed_cards_comments_creator | null;
+}
+
+export interface feed_feed_cards_creator {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  avatar: string | null;
+}
+
+export interface feed_feed_cards {
+  __typename: "CardType";
+  id: string;
+  file: string | null;
+  caption: string;
+  location: feed_feed_cards_location | null;
+  likeCount: number | null;
+  commentCount: number | null;
+  createdAt: any;
+  comments: (feed_feed_cards_comments | null)[] | null;
+  creator: feed_feed_cards_creator | null;
+}
+
+export interface feed_feed {
+  __typename: "FeedResponse";
+  cards: (feed_feed_cards | null)[] | null;
+}
+
+export interface feed {
+  feed: feed_feed;
+}
+
+export interface feedVariables {
+  page: number;
+}
+
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
