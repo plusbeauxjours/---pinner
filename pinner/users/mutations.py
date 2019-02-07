@@ -1,9 +1,10 @@
 import graphene
-from . import models, types
-from .models import User
 from django.db import IntegrityError
-from notifications import models as notification_models
+from .models import User
+from graphql_jwt.decorators import login_required
 from graphql_jwt.shortcuts import get_token
+from . import models, types
+from notifications import models as notification_models
 
 class FollowUser(graphene.Mutation):
 
@@ -14,6 +15,7 @@ class FollowUser(graphene.Mutation):
 
     Output = types.FollowUnfollowResponse
 
+    @login_required
     def mutate(self, info, **kwargs):
 
         userId = kwargs.get('userId')
@@ -170,7 +172,7 @@ class ChangePassword(graphene.Mutation):
 
             if user.check_password(oldPassword):
 
-                user.setPpassword(newPassword)
+                user.set_password(newPassword)
 
                 user.save()
 
@@ -225,4 +227,4 @@ class CreateAccount(graphene.Mutation):
             return types.CreateAccountResponse(token=token)
         except IntegrityError as e:
             print(e)
-            raise Exception("Can't Create Account!!!")
+            raise Exception("Can't Create Account")

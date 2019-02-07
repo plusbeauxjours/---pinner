@@ -1,7 +1,7 @@
 from django.db import IntegrityError
 from . import types, models
 from .models import Location
-
+from graphql_jwt.decorators import login_required
 def resolve_location(self, info):
 
     user = info.context.user
@@ -22,135 +22,89 @@ def resolve_location(self, info):
     else:
         error = 'You nees to be authenticated'
         return types.LocationResponse(ok=not ok, error=error)
-
+        
+@login_required
 def resolve_feed(self, info, **kwargs):
 
     user = info.context.user
     page = kwargs.get('page', 0)
 
-    if user.is_authenticated:
+    following_users = user.following.all()
 
-        followoing_users = user.following.all()
+    card_list = []
 
-        cards_list = []
+    for following_user in following_users:
 
-        for following_user in followoing_users:
+        print(page)
 
-            print(page)
+        user_cards = following_user.user.cards.all()[2 * page:2]
 
-            user_cards = following_user.cards.all()[2 * page:2]
+        for card in user_cards:
 
-            for card in user_cards:
+            card_list.append(card)
 
-                cards_list.append(card)
+    my_cards = user.cards.all()[2 * page:2]
 
-        my_cards = user.cards.all()[2 * page:2]
+    for card in my_cards:
 
-        for card in my_cards: 
+        card_list.append(card)
 
-            cards_list.append(card)
+    cards = sorted(
+        card_list, key=lambda card: card.created_at, reverse=True)
 
-        cards = sorted(
-            cards_list, key=lambda card: card.created_at, reverse=True
-        )
+    return types.FeedResponse(cards=cards)
 
-        ok = True
 
-        error = ''
-    
-    else: 
-
-        cards = []
-        ok = False
-        error = 'You need to be authenticated'
-
-    return types.FeedResponse(ok=ok, cards=cards, error=error)
-
+@login_required
 def resolve_card_likes(self, info, **kwargs):
 
     cardId = kwargs.get('cardId')
     user = info.context.user
 
-    ok = True
-    error = None
+    try:
+        card = models.Card.objects.get(id=cardId)
+    except models.Card.DoesNotExist:
+        raise Exception('Card not found')
 
-    if user.is_authenticated:
-        
-        try: 
-            card = models.Card.objects.get(id=cardId)
-        except models.Card.DoesNotExist:
-            error = 'Card Not Found'
-            return types.CardLikeResponse(ok=not ok, error=error)
+    likes = card.likes.all()
+    return types.PhotoLikeResponse(likes=likes)
 
-        likes = card.likes.all()
-        return types.CardLikeResponse(ok=ok, error=error, likes=likes)
 
-    else:
-        error = 'You nees to be authenticated'
-        return types.CardLikeResponse(ok=not ok, error=error)
-
+@login_required
 def resolve_card_detail(self, info, **kwargs):
 
     cardId = kwargs.get('cardId')
     user = info.context.user
 
-    ok = True
-    error = None
+    try:
+        card = models.Card.objects.get(id=cardId)
+    except models.Card.DoesNotExist:
+        raise Exception('Card not found')
 
-    if user.is_authenticated:
+    return types.CardDetailResponse(card=card)
 
-        try:
-            card = models.Card.objects.get(id=cardId)
-        except models.Card.DoesNotExist:
-            error = 'Card Not Found'
-            return types.CardDetailResponse(ok=not ok, error=error)
-        
-        return types.CardDetailResponse(ok=ok, error=error, card=card)
 
-    else:
-
-        error = 'You need to be authenticated'
-        return types.CardDetailResponse(ok=not ok, error=error)
-
+@login_required
 def resolve_search_cards(self, info, **kwargs):
 
     user = info.context.user
     term = kwargs.get('term')
 
-    ok = True
-    error = None
+    if len(term) < 4:
 
-    if user.is_authenticated:
+        raise Exception('Search Term is too short')
 
-        if len(term) < 4:
-
-            error = "Search Term is Too Short"
-            return types.SearchCardsResponse(ok=not ok, error=error)
-
-        else:
-
-            cards = models.Card.objects.filter(caption__icontains=term)
-
-            return types.SearchCardsResponse(ok=ok, error=error, cards=cards)
-    
     else:
 
-        error = "Unauthorized"
-        return types.SearchCardsResponse(ok=not ok, error=error)
+        cards = models.Card.objects.filter(caption__icontains=term)
 
+        return types.SearchCardsResponse(cards=cards)
+
+
+@login_required
 def resolve_latest_cards(self, info):
 
     user = info.context.user
 
-    ok = True
-    error = None
-
-    if user.is_authenticated:
-
-        cards = models.Card.objects.filter().order_by('-created_at')[:10]
-        return types.LatestCardsResponse(ok=ok, cards=cards)
-
-    else:
-
-        error = "Unauthorized"
-        return types.LatesCardResponse(ok=not ok, error=error)
+    cards = models.Card.objects.filter().order_by('-created_at')[:10]
+    return types.LatestCardsResponse(cards=cards)
