@@ -8,36 +8,39 @@ class Query(object):
         types.UserProfileResponse, 
         resolver=queries.resolve_profile, 
         required=True, 
-        args={'userId':graphene.Int(required=True)}
+        args={'username': graphene.String(required=True)}
         )
+
     me = graphene.Field(
-        types.UserProfileResponse, 
+        types.UserProfileResponse,
         resolver=queries.resolve_me, 
         required=True
         )
+
     search_users = graphene.Field(
         types.SearchUsersResponse, 
         resolver=queries.resolve_search_users, 
         required=True, 
-        args={
-        'term': graphene.String(required=True)}
+        args={'term': graphene.String(required=True)}
         )
+
     check_username = graphene.Field(
         types.CheckUsernameResponse, 
         resolver=queries.resolve_check_username, 
         required=True, 
         args={'username': graphene.String(required=True)}
         )
+
     latest_users = graphene.Field(
-        types.LatestUserResponse, 
+        types.LatestUsersResponse, 
         resolver=queries.resolve_latest_users, 
         required=True
-    )
+        )
+
 
 class Mutation(object):
 
     follow_user = mutations.FollowUser.Field(required=True)
-    unfollow_user = mutations.UnfollowUser.Field(required=True)
     edit_profile = mutations.EditProfile.Field(required=True)
     change_password = mutations.ChangePassword.Field(required=True)
     log_in = graphql_jwt.ObtainJSONWebToken.Field(required=True)

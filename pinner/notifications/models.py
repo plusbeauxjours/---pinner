@@ -1,5 +1,5 @@
 from django.db import models
-from users import models as user_models
+from django.contrib.auth.models import User
 from cards import models as card_models
 from config import models as config_models
 	
@@ -12,9 +12,9 @@ class Notification(config_models.TimeStampedModel):
         ('follow', 'Follow')
     )
 
-    actor = models.ForeignKey(user_models.User, on_delete=models.CASCADE, related_name='actor')
+    actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='actor')
     target = models.ForeignKey(
-        user_models.User, on_delete=models.CASCADE, related_name='target')
+        User, on_delete=models.CASCADE, related_name='target')
     verb = models.CharField(max_length=10, choices=VERBS)
     payload = models.ForeignKey(
         card_models.Card, on_delete=models.CASCADE, null=True)

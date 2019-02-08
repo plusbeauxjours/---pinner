@@ -20,9 +20,10 @@ export const GET_FEED = gql`
           }
         }
         creator {
-          id
           username
-          avatar
+          profile {
+            avatar
+          }
         }
       }
     }

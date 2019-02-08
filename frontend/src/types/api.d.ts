@@ -73,14 +73,18 @@ export interface feed_feed_cards_comments {
   creator: feed_feed_cards_comments_creator | null;
 }
 
+export interface feed_feed_cards_creator_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
 export interface feed_feed_cards_creator {
   __typename: "UserType";
-  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
-  avatar: string | null;
+  profile: feed_feed_cards_creator_profile | null;
 }
 
 export interface feed_feed_cards {
@@ -93,7 +97,7 @@ export interface feed_feed_cards {
   commentCount: number | null;
   createdAt: any;
   comments: (feed_feed_cards_comments | null)[] | null;
-  creator: feed_feed_cards_creator | null;
+  creator: feed_feed_cards_creator;
 }
 
 export interface feed_feed {
@@ -107,6 +111,31 @@ export interface feed {
 
 export interface feedVariables {
   page: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: me
+// ====================================================
+
+export interface me_me_user {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface me_me {
+  __typename: "UserProfileResponse";
+  user: me_me_user | null;
+}
+
+export interface me {
+  me: me_me;
 }
 
 /* tslint:disable */
