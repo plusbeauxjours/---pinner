@@ -11,6 +11,12 @@ import Search from "../../Routes/Search";
 import PhoneLogin from "../../Routes/PhoneLogin";
 import SocialLogin from "../../Routes/SocialLogin";
 import VerifyPhone from "../../Routes/VerifyPhone";
+import Header from "../Header";
+import styled from "src/Styles/typed-components";
+
+const Wrapper = styled.div`
+  padding-top: 85px;
+`;
 
 interface IProps {
   isLoggedIn: boolean;
@@ -33,15 +39,19 @@ const LoggedOutRoutes: React.SFC = () => (
 );
 
 const LoggedInRoutes: React.SFC = () => (
-  <Switch>
-    <Route path={"/"} exact={true} component={Feed} />
-    <Route path={"/p/:id"} exact={true} component={CardDetail} />
-    <Route path="/edit-profile" exact={true} component={EditProfile} />
-    <Route path="/search" exact={true} component={Search} />
-    <Route path="/explore" exact={true} component={Explore} />
-    <Route path="/profile/:username" exact={true} component={Profile} />
-    <Redirect from={"*"} to={"/"} />
-  </Switch>
+  <Wrapper>
+    <Header>
+      <Switch>
+        <Route path={"/"} exact={true} component={Feed} />
+        <Route path={"/p/:id"} exact={true} component={CardDetail} />
+        <Route path="/edit-profile" exact={true} component={EditProfile} />
+        <Route path="/search" exact={true} component={Search} />
+        <Route path="/explore" exact={true} component={Explore} />
+        <Route path="/profile/:username" exact={true} component={Profile} />
+        <Redirect from={"*"} to={"/"} />
+      </Switch>
+    </Header>
+  </Wrapper>
 );
 
 export default AppPresenter;
