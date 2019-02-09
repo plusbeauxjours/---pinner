@@ -8,7 +8,12 @@ const SWrapper = styled(Wrapper)`
   max-width: 650px;
 `;
 
-const FeedPresenter = ({ data, loading }) => {
+interface IProps {
+  data?: any;
+  loading: boolean;
+}
+
+const FeedPresenter: React.SFC<IProps> = ({ data, loading }) => {
   if (loading) {
     return <Loader />;
   } else if (data) {

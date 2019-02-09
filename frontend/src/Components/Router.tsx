@@ -1,57 +1,49 @@
 import React from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
+import styled from "styled-components";
 import Auth from "../Routes/Auth";
-import CardDetail from "../Routes/CardDetail";
-import EditProfile from "../Routes/EditProfile";
-import Explore from "../Routes/Explore";
 import Feed from "../Routes/Feed";
-// import Home from "../../Routes/Home";
+import EditProfile from "../Routes/EditProfile";
 import Profile from "../Routes/Profile";
+import CardDetail from "../Routes/CardDetail";
 import Search from "../Routes/Search";
-import PhoneLogin from "../Routes/PhoneLogin";
-import SocialLogin from "../Routes/SocialLogin";
-import VerifyPhone from "../Routes/VerifyPhone";
+import Explore from "../Routes/Explore";
 import Header from "./Header";
-import styled from "src/Styles/typed-components";
 
 const Wrapper = styled.div`
   padding-top: 135px;
+  min-height: 80vh;
 `;
 
-interface IProps {
-  isLoggedIn: boolean;
-}
-
-const AppPresenter: React.SFC<IProps> = ({ isLoggedIn }) => (
-  <BrowserRouter>
-    {isLoggedIn ? <LoggedInRoutes /> : <LoggedOutRoutes />}
-  </BrowserRouter>
-);
-
-const LoggedOutRoutes: React.SFC = () => (
-  <Switch>
-    <Route path={"/"} exact={true} component={Auth} />
-    <Route path={"/phone-login"} component={PhoneLogin} />
-    <Route path={"/verify-phone"} component={VerifyPhone} />
-    <Route path={"/social-login"} component={SocialLogin} />
-    <Redirect from={"*"} to={"/"} />
-  </Switch>
-);
-
-const LoggedInRoutes: React.SFC = () => (
+const LoggedInPages = () => (
   <Wrapper>
-    <Header>
-      <Switch>
-        <Route path={"/"} exact={true} component={Feed} />
-        <Route path={"/p/:id"} exact={true} component={CardDetail} />
-        <Route path="/edit-profile" exact={true} component={EditProfile} />
-        <Route path="/search" exact={true} component={Search} />
-        <Route path="/explore" exact={true} component={Explore} />
-        <Route path="/profile/:username" exact={true} component={Profile} />
-        <Redirect from={"*"} to={"/"} />
-      </Switch>
-    </Header>
+    <Header />
+    <Switch>
+      <Route path="/" exact={true} component={Feed} />
+      <Route path="/p/:id" component={CardDetail} />
+      <Route path="/edit-profile" component={EditProfile} />
+      <Route path="/search" component={Search} />
+      <Route path="/explore" component={Explore} />
+      <Route path="/:username" component={Profile} />
+      <Redirect from="*" to="/" />
+    </Switch>
   </Wrapper>
 );
 
-export default AppPresenter;
+const LoggedOutPages = () => (
+  <Switch>
+    <Route path="/" exact={true} component={Auth} />
+    <Redirect from="*" to="/" />
+  </Switch>
+);
+
+const AppRouter = ({ isLoggedIn }) => (
+  <Router>{isLoggedIn ? <LoggedInPages /> : <LoggedOutPages />}</Router>
+);
+
+export default AppRouter;

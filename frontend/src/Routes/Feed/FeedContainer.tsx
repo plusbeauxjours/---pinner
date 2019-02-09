@@ -17,9 +17,7 @@ class FeedContainer extends React.Component {
         variables={{ page }}
         fetchPolicy="network-only"
       >
-        {({ data, loading, error }) => (
-          <FeedPresenter loading={loading} data={data} />
-        )}
+        {({ data, loading }) => <FeedPresenter loading={loading} data={data} />}
       </FeedQuery>
     );
   }
