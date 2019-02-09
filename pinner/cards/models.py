@@ -29,7 +29,7 @@ class Card(config_models.TimeStampedModel):
 
     @property
     def natural_time(self):
-        return naturaltime(self.create_at)
+        return naturaltime(self.created_at)
 
     def __str__(self):
         return 'Location: {} - Caption: {} - Creator: {}'.format(self.location, self.caption, self.creator)
