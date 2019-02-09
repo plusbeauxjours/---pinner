@@ -2,7 +2,7 @@ import React from "react";
 import PhotoPresenter from "./PhotoPresenter";
 
 interface IProps {
-  id: string;
+  id: number;
   inline: boolean;
   creatorAvatar: string;
   creatorUsername: string;
@@ -16,8 +16,12 @@ interface IProps {
 }
 
 class PhotoContainer extends React.Component<IProps> {
+  public state = {
+    newComment: ""
+  };
   public render() {
     const {
+      id,
       inline,
       creatorAvatar,
       creatorUsername,
@@ -29,8 +33,10 @@ class PhotoContainer extends React.Component<IProps> {
       createdAt,
       comments
     } = this.props;
+    const { newComment } = this.state;
     return (
       <PhotoPresenter
+        id={id}
         inline={inline}
         creatorAvatar={creatorAvatar}
         creatorUsername={creatorUsername}
@@ -41,9 +47,19 @@ class PhotoContainer extends React.Component<IProps> {
         caption={caption}
         createdAt={createdAt}
         comments={comments}
+        updateNewComment={this.updateNewComment}
+        newComment={newComment}
       />
     );
   }
+  public updateNewComment = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value }
+    } = event;
+    this.setState({
+      newComment: value
+    } as any);
+  };
 }
 
 export default PhotoContainer;

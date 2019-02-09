@@ -2,7 +2,7 @@ import React from "react";
 import Loader from "../../Components/Loader";
 import Photo from "../../Components/Photo";
 import Wrapper from "../../Components/Wrapper";
-import styled from "src/Styles/typed-components";
+import styled from "../../Styles/typed-components";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
