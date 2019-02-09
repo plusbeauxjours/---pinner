@@ -1,10 +1,6 @@
 import React from "react";
-import styled from "../../Styles/typed-components";
+import Loader from "../../Components/Loader";
 
-const Container = styled.div``;
-
-const FeedPresenter: React.SFC<any> = () => (
-  <Container> Feed Login Sex</Container>
-);
+const FeedPresenter: React.SFC<any> = () => <Loader />;
 
 export default FeedPresenter;

@@ -14,7 +14,9 @@ class FeedContainer extends React.Component<any> {
     const { page } = this.state;
     return (
       <FeedQuery query={GET_FEED} variables={{ page }}>
-        {({ data, loading, error }) => <FeedPresenter />}
+        {({ data, loading, error }) => (
+          <FeedPresenter loading={loading} data={data} error={error} />
+        )}
       </FeedQuery>
     );
   }
