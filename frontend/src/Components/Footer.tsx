@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
-import Wrapper from "../Wrapper";
+import Wrapper from "./Wrapper";
 
 const footerLinks = [
   "About Us",

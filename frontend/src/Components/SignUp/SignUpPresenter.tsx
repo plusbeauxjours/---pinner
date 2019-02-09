@@ -1,10 +1,10 @@
 import React from "react";
-import styled from "styled-components";
-import Input from "../Input/Input";
-import Button from "../Button/Button";
+import Input from "../Input";
+import Button from "../Button";
 import Helmet from "react-helmet";
 import { MutationFn } from "react-apollo";
 import Form from "../Form";
+import styled from "src/Styles/typed-components";
 
 const Container = styled.div``;
 

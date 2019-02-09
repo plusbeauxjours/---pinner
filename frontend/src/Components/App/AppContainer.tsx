@@ -2,7 +2,7 @@ import React from "react";
 import { Query } from "react-apollo";
 import { ThemeProvider } from "styled-components";
 import { ToastContainer, toast } from "react-toastify";
-import AppPresenter from "./AppPresenter";
+import Router from "../Router";
 import GlobalStyles from "../../Styles/global-styles";
 import theme from "../../Styles/theme";
 import { APP_QUERIES } from "./AppQueries.local";
@@ -19,7 +19,7 @@ export default () => (
           data: {
             auth: { isLoggedIn }
           }
-        }) => <AppPresenter isLoggedIn={isLoggedIn} />}
+        }) => <Router isLoggedIn={isLoggedIn} />}
       </Query>
       <Footer />
     </>

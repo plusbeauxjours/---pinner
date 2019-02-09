@@ -1,10 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Wrapper from "../Wrapper";
+import Wrapper from "./Wrapper";
 import { Query } from "react-apollo";
-import { ME } from "../../sharedQueries";
-import { me } from "../../types/api";
+import { ME } from "../sharedQueries";
+import { me } from "../types/api";
+import styled from "src/Styles/typed-components";
 
 class MeQuery extends Query<me> {}
 

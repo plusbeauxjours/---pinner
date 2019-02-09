@@ -1,20 +1,20 @@
 import React from "react";
 import Loader from "../../Components/Loader";
-import Wrapper from "../../Components/Wrapper";
 import Photo from "../../Components/Photo";
+import Wrapper from "../../Components/Wrapper";
+import styled from "src/Styles/typed-components";
 
-interface IProps {
-  data?: any;
-  loading: boolean;
-}
+const SWrapper = styled(Wrapper)`
+  max-width: 650px;
+`;
 
-const FeedPresenter: React.SFC<IProps> = ({ data, loading }) => {
+const FeedPresenter = ({ data, loading }) => {
   if (loading) {
     return <Loader />;
   } else if (data) {
     const { feed: { cards = [] } = {} } = data;
     return (
-      <Wrapper>
+      <SWrapper>
         {cards &&
           cards.map(card => (
             <Photo
@@ -32,8 +32,10 @@ const FeedPresenter: React.SFC<IProps> = ({ data, loading }) => {
               createdAt={card.createdAt}
             />
           ))}
-      </Wrapper>
+      </SWrapper>
     );
+  } else {
+    return null;
   }
 };
 

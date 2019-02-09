@@ -1,21 +1,21 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import Auth from "../../Routes/Auth";
-import CardDetail from "../../Routes/CardDetail";
-import EditProfile from "../../Routes/EditProfile";
-import Explore from "../../Routes/Explore";
-import Feed from "../../Routes/Feed";
+import Auth from "../Routes/Auth";
+import CardDetail from "../Routes/CardDetail";
+import EditProfile from "../Routes/EditProfile";
+import Explore from "../Routes/Explore";
+import Feed from "../Routes/Feed";
 // import Home from "../../Routes/Home";
-import Profile from "../../Routes/Profile";
-import Search from "../../Routes/Search";
-import PhoneLogin from "../../Routes/PhoneLogin";
-import SocialLogin from "../../Routes/SocialLogin";
-import VerifyPhone from "../../Routes/VerifyPhone";
-import Header from "../Header";
+import Profile from "../Routes/Profile";
+import Search from "../Routes/Search";
+import PhoneLogin from "../Routes/PhoneLogin";
+import SocialLogin from "../Routes/SocialLogin";
+import VerifyPhone from "../Routes/VerifyPhone";
+import Header from "./Header";
 import styled from "src/Styles/typed-components";
 
 const Wrapper = styled.div`
-  padding-top: 85px;
+  padding-top: 135px;
 `;
 
 interface IProps {
