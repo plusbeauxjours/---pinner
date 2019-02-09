@@ -2,6 +2,7 @@ import React from "react";
 import PhotoPresenter from "./PhotoPresenter";
 
 interface IProps {
+  id: string;
   inline: boolean;
   creatorAvatar: string;
   creatorUsername: string;
@@ -11,6 +12,7 @@ interface IProps {
   commentCount: number;
   caption: string;
   createdAt: string;
+  comments: any;
 }
 
 class PhotoContainer extends React.Component<IProps> {

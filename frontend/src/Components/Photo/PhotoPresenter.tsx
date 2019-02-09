@@ -4,7 +4,7 @@ import styled from "../../Styles/typed-components";
 const Container = styled.div``;
 
 interface IProps {
-  inline: string;
+  inline: boolean;
 }
 
 const PhotoPresenter: React.SFC<IProps> = ({ inline }) => <Container />;
