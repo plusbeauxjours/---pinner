@@ -1,14 +1,11 @@
 import React from "react";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Wrapper from "./Wrapper";
-import { Query } from "react-apollo";
-import { ME } from "../sharedQueries";
-import { me } from "../types/api";
-import styled from "src/Styles/typed-components";
+import Wrapper from "../Wrapper";
+import { Profile, Compass, HeartEmpty } from "../../Icons";
+import Me from "../Me";
 
-class MeQuery extends Query<me> {}
-
-const SHeader = styled.header`
+const Header = styled.header`
   background-color: white;
   height: 75px;
   border: ${props => props.theme.boxBorder};
@@ -16,6 +13,7 @@ const SHeader = styled.header`
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 1;
 `;
 
 const SWrapper = styled(Wrapper)`
@@ -60,9 +58,13 @@ const Icon = styled.span`
     margin-right: 0;
   }
 `;
-
-const Header: React.SFC = () => (
-  <SHeader>
+interface IProps {
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  search: string;
+}
+const HeaderPresenter: React.SFC<IProps> = ({ onSubmit, onChange, search }) => (
+  <Header>
     <SWrapper>
       <Column>
         <Link to="/">
@@ -77,52 +79,33 @@ const Header: React.SFC = () => (
         </Link>
       </Column>
       <Column>
-        <Input placeholder="Search" />
+        <form onSubmit={onSubmit}>
+          <Input placeholder="Search" value={search} onChange={onChange} />
+        </form>
       </Column>
       <Column>
         <Icon>
           <Link to="/explore">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 5.999l-5.621 2.986c-.899-.104-1.806.191-2.474.859-.662.663-.95 1.561-.862 2.428l-3.043 5.728 5.724-3.042c.884.089 1.772-.205 2.432-.865.634-.634.969-1.524.859-2.473l2.985-5.621zm-5.97 7.22c-.689 0-1.25-.559-1.25-1.249-.001-.691.559-1.251 1.25-1.25.69 0 1.25.56 1.25 1.25-.001.689-.56 1.249-1.25 1.249z" />
-            </svg>
+            <Compass />
           </Link>
         </Icon>
         <Icon>
           <Link to="#">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 9.229c.234-1.12 1.547-6.229 5.382-6.229 2.22 0 4.618 1.551 4.618 5.003 0 3.907-3.627 8.47-10 12.629-6.373-4.159-10-8.722-10-12.629 0-3.484 2.369-5.005 4.577-5.005 3.923 0 5.145 5.126 5.423 6.231zm-12-1.226c0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-7.962-9.648-9.028-12-3.737-2.338-5.262-12-4.27-12 3.737z" />
-            </svg>
+            <HeartEmpty />
           </Link>
         </Icon>
         <Icon>
-          <MeQuery query={ME}>
-            {({ data, loading }) => (
-              <Link to={loading ? "still loading" : "loading done"}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M20.822 18.096c-3.439-.794-6.641-1.49-5.09-4.418 4.719-8.912 1.251-13.678-3.732-13.678-5.082 0-8.465 4.949-3.732 13.678 1.598 2.945-1.725 3.641-5.09 4.418-2.979.688-3.178 2.143-3.178 4.663l.005 1.241h1.995c0-3.134-.125-3.55 1.838-4.003 2.851-.657 5.543-1.278 6.525-3.456.359-.795.592-2.103-.338-3.815-2.058-3.799-2.578-7.089-1.423-9.026 1.354-2.275 5.426-2.264 6.767-.034 1.15 1.911.639 5.219-1.403 9.076-.91 1.719-.671 3.023-.31 3.814.99 2.167 3.707 2.794 6.584 3.458 1.879.436 1.76.882 1.76 3.986h1.995l.005-1.241c0-2.52-.199-3.975-3.178-4.663z" />
-                </svg>
+          <Me>
+            {me => (
+              <Link to={`/${me ? me.username : ""}`}>
+                <Profile />
               </Link>
             )}
-          </MeQuery>
+          </Me>
         </Icon>
       </Column>
     </SWrapper>
-  </SHeader>
+  </Header>
 );
 
-export default Header;
+export default HeaderPresenter;

@@ -26,6 +26,31 @@ export interface logInVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: me
+// ====================================================
+
+export interface me_me_user {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface me_me {
+  __typename: "UserProfileResponse";
+  user: me_me_user | null;
+}
+
+export interface me {
+  me: me_me;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: signUp
 // ====================================================
 
@@ -69,6 +94,7 @@ export interface feed_feed_cards_comments_creator {
 
 export interface feed_feed_cards_comments {
   __typename: "CommentType";
+  id: string;
   message: string;
   creator: feed_feed_cards_comments_creator | null;
 }
@@ -95,7 +121,7 @@ export interface feed_feed_cards {
   location: feed_feed_cards_location | null;
   likeCount: number | null;
   commentCount: number | null;
-  createdAt: any;
+  createdAt: string | null;
   comments: (feed_feed_cards_comments | null)[] | null;
   creator: feed_feed_cards_creator;
 }
@@ -111,31 +137,6 @@ export interface feed {
 
 export interface feedVariables {
   page: number;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: me
-// ====================================================
-
-export interface me_me_user {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-}
-
-export interface me_me {
-  __typename: "UserProfileResponse";
-  user: me_me_user | null;
-}
-
-export interface me {
-  me: me_me;
 }
 
 /* tslint:disable */
