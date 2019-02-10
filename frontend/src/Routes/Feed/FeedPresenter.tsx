@@ -24,7 +24,6 @@ const FeedPresenter: React.SFC<IProps> = ({ data, loading }) => {
           cards.map(card => (
             <Photo
               key={card.id}
-              id={card.id}
               inline={true}
               creatorAvatar={card.creator.profile.avatar}
               creatorUsername={card.creator.username}
@@ -35,6 +34,7 @@ const FeedPresenter: React.SFC<IProps> = ({ data, loading }) => {
               caption={card.caption}
               comments={card.comments}
               createdAt={card.createdAt}
+              isLiked={card.isLiked}
             />
           ))}
       </SWrapper>

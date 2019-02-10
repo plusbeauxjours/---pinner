@@ -65,7 +65,6 @@ const STextArea = styled(Textarea)`
 `;
 
 interface IProps {
-  id: number;
   inline: boolean;
   creatorAvatar: string;
   creatorUsername: string;
@@ -83,7 +82,6 @@ interface IProps {
 }
 
 const PhotoPresenter: React.SFC<IProps> = ({
-  id,
   inline = false,
   creatorAvatar,
   creatorUsername,

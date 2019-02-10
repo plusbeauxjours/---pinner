@@ -2,7 +2,6 @@ import React from "react";
 import PhotoPresenter from "./PhotoPresenter";
 
 interface IProps {
-  id: number;
   inline: boolean;
   creatorAvatar: string;
   creatorUsername: string;
@@ -13,6 +12,7 @@ interface IProps {
   caption: string;
   createdAt: string;
   comments: any;
+  isLiked: boolean;
 }
 
 interface IState {
@@ -32,7 +32,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
   }
   public render() {
     const {
-      id,
       inline,
       creatorAvatar,
       creatorUsername,
@@ -46,7 +45,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
     const { newComment, isLiked, likeCount } = this.state;
     return (
       <PhotoPresenter
-        id={id}
         inline={inline}
         creatorAvatar={creatorAvatar}
         creatorUsername={creatorUsername}
@@ -73,9 +71,25 @@ class PhotoContainer extends React.Component<IProps, IState> {
     } as any);
   };
   public onLikeClick = () => {
+    const { likeCount, isLiked } = this.props;
     this.setState(state => {
+      let likeNumber;
+      if (!isLiked) {
+        if (likeCount === state.likeCount) {
+          likeNumber = likeCount + 1;
+        } else {
+          likeNumber = likeCount;
+        }
+      } else {
+        if (likeCount === state.likeCount) {
+          likeNumber = likeCount - 1;
+        } else {
+          likeNumber = likeCount;
+        }
+      }
       return {
-        isLiked: !state.isLiked
+        isLiked: !state.isLiked,
+        likeCount: likeNumber
       };
     });
   };
