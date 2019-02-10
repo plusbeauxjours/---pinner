@@ -12,7 +12,7 @@ class CardType(DjangoObjectType):
     def resolve_is_liked(self, info):
         user = info.context.user
         try:
-            like = models.Like.objects.get(image=self, creator=user)
+            like = models.Like.objects.get(card=self, creator=user)
             return True
         except models.Like.DoesNotExist:
             return False

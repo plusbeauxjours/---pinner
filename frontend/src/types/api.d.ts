@@ -91,6 +91,7 @@ export interface feed_feed_cards {
   location: string | null;
   likeCount: number | null;
   commentCount: number | null;
+  isLiked: boolean | null;
   createdAt: string | null;
   comments: (feed_feed_cards_comments | null)[] | null;
   creator: feed_feed_cards_creator;

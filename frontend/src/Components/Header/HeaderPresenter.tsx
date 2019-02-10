@@ -58,6 +58,7 @@ const Icon = styled.span`
     margin-right: 0;
   }
 `;
+
 interface IProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;

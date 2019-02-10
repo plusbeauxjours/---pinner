@@ -15,10 +15,21 @@ interface IProps {
   comments: any;
 }
 
-class PhotoContainer extends React.Component<IProps> {
-  public state = {
-    newComment: ""
-  };
+interface IState {
+  newComment: string;
+  isLiked: boolean;
+  likeCount: number;
+}
+
+class PhotoContainer extends React.Component<IProps, IState> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      newComment: "",
+      isLiked: props.isLiked,
+      likeCount: props.likeCount
+    };
+  }
   public render() {
     const {
       id,
@@ -27,13 +38,12 @@ class PhotoContainer extends React.Component<IProps> {
       creatorUsername,
       location,
       photoUrl,
-      likeCount,
       commentCount,
       caption,
       createdAt,
       comments
     } = this.props;
-    const { newComment } = this.state;
+    const { newComment, isLiked, likeCount } = this.state;
     return (
       <PhotoPresenter
         id={id}
@@ -49,6 +59,8 @@ class PhotoContainer extends React.Component<IProps> {
         comments={comments}
         updateNewComment={this.updateNewComment}
         newComment={newComment}
+        isLiked={isLiked}
+        onLikeClick={this.onLikeClick}
       />
     );
   }
@@ -59,6 +71,13 @@ class PhotoContainer extends React.Component<IProps> {
     this.setState({
       newComment: value
     } as any);
+  };
+  public onLikeClick = () => {
+    this.setState(state => {
+      return {
+        isLiked: !state.isLiked
+      };
+    });
   };
 }
 

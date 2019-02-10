@@ -3,6 +3,6 @@ import styled from "../../Styles/typed-components";
 
 const Container = styled.div``;
 
-const SearchPresenter: React.SFC<any> = () => <Container> sex</Container>;
+const SearchPresenter: React.SFC<any> = () => <Container>Search</Container>;
 
 export default SearchPresenter;
