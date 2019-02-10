@@ -3,11 +3,6 @@ from graphene_django.types import DjangoObjectType
 from . import models
 from config import types as config_types
 
-class LocationType(DjangoObjectType):
-
-    class Meta:
-        model = models.Location
-
 class CardType(DjangoObjectType):
     like_count = graphene.Int(source='like_count')
     comment_count = graphene.Int(source='comment_count')
@@ -34,9 +29,6 @@ class CommentType(DjangoObjectType):
     
     class Meta:
         model = models.Comment
-
-class LocationResponse(graphene.ObjectType):
-    locations = graphene.List(LocationType)
 
 class FeedResponse(graphene.ObjectType):
     cards = graphene.List(CardType)

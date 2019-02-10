@@ -7,9 +7,7 @@ export const GET_FEED = gql`
         id
         file
         caption
-        location {
-          city
-        }
+        location
         likeCount
         commentCount
         createdAt

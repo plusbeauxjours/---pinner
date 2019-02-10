@@ -1,29 +1,7 @@
 from django.db import IntegrityError
 from . import types, models
-from .models import Location
 from graphql_jwt.decorators import login_required
 
-def resolve_location(self, info):
-
-    user = info.context.user
-
-    ok = True
-    error = None
-
-    if user.is_authenticated:
-            
-        try: 
-            locations = Location.objects.all()
-        except Location.DoesNotExist:
-            error = 'Location Not Found'
-            return types.LocationResponse(ok=not ok, error=error)
-
-        return types.LocationResponse(ok=ok, error=error, locations=locations)
-
-    else:
-        error = 'You nees to be authenticated'
-        return types.LocationResponse(ok=not ok, error=error)
-        
 @login_required
 def resolve_feed(self, info, **kwargs):
 

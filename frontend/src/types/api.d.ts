@@ -26,31 +26,6 @@ export interface logInVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: me
-// ====================================================
-
-export interface me_me_user {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-}
-
-export interface me_me {
-  __typename: "UserProfileResponse";
-  user: me_me_user | null;
-}
-
-export interface me {
-  me: me_me;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL mutation operation: signUp
 // ====================================================
 
@@ -78,11 +53,6 @@ export interface signUpVariables {
 // ====================================================
 // GraphQL query operation: feed
 // ====================================================
-
-export interface feed_feed_cards_location {
-  __typename: "LocationType";
-  city: string;
-}
 
 export interface feed_feed_cards_comments_creator {
   __typename: "UserType";
@@ -118,7 +88,7 @@ export interface feed_feed_cards {
   id: string;
   file: string | null;
   caption: string;
-  location: feed_feed_cards_location | null;
+  location: string | null;
   likeCount: number | null;
   commentCount: number | null;
   createdAt: string | null;
@@ -137,6 +107,31 @@ export interface feed {
 
 export interface feedVariables {
   page: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: me
+// ====================================================
+
+export interface me_me_user {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface me_me {
+  __typename: "UserProfileResponse";
+  user: me_me_user | null;
+}
+
+export interface me {
+  me: me_me;
 }
 
 /* tslint:disable */
