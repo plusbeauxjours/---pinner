@@ -80,7 +80,7 @@ interface IProps {
   isLiked: boolean;
   onLikeClick: () => void;
   selfComments: any;
-  onKeyUp: () => void;
+  onKeyUp: (event: any) => void;
 }
 
 const PhotoPresenter: React.SFC<IProps> = ({

@@ -1,6 +1,7 @@
 import graphene
 from django.db import IntegrityError
 from . import models, types
+from graphql_jwt.decorators import login_required
 from notifications import models as notification_models
 
 class LikeCard(graphene.Mutation):
@@ -12,41 +13,37 @@ class LikeCard(graphene.Mutation):
 
     Output = types.LikeCardResponse
 
+    @login_required
     def mutate(self, info, **kwargs):
         cardId = kwargs.get('cardId')
         user = info.context.user
 
-        if user.is_authenticated: 
-            try:
-                card = models.Card.objects.get(id=cardId)
-            except models.Card.DoesNotExist:
-                raise Exception("Card Not Found")
+        try:
+            card = models.Card.objects.get(id=cardId)
+        except models.Card.DoesNotExist:
+            raise Exception("Card Not Found")
 
-            try:
-                like = models.Like.objects.get(
-                    creator=user, card=card)
-                like.delete()
-                notification = notification_models.Notification.objects.get(
-                    actor=user, target=card.creator, verb='like', payload=card
-                )
-                notification.delete()
-                return types.LikeCardResponse(ok=True)
-            except models.Like.DoesNotExist:
-                pass
-
-            try:
-                like = models.Like.objects.create(
-                    creator=user, card=card)
-                notification_models.Notification.objects.create(
-                actor=user, target=card.creator, verb="like", payload=card
+        try:
+            like = models.Like.objects.get(
+                creator=user, card=card)
+            like.delete()
+            notification = notification_models.Notification.objects.get(
+                actor=user, target=card.creator, verb='like', payload=card
             )
-                return types.LikeCardResponse(ok=True)
-            except IntegrityError as e:
-                raise Exception("Can't Like Card")
-                
-        else: 
-            error = 'You need to log in'
-            return types.LikeCardResponse(ok=False)
+            notification.delete()
+            return types.LikeCardResponse(ok=True)
+        except models.Like.DoesNotExist:
+            pass
+
+        try:
+            like = models.Like.objects.create(
+                creator=user, card=card)
+            notification_models.Notification.objects.create(
+            actor=user, target=card.creator, verb="like", payload=card
+        )
+            return types.LikeCardResponse(ok=True)
+        except IntegrityError as e:
+            raise Exception("Can't Like Card")
 
 class AddComment(graphene.Mutation):
 
