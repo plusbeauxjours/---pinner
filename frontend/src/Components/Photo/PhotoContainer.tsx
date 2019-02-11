@@ -1,6 +1,5 @@
 import React from "react";
 import PhotoPresenter from "./PhotoPresenter";
-import Me from "../Me";
 import { Mutation } from "react-apollo";
 import { TOGGLE_LIKE_CARD, ADD_COMMENT } from "./PhotoQueries";
 import {
@@ -75,31 +74,24 @@ class PhotoContainer extends React.Component<IProps, IState> {
               {toggleLike => {
                 this.toggleLike = toggleLike;
                 return (
-                  <Me>
-                    {me => {
-                      this.currentUser = me.user.username;
-                      return (
-                        <PhotoPresenter
-                          inline={inline}
-                          creatorAvatar={creatorAvatar}
-                          creatorUsername={creatorUsername}
-                          location={location}
-                          photoUrl={photoUrl}
-                          likeCount={likeCount}
-                          commentCount={commentCount}
-                          caption={caption}
-                          createdAt={createdAt}
-                          comments={comments}
-                          updateNewComment={this.updateNewComment}
-                          newComment={newComment}
-                          isLiked={isLiked}
-                          onLikeClick={this.onLikeClick}
-                          selfComments={selfComments}
-                          onKeyUp={this.onKeyUp}
-                        />
-                      );
-                    }}
-                  </Me>
+                  <PhotoPresenter
+                    inline={inline}
+                    creatorAvatar={creatorAvatar}
+                    creatorUsername={creatorUsername}
+                    location={location}
+                    photoUrl={photoUrl}
+                    likeCount={likeCount}
+                    commentCount={commentCount}
+                    caption={caption}
+                    createdAt={createdAt}
+                    comments={comments}
+                    updateNewComment={this.updateNewComment}
+                    newComment={newComment}
+                    isLiked={isLiked}
+                    onLikeClick={this.onLikeClick}
+                    selfComments={selfComments}
+                    onKeyUp={this.onKeyUp}
+                  />
                 );
               }}
             </ToggleLikeMutation>
