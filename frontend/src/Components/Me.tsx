@@ -5,7 +5,7 @@ import { ME } from "../sharedQueries";
 
 class MeQuery extends Query<me> {}
 
-const Me = ({ children }) => (
+const Me: React.SFC<any> = ({ children }) => (
   <MeQuery query={ME}>
     {({ data, loading }) => {
       if (!loading && data.me) {

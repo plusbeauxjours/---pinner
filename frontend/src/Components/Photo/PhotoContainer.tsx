@@ -1,5 +1,6 @@
 import React from "react";
 import PhotoPresenter from "./PhotoPresenter";
+import Me from "../Me";
 
 interface IProps {
   inline: boolean;
@@ -19,6 +20,7 @@ interface IState {
   newComment: string;
   isLiked: boolean;
   likeCount: number;
+  selfComments: any;
 }
 
 class PhotoContainer extends React.Component<IProps, IState> {
@@ -27,7 +29,8 @@ class PhotoContainer extends React.Component<IProps, IState> {
     this.state = {
       newComment: "",
       isLiked: props.isLiked,
-      likeCount: props.likeCount
+      likeCount: props.likeCount,
+      selfComments: []
     };
   }
   public render() {
@@ -44,22 +47,29 @@ class PhotoContainer extends React.Component<IProps, IState> {
     } = this.props;
     const { newComment, isLiked, likeCount } = this.state;
     return (
-      <PhotoPresenter
-        inline={inline}
-        creatorAvatar={creatorAvatar}
-        creatorUsername={creatorUsername}
-        location={location}
-        photoUrl={photoUrl}
-        likeCount={likeCount}
-        commentCount={commentCount}
-        caption={caption}
-        createdAt={createdAt}
-        comments={comments}
-        updateNewComment={this.updateNewComment}
-        newComment={newComment}
-        isLiked={isLiked}
-        onLikeClick={this.onLikeClick}
-      />
+      <Me>
+        {me => {
+          this.currentUser = me.user.username;
+          return (
+            <PhotoPresenter
+              inline={inline}
+              creatorAvatar={creatorAvatar}
+              creatorUsername={creatorUsername}
+              location={location}
+              photoUrl={photoUrl}
+              likeCount={likeCount}
+              commentCount={commentCount}
+              caption={caption}
+              createdAt={createdAt}
+              comments={comments}
+              updateNewComment={this.updateNewComment}
+              newComment={newComment}
+              isLiked={isLiked}
+              onLikeClick={this.onLikeClick}
+            />
+          );
+        }}
+      </Me>
     );
   }
   public updateNewComment = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,6 +102,9 @@ class PhotoContainer extends React.Component<IProps, IState> {
         likeCount: likeNumber
       };
     });
+  };
+  public onCommentSubmit = () => {
+    const { newComment } = this.state;
   };
 }
 
