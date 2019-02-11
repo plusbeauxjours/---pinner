@@ -1,6 +1,11 @@
 import React from "react";
 import PhotoPresenter from "./PhotoPresenter";
 import Me from "../Me";
+import { Mutation } from "react-apollo";
+import { TOGGLE_LIKE_CARD } from "./PhotoQueries";
+import { likeCard, likeCardVariables } from "src/types/api";
+
+class ToggleLikeMutation extends Mutation<likeCard, likeCardVariables> {}
 
 interface IProps {
   inline: boolean;
@@ -14,6 +19,7 @@ interface IProps {
   createdAt: string;
   comments: any;
   isLiked: boolean;
+  id: number;
 }
 
 interface IState {
@@ -43,35 +49,46 @@ class PhotoContainer extends React.Component<IProps, IState> {
       commentCount,
       caption,
       createdAt,
-      comments
+      comments,
+      id
     } = this.props;
     const { newComment, isLiked, likeCount, selfComments } = this.state;
     return (
-      <Me>
-        {me => {
-          this.currentUser = me.user.username;
+      <ToggleLikeMutation
+        mutation={TOGGLE_LIKE_CARD}
+        variables={{ cardId: id }}
+      >
+        {toggleLike => {
+          this.toggleLike = toggleLike;
           return (
-            <PhotoPresenter
-              inline={inline}
-              creatorAvatar={creatorAvatar}
-              creatorUsername={creatorUsername}
-              location={location}
-              photoUrl={photoUrl}
-              likeCount={likeCount}
-              commentCount={commentCount}
-              caption={caption}
-              createdAt={createdAt}
-              comments={comments}
-              updateNewComment={this.updateNewComment}
-              newComment={newComment}
-              isLiked={isLiked}
-              onLikeClick={this.onLikeClick}
-              selfComments={selfComments}
-              onKeyUp={this.onKeyUp}
-            />
+            <Me>
+              {me => {
+                this.currentUser = me.user.username;
+                return (
+                  <PhotoPresenter
+                    inline={inline}
+                    creatorAvatar={creatorAvatar}
+                    creatorUsername={creatorUsername}
+                    location={location}
+                    photoUrl={photoUrl}
+                    likeCount={likeCount}
+                    commentCount={commentCount}
+                    caption={caption}
+                    createdAt={createdAt}
+                    comments={comments}
+                    updateNewComment={this.updateNewComment}
+                    newComment={newComment}
+                    isLiked={isLiked}
+                    onLikeClick={this.onLikeClick}
+                    selfComments={selfComments}
+                    onKeyUp={this.onKeyUp}
+                  />
+                );
+              }}
+            </Me>
           );
         }}
-      </Me>
+      </ToggleLikeMutation>
     );
   }
   public updateNewComment = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,6 +101,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
   };
   public onLikeClick = () => {
     const { likeCount, isLiked } = this.props;
+    this.toggleLike();
     this.setState(state => {
       let likeNumber;
       if (!isLiked) {

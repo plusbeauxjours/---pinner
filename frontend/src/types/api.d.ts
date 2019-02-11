@@ -26,6 +26,27 @@ export interface logInVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: likeCard
+// ====================================================
+
+export interface likeCard_likeCard {
+  __typename: "LikeCardResponse";
+  ok: boolean | null;
+}
+
+export interface likeCard {
+  likeCard: likeCard_likeCard;
+}
+
+export interface likeCardVariables {
+  cardId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: signUp
 // ====================================================
 
