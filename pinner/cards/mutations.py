@@ -75,7 +75,7 @@ class AddComment(graphene.Mutation):
             notification_models.Notification.objects.create(
                 actor=user, target=card.creator, verb="comment", payload=card
                 )
-            return types.AddCommentResponse(ok=True,comment=comment)
+            return types.AddCommentResponse(comment=comment)
         except IntegrityError as e:
             print(e)
             raise Exception("Can't create the comment")

@@ -1,6 +1,6 @@
 import React from "react";
 import PhotoPresenter from "./PhotoPresenter";
-import { Mutation } from "react-apollo";
+import { Mutation, MutationFn } from "react-apollo";
 import { TOGGLE_LIKE_CARD, ADD_COMMENT } from "./PhotoQueries";
 import {
   likeCard,
@@ -35,6 +35,8 @@ interface IState {
 }
 
 class PhotoContainer extends React.Component<IProps, IState> {
+  public addCommentFn: MutationFn;
+  public toggleLikeFn: MutationFn;
   constructor(props) {
     super(props);
     this.state = {
@@ -64,15 +66,15 @@ class PhotoContainer extends React.Component<IProps, IState> {
         variables={{ cardId: id, message: newComment }}
         onCompleted={this.addSelfComment}
       >
-        {addComment => {
-          this.addComment = addComment;
+        {addCommentFn => {
+          this.addCommentFn = addCommentFn;
           return (
             <ToggleLikeMutation
               mutation={TOGGLE_LIKE_CARD}
               variables={{ cardId: id }}
             >
-              {toggleLike => {
-                this.toggleLike = toggleLike;
+              {toggleLikeFn => {
+                this.toggleLikeFn = toggleLikeFn;
                 return (
                   <PhotoPresenter
                     inline={inline}
@@ -111,14 +113,14 @@ class PhotoContainer extends React.Component<IProps, IState> {
   public onKeyUp = event => {
     const { keyCode } = event;
     if (keyCode === 13) {
-      this.addComment();
+      this.addCommentFn();
     } else {
       return;
     }
   };
   public onLikeClick = () => {
     const { likeCount, isLiked } = this.props;
-    this.toggleLike;
+    this.toggleLikeFn();
     this.setState(state => {
       let likeNumber;
       if (!isLiked) {

@@ -34,12 +34,11 @@ interface IProps {
   url: any;
   size: string;
   bg?: string;
+  className?: string;
 }
 
-const Avatar: React.SFC<IProps> = ({ url, size = "md" }) => (
-  <Container url={url} size={size}>
-    d
-  </Container>
+const Avatar: React.SFC<IProps> = ({ className, url, size = "md" }) => (
+  <Container className={className} url={url} size={size} />
 );
 
 export default Avatar;
