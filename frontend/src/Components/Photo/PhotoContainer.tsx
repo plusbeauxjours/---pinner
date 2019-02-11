@@ -59,11 +59,9 @@ class PhotoContainer extends React.Component<IProps, IState> {
         variables={{ cardId: id }}
       >
         {toggleLike => {
-          this.toggleLike = toggleLike;
           return (
             <Me>
               {me => {
-                this.currentUser = me.user.username;
                 return (
                   <PhotoPresenter
                     inline={inline}
@@ -101,7 +99,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
   };
   public onLikeClick = () => {
     const { likeCount, isLiked } = this.props;
-    this.toggleLike();
     this.setState(state => {
       let likeNumber;
       if (!isLiked) {
@@ -131,7 +128,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
           ...state.selfComments,
           {
             id: Math.floor(Math.random() * 1000),
-            username: this.currentUser,
             mesage: newComment
           }
         ],

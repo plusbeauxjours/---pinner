@@ -23,6 +23,7 @@ const FeedPresenter: React.SFC<IProps> = ({ data, loading }) => {
         {cards &&
           cards.map(card => (
             <Photo
+              id={card.id}
               key={card.id}
               inline={true}
               creatorAvatar={card.creator.profile.avatar}

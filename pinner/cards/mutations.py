@@ -15,6 +15,7 @@ class LikeCard(graphene.Mutation):
 
     @login_required
     def mutate(self, info, **kwargs):
+
         cardId = kwargs.get('cardId')
         user = info.context.user
 
@@ -55,34 +56,29 @@ class AddComment(graphene.Mutation):
 
     Output = types.AddCommentResponse
 
+    @login_required
     def mutate(self, info, **kwargs):
+
         cardId = kwargs.get('cardId')
         message = kwargs.get('message')
-
         user = info.context.user
-
         comment = None
 
-        if user.is_authenticated:
-            try: 
-                card = models.Card.objects.get(id=cardId)
-            except models.Card.DoesNotExist:
-                raise Exception('Card Not Found')
+        try: 
+            card = models.Card.objects.get(id=cardId)
+        except models.Card.DoesNotExist:
+            raise Exception('Card Not Found')
 
-            try: 
-                comment = models.Comment.objects.create(
-                    message=message, card=card, creator=user)
-                notification_models.Notification.objects.create(
-                    actor=user, target=card.creator, verb="comment", payload=card
-                    )
-                return types.AddCommentResponse(ok=True,comment=comment)
-            except IntegrityError as e:
-                print(e)
-                raise Exception("Can't create the comment")
-            
-        else: 
-            error = 'You need to log in'
-            return types.AddCommentResponse(ok=False, comment=comment)
+        try: 
+            comment = models.Comment.objects.create(
+                message=message, card=card, creator=user)
+            notification_models.Notification.objects.create(
+                actor=user, target=card.creator, verb="comment", payload=card
+                )
+            return types.AddCommentResponse(ok=True,comment=comment)
+        except IntegrityError as e:
+            print(e)
+            raise Exception("Can't create the comment")
 
 class DeleteComment(graphene.Mutation):
 

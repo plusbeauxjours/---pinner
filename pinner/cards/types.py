@@ -36,8 +36,7 @@ class FeedResponse(graphene.ObjectType):
 class LikeCardResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
-class AddCommentResponse(graphene.ObjectType, config_types.ResponseFields):
-    ok = graphene.Boolean()
+class AddCommentResponse(graphene.ObjectType):
     comment = graphene.Field(CommentType)
 
 class DeleteCommentResponse(graphene.ObjectType, config_types.ResponseFields):
