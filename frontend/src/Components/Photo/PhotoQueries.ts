@@ -7,3 +7,16 @@ export const TOGGLE_LIKE_CARD = gql`
     }
   }
 `;
+
+export const ADD_COMMENT = gql`
+  mutation addComment($cardId: Int!, $message: String!) {
+    addComment(cardId: $cardId, message: $message) {
+      comment {
+        id
+        creator {
+          username
+        }
+      }
+    }
+  }
+`;

@@ -47,6 +47,42 @@ export interface likeCardVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: addComment
+// ====================================================
+
+export interface addComment_addComment_comment_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface addComment_addComment_comment {
+  __typename: "CommentType";
+  id: string;
+  creator: addComment_addComment_comment_creator | null;
+}
+
+export interface addComment_addComment {
+  __typename: "AddCommentResponse";
+  comment: addComment_addComment_comment | null;
+}
+
+export interface addComment {
+  addComment: addComment_addComment;
+}
+
+export interface addCommentVariables {
+  cardId: number;
+  message: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: signUp
 // ====================================================
 

@@ -2,10 +2,16 @@ import React from "react";
 import PhotoPresenter from "./PhotoPresenter";
 import Me from "../Me";
 import { Mutation } from "react-apollo";
-import { TOGGLE_LIKE_CARD } from "./PhotoQueries";
-import { likeCard, likeCardVariables } from "src/types/api";
+import { TOGGLE_LIKE_CARD, ADD_COMMENT } from "./PhotoQueries";
+import {
+  likeCard,
+  likeCardVariables,
+  addComment,
+  addCommentVariables
+} from "src/types/api";
 
 class ToggleLikeMutation extends Mutation<likeCard, likeCardVariables> {}
+class AddCommentMutation extends Mutation<addComment, addCommentVariables> {}
 
 interface IProps {
   inline: boolean;
@@ -54,39 +60,52 @@ class PhotoContainer extends React.Component<IProps, IState> {
     } = this.props;
     const { newComment, isLiked, likeCount, selfComments } = this.state;
     return (
-      <ToggleLikeMutation
-        mutation={TOGGLE_LIKE_CARD}
-        variables={{ cardId: id }}
+      <AddCommentMutation
+        mutation={ADD_COMMENT}
+        variables={{ cardId: id, message: newComment }}
+        onCompleted={this.addSelfComment}
       >
-        {toggleLike => {
+        {addComment => {
+          this.addComment = addComment;
           return (
-            <Me>
-              {me => {
+            <ToggleLikeMutation
+              mutation={TOGGLE_LIKE_CARD}
+              variables={{ cardId: id }}
+            >
+              {toggleLike => {
+                this.toggleLike = toggleLike;
                 return (
-                  <PhotoPresenter
-                    inline={inline}
-                    creatorAvatar={creatorAvatar}
-                    creatorUsername={creatorUsername}
-                    location={location}
-                    photoUrl={photoUrl}
-                    likeCount={likeCount}
-                    commentCount={commentCount}
-                    caption={caption}
-                    createdAt={createdAt}
-                    comments={comments}
-                    updateNewComment={this.updateNewComment}
-                    newComment={newComment}
-                    isLiked={isLiked}
-                    onLikeClick={this.onLikeClick}
-                    selfComments={selfComments}
-                    onKeyUp={this.onKeyUp}
-                  />
+                  <Me>
+                    {me => {
+                      this.currentUser = me.user.username;
+                      return (
+                        <PhotoPresenter
+                          inline={inline}
+                          creatorAvatar={creatorAvatar}
+                          creatorUsername={creatorUsername}
+                          location={location}
+                          photoUrl={photoUrl}
+                          likeCount={likeCount}
+                          commentCount={commentCount}
+                          caption={caption}
+                          createdAt={createdAt}
+                          comments={comments}
+                          updateNewComment={this.updateNewComment}
+                          newComment={newComment}
+                          isLiked={isLiked}
+                          onLikeClick={this.onLikeClick}
+                          selfComments={selfComments}
+                          onKeyUp={this.onKeyUp}
+                        />
+                      );
+                    }}
+                  </Me>
                 );
               }}
-            </Me>
+            </ToggleLikeMutation>
           );
         }}
-      </ToggleLikeMutation>
+      </AddCommentMutation>
     );
   }
   public updateNewComment = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,8 +116,17 @@ class PhotoContainer extends React.Component<IProps, IState> {
       newComment: value
     } as any);
   };
+  public onKeyUp = event => {
+    const { keyCode } = event;
+    if (keyCode === 13) {
+      this.addComment();
+    } else {
+      return;
+    }
+  };
   public onLikeClick = () => {
     const { likeCount, isLiked } = this.props;
+    this.toggleLike;
     this.setState(state => {
       let likeNumber;
       if (!isLiked) {
@@ -120,27 +148,25 @@ class PhotoContainer extends React.Component<IProps, IState> {
       };
     });
   };
-  public submitComment = () => {
+  public addSelfComment = data => {
     const { newComment } = this.state;
-    this.setState(state => {
-      return {
-        selfComments: [
-          ...state.selfComments,
-          {
-            id: Math.floor(Math.random() * 1000),
-            mesage: newComment
-          }
-        ],
-        newComment: ""
-      };
-    });
-  };
-  public onKeyUp = event => {
-    const { keyCode } = event;
-    if (keyCode === 13) {
-      this.submitComment();
-    } else {
-      return;
+    const {
+      addComment: { comment }
+    } = data;
+    if (comment) {
+      this.setState(state => {
+        return {
+          selfComments: [
+            ...state.selfComments,
+            {
+              id: comment.id,
+              username: comment.creator.username,
+              message: newComment
+            }
+          ],
+          newComment: ""
+        };
+      });
     }
   };
 }
