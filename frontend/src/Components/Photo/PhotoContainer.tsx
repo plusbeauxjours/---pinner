@@ -45,7 +45,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
       createdAt,
       comments
     } = this.props;
-    const { newComment, isLiked, likeCount } = this.state;
+    const { newComment, isLiked, likeCount, selfComments } = this.state;
     return (
       <Me>
         {me => {
@@ -66,6 +66,8 @@ class PhotoContainer extends React.Component<IProps, IState> {
               newComment={newComment}
               isLiked={isLiked}
               onLikeClick={this.onLikeClick}
+              selfComments={selfComments}
+              onKeyUp={this.onKeyUp}
             />
           );
         }}
@@ -103,8 +105,29 @@ class PhotoContainer extends React.Component<IProps, IState> {
       };
     });
   };
-  public onCommentSubmit = () => {
+  public submitComment = () => {
     const { newComment } = this.state;
+    this.setState(state => {
+      return {
+        selfComments: [
+          ...state.selfComments,
+          {
+            id: Math.floor(Math.random() * 1000),
+            username: this.currentUser,
+            mesage: newComment
+          }
+        ],
+        newComment: ""
+      };
+    });
+  };
+  public onKeyUp = event => {
+    const { keyCode } = event;
+    if (keyCode === 13) {
+      this.submitComment();
+    } else {
+      return;
+    }
   };
 }
 

@@ -79,6 +79,8 @@ interface IProps {
   newComment: string;
   isLiked: boolean;
   onLikeClick: () => void;
+  selfComments: any;
+  onKeyUp: () => void;
 }
 
 const PhotoPresenter: React.SFC<IProps> = ({
@@ -95,7 +97,9 @@ const PhotoPresenter: React.SFC<IProps> = ({
   updateNewComment,
   newComment,
   isLiked,
-  onLikeClick
+  onLikeClick,
+  selfComments,
+  onKeyUp
 }) => {
   if (inline) {
     return (
@@ -122,6 +126,15 @@ const PhotoPresenter: React.SFC<IProps> = ({
                   comment={comment.message}
                 />
               ))}
+            {selfComments &&
+              selfComments.map(comment => (
+                <Comment
+                  id={comment.id}
+                  key={comment.id}
+                  username={comment.username}
+                  comment={comment.message}
+                />
+              ))}
           </Comments>
           <TimeStamp>{createdAt}</TimeStamp>
           <AddComment>
@@ -129,6 +142,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
               placeholder="Add a comment..."
               onChange={updateNewComment}
               value={newComment}
+              onKeyUp={onKeyUp}
             />
           </AddComment>
         </Meta>
