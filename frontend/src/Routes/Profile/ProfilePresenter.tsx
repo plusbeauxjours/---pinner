@@ -1,10 +1,100 @@
 import React from "react";
 import styled from "../../Styles/typed-components";
+import Wrapper from "../../Components/Wrapper";
+import Loader from "src/Components/Loader";
+import Avatar from "src/Components/Avatar";
+import Bold from "src/Components/Bold";
+import CardGrid from "src/Components/CardGrid";
 
-const Container = styled.div``;
+const SWrapper = styled(Wrapper)`
+  width: 45%;
+`;
 
-const ProfilePresenter: React.SFC<any> = () => (
-  <Container> sex profile</Container>
-);
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  margin-bottom: 80px;
+`;
+
+const HeaderColumn = styled.div`
+  margin-left: 100px;
+`;
+
+const Username = styled.span`
+  font-size: 28px;
+  font-weight: 300;
+`;
+
+const Metrics = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 20px 0px;
+`;
+
+const Metric = styled.span`
+  &:not(:first-child) {
+    margin-left: 45px;
+  }
+`;
+
+const Fullname = styled.span`
+  font-size: 16px;
+  margin-bottom: 10px;
+  display: block;
+  font-weight: 500;
+`;
+
+const Bio = styled.p`
+  font-size: 16px;
+  margin-bottom: 10px;
+`;
+
+const Url = styled.a`
+  font-size: 14px;
+  color: ${props => props.theme.darkBlueColor};
+  font-weight: 600;
+`;
+
+const ProfilePresenter: React.SFC<any> = ({ data, loading }) => {
+  if (loading) {
+    return <Loader />;
+  } else if (!loading && data) {
+    const {
+      userProfile: { user }
+    } = data;
+    return (
+      <React.Fragment>
+        <SWrapper>
+          <Header>
+            <Avatar size="lg" url={user.profile.avator} />
+            <HeaderColumn>
+              <Username>{user.username}</Username>
+              <Metrics>
+                <Metric>
+                  <Bold text={String(user.profile.postCount)} /> posts
+                </Metric>
+                <Metric>
+                  <Bold text={String(user.profile.followersCount)} /> followers
+                </Metric>
+                <Metric>
+                  <Bold text={String(user.profile.followingCount)} /> following
+                </Metric>
+              </Metrics>
+              <Fullname>{`${user.firstName} ${user.lastNmae}`}</Fullname>
+              {user.profile.bio && <Bio>{user.profile.bio}</Bio>}
+              {user.profile.website && <Url>{user.profile.website}</Url>}
+            </HeaderColumn>
+          </Header>
+        </SWrapper>
+        <Wrapper>
+          {user.cards && user.cards.length !== 0 && (
+            <CardGrid cards={user.cards} />
+          )}
+        </Wrapper>
+      </React.Fragment>
+    );
+  }
+  return null;
+};
 
 export default ProfilePresenter;
