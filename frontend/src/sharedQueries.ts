@@ -9,3 +9,23 @@ export const ME = gql`
     }
   }
 `;
+
+export const USER_FRAGMENT = gql`
+  fragment UserParts on UserType {
+    id
+    username
+    profile {
+      isFollowing
+      avatar
+    }
+  }
+`;
+
+export const CARD_FRAGMENT = gql`
+  fragment CardParts on CardType {
+    id
+    likeCount
+    commentCount
+    file
+  }
+`;

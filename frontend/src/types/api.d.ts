@@ -240,6 +240,57 @@ export interface feedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: search
+// ====================================================
+
+export interface search_searchUsers_users_profile {
+  __typename: "ProfileType";
+  isFollowing: boolean | null;
+  avatar: string;
+}
+
+export interface search_searchUsers_users {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: search_searchUsers_users_profile | null;
+}
+
+export interface search_searchUsers {
+  __typename: "SearchUsersResponse";
+  users: (search_searchUsers_users | null)[] | null;
+}
+
+export interface search_searchCards_cards {
+  __typename: "CardType";
+  id: string;
+  likeCount: number | null;
+  commentCount: number | null;
+  file: string | null;
+}
+
+export interface search_searchCards {
+  __typename: "SearchCardsResponse";
+  cards: (search_searchCards_cards | null)[] | null;
+}
+
+export interface search {
+  searchUsers: search_searchUsers;
+  searchCards: search_searchCards;
+}
+
+export interface searchVariables {
+  term: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: me
 // ====================================================
 
@@ -258,6 +309,46 @@ export interface me_me {
 
 export interface me {
   me: me_me;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: UserParts
+// ====================================================
+
+export interface UserParts_profile {
+  __typename: "ProfileType";
+  isFollowing: boolean | null;
+  avatar: string;
+}
+
+export interface UserParts {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: UserParts_profile | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: CardParts
+// ====================================================
+
+export interface CardParts {
+  __typename: "CardType";
+  id: string;
+  likeCount: number | null;
+  commentCount: number | null;
+  file: string | null;
 }
 
 /* tslint:disable */

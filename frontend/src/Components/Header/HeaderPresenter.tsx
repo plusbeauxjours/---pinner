@@ -64,6 +64,7 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
 }
+
 const HeaderPresenter: React.SFC<IProps> = ({ onSubmit, onChange, search }) => (
   <Header>
     <SWrapper>
