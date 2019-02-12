@@ -4,6 +4,7 @@ import Wrapper from "src/Components/Wrapper";
 import Bold from "../../Components/Bold";
 import UserGrid from "src/Components/UserGrid";
 import CardGrid from "src/Components/CardGrid";
+import Loader from "src/Components/Loader";
 
 const TallWrapper = styled(Wrapper)`
   height: 50vh;
@@ -38,11 +39,7 @@ const SearchPresenter: React.SFC<IProps> = ({ data, empty, loading }) => {
       </TallWrapper>
     );
   } else if (loading) {
-    return (
-      <TallWrapper>
-        <Bold text="Loading" />
-      </TallWrapper>
-    );
+    return <Loader />;
   }
   return null;
 };
