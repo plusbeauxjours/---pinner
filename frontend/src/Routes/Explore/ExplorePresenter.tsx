@@ -3,19 +3,13 @@ import styled from "../../Styles/typed-components";
 import Loader from "src/Components/Loader";
 import Wrapper from "src/Components/Wrapper";
 import UserCard from "../../Components/UserCard";
-import SquareCard from "../../Components/SquareCard";
+import CardGrid from "../../Components/CardGrid";
 
 const UserWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 200px));
   grid-gap: 25px;
   margin-bottom: 85px;
-`;
-
-const CardWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 295px);
-  grid-auto-rows: 295px;
 `;
 
 const ExplorePresenter: React.SFC<any> = ({ data, loading }) => {
@@ -41,19 +35,7 @@ const ExplorePresenter: React.SFC<any> = ({ data, loading }) => {
             ))}
           </UserWrapper>
         )}
-        {cards && (
-          <CardWrapper>
-            {cards.map(card => (
-              <SquareCard
-                key={card.id}
-                id={card.id}
-                file={card.file}
-                likeCount={card.likeCount}
-                commentCount={card.commentCount}
-              />
-            ))}
-          </CardWrapper>
-        )}
+        {cards && <CardGrid cards={cards} />}
       </Wrapper>
     );
   } else {

@@ -129,6 +129,53 @@ export interface signUpVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: explore
+// ====================================================
+
+export interface explore_latestCards_cards {
+  __typename: "CardType";
+  id: string;
+  likeCount: number | null;
+  commentCount: number | null;
+  file: string | null;
+}
+
+export interface explore_latestCards {
+  __typename: "LatestCardsResponse";
+  cards: (explore_latestCards_cards | null)[] | null;
+}
+
+export interface explore_latestUsers_users_profile {
+  __typename: "ProfileType";
+  isFollowing: boolean | null;
+  avatar: string;
+}
+
+export interface explore_latestUsers_users {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: explore_latestUsers_users_profile | null;
+}
+
+export interface explore_latestUsers {
+  __typename: "LatestUsersResponse";
+  users: (explore_latestUsers_users | null)[] | null;
+}
+
+export interface explore {
+  latestCards: explore_latestCards;
+  latestUsers: explore_latestUsers;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: feed
 // ====================================================
 
