@@ -1,16 +1,8 @@
 import React from "react";
-import styled from "../../Styles/typed-components";
 import Loader from "src/Components/Loader";
 import Wrapper from "src/Components/Wrapper";
-import UserCard from "../../Components/UserCard";
 import CardGrid from "../../Components/CardGrid";
-
-const UserWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 200px));
-  grid-gap: 25px;
-  margin-bottom: 85px;
-`;
+import UserGrid from "../../Components/UserGrid";
 
 const ExplorePresenter: React.SFC<any> = ({ data, loading }) => {
   if (loading) {
@@ -22,19 +14,7 @@ const ExplorePresenter: React.SFC<any> = ({ data, loading }) => {
     } = data;
     return (
       <Wrapper>
-        {users && (
-          <UserWrapper>
-            {users.map(user => (
-              <UserCard
-                key={user.id}
-                id={user.id}
-                avatar={user.profile.avatar}
-                username={user.username}
-                isFollowing={user.profile.isFollowing}
-              />
-            ))}
-          </UserWrapper>
-        )}
+        {users && <UserGrid users={users} />}
         {cards && <CardGrid cards={cards} />}
       </Wrapper>
     );

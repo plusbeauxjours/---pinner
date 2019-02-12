@@ -5,6 +5,7 @@ import SquareCard from "./SquareCard";
 const Container = styled.div<IProps>`
   display: grid;
   grid-template-columns: repeat(3, 295px);
+  grid-template-rows: 295px;
   grid-auto-rows: 295px;
 `;
 
