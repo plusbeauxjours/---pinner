@@ -3,6 +3,7 @@ import styled from "src/Styles/typed-components";
 import FollowBtn from "./FollowBtn";
 import Avatar from "./Avatar";
 import Bold from "./Bold";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   background-color: white;
@@ -20,6 +21,7 @@ const SAvatar = styled(Avatar)`
 
 const SBold = styled(Bold)`
   margin-bottom: 10px;
+  display: block;
 `;
 
 interface IProps {
@@ -31,8 +33,12 @@ interface IProps {
 
 const UserCard: React.SFC<IProps> = ({ id, avatar, username, isFollowing }) => (
   <Container>
-    <SAvatar url={avatar} size="md" />
-    <SBold text={username} />
+    <Link to={`/${username}`}>
+      <SAvatar url={avatar} size="md" />
+    </Link>
+    <Link to={`/${username}`}>
+      <SBold text={username} />
+    </Link>
     <FollowBtn isFollowing={isFollowing} userId={id} />
   </Container>
 );

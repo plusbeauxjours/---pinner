@@ -240,6 +240,58 @@ export interface feedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: userProfile
+// ====================================================
+
+export interface userProfile_userProfile_user_profile {
+  __typename: "ProfileType";
+  bio: string | null;
+  avatar: string;
+  website: string | null;
+  postCount: number | null;
+  followersCount: number | null;
+  followingCount: number | null;
+}
+
+export interface userProfile_userProfile_user_cards {
+  __typename: "CardType";
+  id: string;
+  likeCount: number | null;
+  commentCount: number | null;
+  file: string | null;
+}
+
+export interface userProfile_userProfile_user {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  firstName: string;
+  lastName: string;
+  profile: userProfile_userProfile_user_profile | null;
+  cards: (userProfile_userProfile_user_cards | null)[] | null;
+}
+
+export interface userProfile_userProfile {
+  __typename: "UserProfileResponse";
+  user: userProfile_userProfile_user | null;
+}
+
+export interface userProfile {
+  userProfile: userProfile_userProfile;
+}
+
+export interface userProfileVariables {
+  username: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: searchTerms
 // ====================================================
 

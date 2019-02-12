@@ -1,10 +1,28 @@
 import React from "react";
 import ProfilePresenter from "./ProfilePresenter";
+import { Query } from "react-apollo";
+import { userProfile, userProfileVariables } from "src/types/api";
+import { GET_USER } from "./ProfileQueries";
+import { withRouter, RouteComponentProps } from "react-router";
 
-class ProfileContainer extends React.Component<any> {
+class ProfileQuery extends Query<userProfile, userProfileVariables> {}
+
+interface IProps extends RouteComponentProps<any> {}
+
+class ProfileContainer extends React.Component<IProps> {
   public render() {
-    return <ProfilePresenter />;
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+
+    return (
+      <ProfileQuery query={GET_USER} variables={{ username }}>
+        {() => <ProfilePresenter />}
+      </ProfileQuery>
+    );
   }
 }
 
-export default ProfileContainer;
+export default withRouter(ProfileContainer);
