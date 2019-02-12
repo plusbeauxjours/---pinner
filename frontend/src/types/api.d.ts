@@ -240,31 +240,31 @@ export interface feedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: search
+// GraphQL query operation: searchTerms
 // ====================================================
 
-export interface search_searchUsers_users_profile {
+export interface searchTerms_searchUsers_users_profile {
   __typename: "ProfileType";
   isFollowing: boolean | null;
   avatar: string;
 }
 
-export interface search_searchUsers_users {
+export interface searchTerms_searchUsers_users {
   __typename: "UserType";
   id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
-  profile: search_searchUsers_users_profile | null;
+  profile: searchTerms_searchUsers_users_profile | null;
 }
 
-export interface search_searchUsers {
+export interface searchTerms_searchUsers {
   __typename: "SearchUsersResponse";
-  users: (search_searchUsers_users | null)[] | null;
+  users: (searchTerms_searchUsers_users | null)[] | null;
 }
 
-export interface search_searchCards_cards {
+export interface searchTerms_searchCards_cards {
   __typename: "CardType";
   id: string;
   likeCount: number | null;
@@ -272,17 +272,17 @@ export interface search_searchCards_cards {
   file: string | null;
 }
 
-export interface search_searchCards {
+export interface searchTerms_searchCards {
   __typename: "SearchCardsResponse";
-  cards: (search_searchCards_cards | null)[] | null;
+  cards: (searchTerms_searchCards_cards | null)[] | null;
 }
 
-export interface search {
-  searchUsers: search_searchUsers;
-  searchCards: search_searchCards;
+export interface searchTerms {
+  searchUsers: searchTerms_searchUsers;
+  searchCards: searchTerms_searchCards;
 }
 
-export interface searchVariables {
+export interface searchTermsVariables {
   term: string;
 }
 

@@ -2,7 +2,7 @@ import { gql } from "apollo-boost";
 import { USER_FRAGMENT, CARD_FRAGMENT } from "src/sharedQueries";
 
 export const SEARCH = gql`
-  query search($term: String!) {
+  query searchTerms($term: String!) {
     searchUsers(term: $term) {
       users {
         ...UserParts

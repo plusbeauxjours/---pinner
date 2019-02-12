@@ -1,19 +1,23 @@
 import React from "react";
 import SearchPresenter from "./SearchPresenter";
 import { Query } from "react-apollo";
-import { searchVariables, search } from "../../types/api";
-import { withRouter } from "react-router";
+import { searchTerms, searchTermsVariables } from "../../types/api";
+import { withRouter, RouteComponentProps } from "react-router";
+import { SEARCH } from "./SearchQueries";
 
-class SearchQuery extends Query<search, searchVariables> {}
+class SearchQuery extends Query<searchTerms, searchTermsVariables> {}
 
-class SearchContainer extends React.Component {
+interface IProps extends RouteComponentProps<any> {}
+
+class SearchContainer extends React.Component<IProps> {
   public render() {
     const {
-      locations: { search }
+      location: { search }
     } = this.props;
     let cleanSearch;
+    console.log(this.props);
     if (search) {
-      urlParams = new URLSearchParams(search);
+      const urlParams = new URLSearchParams(search);
       cleanSearch = urlParams.get("term");
     } else {
       cleanSearch = null;
@@ -21,7 +25,7 @@ class SearchContainer extends React.Component {
     return (
       <SearchQuery
         query={SEARCH}
-        variables={{ term: "Hello how" }}
+        variables={{ term: "hello how" }}
         skip={!cleanSearch}
       >
         {({ data }) => <SearchPresenter data={data} empty={!cleanSearch} />}
