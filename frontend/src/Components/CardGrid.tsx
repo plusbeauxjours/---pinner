@@ -20,7 +20,7 @@ const CardGrid: React.SFC<IProps> = ({ cards, className }) => (
       <SquareCard
         key={card.id}
         id={card.id}
-        file={card.file}
+        files={card.files}
         likeCount={card.likeCount}
         commentCount={card.commentCount}
       />

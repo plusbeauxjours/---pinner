@@ -46,7 +46,7 @@ const CountNumber = styled.div`
 
 interface IProps {
   id?: string;
-  file?: any;
+  files?: any;
   bg?: string;
   commentCount?: number;
   likeCount?: number;
@@ -54,12 +54,12 @@ interface IProps {
 
 const SquareCard: React.SFC<IProps> = ({
   id,
-  file,
+  files,
   commentCount,
   likeCount
 }) => (
   <Link to={`/p/${id}`}>
-    <Square bg={file[0].url}>
+    <Square bg={files[0].url}>
       <Overlay>
         <Count>
           <HeartFilled />
