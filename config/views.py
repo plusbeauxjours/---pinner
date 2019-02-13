@@ -17,9 +17,9 @@ def sign_s3(request):
         s3 = boto3.resource('s3')
 
         upload = s3.Bucket(
-            'pinner').upload_fileobj(file, file_name, {'ACL': 'public-read'})
+            'plusbeauxjours').upload_fileobj(file, file_name, {'ACL': 'public-read'})
 
-        url = f'https://s3-ap-northeast-1.amazonaws.com/pinner/{file_name}'
+        url = f'https://s3-ap-northeast-1.amazonaws.com/plusbeauxjours/{file_name}'
 
         return JsonResponse({'ok': True, 'URL': url})
     

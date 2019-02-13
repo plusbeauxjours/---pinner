@@ -17,7 +17,7 @@ def resolve_feed(self, info, **kwargs):
     my_cards = user.cards.all()
 
     combined = cards.union(my_cards).order_by(
-        'created_at')[offset:5 + offset]
+        '-created_at')[offset:5 + offset]
 
     return types.FeedResponse(cards=combined)
 
