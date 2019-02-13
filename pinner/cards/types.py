@@ -68,3 +68,7 @@ class SearchCardsResponse(graphene.ObjectType):
 
 class LatestCardsResponse(graphene.ObjectType):
     cards = graphene.List(CardType)
+
+class FileInputType(graphene.InputObjectType):
+    url = graphene.String()
+    is_video = graphene.Boolean()
