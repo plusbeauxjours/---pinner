@@ -60,7 +60,7 @@ class EditCardResponse(graphene.ObjectType, config_types.ResponseFields):
 class DeleteCardResponse(graphene.ObjectType, config_types.ResponseFields):
     pass
 
-class UploadCardResponse(graphene.ObjectType, config_types.ResponseFields):
+class UploadCardResponse(graphene.ObjectType):
     card = graphene.Field(CardType)
 
 class SearchCardsResponse(graphene.ObjectType):
