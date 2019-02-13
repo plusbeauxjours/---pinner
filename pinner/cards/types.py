@@ -23,7 +23,7 @@ class CardType(DjangoObjectType):
 class FileType(DjangoObjectType):
 
     class Meta:
-        model = models.FileImage
+        model = models.File
         
 
 class LikeType(DjangoObjectType):

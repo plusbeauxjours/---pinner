@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from config import models as config_models
 
-class FileImage(config_models.TimeStampedModel):
+class File(config_models.TimeStampedModel):
 
     fileURL = models.URLField()
     is_video = models.BooleanField(default=False)
@@ -19,7 +19,7 @@ class Card(config_models.TimeStampedModel):
         User, on_delete=models.CASCADE, related_name='cards')
     caption = models.TextField()
     location = models.CharField(max_length=140, blank=True, null=True)
-    files = models.ManyToManyField(FileImage, related_name='parent')
+    files = models.ManyToManyField(File, related_name='parent')
     file = models.URLField(null=True, blank=True)
 
     @property
@@ -60,3 +60,15 @@ class Like(config_models.TimeStampedModel):
 
     def __str__(self):
         return 'User: {} - Card Caption: {}'.format(self.creator.username, self.card.caption)
+    
+class Story(config_models.TimeStampedModel):
+	
+	    """ Story Model """
+	
+	    file = models.ForeignKey(File, on_delete=models.CASCADE)
+	    creator = models.ForeignKey(
+	        User, related_name='stories', on_delete=models.CASCADE)
+	    expired = models.BooleanField(default=False)
+	
+	    def __str__(self):
+	        return self.creator.username
