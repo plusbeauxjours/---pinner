@@ -33,6 +33,10 @@ class LikeAdmin(admin.ModelAdmin):
         'updated_at',
     )
 
+@admin.register(models.FileImage)
+class FileImageAdmin(admin.ModelAdmin):
+    pass
+
 @admin.register(models.Comment)
 class CommentAdmin(admin.ModelAdmin):
 
