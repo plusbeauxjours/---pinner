@@ -9,8 +9,8 @@ import {
   addCommentVariables
 } from "src/types/api";
 
-class ToggleLikeMutation extends Mutation<likeCard, likeCardVariables> {}
 class AddCommentMutation extends Mutation<addComment, addCommentVariables> {}
+class ToggleLikeMutation extends Mutation<likeCard, likeCardVariables> {}
 
 interface IProps {
   inline: boolean;
@@ -32,6 +32,7 @@ interface IState {
   isLiked: boolean;
   likeCount: number;
   selfComments: any;
+  openedComment: boolean;
 }
 
 class PhotoContainer extends React.Component<IProps, IState> {
@@ -42,6 +43,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
     this.state = {
       newComment: "",
       isLiked: props.isLiked,
+      openedComment: false,
       likeCount: props.likeCount,
       selfComments: []
     };
@@ -59,7 +61,13 @@ class PhotoContainer extends React.Component<IProps, IState> {
       comments,
       id
     } = this.props;
-    const { newComment, isLiked, likeCount, selfComments } = this.state;
+    const {
+      newComment,
+      isLiked,
+      openedComment,
+      likeCount,
+      selfComments
+    } = this.state;
     return (
       <AddCommentMutation
         mutation={ADD_COMMENT}
@@ -92,6 +100,8 @@ class PhotoContainer extends React.Component<IProps, IState> {
                     isLiked={isLiked}
                     onLikeClick={this.onLikeClick}
                     selfComments={selfComments}
+                    toggleCommentClick={this.toggleCommentClick}
+                    openedComment={openedComment}
                     onKeyUp={this.onKeyUp}
                   />
                 );
@@ -115,7 +125,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
     if (keyCode === 13) {
       this.addCommentFn();
     } else {
-      return;
+      return null;
     }
   };
   public onLikeClick = () => {
@@ -139,6 +149,14 @@ class PhotoContainer extends React.Component<IProps, IState> {
       return {
         isLiked: !state.isLiked,
         likeCount: likeNumber
+      };
+    });
+  };
+  public toggleCommentClick = () => {
+    console.log(this.state.openedComment);
+    this.setState(state => {
+      return {
+        openedComment: !state.openedComment
       };
     });
   };

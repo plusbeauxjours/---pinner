@@ -2,7 +2,7 @@ import React from "react";
 import styled from "src/Styles/typed-components";
 import SquareCard from "./SquareCard";
 
-const Container = styled.div<IProps>`
+const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 295px);
   grid-template-rows: 295px;

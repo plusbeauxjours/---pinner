@@ -17,7 +17,7 @@ const FeedPresenter: React.SFC<IProps> = ({ data, loading }) => {
   if (loading) {
     return <Loader />;
   } else if (data) {
-    const { feed: { cards = [] } = {} } = data;
+    const { feed: { cards = {} } = {} } = data;
     return (
       <SWrapper>
         {cards &&

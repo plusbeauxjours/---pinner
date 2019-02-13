@@ -26,7 +26,7 @@ class HeaderContainer extends React.Component<any, IState> {
     } = event;
     this.setState({
       search: value
-    });
+    } as any);
   };
   public onSubmit: React.FormEventHandler<HTMLFormElement> = event => {
     const { history } = this.props;

@@ -21,7 +21,7 @@ interface IProps {
   text?: string;
   active: boolean;
   onClick?: any;
-  size: any;
+  size: string;
   inverted?: boolean;
   className?: string;
 }

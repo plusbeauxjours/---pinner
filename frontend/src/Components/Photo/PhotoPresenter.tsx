@@ -4,7 +4,7 @@ import Avatar from "../Avatar";
 import Bold from "../Bold";
 import Textarea from "react-expanding-textarea";
 import Comment from "../Comment";
-import PhotoButtons from "../PhotoButtons";
+import CardButtons from "../CardButtons";
 
 const Container = styled.div`
   background-color: white;
@@ -80,6 +80,8 @@ interface IProps {
   isLiked: boolean;
   onLikeClick: () => void;
   selfComments: any;
+  openedComment: boolean;
+  toggleCommentClick: () => void;
   onKeyUp: (event: any) => void;
 }
 
@@ -99,6 +101,8 @@ const PhotoPresenter: React.SFC<IProps> = ({
   isLiked,
   onLikeClick,
   selfComments,
+  openedComment,
+  toggleCommentClick,
   onKeyUp
 }) => {
   if (inline) {
@@ -113,7 +117,12 @@ const PhotoPresenter: React.SFC<IProps> = ({
         </Header>
         <Image src={photoUrl} />
         <Meta>
-          <PhotoButtons isLiked={isLiked} onClick={onLikeClick} />
+          <CardButtons
+            isLiked={isLiked}
+            openedComment={openedComment}
+            toggleCommentClick={toggleCommentClick}
+            onClick={onLikeClick}
+          />
           <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
           <Comments>
             <Comment username={creatorUsername} comment={caption} />
@@ -137,14 +146,16 @@ const PhotoPresenter: React.SFC<IProps> = ({
               ))}
           </Comments>
           <TimeStamp>{createdAt}</TimeStamp>
-          <AddComment>
-            <STextArea
-              placeholder="Add a comment..."
-              onChange={updateNewComment}
-              value={newComment}
-              onKeyUp={onKeyUp}
-            />
-          </AddComment>
+          {openedComment && (
+            <AddComment>
+              <STextArea
+                placeholder="Add a comment..."
+                onChange={updateNewComment}
+                value={newComment}
+                onKeyUp={onKeyUp}
+              />
+            </AddComment>
+          )}
         </Meta>
       </Container>
     );
