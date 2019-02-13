@@ -6,6 +6,7 @@ from config import models as config_models
 class FileImage(config_models.TimeStampedModel):
 
     fileURL = models.URLField()
+    is_video = models.BooleanField(default=False)
     creator = models.ForeignKey(
         User, related_name='file_images', on_delete=models.CASCADE, null=True)
     
@@ -18,7 +19,7 @@ class Card(config_models.TimeStampedModel):
         User, on_delete=models.CASCADE, related_name='cards')
     caption = models.TextField()
     location = models.CharField(max_length=140, blank=True, null=True)
-    files = models.ManyToManyField(FileImage)
+    files = models.ManyToManyField(FileImage, related_name='parent')
     file = models.URLField(null=True, blank=True)
 
     @property
