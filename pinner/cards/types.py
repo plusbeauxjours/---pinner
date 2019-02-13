@@ -18,13 +18,7 @@ class CardType(DjangoObjectType):
             return False
 
     class Meta: 
-        model = models.Card
-
-class FileType(DjangoObjectType):
-
-    class Meta:
-        model = models.File
-        
+        model = models.Card 
 
 class LikeType(DjangoObjectType):
 

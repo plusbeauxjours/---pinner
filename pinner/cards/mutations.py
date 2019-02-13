@@ -234,7 +234,7 @@ class UploadCard(graphene.Mutation):
                 try:
                     fileImage = models.File.objects.create(
                         fileURL=file.url, creator=user, is_video=file.is_video)
-                    card.files.add(fileImage)
+                    card.file.add(fileImage)
                     card.save()
                 except IntegrityError as e:
                     print(e)

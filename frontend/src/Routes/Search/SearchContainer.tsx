@@ -15,7 +15,6 @@ class SearchContainer extends React.Component<IProps> {
       location: { search }
     } = this.props;
     let cleanSearch;
-    console.log(this.props);
     if (search) {
       const urlParams = new URLSearchParams(search);
       cleanSearch = urlParams.get("term");

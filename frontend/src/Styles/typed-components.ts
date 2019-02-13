@@ -8,6 +8,8 @@ interface IThemeInterface {
   blueColor: string;
   boxBorder: string;
   darkBlueColor: string;
+  size: string;
+  bg: string;
 }
 
 const {

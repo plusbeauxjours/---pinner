@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { HeartFilled, BubbleFilled } from "../Icons";
 import { Link } from "react-router-dom";
 
-const Square = styled.div<IProps>`
+const Square = styled.div<{ bg: string }>`
   height: 100%;
   width: 100%;
   background-image: url(${props => props.bg});
@@ -46,20 +46,19 @@ const CountNumber = styled.div`
 
 interface IProps {
   id?: string;
-  files?: any;
-  bg?: string;
+  file?: string;
   commentCount?: number;
   likeCount?: number;
 }
 
 const SquareCard: React.SFC<IProps> = ({
   id,
-  files,
+  file,
   commentCount,
   likeCount
 }) => (
   <Link to={`/p/${id}`}>
-    <Square bg={files[0].url}>
+    <Square bg={file}>
       <Overlay>
         <Count>
           <HeartFilled />
