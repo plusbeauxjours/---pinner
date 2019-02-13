@@ -2,8 +2,9 @@ import React from "react";
 import { Query } from "react-apollo";
 import FeedPresenter from "./FeedPresenter";
 import { GET_FEED } from "./FeedQueries";
+import { feed } from "../../types/api";
 
-class FeedQuery extends Query {}
+class FeedQuery extends Query<feed> {}
 
 class FeedContainer extends React.Component {
   public state = {

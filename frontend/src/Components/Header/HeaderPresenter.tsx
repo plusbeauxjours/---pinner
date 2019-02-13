@@ -98,8 +98,8 @@ const HeaderPresenter: React.SFC<IProps> = ({ onSubmit, onChange, search }) => (
         </Icon>
         <Icon>
           <Me>
-            {me => (
-              <Link to={`/${me ? me.user.username : ""}`}>
+            {user => (
+              <Link to={`/${user ? user.username : ""}`}>
                 <Profile />
               </Link>
             )}
