@@ -71,7 +71,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
     return (
       <AddCommentMutation
         mutation={ADD_COMMENT}
-        variables={{ cardId: id, message: newComment }}
+        variables={{ cardId: parseInt(id, 10), message: newComment }}
         onCompleted={this.addSelfComment}
       >
         {addCommentFn => {
@@ -79,7 +79,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
           return (
             <ToggleLikeMutation
               mutation={TOGGLE_LIKE_CARD}
-              variables={{ cardId: id }}
+              variables={{ cardId: parseInt(id, 10) }}
             >
               {toggleLikeFn => {
                 this.toggleLikeFn = toggleLikeFn;
