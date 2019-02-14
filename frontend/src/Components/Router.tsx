@@ -14,7 +14,7 @@ import CardDetail from "../Routes/CardDetail";
 import Search from "../Routes/Search";
 import Explore from "../Routes/Explore";
 import Header from "./Header";
-import index from "./Location";
+import Location from "./Location";
 
 const Wrapper = styled.div`
   padding-top: 135px;
@@ -31,8 +31,8 @@ const LoggedInPages = () => (
       <Route path="/edit-profile" component={EditProfile} />
       <Route path="/search" component={Search} />
       <Route path="/explore" component={Explore} />
+      <Route path="/location" component={Location} />
       <Route path="/:username" component={Profile} />
-      <Route path="/location" component={index} />
       <Redirect from="*" to="/" />
     </Switch>
   </Wrapper>

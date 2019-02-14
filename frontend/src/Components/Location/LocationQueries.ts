@@ -4,6 +4,7 @@ export const GET_LOCATION = gql`
   query location {
     location {
       locations {
+        id
         city
       }
     }

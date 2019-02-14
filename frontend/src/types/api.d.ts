@@ -30,6 +30,7 @@ export interface followUserVariables {
 
 export interface location_location_locations {
   __typename: "LocationType";
+  id: string;
   city: string;
 }
 
