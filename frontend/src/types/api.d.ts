@@ -25,6 +25,28 @@ export interface followUserVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: location
+// ====================================================
+
+export interface location_location_locations {
+  __typename: "LocationType";
+  city: string;
+}
+
+export interface location_location {
+  __typename: "LocationResponse";
+  locations: (location_location_locations | null)[] | null;
+}
+
+export interface location {
+  location: location_location;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: logIn
 // ====================================================
 
@@ -132,6 +154,11 @@ export interface signUpVariables {
 // GraphQL query operation: cardDetail
 // ====================================================
 
+export interface cardDetail_cardDetail_card_location {
+  __typename: "LocationType";
+  city: string;
+}
+
 export interface cardDetail_cardDetail_card_comments_creator {
   __typename: "UserType";
   /**
@@ -166,7 +193,7 @@ export interface cardDetail_cardDetail_card {
   id: string;
   file: string | null;
   caption: string;
-  location: string | null;
+  location: cardDetail_cardDetail_card_location;
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;
@@ -243,6 +270,11 @@ export interface explore {
 // GraphQL query operation: feed
 // ====================================================
 
+export interface feed_feed_cards_location {
+  __typename: "LocationType";
+  city: string;
+}
+
 export interface feed_feed_cards_comments_creator {
   __typename: "UserType";
   /**
@@ -277,7 +309,7 @@ export interface feed_feed_cards {
   id: string;
   file: string | null;
   caption: string;
-  location: string | null;
+  location: feed_feed_cards_location;
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;
@@ -477,6 +509,11 @@ export interface CardParts {
 // GraphQL fragment: DetailParts
 // ====================================================
 
+export interface DetailParts_location {
+  __typename: "LocationType";
+  city: string;
+}
+
 export interface DetailParts_comments_creator {
   __typename: "UserType";
   /**
@@ -511,7 +548,7 @@ export interface DetailParts {
   id: string;
   file: string | null;
   caption: string;
-  location: string | null;
+  location: DetailParts_location;
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;

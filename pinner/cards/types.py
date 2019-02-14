@@ -35,6 +35,9 @@ class CommentType(DjangoObjectType):
     class Meta:
         model = models.Comment
 
+class LocationResponse(graphene.ObjectType):
+    locations = graphene.List(LocationType)
+
 class FeedResponse(graphene.ObjectType):
     cards = graphene.List(CardType)
 

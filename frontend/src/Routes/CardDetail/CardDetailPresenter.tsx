@@ -2,15 +2,21 @@ import React from "react";
 import Loader from "src/Components/Loader";
 import Wrapper from "src/Components/Wrapper";
 import Photo from "src/Components/Photo";
+import { cardDetail } from "src/types/api";
 
-const CardDetailPresenter: React.SFC<any> = ({ data, loading }) => {
+interface IProps {
+  data: cardDetail;
+  loading: boolean;
+}
+
+const CardDetailPresenter: React.SFC<IProps> = ({ data, loading }) => {
   if (loading) {
     return <Loader />;
   } else if (!loading && data) {
     const {
       cardDetail: { card }
     } = data;
-
+    console.log(typeof card.id);
     return (
       <Wrapper>
         <Photo

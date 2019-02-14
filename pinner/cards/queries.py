@@ -3,6 +3,14 @@ from . import types, models
 from graphql_jwt.decorators import login_required
 
 @login_required
+def resolve_location(self, info, **kwargs):
+
+    locations = models.Location.objects.all()
+
+    return types.LocationResponse(locations=locations)
+
+
+@login_required
 def resolve_feed(self, info, **kwargs):
 
     user = info.context.user

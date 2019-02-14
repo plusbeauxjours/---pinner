@@ -24,7 +24,7 @@ interface IProps {
   createdAt: string;
   comments: any;
   isLiked: boolean;
-  id: number;
+  id: string;
 }
 
 interface IState {
