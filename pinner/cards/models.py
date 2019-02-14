@@ -3,12 +3,20 @@ from django.contrib.auth.models import User
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from config import models as config_models
 
+class Location (models.Model):
+
+    city = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.city
+
 class Card(config_models.TimeStampedModel):
 
     creator = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='cards')
     caption = models.TextField()
-    location = models.CharField(max_length=140, blank=True, null=True)
+    location = models.ForeignKey(
+        Location, on_delete=models.CASCADE, related_name='locations')
     file = models.URLField(null=True, blank=True)
 
     @property

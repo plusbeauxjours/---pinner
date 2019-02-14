@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
 import Button from "../Button";
+import { MutationFn } from "react-apollo";
 
 const SButton = styled(Button)`
   width: 50%;
@@ -8,7 +9,7 @@ const SButton = styled(Button)`
 
 interface IProps {
   isFollowing: boolean;
-  toggleBtn: () => void;
+  toggleBtn: MutationFn;
 }
 
 const FollowBtnPresenter: React.SFC<IProps> = ({ isFollowing, toggleBtn }) => (

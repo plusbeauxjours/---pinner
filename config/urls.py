@@ -25,7 +25,8 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True))),
     path("s3Upload/", csrf_exempt(views.sign_s3))
-] 
+    
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit

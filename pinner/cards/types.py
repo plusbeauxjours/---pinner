@@ -6,7 +6,7 @@ from config import types as config_types
 class CardType(DjangoObjectType):
     like_count = graphene.Int(source='like_count')
     comment_count = graphene.Int(source='comment_count')
-    created_at = graphene.String(source="time_ago")
+    created_at = graphene.String(source="natural_time")
     is_liked = graphene.Boolean()
 
     def resolve_is_liked(self, info):
@@ -19,6 +19,11 @@ class CardType(DjangoObjectType):
 
     class Meta: 
         model = models.Card 
+
+class LocationType(DjangoObjectType):
+
+    class Meta: 
+        model = models.Location
 
 class LikeType(DjangoObjectType):
 

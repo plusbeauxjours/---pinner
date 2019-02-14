@@ -16,7 +16,6 @@ class ProfileContainer extends React.Component<IProps> {
         params: { username }
       }
     } = this.props;
-
     return (
       <ProfileQuery query={GET_USER} variables={{ username }}>
         {({ data, loading }) => (

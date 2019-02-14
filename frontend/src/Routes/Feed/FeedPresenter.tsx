@@ -28,7 +28,7 @@ const FeedPresenter: React.SFC<IProps> = ({ data, loading }) => {
               inline={true}
               creatorAvatar={card.creator.profile.avatar}
               creatorUsername={card.creator.username}
-              location={card.location}
+              location={card.location.city}
               photoUrl={card.file}
               likeCount={card.likeCount}
               commentCount={card.commentCount}

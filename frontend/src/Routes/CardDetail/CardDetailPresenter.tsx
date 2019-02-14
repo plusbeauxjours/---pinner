@@ -18,7 +18,7 @@ const CardDetailPresenter: React.SFC<any> = ({ data, loading }) => {
           inline={false}
           creatorAvatar={card.creator.profile.avatar}
           creatorUsername={card.creator.username}
-          location={card.location}
+          location={card.location.city}
           photoUrl={card.file}
           likeCount={card.likeCount}
           commentCount={card.commentCount}
