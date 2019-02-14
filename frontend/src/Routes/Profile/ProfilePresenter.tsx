@@ -5,6 +5,8 @@ import Loader from "src/Components/Loader";
 import Avatar from "src/Components/Avatar";
 import Bold from "src/Components/Bold";
 import CardGrid from "src/Components/CardGrid";
+import { Link } from "react-router-dom";
+import Button from "../../Components/Button";
 
 const SWrapper = styled(Wrapper)`
   width: 45%;
@@ -55,6 +57,13 @@ const Url = styled.a`
   font-weight: 600;
 `;
 
+const UsernameRow = styled.div`
+  display: flex;
+  ${Username} {
+    margin-right: 20px;
+  }
+`;
+
 const ProfilePresenter: React.SFC<any> = ({ data, loading }) => {
   if (loading) {
     return <Loader />;
@@ -68,7 +77,14 @@ const ProfilePresenter: React.SFC<any> = ({ data, loading }) => {
           <Header>
             <Avatar size="lg" url={user.profile.avator} />
             <HeaderColumn>
-              <Username>{user.username}</Username>
+              <UsernameRow>
+                <Username>{user.username}</Username>
+                {user.profile.isSelf && (
+                  <Link to="/edit-profile">
+                    <Button text="Edit Profile" inverted={true} />
+                  </Link>
+                )}
+              </UsernameRow>
               <Metrics>
                 <Metric>
                   <Bold text={String(user.profile.postCount)} /> posts

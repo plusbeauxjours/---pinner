@@ -19,7 +19,7 @@ const SButton = styled.button<IProps>`
 
 interface IProps {
   text?: string;
-  active: boolean;
+  active?: boolean;
   onClick?: any;
   size?: string;
   inverted?: boolean;
