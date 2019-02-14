@@ -1,31 +1,13 @@
 import { gql } from "apollo-boost";
+import { DETAIL_CARD_FRAGMENT } from "../../sharedQueries";
 
 export const GET_FEED = gql`
   query feed($page: Int!) {
     feed(page: $page) {
       cards {
-        id
-        file
-        caption
-        location
-        likeCount
-        commentCount
-        isLiked
-        createdAt
-        comments {
-          id
-          message
-          creator {
-            username
-          }
-        }
-        creator {
-          username
-          profile {
-            avatar
-          }
-        }
+        ...DetailParts
       }
     }
   }
+  ${DETAIL_CARD_FRAGMENT}
 `;

@@ -55,6 +55,7 @@ class DeleteCardResponse(graphene.ObjectType, config_types.ResponseFields):
     pass
 
 class UploadCardResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
     card = graphene.Field(CardType)
 
 class SearchCardsResponse(graphene.ObjectType):

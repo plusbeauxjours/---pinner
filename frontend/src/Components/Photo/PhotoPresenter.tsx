@@ -5,6 +5,7 @@ import Bold from "../Bold";
 import Textarea from "react-expanding-textarea";
 import Comment from "../Comment";
 import CardButtons from "../CardButtons";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   background-color: white;
@@ -36,6 +37,7 @@ const Image = styled.img`
 const Meta = styled.div`
   padding: 10px 15px;
   padding-bottom: 0;
+  background-color: white;
 `;
 
 const Comments = styled.div`
@@ -62,6 +64,35 @@ const STextArea = styled(Textarea)`
   resize: none;
   font-size: 14px;
   padding: 15px 0px;
+`;
+
+const DetailContainer = styled.div`
+  display: flex;
+  background-color: white;
+  border-radius: 3px;
+  overflow: hidden;
+  height: 600px;
+  border: ${props => props.theme.boxBorder};
+  ${Meta} {
+    flex-grow: 1;
+    padding: 20px;
+    overflow: scroll;
+    ${Header} {
+      padding: 0;
+      padding-bottom: 20px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #efefef;
+    }
+  }
+  ${Image} {
+    min-width: 0%;
+    width: 550px;
+  }
+  ${Comments} {
+    min-height: 50%;
+    overflow: scroll;
+    margin-bottom: 30px;
+  }
 `;
 
 interface IProps {
@@ -109,9 +140,13 @@ const PhotoPresenter: React.SFC<IProps> = ({
     return (
       <Container>
         <Header>
-          <Avatar size="sm" url={creatorAvatar} />
+          <Link to={`/${creatorUsername}`}>
+            <Avatar size="sm" url={creatorAvatar} />
+          </Link>
           <HeaderColumn>
-            <Bold text={creatorUsername} />
+            <Link to={`/${creatorUsername}`}>
+              <Bold text={creatorUsername} />
+            </Link>
             <Location>{location}</Location>
           </HeaderColumn>
         </Header>
@@ -160,7 +195,57 @@ const PhotoPresenter: React.SFC<IProps> = ({
       </Container>
     );
   } else {
-    return null;
+    return (
+      <DetailContainer>
+        <Image src={photoUrl} />
+        <Meta>
+          <Header>
+            <Link to={`/${creatorUsername}`}>
+              <Avatar size="md" url={creatorAvatar} />
+            </Link>
+            <HeaderColumn>
+              <Link to={`/${creatorUsername}`}>
+                <Bold text={creatorUsername} />
+              </Link>
+              <Location>{location}</Location>
+            </HeaderColumn>
+          </Header>
+
+          <Comments>
+            <Comment username={creatorUsername} comment={caption} />
+            {comments &&
+              comments.map(comment => (
+                <Comment
+                  id={comment.id}
+                  key={comment.id}
+                  username={comment.creator.username}
+                  comment={comment.message}
+                />
+              ))}
+            {selfComments &&
+              selfComments.map(comment => (
+                <Comment
+                  id={comment.id}
+                  key={comment.id}
+                  username={comment.username}
+                  comment={comment.message}
+                />
+              ))}
+          </Comments>
+          <CardButtons isLiked={isLiked} onClick={onLikeClick} />
+          <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
+          <TimeStamp>{createdAt}</TimeStamp>
+          <AddComment>
+            <STextArea
+              placeholder="Add a comment..."
+              onChange={updateNewComment}
+              value={newComment}
+              onKeyUp={onKeyUp}
+            />
+          </AddComment>
+        </Meta>
+      </DetailContainer>
+    );
   }
 };
 

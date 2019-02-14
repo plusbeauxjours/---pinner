@@ -4,7 +4,7 @@ from django.http import JsonResponse, HttpResponseBadRequest
 
 def sign_s3(request):
 
-    if request.methos != 'POST':
+    if request.method != 'POST':
 
         return HttpResponseBadRequest()
 

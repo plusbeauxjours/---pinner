@@ -29,3 +29,29 @@ export const CARD_FRAGMENT = gql`
     file
   }
 `;
+
+export const DETAIL_CARD_FRAGMENT = gql`
+  fragment DetailParts on CardType {
+    id
+    file
+    caption
+    location
+    likeCount
+    commentCount
+    isLiked
+    createdAt
+    comments {
+      id
+      message
+      creator {
+        username
+      }
+    }
+    creator {
+      username
+      profile {
+        avatar
+      }
+    }
+  }
+`;

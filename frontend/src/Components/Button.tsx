@@ -3,7 +3,7 @@ import styled from "src/Styles/typed-components";
 
 const SButton = styled.button<IProps>`
   border: 0;
-  padding: ${props => (props.size === "md" ? "7px 0px" : "5px 0px")};
+  padding: ${props => (props.size === "md" ? "7px" : "5px")};
   color: ${props => (props.inverted ? props.theme.blackColor : "white")};
   background-color: ${props =>
     props.inverted ? "transparent" : props.theme.blueColor};
@@ -21,7 +21,7 @@ interface IProps {
   text?: string;
   active: boolean;
   onClick?: any;
-  size: string;
+  size?: string;
   inverted?: boolean;
   className?: string;
 }

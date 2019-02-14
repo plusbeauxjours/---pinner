@@ -129,6 +129,70 @@ export interface signUpVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: cardDetail
+// ====================================================
+
+export interface cardDetail_cardDetail_card_comments_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface cardDetail_cardDetail_card_comments {
+  __typename: "CommentType";
+  id: string;
+  message: string;
+  creator: cardDetail_cardDetail_card_comments_creator | null;
+}
+
+export interface cardDetail_cardDetail_card_creator_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface cardDetail_cardDetail_card_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: cardDetail_cardDetail_card_creator_profile | null;
+}
+
+export interface cardDetail_cardDetail_card {
+  __typename: "CardType";
+  id: string;
+  file: string | null;
+  caption: string;
+  location: string | null;
+  likeCount: number | null;
+  commentCount: number | null;
+  isLiked: boolean | null;
+  createdAt: string | null;
+  comments: (cardDetail_cardDetail_card_comments | null)[] | null;
+  creator: cardDetail_cardDetail_card_creator;
+}
+
+export interface cardDetail_cardDetail {
+  __typename: "CardDetailResponse";
+  card: cardDetail_cardDetail_card | null;
+}
+
+export interface cardDetail {
+  cardDetail: cardDetail_cardDetail;
+}
+
+export interface cardDetailVariables {
+  id: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: explore
 // ====================================================
 
@@ -251,6 +315,8 @@ export interface userProfile_userProfile_user_profile {
   postCount: number | null;
   followersCount: number | null;
   followingCount: number | null;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
 }
 
 export interface userProfile_userProfile_user_cards {
@@ -401,6 +467,57 @@ export interface CardParts {
   likeCount: number | null;
   commentCount: number | null;
   file: string | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: DetailParts
+// ====================================================
+
+export interface DetailParts_comments_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface DetailParts_comments {
+  __typename: "CommentType";
+  id: string;
+  message: string;
+  creator: DetailParts_comments_creator | null;
+}
+
+export interface DetailParts_creator_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface DetailParts_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: DetailParts_creator_profile | null;
+}
+
+export interface DetailParts {
+  __typename: "CardType";
+  id: string;
+  file: string | null;
+  caption: string;
+  location: string | null;
+  likeCount: number | null;
+  commentCount: number | null;
+  isLiked: boolean | null;
+  createdAt: string | null;
+  comments: (DetailParts_comments | null)[] | null;
+  creator: DetailParts_creator;
 }
 
 /* tslint:disable */

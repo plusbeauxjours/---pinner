@@ -210,7 +210,7 @@ class DeleteCard(graphene.Mutation):
 class UploadCard(graphene.Mutation):
 
     class Arguments:
-        files = graphene.List(types.FileInputType)
+        fileUrl = graphene.String(required=True)
         caption = graphene.String(required=True)
         location = graphene.String()
 
@@ -222,26 +222,15 @@ class UploadCard(graphene.Mutation):
         user = info.context.user
         ok = True
         error = None
-        files = kwargs.get('files')
+        fileUrl = kwargs.get('fileUrl')
         caption = kwargs.get('caption')
         location = kwargs.get('location')
 
         try:
             card = models.Card.objects.create(
-                creator=user, caption=caption, location=location)
-            
-            for file in files:
-                try:
-                    fileImage = models.File.objects.create(
-                        fileURL=file.url, creator=user, is_video=file.is_video)
-                    card.file.add(fileImage)
-                    card.save()
-                except IntegrityError as e:
-                    print(e)
-                    raise Exception("Can't Create Card")
-
-            return types.UploadCardResponse(card=card)
-
+                creator=user, caption=caption, location=location, file=fileUrl)
+            return types.UploadCardResponse(ok=True, error=error, card=card)
         except IntegrityError as e:
             print(e)
-            raise Exception("Can't Create Card")
+            error = "Can't Create Card"
+            return types.UploadCardResponse(ok=False, error=error)
