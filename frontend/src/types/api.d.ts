@@ -152,56 +152,6 @@ export interface localSignUpVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: facebookLogIn
-// ====================================================
-
-export interface facebookLogIn_facebookLogIn {
-  __typename: "ObtainJSONWebToken";
-  token: string | null;
-}
-
-export interface facebookLogIn {
-  facebookLogIn: facebookLogIn_facebookLogIn;
-}
-
-export interface facebookLogInVariables {
-  username: string;
-  password: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: facebookConnect
-// ====================================================
-
-export interface facebookConnect_createAccount {
-  __typename: "CreateAccountResponse";
-  ok: boolean;
-  error: string | null;
-  token: string | null;
-}
-
-export interface facebookConnect {
-  createAccount: facebookConnect_createAccount;
-}
-
-export interface facebookConnectVariables {
-  avatar?: string | null;
-  email: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-  username: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: cardDetail
 // ====================================================
 
@@ -274,19 +224,6 @@ export interface cardDetailVariables {
 // GraphQL query operation: explore
 // ====================================================
 
-export interface explore_latestCards_cards {
-  __typename: "CardType";
-  id: string;
-  likeCount: number | null;
-  commentCount: number | null;
-  file: string | null;
-}
-
-export interface explore_latestCards {
-  __typename: "LatestCardsResponse";
-  cards: (explore_latestCards_cards | null)[] | null;
-}
-
 export interface explore_latestUsers_users_profile {
   __typename: "ProfileType";
   isFollowing: boolean | null;
@@ -308,9 +245,22 @@ export interface explore_latestUsers {
   users: (explore_latestUsers_users | null)[] | null;
 }
 
+export interface explore_latestCards_cards {
+  __typename: "CardType";
+  id: string;
+  likeCount: number | null;
+  commentCount: number | null;
+  file: string | null;
+}
+
+export interface explore_latestCards {
+  __typename: "LatestCardsResponse";
+  cards: (explore_latestCards_cards | null)[] | null;
+}
+
 export interface explore {
-  latestCards: explore_latestCards;
   latestUsers: explore_latestUsers;
+  latestCards: explore_latestCards;
 }
 
 
@@ -485,6 +435,34 @@ export interface searchTerms {
 
 export interface searchTermsVariables {
   term: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: facebookConnect
+// ====================================================
+
+export interface facebookConnect_createAccount {
+  __typename: "CreateAccountResponse";
+  ok: boolean;
+  error: string | null;
+  token: string | null;
+}
+
+export interface facebookConnect {
+  createAccount: facebookConnect_createAccount;
+}
+
+export interface facebookConnectVariables {
+  avatar?: string | null;
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  username: string;
 }
 
 

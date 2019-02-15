@@ -1,24 +1,19 @@
 import { gql } from "apollo-boost";
+import { USER_FRAGMENT, CARD_FRAGMENT } from "src/sharedQueries";
 
 export const EXPLORE_QUERY = gql`
   query explore {
-    latestCards {
-      cards {
-        id
-        likeCount
-        commentCount
-        file
-      }
-    }
     latestUsers {
       users {
-        id
-        username
-        profile {
-          isFollowing
-          avatar
-        }
+        ...UserParts
+      }
+    }
+    latestCards {
+      cards {
+        ...CardParts
       }
     }
   }
+  ${USER_FRAGMENT}
+  ${CARD_FRAGMENT}
 `;

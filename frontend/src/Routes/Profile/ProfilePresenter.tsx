@@ -71,9 +71,8 @@ const ProfilePresenter: React.SFC<any> = ({ data, loading }) => {
     const {
       userProfile: { user }
     } = data;
-    console.log(user.profile.avatar);
     return (
-      <React.Fragment>
+      <>
         <SWrapper>
           <Header>
             <Avatar size="lg" url={user.profile.avatar} />
@@ -108,7 +107,7 @@ const ProfilePresenter: React.SFC<any> = ({ data, loading }) => {
             <CardGrid cards={user.cards} />
           )}
         </Wrapper>
-      </React.Fragment>
+      </>
     );
   }
   return null;

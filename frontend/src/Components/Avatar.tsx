@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "src/Styles/typed-components";
 
 const Container = styled.div<IProps>`
   height: ${props => {
@@ -31,14 +31,15 @@ const Container = styled.div<IProps>`
 `;
 
 interface IProps {
-  url?: any;
+  url?: string;
   size: string;
   bg?: string;
   className?: string;
 }
 
-const Avatar: React.SFC<IProps> = ({ className, url, size = "md" }) => (
-  <Container className={className} bg={url} size={size} />
-);
+const Avatar: React.SFC<IProps> = ({ className, url, size }) => {
+  console.log(size);
+  return <Container className={className} bg={url} size={size} />;
+};
 
 export default Avatar;

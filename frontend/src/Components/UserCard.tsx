@@ -26,21 +26,23 @@ const SBold = styled(Bold)`
 
 interface IProps {
   id: string;
-  avatar?: string;
+  avatar: string;
   username: string;
   isFollowing: boolean;
 }
 
-const UserCard: React.SFC<IProps> = ({ id, avatar, username, isFollowing }) => (
-  <Container>
-    <Link to={`/${username}`}>
-      <SAvatar url={avatar} size="md" />
-    </Link>
-    <Link to={`/${username}`}>
-      <SBold text={username} />
-    </Link>
-    <FollowBtn isFollowing={isFollowing} userId={id} />
-  </Container>
-);
-
+const UserCard: React.SFC<IProps> = ({ id, avatar, username, isFollowing }) => {
+  console.log(avatar);
+  return (
+    <Container>
+      <Link to={`/${username}`}>
+        <SAvatar url={avatar} size="md" />
+      </Link>
+      <Link to={`/${username}`}>
+        <SBold text={username} />
+      </Link>
+      <FollowBtn isFollowing={isFollowing} userId={id} />
+    </Container>
+  );
+};
 export default UserCard;
