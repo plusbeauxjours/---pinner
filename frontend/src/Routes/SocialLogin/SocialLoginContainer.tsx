@@ -3,9 +3,10 @@ import SocialLoginPresenter from "./SocialLoginPresenter";
 import { Mutation, MutationFn } from "react-apollo";
 import { SIGN_UP } from "./SocialLoginQueries";
 import { toast } from "react-toastify";
-import { LOG_USER_IN } from "../../sharedQueries.local";
 import { facebookConnect, facebookConnectVariables } from "../../types/api";
+import { LOG_USER_IN } from "../../sharedQueries.local";
 
+class LogUserInMutation extends Mutation {}
 class LoginMutaion extends Mutation<
   facebookConnect,
   facebookConnectVariables
@@ -31,7 +32,7 @@ class SocialLoginContainer extends React.Component<any, IState> {
   public facebookMutation: MutationFn;
   public render() {
     return (
-      <Mutation mutation={LOG_USER_IN}>
+      <LogUserInMutation mutation={LOG_USER_IN}>
         {logUserIn => (
           <LoginMutaion
             mutation={SIGN_UP}
@@ -56,7 +57,7 @@ class SocialLoginContainer extends React.Component<any, IState> {
             }}
           </LoginMutaion>
         )}
-      </Mutation>
+      </LogUserInMutation>
     );
   }
   public loginCallback = response => {

@@ -31,14 +31,14 @@ const Container = styled.div<IProps>`
 `;
 
 interface IProps {
-  url: any;
+  url?: any;
   size: string;
   bg?: string;
   className?: string;
 }
 
 const Avatar: React.SFC<IProps> = ({ className, url, size = "md" }) => (
-  <Container className={className} url={url} size={size} />
+  <Container className={className} bg={url} size={size} />
 );
 
 export default Avatar;

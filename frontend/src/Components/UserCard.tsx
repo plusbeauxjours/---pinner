@@ -26,7 +26,7 @@ const SBold = styled(Bold)`
 
 interface IProps {
   id: string;
-  avatar: string;
+  avatar?: string;
   username: string;
   isFollowing: boolean;
 }

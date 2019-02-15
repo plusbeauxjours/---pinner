@@ -2,8 +2,9 @@ import React from "react";
 import styled from "../../Styles/typed-components";
 import Wrapper from "../../Components/Wrapper";
 import LogIn from "../../Components/LogIn";
-import SocialLogin from "../../Components/SocialLogin";
+import SignUp from "../../Components/SignUp";
 import PhoneImage from "../../Images/phone.png";
+import { Link } from "react-router-dom";
 
 const Container = styled(Wrapper)`
   display: flex;
@@ -46,17 +47,25 @@ interface IProps {
   changeMode: any;
 }
 
-const FeedPresenter: React.SFC<IProps> = ({ logIn, changeMode }) => (
+const SocialLogin = styled.div`
+  border-top: 1px solid ${props => props.theme.greyColor};
+  padding: 30px 20px;
+`;
+
+const SocialLink = styled.span`
+  color: ${props => props.theme.blueColor};
+  font-size: 20px;
+  cursor: pointer;
+`;
+
+const AuthPresenter: React.SFC<IProps> = ({ logIn, changeMode }) => (
   <Container>
     <Phone src={PhoneImage} />
     <Column>
-      <FormBox>{logIn ? <LogIn /> : <SocialLogin />}</FormBox>
+      <FormBox>{logIn ? <LogIn /> : <SignUp />}</FormBox>
       <SwitchBox>
         {logIn ? (
-          <>
-            Don't have an account?{" "}
-            <SwitchLink onClick={changeMode}>SocialLogin</SwitchLink>
-          </>
+          <>Don't have an account? </>
         ) : (
           <>
             Have an account?{" "}
@@ -64,8 +73,13 @@ const FeedPresenter: React.SFC<IProps> = ({ logIn, changeMode }) => (
           </>
         )}
       </SwitchBox>
+      <Link to={"/social-login"}>
+        <SocialLogin>
+          <SocialLink>Or connect with social</SocialLink>
+        </SocialLogin>
+      </Link>
     </Column>
   </Container>
 );
 
-export default FeedPresenter;
+export default AuthPresenter;

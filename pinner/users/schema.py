@@ -44,5 +44,4 @@ class Mutation(object):
     edit_profile = mutations.EditProfile.Field(required=True)
     change_password = mutations.ChangePassword.Field(required=True)
     log_in = graphql_jwt.ObtainJSONWebToken.Field(required=True)
-    facebook_log_in = graphql_jwt.ObtainJSONWebToken.Field(required=True)
     create_account = mutations.CreateAccount.Field(required=True)

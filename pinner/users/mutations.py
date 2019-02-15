@@ -203,7 +203,7 @@ class CreateAccount(graphene.Mutation):
             return types.CreateAccountResponse(token=token)
         except IntegrityError as e:
                 print(e)
-                return types.CreateAccountResponse(ok=not ok, error=error)
+                return types.CreateAccountResponse(token=token)
                     
 
         return types.CreateAccountResponse(ok=ok, error=None)

@@ -71,11 +71,12 @@ const ProfilePresenter: React.SFC<any> = ({ data, loading }) => {
     const {
       userProfile: { user }
     } = data;
+    console.log(user.profile.avatar);
     return (
       <React.Fragment>
         <SWrapper>
           <Header>
-            <Avatar size="lg" url={user.profile.avator} />
+            <Avatar size="lg" url={user.profile.avatar} />
             <HeaderColumn>
               <UsernameRow>
                 <Username>{user.username}</Username>
