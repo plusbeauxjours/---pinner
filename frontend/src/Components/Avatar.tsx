@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
 
-const Container = styled.div<IProps>`
+const Container = styled.img<IProps>`
   height: ${props => {
     if (props.size === "md") {
       return "50px";
@@ -24,7 +24,6 @@ const Container = styled.div<IProps>`
       return "30px";
     }
   }};
-  background-image: url(${props => props.bg});
   background-position: center center;
   background-size: 100%;
   border-radius: 50%;
@@ -39,7 +38,7 @@ interface IProps {
 
 const Avatar: React.SFC<IProps> = ({ className, url, size }) => {
   console.log(size);
-  return <Container className={className} bg={url} size={size} />;
+  return <Container className={className} src={url} size={size} />;
 };
 
 export default Avatar;

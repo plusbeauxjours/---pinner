@@ -9,7 +9,7 @@ class ExploreQuery extends Query<explore> {}
 class ExploreContainer extends React.Component<any> {
   public render = () => {
     return (
-      <ExploreQuery query={EXPLORE_QUERY}>
+      <ExploreQuery query={EXPLORE_QUERY} fetchPolicy="network-only">
         {({ data, loading }) => (
           <ExplorePresenter data={data} loading={loading} />
         )}

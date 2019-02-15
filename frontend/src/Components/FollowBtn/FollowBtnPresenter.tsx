@@ -15,7 +15,7 @@ interface IProps {
 const FollowBtnPresenter: React.SFC<IProps> = ({ isFollowing, toggleBtn }) => (
   <SButton
     active={isFollowing}
-    size={null}
+    size={"xs"}
     text={isFollowing ? "Unfollow" : "Follow"}
     onClick={toggleBtn}
   />

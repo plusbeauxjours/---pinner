@@ -17,7 +17,11 @@ class ProfileContainer extends React.Component<IProps> {
       }
     } = this.props;
     return (
-      <ProfileQuery query={GET_USER} variables={{ username }}>
+      <ProfileQuery
+        query={GET_USER}
+        variables={{ username }}
+        fetchPolicy="network-only"
+      >
         {({ data, loading }) => (
           <ProfilePresenter loading={loading} data={data} />
         )}
