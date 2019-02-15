@@ -153,7 +153,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
     });
   };
   public toggleCommentClick = () => {
-    console.log(this.state.openedComment);
     this.setState(state => {
       return {
         openedComment: !state.openedComment

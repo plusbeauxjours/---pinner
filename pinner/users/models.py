@@ -19,11 +19,8 @@ class Profile(config_models.TimeStampedModel):
     bio = models.TextField(default='', blank=True, null=True)
     website = models.URLField(blank=True, null=True)
     gender = models.CharField(max_length=1, choices=GENDERS, default='M')
-    avatar = ProcessedImageField(
-        processors = [ResizeToFill(200, 200)],
-        format = 'JPEG',
-        options = {'quality':100}
-    )
+    avatar = models.URLField(
+        blank=True, default="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80")
     following = models.ManyToManyField(
         'self', blank=True, symmetrical=False, related_name='following_users')
     followers = models.ManyToManyField(

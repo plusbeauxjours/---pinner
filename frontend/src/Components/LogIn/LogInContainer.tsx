@@ -1,6 +1,6 @@
 import React from "react";
 import LogInPresenter from "./LogInPresenter";
-import { Mutation, MutationFn } from "react-apollo";
+import { Mutation } from "react-apollo";
 import { logIn, logInVariables } from "../../types/api";
 import { LOGIN_MUTATION } from "./LogInQueries";
 import { toast } from "react-toastify";
@@ -15,7 +15,6 @@ class LogUserInMutation extends Mutation {}
 class LogInMutation extends Mutation<logIn, logInVariables> {}
 
 class LogInContainer extends React.Component<any, IState> {
-  public LogInMutation: MutationFn;
   public state = {
     username: "",
     password: ""

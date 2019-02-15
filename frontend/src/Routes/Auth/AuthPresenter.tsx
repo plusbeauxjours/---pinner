@@ -2,7 +2,7 @@ import React from "react";
 import styled from "../../Styles/typed-components";
 import Wrapper from "../../Components/Wrapper";
 import LogIn from "../../Components/LogIn";
-import SignUp from "../../Components/SignUp";
+import SocialLogin from "../../Components/SocialLogin";
 import PhoneImage from "../../Images/phone.png";
 
 const Container = styled(Wrapper)`
@@ -50,12 +50,12 @@ const FeedPresenter: React.SFC<IProps> = ({ logIn, changeMode }) => (
   <Container>
     <Phone src={PhoneImage} />
     <Column>
-      <FormBox>{logIn ? <LogIn /> : <SignUp />}</FormBox>
+      <FormBox>{logIn ? <LogIn /> : <SocialLogin />}</FormBox>
       <SwitchBox>
         {logIn ? (
           <>
             Don't have an account?{" "}
-            <SwitchLink onClick={changeMode}>Sign up</SwitchLink>
+            <SwitchLink onClick={changeMode}>SocialLogin</SwitchLink>
           </>
         ) : (
           <>

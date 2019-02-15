@@ -92,7 +92,7 @@ const HeaderPresenter: React.SFC<IProps> = ({ onSubmit, onChange, search }) => (
           </Link>
         </Icon>
         <Icon>
-          <Link to="#">
+          <Link to="/location">
             <HeartEmpty />
           </Link>
         </Icon>

@@ -53,7 +53,7 @@ class SearchUsersResponse(graphene.ObjectType):
 class CheckUsernameResponse(graphene.ObjectType,):
     ok = graphene.Boolean()
 
-class CreateAccountResponse(graphene.ObjectType):
+class CreateAccountResponse(graphene.ObjectType, config_types.ResponseFields):
     token = graphene.String()
 
 class LatestUsersResponse(graphene.ObjectType):

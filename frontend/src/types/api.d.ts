@@ -127,19 +127,69 @@ export interface addCommentVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: signUp
+// GraphQL mutation operation: localSignUp
 // ====================================================
 
-export interface signUp_createAccount {
+export interface localSignUp_createAccount {
   __typename: "CreateAccountResponse";
   token: string | null;
 }
 
-export interface signUp {
-  createAccount: signUp_createAccount;
+export interface localSignUp {
+  createAccount: localSignUp_createAccount;
 }
 
-export interface signUpVariables {
+export interface localSignUpVariables {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  username: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: facebookLogIn
+// ====================================================
+
+export interface facebookLogIn_facebookLogIn {
+  __typename: "ObtainJSONWebToken";
+  token: string | null;
+}
+
+export interface facebookLogIn {
+  facebookLogIn: facebookLogIn_facebookLogIn;
+}
+
+export interface facebookLogInVariables {
+  username: string;
+  password: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: facebookConnect
+// ====================================================
+
+export interface facebookConnect_createAccount {
+  __typename: "CreateAccountResponse";
+  ok: boolean;
+  error: string | null;
+  token: string | null;
+}
+
+export interface facebookConnect {
+  createAccount: facebookConnect_createAccount;
+}
+
+export interface facebookConnectVariables {
+  avatar?: string | null;
   email: string;
   firstName: string;
   lastName: string;

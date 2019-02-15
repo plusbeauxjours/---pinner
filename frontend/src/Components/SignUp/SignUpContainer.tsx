@@ -1,7 +1,7 @@
 import React from "react";
 import SignUpPresenter from "./SignUpPresenter";
 import { Mutation, MutationFn } from "react-apollo";
-import { signUp, signUpVariables } from "../../types/api";
+import { localSignUp, localSignUpVariables } from "../../types/api";
 import { SIGNUP_MUTATION } from "./SignUpQueries";
 import { LOG_USER_IN } from "../../sharedQueries.local";
 
@@ -14,7 +14,7 @@ interface IState {
 }
 
 class LogUserInMutation extends Mutation {}
-class SignUpMutation extends Mutation<signUp, signUpVariables> {}
+class SignUpMutation extends Mutation<localSignUp, localSignUpVariables> {}
 
 class SignUpContainer extends React.Component<any, IState> {
   public signUpFn: MutationFn;
