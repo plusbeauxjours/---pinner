@@ -65,7 +65,10 @@ const AuthPresenter: React.SFC<IProps> = ({ logIn, changeMode }) => (
       <FormBox>{logIn ? <LogIn /> : <SignUp />}</FormBox>
       <SwitchBox>
         {logIn ? (
-          <>Don't have an account? </>
+          <>
+            Don't have an account?
+            <SwitchLink onClick={changeMode}>Sign up</SwitchLink>
+          </>
         ) : (
           <>
             Have an account?{" "}

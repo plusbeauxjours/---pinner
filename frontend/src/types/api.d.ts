@@ -127,24 +127,25 @@ export interface addCommentVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: localSignUp
+// GraphQL mutation operation: signUp
 // ====================================================
 
-export interface localSignUp_createAccount {
+export interface signUp_createAccount {
   __typename: "CreateAccountResponse";
   token: string | null;
 }
 
-export interface localSignUp {
-  createAccount: localSignUp_createAccount;
+export interface signUp {
+  createAccount: signUp_createAccount;
 }
 
-export interface localSignUpVariables {
+export interface signUpVariables {
   email: string;
   firstName: string;
   lastName: string;
   password: string;
   username: string;
+  avatar?: string | null;
 }
 
 
@@ -177,7 +178,7 @@ export interface cardDetail_cardDetail_card_comments {
 
 export interface cardDetail_cardDetail_card_creator_profile {
   __typename: "ProfileType";
-  avatar: string;
+  avatar: string | null;
 }
 
 export interface cardDetail_cardDetail_card_creator {
@@ -227,7 +228,7 @@ export interface cardDetailVariables {
 export interface explore_latestUsers_users_profile {
   __typename: "ProfileType";
   isFollowing: boolean | null;
-  avatar: string;
+  avatar: string | null;
 }
 
 export interface explore_latestUsers_users {
@@ -293,7 +294,7 @@ export interface feed_feed_cards_comments {
 
 export interface feed_feed_cards_creator_profile {
   __typename: "ProfileType";
-  avatar: string;
+  avatar: string | null;
 }
 
 export interface feed_feed_cards_creator {
@@ -343,7 +344,7 @@ export interface feedVariables {
 export interface userProfile_userProfile_user_profile {
   __typename: "ProfileType";
   bio: string | null;
-  avatar: string;
+  avatar: string | null;
   website: string | null;
   postCount: number | null;
   followersCount: number | null;
@@ -397,7 +398,7 @@ export interface userProfileVariables {
 export interface searchTerms_searchUsers_users_profile {
   __typename: "ProfileType";
   isFollowing: boolean | null;
-  avatar: string;
+  avatar: string | null;
 }
 
 export interface searchTerms_searchUsers_users {
@@ -447,8 +448,6 @@ export interface searchTermsVariables {
 
 export interface facebookConnect_createAccount {
   __typename: "CreateAccountResponse";
-  ok: boolean;
-  error: string | null;
   token: string | null;
 }
 
@@ -501,7 +500,7 @@ export interface me {
 export interface UserParts_profile {
   __typename: "ProfileType";
   isFollowing: boolean | null;
-  avatar: string;
+  avatar: string | null;
 }
 
 export interface UserParts {
@@ -560,7 +559,7 @@ export interface DetailParts_comments {
 
 export interface DetailParts_creator_profile {
   __typename: "ProfileType";
-  avatar: string;
+  avatar: string | null;
 }
 
 export interface DetailParts_creator {

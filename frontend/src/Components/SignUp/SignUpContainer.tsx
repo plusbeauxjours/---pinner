@@ -1,8 +1,8 @@
 import React from "react";
 import SignUpPresenter from "./SignUpPresenter";
 import { Mutation, MutationFn } from "react-apollo";
-import { localSignUp, localSignUpVariables } from "../../types/api";
-import { SIGNUP_MUTATION } from "./SignUpQueries";
+import { signUp, signUpVariables } from "../../types/api";
+import { SIGN_UP } from "./SignUpQueries";
 import { LOG_USER_IN } from "../../sharedQueries.local";
 
 interface IState {
@@ -11,10 +11,11 @@ interface IState {
   lastName: string;
   username: string;
   password: string;
+  avatar: string;
 }
 
 class LogUserInMutation extends Mutation {}
-class SignUpMutation extends Mutation<localSignUp, localSignUpVariables> {}
+class SignUpMutation extends Mutation<signUp, signUpVariables> {}
 
 class SignUpContainer extends React.Component<any, IState> {
   public signUpFn: MutationFn;
@@ -23,22 +24,38 @@ class SignUpContainer extends React.Component<any, IState> {
     firstName: "",
     lastName: "",
     username: "",
-    password: ""
+    password: "",
+    avatar:
+      "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
   };
 
   public render() {
-    const { email, firstName, lastName, username, password } = this.state;
+    const {
+      email,
+      firstName,
+      lastName,
+      username,
+      password,
+      avatar
+    } = this.state;
     return (
       <LogUserInMutation mutation={LOG_USER_IN}>
         {logUserIn => (
           <SignUpMutation
-            mutation={SIGNUP_MUTATION}
-            variables={{ email, firstName, password, username, lastName }}
+            mutation={SIGN_UP}
+            variables={{
+              email,
+              firstName,
+              password,
+              username,
+              lastName,
+              avatar
+            }}
             onCompleted={({ createAccount: { token } }) =>
               logUserIn({ variables: { token } })
             }
           >
-            {(signUpFn, { loading }) => (
+            {signUpFn => (
               <SignUpPresenter
                 email={email}
                 firstName={firstName}
@@ -54,7 +71,6 @@ class SignUpContainer extends React.Component<any, IState> {
                   password !== ""
                 }
                 signUpFn={signUpFn}
-                loading={loading}
               />
             )}
           </SignUpMutation>

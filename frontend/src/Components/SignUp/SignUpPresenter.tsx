@@ -24,7 +24,6 @@ interface IProps {
   canSubmit: boolean;
   onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
   signUpFn: MutationFn;
-  loading: boolean;
 }
 
 const SignUpPresenter: React.SFC<IProps> = ({

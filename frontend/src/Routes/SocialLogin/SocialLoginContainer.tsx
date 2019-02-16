@@ -38,14 +38,14 @@ class SocialLoginContainer extends React.Component<any, IState> {
             mutation={SIGN_UP}
             onCompleted={data => {
               const { createAccount } = data;
-              if (createAccount.ok) {
+              if (createAccount) {
                 logUserIn({
                   variables: {
                     token: createAccount.token
                   }
                 });
               } else {
-                toast.error(createAccount.error);
+                toast.error(!createAccount);
               }
             }}
           >

@@ -1,12 +1,13 @@
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 
-export const SIGNUP_MUTATION = gql`
-  mutation localSignUp(
+export const SIGN_UP = gql`
+  mutation signUp(
     $email: String!
     $firstName: String!
     $lastName: String!
     $password: String!
     $username: String!
+    $avatar: String
   ) {
     createAccount(
       email: $email
@@ -14,6 +15,7 @@ export const SIGNUP_MUTATION = gql`
       lastName: $lastName
       password: $password
       username: $username
+      avatar: $avatar
     ) {
       token
     }

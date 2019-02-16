@@ -45,6 +45,7 @@ django-taggit = "*"
 django-taggit-serializer = "*"
 django-cors-headers = "*"
 "boto3" = "*"
+twilio = "*"
 
 
 [dev-packages]

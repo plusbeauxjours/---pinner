@@ -17,8 +17,6 @@ export const SIGN_UP = gql`
       password: $password
       username: $username
     ) {
-      ok
-      error
       token
     }
   }
