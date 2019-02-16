@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from graphql_jwt.decorators import login_required
 from graphql_jwt.shortcuts import get_token
 from . import models, types
-from . import models as notification_models
+from notifications import models as notification_models
 
 class FollowUser(graphene.Mutation):
 
