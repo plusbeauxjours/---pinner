@@ -1,4 +1,5 @@
 import graphene
+from graphql_jwt.decorators import login_required
 from . import models, types
 
 class MarkAsRead(graphene.Mutation):
@@ -8,26 +9,20 @@ class MarkAsRead(graphene.Mutation):
 
     Output = types.MarkAsReadResponse
 
+    @login_required
     def mutate(self, info, **kwargs):
 
         notificationId = kwargs.get('notificationId')
         user = info.context.user
-        ok = True
-        error = None
 
-        if user.is_authenticated:
-
-            try:
-                notification = models.Notification.objects.get(
-                    id=notificationId
-                )
-                notification.read=True
-                notification.save()
-                return types.MarkAsReadResponse(ok=ok, error=error)
-            except models.Notification.DoesNotExist:
-                error = "Notification Not Found"
-                return types.MarkAsReadResponse(ok=not ok, error=error)
-                
-        else:
-            error = "Unauthorized"
-            return types.MarkAsReadResponse(ok=not ok, error=error)
+        try:
+            notification = models.Notification.objects.get(
+                id=notificationId
+            )
+            notification.read=True
+            notification.save()
+            return types.MarkAsReadResponse(ok=True)
+            
+        except models.Notification.DoesNotExist:
+            raise Exception('Notification Not Found')
+            

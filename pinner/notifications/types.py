@@ -8,8 +8,9 @@ class NotificationType(DjangoObjectType):
     class Meta:
         model = models.Notification
 
-class GetNotificationsResponse(graphene.ObjectType, config_types.ResponseFields):
+class GetNotificationsResponse(graphene.ObjectType):
     notifications = graphene.List(NotificationType)
+    ok = graphene.Boolean()
 
-class MarkAsReadResponse(graphene.ObjectType, config_types.ResponseFields):
-    pass
+class MarkAsReadResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
