@@ -13,3 +13,5 @@ class Query(object):
 class Mutation(object):
 
     mark_as_verified = mutations.MarkAsVerified.Field(required=True)
+    start_phone_verification = mutations.StartPhoneVerification.Field(required=True)
+    # complete_phone_verification = mutations.CompletePhoneVerification(required=True)

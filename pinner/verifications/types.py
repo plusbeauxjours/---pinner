@@ -14,3 +14,12 @@ class GetVerificationsResponse(graphene.ObjectType):
 
 class MarkAsVerifiedResponse(graphene.ObjectType):
     ok = graphene.Boolean()
+
+class StartPhoneVerificationResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
+
+# class CompletePhoneVerificationResponse(graphene.ObjectType):
+#     pass
+#     ok = graphene.Boolean()
+#     token = graphene.String()
+
