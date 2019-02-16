@@ -45,7 +45,10 @@ class StartPhoneVerification(graphene.Mutation):
             )
             if existingVerification:
                 existingVerification.delete()
-                
+        except:
+            pass
+
+        try:
             newVerification = models.Verification.objects.create(
                 payload=phoneNumber,
                 target="Phone"
@@ -55,7 +58,7 @@ class StartPhoneVerification(graphene.Mutation):
             return types.StartPhoneVerificationResponse(ok=True)
         
         except IntegrityError as e:
-            raise Exception("Can't Send Code")
+            raise Exception("Wrong Phone Number")
     
             
 # class CompletePhoneVerification(graphene.Mutation):
