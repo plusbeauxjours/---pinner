@@ -229,8 +229,10 @@ class UploadCard(graphene.Mutation):
         try:
             card = models.Card.objects.create(
                 creator=user, caption=caption, location=location, file=fileUrl)
-            return types.UploadCardResponse(ok=True, error=error, card=card)
+            notification_models.Notification.objects.create(
+                actor=user, target=card.creator, verb="cards", payload=card
+            )
+            return types.UploadCardResponse(card=card)
         except IntegrityError as e:
             print(e)
-            error = "Can't Create Card"
-            return types.UploadCardResponse(ok=False, error=error)
+            raise Exception("Can't create the card")
