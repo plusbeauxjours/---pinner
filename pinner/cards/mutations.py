@@ -2,7 +2,7 @@ import graphene
 from django.db import IntegrityError
 from . import models, types
 from graphql_jwt.decorators import login_required
-from notifications import models as notification_models
+from . import models as notification_models
 
 class LikeCard(graphene.Mutation):
 

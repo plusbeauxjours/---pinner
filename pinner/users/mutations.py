@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from graphql_jwt.decorators import login_required
 from graphql_jwt.shortcuts import get_token
 from . import models, types
-from notifications import models as notification_models
+from . import models as notification_models
 
 class FollowUser(graphene.Mutation):
 
@@ -175,9 +175,6 @@ class CreateAccount(graphene.Mutation):
         password = kwargs.get('password')
         avatar = kwargs.get('avatar', None)
 
-        ok = True
-        error = None
-
         try:
             existing_user = User.objects.get(username=username)
             raise Exception("Username is already taken")
@@ -192,7 +189,6 @@ class CreateAccount(graphene.Mutation):
         except IntegrityError as e:
             print(e)
             raise Exception("Can't Create Account")
-        return types.CreateAccountResponse(ok=not ok, error=error)
 
         try:
             profile = models.Profile.objects.create(
@@ -202,8 +198,5 @@ class CreateAccount(graphene.Mutation):
             token = get_token(user)
             return types.CreateAccountResponse(token=token)
         except IntegrityError as e:
-                print(e)
-                return types.CreateAccountResponse(token=token)
-                    
-
-        return types.CreateAccountResponse(ok=ok, error=None)
+            print(e)
+            raise Exception("Can't Create Account")
