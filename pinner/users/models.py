@@ -25,6 +25,11 @@ class Profile(config_models.TimeStampedModel):
         'self', blank=True, symmetrical=False, related_name='following_users')
     followers = models.ManyToManyField(
         'self', blank=True, symmetrical=False, related_name='followed_by')
+    phoneNumber = models.CharField(max_length=20, blank=True, null=True)
+    verifiedPhoneNumber = models.BooleanField(default=False)
+    verifiedEmail = models.BooleanField(default=False)
+    lastLng = models.IntegerField(blank=True, null=True)
+    lastLat = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.user.username

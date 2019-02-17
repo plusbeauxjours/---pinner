@@ -6,10 +6,8 @@ TWILIO_TOKEN="f5fad23d4772fc5249af8f78945987ee"
 from_number = "+16623301384"  
 client = Client(TWILIO_SID, TWILIO_TOKEN)
 
-to_number = "+66803832506"
-
 def sendSMS(to, body):
-    return client.messages.create(to=to_number,
+    return client.messages.create(to=to,
                                     from_=from_number,
                                     body=body)
 

@@ -18,8 +18,7 @@ class MarkAsVerifiedResponse(graphene.ObjectType):
 class StartPhoneVerificationResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
-# class CompletePhoneVerificationResponse(graphene.ObjectType):
-#     pass
-#     ok = graphene.Boolean()
-#     token = graphene.String()
+class CompletePhoneVerificationResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
+    token = graphene.String()
 
