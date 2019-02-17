@@ -6,14 +6,13 @@ import {
   Redirect
 } from "react-router-dom";
 import styled from "styled-components";
-import Auth from "../Routes/Auth";
+import Home from "../Routes/Home";
 import Feed from "../Routes/Feed";
 import EditProfile from "../Routes/EditProfile";
 import Profile from "../Routes/Profile";
 import CardDetail from "../Routes/CardDetail";
 import Search from "../Routes/Search";
 import VerifyPhone from "../Routes/VerifyPhone";
-import SocialLogin from "../Routes/SocialLogin";
 import Explore from "../Routes/Explore";
 import Header from "./Header";
 import Location from "./Location";
@@ -32,8 +31,7 @@ const LoggedInPages = () => (
       <Route path="/p/:id" component={CardDetail} />
       <Route path="/edit-profile" component={EditProfile} />
       <Route path="/search" component={Search} />
-      <Route path={"/verify-phone"} component={VerifyPhone} />
-      <Route path="/social-login" component={SocialLogin} />
+      <Route path="/verify-phone" component={VerifyPhone} />
       <Route path="/explore" component={Explore} />
       <Route path="/location" component={Location} />
       <Route path="/:username" component={Profile} />
@@ -44,7 +42,7 @@ const LoggedInPages = () => (
 
 const LoggedOutPages = () => (
   <Switch>
-    <Route path="/" exact={true} component={Auth} />
+    <Route path="/" exact={true} component={Home} />
     <Redirect from="*" to="/" />
   </Switch>
 );
