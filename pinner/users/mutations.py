@@ -208,6 +208,7 @@ class FacebookConnect(graphene.Mutation):
         first_name = graphene.String()
         last_name = graphene.String()
         email= graphene.String()
+        gender= graphene.String()
         fbId = graphene.String(required=True)
     
     Output = types.FacebookConnectResponse
@@ -219,21 +220,18 @@ class FacebookConnect(graphene.Mutation):
         first_name = kwargs.get('first_name')
         last_name = kwargs.get('last_name')
         email = kwargs.get('email')
+        gender = kwargs.get('gender')
         fbId = kwargs.get('fbId')
-
 
         try: 
             existingUser = models.Profile.objects.get(
                 fbId=fbId
             )
-            print(user)
-            if existingUser:
-                token = get_token(user) 
-                return types.FacebookConnectResponse(ok=True, token=token)
-
-        except IntegrityError as e:
-            print(e)
-            raise Exception("Could not Log In")
+            token = get_token(existingUser.user) 
+            return types.FacebookConnectResponse(ok=True, token=token)
+        
+        except:
+            pass
 
         try:
             newUser = User.objects.create_user(username, email)
@@ -243,13 +241,12 @@ class FacebookConnect(graphene.Mutation):
             profile = models.Profile.objects.create(
                 user=newUser,
                 fbId=fbId,
+                gender=gender,
                 avatar='http://graph.facebook.com/{}/picture?type=large'.format(fbId)
             )
             token = get_token(newUser) 
             return types.FacebookConnectResponse(ok=True, token=token)
-        
+
         except IntegrityError as e:
-            print(e)
-            raise Exception("Could not Log In")
-
-
+            raise Exception("No Phone to Verify")
+            

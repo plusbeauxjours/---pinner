@@ -153,6 +153,32 @@ export interface signUpVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: FacebookConnect
+// ====================================================
+
+export interface FacebookConnect_facebookConnect {
+  __typename: "FacebookConnectResponse";
+  token: string | null;
+}
+
+export interface FacebookConnect {
+  facebookConnect: FacebookConnect_facebookConnect;
+}
+
+export interface FacebookConnectVariables {
+  username: string;
+  firstName: string;
+  lastName: string;
+  email?: string | null;
+  gender?: string | null;
+  fbId: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: cardDetail
 // ====================================================
 
@@ -178,7 +204,7 @@ export interface cardDetail_cardDetail_card_comments {
 
 export interface cardDetail_cardDetail_card_creator_profile {
   __typename: "ProfileType";
-  avatar: string | null;
+  avatar: string;
 }
 
 export interface cardDetail_cardDetail_card_creator {
@@ -228,7 +254,7 @@ export interface cardDetailVariables {
 export interface explore_latestUsers_users_profile {
   __typename: "ProfileType";
   isFollowing: boolean | null;
-  avatar: string | null;
+  avatar: string;
 }
 
 export interface explore_latestUsers_users {
@@ -294,7 +320,7 @@ export interface feed_feed_cards_comments {
 
 export interface feed_feed_cards_creator_profile {
   __typename: "ProfileType";
-  avatar: string | null;
+  avatar: string;
 }
 
 export interface feed_feed_cards_creator {
@@ -344,7 +370,7 @@ export interface feedVariables {
 export interface userProfile_userProfile_user_profile {
   __typename: "ProfileType";
   bio: string | null;
-  avatar: string | null;
+  avatar: string;
   website: string | null;
   postCount: number | null;
   followersCount: number | null;
@@ -398,7 +424,7 @@ export interface userProfileVariables {
 export interface searchTerms_searchUsers_users_profile {
   __typename: "ProfileType";
   isFollowing: boolean | null;
-  avatar: string | null;
+  avatar: string;
 }
 
 export interface searchTerms_searchUsers_users {
@@ -443,32 +469,6 @@ export interface searchTermsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: facebookConnect
-// ====================================================
-
-export interface facebookConnect_createAccount {
-  __typename: "CreateAccountResponse";
-  token: string | null;
-}
-
-export interface facebookConnect {
-  createAccount: facebookConnect_createAccount;
-}
-
-export interface facebookConnectVariables {
-  avatar?: string | null;
-  email: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-  username: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: me
 // ====================================================
 
@@ -500,7 +500,7 @@ export interface me {
 export interface UserParts_profile {
   __typename: "ProfileType";
   isFollowing: boolean | null;
-  avatar: string | null;
+  avatar: string;
 }
 
 export interface UserParts {
@@ -559,7 +559,7 @@ export interface DetailParts_comments {
 
 export interface DetailParts_creator_profile {
   __typename: "ProfileType";
-  avatar: string | null;
+  avatar: string;
 }
 
 export interface DetailParts_creator {

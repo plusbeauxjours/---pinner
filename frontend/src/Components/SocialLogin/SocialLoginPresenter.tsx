@@ -20,7 +20,7 @@ const SocialLoginPresenter: React.SFC<IProps> = ({ loginCallback }) => (
   <FacebookLogin
     appId="242663513281642"
     autoLoad={false}
-    fields="name, first_name, last_name, email, password"
+    fields="name, first_name, last_name, email, gender"
     callback={loginCallback}
     render={renderProps => (
       <Link onClick={renderProps.onClick}>

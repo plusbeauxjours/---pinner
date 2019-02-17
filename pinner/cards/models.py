@@ -38,9 +38,9 @@ class Comment(config_models.TimeStampedModel):
     
     message = models.TextField()
     creator = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True)
+        User, on_delete=models.CASCADE, null=True)
     card = models.ForeignKey(
-        Card, on_delete=models.SET_NULL, null=True, related_name='comments')
+        Card, on_delete=models.CASCADE, null=True, related_name='comments')
 
     def __str__(self):
         return 'User: {} - Comment: {}'.format(self.creator.username, self.message)
@@ -48,9 +48,9 @@ class Comment(config_models.TimeStampedModel):
 class Like(config_models.TimeStampedModel):
     
     creator = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, related_name='likes')
+        User, on_delete=models.CASCADE, null=True, related_name='likes')
     card = models.ForeignKey(
-        Card, on_delete=models.SET_NULL, null=True, related_name='likes')
+        Card, on_delete=models.CASCADE, null=True, related_name='likes')
 
     def __str__(self):
         return 'User: {} - Card Caption: {}'.format(self.creator.username, self.card.caption)

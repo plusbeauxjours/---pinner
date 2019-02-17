@@ -1,33 +1,32 @@
 import React from "react";
 import SocialLoginPresenter from "./SocialLoginPresenter";
 import { Mutation, MutationFn } from "react-apollo";
-import { facebookConnect, facebookConnectVariables } from "../../types/api";
+import { FacebookConnect, FacebookConnectVariables } from "../../types/api";
 import { FACEBOOK_CONNECT } from "./SocialLoginQueries";
-import { RouteChildrenProps } from "react-router";
 import { toast } from "react-toastify";
 import { LOG_USER_IN } from "../../sharedQueries.local";
 
-class LoginMutaion extends Mutation<
-  facebookConnect,
-  facebookConnectVariables
+class FacebookConnectMutaion extends Mutation<
+  FacebookConnect,
+  FacebookConnectVariables
 > {}
-
-interface IProps extends RouteChildrenProps<any> {}
 
 interface IState {
   name: string;
   firstName: string;
   lastName: string;
   email?: string;
+  gender: string;
   fbId: string;
 }
 
-class SocialLoginContainer extends React.Component<IProps, IState> {
+class SocialLoginContainer extends React.Component<any, IState> {
   public state = {
     name: "",
     firstName: "",
     lastName: "",
     email: "",
+    gender: "",
     fbId: ""
   };
   public facebookMutation: MutationFn;
@@ -35,34 +34,42 @@ class SocialLoginContainer extends React.Component<IProps, IState> {
     return (
       <Mutation mutation={LOG_USER_IN}>
         {logUserIn => (
-          <LoginMutaion
+          <FacebookConnectMutaion
             mutation={FACEBOOK_CONNECT}
             onCompleted={data => {
-              const { FacebookConnect } = data;
-              if (FacebookConnect.ok) {
+              const { facebookConnect } = data;
+              if (facebookConnect) {
                 logUserIn({
                   variables: {
-                    token: FacebookConnect.token
+                    token: facebookConnect.token
                   }
                 });
               } else {
-                toast.error(FacebookConnect.error);
+                toast.error("Could not log you in 😔");
               }
             }}
           >
-            {(facebookMutation, { loading }) => {
+            {facebookMutation => {
               this.facebookMutation = facebookMutation;
               return (
                 <SocialLoginPresenter loginCallback={this.loginCallback} />
               );
             }}
-          </LoginMutaion>
+          </FacebookConnectMutaion>
         )}
       </Mutation>
     );
   }
   public loginCallback = response => {
-    const { name, first_name, last_name, email, id, accessToken } = response;
+    const {
+      name,
+      first_name,
+      last_name,
+      email,
+      gender,
+      id,
+      accessToken
+    } = response;
     if (accessToken) {
       toast.success(`Welcom ${name}!`);
       this.facebookMutation({
@@ -71,11 +78,12 @@ class SocialLoginContainer extends React.Component<IProps, IState> {
           firstName: first_name,
           lastName: last_name,
           email,
+          gender,
           fbId: id
         }
       });
     } else {
-      toast.error("COuld not log you in 😔");
+      toast.error("Could not log you in 😔");
     }
   };
 }

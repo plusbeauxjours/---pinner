@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from config import models as config_models
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
+from django.db.models.signals import post_delete 
+from django.dispatch import receiver
 
 
 class Profile(config_models.TimeStampedModel):
@@ -18,7 +20,7 @@ class Profile(config_models.TimeStampedModel):
         User, on_delete=models.CASCADE)
     bio = models.TextField(default='', blank=True, null=True)
     website = models.URLField(blank=True, null=True)
-    gender = models.CharField(max_length=1, choices=GENDERS, default='M')
+    gender = models.CharField(max_length=15, blank=True, null=True)
     avatar = models.URLField(
         blank=True, default="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80")
     following = models.ManyToManyField(
@@ -50,3 +52,6 @@ class Profile(config_models.TimeStampedModel):
     @property
     def active_stories(self):
         return self.user.stories.filter(expired=False)
+
+    class Meta:
+        ordering = ['-created_at']
