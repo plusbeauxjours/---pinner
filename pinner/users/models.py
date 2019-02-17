@@ -30,6 +30,7 @@ class Profile(config_models.TimeStampedModel):
     verifiedEmail = models.BooleanField(default=False)
     lastLng = models.IntegerField(blank=True, null=True)
     lastLat = models.IntegerField(blank=True, null=True)
+    fbId = models.CharField(blank=True, null=True, max_length=20)
 
     def __str__(self):
         return self.user.username

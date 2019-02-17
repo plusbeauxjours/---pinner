@@ -50,10 +50,14 @@ class ChangePasswordResponse(graphene.ObjectType, config_types.ResponseFields):
 class SearchUsersResponse(graphene.ObjectType):
     users = graphene.List(UserType)
 
-class CheckUsernameResponse(graphene.ObjectType,):
+class CheckUsernameResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
 class CreateAccountResponse(graphene.ObjectType):
+    token = graphene.String()
+
+class FacebookConnectResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
     token = graphene.String()
 
 class LatestUsersResponse(graphene.ObjectType):

@@ -94,14 +94,14 @@ const ModalLink = styled.div`
 `;
 
 interface IProps {
-  logIn: boolean;
+  isLogIn: boolean;
   modalOpen: boolean;
   changeMode: () => void;
   toggleModal: () => void;
 }
 
 const HomePresenter: React.SFC<IProps> = ({
-  logIn,
+  isLogIn,
   modalOpen,
   toggleModal,
   changeMode
@@ -122,9 +122,9 @@ const HomePresenter: React.SFC<IProps> = ({
       <Container>
         <Phone src={PhoneImage} />
         <Column>
-          <FormBox>{logIn ? <LogIn /> : <SignUp />}</FormBox>
+          <FormBox>{isLogIn ? <LogIn /> : <SignUp />}</FormBox>
           <SwitchBox>
-            {logIn ? (
+            {isLogIn ? (
               <>
                 Don't have an account?
                 <SwitchLink onClick={changeMode}>Sign up</SwitchLink>

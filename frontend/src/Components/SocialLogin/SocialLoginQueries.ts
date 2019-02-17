@@ -1,21 +1,19 @@
 import { gql } from "apollo-boost";
 
-export const SIGN_UP = gql`
+export const FACEBOOK_CONNECT = gql`
   mutation facebookConnect(
-    $avatar: String
-    $email: String!
+    $name: String!
     $firstName: String!
     $lastName: String!
-    $password: String!
-    $username: String!
+    $email: String
+    $fbId: String!
   ) {
-    createAccount(
-      avatar: $avatar
-      email: $email
+    FacebookConnect(
+      name: $name
       firstName: $firstName
       lastName: $lastName
-      password: $password
-      username: $username
+      email: $email
+      fbId: $fbId
     ) {
       token
     }

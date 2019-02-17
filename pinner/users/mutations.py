@@ -200,3 +200,56 @@ class CreateAccount(graphene.Mutation):
         except IntegrityError as e:
             print(e)
             raise Exception("Can't Create Account")
+
+class FacebookConnect(graphene.Mutation):
+
+    class Arguments:
+        username = graphene.String()
+        first_name = graphene.String()
+        last_name = graphene.String()
+        email= graphene.String()
+        fbId = graphene.String(required=True)
+    
+    Output = types.FacebookConnectResponse
+    
+    def mutate(self, info, **kwargs):
+
+        user = info.context.user
+        username = kwargs.get('username')
+        first_name = kwargs.get('first_name')
+        last_name = kwargs.get('last_name')
+        email = kwargs.get('email')
+        fbId = kwargs.get('fbId')
+
+
+        try: 
+            existingUser = models.Profile.objects.get(
+                fbId=fbId
+            )
+            print(user)
+            if existingUser:
+                token = get_token(user) 
+                return types.FacebookConnectResponse(ok=True, token=token)
+
+        except IntegrityError as e:
+            print(e)
+            raise Exception("Could not Log In")
+
+        try:
+            newUser = User.objects.create_user(username, email)
+            newUser.first_name = first_name
+            newUser.last_name = last_name
+            newUser.save()
+            profile = models.Profile.objects.create(
+                user=newUser,
+                fbId=fbId,
+                avatar='http://graph.facebook.com/{}/picture?type=large'.format(fbId)
+            )
+            token = get_token(newUser) 
+            return types.FacebookConnectResponse(ok=True, token=token)
+        
+        except IntegrityError as e:
+            print(e)
+            raise Exception("Could not Log In")
+
+

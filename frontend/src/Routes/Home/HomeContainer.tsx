@@ -3,7 +3,7 @@ import HomePresenter from "./HomePresenter";
 import { RouteComponentProps } from "react-router";
 
 interface IState {
-  logIn: boolean;
+  isLogIn: boolean;
   modalOpen: boolean;
 }
 
@@ -13,15 +13,15 @@ class HomeContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      logIn: true,
+      isLogIn: true,
       modalOpen: false
     };
   }
   public render() {
-    const { logIn, modalOpen } = this.state;
+    const { isLogIn, modalOpen } = this.state;
     return (
       <HomePresenter
-        logIn={logIn}
+        isLogIn={isLogIn}
         modalOpen={modalOpen}
         changeMode={this.changeMode}
         toggleModal={this.toggleModal}
@@ -39,7 +39,7 @@ class HomeContainer extends React.Component<IProps, IState> {
   public changeMode = () => {
     this.setState(state => {
       return {
-        logIn: !state.logIn
+        isLogIn: !state.isLogIn
       };
     });
   };
