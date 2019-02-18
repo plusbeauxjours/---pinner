@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from cards import models as card_models
 from config import models as config_models
-	
-	
+
+
 class Notification(config_models.TimeStampedModel):
 
     VERBS = (
@@ -25,9 +25,9 @@ class Notification(config_models.TimeStampedModel):
 
     def __str__(self):
         return '{} From: {} {} 👉🏻 To: {} Read:{}'.format(
-            self.id, 
-            self.actor.username, 
-            self.verb, 
-            self.target.username, 
+            self.id,
+            self.actor.username,
+            self.verb,
+            self.target.username,
             self.read
-            )
+        )

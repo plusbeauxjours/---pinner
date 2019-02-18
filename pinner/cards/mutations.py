@@ -4,11 +4,12 @@ from . import models, types
 from graphql_jwt.decorators import login_required
 from . import models as notification_models
 
+
 class LikeCard(graphene.Mutation):
 
     """ Like a Card """
 
-    class Arguments: 
+    class Arguments:
         cardId = graphene.Int(required=True)
 
     Output = types.LikeCardResponse
@@ -40,17 +41,18 @@ class LikeCard(graphene.Mutation):
             like = models.Like.objects.create(
                 creator=user, card=card)
             notification_models.Notification.objects.create(
-            actor=user, target=card.creator, verb="like", payload=card
-        )
+                actor=user, target=card.creator, verb="like", payload=card
+            )
             return types.LikeCardResponse(ok=True)
         except IntegrityError as e:
             raise Exception("Can't Like Card")
+
 
 class AddComment(graphene.Mutation):
 
     """ Add Comment """
 
-    class Arguments: 
+    class Arguments:
         cardId = graphene.Int(required=True)
         message = graphene.String(required=True)
 
@@ -64,21 +66,22 @@ class AddComment(graphene.Mutation):
         user = info.context.user
         comment = None
 
-        try: 
+        try:
             card = models.Card.objects.get(id=cardId)
         except models.Card.DoesNotExist:
             raise Exception('Card Not Found')
 
-        try: 
+        try:
             comment = models.Comment.objects.create(
                 message=message, card=card, creator=user)
             notification_models.Notification.objects.create(
                 actor=user, target=card.creator, verb="comment", payload=card
-                )
+            )
             return types.AddCommentResponse(comment=comment)
         except IntegrityError as e:
             print(e)
             raise Exception("Can't create the comment")
+
 
 class DeleteComment(graphene.Mutation):
 
@@ -98,13 +101,13 @@ class DeleteComment(graphene.Mutation):
 
         if user.is_authenticated:
 
-            try: 
+            try:
                 card = models.Card.objects.get(id=cardId)
             except models.Card.DoesNotExist:
                 error = 'Card Not Found'
                 return types.DeleteCommentResponse(ok=not ok, error=error)
 
-            try: 
+            try:
                 comment = models.Comment.objects.get(id=commentId)
             except models.Comment.DoesNotExist:
                 error = 'Comment Not Found'
@@ -112,13 +115,14 @@ class DeleteComment(graphene.Mutation):
 
             if comment.creator.id == user.id or card.creator.id == user.id:
                 comment.delete()
-            else: 
+            else:
                 error = "Can't Delete Comment"
             return types.DeleteCommentResponse(ok=not ok, error=error)
 
         else:
             error = 'You need to log in'
             return types.DeleteCommentResponse(ok=not ok, error=error)
+
 
 class EditCard(graphene.Mutation):
 
@@ -206,6 +210,7 @@ class DeleteCard(graphene.Mutation):
         else:
             error = "You need to log in"
             return types.EditCardResponse(ok=not ok, error=error)
+
 
 class UploadCard(graphene.Mutation):
 

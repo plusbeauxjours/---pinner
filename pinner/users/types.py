@@ -4,6 +4,7 @@ from . import models
 from django.contrib.auth.models import User
 from config import types as config_types
 
+
 class ProfileType(DjangoObjectType):
 
     following_count = graphene.Int(source='followers_count')
@@ -29,36 +30,46 @@ class ProfileType(DjangoObjectType):
     class Meta:
         model = models.Profile
 
+
 class UserType(DjangoObjectType):
 
     class Meta:
         model = User
         exclude_fields = ('password',)
 
+
 class UserProfileResponse(graphene.ObjectType):
     user = graphene.Field(UserType)
+
 
 class FollowUnfollowResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
+
 class EditProfileResponse(graphene.ObjectType, config_types.ResponseFields):
     user = graphene.Field(UserType)
+
 
 class ChangePasswordResponse(graphene.ObjectType, config_types.ResponseFields):
     pass
 
+
 class SearchUsersResponse(graphene.ObjectType):
     users = graphene.List(UserType)
+
 
 class CheckUsernameResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
+
 class CreateAccountResponse(graphene.ObjectType):
     token = graphene.String()
+
 
 class FacebookConnectResponse(graphene.ObjectType):
     ok = graphene.Boolean()
     token = graphene.String()
+
 
 class LatestUsersResponse(graphene.ObjectType):
     users = graphene.List(UserType)

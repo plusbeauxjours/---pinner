@@ -3,12 +3,14 @@ from django.contrib.auth.models import User
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from config import models as config_models
 
+
 class Location (models.Model):
 
     city = models.CharField(max_length=100)
 
     def __str__(self):
         return self.city
+
 
 class Card(config_models.TimeStampedModel):
 
@@ -21,7 +23,7 @@ class Card(config_models.TimeStampedModel):
 
     @property
     def like_count(self):
-         return self.likes.all().count()
+        return self.likes.all().count()
 
     @property
     def comment_count(self):
@@ -34,8 +36,9 @@ class Card(config_models.TimeStampedModel):
     def __str__(self):
         return 'Location: {} - Caption: {} - Creator: {}'.format(self.location, self.caption, self.creator)
 
+
 class Comment(config_models.TimeStampedModel):
-    
+
     message = models.TextField()
     creator = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True)
@@ -45,8 +48,9 @@ class Comment(config_models.TimeStampedModel):
     def __str__(self):
         return 'User: {} - Comment: {}'.format(self.creator.username, self.message)
 
+
 class Like(config_models.TimeStampedModel):
-    
+
     creator = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, related_name='likes')
     card = models.ForeignKey(

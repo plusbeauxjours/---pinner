@@ -1,9 +1,11 @@
 from django.contrib import admin
 from . import models
 
+
 @admin.register(models.Location)
 class LocationAdmin(admin.ModelAdmin):
     pass
+
 
 @admin.register(models.Card)
 class CardAdmin(admin.ModelAdmin):
@@ -27,6 +29,7 @@ class CardAdmin(admin.ModelAdmin):
         'updated_at',
     )
 
+
 @admin.register(models.Like)
 class LikeAdmin(admin.ModelAdmin):
 
@@ -36,6 +39,7 @@ class LikeAdmin(admin.ModelAdmin):
         'created_at',
         'updated_at',
     )
+
 
 @admin.register(models.Comment)
 class CommentAdmin(admin.ModelAdmin):

@@ -6,6 +6,7 @@ from graphql_jwt.shortcuts import get_token
 from . import models, types
 from notifications import models as notification_models
 
+
 class FollowUser(graphene.Mutation):
 
     """ Follow User """
@@ -201,18 +202,19 @@ class CreateAccount(graphene.Mutation):
             print(e)
             raise Exception("Can't Create Account")
 
+
 class FacebookConnect(graphene.Mutation):
 
     class Arguments:
         username = graphene.String()
         first_name = graphene.String()
         last_name = graphene.String()
-        email= graphene.String()
-        gender= graphene.String()
+        email = graphene.String()
+        gender = graphene.String()
         fbId = graphene.String(required=True)
-    
+
     Output = types.FacebookConnectResponse
-    
+
     def mutate(self, info, **kwargs):
 
         user = info.context.user
@@ -223,13 +225,13 @@ class FacebookConnect(graphene.Mutation):
         gender = kwargs.get('gender')
         fbId = kwargs.get('fbId')
 
-        try: 
+        try:
             existingUser = models.Profile.objects.get(
                 fbId=fbId
             )
-            token = get_token(existingUser.user) 
+            token = get_token(existingUser.user)
             return types.FacebookConnectResponse(ok=True, token=token)
-        
+
         except:
             pass
 
@@ -244,9 +246,8 @@ class FacebookConnect(graphene.Mutation):
                 gender=gender,
                 avatar='http://graph.facebook.com/{}/picture?type=large'.format(fbId)
             )
-            token = get_token(newUser) 
+            token = get_token(newUser)
             return types.FacebookConnectResponse(ok=True, token=token)
 
         except IntegrityError as e:
             raise Exception("Could not log you in")
-            

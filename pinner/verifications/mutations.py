@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from . import models, types
 from . import sendSMS
 
+
 class MarkAsVerified(graphene.Mutation):
 
     class Arguments:
@@ -25,25 +26,26 @@ class MarkAsVerified(graphene.Mutation):
             verification = models.Verification.objects.get(
                 id=verificationId
             )
-            verification.verified=True
+            verification.verified = True
             verification.save()
             return types.MarkAsVerifiedResponse(ok=True)
-            
+
         except models.Verification.DoesNotExist:
             raise Exception('Verification Not Found')
+
 
 class StartPhoneVerification(graphene.Mutation):
 
     class Arguments:
         phoneNumber = graphene.String(required=True)
-    
+
     Output = types.StartPhoneVerificationResponse
-    
+
     def mutate(self, info, **kwargs):
 
         phoneNumber = kwargs.get('phoneNumber')
 
-        try: 
+        try:
             existingVerification = models.Verification.objects.get(
                 payload=phoneNumber
             )
@@ -61,9 +63,10 @@ class StartPhoneVerification(graphene.Mutation):
             newVerification.save()
             sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
             return types.StartPhoneVerificationResponse(ok=True)
-            
+
+
 class CompletePhoneVerification(graphene.Mutation):
-    
+
     class Arguments:
         phoneNumber = graphene.String(required=True)
         key = graphene.String(required=True)
@@ -86,13 +89,13 @@ class CompletePhoneVerification(graphene.Mutation):
         except models.Verification.DoesNotExist:
             raise Exception('Verification key not valid')
 
-        try: 
+        try:
             exstingUserProfile = users_models.Profile.objects.get(phoneNumber=phoneNumber)
             exstingUserProfile.verifiedPhoneNumber = True
             exstingUserProfile.save()
             token = get_token(exstingUserProfile.user)
             return types.CompletePhoneVerificationResponse(ok=True, token=token)
-        
+
         except users_models.Profile.DoesNotExist:
             pass
 

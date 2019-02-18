@@ -1,14 +1,16 @@
 import graphene
 from . import types, queries, mutations
 
+
 class Query(object):
 
     get_notifications = graphene.Field(
-        types.GetNotificationsResponse, 
-        resolver=queries.resolve_get_notifications, 
-        required=True, 
+        types.GetNotificationsResponse,
+        resolver=queries.resolve_get_notifications,
+        required=True,
         args={'page': graphene.Int()}
     )
+
 
 class Mutation(object):
 

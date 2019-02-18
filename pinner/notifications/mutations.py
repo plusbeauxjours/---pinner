@@ -2,6 +2,7 @@ import graphene
 from graphql_jwt.decorators import login_required
 from . import models, types
 
+
 class MarkAsRead(graphene.Mutation):
 
     class Arguments:
@@ -19,10 +20,9 @@ class MarkAsRead(graphene.Mutation):
             notification = models.Notification.objects.get(
                 id=notificationId
             )
-            notification.read=True
+            notification.read = True
             notification.save()
             return types.MarkAsReadResponse(ok=True)
-            
+
         except models.Notification.DoesNotExist:
             raise Exception('Notification Not Found')
-            

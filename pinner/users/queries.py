@@ -3,6 +3,7 @@ from graphql_jwt.decorators import login_required
 from django.contrib.auth.models import User
 from . import types, models
 
+
 def resolve_profile(self, info, **kwargs):
 
     username = kwargs.get('username')
