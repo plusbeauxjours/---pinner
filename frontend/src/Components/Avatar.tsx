@@ -37,7 +37,6 @@ interface IProps {
 }
 
 const Avatar: React.SFC<IProps> = ({ className, url, size }) => {
-  console.log(size);
   return <Container className={className} src={url} size={size} />;
 };
 

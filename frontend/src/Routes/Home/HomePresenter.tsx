@@ -1,11 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { keyframes } from "styled-components";
 import styled from "../../Styles/typed-components";
+import PhoneImage from "../../Images/phone.png";
 import Wrapper from "../../Components/Wrapper";
 import LogIn from "../../Components/LogIn";
 import SignUp from "../../Components/SignUp";
-import PhoneImage from "../../Images/phone.png";
-import { keyframes } from "styled-components";
-import SocialLogin from "../../Components/SocialLogin/index";
+import { Phone } from "../../Icons";
+import SocialLogin from "../../Components/SocialLogin";
 
 const Container = styled(Wrapper)`
   display: flex;
@@ -15,7 +17,7 @@ const Container = styled(Wrapper)`
   max-width: 745px;
 `;
 
-const Phone = styled.img`
+const Image = styled.img`
   max-width: 360px;
 `;
 
@@ -93,6 +95,10 @@ const ModalLink = styled.div`
   }
 `;
 
+const Icon = styled.span`
+  margin-right: 10px;
+`;
+
 interface IProps {
   isLogIn: boolean;
   modalOpen: boolean;
@@ -113,14 +119,21 @@ const HomePresenter: React.SFC<IProps> = ({
           <ModalOverlay onClick={toggleModal} />
           <Modal>
             <ModalLink>
-              <SocialLogin>PhoneVerification</SocialLogin>
+              <SocialLogin />
             </ModalLink>
-            <ModalLink onClick={toggleModal}>PhoneVerification</ModalLink>
+            <Link to="/phone-login">
+              <ModalLink>
+                <Icon>
+                  <Phone />
+                </Icon>
+                Phone
+              </ModalLink>
+            </Link>
           </Modal>
         </ModalContainer>
       )}
       <Container>
-        <Phone src={PhoneImage} />
+        <Image src={PhoneImage} />
         <Column>
           <FormBox>{isLogIn ? <LogIn /> : <SignUp />}</FormBox>
           <SwitchBox>

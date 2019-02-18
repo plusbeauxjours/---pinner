@@ -217,7 +217,6 @@ class FacebookConnect(graphene.Mutation):
 
     def mutate(self, info, **kwargs):
 
-        user = info.context.user
         username = kwargs.get('username')
         first_name = kwargs.get('first_name')
         last_name = kwargs.get('last_name')
@@ -251,3 +250,36 @@ class FacebookConnect(graphene.Mutation):
 
         except IntegrityError as e:
             raise Exception("Could not log you in")
+
+
+class GetLocation(graphene.Mutation):
+
+    class Arguments:
+        lastLng = graphene.Float(required=True)
+        lastLat = graphene.Float(required=True)
+        lastCity = graphene.String(required=True)
+        lastCountry = graphene.String(required=True)
+
+    Output = types.GetLocationResponse
+
+    @login_required
+    def mutate(self, info, **kwargs):
+        user = info.context.user
+        lastLng = kwargs.get('email')
+        lastLat = kwargs.get('email')
+        lastCity = kwargs.get('lastCity')
+        lastCountry = kwargs.get('lastCountry')
+
+        try:
+            profile = user.profile
+
+            profile.lastLng = lastLng
+            profile.lastLat = lastLat
+            profile.lastCity = lastCity
+            profile.lastCountry = lastCountry
+            profile.save()
+            user.save()
+            return types.GetLocationResponse(ok=True)
+
+        except profile.DoesNotExist:
+            raise Exception('Profile not found')

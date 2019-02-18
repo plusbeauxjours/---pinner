@@ -73,3 +73,7 @@ class FacebookConnectResponse(graphene.ObjectType):
 
 class LatestUsersResponse(graphene.ObjectType):
     users = graphene.List(UserType)
+
+
+class GetLocationResponse(graphene.ObjectType):
+    ok = graphene.Boolean()

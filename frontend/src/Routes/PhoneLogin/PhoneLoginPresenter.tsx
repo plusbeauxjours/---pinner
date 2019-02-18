@@ -65,7 +65,7 @@ const PhoneLoginPresenter: React.SFC<IProps> = ({
 }) => (
   <Container>
     <Helmet>
-      <title>Phone Login | Puber</title>
+      <title>Phone Login . Pinner </title>
     </Helmet>
     <Title>Enter your mobile</Title>
     <CountrySelect

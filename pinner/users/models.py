@@ -30,8 +30,10 @@ class Profile(config_models.TimeStampedModel):
     phoneNumber = models.CharField(max_length=20, blank=True, null=True)
     verifiedPhoneNumber = models.BooleanField(default=False)
     verifiedEmail = models.BooleanField(default=False)
-    lastLng = models.IntegerField(blank=True, null=True)
-    lastLat = models.IntegerField(blank=True, null=True)
+    lastLng = models.FloatField(blank=True, null=True)
+    lastLat = models.FloatField(blank=True, null=True)
+    lastCity = models.CharField(max_length=30, blank=True, null=True)
+    lastCountry = models.CharField(max_length=30, blank=True, null=True)
     fbId = models.CharField(blank=True, null=True, max_length=20)
 
     def __str__(self):

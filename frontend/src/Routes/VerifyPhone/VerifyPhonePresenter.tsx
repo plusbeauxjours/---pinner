@@ -31,7 +31,7 @@ const VerifyPhonePresenter: React.SFC<IProps> = ({
 }) => (
   <Container>
     <Helmet>
-      <title>Verify Phone | Puber</title>
+      <title>Verify Phone . Pinner</title>
     </Helmet>
     <ExtendedForm onSubmit={onSubmit}>
       <ExtendedInput

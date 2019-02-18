@@ -32,7 +32,6 @@ interface IProps {
 }
 
 const UserCard: React.SFC<IProps> = ({ id, avatar, username, isFollowing }) => {
-  console.log(avatar);
   return (
     <Container>
       <Link to={`/${username}`}>

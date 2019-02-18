@@ -17,7 +17,6 @@ const LocationPresenter: React.SFC<IProps> = ({ data, loading, className }) => {
     const {
       location: { locations = [] }
     } = data;
-    console.log(data.location.locations[0]);
     return (
       <Container className={className}>
         {locations.map(location => (
