@@ -21,6 +21,7 @@ interface IState {
 }
 
 class SocialLoginContainer extends React.Component<any, IState> {
+  public facebookMutation: MutationFn;
   public state = {
     name: "",
     firstName: "",
@@ -29,7 +30,6 @@ class SocialLoginContainer extends React.Component<any, IState> {
     gender: "",
     fbId: ""
   };
-  public facebookMutation: MutationFn;
   public render() {
     return (
       <Mutation mutation={LOG_USER_IN}>

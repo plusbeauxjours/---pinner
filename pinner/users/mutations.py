@@ -265,8 +265,8 @@ class GetLocation(graphene.Mutation):
     @login_required
     def mutate(self, info, **kwargs):
         user = info.context.user
-        lastLng = kwargs.get('email')
-        lastLat = kwargs.get('email')
+        lastLng = kwargs.get('lastLng')
+        lastLat = kwargs.get('lastLat')
         lastCity = kwargs.get('lastCity')
         lastCountry = kwargs.get('lastCountry')
 

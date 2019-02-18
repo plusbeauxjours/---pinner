@@ -364,6 +364,30 @@ export interface feedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: GetLocation
+// ====================================================
+
+export interface GetLocation_getLocation {
+  __typename: "GetLocationResponse";
+  ok: boolean | null;
+}
+
+export interface GetLocation {
+  getLocation: GetLocation_getLocation;
+}
+
+export interface GetLocationVariables {
+  lastCity: string;
+  lastCountry: string;
+  lastLat: number;
+  lastLng: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: StartPhoneVerification
 // ====================================================
 
