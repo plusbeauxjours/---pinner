@@ -80,41 +80,34 @@ class CompletePhoneVerification(graphene.Mutation):
                 payload=phoneNumber,
                 key=key
             )
-            if not verification:
-                return types.CompletePhoneVerificationResponse(ok=False)
-            else:
-                verification.verified = True
-                verification.save()
+            verification.verified = True
+            verification.save()
 
-        except IntegrityError as e:
-            raise Exception("Wrong Phone Number")
-
+        except models.Verification.DoesNotExist:
+            raise Exception('Verification key not valid')
 
         try: 
-            user = users_models.Profile.objects.get(phoneNumber=phoneNumber)
-            user.save()
+            exstingUserProfile = users_models.Profile.objects.get(phoneNumber=phoneNumber)
+            exstingUserProfile.verifiedPhoneNumber = True
+            exstingUserProfile.save()
+            token = get_token(exstingUserProfile.user)
+            return types.CompletePhoneVerificationResponse(ok=True, token=token)
         
-        except:
+        except users_models.Profile.DoesNotExist:
             pass
 
         try:
-            uuiduser = str(uuid.uuid4().hex)
-            print(uuid)
-            username = uuiduser
-            password = uuiduser
-            user = User.objects.create_user(username, password)
-            profile = users_models.Profile.objects.create(
-                user=user,
+            useruuid = str(uuid.uuid4().hex)
+            newUser = User.objects.create_user(username=useruuid, password=useruuid)
+            newUser.save()
+            token = get_token(newUser)
+            newUserProfile = users_models.Profile.objects.create(
+                user=newUser,
                 phoneNumber=phoneNumber
             )
-            profile.verifiedPhoneNumber = True
-            profile.save()
-            if user:
-                user.save()
-                token = get_token(user)
-                return types.CompletePhoneVerificationResponse(ok=True, token=token)
-            else:
-                types.CompletePhoneVerificationResponse(ok=False)
+            newUserProfile.verifiedPhoneNumber = True
+            newUserProfile.save()
+            return types.CompletePhoneVerificationResponse(ok=True, token=token)
 
         except IntegrityError as e:
             raise Exception("No Phone to Verify")

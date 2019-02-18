@@ -248,5 +248,5 @@ class FacebookConnect(graphene.Mutation):
             return types.FacebookConnectResponse(ok=True, token=token)
 
         except IntegrityError as e:
-            raise Exception("No Phone to Verify")
+            raise Exception("Could not log you in")
             
