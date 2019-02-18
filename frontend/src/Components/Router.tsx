@@ -12,7 +12,10 @@ import EditProfile from "../Routes/EditProfile";
 import Profile from "../Routes/Profile";
 import CardDetail from "../Routes/CardDetail";
 import Search from "../Routes/Search";
+
 import VerifyPhone from "../Routes/VerifyPhone";
+import PhoneLogin from "../Routes/PhoneLogin";
+
 import Explore from "../Routes/Explore";
 import Header from "./Header";
 import Location from "./Location";
@@ -31,7 +34,7 @@ const LoggedInPages = () => (
       <Route path="/p/:id" component={CardDetail} />
       <Route path="/edit-profile" component={EditProfile} />
       <Route path="/search" component={Search} />
-      <Route path="/verify-phone" component={VerifyPhone} />
+
       <Route path="/explore" component={Explore} />
       <Route path="/location" component={Location} />
       <Route path="/:username" component={Profile} />
@@ -43,6 +46,8 @@ const LoggedInPages = () => (
 const LoggedOutPages = () => (
   <Switch>
     <Route path="/" exact={true} component={Home} />
+    <Route path="/verify-phone" component={VerifyPhone} />
+    <Route path="/phone-login" component={PhoneLogin} />
     <Redirect from="*" to="/" />
   </Switch>
 );

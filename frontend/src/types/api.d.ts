@@ -364,6 +364,27 @@ export interface feedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: StartPhoneVerification
+// ====================================================
+
+export interface StartPhoneVerification_startPhoneVerification {
+  __typename: "StartPhoneVerificationResponse";
+  ok: boolean | null;
+}
+
+export interface StartPhoneVerification {
+  startPhoneVerification: StartPhoneVerification_startPhoneVerification;
+}
+
+export interface StartPhoneVerificationVariables {
+  phoneNumber: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: userProfile
 // ====================================================
 
@@ -462,6 +483,29 @@ export interface searchTerms {
 
 export interface searchTermsVariables {
   term: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: CompletePhoneVerification
+// ====================================================
+
+export interface CompletePhoneVerification_completePhoneVerification {
+  __typename: "CompletePhoneVerificationResponse";
+  ok: boolean | null;
+  token: string | null;
+}
+
+export interface CompletePhoneVerification {
+  completePhoneVerification: CompletePhoneVerification_completePhoneVerification;
+}
+
+export interface CompletePhoneVerificationVariables {
+  key: string;
+  phoneNumber: string;
 }
 
 

@@ -83,34 +83,34 @@ class CompletePhoneVerification(graphene.Mutation):
                 payload=phoneNumber,
                 key=key
             )
+
+            try:
+                exstingUserProfile = users_models.Profile.objects.get(phoneNumber=phoneNumber)
+                if (exstingUserProfile.verifiedPhoneNumber == False):
+                    exstingUserProfile.verifiedPhoneNumber == True
+                    exstingUserProfile.save()
+                token = get_token(exstingUserProfile.user)
+                return types.CompletePhoneVerificationResponse(ok=True, token=token)
+
+            except users_models.Profile.DoesNotExist:
+                pass
+
+            try:
+                useruuid = str(uuid.uuid4().hex)
+                newUser = User.objects.create_user(username=useruuid, password=useruuid)
+                token = get_token(newUser)
+                newUserProfile = users_models.Profile.objects.create(
+                    user=newUser,
+                    phoneNumber=phoneNumber
+                )
+                newUserProfile.verifiedPhoneNumber = True
+                newUserProfile.save()
+                return types.CompletePhoneVerificationResponse(ok=True, token=token)
+
+            except IntegrityError as e:
+                raise Exception("No Phone to Verify")
+
             verification.verified = True
             verification.save()
-
         except models.Verification.DoesNotExist:
             raise Exception('Verification key not valid')
-
-        try:
-            exstingUserProfile = users_models.Profile.objects.get(phoneNumber=phoneNumber)
-            exstingUserProfile.verifiedPhoneNumber = True
-            exstingUserProfile.save()
-            token = get_token(exstingUserProfile.user)
-            return types.CompletePhoneVerificationResponse(ok=True, token=token)
-
-        except users_models.Profile.DoesNotExist:
-            pass
-
-        try:
-            useruuid = str(uuid.uuid4().hex)
-            newUser = User.objects.create_user(username=useruuid, password=useruuid)
-            newUser.save()
-            token = get_token(newUser)
-            newUserProfile = users_models.Profile.objects.create(
-                user=newUser,
-                phoneNumber=phoneNumber
-            )
-            newUserProfile.verifiedPhoneNumber = True
-            newUserProfile.save()
-            return types.CompletePhoneVerificationResponse(ok=True, token=token)
-
-        except IntegrityError as e:
-            raise Exception("No Phone to Verify")

@@ -39,7 +39,7 @@ class Profile(config_models.TimeStampedModel):
 
     @property
     def post_count(self):
-        return self.user.images.all().count()
+        return self.user.cards.all().count()
 
     @property
     def followers_count(self):
