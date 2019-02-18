@@ -12,6 +12,7 @@ import {
 interface IState {
   countryCode: string;
   phoneNumber: string;
+  isSubmitted: boolean;
 }
 
 class PhoneSignInMutation extends Mutation<
@@ -26,7 +27,8 @@ class PhoneLoginContainer extends React.Component<
   public phoneMutation: MutationFn;
   public state = {
     countryCode: "+66",
-    phoneNumber: ""
+    phoneNumber: "",
+    isSubmitted: false
   };
 
   public render() {
@@ -41,8 +43,6 @@ class PhoneLoginContainer extends React.Component<
         onCompleted={data => {
           const { startPhoneVerification } = data;
           const phone = `${countryCode}${phoneNumber}`;
-          // tslint:disable-next-line
-          console.log(startPhoneVerification);
           if (startPhoneVerification.ok) {
             toast.success("SMS Sent! Redirectiong you...");
             setTimeout(() => {
@@ -86,11 +86,16 @@ class PhoneLoginContainer extends React.Component<
   };
   public onSubmit: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
-    const { countryCode, phoneNumber } = this.state;
+    const { countryCode, phoneNumber, isSubmitted } = this.state;
     const phone = `${countryCode}${phoneNumber}`;
     const isValid = /^\+[1-9]{1}[0-9]{7,11}$/.test(phone);
     if (isValid) {
-      this.phoneMutation();
+      if (!isSubmitted) {
+        this.phoneMutation();
+        this.setState({
+          isSubmitted: true
+        });
+      }
     } else {
       toast.error("Please write a valid phone number");
     }
