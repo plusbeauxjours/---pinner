@@ -25,11 +25,13 @@ class VerifyMuataion extends Mutation<
 class VerifyPhoneContainer extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
+    const { location: { state = {} } = {} } = ({} = props);
+    console.log(state);
     if (!props.location.state) {
       props.history.push("/");
     }
     this.state = {
-      phoneNumber: props.location.state.phone,
+      phoneNumber: state.phone,
       verificationKey: ""
     };
   }
