@@ -7,6 +7,10 @@ export const GET_LOCATION = gql`
         id
         countryname
       }
+      city {
+        id
+        cityname
+      }
     }
   }
 `;
