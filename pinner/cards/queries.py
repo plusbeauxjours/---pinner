@@ -35,11 +35,11 @@ def resolve_feed(self, info, **kwargs):
 def resolve_feed_by_location(self, info, **kwargs):
 
     user = info.context.user
-    location = kwargs.get('location')
+    cityname = kwargs.get('cityname')
     page = kwargs.get('page', 0)
     offset = 5 * page
 
-    cards = models.Card.objects.filter(location__city=location).order_by(
+    cards = models.Card.objects.filter(location__city=cityname).order_by(
         '-created_at')[offset:5 + offset]
 
     return types.FeedByLocationResponse(cards=cards)

@@ -12,13 +12,14 @@ import EditProfile from "../Routes/EditProfile";
 import Profile from "../Routes/Profile";
 import CardDetail from "../Routes/CardDetail";
 import Search from "../Routes/Search";
+import Location from "../Routes/Location";
 
 import VerifyPhone from "../Routes/VerifyPhone";
 import PhoneLogin from "../Routes/PhoneLogin";
+import FeedByLocation from "../Routes/FeedByLocation";
 
 import Explore from "../Routes/Explore";
 import Header from "./Header";
-import Location from "./Location";
 
 const Wrapper = styled.div`
   padding-top: 135px;
@@ -36,7 +37,8 @@ const LoggedInPages = () => (
       <Route path="/search" component={Search} />
 
       <Route path="/explore" component={Explore} />
-      <Route path="/location" component={Location} />
+      <Route path="/location" exact={true} component={Location} />
+      <Route path="/location/:cityname" component={FeedByLocation} />
       <Route path="/:username" component={Profile} />
       <Redirect from="*" to="/" />
     </Switch>

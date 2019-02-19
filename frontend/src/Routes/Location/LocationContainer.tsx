@@ -6,7 +6,14 @@ import { GET_LOCATION } from "./LocationQueries";
 
 class LocationQuery extends Query<location> {}
 
-class LocationContainer extends React.Component {
+interface IState {
+  page: number;
+}
+
+class LocationContainer extends React.Component<any, IState> {
+  public state = {
+    page: 0
+  };
   public render() {
     return (
       <LocationQuery query={GET_LOCATION}>

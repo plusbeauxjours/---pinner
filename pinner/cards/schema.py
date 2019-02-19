@@ -20,7 +20,7 @@ class Query(object):
         resolver=queries.resolve_feed_by_location,
         required=True,
         args={
-            'location': graphene.String(required=True),
+            'cityname': graphene.String(required=True),
             'page': graphene.Int()
         }
     )

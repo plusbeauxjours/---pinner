@@ -52,7 +52,7 @@ class Comment(config_models.TimeStampedModel):
 class Like(config_models.TimeStampedModel):
 
     creator = models.ForeignKey(
-        User, on_delete=models.CASCADE, null=True, related_name='likes')
+        User, on_delete=models.CASCADE, null=True, related_name='card_likes')
     card = models.ForeignKey(
         Card, on_delete=models.CASCADE, null=True, related_name='likes')
 

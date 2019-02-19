@@ -18,7 +18,6 @@ APPS_DIR = ROOT_DIR.path('pinner')
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-
 READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
@@ -69,7 +68,7 @@ DJANGO_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.humanize', # Handy template tags
+    'django.contrib.humanize',  # Handy template tags
     'django.contrib.admin',
 
 ]
@@ -78,7 +77,7 @@ THIRD_PARTY_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'rest_framework', 
+    'rest_framework',
     'imagekit',
     'graphene_django',
     'corsheaders',
@@ -88,9 +87,10 @@ LOCAL_APPS = [
     'users.apps.UsersConfig',
     'cards.apps.CardsConfig',
     'notifications.apps.NotificationsConfig',
-    'verifications.apps.VerificationsConfig'
+    'verifications.apps.VerificationsConfig',
+    'locations.apps.LocationsConfig'
 
-        # Your stuff: custom apps go here
+    # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -268,10 +268,10 @@ SOCIALACCOUNT_ADAPTER = 'pinner.users.adapters.SocialAccountAdapter'
 
 GRAPHENE = {
     'SCHEMA': 'config.schema.schema',
-	    'MIDDLEWARE': [
-	        'graphql_jwt.middleware.JSONWebTokenMiddleware',
-	    ],
-	}
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
+}
 
 AUTHENTICATION_BACKENDS = [
     'graphql_jwt.backends.JSONWebTokenBackend',
@@ -279,8 +279,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 CORS_ORIGIN_WHITELIST = (
-	    'localhost:3000',
-	)
+    'localhost:3000',
+)
 
 TWILIO_SID = "ACe45be468996891a959f54a05dbaf164b"
 TWILIO_TOKEN = "f5fad23d4772fc5249af8f78945987ee"

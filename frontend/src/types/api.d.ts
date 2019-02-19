@@ -25,29 +25,6 @@ export interface followUserVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: location
-// ====================================================
-
-export interface location_location_locations {
-  __typename: "LocationType";
-  id: string;
-  city: string;
-}
-
-export interface location_location {
-  __typename: "LocationResponse";
-  locations: (location_location_locations | null)[] | null;
-}
-
-export interface location {
-  location: location_location;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL mutation operation: logIn
 // ====================================================
 
@@ -364,6 +341,76 @@ export interface feedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: FeedByLocaion
+// ====================================================
+
+export interface FeedByLocaion_feedByLocation_cards_location {
+  __typename: "LocationType";
+  city: string;
+}
+
+export interface FeedByLocaion_feedByLocation_cards_comments_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface FeedByLocaion_feedByLocation_cards_comments {
+  __typename: "CommentType";
+  id: string;
+  message: string;
+  creator: FeedByLocaion_feedByLocation_cards_comments_creator | null;
+}
+
+export interface FeedByLocaion_feedByLocation_cards_creator_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface FeedByLocaion_feedByLocation_cards_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: FeedByLocaion_feedByLocation_cards_creator_profile | null;
+}
+
+export interface FeedByLocaion_feedByLocation_cards {
+  __typename: "CardType";
+  id: string;
+  file: string | null;
+  caption: string;
+  location: FeedByLocaion_feedByLocation_cards_location;
+  likeCount: number | null;
+  commentCount: number | null;
+  isLiked: boolean | null;
+  createdAt: string | null;
+  comments: (FeedByLocaion_feedByLocation_cards_comments | null)[] | null;
+  creator: FeedByLocaion_feedByLocation_cards_creator;
+}
+
+export interface FeedByLocaion_feedByLocation {
+  __typename: "FeedByLocationResponse";
+  cards: (FeedByLocaion_feedByLocation_cards | null)[] | null;
+}
+
+export interface FeedByLocaion {
+  feedByLocation: FeedByLocaion_feedByLocation;
+}
+
+export interface FeedByLocaionVariables {
+  page: number;
+  cityname: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ReportLocation
 // ====================================================
 
@@ -381,6 +428,29 @@ export interface ReportLocationVariables {
   lastCountry: string;
   lastLat: number;
   lastLng: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: location
+// ====================================================
+
+export interface location_location_locations {
+  __typename: "LocationType";
+  id: string;
+  city: string;
+}
+
+export interface location_location {
+  __typename: "LocationResponse";
+  locations: (location_location_locations | null)[] | null;
+}
+
+export interface location {
+  location: location_location;
 }
 
 
