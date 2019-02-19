@@ -36,6 +36,7 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
     };
   }
   public render() {
+    const { history } = this.props;
     const { verificationKey, phoneNumber } = this.state;
     return (
       <Mutation mutation={LOG_USER_IN}>
@@ -57,6 +58,11 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
                   });
                 }
                 toast.success("You're verified, loggin in now");
+                setTimeout(() => {
+                  history.push({
+                    pathname: "/"
+                  });
+                }, 500);
               } else {
                 toast.error("Could not be Verified you");
               }

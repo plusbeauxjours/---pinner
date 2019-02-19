@@ -1,13 +1,13 @@
 import { gql } from "apollo-boost";
 
-export const GET_LOCATION = gql`
-  mutation GetLocation(
+export const REPORT_LOCATION = gql`
+  mutation ReportLocation(
     $lastCity: String!
     $lastCountry: String!
     $lastLat: Float!
     $lastLng: Float!
   ) {
-    getLocation(
+    reportLocation(
       lastCity: $lastCity
       lastCountry: $lastCountry
       lastLat: $lastLat

@@ -75,5 +75,5 @@ class LatestUsersResponse(graphene.ObjectType):
     users = graphene.List(UserType)
 
 
-class GetLocationResponse(graphene.ObjectType):
+class ReportLocationResponse(graphene.ObjectType):
     ok = graphene.Boolean()

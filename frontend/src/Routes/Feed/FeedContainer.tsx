@@ -2,12 +2,15 @@ import React from "react";
 import { Query, Mutation, MutationFn } from "react-apollo";
 import FeedPresenter from "./FeedPresenter";
 import { GET_FEED } from "./FeedQueries";
-import { feed, GetLocation, GetLocationVariables } from "../../types/api";
+import { feed, ReportLocation, ReportLocationVariables } from "../../types/api";
 import { RouteComponentProps } from "react-router";
-import { GET_LOCATION } from "../Home/HomeQueries";
+import { REPORT_LOCATION } from "../Home/HomeQueries";
 import { reverseGeoCode } from "../../mapHelpers";
 
-class GetLocationMutation extends Mutation<GetLocation, GetLocationVariables> {}
+class ReportLocationMutation extends Mutation<
+  ReportLocation,
+  ReportLocationVariables
+> {}
 
 class FeedQuery extends Query<feed> {}
 
@@ -22,7 +25,7 @@ interface IState {
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
-  public getLocationFn: MutationFn;
+  public ReportLocationFn: MutationFn;
   public state = {
     page: 0,
     lastLat: 0,
@@ -39,12 +42,12 @@ class FeedContainer extends React.Component<IProps, IState> {
   public render() {
     const { page, lastLat, lastLng, lastCity, lastCountry } = this.state;
     return (
-      <GetLocationMutation
-        mutation={GET_LOCATION}
+      <ReportLocationMutation
+        mutation={REPORT_LOCATION}
         variables={{ lastLat, lastLng, lastCity, lastCountry }}
       >
-        {getLocationFn => {
-          this.getLocationFn = getLocationFn;
+        {ReportLocationFn => {
+          this.ReportLocationFn = ReportLocationFn;
           return (
             <FeedQuery
               query={GET_FEED}
@@ -57,7 +60,7 @@ class FeedContainer extends React.Component<IProps, IState> {
             </FeedQuery>
           );
         }}
-      </GetLocationMutation>
+      </ReportLocationMutation>
     );
   }
   public handleGeoSuccess = (position: Position) => {
@@ -68,30 +71,37 @@ class FeedContainer extends React.Component<IProps, IState> {
       lastLat: latitude,
       lastLng: longitude
     });
-    this.getFromAddress(latitude, longitude);
+    this.getAddress(latitude, longitude);
+  };
+  public getAddress = async (lat: number, lng: number) => {
+    const address = await reverseGeoCode(lat, lng);
+    console.log(address);
+    if (address) {
+      this.setState({
+        lastCity: address.city,
+        lastCountry: address.country
+      });
+      this.reportLocation(lat, lng, address.city, address.country);
+      console.log(this.state);
+    }
+  };
+  public reportLocation = (
+    lat: number,
+    lng: number,
+    lastCity: string,
+    lastCountry: string
+  ) => {
+    this.ReportLocationFn({
+      variables: {
+        lastLat: lat,
+        lastLng: lng,
+        lastCity,
+        lastCountry
+      }
+    });
   };
   public handleGeoError = () => {
     console.log("No location");
-  };
-  public getFromAddress = async (lat: number, lng: number) => {
-    const address = await reverseGeoCode(lat, lng);
-    if (address) {
-      this.setState({
-        lastLat: lat,
-        lastLng: lng,
-        lastCity: address,
-        lastCountry: address
-      });
-      console.log(this.state);
-      this.getLocationFn({
-        variables: {
-          lastLat: lat,
-          lastLng: lng,
-          lastCity: address,
-          lastCountry: address
-        }
-      });
-    }
   };
 }
 

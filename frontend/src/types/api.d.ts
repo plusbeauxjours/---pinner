@@ -364,19 +364,19 @@ export interface feedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: GetLocation
+// GraphQL mutation operation: ReportLocation
 // ====================================================
 
-export interface GetLocation_getLocation {
-  __typename: "GetLocationResponse";
+export interface ReportLocation_reportLocation {
+  __typename: "ReportLocationResponse";
   ok: boolean | null;
 }
 
-export interface GetLocation {
-  getLocation: GetLocation_getLocation;
+export interface ReportLocation {
+  reportLocation: ReportLocation_reportLocation;
 }
 
-export interface GetLocationVariables {
+export interface ReportLocationVariables {
   lastCity: string;
   lastCountry: string;
   lastLat: number;

@@ -252,7 +252,7 @@ class FacebookConnect(graphene.Mutation):
             raise Exception("Could not log you in")
 
 
-class GetLocation(graphene.Mutation):
+class ReportLocation(graphene.Mutation):
 
     class Arguments:
         lastLng = graphene.Float(required=True)
@@ -260,7 +260,7 @@ class GetLocation(graphene.Mutation):
         lastCity = graphene.String(required=True)
         lastCountry = graphene.String(required=True)
 
-    Output = types.GetLocationResponse
+    Output = types.ReportLocationResponse
 
     @login_required
     def mutate(self, info, **kwargs):
@@ -279,7 +279,7 @@ class GetLocation(graphene.Mutation):
             profile.lastCountry = lastCountry
             profile.save()
             user.save()
-            return types.GetLocationResponse(ok=True)
+            return types.ReportLocationResponse(ok=True)
 
         except profile.DoesNotExist:
             raise Exception('Profile not found')
