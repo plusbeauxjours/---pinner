@@ -159,9 +159,14 @@ export interface FacebookConnectVariables {
 // GraphQL query operation: cardDetail
 // ====================================================
 
-export interface cardDetail_cardDetail_card_location {
-  __typename: "LocationType";
-  city: string;
+export interface cardDetail_cardDetail_card_country {
+  __typename: "CountryType";
+  countryname: string | null;
+}
+
+export interface cardDetail_cardDetail_card_city {
+  __typename: "CityType";
+  cityname: string | null;
 }
 
 export interface cardDetail_cardDetail_card_comments_creator {
@@ -198,7 +203,8 @@ export interface cardDetail_cardDetail_card {
   id: string;
   file: string | null;
   caption: string;
-  location: cardDetail_cardDetail_card_location;
+  country: cardDetail_cardDetail_card_country;
+  city: cardDetail_cardDetail_card_city;
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;
@@ -275,9 +281,14 @@ export interface explore {
 // GraphQL query operation: feed
 // ====================================================
 
-export interface feed_feed_cards_location {
-  __typename: "LocationType";
-  city: string;
+export interface feed_feed_cards_country {
+  __typename: "CountryType";
+  countryname: string | null;
+}
+
+export interface feed_feed_cards_city {
+  __typename: "CityType";
+  cityname: string | null;
 }
 
 export interface feed_feed_cards_comments_creator {
@@ -314,7 +325,8 @@ export interface feed_feed_cards {
   id: string;
   file: string | null;
   caption: string;
-  location: feed_feed_cards_location;
+  country: feed_feed_cards_country;
+  city: feed_feed_cards_city;
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;
@@ -344,9 +356,14 @@ export interface feedVariables {
 // GraphQL query operation: FeedByLocaion
 // ====================================================
 
-export interface FeedByLocaion_feedByLocation_cards_location {
-  __typename: "LocationType";
-  city: string;
+export interface FeedByLocaion_feedByLocation_cards_country {
+  __typename: "CountryType";
+  countryname: string | null;
+}
+
+export interface FeedByLocaion_feedByLocation_cards_city {
+  __typename: "CityType";
+  cityname: string | null;
 }
 
 export interface FeedByLocaion_feedByLocation_cards_comments_creator {
@@ -383,7 +400,8 @@ export interface FeedByLocaion_feedByLocation_cards {
   id: string;
   file: string | null;
   caption: string;
-  location: FeedByLocaion_feedByLocation_cards_location;
+  country: FeedByLocaion_feedByLocation_cards_country;
+  city: FeedByLocaion_feedByLocation_cards_city;
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;
@@ -438,15 +456,20 @@ export interface ReportLocationVariables {
 // GraphQL query operation: location
 // ====================================================
 
-export interface location_location_locations {
-  __typename: "LocationType";
+export interface location_location_country {
+  __typename: "CountryType";
   id: string;
-  city: string;
+}
+
+export interface location_location_city {
+  __typename: "CityType";
+  id: string;
 }
 
 export interface location_location {
   __typename: "LocationResponse";
-  locations: (location_location_locations | null)[] | null;
+  country: (location_location_country | null)[] | null;
+  city: (location_location_city | null)[] | null;
 }
 
 export interface location {
@@ -675,9 +698,14 @@ export interface CardParts {
 // GraphQL fragment: DetailParts
 // ====================================================
 
-export interface DetailParts_location {
-  __typename: "LocationType";
-  city: string;
+export interface DetailParts_country {
+  __typename: "CountryType";
+  countryname: string | null;
+}
+
+export interface DetailParts_city {
+  __typename: "CityType";
+  cityname: string | null;
 }
 
 export interface DetailParts_comments_creator {
@@ -714,7 +742,8 @@ export interface DetailParts {
   id: string;
   file: string | null;
   caption: string;
-  location: DetailParts_location;
+  country: DetailParts_country;
+  city: DetailParts_city;
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;

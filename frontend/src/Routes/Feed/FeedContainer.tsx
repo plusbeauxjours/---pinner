@@ -75,14 +75,12 @@ class FeedContainer extends React.Component<IProps, IState> {
   };
   public getAddress = async (lat: number, lng: number) => {
     const address = await reverseGeoCode(lat, lng);
-    console.log(address);
     if (address) {
       this.setState({
         lastCity: address.city,
         lastCountry: address.country
       });
       this.reportLocation(lat, lng, address.city, address.country);
-      console.log(this.state);
     }
   };
   public reportLocation = (

@@ -4,11 +4,6 @@ from . import types, queries, mutations
 
 class Query(object):
 
-    location = graphene.Field(
-        types.LocationResponse,
-        resolver=queries.resolve_location,
-        required=True
-    )
     feed = graphene.Field(
         types.FeedResponse,
         resolver=queries.resolve_feed,

@@ -16,7 +16,7 @@ const LocationPresenter: React.SFC<IProps> = ({ data, loading, className }) => {
     return <Loader />;
   } else if (!loading && data) {
     const {
-      location: { locations = [] }
+      location: { countries = [] }
     } = data;
     return (
       <Container className={className}>
@@ -25,9 +25,9 @@ const LocationPresenter: React.SFC<IProps> = ({ data, loading, className }) => {
         feed와, explore 둘 다, 현재 로그인 한 지역에 한하여 노출 시킨다. 3)
         feed에는 도시에 도착 한 사람의 아이디 노출, 팔로잉하는 유저가 좋아요 한
         카드 노출, 도시에서 업로드한 카드 노출 시킨다.
-        {locations.map(location => (
-          <Link to={`/location/${location.city}`}>
-            <h1 key={location.id}>{location.city}</h1>
+        {countries.map(country => (
+          <Link to={`/location/${country.countryname}`}>
+            <h1 key={country.id}>{country.countryname}</h1>
           </Link>
         ))}
       </Container>

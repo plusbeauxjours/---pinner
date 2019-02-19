@@ -22,12 +22,6 @@ class CardType(DjangoObjectType):
         model = models.Card
 
 
-class LocationType(DjangoObjectType):
-
-    class Meta:
-        model = models.Location
-
-
 class LikeType(DjangoObjectType):
 
     class Meta:
@@ -38,10 +32,6 @@ class CommentType(DjangoObjectType):
 
     class Meta:
         model = models.Comment
-
-
-class LocationResponse(graphene.ObjectType):
-    locations = graphene.List(LocationType)
 
 
 class FeedResponse(graphene.ObjectType):

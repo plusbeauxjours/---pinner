@@ -24,7 +24,8 @@ const CardDetailPresenter: React.SFC<IProps> = ({ data, loading }) => {
           inline={false}
           creatorAvatar={card.creator.profile.avatar}
           creatorUsername={card.creator.username}
-          location={card.location.city}
+          country={card.country.countryname}
+          city={card.city.cityname}
           photoUrl={card.file}
           likeCount={card.likeCount}
           commentCount={card.commentCount}

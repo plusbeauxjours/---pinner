@@ -2,14 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from config import models as config_models
-
-
-class Location (models.Model):
-
-    city = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.city
+from locations import models as location_models
 
 
 class Card(config_models.TimeStampedModel):
@@ -17,8 +10,10 @@ class Card(config_models.TimeStampedModel):
     creator = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='cards')
     caption = models.TextField()
-    location = models.ForeignKey(
-        Location, on_delete=models.CASCADE, related_name='locations')
+    city = models.ForeignKey(
+        location_models.City, on_delete=models.CASCADE, related_name='city')
+    country = models.ForeignKey(
+        location_models.Country, on_delete=models.CASCADE, related_name='country')
     file = models.URLField(null=True, blank=True)
 
     @property
@@ -34,7 +29,7 @@ class Card(config_models.TimeStampedModel):
         return naturaltime(self.created_at)
 
     def __str__(self):
-        return 'Location: {} - Caption: {} - Creator: {}'.format(self.location, self.caption, self.creator)
+        return 'Country: {} - City: {} - Caption: {} - Creator: {}'.format(self.country, self.city, self.caption, self.creator)
 
 
 class Comment(config_models.TimeStampedModel):

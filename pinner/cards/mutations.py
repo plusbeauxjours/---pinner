@@ -129,7 +129,8 @@ class EditCard(graphene.Mutation):
     class Arguments:
         cardId = graphene.Int(required=True)
         caption = graphene.String()
-        location = graphene.String()
+        country = graphene.String()
+        city = graphene.String()
 
     Output = types.EditCardResponse
 
@@ -158,10 +159,12 @@ class EditCard(graphene.Mutation):
                 try:
 
                     caption = kwargs.get('caption', card.caption)
-                    location = kwargs.get('location', card.location)
+                    country = kwargs.get('country', card.country)
+                    city = kwargs.get('city', card.city)
 
                     card.caption = caption
-                    card.location = location
+                    card.country = country
+                    card.city = city
 
                     card.save()
                     return types.EditCardResponse(ok=ok, error=error, card=card)
@@ -217,7 +220,8 @@ class UploadCard(graphene.Mutation):
     class Arguments:
         fileUrl = graphene.String(required=True)
         caption = graphene.String(required=True)
-        location = graphene.String()
+        country = graphene.String()
+        city = graphene.String()
 
     Output = types.UploadCardResponse
 
@@ -229,11 +233,12 @@ class UploadCard(graphene.Mutation):
         error = None
         fileUrl = kwargs.get('fileUrl')
         caption = kwargs.get('caption')
-        location = kwargs.get('location')
+        country = kwargs.get('country')
+        city = kwargs.get('city')
 
         try:
             card = models.Card.objects.create(
-                creator=user, caption=caption, location=location, file=fileUrl)
+                creator=user, caption=caption, country=country, city=city, file=fileUrl)
             notification_models.Notification.objects.create(
                 actor=user, target=card.creator, verb="cards", payload=card
             )

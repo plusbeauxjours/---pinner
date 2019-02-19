@@ -2,27 +2,25 @@ from django.contrib import admin
 from . import models
 
 
-@admin.register(models.Location)
-class LocationAdmin(admin.ModelAdmin):
-    pass
-
-
 @admin.register(models.Card)
 class CardAdmin(admin.ModelAdmin):
 
     search_fields = (
-        'location',
+        'country',
+        'city',
         'caption',
     )
 
     list_filter = (
-        'location',
+        'country',
+        'city',
         'creator',
     )
 
     list_display = (
         'id',
-        'location',
+        'country',
+        'city',
         'creator',
         'caption',
         'created_at',

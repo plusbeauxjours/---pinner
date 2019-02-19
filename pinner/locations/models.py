@@ -6,15 +6,11 @@ from config import models as config_models
 
 class Country (config_models.TimeStampedModel):
 
-    countryname = models.CharField(max_length=100)
-
-    @property
-    def like_count(self):
-        return self.likes.all().count()
+    countryname = models.CharField(max_length=100, null=True, blank=True)
 
     @property
     def city_count(self):
-        return self.likes.all().count()
+        return self.city.all().count()
 
     def __str__(self):
         return self.countryname
@@ -24,11 +20,7 @@ class City (config_models.TimeStampedModel):
 
     country = models.ForeignKey(
         Country, on_delete=models.CASCADE, related_name='city')
-    cityname = models.CharField(max_length=100)
-
-    @property
-    def card_count(self):
-        return self.likes.all().count()
+    cityname = models.CharField(max_length=100, null=True, blank=True)
 
     @property
     def like_count(self):

@@ -16,7 +16,8 @@ interface IProps {
   inline: boolean;
   creatorAvatar: string;
   creatorUsername: string;
-  location: string;
+  country: string;
+  city: string;
   photoUrl: string;
   likeCount: number;
   commentCount: number;
@@ -53,7 +54,8 @@ class PhotoContainer extends React.Component<IProps, IState> {
       inline,
       creatorAvatar,
       creatorUsername,
-      location,
+      country,
+      city,
       photoUrl,
       commentCount,
       caption,
@@ -88,7 +90,8 @@ class PhotoContainer extends React.Component<IProps, IState> {
                     inline={inline}
                     creatorAvatar={creatorAvatar}
                     creatorUsername={creatorUsername}
-                    location={location}
+                    country={country}
+                    city={city}
                     photoUrl={photoUrl}
                     likeCount={likeCount}
                     commentCount={commentCount}

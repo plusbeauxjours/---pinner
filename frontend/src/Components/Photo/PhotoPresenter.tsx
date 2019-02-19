@@ -99,7 +99,8 @@ interface IProps {
   inline: boolean;
   creatorAvatar: string;
   creatorUsername: string;
-  location: string;
+  country: string;
+  city: string;
   photoUrl: string;
   likeCount: number;
   commentCount: number;
@@ -120,7 +121,8 @@ const PhotoPresenter: React.SFC<IProps> = ({
   inline = false,
   creatorAvatar,
   creatorUsername,
-  location,
+  country,
+  city,
   photoUrl,
   likeCount,
   commentCount,
@@ -147,7 +149,8 @@ const PhotoPresenter: React.SFC<IProps> = ({
             <Link to={`/${creatorUsername}`}>
               <Bold text={creatorUsername} />
             </Link>
-            <Location>{location}</Location>
+            <Location>{country}</Location>
+            <Location>{city}</Location>
           </HeaderColumn>
         </Header>
         <Image src={photoUrl} />
@@ -207,7 +210,8 @@ const PhotoPresenter: React.SFC<IProps> = ({
               <Link to={`/${creatorUsername}`}>
                 <Bold text={creatorUsername} />
               </Link>
-              <Location>{location}</Location>
+              <Location>{country}</Location>
+              <Location>{city}</Location>
             </HeaderColumn>
           </Header>
 

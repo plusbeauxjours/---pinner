@@ -35,8 +35,11 @@ export const DETAIL_CARD_FRAGMENT = gql`
     id
     file
     caption
-    location {
-      city
+    country {
+      countryname
+    }
+    city {
+      cityname
     }
     likeCount
     commentCount

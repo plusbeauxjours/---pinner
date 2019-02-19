@@ -4,14 +4,6 @@ from graphql_jwt.decorators import login_required
 
 
 @login_required
-def resolve_location(self, info, **kwargs):
-
-    locations = models.Location.objects.all()
-
-    return types.LocationResponse(locations=locations)
-
-
-@login_required
 def resolve_feed(self, info, **kwargs):
 
     user = info.context.user
@@ -39,7 +31,7 @@ def resolve_feed_by_location(self, info, **kwargs):
     page = kwargs.get('page', 0)
     offset = 5 * page
 
-    cards = models.Card.objects.filter(location__city=cityname).order_by(
+    cards = models.Card.objects.filter(country__city__cityname=cityname).order_by(
         '-created_at')[offset:5 + offset]
 
     return types.FeedByLocationResponse(cards=cards)
