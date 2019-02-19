@@ -11,9 +11,9 @@ class Card(config_models.TimeStampedModel):
         User, on_delete=models.CASCADE, related_name='cards')
     caption = models.TextField()
     city = models.ForeignKey(
-        location_models.City, on_delete=models.CASCADE, related_name='city')
+        location_models.City, on_delete=models.CASCADE, related_name='city', null=True)
     country = models.ForeignKey(
-        location_models.Country, on_delete=models.CASCADE, related_name='country')
+        location_models.Country, on_delete=models.CASCADE, related_name='country', null=True)
     file = models.URLField(null=True, blank=True)
 
     @property

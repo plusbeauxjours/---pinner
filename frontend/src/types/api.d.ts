@@ -203,8 +203,8 @@ export interface cardDetail_cardDetail_card {
   id: string;
   file: string | null;
   caption: string;
-  country: cardDetail_cardDetail_card_country;
-  city: cardDetail_cardDetail_card_city;
+  country: cardDetail_cardDetail_card_country | null;
+  city: cardDetail_cardDetail_card_city | null;
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;
@@ -325,8 +325,8 @@ export interface feed_feed_cards {
   id: string;
   file: string | null;
   caption: string;
-  country: feed_feed_cards_country;
-  city: feed_feed_cards_city;
+  country: feed_feed_cards_country | null;
+  city: feed_feed_cards_city | null;
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;
@@ -400,8 +400,8 @@ export interface FeedByLocaion_feedByLocation_cards {
   id: string;
   file: string | null;
   caption: string;
-  country: FeedByLocaion_feedByLocation_cards_country;
-  city: FeedByLocaion_feedByLocation_cards_city;
+  country: FeedByLocaion_feedByLocation_cards_country | null;
+  city: FeedByLocaion_feedByLocation_cards_city | null;
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;
@@ -459,17 +459,12 @@ export interface ReportLocationVariables {
 export interface location_location_country {
   __typename: "CountryType";
   id: string;
-}
-
-export interface location_location_city {
-  __typename: "CityType";
-  id: string;
+  countryname: string | null;
 }
 
 export interface location_location {
   __typename: "LocationResponse";
   country: (location_location_country | null)[] | null;
-  city: (location_location_city | null)[] | null;
 }
 
 export interface location {
@@ -742,8 +737,8 @@ export interface DetailParts {
   id: string;
   file: string | null;
   caption: string;
-  country: DetailParts_country;
-  city: DetailParts_city;
+  country: DetailParts_country | null;
+  city: DetailParts_city | null;
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;

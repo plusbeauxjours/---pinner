@@ -5,9 +5,7 @@ export const GET_LOCATION = gql`
     location {
       country {
         id
-      }
-      city {
-        id
+        countryname
       }
     }
   }

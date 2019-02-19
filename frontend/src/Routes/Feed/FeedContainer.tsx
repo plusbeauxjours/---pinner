@@ -89,6 +89,7 @@ class FeedContainer extends React.Component<IProps, IState> {
     lastCity: string,
     lastCountry: string
   ) => {
+    console.log(lat, lng, lastCity, lastCountry);
     this.ReportLocationFn({
       variables: {
         lastLat: lat,

@@ -34,13 +34,16 @@ class FeedByLocationContainer extends React.Component<IProps, IState> {
         query={FEED_BY_LOCATION}
         variables={{ page, cityname }}
       >
-        {({ data, loading }) => (
-          <FeedByLocationPresenter
-            loading={loading}
-            data={data}
-            cityname={cityname}
-          />
-        )}
+        {({ data, loading }) => {
+          console.log(data);
+          return (
+            <FeedByLocationPresenter
+              loading={loading}
+              data={data}
+              cityname={cityname}
+            />
+          );
+        }}
       </FeedByLocationQuery>
     );
   }

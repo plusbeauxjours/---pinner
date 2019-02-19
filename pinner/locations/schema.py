@@ -1,5 +1,4 @@
 import graphene
-import graphql_jwt
 from . import types, mutations, queries
 
 

@@ -40,12 +40,13 @@ class ReportLocation(graphene.Mutation):
                 try:
                     existing_city = models.City.objects.get(cityname=lastCity)
                 except:
-                    new_city = models.City.objects.create(cityname=lastCity)
+                    new_city = models.City.objects.create(cityname=lastCity, country=existing_country)
+                    new_city.save()
 
             except:
                 new_country = models.Country.objects.create(countryname=lastCountry)
                 new_country.save()
-                new_city = models.City.objects.create(cityname=lastCity)
+                new_city = models.City.objects.create(cityname=lastCity, country=new_country)
                 new_city.save()
 
             return types.ReportLocationResponse(ok=True)
