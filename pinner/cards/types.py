@@ -48,6 +48,10 @@ class FeedResponse(graphene.ObjectType):
     cards = graphene.List(CardType)
 
 
+class FeedByLocationResponse(graphene.ObjectType):
+    cards = graphene.List(CardType)
+
+
 class LikeCardResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 

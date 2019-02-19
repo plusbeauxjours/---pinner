@@ -15,6 +15,15 @@ class Query(object):
         required=True,
         args={'page': graphene.Int()}
     )
+    feed_by_location = graphene.Field(
+        types.FeedByLocationResponse,
+        resolver=queries.resolve_feed_by_location,
+        required=True,
+        args={
+            'location': graphene.String(required=True),
+            'page': graphene.Int()
+        }
+    )
     card_likes = graphene.Field(
         types.CardLikeResponse,
         resolver=queries.resolve_card_likes,

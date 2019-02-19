@@ -3,7 +3,7 @@ import { MAPS_KEY } from "./keys";
 import { toast } from "react-toastify";
 
 export const reverseGeoCode = async (lat: number, lng: number) => {
-  const URL = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${MAPS_KEY}`;
+  const URL = `https://maps.googleapis.com/maps/api/geocode/json?&language=en&latlng=${lat},${lng}&key=${MAPS_KEY}`;
   const { data } = await axios(URL);
   if (!data.error_message) {
     const { results } = data;

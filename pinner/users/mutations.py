@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from graphql_jwt.decorators import login_required
 from graphql_jwt.shortcuts import get_token
 from . import models, types
+from cards import models as cards_models
 from notifications import models as notification_models
 
 
@@ -279,6 +280,14 @@ class ReportLocation(graphene.Mutation):
             profile.lastCountry = lastCountry
             profile.save()
             user.save()
+
+            try:
+                existing_city = cards_models.Location.objects.get(city=lastCity)
+
+            except:
+                newCity = cards_models.Location.objects.create(city=lastCity)
+                newCity.save()
+
             return types.ReportLocationResponse(ok=True)
 
         except profile.DoesNotExist:
