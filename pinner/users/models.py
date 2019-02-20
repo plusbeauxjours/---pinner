@@ -22,7 +22,7 @@ class Profile(config_models.TimeStampedModel):
     website = models.URLField(blank=True, null=True)
     gender = models.CharField(max_length=15, blank=True, null=True)
     avatar = models.URLField(
-        blank=True, default="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80")
+        blank=True, default="http://basmed.unilag.edu.ng/wp-content/uploads/2018/10/avatar__181424.png")
     following = models.ManyToManyField(
         'self', blank=True, symmetrical=False, related_name='following_users')
     followers = models.ManyToManyField(
@@ -32,8 +32,8 @@ class Profile(config_models.TimeStampedModel):
     verifiedEmail = models.BooleanField(default=False)
     lastLng = models.FloatField(blank=True, null=True)
     lastLat = models.FloatField(blank=True, null=True)
-    lastCity = models.CharField(max_length=3000, blank=True, null=True)
-    lastCountry = models.CharField(max_length=3000, blank=True, null=True)
+    lastCity = models.CharField(max_length=300, blank=True, null=True)
+    lastCountry = models.CharField(max_length=300, blank=True, null=True)
     fbId = models.CharField(blank=True, null=True, max_length=20)
 
     def __str__(self):

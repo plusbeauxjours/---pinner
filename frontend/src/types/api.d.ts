@@ -462,9 +462,16 @@ export interface location_location_country {
   countryname: string | null;
 }
 
+export interface location_location_city {
+  __typename: "CityType";
+  id: string;
+  cityname: string | null;
+}
+
 export interface location_location {
   __typename: "LocationResponse";
   country: (location_location_country | null)[] | null;
+  city: (location_location_city | null)[] | null;
 }
 
 export interface location {
@@ -510,6 +517,8 @@ export interface userProfile_userProfile_user_profile {
   followingCount: number | null;
   isFollowing: boolean | null;
   isSelf: boolean | null;
+  lastCountry: string | null;
+  lastCity: string | null;
 }
 
 export interface userProfile_userProfile_user_cards {

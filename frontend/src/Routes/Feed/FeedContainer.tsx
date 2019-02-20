@@ -1,18 +1,26 @@
 import React from "react";
 import { Query, Mutation, MutationFn } from "react-apollo";
 import FeedPresenter from "./FeedPresenter";
-import { GET_FEED } from "./FeedQueries";
-import { feed, ReportLocation, ReportLocationVariables } from "../../types/api";
+import {
+  ReportLocation,
+  ReportLocationVariables,
+  FeedByLocaion,
+  FeedByLocaionVariables
+} from "../../types/api";
 import { RouteComponentProps } from "react-router";
 import { REPORT_LOCATION } from "../Home/HomeQueries";
 import { reverseGeoCode } from "../../mapHelpers";
+import { FEED_BY_LOCATION } from "../FeedByLocation/FeedByLocationQueries";
 
 class ReportLocationMutation extends Mutation<
   ReportLocation,
   ReportLocationVariables
 > {}
 
-class FeedQuery extends Query<feed> {}
+class FeedByLocationQuery extends Query<
+  FeedByLocaion,
+  FeedByLocaionVariables
+> {}
 
 interface IProps extends RouteComponentProps<any> {}
 
@@ -49,15 +57,19 @@ class FeedContainer extends React.Component<IProps, IState> {
         {ReportLocationFn => {
           this.ReportLocationFn = ReportLocationFn;
           return (
-            <FeedQuery
-              query={GET_FEED}
-              variables={{ page }}
+            <FeedByLocationQuery
+              query={FEED_BY_LOCATION}
+              variables={{ page, cityname: lastCity }}
               fetchPolicy="network-only"
             >
               {({ data, loading }) => (
-                <FeedPresenter loading={loading} data={data} />
+                <FeedPresenter
+                  loading={loading}
+                  data={data}
+                  lastCity={lastCity}
+                />
               )}
-            </FeedQuery>
+            </FeedByLocationQuery>
           );
         }}
       </ReportLocationMutation>

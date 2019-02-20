@@ -149,8 +149,9 @@ const PhotoPresenter: React.SFC<IProps> = ({
             <Link to={`/${creatorUsername}`}>
               <Bold text={creatorUsername} />
             </Link>
-            <Location>{country}</Location>
-            <Location>{city}</Location>
+            <Location>
+              {city}, <Bold text={country} />
+            </Location>
           </HeaderColumn>
         </Header>
         <Image src={photoUrl} />

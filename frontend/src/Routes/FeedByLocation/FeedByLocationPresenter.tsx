@@ -24,7 +24,6 @@ const FeedByLocationPresenter: React.SFC<IProps> = ({
   } else if (data) {
     console.log(data);
     const { feedByLocation: { cards = {} } = {} } = data;
-    console.log(cards);
     return (
       <SWrapper>
         <h2>{cityname}</h2>
@@ -37,7 +36,7 @@ const FeedByLocationPresenter: React.SFC<IProps> = ({
               creatorAvatar={card.creator.profile.avatar}
               creatorUsername={card.creator.username}
               country={card.country.countryname}
-              city={card.country.cityname}
+              city={card.city.cityname}
               photoUrl={card.file}
               likeCount={card.likeCount}
               commentCount={card.commentCount}

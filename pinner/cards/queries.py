@@ -31,7 +31,7 @@ def resolve_feed_by_location(self, info, **kwargs):
     page = kwargs.get('page', 0)
     offset = 5 * page
 
-    cards = models.Card.objects.filter(country__city__cityname=cityname).order_by(
+    cards = models.Card.objects.filter(city__cityname=cityname).order_by(
         '-created_at')[offset:5 + offset]
 
     return types.FeedByLocationResponse(cards=cards)
