@@ -50,8 +50,8 @@ class AddCommentResponse(graphene.ObjectType):
     comment = graphene.Field(CommentType)
 
 
-class DeleteCommentResponse(graphene.ObjectType, config_types.ResponseFields):
-    pass
+class DeleteCommentResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
 
 
 class CardLikeResponse(graphene.ObjectType):

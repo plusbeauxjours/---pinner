@@ -104,6 +104,28 @@ export interface addCommentVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: DeleteComment
+// ====================================================
+
+export interface DeleteComment_deleteComment {
+  __typename: "DeleteCommentResponse";
+  ok: boolean | null;
+}
+
+export interface DeleteComment {
+  deleteComment: DeleteComment_deleteComment;
+}
+
+export interface DeleteCommentVariables {
+  cardId: number;
+  commentId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: signUp
 // ====================================================
 

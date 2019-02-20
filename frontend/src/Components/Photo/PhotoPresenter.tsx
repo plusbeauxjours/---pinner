@@ -6,6 +6,7 @@ import Textarea from "react-expanding-textarea";
 import Comment from "../Comment";
 import CardButtons from "../CardButtons";
 import { Link } from "react-router-dom";
+import { keyframes } from "styled-components";
 
 const Container = styled.div`
   background-color: white;
@@ -94,6 +95,55 @@ const DetailContainer = styled.div`
     margin-bottom: 30px;
   }
 `;
+const ModalContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+`;
+
+const ModalOverlay = styled.div`
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+`;
+
+const ModalAnimation = keyframes`
+	  from{
+	    opacity:0;
+	    transform:scale(1.1);
+	  }
+	  to{
+	    opacity:1;
+	    transform:none;
+	  }
+	`;
+
+const Modal = styled.div`
+  background-color: white;
+  width: 30%;
+  border-radius: 12px;
+  z-index: 5;
+  animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const ModalLink = styled.div`
+  text-align: center;
+  min-height: 50px;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  :not(:last-child) {
+    border-bottom: 1px solid #efefef;
+  }
+`;
 
 interface IProps {
   inline: boolean;
@@ -115,6 +165,9 @@ interface IProps {
   openedComment: boolean;
   toggleCommentClick: () => void;
   onKeyUp: (event: any) => void;
+  onSubmit: () => void;
+  modalOpen: boolean;
+  toggleModal: () => void;
 }
 
 const PhotoPresenter: React.SFC<IProps> = ({
@@ -125,7 +178,6 @@ const PhotoPresenter: React.SFC<IProps> = ({
   city,
   photoUrl,
   likeCount,
-  commentCount,
   caption,
   createdAt,
   comments,
@@ -136,56 +188,137 @@ const PhotoPresenter: React.SFC<IProps> = ({
   selfComments,
   openedComment,
   toggleCommentClick,
-  onKeyUp
+  onKeyUp,
+  onSubmit,
+  modalOpen,
+  toggleModal
 }) => {
   if (inline) {
     return (
-      <Container>
-        <Header>
-          <Link to={`/${creatorUsername}`}>
-            <Avatar size="sm" url={creatorAvatar} />
-          </Link>
-          <HeaderColumn>
+      <>
+        {modalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleModal} />
+            <Modal>
+              <ModalLink onClick={onSubmit}>Delete Comment</ModalLink>
+              <ModalLink onClick={toggleModal}>Cancel</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
+        <Container>
+          <Header>
             <Link to={`/${creatorUsername}`}>
-              <Bold text={creatorUsername} />
+              <Avatar size="sm" url={creatorAvatar} />
             </Link>
-            <Location>
-              {city}, <Bold text={country} />
-            </Location>
-          </HeaderColumn>
-        </Header>
-        <Image src={photoUrl} />
-        <Meta>
-          <CardButtons
-            isLiked={isLiked}
-            openedComment={openedComment}
-            toggleCommentClick={toggleCommentClick}
-            onClick={onLikeClick}
-          />
-          <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
-          <Comments>
-            <Comment username={creatorUsername} comment={caption} />
-            {comments &&
-              comments.map(comment => (
-                <Comment
-                  id={comment.id}
-                  key={comment.id}
-                  username={comment.creator.username}
-                  comment={comment.message}
+            <HeaderColumn>
+              <Link to={`/${creatorUsername}`}>
+                <Bold text={creatorUsername} />
+              </Link>
+              <Location>
+                {city}, <Bold text={country} />
+              </Location>
+            </HeaderColumn>
+          </Header>
+          <Image src={photoUrl} />
+          <Meta>
+            <CardButtons
+              isLiked={isLiked}
+              openedComment={openedComment}
+              toggleCommentClick={toggleCommentClick}
+              onClick={onLikeClick}
+            />
+            <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
+            <Comments>
+              <Comment username={creatorUsername} comment={caption} />
+              {comments &&
+                comments.map(comment => (
+                  <Comment
+                    id={comment.id}
+                    key={comment.id}
+                    username={comment.creator.username}
+                    comment={comment.message}
+                    toggleModal={toggleModal}
+                  />
+                ))}
+              {selfComments &&
+                selfComments.map(comment => (
+                  <Comment
+                    id={comment.id}
+                    key={comment.id}
+                    username={comment.username}
+                    comment={comment.message}
+                    toggleModal={toggleModal}
+                  />
+                ))}
+            </Comments>
+            <TimeStamp>{createdAt}</TimeStamp>
+            {openedComment && (
+              <AddComment>
+                <STextArea
+                  placeholder="Add a comment..."
+                  onChange={updateNewComment}
+                  value={newComment}
+                  onKeyUp={onKeyUp}
                 />
-              ))}
-            {selfComments &&
-              selfComments.map(comment => (
-                <Comment
-                  id={comment.id}
-                  key={comment.id}
-                  username={comment.username}
-                  comment={comment.message}
-                />
-              ))}
-          </Comments>
-          <TimeStamp>{createdAt}</TimeStamp>
-          {openedComment && (
+              </AddComment>
+            )}
+          </Meta>
+        </Container>
+      </>
+    );
+  } else {
+    return (
+      <>
+        {modalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleModal} />
+            <Modal>
+              <ModalLink onClick={onSubmit}>Delete Comment</ModalLink>
+              <ModalLink onClick={toggleModal}>Cancel</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
+        <DetailContainer>
+          <Image src={photoUrl} />
+          <Meta>
+            <Header>
+              <Link to={`/${creatorUsername}`}>
+                <Avatar size="md" url={creatorAvatar} />
+              </Link>
+              <HeaderColumn>
+                <Link to={`/${creatorUsername}`}>
+                  <Bold text={creatorUsername} />
+                </Link>
+                <Location>{country}</Location>
+                <Location>{city}</Location>
+              </HeaderColumn>
+            </Header>
+            <Comments>
+              <Comment username={creatorUsername} comment={caption} />
+              {comments &&
+                comments.map(comment => (
+                  <Comment
+                    id={comment.id}
+                    key={comment.id}
+                    username={comment.creator.username}
+                    comment={comment.message}
+                    toggleModal={toggleModal}
+                  />
+                ))}
+              {selfComments &&
+                selfComments.map(comment => (
+                  <Comment
+                    id={comment.id}
+                    key={comment.id}
+                    username={comment.username}
+                    comment={comment.message}
+                    toggleModal={toggleModal}
+                  />
+                ))}
+            </Comments>
+            <CardButtons isLiked={isLiked} onClick={onLikeClick} />
+            <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
+            <TimeStamp>{createdAt}</TimeStamp>
             <AddComment>
               <STextArea
                 placeholder="Add a comment..."
@@ -194,62 +327,9 @@ const PhotoPresenter: React.SFC<IProps> = ({
                 onKeyUp={onKeyUp}
               />
             </AddComment>
-          )}
-        </Meta>
-      </Container>
-    );
-  } else {
-    return (
-      <DetailContainer>
-        <Image src={photoUrl} />
-        <Meta>
-          <Header>
-            <Link to={`/${creatorUsername}`}>
-              <Avatar size="md" url={creatorAvatar} />
-            </Link>
-            <HeaderColumn>
-              <Link to={`/${creatorUsername}`}>
-                <Bold text={creatorUsername} />
-              </Link>
-              <Location>{country}</Location>
-              <Location>{city}</Location>
-            </HeaderColumn>
-          </Header>
-
-          <Comments>
-            <Comment username={creatorUsername} comment={caption} />
-            {comments &&
-              comments.map(comment => (
-                <Comment
-                  id={comment.id}
-                  key={comment.id}
-                  username={comment.creator.username}
-                  comment={comment.message}
-                />
-              ))}
-            {selfComments &&
-              selfComments.map(comment => (
-                <Comment
-                  id={comment.id}
-                  key={comment.id}
-                  username={comment.username}
-                  comment={comment.message}
-                />
-              ))}
-          </Comments>
-          <CardButtons isLiked={isLiked} onClick={onLikeClick} />
-          <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
-          <TimeStamp>{createdAt}</TimeStamp>
-          <AddComment>
-            <STextArea
-              placeholder="Add a comment..."
-              onChange={updateNewComment}
-              value={newComment}
-              onKeyUp={onKeyUp}
-            />
-          </AddComment>
-        </Meta>
-      </DetailContainer>
+          </Meta>
+        </DetailContainer>
+      </>
     );
   }
 };

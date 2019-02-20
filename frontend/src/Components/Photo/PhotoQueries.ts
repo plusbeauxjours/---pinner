@@ -20,3 +20,11 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+export const DELETE_COMMENT = gql`
+  mutation DeleteComment($cardId: Int!, $commentId: Int!) {
+    deleteComment(cardId: $cardId, commentId: $commentId) {
+      ok
+    }
+  }
+`;

@@ -91,37 +91,38 @@ class DeleteComment(graphene.Mutation):
 
     Output = types.DeleteCommentResponse
 
+    @login_required
     def mutate(self, info, **kwargs):
 
         cardId = kwargs.get('cardId')
         commentId = kwargs.get('commentId')
         user = info.context.user
-        ok = True
-        error = None
 
-        if user.is_authenticated:
-
-            try:
-                card = models.Card.objects.get(id=cardId)
-            except models.Card.DoesNotExist:
-                error = 'Card Not Found'
-                return types.DeleteCommentResponse(ok=not ok, error=error)
+        try:
+            card = models.Card.objects.get(id=cardId)
+            print("card found")
 
             try:
                 comment = models.Comment.objects.get(id=commentId)
+                print("comment found")
+
+                if comment.creator.id == user.id or card.creator.id == user.id:
+                    comment.delete()
+                    print("comment delete")
+
+                else:
+                    error = "Can't Delete Comment"
+                    print("comment didn't delete")
+
+                return types.DeleteCommentResponse(ok=True)
+
             except models.Comment.DoesNotExist:
                 error = 'Comment Not Found'
-                return types.DeleteCommentResponse(ok=not ok, error=error)
+                return types.DeleteCommentResponse(ok=False)
 
-            if comment.creator.id == user.id or card.creator.id == user.id:
-                comment.delete()
-            else:
-                error = "Can't Delete Comment"
-            return types.DeleteCommentResponse(ok=not ok, error=error)
-
-        else:
-            error = 'You need to log in'
-            return types.DeleteCommentResponse(ok=not ok, error=error)
+        except models.Card.DoesNotExist:
+            error = 'Card Not Found'
+            return types.DeleteCommentResponse(ok=False)
 
 
 class EditCard(graphene.Mutation):

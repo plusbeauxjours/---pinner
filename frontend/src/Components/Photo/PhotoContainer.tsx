@@ -1,7 +1,8 @@
 import React from "react";
 import PhotoPresenter from "./PhotoPresenter";
 import { Mutation, MutationFn } from "react-apollo";
-import { TOGGLE_LIKE_CARD, ADD_COMMENT } from "./PhotoQueries";
+import { TOGGLE_LIKE_CARD, ADD_COMMENT, DELETE_COMMENT } from "./PhotoQueries";
+import { DeleteComment, DeleteCommentVariables } from "../../types/api";
 import {
   likeCard,
   likeCardVariables,
@@ -10,6 +11,10 @@ import {
 } from "src/types/api";
 
 class AddCommentMutation extends Mutation<addComment, addCommentVariables> {}
+class DeleteCommentMutation extends Mutation<
+  DeleteComment,
+  DeleteCommentVariables
+> {}
 class ToggleLikeMutation extends Mutation<likeCard, likeCardVariables> {}
 
 interface IProps {
@@ -34,10 +39,12 @@ interface IState {
   likeCount: number;
   selfComments: any;
   openedComment: boolean;
+  modalOpen: boolean;
 }
 
 class PhotoContainer extends React.Component<IProps, IState> {
   public addCommentFn: MutationFn;
+  public deleteCommentFn: MutationFn;
   public toggleLikeFn: MutationFn;
   constructor(props) {
     super(props);
@@ -46,7 +53,8 @@ class PhotoContainer extends React.Component<IProps, IState> {
       isLiked: props.isLiked,
       openedComment: false,
       likeCount: props.likeCount,
-      selfComments: []
+      selfComments: [],
+      modalOpen: false
     };
   }
   public render() {
@@ -68,7 +76,8 @@ class PhotoContainer extends React.Component<IProps, IState> {
       isLiked,
       openedComment,
       likeCount,
-      selfComments
+      selfComments,
+      modalOpen
     } = this.state;
     return (
       <AddCommentMutation
@@ -79,37 +88,54 @@ class PhotoContainer extends React.Component<IProps, IState> {
         {addCommentFn => {
           this.addCommentFn = addCommentFn;
           return (
-            <ToggleLikeMutation
-              mutation={TOGGLE_LIKE_CARD}
-              variables={{ cardId: parseInt(id, 10) }}
+            <DeleteCommentMutation
+              mutation={DELETE_COMMENT}
+              variables={{
+                cardId: parseInt(id, 10),
+                commentId: 24
+              }}
             >
-              {toggleLikeFn => {
-                this.toggleLikeFn = toggleLikeFn;
+              {deleteCommentFn => {
+                this.deleteCommentFn = deleteCommentFn;
+                console.log(comments);
                 return (
-                  <PhotoPresenter
-                    inline={inline}
-                    creatorAvatar={creatorAvatar}
-                    creatorUsername={creatorUsername}
-                    country={country}
-                    city={city}
-                    photoUrl={photoUrl}
-                    likeCount={likeCount}
-                    commentCount={commentCount}
-                    caption={caption}
-                    createdAt={createdAt}
-                    comments={comments}
-                    updateNewComment={this.updateNewComment}
-                    newComment={newComment}
-                    isLiked={isLiked}
-                    onLikeClick={this.onLikeClick}
-                    selfComments={selfComments}
-                    toggleCommentClick={this.toggleCommentClick}
-                    openedComment={openedComment}
-                    onKeyUp={this.onKeyUp}
-                  />
+                  <ToggleLikeMutation
+                    mutation={TOGGLE_LIKE_CARD}
+                    variables={{ cardId: parseInt(id, 10) }}
+                  >
+                    {toggleLikeFn => {
+                      this.toggleLikeFn = toggleLikeFn;
+                      return (
+                        <PhotoPresenter
+                          inline={inline}
+                          creatorAvatar={creatorAvatar}
+                          creatorUsername={creatorUsername}
+                          country={country}
+                          city={city}
+                          photoUrl={photoUrl}
+                          likeCount={likeCount}
+                          commentCount={commentCount}
+                          caption={caption}
+                          createdAt={createdAt}
+                          comments={comments}
+                          updateNewComment={this.updateNewComment}
+                          newComment={newComment}
+                          isLiked={isLiked}
+                          onLikeClick={this.onLikeClick}
+                          selfComments={selfComments}
+                          toggleCommentClick={this.toggleCommentClick}
+                          openedComment={openedComment}
+                          onKeyUp={this.onKeyUp}
+                          onSubmit={this.onSubmit}
+                          toggleModal={this.toggleModal}
+                          modalOpen={modalOpen}
+                        />
+                      );
+                    }}
+                  </ToggleLikeMutation>
                 );
               }}
-            </ToggleLikeMutation>
+            </DeleteCommentMutation>
           );
         }}
       </AddCommentMutation>
@@ -130,6 +156,9 @@ class PhotoContainer extends React.Component<IProps, IState> {
     } else {
       return null;
     }
+  };
+  public onSubmit = () => {
+    console.log("hihisexsex");
   };
   public onLikeClick = () => {
     const { likeCount, isLiked } = this.props;
@@ -182,6 +211,13 @@ class PhotoContainer extends React.Component<IProps, IState> {
         };
       });
     }
+  };
+  public toggleModal = () => {
+    this.setState(state => {
+      return {
+        modalOpen: !state.modalOpen
+      };
+    });
   };
 }
 
