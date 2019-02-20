@@ -52,8 +52,8 @@ class PhotoContainer extends React.Component<IProps, IState> {
     this.state = {
       newComment: "",
       isLiked: props.isLiked,
-      openedComment: false,
       likeCount: props.likeCount,
+      openedComment: false,
       selfComments: [],
       commentId: "",
       modalOpen: false
@@ -97,6 +97,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
                 cardId: parseInt(id, 10),
                 commentId: parseInt(commentId, 10)
               }}
+              onCompleted={() => this.setState({ commentId: "" })}
             >
               {deleteCommentFn => {
                 this.deleteCommentFn = deleteCommentFn;
@@ -131,6 +132,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
                           onSubmit={this.onSubmit}
                           modalOpen={modalOpen}
                           toggleModal={this.toggleModal}
+                          getCommentId={this.getCommentId}
                         />
                       );
                     }}
@@ -158,20 +160,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
     } else {
       return null;
     }
-  };
-  public onSubmit = () => {
-    const { id } = this.props;
-    const { commentId } = this.state;
-    this.setState({
-      commentId: "3"
-    } as any);
-    console.log(commentId);
-    this.deleteCommentFn({
-      variables: {
-        id,
-        commentId
-      }
-    });
   };
   public onLikeClick = () => {
     const { likeCount, isLiked } = this.props;
@@ -231,6 +219,28 @@ class PhotoContainer extends React.Component<IProps, IState> {
         modalOpen: !state.modalOpen
       };
     });
+  };
+  public getCommentId = commentId => {
+    const { modalOpen } = this.state;
+    this.setState({
+      modalOpen: !modalOpen,
+      commentId
+    } as any);
+  };
+  public onSubmit = () => {
+    const { id: cardId } = this.props;
+    const { commentId, modalOpen } = this.state;
+    this.setState({
+      modalOpen: !modalOpen
+    });
+
+    this.deleteCommentFn({
+      variables: {
+        cardId,
+        commentId
+      }
+    });
+    console.log(this.state);
   };
 }
 

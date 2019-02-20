@@ -165,9 +165,10 @@ interface IProps {
   openedComment: boolean;
   toggleCommentClick: () => void;
   onKeyUp: (event: any) => void;
-  onSubmit: () => void;
+  onSubmit: any;
   modalOpen: boolean;
   toggleModal: () => void;
+  getCommentId: any;
 }
 
 const PhotoPresenter: React.SFC<IProps> = ({
@@ -191,7 +192,8 @@ const PhotoPresenter: React.SFC<IProps> = ({
   onKeyUp,
   onSubmit,
   modalOpen,
-  toggleModal
+  toggleModal,
+  getCommentId
 }) => {
   if (inline) {
     return (
@@ -237,7 +239,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                     key={comment.id}
                     username={comment.creator.username}
                     comment={comment.message}
-                    toggleModal={toggleModal}
+                    getCommentId={getCommentId}
                   />
                 ))}
               {selfComments &&
@@ -247,7 +249,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                     key={comment.id}
                     username={comment.username}
                     comment={comment.message}
-                    toggleModal={toggleModal}
+                    getCommentId={getCommentId}
                   />
                 ))}
             </Comments>
@@ -302,7 +304,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                     key={comment.id}
                     username={comment.creator.username}
                     comment={comment.message}
-                    toggleModal={toggleModal}
+                    getCommentId={getCommentId}
                   />
                 ))}
               {selfComments &&
@@ -312,7 +314,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                     key={comment.id}
                     username={comment.username}
                     comment={comment.message}
-                    toggleModal={toggleModal}
+                    getCommentId={getCommentId}
                   />
                 ))}
             </Comments>

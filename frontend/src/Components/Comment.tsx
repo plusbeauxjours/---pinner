@@ -24,14 +24,20 @@ interface IProps {
   username: string;
   comment: string;
   toggleModal?: () => void;
-  onSubmit?: () => void;
+  getCommentId?: any;
+  onClick?: any;
 }
 
-const Comment: React.SFC<IProps> = ({ username, comment, toggleModal }) => (
+const Comment: React.SFC<IProps> = ({
+  id,
+  username,
+  comment,
+  getCommentId
+}) => (
   <Container>
     <SBold text={username} />
     {comment}
-    <GearContainer onClick={toggleModal}>
+    <GearContainer onClick={() => getCommentId(id)}>
       <Gear />
     </GearContainer>
   </Container>
