@@ -24,6 +24,7 @@ interface IProps {
   username: string;
   comment: string;
   toggleModal?: () => void;
+  onSubmit?: () => void;
 }
 
 const Comment: React.SFC<IProps> = ({ username, comment, toggleModal }) => (

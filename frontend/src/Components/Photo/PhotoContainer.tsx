@@ -39,6 +39,7 @@ interface IState {
   likeCount: number;
   selfComments: any;
   openedComment: boolean;
+  commentId: string;
   modalOpen: boolean;
 }
 
@@ -54,6 +55,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
       openedComment: false,
       likeCount: props.likeCount,
       selfComments: [],
+      commentId: "",
       modalOpen: false
     };
   }
@@ -77,6 +79,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
       openedComment,
       likeCount,
       selfComments,
+      commentId,
       modalOpen
     } = this.state;
     return (
@@ -92,12 +95,11 @@ class PhotoContainer extends React.Component<IProps, IState> {
               mutation={DELETE_COMMENT}
               variables={{
                 cardId: parseInt(id, 10),
-                commentId: 24
+                commentId: parseInt(commentId, 10)
               }}
             >
               {deleteCommentFn => {
                 this.deleteCommentFn = deleteCommentFn;
-                console.log(comments);
                 return (
                   <ToggleLikeMutation
                     mutation={TOGGLE_LIKE_CARD}
@@ -127,8 +129,8 @@ class PhotoContainer extends React.Component<IProps, IState> {
                           openedComment={openedComment}
                           onKeyUp={this.onKeyUp}
                           onSubmit={this.onSubmit}
-                          toggleModal={this.toggleModal}
                           modalOpen={modalOpen}
+                          toggleModal={this.toggleModal}
                         />
                       );
                     }}
@@ -158,7 +160,18 @@ class PhotoContainer extends React.Component<IProps, IState> {
     }
   };
   public onSubmit = () => {
-    console.log("hihisexsex");
+    const { id } = this.props;
+    const { commentId } = this.state;
+    this.setState({
+      commentId: "3"
+    } as any);
+    console.log(commentId);
+    this.deleteCommentFn({
+      variables: {
+        id,
+        commentId
+      }
+    });
   };
   public onLikeClick = () => {
     const { likeCount, isLiked } = this.props;
