@@ -60,12 +60,10 @@ class EditProfile(graphene.Mutation):
 
     class Arguments:
         bio = graphene.String()
-        website = graphene.String()
         gender = graphene.String()
         avatar = graphene.String()
         first_name = graphene.String()
         last_name = graphene.String()
-        email = graphene.String()
         username = graphene.String()
 
     Output = types.EditProfileResponse
@@ -80,26 +78,22 @@ class EditProfile(graphene.Mutation):
         if user.is_authenticated and profile is not None:
 
             bio = kwargs.get('bio', user.profile.bio)
-            website = kwargs.get('website', user.profile.website)
             gender = kwargs.get('gender', user.profile.gender)
             avatar = kwargs.get('avatar', user.profile.avatar)
             first_name = kwargs.get('first_name', user.first_name)
             last_name = kwargs.get('last_name', user.last_name)
-            email = kwargs.get('email', user.email)
             username = kwargs.get('username', user.username)
 
             try:
-                user.profile.bio = bio
-                user.profile.website = website
-                user.profile.gender = gender
-                user.profile.avatar = avatar
+                profile.bio = bio
+                profile.gender = gender
+                profile.avatar = avatar
 
                 user.first_name = first_name
                 user.last_name = last_name
-                user.email = email
                 user.username = username
 
-                user.profile.save()
+                profile.save()
                 user.save()
 
             except IntegrityError as e:

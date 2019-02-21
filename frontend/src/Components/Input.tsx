@@ -26,6 +26,7 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   required?: boolean;
+  onKeyUp?: (event: any) => void;
 }
 
 const Input: React.SFC<IProps> = ({
@@ -35,7 +36,8 @@ const Input: React.SFC<IProps> = ({
   name = "",
   onChange,
   className,
-  required = true
+  required = true,
+  onKeyUp
 }) => (
   <Container
     value={value}
@@ -45,6 +47,7 @@ const Input: React.SFC<IProps> = ({
     name={name}
     className={className}
     required={required}
+    onKeyUp={onKeyUp}
   />
 );
 

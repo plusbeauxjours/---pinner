@@ -1,14 +1,17 @@
 import React from "react";
-import styled, { keyframes } from "../../Styles/typed-components";
-import Wrapper from "../../Components/Wrapper";
-import Loader from "src/Components/Loader";
-import Avatar from "src/Components/Avatar";
-import Bold from "src/Components/Bold";
-import CardGrid from "src/Components/CardGrid";
-import { Link } from "react-router-dom";
-import Button from "../../Components/Button";
-import FollowBtn from "src/Components/FollowBtn";
+import { MutationFn } from "react-apollo";
+
 import { Gear } from "../../Icons";
+import styled, { keyframes } from "../../Styles/typed-components";
+
+import Wrapper from "../../Components/Wrapper";
+import Loader from "../..//Components/Loader";
+import Avatar from "../..//Components/Avatar";
+import Bold from "../..//Components/Bold";
+import CardGrid from "../..//Components/CardGrid";
+import FollowBtn from "../..//Components/FollowBtn";
+import Input from "../../Components/Input";
+// import Form from "../../Components/Form";
 
 const SWrapper = styled(Wrapper)`
   width: 45%;
@@ -51,12 +54,6 @@ const Fullname = styled.span`
 const Bio = styled.p`
   font-size: 16px;
   margin-bottom: 10px;
-`;
-
-const Url = styled.a`
-  font-size: 14px;
-  color: ${props => props.theme.darkBlueColor};
-  font-weight: 600;
 `;
 
 const UsernameRow = styled.div`
@@ -121,20 +118,50 @@ const ModalLink = styled.div`
   }
 `;
 
+// const ExtendedForm = styled(Form)`
+//   padding: 0px 40px;
+// `;
+
+const ExtendedInput = styled(Input)`
+  margin-bottom: 30px;
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
   modalOpen: boolean;
+  editMode: boolean;
+  openEditMode: () => void;
   toggleModal: () => void;
   logUserOutFn: () => void;
+  onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: MutationFn;
+  onKeyUp: (event: any) => void;
+  userName: string;
+  bio: string;
+  gender: string;
+  avatar: string;
+  firstName: string;
+  lastName: string;
 }
 
 const ProfilePresenter: React.SFC<IProps> = ({
   data,
   loading,
   modalOpen,
+  editMode,
   toggleModal,
-  logUserOutFn
+  openEditMode,
+  logUserOutFn,
+  onInputChange,
+  onSubmit,
+  onKeyUp,
+  userName,
+  bio,
+  gender,
+  avatar,
+  firstName,
+  lastName
 }) => {
   if (loading) {
     return <Loader />;
@@ -148,6 +175,7 @@ const ProfilePresenter: React.SFC<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleModal} />
             <Modal>
+              <ModalLink onClick={openEditMode}>Edit Profile</ModalLink>
               <ModalLink onClick={logUserOutFn}>Log Out</ModalLink>
               <ModalLink onClick={toggleModal}>Cancel</ModalLink>
             </Modal>
@@ -158,20 +186,22 @@ const ProfilePresenter: React.SFC<IProps> = ({
             <Avatar size="lg" url={user.profile.avatar} />
             <HeaderColumn>
               <UsernameRow>
-                <Username>{user.username}</Username>
+                {editMode ? (
+                  <ExtendedInput
+                    onChange={onInputChange}
+                    type={"text"}
+                    value={userName}
+                    placeholder={user.username}
+                    name={"userName"}
+                    onKeyUp={onKeyUp}
+                  />
+                ) : (
+                  <Username>{user.username}</Username>
+                )}
                 {user.profile.isSelf ? (
-                  <>
-                    <Link to="/edit-profile">
-                      <Button
-                        text="Edit Profile"
-                        inverted={true}
-                        active={true}
-                      />
-                    </Link>
-                    <GearContainer onClick={toggleModal}>
-                      <Gear />
-                    </GearContainer>
-                  </>
+                  <GearContainer onClick={toggleModal}>
+                    <Gear />
+                  </GearContainer>
                 ) : (
                   <FollowBtn
                     isFollowing={user.profile.isFollowing}
@@ -180,6 +210,21 @@ const ProfilePresenter: React.SFC<IProps> = ({
                 )}
               </UsernameRow>
               <Metrics>
+                <Metric>
+                  {editMode ? (
+                    <ExtendedInput
+                      onChange={onInputChange}
+                      type={"text"}
+                      value={gender}
+                      placeholder={user.profile.gender || "Sex"}
+                      name={"gender"}
+                      onKeyUp={onKeyUp}
+                    />
+                  ) : (
+                    <Bold text={String(user.profile.gender)} />
+                  )}{" "}
+                  gender
+                </Metric>
                 <Metric>
                   <Bold text={String(user.profile.lastCity)} /> lastCity
                 </Metric>
@@ -196,9 +241,43 @@ const ProfilePresenter: React.SFC<IProps> = ({
                   <Bold text={String(user.profile.followingCount)} /> following
                 </Metric>
               </Metrics>
-              <Fullname>{`${user.firstName} ${user.lastNmae}`}</Fullname>
-              {user.profile.bio && <Bio>{user.profile.bio}</Bio>}
-              {user.profile.website && <Url>{user.profile.website}</Url>}
+              <Metric>
+                {editMode ? (
+                  <>
+                    <ExtendedInput
+                      onChange={onInputChange}
+                      type={"text"}
+                      value={firstName}
+                      placeholder={user.firstName || "First Name"}
+                      name={"firstName"}
+                      onKeyUp={onKeyUp}
+                    />
+                    <ExtendedInput
+                      onChange={onInputChange}
+                      type={"text"}
+                      value={lastName}
+                      placeholder={user.lastName || "Last Name"}
+                      name={"lastName"}
+                      onKeyUp={onKeyUp}
+                    />
+                  </>
+                ) : (
+                  <Fullname>{`${user.firstName} ${user.lastName}`}</Fullname>
+                )}{" "}
+              </Metric>
+              {user.profile.bio &&
+                (editMode ? (
+                  <ExtendedInput
+                    onChange={onInputChange}
+                    type={"text"}
+                    value={bio}
+                    placeholder={user.profile.bio || "Bio"}
+                    name={"bio"}
+                    onKeyUp={onKeyUp}
+                  />
+                ) : (
+                  <Bio>{`${user.profile.bio}`}</Bio>
+                ))}
             </HeaderColumn>
           </Header>
         </SWrapper>

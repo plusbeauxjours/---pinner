@@ -532,6 +532,7 @@ export interface StartPhoneVerificationVariables {
 export interface userProfile_userProfile_user_profile {
   __typename: "ProfileType";
   bio: string | null;
+  gender: string | null;
   avatar: string;
   website: string | null;
   postCount: number | null;
@@ -575,6 +576,52 @@ export interface userProfile {
 
 export interface userProfileVariables {
   username: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: EditProfile
+// ====================================================
+
+export interface EditProfile_editProfile_user_profile {
+  __typename: "ProfileType";
+  bio: string | null;
+  gender: string | null;
+  avatar: string;
+}
+
+export interface EditProfile_editProfile_user {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  firstName: string;
+  lastName: string;
+  profile: EditProfile_editProfile_user_profile | null;
+}
+
+export interface EditProfile_editProfile {
+  __typename: "EditProfileResponse";
+  ok: boolean | null;
+  user: EditProfile_editProfile_user | null;
+}
+
+export interface EditProfile {
+  editProfile: EditProfile_editProfile;
+}
+
+export interface EditProfileVariables {
+  username?: string | null;
+  bio?: string | null;
+  gender?: string | null;
+  avatar?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
 }
 
 

@@ -8,7 +8,6 @@ import {
 import styled from "styled-components";
 import Home from "../Routes/Home";
 import Feed from "../Routes/Feed";
-import EditProfile from "../Routes/EditProfile";
 import Profile from "../Routes/Profile";
 import CardDetail from "../Routes/CardDetail";
 import Search from "../Routes/Search";
@@ -33,7 +32,6 @@ const LoggedInPages = () => (
     <Switch>
       <Route path="/" exact={true} component={Feed} />
       <Route path="/p/:id" component={CardDetail} />
-      <Route path="/edit-profile" component={EditProfile} />
       <Route path="/search" component={Search} />
 
       <Route path="/explore" component={Explore} />
