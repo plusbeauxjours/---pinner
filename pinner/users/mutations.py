@@ -70,12 +70,10 @@ class EditProfile(graphene.Mutation):
 
     Output = types.EditProfileResponse
 
+    @login_required
     def mutate(self, info, **kwargs):
 
         user = info.context.user
-
-        ok = True
-        error = None
 
         profile = user.profile
 
@@ -107,13 +105,13 @@ class EditProfile(graphene.Mutation):
             except IntegrityError as e:
                 print(e)
                 error = "Can't save"
-                return types.EditProfileResponse(ok=not ok, error=error)
+                return types.EditProfileResponse(ok=False)
 
-            return types.EditProfileResponse(ok=ok, error=error)
+            return types.EditProfileResponse(ok=True, user=user)
 
         else:
             error = 'You need to log in'
-            return types.EditProfileResponse(ok=not ok, error=error)
+            return types.EditProfileResponse(ok=False)
 
 
 class ChangePassword(graphene.Mutation):

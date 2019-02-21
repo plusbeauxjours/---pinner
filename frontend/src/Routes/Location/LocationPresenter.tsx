@@ -23,17 +23,13 @@ const LocationPresenter: React.SFC<IProps> = ({ data, loading, className }) => {
     return (
       <Container className={className}>
         {country.map(index => (
-          <Link to={`/location/${index.countryname}`}>
-            <div key={index.id}>
-              <p>{index.countryname}</p>
-            </div>
+          <Link key={index.id} to={`/location/${index.countryname}`}>
+            <p>{index.countryname}</p>
           </Link>
         ))}
-        {city.map(index => (
-          <Link to={`/location/${index.cityname}`}>
-            <div key={index.id}>
-              <p>{index.cityname}</p>
-            </div>
+        {city.map(key => (
+          <Link key={key.id} to={`/location/${key.cityname}`}>
+            <p>{key.cityname}</p>
           </Link>
         ))}
       </Container>

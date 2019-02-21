@@ -97,7 +97,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
                 cardId: parseInt(id, 10),
                 commentId: parseInt(commentId, 10)
               }}
-              onCompleted={() => this.setState({ commentId: "" })}
+              onCompleted={() => this.setState({ commentId: "xsgersrg" })}
             >
               {deleteCommentFn => {
                 this.deleteCommentFn = deleteCommentFn;
@@ -233,7 +233,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
     this.setState({
       modalOpen: !modalOpen
     });
-
     this.deleteCommentFn({
       variables: {
         cardId,

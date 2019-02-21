@@ -46,7 +46,8 @@ class FollowUnfollowResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
 
-class EditProfileResponse(graphene.ObjectType, config_types.ResponseFields):
+class EditProfileResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
     user = graphene.Field(UserType)
 
 
