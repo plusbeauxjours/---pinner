@@ -1,6 +1,4 @@
 import React from "react";
-import { MutationFn } from "react-apollo";
-
 import { Gear } from "../../Icons";
 import styled, { keyframes } from "../../Styles/typed-components";
 
@@ -118,10 +116,6 @@ const ModalLink = styled.div`
   }
 `;
 
-// const ExtendedForm = styled(Form)`
-//   padding: 0px 40px;
-// `;
-
 const ExtendedInput = styled(Input)`
   margin-bottom: 30px;
 `;
@@ -130,13 +124,15 @@ interface IProps {
   data?: any;
   loading: boolean;
   modalOpen: boolean;
+  confirmModalOpen: boolean;
   editMode: boolean;
   openEditMode: () => void;
   toggleModal: () => void;
+  toggleConfirmModal: () => void;
   logUserOutFn: () => void;
+  confirmDeleteProfile: () => void;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: MutationFn;
-  onKeyUp: (event: any) => void;
+  onKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   userName: string;
   bio: string;
   gender: string;
@@ -149,12 +145,14 @@ const ProfilePresenter: React.SFC<IProps> = ({
   data,
   loading,
   modalOpen,
+  confirmModalOpen,
   editMode,
   toggleModal,
+  toggleConfirmModal,
   openEditMode,
   logUserOutFn,
+  confirmDeleteProfile,
   onInputChange,
-  onSubmit,
   onKeyUp,
   userName,
   bio,
@@ -176,8 +174,18 @@ const ProfilePresenter: React.SFC<IProps> = ({
             <ModalOverlay onClick={toggleModal} />
             <Modal>
               <ModalLink onClick={openEditMode}>Edit Profile</ModalLink>
+              <ModalLink onClick={toggleConfirmModal}>Delete Profile</ModalLink>
               <ModalLink onClick={logUserOutFn}>Log Out</ModalLink>
               <ModalLink onClick={toggleModal}>Cancel</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
+        {confirmModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleConfirmModal} />
+            <Modal>
+              <ModalLink onClick={confirmDeleteProfile}>Yes</ModalLink>
+              <ModalLink onClick={toggleConfirmModal}>No</ModalLink>
             </Modal>
           </ModalContainer>
         )}

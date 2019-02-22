@@ -33,7 +33,7 @@ export const GET_USER = gql`
 
 export const EDIT_PROFILE = gql`
   mutation EditProfile(
-    $username: String
+    $userName: String
     $bio: String
     $gender: String
     $avatar: String
@@ -41,7 +41,7 @@ export const EDIT_PROFILE = gql`
     $lastName: String
   ) {
     editProfile(
-      username: $username
+      username: $userName
       bio: $bio
       gender: $gender
       avatar: $avatar
@@ -60,6 +60,14 @@ export const EDIT_PROFILE = gql`
           avatar
         }
       }
+    }
+  }
+`;
+
+export const DELETE_PROFILE = gql`
+  mutation DeleteProfile {
+    deleteProfile {
+      ok
     }
   }
 `;
