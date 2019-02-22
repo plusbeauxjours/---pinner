@@ -51,6 +51,10 @@ class EditProfileResponse(graphene.ObjectType):
     user = graphene.Field(UserType)
 
 
+class DeleteProfileResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
+
+
 class ChangePasswordResponse(graphene.ObjectType, config_types.ResponseFields):
     pass
 

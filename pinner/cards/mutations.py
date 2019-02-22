@@ -112,7 +112,7 @@ class DeleteComment(graphene.Mutation):
 
                 else:
                     error = "Can't Delete Comment"
-                    print("comment didn't delete")
+                    print("you are not authorized")
 
                 return types.DeleteCommentResponse(ok=True)
 

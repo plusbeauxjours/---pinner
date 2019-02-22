@@ -164,7 +164,7 @@ interface IProps {
   selfComments: any;
   openedComment: boolean;
   toggleCommentClick: () => void;
-  onKeyUp: (event: any) => void;
+  onKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onSubmit: any;
   modalOpen: boolean;
   toggleModal: () => void;

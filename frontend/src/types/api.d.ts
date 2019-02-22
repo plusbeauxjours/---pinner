@@ -616,12 +616,29 @@ export interface EditProfile {
 }
 
 export interface EditProfileVariables {
-  username?: string | null;
+  userName?: string | null;
   bio?: string | null;
   gender?: string | null;
   avatar?: string | null;
   firstName?: string | null;
   lastName?: string | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: DeleteProfile
+// ====================================================
+
+export interface DeleteProfile_deleteProfile {
+  __typename: "DeleteProfileResponse";
+  ok: boolean | null;
+}
+
+export interface DeleteProfile {
+  deleteProfile: DeleteProfile_deleteProfile;
 }
 
 

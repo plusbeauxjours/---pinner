@@ -153,7 +153,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
       newComment: value
     } as any);
   };
-  public onKeyUp = event => {
+  public onKeyUp = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { keyCode } = event;
     if (keyCode === 13) {
       this.addCommentFn();

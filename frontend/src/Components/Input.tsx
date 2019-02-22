@@ -26,7 +26,7 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   required?: boolean;
-  onKeyUp?: (event: any) => void;
+  onKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 }
 
 const Input: React.SFC<IProps> = ({

@@ -108,6 +108,29 @@ class EditProfile(graphene.Mutation):
             return types.EditProfileResponse(ok=False)
 
 
+class DeleteProfile(graphene.Mutation):
+
+    """ Delete Profile """
+
+    Output = types.DeleteProfileResponse
+
+    @login_required
+    def mutate(self, info, **kwargs):
+
+        user = info.context.user
+
+        try:
+            print(user)
+            user.delete()
+            user.profile.delete()
+            print('user and profil deleted')
+            return types.DeleteProfileResponse(ok=True)
+
+        except IntegrityError as e:
+            print(e)
+            return types.DeleteProfileResponse(ok=False)
+
+
 class ChangePassword(graphene.Mutation):
 
     class Arguments:
