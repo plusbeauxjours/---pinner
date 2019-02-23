@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import Avatar from "../Avatar";
 import Bold from "../Bold";
 import Textarea from "react-expanding-textarea";
 import Comment from "../Comment";
 import CardButtons from "../CardButtons";
-import { Link } from "react-router-dom";
 import { keyframes } from "styled-components";
+import UserHeader from "../UserHeader";
 
 const Container = styled.div`
   background-color: white;
@@ -18,16 +17,6 @@ const Header = styled.header`
   padding: 15px;
   display: flex;
   align-items: center;
-`;
-
-const HeaderColumn = styled.div`
-  margin-left: 15px;
-`;
-
-const Location = styled.span`
-  margin-top: 5px;
-  display: block;
-  font-size: 12px;
 `;
 
 const Image = styled.img`
@@ -208,19 +197,13 @@ const PhotoPresenter: React.SFC<IProps> = ({
           </ModalContainer>
         )}
         <Container>
-          <Header>
-            <Link to={`/${creatorUsername}`}>
-              <Avatar size="sm" url={creatorAvatar} />
-            </Link>
-            <HeaderColumn>
-              <Link to={`/${creatorUsername}`}>
-                <Bold text={creatorUsername} />
-              </Link>
-              <Location>
-                {city}, <Bold text={country} />
-              </Location>
-            </HeaderColumn>
-          </Header>
+          <UserHeader
+            username={creatorUsername}
+            avatar={creatorAvatar}
+            lastCity={city}
+            lastCountry={country}
+            size={"sm"}
+          />
           <Image src={photoUrl} />
           <Meta>
             <CardButtons
@@ -283,18 +266,12 @@ const PhotoPresenter: React.SFC<IProps> = ({
         <DetailContainer>
           <Image src={photoUrl} />
           <Meta>
-            <Header>
-              <Link to={`/${creatorUsername}`}>
-                <Avatar size="md" url={creatorAvatar} />
-              </Link>
-              <HeaderColumn>
-                <Link to={`/${creatorUsername}`}>
-                  <Bold text={creatorUsername} />
-                </Link>
-                <Location>{country}</Location>
-                <Location>{city}</Location>
-              </HeaderColumn>
-            </Header>
+            <UserHeader
+              username={creatorUsername}
+              avatar={creatorAvatar}
+              lastCity={city}
+              lastCountry={country}
+            />
             <Comments>
               <Comment username={creatorUsername} comment={caption} />
               {comments &&

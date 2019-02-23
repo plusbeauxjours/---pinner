@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
-import { Link } from "react-router-dom";
+import UserHeader from "./UserHeader";
 import Bold from "./Bold";
-import Avatar from "./Avatar";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   background-color: white;
@@ -10,8 +10,13 @@ const Container = styled.div`
   border: ${props => props.theme.boxBorder};
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: #e6e6e6;
+  }
 `;
 
 const Header = styled.header`
@@ -19,19 +24,14 @@ const Header = styled.header`
   margin: 0 15px 0 15px;
   display: flex;
   align-items: center;
-  background-color: white;
   border-radius: 3px;
-  border: ${props => props.theme.boxBorder};
-`;
-
-const HeaderColumn = styled.div`
-  margin-left: 15px;
 `;
 
 const Location = styled.span`
   margin-top: 5px;
   display: block;
   font-size: 12px;
+  font-weight: 200;
 `;
 
 const TimeStamp = styled.span`
@@ -42,8 +42,6 @@ const TimeStamp = styled.span`
   display: block;
   color: ${props => props.theme.greyColor};
 `;
-
-const SAvatar = styled(Avatar)``;
 
 const SBold = styled(Bold)`
   display: flex;
@@ -57,35 +55,45 @@ interface IProps {
   actor: any;
   target: any;
   payload?: any;
+  toggleModal: () => void;
+  getCardId: (cardId: string) => void;
 }
 const NotificationRow: React.SFC<IProps> = ({
   notification,
   actor,
-  target,
-  payload
+  payload,
+  getCardId
 }) => (
   <>
-    <Container>
-      <Header>
-        <Link to={`/${actor.username}`}>
-          <SAvatar size="sm" url={actor.profile.avatar} />
-        </Link>
-        <HeaderColumn>
-          <Link to={`/${actor.username}`}>
-            <SBold text={actor.username} />
-          </Link>
-          <Location>
-            <SBold text={actor.profile.lastCountry} />
-          </Location>
-        </HeaderColumn>
-      </Header>
-      {(() => {
-        switch (notification.verb) {
-          case "FOLLOW":
-            return <SBold text={"started to follow me"} />;
-          case "COMMENT":
-            return (
-              <>
+    {(() => {
+      switch (notification.verb) {
+        case "FOLLOW":
+          return (
+            <>
+              <Link to={`/${actor.username}`}>
+                <Container>
+                  <UserHeader
+                    username={actor.username}
+                    lastCountry={actor.profile.lastCountry}
+                    avatar={actor.profile.avatar}
+                    size={"sm"}
+                  />
+                  <SBold text={"started to follow me"} />
+                  <TimeStamp>{notification.createdAt}</TimeStamp>
+                </Container>
+              </Link>
+            </>
+          );
+        case "COMMENT":
+          return (
+            <>
+              <Container onClick={() => getCardId(payload.id)}>
+                <UserHeader
+                  username={actor.username}
+                  lastCountry={actor.profile.lastCountry}
+                  avatar={actor.profile.avatar}
+                  size={"sm"}
+                />
                 <SBold text={"commented on card"} />
                 <Header>
                   <Location>
@@ -93,65 +101,44 @@ const NotificationRow: React.SFC<IProps> = ({
                   </Location>
                 </Header>
                 <TimeStamp>{notification.createdAt}</TimeStamp>
-              </>
-            );
-          case "LIKE":
-            return (
-              <>
+              </Container>
+            </>
+          );
+        case "LIKE":
+          return (
+            <>
+              <Container>
+                <UserHeader
+                  username={actor.username}
+                  lastCountry={actor.profile.lastCountry}
+                  avatar={actor.profile.avatar}
+                  size={"sm"}
+                />
                 <SBold text={"liked card"} />
-                <Header>
-                  <Location>
-                    <SBold text={payload.caption} />
-                  </Location>
-                </Header>
                 <TimeStamp>{notification.createdAt}</TimeStamp>
-              </>
-            );
-          case "MOVE":
-            return (
-              <>
-                <SBold text={"moved to"} />
-                <Header>
-                  <Link to={`/${target.username}`}>
-                    <SAvatar size="sm" url={target.profile.avatar} />
-                  </Link>
-                  <HeaderColumn>
-                    <Link to={`/${target.username}`}>
-                      <SBold text={target.username} />
-                    </Link>
-                    <Location>
-                      <SBold text={target.profile.lastCountry} />
-                    </Location>
-                  </HeaderColumn>
-                </Header>
-                <TimeStamp>{notification.createdAt}</TimeStamp>
-              </>
-            );
-          case "UPLOAD":
-            return (
-              <>
-                <SBold text={"uploaded card"} />
-                <Header>
-                  <Link to={`/${target.username}`}>
-                    <SAvatar size="sm" url={target.profile.avatar} />
-                  </Link>
-                  <HeaderColumn>
-                    <Link to={`/p/:${payload.id}`}>
-                      <SBold text={payload} />
-                    </Link>
-                    <Location>
-                      <SBold text={payload.country.countryname} />
-                    </Location>
-                  </HeaderColumn>
-                </Header>
-                <TimeStamp>{notification.createdAt}</TimeStamp>
-              </>
-            );
-          default:
-            return <p>hi</p>;
-        }
-      })()}
-    </Container>
+              </Container>
+            </>
+          );
+        case "MOVE":
+          return (
+            <>
+              <SBold text={"moved to"} />
+
+              <TimeStamp>{notification.createdAt}</TimeStamp>
+            </>
+          );
+        case "UPLOAD":
+          return (
+            <>
+              <SBold text={"uploaded card"} />
+
+              <TimeStamp>{notification.createdAt}</TimeStamp>
+            </>
+          );
+        default:
+          return <p>hi</p>;
+      }
+    })()}
   </>
 );
 

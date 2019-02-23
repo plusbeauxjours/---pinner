@@ -14,7 +14,6 @@ const Square = styled.div<{ bg: string }>`
 const Overlay = styled.div`
   color: white;
   z-index: 1;
-
   opacity: 0;
   svg {
     fill: white;

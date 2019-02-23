@@ -97,7 +97,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
                 cardId: parseInt(id, 10),
                 commentId: parseInt(commentId, 10)
               }}
-              onCompleted={() => this.setState({ commentId: "xsgersrg" })}
+              onCompleted={() => this.setState({ commentId: "" })}
             >
               {deleteCommentFn => {
                 this.deleteCommentFn = deleteCommentFn;
@@ -158,7 +158,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
     if (keyCode === 13) {
       this.addCommentFn();
     } else {
-      return null;
+      return;
     }
   };
   public onLikeClick = () => {
@@ -197,6 +197,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
     const {
       addComment: { comment }
     } = data;
+    console.log(comment);
     if (comment) {
       this.setState(state => {
         return {

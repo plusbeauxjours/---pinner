@@ -550,6 +550,7 @@ export interface GetNotifictions_getNotifications_notifications_payload_city {
 
 export interface GetNotifictions_getNotifications_notifications_payload {
   __typename: "CardType";
+  id: string;
   country: GetNotifictions_getNotifications_notifications_payload_country | null;
   city: GetNotifictions_getNotifications_notifications_payload_city | null;
   caption: string;
