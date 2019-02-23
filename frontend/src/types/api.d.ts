@@ -516,12 +516,18 @@ export interface GetNotifictions_getNotifications_notifications_actor {
   username: string;
 }
 
+export interface GetNotifictions_getNotifications_notifications_target_profile {
+  __typename: "ProfileType";
+  lastCountry: string | null;
+}
+
 export interface GetNotifictions_getNotifications_notifications_target {
   __typename: "UserType";
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
+  profile: GetNotifictions_getNotifications_notifications_target_profile | null;
 }
 
 export interface GetNotifictions_getNotifications_notifications_payload_country {
@@ -529,15 +535,10 @@ export interface GetNotifictions_getNotifications_notifications_payload_country 
   countryname: string | null;
 }
 
-export interface GetNotifictions_getNotifications_notifications_payload_city {
-  __typename: "CityType";
-  cityname: string | null;
-}
-
 export interface GetNotifictions_getNotifications_notifications_payload {
   __typename: "CardType";
   country: GetNotifictions_getNotifications_notifications_payload_country | null;
-  city: GetNotifictions_getNotifications_notifications_payload_city | null;
+  caption: string;
 }
 
 export interface GetNotifictions_getNotifications_notifications {
@@ -548,7 +549,7 @@ export interface GetNotifictions_getNotifications_notifications {
   verb: NotificationVerb;
   payload: GetNotifictions_getNotifications_notifications_payload | null;
   read: boolean;
-  createdAt: any;
+  createdAt: string | null;
 }
 
 export interface GetNotifictions_getNotifications {
@@ -921,6 +922,8 @@ export enum NotificationVerb {
   COMMENT = "COMMENT",
   FOLLOW = "FOLLOW",
   LIKE = "LIKE",
+  MOVE = "MOVE",
+  UPLOAD = "UPLOAD",
 }
 
 //==============================================================

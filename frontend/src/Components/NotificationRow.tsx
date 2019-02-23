@@ -16,10 +16,34 @@ interface IProps {
   className?: any;
   id: string;
   key: string;
+  actor: string;
+  target?: string;
+  actorLastCountry?: string;
+  verb: string;
+  caption?: string;
+  read: boolean;
   createdAt: string;
 }
-const NotificationRow: React.SFC<IProps> = ({ id, key, createdAt }) => (
+const NotificationRow: React.SFC<IProps> = ({
+  id,
+  key,
+  actor,
+  target,
+  actorLastCountry,
+  verb,
+  caption,
+  read,
+  createdAt
+}) => (
   <Container>
+    <p>
+      {actor}
+      {target}
+      {actorLastCountry}
+      {verb}
+      {caption}
+      {read}
+    </p>
     <TimeStamp>{createdAt}</TimeStamp>
   </Container>
 );

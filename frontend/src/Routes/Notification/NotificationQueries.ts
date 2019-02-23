@@ -11,15 +11,16 @@ export const GET_NOTIFICATION = gql`
         }
         target {
           username
+          profile {
+            lastCountry
+          }
         }
         verb
         payload {
           country {
             countryname
           }
-          city {
-            cityname
-          }
+          caption
         }
         read
         createdAt

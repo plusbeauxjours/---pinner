@@ -34,6 +34,13 @@ const NotificationPresenter: React.SFC<IProps> = ({
               className={className}
               id={notification.id}
               key={notification.id}
+              actor={notification.actor.username}
+              target={notification.target.username}
+              actorLastCountry={notification.target.profile.lastCountry}
+              verb={notification.verb}
+              // cardCountry={notification.payload!.country!.countryname}
+              // caption={notification.payload.caption}
+              read={notification.read}
               createdAt={notification.createdAt}
             />
           ))}

@@ -39,6 +39,6 @@ class Notification(config_models.TimeStampedModel):
             self.id,
             self.actor.username,
             self.verb,
-            self.target.username | self.country.countryname,
+            self.target.username,
             self.read
         )
