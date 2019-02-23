@@ -5,6 +5,7 @@ from . import models
 
 
 class NotificationType(DjangoObjectType):
+    created_at = graphene.String(source="natural_time")
 
     class Meta:
         model = models.Notification

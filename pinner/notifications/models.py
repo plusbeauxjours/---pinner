@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.humanize.templatetags.humanize import naturaltime
 
 from cards import models as card_models
+from locations import models as locations_models
+
 from config import models as config_models
 
 
@@ -11,10 +13,13 @@ class Notification(config_models.TimeStampedModel):
     VERBS = (
         ('like', 'Like'),
         ('comment', 'Comment'),
-        ('follow', 'Follow')
+        ('follow', 'Follow'),
+        ('move', 'Move'),
+        ('upload', 'Upload')
     )
 
     actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='actor')
+    country = models.ForeignKey(locations_models.Country, on_delete=models.CASCADE, null=True)
     target = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='target')
     verb = models.CharField(max_length=10, choices=VERBS)
@@ -22,18 +27,18 @@ class Notification(config_models.TimeStampedModel):
         card_models.Card, on_delete=models.CASCADE, null=True)
     read = models.BooleanField(default=False)
 
-    class Meta:
-        ordering = ['-created_at']
-
     @property
     def natural_time(self):
         return naturaltime(self.created_at)
+
+    class Meta:
+        ordering = ['-created_at']
 
     def __str__(self):
         return '{} / From: {} {} 👉🏻 To: {} Read:{}'.format(
             self.id,
             self.actor.username,
             self.verb,
-            self.target.username,
+            self.target.username | self.country.countryname,
             self.read
         )

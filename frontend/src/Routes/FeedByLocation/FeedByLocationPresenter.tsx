@@ -21,7 +21,7 @@ const FeedByLocationPresenter: React.SFC<IProps> = ({
 }) => {
   if (loading) {
     return <Loader />;
-  } else if (data) {
+  } else if (!loading && data) {
     console.log(data);
     const { feedByLocation: { cards = {} } = {} } = data;
     return (

@@ -1,9 +1,36 @@
 import React from "react";
-import NotificationPresenter from "./NotificationPresenter";
+import { Query } from "react-apollo";
+import { GetNotifictions, GetNotifictionsVariables } from "../../types/api";
 
-class NotificationContainer extends React.Component<any> {
+import NotificationPresenter from "./NotificationPresenter";
+import { GET_NOTIFICATION } from "./NotificationQueries";
+
+class GetNotifictionQuery extends Query<
+  GetNotifictions,
+  GetNotifictionsVariables
+> {}
+
+interface IState {
+  page: number;
+}
+
+class NotificationContainer extends React.Component<any, IState> {
+  public state = {
+    page: 0
+  };
   public render() {
-    return <NotificationPresenter />;
+    const { page } = this.state;
+    return (
+      <GetNotifictionQuery
+        query={GET_NOTIFICATION}
+        variables={{ page }}
+        // pollInterval={1000}
+      >
+        {({ data, loading }) => (
+          <NotificationPresenter data={data} loading={loading} />
+        )}
+      </GetNotifictionQuery>
+    );
   }
 }
 
