@@ -17,14 +17,13 @@ interface IProps {
 }
 
 const NotificationPresenter: React.SFC<IProps> = ({
-  data,
+  data: { getNotifications: { notifications = null } = {} } = {},
   loading,
   className
 }) => {
   if (loading) {
     return <Loader />;
-  } else if (!loading && data) {
-    const { getNotifications: { notifications = [] } = {} } = data;
+  } else if (!loading && notifications) {
     console.log(notifications);
     return (
       <SWrapper>
@@ -34,14 +33,10 @@ const NotificationPresenter: React.SFC<IProps> = ({
               className={className}
               id={notification.id}
               key={notification.id}
-              actor={notification.actor.username}
-              target={notification.target.username}
-              actorLastCountry={notification.target.profile.lastCountry}
-              verb={notification.verb}
-              // cardCountry={notification.payload!.country!.countryname}
-              // caption={notification.payload.caption}
-              read={notification.read}
-              createdAt={notification.createdAt}
+              notification={notification}
+              actor={notification.actor}
+              target={notification.target}
+              payload={notification.payload}
             />
           ))}
       </SWrapper>

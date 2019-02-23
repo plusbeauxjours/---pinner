@@ -8,10 +8,15 @@ export const GET_NOTIFICATION = gql`
         id
         actor {
           username
+          profile {
+            avatar
+            lastCountry
+          }
         }
         target {
           username
           profile {
+            avatar
             lastCountry
           }
         }
@@ -20,9 +25,13 @@ export const GET_NOTIFICATION = gql`
           country {
             countryname
           }
+          city {
+            cityname
+          }
           caption
         }
         read
+        comment
         createdAt
       }
     }

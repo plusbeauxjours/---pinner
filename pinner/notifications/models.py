@@ -19,13 +19,14 @@ class Notification(config_models.TimeStampedModel):
     )
 
     actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='actor')
-    country = models.ForeignKey(locations_models.Country, on_delete=models.CASCADE, null=True)
+    # country = models.ForeignKey(locations_models.Country, on_delete=models.CASCADE, null=True)
     target = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='target')
     verb = models.CharField(max_length=10, choices=VERBS)
     payload = models.ForeignKey(
-        card_models.Card, on_delete=models.CASCADE, null=True)
+        card_models.Card, on_delete=models.CASCADE, null=True, blank=True)
     read = models.BooleanField(default=False)
+    comment = models.TextField(null=True, blank=True)
 
     @property
     def natural_time(self):

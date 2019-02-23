@@ -508,16 +508,24 @@ export interface location {
 // GraphQL query operation: GetNotifictions
 // ====================================================
 
+export interface GetNotifictions_getNotifications_notifications_actor_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  lastCountry: string | null;
+}
+
 export interface GetNotifictions_getNotifications_notifications_actor {
   __typename: "UserType";
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
+  profile: GetNotifictions_getNotifications_notifications_actor_profile | null;
 }
 
 export interface GetNotifictions_getNotifications_notifications_target_profile {
   __typename: "ProfileType";
+  avatar: string;
   lastCountry: string | null;
 }
 
@@ -535,9 +543,15 @@ export interface GetNotifictions_getNotifications_notifications_payload_country 
   countryname: string | null;
 }
 
+export interface GetNotifictions_getNotifications_notifications_payload_city {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
 export interface GetNotifictions_getNotifications_notifications_payload {
   __typename: "CardType";
   country: GetNotifictions_getNotifications_notifications_payload_country | null;
+  city: GetNotifictions_getNotifications_notifications_payload_city | null;
   caption: string;
 }
 
@@ -549,6 +563,7 @@ export interface GetNotifictions_getNotifications_notifications {
   verb: NotificationVerb;
   payload: GetNotifictions_getNotifications_notifications_payload | null;
   read: boolean;
+  comment: string | null;
   createdAt: string | null;
 }
 

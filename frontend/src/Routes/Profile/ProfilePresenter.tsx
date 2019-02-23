@@ -9,9 +9,9 @@ import Bold from "../..//Components/Bold";
 import CardGrid from "../..//Components/CardGrid";
 import FollowBtn from "../..//Components/FollowBtn";
 import Input from "../../Components/Input";
-// import Form from "../../Components/Form";
 
 const SWrapper = styled(Wrapper)`
+  z-index: 1;
   width: 45%;
 `;
 
@@ -62,6 +62,7 @@ const UsernameRow = styled.div`
 `;
 
 const ModalContainer = styled.div`
+  z-index: 8;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,6 +78,7 @@ const GearContainer = styled.span`
 `;
 
 const ModalOverlay = styled.div`
+  z-index: 5;
   height: 100%;
   width: 100%;
   position: fixed;
@@ -99,7 +101,7 @@ const Modal = styled.div`
   background-color: white;
   width: 30%;
   border-radius: 12px;
-  z-index: 5;
+  z-index: 10;
   animation: ${ModalAnimation} 0.1s linear;
 `;
 
