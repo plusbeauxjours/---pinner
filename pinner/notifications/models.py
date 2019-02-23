@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.humanize.templatetags.humanize import naturaltime
+
 from cards import models as card_models
 from config import models as config_models
 
@@ -22,6 +24,10 @@ class Notification(config_models.TimeStampedModel):
 
     class Meta:
         ordering = ['-created_at']
+
+    @property
+    def natural_time(self):
+        return naturaltime(self.created_at)
 
     def __str__(self):
         return '{} / From: {} {} 👉🏻 To: {} Read:{}'.format(

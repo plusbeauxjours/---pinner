@@ -12,6 +12,7 @@ import Profile from "../Routes/Profile";
 import CardDetail from "../Routes/CardDetail";
 import Search from "../Routes/Search";
 import Location from "../Routes/Location";
+import Notification from "../Routes/Notification";
 
 import VerifyPhone from "../Routes/VerifyPhone";
 import PhoneLogin from "../Routes/PhoneLogin";
@@ -36,6 +37,7 @@ const LoggedInPages = () => (
 
       <Route path="/explore" component={Explore} />
       <Route path="/location" exact={true} component={Location} />
+      <Route path="/notification" component={Notification} />
       <Route path="/location/:cityname" component={FeedByLocation} />
       <Route path="/:username" component={Profile} />
       <Redirect from="*" to="/" />

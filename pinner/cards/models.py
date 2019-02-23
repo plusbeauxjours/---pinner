@@ -40,6 +40,10 @@ class Comment(config_models.TimeStampedModel):
     card = models.ForeignKey(
         Card, on_delete=models.CASCADE, null=True, related_name='comments')
 
+    @property
+    def natural_time(self):
+        return naturaltime(self.created_at)
+
     def __str__(self):
         return '{} / User: {} - Comment: {} - Card: {} {}'.format(self.id, self.creator.username, self.message, self.card_id, self.card.city)
 
@@ -50,6 +54,10 @@ class Like(config_models.TimeStampedModel):
         User, on_delete=models.CASCADE, null=True, related_name='card_likes')
     card = models.ForeignKey(
         Card, on_delete=models.CASCADE, null=True, related_name='likes')
+
+    @property
+    def natural_time(self):
+        return naturaltime(self.created_at)
 
     def __str__(self):
         return 'User: {} - Card Caption: {}'.format(self.creator.username, self.card.caption)

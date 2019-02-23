@@ -505,6 +505,71 @@ export interface location {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetNotifictions
+// ====================================================
+
+export interface GetNotifictions_getNotifications_notifications_actor {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface GetNotifictions_getNotifications_notifications_target {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface GetNotifictions_getNotifications_notifications_payload_country {
+  __typename: "CountryType";
+  countryname: string | null;
+}
+
+export interface GetNotifictions_getNotifications_notifications_payload_city {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
+export interface GetNotifictions_getNotifications_notifications_payload {
+  __typename: "CardType";
+  country: GetNotifictions_getNotifications_notifications_payload_country | null;
+  city: GetNotifictions_getNotifications_notifications_payload_city | null;
+}
+
+export interface GetNotifictions_getNotifications_notifications {
+  __typename: "NotificationType";
+  id: string;
+  actor: GetNotifictions_getNotifications_notifications_actor;
+  target: GetNotifictions_getNotifications_notifications_target;
+  verb: NotificationVerb;
+  payload: GetNotifictions_getNotifications_notifications_payload | null;
+  read: boolean;
+  createdAt: any;
+}
+
+export interface GetNotifictions_getNotifications {
+  __typename: "GetNotificationsResponse";
+  ok: boolean | null;
+  notifications: (GetNotifictions_getNotifications_notifications | null)[] | null;
+}
+
+export interface GetNotifictions {
+  getNotifications: GetNotifictions_getNotifications;
+}
+
+export interface GetNotifictionsVariables {
+  page: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: StartPhoneVerification
 // ====================================================
 
@@ -848,6 +913,15 @@ export interface DetailParts {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+/**
+ * An enumeration.
+ */
+export enum NotificationVerb {
+  COMMENT = "COMMENT",
+  FOLLOW = "FOLLOW",
+  LIKE = "LIKE",
+}
 
 //==============================================================
 // END Enums and Input Objects
