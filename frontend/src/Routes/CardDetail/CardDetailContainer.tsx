@@ -15,7 +15,11 @@ class CardDetailContainer extends React.Component<any> {
       }
     } = this.props;
     return (
-      <CardDetailQuery query={GET_CARD} variables={{ id }}>
+      <CardDetailQuery
+        query={GET_CARD}
+        variables={{ id }}
+        fetchPolicy="network-only"
+      >
         {({ data, loading }) => (
           <CardDetailPresenter loading={loading} data={data} back={this.back} />
         )}
