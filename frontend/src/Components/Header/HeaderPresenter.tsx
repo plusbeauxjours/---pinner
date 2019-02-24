@@ -80,22 +80,22 @@ const HeaderPresenter: React.SFC<IProps> = ({ onSubmit, onChange, search }) => (
           </svg>
         </Link>
       </Column>
+      <Icon>
+        <Link to="/explore">
+          <Compass />
+        </Link>
+      </Icon>
+      <Icon>
+        <Link to="/location">
+          <HeaderMap />
+        </Link>
+      </Icon>
       <Column>
         <form onSubmit={onSubmit}>
           <Input placeholder="Search" value={search} onChange={onChange} />
         </form>
       </Column>
       <Column>
-        <Icon>
-          <Link to="/explore">
-            <Compass />
-          </Link>
-        </Icon>
-        <Icon>
-          <Link to="/location">
-            <HeaderMap />
-          </Link>
-        </Icon>
         <Icon>
           <Link to="/notification">
             <HeartEmpty />

@@ -84,6 +84,7 @@ const DetailContainer = styled.div`
     margin-bottom: 30px;
   }
 `;
+
 const ModalContainer = styled.div`
   display: flex;
   justify-content: center;

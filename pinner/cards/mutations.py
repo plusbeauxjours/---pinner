@@ -29,11 +29,15 @@ class LikeCard(graphene.Mutation):
             like = models.Like.objects.get(
                 creator=user, card=card)
             like.delete()
-            notification = notification_models.Notification.objects.get(
-                actor=user, target=card.creator, verb='like', payload=card
-            )
-            notification.delete()
-            return types.LikeCardResponse(ok=True)
+            try:
+                notification = notification_models.Notification.objects.get(
+                    actor=user, target=card.creator, verb='like', payload=card
+                )
+                notification.delete()
+                return types.LikeCardResponse(ok=True)
+            except:
+                pass
+
         except models.Like.DoesNotExist:
             pass
 
@@ -45,6 +49,7 @@ class LikeCard(graphene.Mutation):
                     actor=user, target=card.creator, verb="like", payload=card
                 )
             return types.LikeCardResponse(ok=True)
+
         except IntegrityError as e:
             raise Exception("Can't Like Card")
 

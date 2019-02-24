@@ -17,11 +17,15 @@ class CardDetailContainer extends React.Component<any> {
     return (
       <CardDetailQuery query={GET_CARD} variables={{ id }}>
         {({ data, loading }) => (
-          <CardDetailPresenter loading={loading} data={data} />
+          <CardDetailPresenter loading={loading} data={data} back={this.back} />
         )}
       </CardDetailQuery>
     );
   }
+  public back = event => {
+    event.stopPropagation();
+    this.props.history.goBack();
+  };
 }
 
 export default withRouter(CardDetailContainer);

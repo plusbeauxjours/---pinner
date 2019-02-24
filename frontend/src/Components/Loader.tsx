@@ -2,10 +2,10 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 
 const Container = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const loaderAnimation = keyframes`
   0% {
@@ -27,7 +27,7 @@ const loaderAnimation = keyframes`
   100% {
     transform: rotate(360deg);
   }
-`
+`;
 
 const loaderInnerAnimation = keyframes`
   0% {
@@ -48,8 +48,7 @@ const loaderInnerAnimation = keyframes`
   100% {
     height: 0%;
   }
-`
-
+`;
 
 const Loader = styled.div`
   display: inline-block;
@@ -59,7 +58,7 @@ const Loader = styled.div`
   border: 4px solid #262f3e;
   top: 50%;
   animation: ${loaderAnimation} 2s linear;
-`
+`;
 
 const LoaderInner = styled.div`
   vertical-align: top;
@@ -67,9 +66,12 @@ const LoaderInner = styled.div`
   width: 100%;
   background-color: #262f3e;
   animation: ${loaderInnerAnimation} 2s linear;
-`
+`;
 
 export default () => (
   <Container>
-    <Loader><LoaderInner/></Loader>
-  </Container>)
+    <Loader>
+      <LoaderInner />
+    </Loader>
+  </Container>
+);

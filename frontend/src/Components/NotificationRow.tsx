@@ -56,14 +56,8 @@ interface IProps {
   target: any;
   payload?: any;
   toggleModal: () => void;
-  getCardId: (cardId: string) => void;
 }
-const NotificationRow: React.SFC<IProps> = ({
-  notification,
-  actor,
-  payload,
-  getCardId
-}) => (
+const NotificationRow: React.SFC<IProps> = ({ notification, actor }) => (
   <>
     {(() => {
       switch (notification.verb) {
@@ -87,36 +81,52 @@ const NotificationRow: React.SFC<IProps> = ({
         case "COMMENT":
           return (
             <>
-              <Container onClick={() => getCardId(payload.id)}>
-                <UserHeader
-                  username={actor.username}
-                  lastCountry={actor.profile.lastCountry}
-                  avatar={actor.profile.avatar}
-                  size={"sm"}
-                />
-                <SBold text={"commented on card"} />
-                <Header>
-                  <Location>
-                    <SBold text={notification.comment.message} />
-                  </Location>
-                </Header>
-                <TimeStamp>{notification.createdAt}</TimeStamp>
-              </Container>
+              <Link
+                key={notification!.payload!.id}
+                to={{
+                  pathname: `/p/${notification.payload.id}`,
+                  state: { modalOpen: true }
+                }}
+              >
+                <Container>
+                  <UserHeader
+                    username={actor.username}
+                    lastCountry={actor.profile.lastCountry}
+                    avatar={actor.profile.avatar}
+                    size={"sm"}
+                  />
+                  <SBold text={"commented on card"} />
+                  <Header>
+                    <Location>
+                      <SBold text={notification.comment.message} />
+                    </Location>
+                  </Header>
+                  <TimeStamp>{notification.createdAt}</TimeStamp>
+                </Container>
+              </Link>
             </>
           );
         case "LIKE":
           return (
             <>
-              <Container onClick={() => getCardId(payload.id)}>
-                <UserHeader
-                  username={actor.username}
-                  lastCountry={actor.profile.lastCountry}
-                  avatar={actor.profile.avatar}
-                  size={"sm"}
-                />
-                <SBold text={"liked card"} />
-                <TimeStamp>{notification.createdAt}</TimeStamp>
-              </Container>
+              <Link
+                key={notification!.payload!.id}
+                to={{
+                  pathname: `/p/${notification.payload.id}`,
+                  state: { modalOpen: true }
+                }}
+              >
+                <Container>
+                  <UserHeader
+                    username={actor.username}
+                    lastCountry={actor.profile.lastCountry}
+                    avatar={actor.profile.avatar}
+                    size={"sm"}
+                  />
+                  <SBold text={"liked card"} />
+                  <TimeStamp>{notification.createdAt}</TimeStamp>
+                </Container>
+              </Link>
             </>
           );
         case "MOVE":

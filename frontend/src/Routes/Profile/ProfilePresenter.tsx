@@ -254,7 +254,6 @@ const ProfilePresenter: React.SFC<IProps> = ({
                 <Metric>
                   <CBold text={String(user.profile.lastCity)} />
                 </Metric>
-                <SAvatar size="md" url={Flag} />
                 <Metric>
                   <SBold text={String(user.profile.postCount)} />
                 </Metric>
@@ -264,31 +263,30 @@ const ProfilePresenter: React.SFC<IProps> = ({
                 <Metric>
                   <SBold text={String(user.profile.followingCount)} />
                 </Metric>
+                <SAvatar size="md" url={Flag} />
               </Metrics>
-              <Metric>
-                {editMode ? (
-                  <>
-                    <ExtendedInput
-                      onChange={onInputChange}
-                      type={"text"}
-                      value={firstName}
-                      placeholder={user.firstName || "First Name"}
-                      name={"firstName"}
-                      onKeyUp={onKeyUp}
-                    />
-                    <ExtendedInput
-                      onChange={onInputChange}
-                      type={"text"}
-                      value={lastName}
-                      placeholder={user.lastName || "Last Name"}
-                      name={"lastName"}
-                      onKeyUp={onKeyUp}
-                    />
-                  </>
-                ) : (
-                  <Fullname>{`${user.firstName} ${user.lastName}`}</Fullname>
-                )}{" "}
-              </Metric>
+              {editMode ? (
+                <>
+                  <ExtendedInput
+                    onChange={onInputChange}
+                    type={"text"}
+                    value={firstName}
+                    placeholder={user.firstName || "First Name"}
+                    name={"firstName"}
+                    onKeyUp={onKeyUp}
+                  />
+                  <ExtendedInput
+                    onChange={onInputChange}
+                    type={"text"}
+                    value={lastName}
+                    placeholder={user.lastName || "Last Name"}
+                    name={"lastName"}
+                    onKeyUp={onKeyUp}
+                  />
+                </>
+              ) : (
+                <Fullname>{`${user.firstName} ${user.lastName}`}</Fullname>
+              )}{" "}
               {user.profile.bio &&
                 (editMode ? (
                   <ExtendedInput
