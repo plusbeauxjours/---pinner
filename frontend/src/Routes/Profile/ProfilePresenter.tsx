@@ -9,6 +9,7 @@ import Bold from "../..//Components/Bold";
 import CardGrid from "../..//Components/CardGrid";
 import FollowBtn from "../..//Components/FollowBtn";
 import Input from "../../Components/Input";
+import Flag from "../../Images/countryFlag/scotland.svg";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -38,7 +39,20 @@ const Metrics = styled.div`
 
 const Metric = styled.span`
   &:not(:first-child) {
-    margin-left: 45px;
+    margin-left: 20px;
+  }
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-position: center center;
+  background-size: 100%;
+  border: ${props => props.theme.boxBorder};
+  border-radius: 50%;
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
   }
 `;
 
@@ -120,6 +134,23 @@ const ModalLink = styled.div`
 
 const ExtendedInput = styled(Input)`
   margin-bottom: 30px;
+`;
+
+const SAvatar = styled(Avatar)`
+  &:not(:first-child) {
+    margin-left: 20px;
+  }
+  opacity: 0.95;
+  font-size: 20px;
+`;
+
+const SBold = styled(Bold)`
+  font-size: 20px;
+  font-weight: 200;
+`;
+
+const CBold = styled(Bold)`
+  font-weight: 200;
 `;
 
 interface IProps {
@@ -221,34 +252,17 @@ const ProfilePresenter: React.SFC<IProps> = ({
               </UsernameRow>
               <Metrics>
                 <Metric>
-                  {editMode ? (
-                    <ExtendedInput
-                      onChange={onInputChange}
-                      type={"text"}
-                      value={gender}
-                      placeholder={user.profile.gender || "Sex"}
-                      name={"gender"}
-                      onKeyUp={onKeyUp}
-                    />
-                  ) : (
-                    <Bold text={String(user.profile.gender)} />
-                  )}{" "}
-                  gender
+                  <CBold text={String(user.profile.lastCity)} />
+                </Metric>
+                <SAvatar size="md" url={Flag} />
+                <Metric>
+                  <SBold text={String(user.profile.postCount)} />
                 </Metric>
                 <Metric>
-                  <Bold text={String(user.profile.lastCity)} /> lastCity
+                  <SBold text={String(user.profile.followersCount)} />
                 </Metric>
                 <Metric>
-                  <Bold text={String(user.profile.lastCountry)} /> lastCountry
-                </Metric>
-                <Metric>
-                  <Bold text={String(user.profile.postCount)} /> posts
-                </Metric>
-                <Metric>
-                  <Bold text={String(user.profile.followersCount)} /> followers
-                </Metric>
-                <Metric>
-                  <Bold text={String(user.profile.followingCount)} /> following
+                  <SBold text={String(user.profile.followingCount)} />
                 </Metric>
               </Metrics>
               <Metric>

@@ -7,6 +7,7 @@ from config import models as config_models
 class Country (config_models.TimeStampedModel):
 
     countryname = models.CharField(max_length=100, null=True, blank=True)
+    countrycode = models.CharField(max_length=2, null=True, blank=True)
 
     @property
     def city_count(self):

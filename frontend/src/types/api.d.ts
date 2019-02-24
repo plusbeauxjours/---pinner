@@ -556,6 +556,11 @@ export interface GetNotifictions_getNotifications_notifications_payload {
   caption: string;
 }
 
+export interface GetNotifictions_getNotifications_notifications_comment {
+  __typename: "CommentType";
+  message: string;
+}
+
 export interface GetNotifictions_getNotifications_notifications {
   __typename: "NotificationType";
   id: string;
@@ -564,7 +569,7 @@ export interface GetNotifictions_getNotifications_notifications {
   verb: NotificationVerb;
   payload: GetNotifictions_getNotifications_notifications_payload | null;
   read: boolean;
-  comment: string | null;
+  comment: GetNotifictions_getNotifications_notifications_comment | null;
   createdAt: string | null;
 }
 

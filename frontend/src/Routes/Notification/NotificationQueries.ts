@@ -32,7 +32,9 @@ export const GET_NOTIFICATION = gql`
           caption
         }
         read
-        comment
+        comment {
+          message
+        }
         createdAt
       }
     }

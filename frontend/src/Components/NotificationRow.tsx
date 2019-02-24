@@ -97,7 +97,7 @@ const NotificationRow: React.SFC<IProps> = ({
                 <SBold text={"commented on card"} />
                 <Header>
                   <Location>
-                    <SBold text={notification.comment} />
+                    <SBold text={notification.comment.message} />
                   </Location>
                 </Header>
                 <TimeStamp>{notification.createdAt}</TimeStamp>
