@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Wrapper from "../Wrapper";
-import { Profile, Compass, HeartEmpty, HeaderMap } from "../../Icons";
+import { Profile, Compass, HeartEmpty, HeaderMap, Upload } from "../../Icons";
 import Me from "../Me";
 
 const Header = styled.header`
@@ -109,6 +109,9 @@ const HeaderPresenter: React.SFC<IProps> = ({ onSubmit, onChange, search }) => (
               </Link>
             )}
           </Me>
+        </Icon>
+        <Icon>
+          <Upload />
         </Icon>
       </Column>
     </SWrapper>

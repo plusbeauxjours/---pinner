@@ -40,9 +40,10 @@ class LikeCard(graphene.Mutation):
         try:
             like = models.Like.objects.create(
                 creator=user, card=card)
-            notification_models.Notification.objects.create(
-                actor=user, target=card.creator, verb="like", payload=card
-            )
+            if (like.creator.id is not card.creator.id):
+                notification_models.Notification.objects.create(
+                    actor=user, target=card.creator, verb="like", payload=card
+                )
             return types.LikeCardResponse(ok=True)
         except IntegrityError as e:
             raise Exception("Can't Like Card")
@@ -76,7 +77,7 @@ class AddComment(graphene.Mutation):
                 message=message, card=card, creator=user)
             if (comment.creator.id is not card.creator.id):
                 notification_models.Notification.objects.create(
-                    actor=user, target=card.creator, verb="comment", payload=card, comment=message
+                    actor=user, target=card.creator, verb="comment", payload=card, comment=comment
                 )
             return types.AddCommentResponse(comment=comment)
 
@@ -102,19 +103,16 @@ class DeleteComment(graphene.Mutation):
 
         try:
             card = models.Card.objects.get(id=cardId)
-            print("card found")
 
             try:
                 comment = models.Comment.objects.get(id=commentId)
-                print("comment found")
 
                 if comment.creator.id == user.id or card.creator.id == user.id:
                     comment.delete()
-                    print("comment delete")
+                    return types.AddCommentResponse(comment=comment)
 
                 else:
                     error = "Can't Delete Comment"
-                    print("you are not authorized")
 
                 return types.DeleteCommentResponse(ok=True)
 

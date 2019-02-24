@@ -58,11 +58,9 @@ class NotificationContainer extends React.Component<any, IState> {
   }
   public toggleModal = () => {
     const { modalOpen } = this.state;
-    this.setState(state => {
-      return {
-        modalOpen: !modalOpen
-      };
-    });
+    this.setState({
+      modalOpen: !modalOpen
+    } as any);
   };
   public getCardId = cardId => {
     const { modalOpen } = this.state;

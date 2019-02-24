@@ -107,7 +107,7 @@ const NotificationRow: React.SFC<IProps> = ({
         case "LIKE":
           return (
             <>
-              <Container>
+              <Container onClick={() => getCardId(payload.id)}>
                 <UserHeader
                   username={actor.username}
                   lastCountry={actor.profile.lastCountry}

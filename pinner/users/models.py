@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from config import models as config_models
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
-from django.db.models.signals import post_delete
 from django.dispatch import receiver
 
 

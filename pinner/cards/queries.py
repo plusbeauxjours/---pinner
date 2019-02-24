@@ -58,10 +58,11 @@ def resolve_card_detail(self, info, **kwargs):
     cardId = kwargs.get('cardId')
     user = info.context.user
 
-    try:
-        card = models.Card.objects.get(id=cardId)
-    except models.Card.DoesNotExist:
-        raise Exception('Card not found')
+    if cardId:
+        try:
+            card = models.Card.objects.get(id=cardId)
+        except:
+            pass
 
     return types.CardDetailResponse(card=card)
 

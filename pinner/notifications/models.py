@@ -26,7 +26,8 @@ class Notification(config_models.TimeStampedModel):
     payload = models.ForeignKey(
         card_models.Card, on_delete=models.CASCADE, null=True, blank=True)
     read = models.BooleanField(default=False)
-    comment = models.TextField(null=True, blank=True)
+    comment = models.ForeignKey(
+        card_models.Comment, on_delete=models.CASCADE, null=True, blank=True)
 
     @property
     def natural_time(self):

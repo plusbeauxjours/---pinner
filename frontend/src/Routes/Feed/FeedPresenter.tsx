@@ -21,28 +21,31 @@ const FeedPresenter: React.SFC<IProps> = ({ data, loading, lastCity }) => {
     const { feedByLocation: { cards = {} } = {} } = data;
     return (
       <SWrapper>
+        <h1>welcome to {lastCity}</h1>
         {cards &&
-          cards.map(card => (
-            <>
-              <h1>welcome to {card.city.cityname}</h1>
-              <Photo
-                id={card.id}
-                key={card.id}
-                inline={true}
-                creatorAvatar={card.creator.profile.avatar}
-                creatorUsername={card.creator.username}
-                country={card.country.countryname}
-                city={card.city.cityname}
-                photoUrl={card.file}
-                likeCount={card.likeCount}
-                commentCount={card.commentCount}
-                caption={card.caption}
-                comments={card.comments}
-                createdAt={card.createdAt}
-                isLiked={card.isLiked}
-              />
-            </>
-          ))}
+          cards.map(card => {
+            console.log(card);
+            return (
+              <>
+                <Photo
+                  key={card.id}
+                  id={card.id}
+                  inline={true}
+                  creatorAvatar={card.creator.profile.avatar}
+                  creatorUsername={card.creator.username}
+                  country={card.country.countryname}
+                  city={card.city.cityname}
+                  photoUrl={card.file}
+                  likeCount={card.likeCount}
+                  commentCount={card.commentCount}
+                  caption={card.caption}
+                  comments={card.comments}
+                  createdAt={card.createdAt}
+                  isLiked={card.isLiked}
+                />
+              </>
+            );
+          })}
       </SWrapper>
     );
   } else {
