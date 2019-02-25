@@ -80,7 +80,6 @@ class FeedContainer extends React.Component<IProps, IState> {
     const {
       coords: { latitude, longitude }
     } = position;
-    console.log(position);
     this.setState({
       lastLat: latitude,
       lastLng: longitude

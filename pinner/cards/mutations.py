@@ -37,6 +37,7 @@ class LikeCard(graphene.Mutation):
                 return types.LikeCardResponse(ok=True)
             except:
                 pass
+            return types.LikeCardResponse(ok=True)
 
         except models.Like.DoesNotExist:
             pass
