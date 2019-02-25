@@ -16,8 +16,11 @@ class CityType(DjangoObjectType):
         model = models.City
 
 
-class LocationResponse(graphene.ObjectType):
+class CountryResponse(graphene.ObjectType):
     country = graphene.List(CountryType)
+
+
+class CityResponse(graphene.ObjectType):
     city = graphene.List(CityType)
 
 

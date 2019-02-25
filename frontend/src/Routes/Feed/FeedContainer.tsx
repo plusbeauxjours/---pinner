@@ -4,23 +4,20 @@ import FeedPresenter from "./FeedPresenter";
 import {
   ReportLocation,
   ReportLocationVariables,
-  FeedByLocaion,
-  FeedByLocaionVariables
+  Feed,
+  FeedVariables
 } from "../../types/api";
 import { RouteComponentProps } from "react-router";
 import { REPORT_LOCATION } from "../Home/HomeQueries";
 import { reverseGeoCode } from "../../mapHelpers";
-import { FEED_BY_LOCATION } from "../FeedByLocation/FeedByLocationQueries";
+import { GET_FEED } from "./FeedQueries";
 
 class ReportLocationMutation extends Mutation<
   ReportLocation,
   ReportLocationVariables
 > {}
 
-class FeedByLocationQuery extends Query<
-  FeedByLocaion,
-  FeedByLocaionVariables
-> {}
+class FeedQuery extends Query<Feed, FeedVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
 
@@ -57,19 +54,23 @@ class FeedContainer extends React.Component<IProps, IState> {
         {ReportLocationFn => {
           this.ReportLocationFn = ReportLocationFn;
           return (
-            <FeedByLocationQuery
-              query={FEED_BY_LOCATION}
+            <FeedQuery
+              query={GET_FEED}
               variables={{ page, cityname: lastCity }}
               fetchPolicy="network-only"
+              onCompleted={() =>
+                this.reportLocation(lastLat, lastLng, lastCity, lastCountry)
+              }
             >
               {({ data, loading }) => (
                 <FeedPresenter
                   loading={loading}
                   data={data}
                   lastCity={lastCity}
+                  lastCountry={lastCountry}
                 />
               )}
-            </FeedByLocationQuery>
+            </FeedQuery>
           );
         }}
       </ReportLocationMutation>
@@ -79,6 +80,7 @@ class FeedContainer extends React.Component<IProps, IState> {
     const {
       coords: { latitude, longitude }
     } = position;
+    console.log(position);
     this.setState({
       lastLat: latitude,
       lastLng: longitude
@@ -92,7 +94,6 @@ class FeedContainer extends React.Component<IProps, IState> {
         lastCity: address.city,
         lastCountry: address.country
       });
-      this.reportLocation(lat, lng, address.city, address.country);
     }
   };
   public reportLocation = (

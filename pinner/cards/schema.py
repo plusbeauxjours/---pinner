@@ -8,14 +8,17 @@ class Query(object):
         types.FeedResponse,
         resolver=queries.resolve_feed,
         required=True,
-        args={'page': graphene.Int()}
+        args={
+            'cityname': graphene.String(required=True),
+            'page': graphene.Int(),
+        }
     )
     feed_by_location = graphene.Field(
         types.FeedByLocationResponse,
         resolver=queries.resolve_feed_by_location,
         required=True,
         args={
-            'cityname': graphene.String(required=True),
+            'countryname': graphene.String(required=True),
             'page': graphene.Int()
         }
     )

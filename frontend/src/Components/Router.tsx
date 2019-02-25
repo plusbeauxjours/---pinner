@@ -38,7 +38,7 @@ const LoggedInPages = () => (
       <Route path="/explore" component={Explore} />
       <Route path="/location" exact={true} component={Location} />
       <Route path="/notification" component={Notification} />
-      <Route path="/location/:cityname" component={FeedByLocation} />
+      <Route path="/location/:countryname" component={FeedByLocation} />
       <Route path="/:username" component={Profile} />
       <Redirect from="*" to="/" />
     </Switch>

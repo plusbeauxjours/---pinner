@@ -3,7 +3,7 @@ import { Query } from "react-apollo";
 import FeedByLocationPresenter from "./FeedByLocationPresenter";
 import { FeedByLocaion, FeedByLocaionVariables } from "../../types/api";
 import { RouteComponentProps } from "react-router";
-import { FEED_BY_LOCATION } from "./FeedByLocationQueries";
+import { GET_FEED_BY_LOCATION } from "./FeedByLocationQueries";
 
 class FeedByLocationQuery extends Query<
   FeedByLocaion,
@@ -14,32 +14,32 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   page: number;
-  cityname: string;
+  countryname: string;
 }
 
 class FeedByLocationContainer extends React.Component<IProps, IState> {
   public state = {
     page: 0,
-    cityname: ""
+    countryname: ""
   };
   public render() {
     const {
       match: {
-        params: { cityname }
+        params: { countryname }
       }
     } = this.props;
     const { page } = this.state;
     return (
       <FeedByLocationQuery
-        query={FEED_BY_LOCATION}
-        variables={{ page, cityname }}
+        query={GET_FEED_BY_LOCATION}
+        variables={{ page, countryname }}
       >
         {({ data, loading }) => {
           return (
             <FeedByLocationPresenter
               loading={loading}
               data={data}
-              cityname={cityname}
+              countryname={countryname}
             />
           );
         }}

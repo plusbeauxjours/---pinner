@@ -8,16 +8,20 @@ def resolve_feed(self, info, **kwargs):
 
     user = info.context.user
     page = kwargs.get('page', 0)
+    cityname = kwargs.get('cityname')
     offset = 5 * page
 
     following_profiles = user.profile.following.all()
 
-    cards = models.Card.objects.filter(
+    following_cards = models.Card.objects.filter(
         creator__profile__in=following_profiles)
+
+    city_cards = models.Card.objects.filter(
+        city__cityname=cityname)
 
     my_cards = user.cards.all()
 
-    combined = cards.union(my_cards).order_by(
+    combined = following_cards.union(city_cards).union(my_cards).order_by(
         '-created_at')[offset:5 + offset]
 
     return types.FeedResponse(cards=combined)
@@ -27,11 +31,11 @@ def resolve_feed(self, info, **kwargs):
 def resolve_feed_by_location(self, info, **kwargs):
 
     user = info.context.user
-    cityname = kwargs.get('cityname')
+    countryname = kwargs.get('countryname')
     page = kwargs.get('page', 0)
     offset = 5 * page
 
-    cards = models.Card.objects.filter(city__cityname=cityname).order_by(
+    cards = models.Card.objects.filter(country__countryname=countryname).order_by(
         '-created_at')[offset:5 + offset]
 
     return types.FeedByLocationResponse(cards=cards)

@@ -3,45 +3,54 @@ import Loader from "../../Components/Loader";
 import Photo from "../../Components/Photo";
 import Wrapper from "../../Components/Wrapper";
 import styled from "../../Styles/typed-components";
+import { Feed } from "src/types/api";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
 `;
 
 interface IProps {
-  data?: any;
+  data?: Feed;
   loading: boolean;
   lastCity: string;
+  lastCountry: string;
 }
 
-const FeedPresenter: React.SFC<IProps> = ({ data, loading, lastCity }) => {
+const FeedPresenter: React.SFC<IProps> = ({
+  data: { feed: { cards = null } = {} } = {},
+  loading,
+  lastCity,
+  lastCountry
+}) => {
   if (loading) {
     return <Loader />;
-  } else if (data) {
-    const { feedByLocation: { cards = {} } = {} } = data;
+  } else if (cards) {
     return (
       <SWrapper>
-        <h1>welcome to {lastCity}</h1>
+        <h1>
+          welcome to {lastCity}
+          {lastCountry}
+        </h1>
         {cards &&
-          cards.map(card => {
-            console.log(card);
+          cards.map(cardkolpo => {
+            console.log(cardkolpo);
             return (
               <>
                 <Photo
-                  key={card.id}
-                  id={card.id}
+                  key={cardkolpo.id}
+                  id={cardkolpo.id}
                   inline={true}
-                  creatorAvatar={card.creator.profile.avatar}
-                  creatorUsername={card.creator.username}
-                  country={card.country.countryname}
-                  city={card.city.cityname}
-                  photoUrl={card.file}
-                  likeCount={card.likeCount}
-                  commentCount={card.commentCount}
-                  caption={card.caption}
-                  comments={card.comments}
-                  createdAt={card.createdAt}
-                  isLiked={card.isLiked}
+                  creatorAvatar={cardkolpo.creator.profile.avatar}
+                  creatorUsername={cardkolpo.creator.username}
+                  country={cardkolpo.country.countryname}
+                  city={cardkolpo.city.cityname}
+                  photoUrl={cardkolpo.file}
+                  likeCount={cardkolpo.likeCount}
+                  commentCount={cardkolpo.commentCount}
+                  caption={cardkolpo.caption}
+                  comments={cardkolpo.comments}
+                  createdAt={cardkolpo.createdAt}
+                  isLiked={cardkolpo.isLiked}
                 />
               </>
             );

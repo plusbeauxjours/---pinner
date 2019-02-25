@@ -300,20 +300,20 @@ export interface explore {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: feed
+// GraphQL query operation: Feed
 // ====================================================
 
-export interface feed_feed_cards_country {
+export interface Feed_feed_cards_country {
   __typename: "CountryType";
   countryname: string | null;
 }
 
-export interface feed_feed_cards_city {
+export interface Feed_feed_cards_city {
   __typename: "CityType";
   cityname: string | null;
 }
 
-export interface feed_feed_cards_comments_creator {
+export interface Feed_feed_cards_comments_creator {
   __typename: "UserType";
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
@@ -321,53 +321,54 @@ export interface feed_feed_cards_comments_creator {
   username: string;
 }
 
-export interface feed_feed_cards_comments {
+export interface Feed_feed_cards_comments {
   __typename: "CommentType";
   id: string;
   message: string;
-  creator: feed_feed_cards_comments_creator | null;
+  creator: Feed_feed_cards_comments_creator | null;
 }
 
-export interface feed_feed_cards_creator_profile {
+export interface Feed_feed_cards_creator_profile {
   __typename: "ProfileType";
   avatar: string;
 }
 
-export interface feed_feed_cards_creator {
+export interface Feed_feed_cards_creator {
   __typename: "UserType";
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
-  profile: feed_feed_cards_creator_profile | null;
+  profile: Feed_feed_cards_creator_profile | null;
 }
 
-export interface feed_feed_cards {
+export interface Feed_feed_cards {
   __typename: "CardType";
   id: string;
   file: string | null;
   caption: string;
-  country: feed_feed_cards_country | null;
-  city: feed_feed_cards_city | null;
+  country: Feed_feed_cards_country | null;
+  city: Feed_feed_cards_city | null;
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;
   createdAt: string | null;
-  comments: (feed_feed_cards_comments | null)[] | null;
-  creator: feed_feed_cards_creator;
+  comments: (Feed_feed_cards_comments | null)[] | null;
+  creator: Feed_feed_cards_creator;
 }
 
-export interface feed_feed {
+export interface Feed_feed {
   __typename: "FeedResponse";
-  cards: (feed_feed_cards | null)[] | null;
+  cards: (Feed_feed_cards | null)[] | null;
 }
 
-export interface feed {
-  feed: feed_feed;
+export interface Feed {
+  feed: Feed_feed;
 }
 
-export interface feedVariables {
+export interface FeedVariables {
   page: number;
+  cityname: string;
 }
 
 
@@ -443,7 +444,7 @@ export interface FeedByLocaion {
 
 export interface FeedByLocaionVariables {
   page: number;
-  cityname: string;
+  countryname: string;
 }
 
 
@@ -475,29 +476,45 @@ export interface ReportLocationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: location
+// GraphQL query operation: GetCountry
 // ====================================================
 
-export interface location_location_country {
+export interface GetCountry_getCountry_country {
   __typename: "CountryType";
   id: string;
   countryname: string | null;
 }
 
-export interface location_location_city {
+export interface GetCountry_getCountry {
+  __typename: "CountryResponse";
+  country: (GetCountry_getCountry_country | null)[] | null;
+}
+
+export interface GetCountry {
+  getCountry: GetCountry_getCountry;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetCity
+// ====================================================
+
+export interface GetCity_getCity_city {
   __typename: "CityType";
   id: string;
   cityname: string | null;
 }
 
-export interface location_location {
-  __typename: "LocationResponse";
-  country: (location_location_country | null)[] | null;
-  city: (location_location_city | null)[] | null;
+export interface GetCity_getCity {
+  __typename: "CityResponse";
+  city: (GetCity_getCity_city | null)[] | null;
 }
 
-export interface location {
-  location: location_location;
+export interface GetCity {
+  getCity: GetCity_getCity;
 }
 
 

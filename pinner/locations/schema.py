@@ -3,9 +3,15 @@ from . import types, mutations, queries
 
 
 class Query(object):
-    location = graphene.Field(
-        types.LocationResponse,
-        resolver=queries.resolve_location,
+    getCountry = graphene.Field(
+        types.CountryResponse,
+        resolver=queries.resolve_get_country,
+        required=True
+    )
+
+    getCity = graphene.Field(
+        types.CityResponse,
+        resolver=queries.resolve_get_city,
         required=True
     )
 
