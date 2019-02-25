@@ -33,7 +33,6 @@ const FeedPresenter: React.SFC<IProps> = ({
         </h1>
         {cards &&
           cards.map(cardkolpo => {
-            console.log(cardkolpo);
             return (
               <>
                 <Photo

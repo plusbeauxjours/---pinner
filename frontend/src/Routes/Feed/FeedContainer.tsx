@@ -52,14 +52,23 @@ class FeedContainer extends React.Component<IProps, IState> {
         variables={{ lastLat, lastLng, lastCity, lastCountry }}
       >
         {ReportLocationFn => {
-          this.ReportLocationFn = ReportLocationFn;
           return (
             <FeedQuery
               query={GET_FEED}
-              variables={{ page, cityname: lastCity }}
+              variables={{
+                page,
+                cityname: lastCity
+              }}
               fetchPolicy="network-only"
               onCompleted={() =>
-                this.reportLocation(lastLat, lastLng, lastCity, lastCountry)
+                ReportLocationFn({
+                  variables: {
+                    lastLat,
+                    lastLng,
+                    lastCity,
+                    lastCountry
+                  }
+                })
               }
             >
               {({ data, loading }) => (
@@ -94,22 +103,6 @@ class FeedContainer extends React.Component<IProps, IState> {
         lastCountry: address.country
       });
     }
-  };
-  public reportLocation = (
-    lat: number,
-    lng: number,
-    lastCity: string,
-    lastCountry: string
-  ) => {
-    console.log(lat, lng, lastCity, lastCountry);
-    this.ReportLocationFn({
-      variables: {
-        lastLat: lat,
-        lastLng: lng,
-        lastCity,
-        lastCountry
-      }
-    });
   };
   public handleGeoError = () => {
     console.log("No location");
