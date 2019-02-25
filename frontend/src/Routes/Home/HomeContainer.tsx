@@ -2,12 +2,12 @@ import React from "react";
 import HomePresenter from "./HomePresenter";
 import { RouteComponentProps } from "react-router";
 
+interface IProps extends RouteComponentProps<any> {}
+
 interface IState {
   isLogIn: boolean;
   modalOpen: boolean;
 }
-
-interface IProps extends RouteComponentProps<any> {}
 
 class HomeContainer extends React.Component<IProps, IState> {
   constructor(props) {

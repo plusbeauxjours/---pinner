@@ -23,20 +23,22 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   page: number;
-  lastLat: number;
-  lastLng: number;
-  lastCity: string;
-  lastCountry: string;
+  currentLat: number;
+  currentLng: number;
+  currentCity: string;
+  currentCountry: string;
+  currentCountryCode: string;
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
   public ReportLocationFn: MutationFn;
   public state = {
     page: 0,
-    lastLat: 0,
-    lastLng: 0,
-    lastCity: "",
-    lastCountry: ""
+    currentLat: 0,
+    currentLng: 0,
+    currentCity: "",
+    currentCountry: "",
+    currentCountryCode: ""
   };
   public componentDidMount() {
     navigator.geolocation.getCurrentPosition(
@@ -45,38 +47,46 @@ class FeedContainer extends React.Component<IProps, IState> {
     );
   }
   public render() {
-    const { page, lastLat, lastLng, lastCity, lastCountry } = this.state;
+    const {
+      page,
+      currentLat,
+      currentLng,
+      currentCity,
+      currentCountry,
+      currentCountryCode
+    } = this.state;
     return (
       <ReportLocationMutation
         mutation={REPORT_LOCATION}
-        variables={{ lastLat, lastLng, lastCity, lastCountry }}
+        variables={{
+          currentLat,
+          currentLng,
+          currentCity,
+          currentCountry,
+          currentCountryCode
+        }}
       >
         {ReportLocationFn => {
+          this.ReportLocationFn = ReportLocationFn;
           return (
             <FeedQuery
               query={GET_FEED}
               variables={{
                 page,
-                cityname: lastCity
+                cityname: currentCity
               }}
               fetchPolicy="network-only"
-              onCompleted={() =>
-                ReportLocationFn({
-                  variables: {
-                    lastLat,
-                    lastLng,
-                    lastCity,
-                    lastCountry
-                  }
-                })
-              }
+              onCompleted={() => {
+                console.log("mutationFn");
+              }}
             >
               {({ data, loading }) => (
                 <FeedPresenter
                   loading={loading}
                   data={data}
-                  lastCity={lastCity}
-                  lastCountry={lastCountry}
+                  currentCity={currentCity}
+                  currentCountry={currentCountry}
+                  currentCountryCode={currentCountryCode}
                 />
               )}
             </FeedQuery>
@@ -90,8 +100,8 @@ class FeedContainer extends React.Component<IProps, IState> {
       coords: { latitude, longitude }
     } = position;
     this.setState({
-      lastLat: latitude,
-      lastLng: longitude
+      currentLat: latitude,
+      currentLng: longitude
     });
     this.getAddress(latitude, longitude);
   };
@@ -99,10 +109,36 @@ class FeedContainer extends React.Component<IProps, IState> {
     const address = await reverseGeoCode(lat, lng);
     if (address) {
       this.setState({
-        lastCity: address.city,
-        lastCountry: address.country
+        currentCity: address.city,
+        currentCountry: address.country,
+        currentCountryCode: address.countryCode
       });
+      this.reportLocation(
+        lat,
+        lng,
+        address.city,
+        address.country,
+        address.countryCode
+      );
     }
+  };
+  public reportLocation = (
+    lat: number,
+    lng: number,
+    lastCity: string,
+    lastCountry: string,
+    currentCountryCode: string
+  ) => {
+    console.log(lat, lng, lastCity, lastCountry);
+    this.ReportLocationFn({
+      variables: {
+        lastLat: lat,
+        lastLng: lng,
+        lastCity,
+        lastCountry,
+        currentCountryCode
+      }
+    });
   };
   public handleGeoError = () => {
     console.log("No location");

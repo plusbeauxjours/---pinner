@@ -9,16 +9,16 @@ import {
   StartPhoneVerificationVariables
 } from "../../types/api";
 
+class PhoneSignInMutation extends Mutation<
+  StartPhoneVerification,
+  StartPhoneVerificationVariables
+> {}
+
 interface IState {
   countryCode: string;
   phoneNumber: string;
   isSubmitted: boolean;
 }
-
-class PhoneSignInMutation extends Mutation<
-  StartPhoneVerification,
-  StartPhoneVerificationVariables
-> {}
 
 class PhoneLoginContainer extends React.Component<
   RouteComponentProps<any>,

@@ -6,13 +6,13 @@ import { LOGIN_MUTATION } from "./LogInQueries";
 import { toast } from "react-toastify";
 import { LOG_USER_IN } from "../../sharedQueries.local";
 
+class LogUserInMutation extends Mutation {}
+class LogInMutation extends Mutation<logIn, logInVariables> {}
+
 interface IState {
   username: string;
   password: string;
 }
-
-class LogUserInMutation extends Mutation {}
-class LogInMutation extends Mutation<logIn, logInVariables> {}
 
 class LogInContainer extends React.Component<any, IState> {
   public state = {

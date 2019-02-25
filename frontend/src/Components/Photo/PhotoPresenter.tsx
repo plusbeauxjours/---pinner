@@ -201,8 +201,8 @@ const PhotoPresenter: React.SFC<IProps> = ({
           <UserHeader
             username={creatorUsername}
             avatar={creatorAvatar}
-            lastCity={city}
-            lastCountry={country}
+            currentCity={city}
+            currentCountry={country}
             size={"sm"}
           />
           <Image src={photoUrl} />
@@ -270,8 +270,8 @@ const PhotoPresenter: React.SFC<IProps> = ({
             <UserHeader
               username={creatorUsername}
               avatar={creatorAvatar}
-              lastCity={city}
-              lastCountry={country}
+              currentCity={city}
+              currentCountry={country}
             />
             <Comments>
               <Comment username={creatorUsername} comment={caption} />

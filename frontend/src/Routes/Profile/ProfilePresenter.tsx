@@ -252,7 +252,7 @@ const ProfilePresenter: React.SFC<IProps> = ({
               </UsernameRow>
               <Metrics>
                 <Metric>
-                  <CBold text={String(user.profile.lastCity)} />
+                  <CBold text={String(user.profile.currentCity.cityname)} />
                 </Metric>
                 <Metric>
                   <SBold text={String(user.profile.postCount)} />

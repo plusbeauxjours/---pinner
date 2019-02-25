@@ -11,10 +11,13 @@ export const reverseGeoCode = async (lat: number, lng: number) => {
     if (!firstPlace.address_components) {
       return false;
     }
+    console.log(firstPlace.address_components);
     const city = firstPlace.address_components[0].long_name;
     const country = firstPlace.address_components[1].long_name;
-    console.log(city, country);
-    return { city, country };
+    const countryCode = firstPlace.address_components[1].short_name;
+
+    console.log(city, country, countryCode);
+    return { city, country, countryCode };
   } else {
     toast.error(data.error_message);
     return false;

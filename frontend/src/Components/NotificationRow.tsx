@@ -68,7 +68,7 @@ const NotificationRow: React.SFC<IProps> = ({ notification, actor }) => (
                 <Container>
                   <UserHeader
                     username={actor.username}
-                    lastCountry={actor.profile.lastCountry}
+                    currentCountry={actor.profile.currentCountry}
                     avatar={actor.profile.avatar}
                     size={"sm"}
                   />
@@ -91,7 +91,7 @@ const NotificationRow: React.SFC<IProps> = ({ notification, actor }) => (
                 <Container>
                   <UserHeader
                     username={actor.username}
-                    lastCountry={actor.profile.lastCountry}
+                    currentCountry={actor.profile.currentCountry}
                     avatar={actor.profile.avatar}
                     size={"sm"}
                   />
@@ -119,7 +119,7 @@ const NotificationRow: React.SFC<IProps> = ({ notification, actor }) => (
                 <Container>
                   <UserHeader
                     username={actor.username}
-                    lastCountry={actor.profile.lastCountry}
+                    currentCountry={actor.profile.currentCountry}
                     avatar={actor.profile.avatar}
                     size={"sm"}
                   />

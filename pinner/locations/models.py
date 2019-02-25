@@ -11,7 +11,7 @@ class Country (config_models.TimeStampedModel):
 
     @property
     def city_count(self):
-        return self.city.all().count()
+        return self.cities.all().count()
 
     def __str__(self):
         return self.countryname
@@ -20,7 +20,7 @@ class Country (config_models.TimeStampedModel):
 class City (config_models.TimeStampedModel):
 
     country = models.ForeignKey(
-        Country, on_delete=models.CASCADE, related_name='city')
+        Country, on_delete=models.CASCADE, related_name='cities')
     cityname = models.CharField(max_length=100, null=True, blank=True)
 
     @property
@@ -34,7 +34,7 @@ class City (config_models.TimeStampedModel):
 class Like(config_models.TimeStampedModel):
 
     creator = models.ForeignKey(
-        User, on_delete=models.CASCADE, null=True, related_name='city_likes')
+        User, on_delete=models.CASCADE, null=True, related_name='likes')
     city = models.ForeignKey(
         City, on_delete=models.CASCADE, null=True, related_name='likes')
 
@@ -44,3 +44,13 @@ class Like(config_models.TimeStampedModel):
 
     def __str__(self):
         return 'User: {} - City cityname: {}'.format(self.creator.username, self.city.cityname)
+
+
+class LocationLog(config_models.TimeStampedModel):
+
+    creator = models.ForeignKey(
+        User,  on_delete=models.CASCADE, null=True, related_name='logs')
+    # city = models.ManyToManyField(
+    #     City, null=True, related_name='logs')
+    # country = models.ManyToManyField(
+    #     Country, related_name='logs')

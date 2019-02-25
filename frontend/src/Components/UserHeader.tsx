@@ -31,8 +31,8 @@ const Location = styled.span`
 interface IProps {
   username: string;
   avatar: string;
-  lastCity?: string;
-  lastCountry: string;
+  currentCity?: string;
+  currentCountry: string;
   size?: string;
 }
 
@@ -45,8 +45,8 @@ const SBold = styled(Bold)`
 const UserHeader: React.SFC<IProps> = ({
   username,
   avatar,
-  lastCity,
-  lastCountry,
+  currentCity,
+  currentCountry,
   size
 }) => (
   <>
@@ -57,8 +57,8 @@ const UserHeader: React.SFC<IProps> = ({
       <HeaderColumn>
         <SBold text={username} />
         <Location>
-          {lastCity}
-          {lastCountry}
+          {currentCity}
+          {currentCountry}
         </Location>
       </HeaderColumn>
     </Header>

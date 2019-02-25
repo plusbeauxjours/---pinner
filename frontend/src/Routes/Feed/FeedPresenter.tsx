@@ -12,15 +12,17 @@ const SWrapper = styled(Wrapper)`
 interface IProps {
   data?: Feed;
   loading: boolean;
-  lastCity: string;
-  lastCountry: string;
+  currentCity: string;
+  currentCountry: string;
+  currentCountryCode: string;
 }
 
 const FeedPresenter: React.SFC<IProps> = ({
   data: { feed: { cards = null } = {} } = {},
   loading,
-  lastCity,
-  lastCountry
+  currentCity,
+  currentCountry,
+  currentCountryCode
 }) => {
   if (loading) {
     return <Loader />;
@@ -28,28 +30,29 @@ const FeedPresenter: React.SFC<IProps> = ({
     return (
       <SWrapper>
         <h1>
-          welcome to {lastCity}
-          {lastCountry}
+          welcome to {currentCity}
+          {currentCountry}
+          {currentCountryCode}
         </h1>
         {cards &&
-          cards.map(cardkolpo => {
+          cards.map(card => {
             return (
               <>
                 <Photo
-                  key={cardkolpo.id}
-                  id={cardkolpo.id}
+                  key={card.id}
+                  id={card.id}
                   inline={true}
-                  creatorAvatar={cardkolpo.creator.profile.avatar}
-                  creatorUsername={cardkolpo.creator.username}
-                  country={cardkolpo.country.countryname}
-                  city={cardkolpo.city.cityname}
-                  photoUrl={cardkolpo.file}
-                  likeCount={cardkolpo.likeCount}
-                  commentCount={cardkolpo.commentCount}
-                  caption={cardkolpo.caption}
-                  comments={cardkolpo.comments}
-                  createdAt={cardkolpo.createdAt}
-                  isLiked={cardkolpo.isLiked}
+                  creatorAvatar={card.creator.profile.avatar}
+                  creatorUsername={card.creator.username}
+                  country={card.country.countryname}
+                  city={card.city.cityname}
+                  photoUrl={card.file}
+                  likeCount={card.likeCount}
+                  commentCount={card.commentCount}
+                  caption={card.caption}
+                  comments={card.comments}
+                  createdAt={card.createdAt}
+                  isLiked={card.isLiked}
                 />
               </>
             );

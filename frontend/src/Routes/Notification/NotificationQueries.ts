@@ -10,14 +10,32 @@ export const GET_NOTIFICATION = gql`
           username
           profile {
             avatar
-            lastCountry
+            lastCountry {
+              countryname
+              countrycode
+            }
+            lastCity {
+              cityname
+            }
+            currentCountry {
+              countryname
+              countrycode
+            }
+            currentCity {
+              cityname
+            }
           }
         }
         target {
           username
           profile {
             avatar
-            lastCountry
+            currentCountry {
+              countryname
+            }
+            currentCity {
+              cityname
+            }
           }
         }
         verb

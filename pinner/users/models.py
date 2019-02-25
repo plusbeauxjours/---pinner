@@ -5,6 +5,8 @@ from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django.dispatch import receiver
 
+from locations import models as locations_models
+
 
 class Profile(config_models.TimeStampedModel):
 
@@ -21,22 +23,38 @@ class Profile(config_models.TimeStampedModel):
     website = models.URLField(blank=True, null=True)
     gender = models.CharField(max_length=15, blank=True, null=True)
     avatar = models.URLField(
-        blank=True, default="http://basmed.unilag.edu.ng/wp-content/uploads/2018/10/avatar__181424.png")
+        blank=True,
+        default="http://basmed.unilag.edu.ng/wp-content/uploads/2018/10/avatar__181424.png")
     following = models.ManyToManyField(
         'self', blank=True, symmetrical=False, related_name='following_users')
     followers = models.ManyToManyField(
         'self', blank=True, symmetrical=False, related_name='followed_by')
+
     phoneNumber = models.CharField(max_length=20, blank=True, null=True)
     verifiedPhoneNumber = models.BooleanField(default=False)
     verifiedEmail = models.BooleanField(default=False)
+    fbId = models.CharField(blank=True, null=True, max_length=20)
+
+    currentLng = models.FloatField(blank=True, null=True)
+    currentLat = models.FloatField(blank=True, null=True)
+    currentCity = models.ForeignKey(
+        locations_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCity', )
+    currentCountry = models.ForeignKey(
+        locations_models.Country, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCountry', )
+
     lastLng = models.FloatField(blank=True, null=True)
     lastLat = models.FloatField(blank=True, null=True)
-    lastCity = models.CharField(max_length=300, blank=True, null=True)
-    lastCountry = models.CharField(max_length=300, blank=True, null=True)
-    fbId = models.CharField(blank=True, null=True, max_length=20)
+    lastCity = models.ForeignKey(
+        locations_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='lastCity', )
+    lastCountry = models.ForeignKey(
+        locations_models.Country, on_delete=models.SET_NULL, null=True, blank=True, related_name='lastCountry', )
 
     def __str__(self):
         return self.user.username
+
+    @property
+    def country_log(self):
+        return self.lastCountry.all()
 
     @property
     def post_count(self):

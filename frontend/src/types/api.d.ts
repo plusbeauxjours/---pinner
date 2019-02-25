@@ -465,10 +465,11 @@ export interface ReportLocation {
 }
 
 export interface ReportLocationVariables {
-  lastCity: string;
-  lastCountry: string;
-  lastLat: number;
-  lastLng: number;
+  currentLat: number;
+  currentLng: number;
+  currentCity: string;
+  currentCountry: string;
+  currentCountryCode: string;
 }
 
 
@@ -525,10 +526,35 @@ export interface GetCity {
 // GraphQL query operation: GetNotifictions
 // ====================================================
 
+export interface GetNotifictions_getNotifications_notifications_actor_profile_lastCountry {
+  __typename: "CountryType";
+  countryname: string | null;
+  countrycode: string | null;
+}
+
+export interface GetNotifictions_getNotifications_notifications_actor_profile_lastCity {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
+export interface GetNotifictions_getNotifications_notifications_actor_profile_currentCountry {
+  __typename: "CountryType";
+  countryname: string | null;
+  countrycode: string | null;
+}
+
+export interface GetNotifictions_getNotifications_notifications_actor_profile_currentCity {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
 export interface GetNotifictions_getNotifications_notifications_actor_profile {
   __typename: "ProfileType";
   avatar: string;
-  lastCountry: string | null;
+  lastCountry: GetNotifictions_getNotifications_notifications_actor_profile_lastCountry | null;
+  lastCity: GetNotifictions_getNotifications_notifications_actor_profile_lastCity | null;
+  currentCountry: GetNotifictions_getNotifications_notifications_actor_profile_currentCountry | null;
+  currentCity: GetNotifictions_getNotifications_notifications_actor_profile_currentCity | null;
 }
 
 export interface GetNotifictions_getNotifications_notifications_actor {
@@ -540,10 +566,21 @@ export interface GetNotifictions_getNotifications_notifications_actor {
   profile: GetNotifictions_getNotifications_notifications_actor_profile | null;
 }
 
+export interface GetNotifictions_getNotifications_notifications_target_profile_currentCountry {
+  __typename: "CountryType";
+  countryname: string | null;
+}
+
+export interface GetNotifictions_getNotifications_notifications_target_profile_currentCity {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
 export interface GetNotifictions_getNotifications_notifications_target_profile {
   __typename: "ProfileType";
   avatar: string;
-  lastCountry: string | null;
+  currentCountry: GetNotifictions_getNotifications_notifications_target_profile_currentCountry | null;
+  currentCity: GetNotifictions_getNotifications_notifications_target_profile_currentCity | null;
 }
 
 export interface GetNotifictions_getNotifications_notifications_target {
@@ -633,6 +670,17 @@ export interface StartPhoneVerificationVariables {
 // GraphQL query operation: userProfile
 // ====================================================
 
+export interface userProfile_userProfile_user_profile_currentCountry {
+  __typename: "CountryType";
+  countryname: string | null;
+  countrycode: string | null;
+}
+
+export interface userProfile_userProfile_user_profile_currentCity {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
 export interface userProfile_userProfile_user_profile {
   __typename: "ProfileType";
   bio: string | null;
@@ -644,8 +692,8 @@ export interface userProfile_userProfile_user_profile {
   followingCount: number | null;
   isFollowing: boolean | null;
   isSelf: boolean | null;
-  lastCountry: string | null;
-  lastCity: string | null;
+  currentCountry: userProfile_userProfile_user_profile_currentCountry | null;
+  currentCity: userProfile_userProfile_user_profile_currentCity | null;
 }
 
 export interface userProfile_userProfile_user_cards {

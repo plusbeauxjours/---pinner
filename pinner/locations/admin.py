@@ -20,5 +20,4 @@ class CityAdmin(admin.ModelAdmin):
 
 @admin.register(models.Like)
 class LikeAdmin(admin.ModelAdmin):
-    list_display = (
-        'natural_time',)
+    pass

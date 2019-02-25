@@ -10,17 +10,17 @@ import { COMPLETE_PHONE_SIGN_IN } from "./VerifyPhoneQueries";
 import { toast } from "react-toastify";
 import { LOG_USER_IN } from "../../sharedQueries.local";
 
-interface IState {
-  verificationKey: string;
-  phoneNumber: string;
-}
-
-interface IProps extends RouteComponentProps<any> {}
-
 class VerifyMuataion extends Mutation<
   CompletePhoneVerification,
   CompletePhoneVerificationVariables
 > {}
+
+interface IProps extends RouteComponentProps<any> {}
+
+interface IState {
+  verificationKey: string;
+  phoneNumber: string;
+}
 
 class VerifyPhoneContainer extends React.Component<IProps, IState> {
   constructor(props: IProps) {
