@@ -45,6 +45,7 @@ class FeedContainer extends React.Component<IProps, IState> {
       this.handleGeoSuccess,
       this.handleGeoError
     );
+    console.log("goodmorning");
   }
   public render() {
     const {
@@ -56,31 +57,31 @@ class FeedContainer extends React.Component<IProps, IState> {
       currentCountryCode
     } = this.state;
     return (
-      <ReportLocationMutation
-        mutation={REPORT_LOCATION}
+      <FeedQuery
+        query={GET_FEED}
         variables={{
-          currentLat,
-          currentLng,
-          currentCity,
-          currentCountry,
-          currentCountryCode
+          page,
+          cityname: currentCity
+        }}
+        fetchPolicy="network-only"
+        onCompleted={() => {
+          console.log("mutationFn");
         }}
       >
-        {ReportLocationFn => {
-          this.ReportLocationFn = ReportLocationFn;
-          return (
-            <FeedQuery
-              query={GET_FEED}
-              variables={{
-                page,
-                cityname: currentCity
-              }}
-              fetchPolicy="network-only"
-              onCompleted={() => {
-                console.log("mutationFn");
-              }}
-            >
-              {({ data, loading }) => (
+        {({ data, loading }) => (
+          <ReportLocationMutation
+            mutation={REPORT_LOCATION}
+            variables={{
+              currentLat,
+              currentLng,
+              currentCity,
+              currentCountry,
+              currentCountryCode
+            }}
+          >
+            {ReportLocationFn => {
+              this.ReportLocationFn = ReportLocationFn;
+              return (
                 <FeedPresenter
                   loading={loading}
                   data={data}
@@ -88,11 +89,11 @@ class FeedContainer extends React.Component<IProps, IState> {
                   currentCountry={currentCountry}
                   currentCountryCode={currentCountryCode}
                 />
-              )}
-            </FeedQuery>
-          );
-        }}
-      </ReportLocationMutation>
+              );
+            }}
+          </ReportLocationMutation>
+        )}
+      </FeedQuery>
     );
   }
   public handleGeoSuccess = (position: Position) => {
@@ -129,7 +130,6 @@ class FeedContainer extends React.Component<IProps, IState> {
     lastCountry: string,
     currentCountryCode: string
   ) => {
-    console.log(lat, lng, lastCity, lastCountry);
     this.ReportLocationFn({
       variables: {
         lastLat: lat,
@@ -139,6 +139,7 @@ class FeedContainer extends React.Component<IProps, IState> {
         currentCountryCode
       }
     });
+    console.log(this.state);
   };
   public handleGeoError = () => {
     console.log("No location");

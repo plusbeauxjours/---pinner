@@ -11,7 +11,6 @@ export const reverseGeoCode = async (lat: number, lng: number) => {
     if (!firstPlace.address_components) {
       return false;
     }
-    console.log(firstPlace.address_components);
     const city = firstPlace.address_components[0].long_name;
     const country = firstPlace.address_components[1].long_name;
     const countryCode = firstPlace.address_components[1].short_name;

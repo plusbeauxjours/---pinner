@@ -35,15 +35,15 @@ class Profile(config_models.TimeStampedModel):
     verifiedEmail = models.BooleanField(default=False)
     fbId = models.CharField(blank=True, null=True, max_length=20)
 
-    currentLng = models.FloatField(blank=True, null=True)
     currentLat = models.FloatField(blank=True, null=True)
+    currentLng = models.FloatField(blank=True, null=True)
     currentCity = models.ForeignKey(
         locations_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCity', )
     currentCountry = models.ForeignKey(
         locations_models.Country, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCountry', )
 
-    lastLng = models.FloatField(blank=True, null=True)
     lastLat = models.FloatField(blank=True, null=True)
+    lastLng = models.FloatField(blank=True, null=True)
     lastCity = models.ForeignKey(
         locations_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='lastCity', )
     lastCountry = models.ForeignKey(
