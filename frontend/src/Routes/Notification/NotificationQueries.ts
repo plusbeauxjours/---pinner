@@ -53,6 +53,20 @@ export const GET_NOTIFICATION = gql`
         comment {
           message
         }
+        fromCity {
+          cityname
+        }
+        fromCountry {
+          countryname
+          countrycode
+        }
+        toCity {
+          cityname
+        }
+        toCountry {
+          countryname
+          countrycode
+        }
         createdAt
       }
     }

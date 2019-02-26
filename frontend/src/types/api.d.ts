@@ -615,15 +615,41 @@ export interface GetNotifictions_getNotifications_notifications_comment {
   message: string;
 }
 
+export interface GetNotifictions_getNotifications_notifications_fromCity {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
+export interface GetNotifictions_getNotifications_notifications_fromCountry {
+  __typename: "CountryType";
+  countryname: string | null;
+  countrycode: string | null;
+}
+
+export interface GetNotifictions_getNotifications_notifications_toCity {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
+export interface GetNotifictions_getNotifications_notifications_toCountry {
+  __typename: "CountryType";
+  countryname: string | null;
+  countrycode: string | null;
+}
+
 export interface GetNotifictions_getNotifications_notifications {
   __typename: "NotificationType";
   id: string;
   actor: GetNotifictions_getNotifications_notifications_actor;
-  target: GetNotifictions_getNotifications_notifications_target;
+  target: GetNotifictions_getNotifications_notifications_target | null;
   verb: NotificationVerb;
   payload: GetNotifictions_getNotifications_notifications_payload | null;
   read: boolean;
   comment: GetNotifictions_getNotifications_notifications_comment | null;
+  fromCity: GetNotifictions_getNotifications_notifications_fromCity | null;
+  fromCountry: GetNotifictions_getNotifications_notifications_fromCountry | null;
+  toCity: GetNotifictions_getNotifications_notifications_toCity | null;
+  toCountry: GetNotifictions_getNotifications_notifications_toCountry | null;
   createdAt: string | null;
 }
 

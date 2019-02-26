@@ -3,6 +3,7 @@ import styled from "src/Styles/typed-components";
 import UserHeader from "./UserHeader";
 import Bold from "./Bold";
 import { Link } from "react-router-dom";
+import FlagHeader from "./FlagHeader";
 
 const Container = styled.div`
   background-color: white;
@@ -10,7 +11,6 @@ const Container = styled.div`
   border: ${props => props.theme.boxBorder};
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
@@ -19,11 +19,31 @@ const Container = styled.div`
   }
 `;
 
+const FContainer = styled(Container)`
+  justify-content: flex-start;
+`;
+
+const MContainer = styled(Container)`
+  justify-content: space-between;
+`;
+
+const CLUContainer = styled(Container)`
+  justify-content: flex-start;
+`;
+
 const Header = styled.header`
   padding: 12px;
   margin: 0 15px 0 15px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 3px;
+`;
+
+const MHeader = styled(Header)`
+  width: 300px;
+  flex-direction: row;
+  justify-content: space-between;
   border-radius: 3px;
 `;
 
@@ -38,13 +58,13 @@ const TimeStamp = styled.span`
   text-transform: uppercase;
   font-size: 10px;
   line-height: 18px;
-  margin-top: 10px;
   display: block;
   color: ${props => props.theme.greyColor};
 `;
 
 const SBold = styled(Bold)`
   display: flex;
+  align-items: center;
 `;
 
 interface IProps {
@@ -53,8 +73,6 @@ interface IProps {
   key: string;
   notification: any;
   actor: any;
-  target: any;
-  payload?: any;
   toggleModal: () => void;
 }
 const NotificationRow: React.SFC<IProps> = ({ notification, actor }) => (
@@ -64,17 +82,19 @@ const NotificationRow: React.SFC<IProps> = ({ notification, actor }) => (
         case "FOLLOW":
           return (
             <>
-              <Link to={`/${actor.username}`}>
-                <Container>
+              <Link to={`/${notification.actor.username}`}>
+                <FContainer>
                   <UserHeader
-                    username={actor.username}
-                    currentCountry={actor.profile.currentCountry}
-                    avatar={actor.profile.avatar}
+                    username={notification.actor.username}
+                    currentCity={actor.currentCity.cityname}
+                    avatar={actor.avatar}
                     size={"sm"}
                   />
-                  <SBold text={"started to follow me"} />
-                  <TimeStamp>{notification.createdAt}</TimeStamp>
-                </Container>
+                  <Header>
+                    <SBold text={"started to follow me"} />
+                    <TimeStamp>{notification.createdAt}</TimeStamp>
+                  </Header>
+                </FContainer>
               </Link>
             </>
           );
@@ -90,18 +110,20 @@ const NotificationRow: React.SFC<IProps> = ({ notification, actor }) => (
               >
                 <Container>
                   <UserHeader
-                    username={actor.username}
-                    currentCountry={actor.profile.currentCountry}
-                    avatar={actor.profile.avatar}
+                    username={notification.actor.username}
+                    currentCity={actor.currentCity.cityname}
+                    avatar={actor.avatar}
                     size={"sm"}
                   />
-                  <SBold text={"commented on card"} />
+                  <Header>
+                    <SBold text={"commented on card"} />
+                    <TimeStamp>{notification.createdAt}</TimeStamp>
+                  </Header>
                   <Header>
                     <Location>
                       <SBold text={notification.comment.message} />
                     </Location>
                   </Header>
-                  <TimeStamp>{notification.createdAt}</TimeStamp>
                 </Container>
               </Link>
             </>
@@ -116,33 +138,60 @@ const NotificationRow: React.SFC<IProps> = ({ notification, actor }) => (
                   state: { modalOpen: true }
                 }}
               >
-                <Container>
+                <CLUContainer>
                   <UserHeader
-                    username={actor.username}
-                    currentCountry={actor.profile.currentCountry}
-                    avatar={actor.profile.avatar}
+                    username={notification.actor.username}
+                    currentCity={actor.currentCity.cityname}
+                    avatar={actor.avatar}
                     size={"sm"}
                   />
-                  <SBold text={"liked card"} />
-                  <TimeStamp>{notification.createdAt}</TimeStamp>
-                </Container>
+                  <Header>
+                    <SBold text={"liked card"} />
+                    <TimeStamp>{notification.createdAt}</TimeStamp>
+                  </Header>
+                </CLUContainer>
               </Link>
             </>
           );
         case "MOVE":
           return (
             <>
-              <SBold text={"moved to"} />
-
-              <TimeStamp>{notification.createdAt}</TimeStamp>
+              <Link to={`/${notification.actor.username}`}>
+                <MContainer>
+                  <UserHeader
+                    username={notification.actor.username}
+                    currentCity={actor.currentCity.cityname}
+                    avatar={actor.avatar}
+                    size={"sm"}
+                  />
+                  <Header>
+                    <SBold text={"Moved"} />
+                    <TimeStamp>{notification.createdAt}</TimeStamp>
+                  </Header>
+                  <MHeader>
+                    <FlagHeader
+                      cityname={notification.fromCity.cityname}
+                      countryname={notification.fromCountry.countryname}
+                    />
+                    <SBold text={"To"} />
+                    <FlagHeader
+                      cityname={notification.toCity.cityname}
+                      countryname={notification.toCountry.countryname}
+                    />
+                  </MHeader>
+                </MContainer>
+              </Link>
             </>
           );
         case "UPLOAD":
           return (
             <>
-              <SBold text={"uploaded card"} />
-
-              <TimeStamp>{notification.createdAt}</TimeStamp>
+              <CLUContainer>
+                <Header>
+                  <SBold text={"uploaded card"} />
+                  <TimeStamp>{notification.createdAt}</TimeStamp>
+                </Header>
+              </CLUContainer>
             </>
           );
         default:

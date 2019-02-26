@@ -32,7 +32,7 @@ interface IProps {
   username: string;
   avatar: string;
   currentCity?: string;
-  currentCountry: string;
+  currentCountry?: string;
   size?: string;
 }
 

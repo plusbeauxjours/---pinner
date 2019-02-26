@@ -29,23 +29,24 @@ const NotificationPresenter: React.SFC<IProps> = ({
   if (loading) {
     return <Loader />;
   } else if (!loading && notifications) {
+    console.log(notifications);
     return (
       <>
         {modalOpen && <Route path="/p/:id" component={CardDetail} />}
         <SWrapper>
           {notifications &&
-            notifications.map(notification => (
-              <NotificationRow
-                className={className}
-                id={notification.id}
-                key={notification.id}
-                notification={notification}
-                actor={notification.actor}
-                target={notification.target}
-                payload={notification.payload}
-                toggleModal={toggleModal}
-              />
-            ))}
+            notifications.map(notification => {
+              return (
+                <NotificationRow
+                  className={className}
+                  id={notification.id}
+                  key={notification.id}
+                  notification={notification}
+                  actor={notification.actor.profile}
+                  toggleModal={toggleModal}
+                />
+              );
+            })}
         </SWrapper>
       </>
     );

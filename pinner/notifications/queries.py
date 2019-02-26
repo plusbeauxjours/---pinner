@@ -7,11 +7,16 @@ def resolve_get_notifications(self, info, **kwargs):
 
     user = info.context.user
     page = kwargs.get('page', 0)
+    offset = 15 * page
 
-    try:
-        notifications = models.Notification.objects.filter(target=user)[
-            25 * page:15]
-        return types.GetNotificationsResponse(ok=True, notifications=notifications)
+    following_profiles = user.profile.following.all()
 
-    except models.Notification.DoesNotExist:
-        raise Exception("Notification Not Found")
+    my_notifications = models.Notification.objects.filter(target=user).order_by(
+        '-created_at')[offset:15 + offset]
+    print('mine', my_notifications)
+
+    following_notifications = models.Notification.objects.filter(
+        actor__profile__in=following_profiles, verb='move')
+    combined = following_notifications.union(my_notifications).order_by(
+        '-created_at')[offset:15 + offset]
+    return types.GetNotificationsResponse(ok=True, notifications=combined)
