@@ -10,17 +10,6 @@ export const GET_NOTIFICATION = gql`
           username
           profile {
             avatar
-            lastCountry {
-              countryname
-              countrycode
-            }
-            lastCity {
-              cityname
-            }
-            currentCountry {
-              countryname
-              countrycode
-            }
             currentCity {
               cityname
             }

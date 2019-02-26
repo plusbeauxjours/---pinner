@@ -41,7 +41,7 @@ const Header = styled.header`
 `;
 
 const MHeader = styled(Header)`
-  width: 300px;
+  max-width: 300px;
   flex-direction: row;
   justify-content: space-between;
   border-radius: 3px;
@@ -91,7 +91,7 @@ const NotificationRow: React.SFC<IProps> = ({ notification, actor }) => (
                     size={"sm"}
                   />
                   <Header>
-                    <SBold text={"started to follow me"} />
+                    <SBold text={"Follow me"} />
                     <TimeStamp>{notification.createdAt}</TimeStamp>
                   </Header>
                 </FContainer>
@@ -116,7 +116,7 @@ const NotificationRow: React.SFC<IProps> = ({ notification, actor }) => (
                     size={"sm"}
                   />
                   <Header>
-                    <SBold text={"commented on card"} />
+                    <SBold text={"Commented on card"} />
                     <TimeStamp>{notification.createdAt}</TimeStamp>
                   </Header>
                   <Header>
@@ -146,7 +146,7 @@ const NotificationRow: React.SFC<IProps> = ({ notification, actor }) => (
                     size={"sm"}
                   />
                   <Header>
-                    <SBold text={"liked card"} />
+                    <SBold text={"Liked card"} />
                     <TimeStamp>{notification.createdAt}</TimeStamp>
                   </Header>
                 </CLUContainer>
@@ -171,12 +171,12 @@ const NotificationRow: React.SFC<IProps> = ({ notification, actor }) => (
                   <MHeader>
                     <FlagHeader
                       cityname={notification.fromCity.cityname}
-                      countryname={notification.fromCountry.countryname}
+                      countrycode={notification.fromCountry.countrycode}
                     />
                     <SBold text={"To"} />
                     <FlagHeader
                       cityname={notification.toCity.cityname}
-                      countryname={notification.toCountry.countryname}
+                      countrycode={notification.toCountry.countrycode}
                     />
                   </MHeader>
                 </MContainer>
@@ -188,7 +188,7 @@ const NotificationRow: React.SFC<IProps> = ({ notification, actor }) => (
             <>
               <CLUContainer>
                 <Header>
-                  <SBold text={"uploaded card"} />
+                  <SBold text={"USploaded card"} />
                   <TimeStamp>{notification.createdAt}</TimeStamp>
                 </Header>
               </CLUContainer>

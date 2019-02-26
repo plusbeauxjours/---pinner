@@ -136,7 +136,6 @@ class ProfileContainer extends React.Component<IProps, IState> {
                               userName={userName}
                               bio={bio}
                               gender={gender}
-                              avatar={avatar}
                               firstName={firstName}
                               lastName={lastName}
                             />

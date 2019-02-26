@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 // import { Link } from "react-router-dom";
-import Avatar from "./Avatar";
-import Flag from "src/Images/countryFlag/scotland.svg";
+import Flag from "./Flag";
 
 const Header = styled.header`
   width: 120px;
@@ -29,20 +28,25 @@ const Location = styled.span`
   color: ${props => props.theme.greyColor};
 `;
 
-const FAvatar = styled(Avatar)``;
-
 interface IProps {
   cityname: string;
-  countryname: string;
-  flag?: string;
+  countryname?: string;
+  countrycode?: string;
 }
 
-const FlagHeader: React.SFC<IProps> = ({ cityname, countryname, flag }) => (
+const FlagHeader: React.SFC<IProps> = ({
+  cityname,
+  countryname,
+  countrycode
+}) => (
   <>
     <Header>
       {/* <Link to={`/${countryname}`}> */}
       <HeaderColumn>
-        <FAvatar url={Flag} size="md" />
+        <Flag
+          countrycode={require(`../Images/countryFlag/${countrycode}.svg`)}
+          size="sm"
+        />
         <Location>{cityname}</Location>
       </HeaderColumn>
       {/* </Link> */}

@@ -26,7 +26,11 @@ class NotificationContainer extends React.Component<any, IState> {
   public render() {
     const { page, modalOpen } = this.state;
     return (
-      <GetNotifictionQuery query={GET_NOTIFICATION} variables={{ page }}>
+      <GetNotifictionQuery
+        query={GET_NOTIFICATION}
+        variables={{ page }}
+        fetchPolicy="network-only"
+      >
         {({ data, loading }) => (
           <NotificationPresenter
             data={data}

@@ -3,13 +3,13 @@ import { Gear } from "../../Icons";
 import styled, { keyframes } from "../../Styles/typed-components";
 
 import Wrapper from "../../Components/Wrapper";
-import Loader from "../..//Components/Loader";
-import Avatar from "../..//Components/Avatar";
-import Bold from "../..//Components/Bold";
-import CardGrid from "../..//Components/CardGrid";
-import FollowBtn from "../..//Components/FollowBtn";
+import Loader from "../../Components/Loader";
+import Avatar from "../../Components/Avatar";
+import Bold from "../../Components/Bold";
+import CardGrid from "../../Components/CardGrid";
+import FollowBtn from "../../Components/FollowBtn";
 import Input from "../../Components/Input";
-import Flag from "../../Images/countryFlag/scotland.svg";
+import Flag from "../../Components/Flag";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -136,12 +136,10 @@ const ExtendedInput = styled(Input)`
   margin-bottom: 30px;
 `;
 
-const SAvatar = styled(Avatar)`
+const SFlag = styled(Flag)`
   &:not(:first-child) {
     margin-left: 20px;
   }
-  opacity: 0.95;
-  font-size: 20px;
 `;
 
 const SBold = styled(Bold)`
@@ -169,7 +167,6 @@ interface IProps {
   userName: string;
   bio: string;
   gender: string;
-  avatar: string;
   firstName: string;
   lastName: string;
 }
@@ -190,7 +187,6 @@ const ProfilePresenter: React.SFC<IProps> = ({
   userName,
   bio,
   gender,
-  avatar,
   firstName,
   lastName
 }) => {
@@ -200,6 +196,7 @@ const ProfilePresenter: React.SFC<IProps> = ({
     const {
       userProfile: { user }
     } = data;
+    console.log(user.profile.currentCountry.countrycode);
     return (
       <>
         {modalOpen && (
@@ -263,7 +260,12 @@ const ProfilePresenter: React.SFC<IProps> = ({
                 <Metric>
                   <SBold text={String(user.profile.followingCount)} />
                 </Metric>
-                <SAvatar size="md" url={Flag} />
+                <SFlag
+                  size="md"
+                  countrycode={require(`../../Images/countryFlag/${
+                    user.profile.currentCountry.countrycode
+                  }.svg`)}
+                />
               </Metrics>
               {editMode ? (
                 <>
