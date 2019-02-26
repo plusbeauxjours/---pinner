@@ -19,15 +19,22 @@ class Notification(config_models.TimeStampedModel):
     )
 
     actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='actor')
-    # country = models.ForeignKey(locations_models.Country, on_delete=models.CASCADE, null=True)
     target = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='target')
+        User, on_delete=models.CASCADE, null=True, blank=True, related_name='target')
     verb = models.CharField(max_length=10, choices=VERBS)
     payload = models.ForeignKey(
         card_models.Card, on_delete=models.CASCADE, null=True, blank=True)
     read = models.BooleanField(default=False)
     comment = models.ForeignKey(
         card_models.Comment, on_delete=models.CASCADE, null=True, blank=True)
+    fromCity = models.ForeignKey(
+        locations_models.City, on_delete=models.CASCADE, null=True, blank=True, related_name='fromCity')
+    fromCountry = models.ForeignKey(
+        locations_models.Country, on_delete=models.CASCADE, null=True, blank=True, related_name='fromCountry')
+    toCity = models.ForeignKey(
+        locations_models.City, on_delete=models.CASCADE, null=True, blank=True, related_name='toCity')
+    toCountry = models.ForeignKey(
+        locations_models.Country, on_delete=models.CASCADE, null=True, blank=True, related_name='toCountry')
 
     @property
     def natural_time(self):
@@ -37,10 +44,9 @@ class Notification(config_models.TimeStampedModel):
         ordering = ['-created_at']
 
     def __str__(self):
-        return '{} / From: {} {} 👉🏻 To: {} Read:{}'.format(
+        return '{} / From: {} {} 👉🏻 To:  Read:{}'.format(
             self.id,
             self.actor.username,
             self.verb,
-            self.target.username,
             self.read
         )

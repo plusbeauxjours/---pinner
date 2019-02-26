@@ -2,7 +2,9 @@ import graphene
 from django.db import IntegrityError
 from django.contrib.auth.models import User
 from graphql_jwt.decorators import login_required
+
 from . import models, types
+from notifications import models as notification_models
 
 
 class ReportLocation(graphene.Mutation):
@@ -54,7 +56,14 @@ class ReportLocation(graphene.Mutation):
 
                         profile.currentCity = existing_city
                         profile.save()
-
+                        notification_models.Notification.objects.create(
+                            actor=user,
+                            verb="move",
+                            fromCity=profile.lastCity,
+                            fromCountry=profile.lastCountry,
+                            toCity=profile.currentCity,
+                            toCountry=profile.currentCountry
+                        )
                         return types.ReportLocationResponse(ok=True)
 
                     except:
@@ -63,6 +72,14 @@ class ReportLocation(graphene.Mutation):
 
                         profile.currentCity = new_city
                         profile.save()
+                        notification_models.Notification.objects.create(
+                            actor=user,
+                            verb="move",
+                            fromCity=profile.lastCity,
+                            fromCountry=profile.lastCountry,
+                            toCity=profile.currentCity,
+                            toCountry=profile.currentCountry
+                        )
 
                 except:
                     new_country = models.Country.objects.create(
@@ -73,8 +90,15 @@ class ReportLocation(graphene.Mutation):
 
                     profile.currentCity = new_city
                     profile.currentCountry = new_country
-
                     profile.save()
+                    notification_models.Notification.objects.create(
+                        actor=user,
+                        verb="move",
+                        fromCity=profile.lastCity,
+                        fromCountry=profile.lastCountry,
+                        toCity=profile.currentCity,
+                        toCountry=profile.currentCountry
+                    )
 
                 return types.ReportLocationResponse(ok=True)
 
