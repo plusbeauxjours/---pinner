@@ -2,9 +2,9 @@ import React from "react";
 import LocationPresenter from "./LocationPresenter";
 import { Query } from "react-apollo";
 import { GET_COUNTRY } from "./LocationQueries";
-import { GetCountry } from "../../types/api";
+import { GetCountries } from "../../types/api";
 
-class CountryQuery extends Query<GetCountry> {}
+class CountryQuery extends Query<GetCountries> {}
 
 interface IState {
   page: number;

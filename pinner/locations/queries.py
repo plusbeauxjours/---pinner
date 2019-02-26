@@ -4,16 +4,16 @@ from graphql_jwt.decorators import login_required
 
 
 @login_required
-def resolve_get_country(self, info, **kwargs):
+def resolve_get_countries(self, info, **kwargs):
 
-    country = models.Country.objects.all()
+    countries = models.Country.objects.all()
 
-    return types.CountryResponse(country=country)
+    return types.CountriesResponse(countries=countries)
 
 
 @login_required
-def resolve_get_city(self, info, **kwargs):
+def resolve_get_cities(self, info, **kwargs):
 
-    city = models.City.objects.all()
+    cities = models.City.objects.all()
 
-    return types.CityResponse(city=city)
+    return types.CitiesResponse(cities=cities)

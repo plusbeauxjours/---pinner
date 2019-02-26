@@ -15,14 +15,14 @@ interface IProps {
   loading: boolean;
 }
 
-const ExplorePresenter: React.SFC<IProps> = ({ data, loading }) => {
+const ExplorePresenter: React.SFC<IProps> = ({
+  data: { latestCards: { cards = null } = {} } = {},
+  data: { latestUsers: { users = null } = {} } = {},
+  loading
+}) => {
   if (loading) {
     return <Loader />;
-  } else if (data && data) {
-    const {
-      latestCards: { cards },
-      latestUsers: { users }
-    } = data;
+  } else if (!loading && cards && users) {
     return (
       <TallWrapper>
         {users && <UserGrid users={users} />}

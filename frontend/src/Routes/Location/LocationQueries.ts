@@ -1,20 +1,21 @@
 import gql from "graphql-tag";
 
 export const GET_COUNTRY = gql`
-  query GetCountry {
-    getCountry {
-      country {
+  query GetCountries {
+    getCountries {
+      countries {
         id
         countryname
+        countrycode
       }
     }
   }
 `;
 
 export const GET_CITY = gql`
-  query GetCity {
-    getCity {
-      city {
+  query GetCities {
+    getCities {
+      cities {
         id
         cityname
       }

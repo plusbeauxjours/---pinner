@@ -477,22 +477,23 @@ export interface ReportLocationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetCountry
+// GraphQL query operation: GetCountries
 // ====================================================
 
-export interface GetCountry_getCountry_country {
+export interface GetCountries_getCountries_countries {
   __typename: "CountryType";
   id: string;
   countryname: string | null;
+  countrycode: string | null;
 }
 
-export interface GetCountry_getCountry {
-  __typename: "CountryResponse";
-  country: (GetCountry_getCountry_country | null)[] | null;
+export interface GetCountries_getCountries {
+  __typename: "CountriesResponse";
+  countries: (GetCountries_getCountries_countries | null)[] | null;
 }
 
-export interface GetCountry {
-  getCountry: GetCountry_getCountry;
+export interface GetCountries {
+  getCountries: GetCountries_getCountries;
 }
 
 
@@ -500,22 +501,22 @@ export interface GetCountry {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetCity
+// GraphQL query operation: GetCities
 // ====================================================
 
-export interface GetCity_getCity_city {
+export interface GetCities_getCities_cities {
   __typename: "CityType";
   id: string;
   cityname: string | null;
 }
 
-export interface GetCity_getCity {
-  __typename: "CityResponse";
-  city: (GetCity_getCity_city | null)[] | null;
+export interface GetCities_getCities {
+  __typename: "CitiesResponse";
+  cities: (GetCities_getCities_cities | null)[] | null;
 }
 
-export interface GetCity {
-  getCity: GetCity_getCity;
+export interface GetCities {
+  getCities: GetCities_getCities;
 }
 
 
@@ -526,23 +527,6 @@ export interface GetCity {
 // GraphQL query operation: GetNotifictions
 // ====================================================
 
-export interface GetNotifictions_getNotifications_notifications_actor_profile_lastCountry {
-  __typename: "CountryType";
-  countryname: string | null;
-  countrycode: string | null;
-}
-
-export interface GetNotifictions_getNotifications_notifications_actor_profile_lastCity {
-  __typename: "CityType";
-  cityname: string | null;
-}
-
-export interface GetNotifictions_getNotifications_notifications_actor_profile_currentCountry {
-  __typename: "CountryType";
-  countryname: string | null;
-  countrycode: string | null;
-}
-
 export interface GetNotifictions_getNotifications_notifications_actor_profile_currentCity {
   __typename: "CityType";
   cityname: string | null;
@@ -551,9 +535,6 @@ export interface GetNotifictions_getNotifications_notifications_actor_profile_cu
 export interface GetNotifictions_getNotifications_notifications_actor_profile {
   __typename: "ProfileType";
   avatar: string;
-  lastCountry: GetNotifictions_getNotifications_notifications_actor_profile_lastCountry | null;
-  lastCity: GetNotifictions_getNotifications_notifications_actor_profile_lastCity | null;
-  currentCountry: GetNotifictions_getNotifications_notifications_actor_profile_currentCountry | null;
   currentCity: GetNotifictions_getNotifications_notifications_actor_profile_currentCity | null;
 }
 

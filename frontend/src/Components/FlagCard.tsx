@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
-import Avatar from "./Avatar";
 import Bold from "./Bold";
 import { Link } from "react-router-dom";
+import Flag from "../Components/Flag";
 
 const Container = styled.div`
   background-color: white;
@@ -14,7 +14,7 @@ const Container = styled.div`
   padding: 30px 15px;
 `;
 
-const SAvatar = styled(Avatar)`
+const SFlag = styled(Flag)`
   margin-bottom: 15px;
 `;
 
@@ -26,14 +26,16 @@ const SBold = styled(Bold)`
 interface IProps {
   countryname: string;
   countrycode: string;
-  flag: string;
 }
 
-const FlagCard: React.SFC<IProps> = ({ countryname, flag }) => {
+const FlagCard: React.SFC<IProps> = ({ countryname, countrycode }) => {
   return (
     <Container>
       <Link to={`/location/${countryname}`}>
-        <SAvatar url={flag} size="md" />
+        <SFlag
+          countrycode={require(`../Images/countryFlag/${countrycode}.svg`)}
+          size="md"
+        />
       </Link>
       <SBold text={countryname} />
     </Container>

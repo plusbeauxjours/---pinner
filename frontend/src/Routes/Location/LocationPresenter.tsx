@@ -1,41 +1,31 @@
 import React from "react";
 import Loader from "src/Components/Loader";
 import styled from "src/Styles/typed-components";
-import { Link } from "react-router-dom";
 import Wrapper from "src/Components/Wrapper";
-import { GetCountry } from "../../types/api";
+import { GetCountries } from "../../types/api";
+import FlagGrid from "../../Components/FlagGrid";
 
-const SWrapper = styled(Wrapper)`
-  max-width: 650px;
+const TallWrapper = styled(Wrapper)`
+  height: 50vh;
+  text-align: center;
 `;
 
-const Container = styled.div``;
-
 interface IProps {
-  data: GetCountry;
+  data?: GetCountries;
   loading: boolean;
-  className?: string;
 }
 
 const LocationPresenter: React.SFC<IProps> = ({
-  data: { getCountry: { country = null } = {} } = {},
-  loading,
-  className
+  data: { getCountries: { countries = null } = {} } = {},
+  loading
 }) => {
   if (loading) {
     return <Loader />;
-  } else if (!loading && country) {
-    console.log(country);
+  } else if (!loading && countries) {
     return (
-      <SWrapper>
-        <Container className={className}>
-          {country.map(index => (
-            <Link key={index.id} to={`/location/${index.countryname}`}>
-              <p>{index.countryname}</p>
-            </Link>
-          ))}
-        </Container>
-      </SWrapper>
+      <TallWrapper>
+        {countries && <FlagGrid countries={countries} />}
+      </TallWrapper>
     );
   } else {
     return null;
