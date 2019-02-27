@@ -1,13 +1,19 @@
 import React from "react";
+import { Route } from "react-router";
 import { Link } from "react-router-dom";
+
 import { keyframes } from "styled-components";
 import styled from "../../Styles/typed-components";
+
+import { Phone } from "../../Icons";
 import PhoneImage from "../../Images/phone.png";
+
 import Wrapper from "../../Components/Wrapper";
 import LogIn from "../../Components/LogIn";
 import SignUp from "../../Components/SignUp";
-import { Phone } from "../../Icons";
 import SocialLogin from "../../Components/SocialLogin";
+
+import PhoneLogin from "../../Routes/CardDetail";
 
 const Container = styled(Wrapper)`
   display: flex;
@@ -102,18 +108,25 @@ const Icon = styled.span`
 interface IProps {
   isLogIn: boolean;
   modalOpen: boolean;
+  verificationModalOpen: boolean;
   changeMode: () => void;
   toggleModal: () => void;
+  toggleVerificationModal: () => void;
 }
 
 const HomePresenter: React.SFC<IProps> = ({
   isLogIn,
   modalOpen,
+  verificationModalOpen,
   toggleModal,
+  toggleVerificationModal,
   changeMode
 }) => {
   return (
     <>
+      {verificationModalOpen && (
+        <Route path="/phone-login" component={PhoneLogin} />
+      )}
       {modalOpen && (
         <ModalContainer>
           <ModalOverlay onClick={toggleModal} />

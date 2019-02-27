@@ -67,6 +67,7 @@ class PhoneLoginContainer extends React.Component<
               onInputChange={this.onInputChange}
               onSubmit={this.onSubmit}
               loading={loading}
+              back={this.back}
             />
           );
         }}
@@ -99,6 +100,10 @@ class PhoneLoginContainer extends React.Component<
     } else {
       toast.error("Please write a valid phone number");
     }
+  };
+  public back = event => {
+    event.stopPropagation();
+    this.props.history.goBack();
   };
 }
 
