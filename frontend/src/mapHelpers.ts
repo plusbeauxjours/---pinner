@@ -15,7 +15,7 @@ export const reverseGeoCode = async (lat: number, lng: number) => {
     const country = firstPlace.address_components[1].long_name;
     const countryCode = firstPlace.address_components[1].short_name;
 
-    console.log(city, country, countryCode);
+    console.log(results.reverse());
     return { city, country, countryCode };
   } else {
     toast.error(data.error_message);

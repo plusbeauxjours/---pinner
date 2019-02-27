@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
 
-const Flag = styled.img<IProps>`
+const Container = styled.div``;
+
+const SFlag = styled.img<IProps>`
   height: ${props => {
     if (props.size === "md") {
       return "50px";
@@ -54,12 +56,6 @@ const Overlay = styled.div<IProps>`
       return "15px";
     }
   }};
-  color: white;
-  z-index: 1;
-  background: rgba(0, 0.1, 0, 0.2);
-  background-position: center center;
-  cursor: pointer;
-  transition: opacity 0.2s ease-in-out;
   border-bottom-left-radius: ${props => {
     if (props.size === "md") {
       return "100px";
@@ -82,7 +78,11 @@ const Overlay = styled.div<IProps>`
       return "60px";
     }
   }};
-  margin-bottom: 15px;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.2);
+  background-position: center center;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
   &:hover {
     opacity: 0.5;
   }
@@ -95,10 +95,12 @@ interface IProps {
   className?: string;
 }
 
-const Avatar: React.SFC<IProps> = ({ className, countrycode, size }) => (
-  <Overlay size={size}>
-    <Flag className={className} src={countrycode} size={size} />
-  </Overlay>
+const Flag: React.SFC<IProps> = ({ className, countrycode, size }) => (
+  <Container>
+    <Overlay size={size}>
+      <SFlag className={className} src={countrycode} size={size} />
+    </Overlay>
+  </Container>
 );
 
-export default Avatar;
+export default Flag;

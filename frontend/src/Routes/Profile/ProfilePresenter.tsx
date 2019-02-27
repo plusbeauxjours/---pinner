@@ -136,12 +136,6 @@ const ExtendedInput = styled(Input)`
   margin-bottom: 30px;
 `;
 
-const SFlag = styled(Flag)`
-  &:not(:first-child) {
-    margin-left: 20px;
-  }
-`;
-
 const SBold = styled(Bold)`
   font-size: 20px;
   font-weight: 200;
@@ -260,12 +254,14 @@ const ProfilePresenter: React.SFC<IProps> = ({
                 <Metric>
                   <SBold text={String(user.profile.followingCount)} />
                 </Metric>
-                <SFlag
-                  size="md"
-                  countrycode={require(`../../Images/countryFlag/${
-                    user.profile.currentCountry.countrycode
-                  }.svg`)}
-                />
+                <Metric>
+                  <Flag
+                    size="md"
+                    countrycode={require(`../../Images/countryFlag/${
+                      user.profile.currentCountry.countrycode
+                    }.svg`)}
+                  />
+                </Metric>
               </Metrics>
               {editMode ? (
                 <>

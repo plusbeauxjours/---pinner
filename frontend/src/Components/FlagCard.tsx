@@ -11,16 +11,17 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px 15px;
+  padding-top: 30px;
 `;
 
 const SFlag = styled(Flag)`
   margin-bottom: 15px;
+  display: flex;
+  align-items: center;
 `;
 
 const SBold = styled(Bold)`
   margin-bottom: 10px;
-  display: block;
 `;
 
 interface IProps {
