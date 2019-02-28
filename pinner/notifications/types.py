@@ -11,8 +11,20 @@ class NotificationType(DjangoObjectType):
         model = models.Notification
 
 
+class MoveNotificationType(DjangoObjectType):
+    created_at = graphene.String(source="natural_time")
+
+    class Meta:
+        model = models.MoveNotification
+
+
 class GetNotificationsResponse(graphene.ObjectType):
     notifications = graphene.List(NotificationType)
+    ok = graphene.Boolean()
+
+
+class GetMoveNotificationsResponse(graphene.ObjectType):
+    move_notifications = graphene.List(NotificationType)
     ok = graphene.Boolean()
 
 
