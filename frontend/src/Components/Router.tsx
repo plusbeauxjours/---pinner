@@ -13,6 +13,7 @@ import CardDetail from "../Routes/CardDetail";
 import Search from "../Routes/Search";
 import Location from "../Routes/Location";
 import Notification from "../Routes/Notification";
+import Footprint from "../Routes/Footprint";
 
 import VerifyPhone from "../Routes/VerifyPhone";
 import PhoneLogin from "../Routes/PhoneLogin";
@@ -39,8 +40,8 @@ const LoggedInPages = () => (
       <Route path="/location" exact={true} component={Location} />
       <Route path="/notification" component={Notification} />
       <Route path="/location/:countryname" component={FeedByLocation} />
+      <Route path="/:username/footprint" exact={true} component={Footprint} />
       <Route path="/:username" component={Profile} />
-      <Route path="/:username/footprint" component={Profile} />
       <Redirect from="*" to="/" />
     </Switch>
   </Wrapper>

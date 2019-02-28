@@ -452,6 +452,42 @@ export interface FeedByLocaionVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetFootprints
+// ====================================================
+
+export interface GetFootprints_getFootprints_footprints_country {
+  __typename: "CountryType";
+  countryname: string | null;
+  countrycode: string | null;
+}
+
+export interface GetFootprints_getFootprints_footprints_city {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
+export interface GetFootprints_getFootprints_footprints {
+  __typename: "LocationLogType";
+  id: string;
+  country: GetFootprints_getFootprints_footprints_country | null;
+  city: GetFootprints_getFootprints_footprints_city | null;
+  createdAt: any;
+}
+
+export interface GetFootprints_getFootprints {
+  __typename: "FootprintsResponse";
+  footprints: (GetFootprints_getFootprints_footprints | null)[] | null;
+}
+
+export interface GetFootprints {
+  getFootprints: GetFootprints_getFootprints;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ReportLocation
 // ====================================================
 

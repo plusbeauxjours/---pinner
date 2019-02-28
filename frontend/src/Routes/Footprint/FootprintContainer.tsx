@@ -1,21 +1,18 @@
 import React from "react";
 import { Query } from "react-apollo";
-import { GetNotifictions, GetNotifictionsVariables } from "../../types/api";
+import { GetFootprints } from "../../types/api";
 
-import NotificationPresenter from "./FootprintPresenter";
-import { GET_NOTIFICATION } from "./FootprintQueries";
+import FootprintPresenter from "./FootprintPresenter";
+import { GET_FOOTPRINT } from "./FootprintQueries";
 
-class GetNotifictionQuery extends Query<
-  GetNotifictions,
-  GetNotifictionsVariables
-> {}
+class GetFootprintQuery extends Query<GetFootprints> {}
 
 interface IState {
   page: number;
   modalOpen: boolean;
 }
 
-class NotificationContainer extends React.Component<any, IState> {
+class FootprintContainer extends React.Component<any, IState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,20 +23,17 @@ class NotificationContainer extends React.Component<any, IState> {
   public render() {
     const { page, modalOpen } = this.state;
     return (
-      <GetNotifictionQuery
-        query={GET_NOTIFICATION}
-        variables={{ page }}
-        fetchPolicy="network-only"
-      >
+      <GetFootprintQuery query={GET_FOOTPRINT} variables={{ page }}>
         {({ data, loading }) => (
-          <NotificationPresenter
+          <FootprintPresenter
             data={data}
             loading={loading}
             modalOpen={modalOpen}
             toggleModal={this.toggleModal}
+            back={this.back}
           />
         )}
-      </GetNotifictionQuery>
+      </GetFootprintQuery>
     );
   }
   public toggleModal = () => {
@@ -48,6 +42,10 @@ class NotificationContainer extends React.Component<any, IState> {
       modalOpen: !modalOpen
     } as any);
   };
+  public back = event => {
+    event.stopPropagation();
+    this.props.history.goBack();
+  };
 }
 
-export default NotificationContainer;
+export default FootprintContainer;

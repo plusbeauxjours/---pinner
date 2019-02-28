@@ -10,6 +10,7 @@ import CardGrid from "../../Components/CardGrid";
 import FollowBtn from "../../Components/FollowBtn";
 import Input from "../../Components/Input";
 import Flag from "../../Components/Flag";
+import { Link } from "react-router-dom";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -240,9 +241,11 @@ const ProfilePresenter: React.SFC<IProps> = ({
                     userId={user.id}
                   />
                 )}
-                <GearContainer onClick={toggleModal}>
-                  <Gear />
-                </GearContainer>
+                <Link to={`/${user.username}/footprint`}>
+                  <GearContainer>
+                    <Gear />
+                  </GearContainer>
+                </Link>
               </UsernameRow>
               <Metrics>
                 <Metric>
@@ -287,7 +290,7 @@ const ProfilePresenter: React.SFC<IProps> = ({
                 </>
               ) : (
                 <Fullname>{`${user.firstName} ${user.lastName}`}</Fullname>
-              )}{" "}
+              )}
               {user.profile.bio &&
                 (editMode ? (
                   <ExtendedInput

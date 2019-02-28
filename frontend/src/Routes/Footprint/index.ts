@@ -1,2 +1,2 @@
-import NotificationContainer from "./NotificationContainer";
-export default NotificationContainer;
+import FootprintContainer from "./FootprintContainer";
+export default FootprintContainer;
