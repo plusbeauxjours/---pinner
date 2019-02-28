@@ -16,12 +16,22 @@ class CityType(DjangoObjectType):
         model = models.City
 
 
+class LocationLogType(DjangoObjectType):
+
+    class Meta:
+        model = models.LocationLog
+
+
 class CountriesResponse(graphene.ObjectType):
     countries = graphene.List(CountryType)
 
 
 class CitiesResponse(graphene.ObjectType):
     cities = graphene.List(CityType)
+
+
+class FootprintsResponse(graphene.ObjectType):
+    footprints = graphene.List(LocationLogType)
 
 
 class ReportLocationResponse(graphene.ObjectType):

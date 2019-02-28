@@ -40,6 +40,7 @@ const LoggedInPages = () => (
       <Route path="/notification" component={Notification} />
       <Route path="/location/:countryname" component={FeedByLocation} />
       <Route path="/:username" component={Profile} />
+      <Route path="/:username/footprint" component={Profile} />
       <Redirect from="*" to="/" />
     </Switch>
   </Wrapper>

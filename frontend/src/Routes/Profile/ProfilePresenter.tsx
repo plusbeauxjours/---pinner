@@ -240,6 +240,9 @@ const ProfilePresenter: React.SFC<IProps> = ({
                     userId={user.id}
                   />
                 )}
+                <GearContainer onClick={toggleModal}>
+                  <Gear />
+                </GearContainer>
               </UsernameRow>
               <Metrics>
                 <Metric>

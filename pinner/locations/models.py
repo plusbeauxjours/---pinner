@@ -49,11 +49,11 @@ class Like(config_models.TimeStampedModel):
 class LocationLog(config_models.TimeStampedModel):
 
     creator = models.ForeignKey(
-        User,  on_delete=models.CASCADE, null=True, related_name='logs_creator')
+        User,  on_delete=models.CASCADE, null=True, related_name='locationlogs')
     city = models.ForeignKey(
-        City, on_delete=models.CASCADE, null=True, related_name='logs_city')
+        City, on_delete=models.CASCADE, null=True, related_name='locationlogs')
     country = models.ForeignKey(
-        Country, on_delete=models.CASCADE, null=True, related_name='logs_country')
+        Country, on_delete=models.CASCADE, null=True, related_name='locationlogs')
 
     def natural_time(self):
         return naturaltime(self.created_at)

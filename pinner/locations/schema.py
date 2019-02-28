@@ -15,6 +15,12 @@ class Query(object):
         required=True
     )
 
+    getFootprints = graphene.Field(
+        types.FootprintsResponse,
+        resolver=queries.resolve_get_footprints,
+        required=True
+    )
+
 
 class Mutation(object):
     report_location = mutations.ReportLocation.Field(required=True)
