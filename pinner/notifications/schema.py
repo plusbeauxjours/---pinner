@@ -10,7 +10,7 @@ class Query(object):
         required=True,
         args={'page': graphene.Int()}
     )
-    get_move_notification = graphene.Field(
+    get_move_notifications = graphene.Field(
         types.GetMoveNotificationsResponse,
         resolver=queries.resolve_get_move_notifications,
         required=True,

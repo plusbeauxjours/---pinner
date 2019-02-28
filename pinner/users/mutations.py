@@ -183,8 +183,6 @@ class CreateAccount(graphene.Mutation):
 
     def mutate(self, info, **kwargs):
 
-        print('hi')
-
         first_name = kwargs.get('first_name')
         last_name = kwargs.get('last_name')
         username = kwargs.get('username')

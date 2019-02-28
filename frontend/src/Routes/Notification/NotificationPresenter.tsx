@@ -3,7 +3,7 @@ import CardDetail from "../../Routes/CardDetail";
 import NotificationRow from "../../Components/NotificationRow";
 import styled from "src/Styles/typed-components";
 import Wrapper from "src/Components/Wrapper";
-import { GetNotifictions } from "../../types/api";
+import { GetNotifictions, GetMoveNotifications } from "../../types/api";
 import Loader from "src/Components/Loader";
 import { Route } from "react-router";
 
@@ -12,7 +12,8 @@ const SWrapper = styled(Wrapper)`
 `;
 
 interface IProps {
-  data?: GetNotifictions;
+  getNotifications?: GetNotifictions;
+  getMoveNotifications?: GetMoveNotifications;
   loading: boolean;
   className?: string;
   modalOpen: boolean;
@@ -20,7 +21,12 @@ interface IProps {
 }
 
 const NotificationPresenter: React.SFC<IProps> = ({
-  data: { getNotifications: { notifications = null } = {} } = {},
+  getNotifications: {
+    getNotifications: { notifications: getNotifications = null } = {}
+  } = {},
+  getMoveNotifications: {
+    getMoveNotifications: { notifications: getMoveNotifications = null } = {}
+  } = {},
   loading,
   className,
   modalOpen,
@@ -28,14 +34,29 @@ const NotificationPresenter: React.SFC<IProps> = ({
 }) => {
   if (loading) {
     return <Loader />;
-  } else if (!loading && notifications) {
-    console.log(notifications);
+  } else if (!loading && getNotifications && getMoveNotifications) {
+    console.log(getNotifications, getMoveNotifications);
     return (
       <>
         {modalOpen && <Route path="/p/:id" component={CardDetail} />}
         <SWrapper>
-          {notifications &&
-            notifications.map(notification => {
+          {getNotifications &&
+            getNotifications.map(notification => {
+              return (
+                <NotificationRow
+                  className={className}
+                  id={notification.id}
+                  key={notification.id}
+                  notification={notification}
+                  actor={notification.actor.profile}
+                  toggleModal={toggleModal}
+                />
+              );
+            })}
+        </SWrapper>
+        <SWrapper>
+          {getMoveNotifications &&
+            getMoveNotifications.map(notification => {
               return (
                 <NotificationRow
                   className={className}

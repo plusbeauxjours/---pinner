@@ -24,7 +24,8 @@ def resolve_get_move_notifications(self, info, **kwargs):
 
     following_profiles = user.profile.following.all()
 
-    move_notifications = models.Notification.objects.filter(
-        actor__profile__in=following_profiles, verb='move')
+    notifications = models.MoveNotification.objects.filter(
+        actor__profile__in=following_profiles, verb='move').order_by(
+        '-created_at')[offset:15 + offset]
 
-    return types.GetNotificationsResponse(ok=True, move_notifications=move_notifications)
+    return types.GetMoveNotificationsResponse(ok=True, notifications=notifications)

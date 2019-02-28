@@ -583,37 +583,6 @@ export interface GetNotifictions_getNotifications_notifications_actor {
   profile: GetNotifictions_getNotifications_notifications_actor_profile | null;
 }
 
-export interface GetNotifictions_getNotifications_notifications_target_profile_currentCountry {
-  __typename: "CountryType";
-  countryname: string | null;
-}
-
-export interface GetNotifictions_getNotifications_notifications_target_profile_currentCity {
-  __typename: "CityType";
-  cityname: string | null;
-}
-
-export interface GetNotifictions_getNotifications_notifications_target_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  currentCountry: GetNotifictions_getNotifications_notifications_target_profile_currentCountry | null;
-  currentCity: GetNotifictions_getNotifications_notifications_target_profile_currentCity | null;
-}
-
-export interface GetNotifictions_getNotifications_notifications_target {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: GetNotifictions_getNotifications_notifications_target_profile | null;
-}
-
-export interface GetNotifictions_getNotifications_notifications_payload_country {
-  __typename: "CountryType";
-  countryname: string | null;
-}
-
 export interface GetNotifictions_getNotifications_notifications_payload_city {
   __typename: "CityType";
   cityname: string | null;
@@ -622,7 +591,6 @@ export interface GetNotifictions_getNotifications_notifications_payload_city {
 export interface GetNotifictions_getNotifications_notifications_payload {
   __typename: "CardType";
   id: string;
-  country: GetNotifictions_getNotifications_notifications_payload_country | null;
   city: GetNotifictions_getNotifications_notifications_payload_city | null;
   caption: string;
 }
@@ -632,41 +600,14 @@ export interface GetNotifictions_getNotifications_notifications_comment {
   message: string;
 }
 
-export interface GetNotifictions_getNotifications_notifications_fromCity {
-  __typename: "CityType";
-  cityname: string | null;
-}
-
-export interface GetNotifictions_getNotifications_notifications_fromCountry {
-  __typename: "CountryType";
-  countryname: string | null;
-  countrycode: string | null;
-}
-
-export interface GetNotifictions_getNotifications_notifications_toCity {
-  __typename: "CityType";
-  cityname: string | null;
-}
-
-export interface GetNotifictions_getNotifications_notifications_toCountry {
-  __typename: "CountryType";
-  countryname: string | null;
-  countrycode: string | null;
-}
-
 export interface GetNotifictions_getNotifications_notifications {
   __typename: "NotificationType";
   id: string;
   actor: GetNotifictions_getNotifications_notifications_actor;
-  target: GetNotifictions_getNotifications_notifications_target | null;
   verb: NotificationVerb;
   payload: GetNotifictions_getNotifications_notifications_payload | null;
   read: boolean;
   comment: GetNotifictions_getNotifications_notifications_comment | null;
-  fromCity: GetNotifictions_getNotifications_notifications_fromCity | null;
-  fromCountry: GetNotifictions_getNotifications_notifications_fromCountry | null;
-  toCity: GetNotifictions_getNotifications_notifications_toCity | null;
-  toCountry: GetNotifictions_getNotifications_notifications_toCountry | null;
   createdAt: string | null;
 }
 
@@ -681,6 +622,81 @@ export interface GetNotifictions {
 }
 
 export interface GetNotifictionsVariables {
+  page: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetMoveNotifications
+// ====================================================
+
+export interface GetMoveNotifications_getMoveNotifications_notifications_actor_profile_currentCity {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
+export interface GetMoveNotifications_getMoveNotifications_notifications_actor_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  currentCity: GetMoveNotifications_getMoveNotifications_notifications_actor_profile_currentCity | null;
+}
+
+export interface GetMoveNotifications_getMoveNotifications_notifications_actor {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: GetMoveNotifications_getMoveNotifications_notifications_actor_profile | null;
+}
+
+export interface GetMoveNotifications_getMoveNotifications_notifications_fromCity {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
+export interface GetMoveNotifications_getMoveNotifications_notifications_fromCountry {
+  __typename: "CountryType";
+  countryname: string | null;
+  countrycode: string | null;
+}
+
+export interface GetMoveNotifications_getMoveNotifications_notifications_toCity {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
+export interface GetMoveNotifications_getMoveNotifications_notifications_toCountry {
+  __typename: "CountryType";
+  countryname: string | null;
+  countrycode: string | null;
+}
+
+export interface GetMoveNotifications_getMoveNotifications_notifications {
+  __typename: "MoveNotificationType";
+  id: string;
+  actor: GetMoveNotifications_getMoveNotifications_notifications_actor;
+  fromCity: GetMoveNotifications_getMoveNotifications_notifications_fromCity | null;
+  fromCountry: GetMoveNotifications_getMoveNotifications_notifications_fromCountry | null;
+  toCity: GetMoveNotifications_getMoveNotifications_notifications_toCity | null;
+  toCountry: GetMoveNotifications_getMoveNotifications_notifications_toCountry | null;
+  createdAt: string | null;
+}
+
+export interface GetMoveNotifications_getMoveNotifications {
+  __typename: "GetMoveNotificationsResponse";
+  ok: boolean | null;
+  notifications: (GetMoveNotifications_getMoveNotifications_notifications | null)[] | null;
+}
+
+export interface GetMoveNotifications {
+  getMoveNotifications: GetMoveNotifications_getMoveNotifications;
+}
+
+export interface GetMoveNotificationsVariables {
   page: number;
 }
 

@@ -24,7 +24,7 @@ class GetNotificationsResponse(graphene.ObjectType):
 
 
 class GetMoveNotificationsResponse(graphene.ObjectType):
-    move_notifications = graphene.List(NotificationType)
+    notifications = graphene.List(MoveNotificationType)
     ok = graphene.Boolean()
 
 

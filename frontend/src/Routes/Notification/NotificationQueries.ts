@@ -15,24 +15,9 @@ export const GET_NOTIFICATION = gql`
             }
           }
         }
-        target {
-          username
-          profile {
-            avatar
-            currentCountry {
-              countryname
-            }
-            currentCity {
-              cityname
-            }
-          }
-        }
         verb
         payload {
           id
-          country {
-            countryname
-          }
           city {
             cityname
           }
@@ -42,6 +27,28 @@ export const GET_NOTIFICATION = gql`
         comment {
           message
         }
+        createdAt
+      }
+    }
+  }
+`;
+
+export const GET_MOVE_NOTIFICATION = gql`
+  query GetMoveNotifications($page: Int!) {
+    getMoveNotifications(page: $page) {
+      ok
+      notifications {
+        id
+        actor {
+          username
+          profile {
+            avatar
+            currentCity {
+              cityname
+            }
+          }
+        }
+        verb
         fromCity {
           cityname
         }
