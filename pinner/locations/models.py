@@ -49,8 +49,22 @@ class Like(config_models.TimeStampedModel):
 class LocationLog(config_models.TimeStampedModel):
 
     creator = models.ForeignKey(
-        User,  on_delete=models.CASCADE, null=True, related_name='logs')
-    # city = models.ManyToManyField(
-    #     City, null=True, related_name='logs')
-    # country = models.ManyToManyField(
-    #     Country, related_name='logs')
+        User,  on_delete=models.CASCADE, null=True, related_name='logs_creator')
+    city = models.ForeignKey(
+        City, on_delete=models.CASCADE, null=True, related_name='logs_city')
+    country = models.ForeignKey(
+        Country, on_delete=models.CASCADE, null=True, related_name='logs_country')
+
+    def natural_time(self):
+        return naturaltime(self.created_at)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return '{} / From: {} {} 👉🏻 To:  Read:{}'.format(
+            self.id,
+            self.city.cityname,
+            self.country.countryname,
+            self.created_at
+        )
