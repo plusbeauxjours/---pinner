@@ -74,6 +74,7 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
                 onSubmit={mutation}
                 verificationKey={verificationKey}
                 loading={loading}
+                back={this.back}
               />
             )}
           </VerifyMuataion>
@@ -88,6 +89,10 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
     this.setState({
       [name]: value
     } as any);
+  };
+  public back = event => {
+    event.stopPropagation();
+    this.props.history.goBack();
   };
 }
 

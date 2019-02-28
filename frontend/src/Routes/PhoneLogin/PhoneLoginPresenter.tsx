@@ -5,6 +5,7 @@ import Input from "../../Components/Input";
 import styled from "src/Styles/typed-components";
 import { keyframes } from "styled-components";
 import Wrapper from "src/Components/Wrapper";
+import Loader from "src/Components/Loader";
 
 const Container = styled.div`
   margin-top: 10px;
@@ -60,7 +61,8 @@ const ModalAnimation = keyframes`
 const Modal = styled.div`
   background-color: white;
   border-radius: 12px;
-  max-width: 935px;
+  width: 540px;
+  height: 240px;
   z-index: 5;
   animation: ${ModalAnimation} 0.1s linear;
 `;
@@ -73,7 +75,7 @@ interface IProps {
   ) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   loading: boolean;
-  back: any;
+  back: (event) => void;
 }
 
 const PhoneLoginPresenter: React.SFC<IProps> = ({
@@ -83,38 +85,45 @@ const PhoneLoginPresenter: React.SFC<IProps> = ({
   onSubmit,
   loading,
   back
-}) => (
-  <ModalContainer>
-    <ModalOverlay onClick={back} />
-    <Modal>
-      <Wrapper>
-        <Container>
-          <Helmet>
-            <title>Phone Login . Pinner </title>
-          </Helmet>
-          <CountrySelect
-            value={countryCode}
-            name={"countryCode"}
-            onChange={onInputChange}
-          >
-            {countries.map((country, index) => (
-              <CountryOption key={index} value={country.dial_code}>
-                {country.flag} {country.name} ({country.dial_code})
-              </CountryOption>
-            ))}
-          </CountrySelect>
-          <Form onSubmit={onSubmit}>
-            <Input
-              placeholder={"080 383 2506"}
-              value={phoneNumber}
-              name={"phoneNumber"}
-              onChange={onInputChange}
-            />
-          </Form>
-        </Container>
-      </Wrapper>
-    </Modal>
-  </ModalContainer>
-);
+}) => {
+  if (loading) {
+    return <Loader />;
+  } else if (!loading) {
+    return (
+      <ModalContainer>
+        <ModalOverlay onClick={back} />
+        <Modal>
+          <Wrapper>
+            <Container>
+              <Helmet>
+                <title>Phone Login . Pinner </title>
+              </Helmet>
+              <CountrySelect
+                value={countryCode}
+                name={"countryCode"}
+                onChange={onInputChange}
+              >
+                {countries.map((country, index) => (
+                  <CountryOption key={index} value={country.dial_code}>
+                    {country.flag} {country.name} ({country.dial_code})
+                  </CountryOption>
+                ))}
+              </CountrySelect>
+              <Form onSubmit={onSubmit}>
+                <Input
+                  placeholder={"080 383 2506"}
+                  value={phoneNumber}
+                  name={"phoneNumber"}
+                  onChange={onInputChange}
+                />
+              </Form>
+            </Container>
+          </Wrapper>
+        </Modal>
+      </ModalContainer>
+    );
+  }
+  return null;
+};
 
 export default PhoneLoginPresenter;
