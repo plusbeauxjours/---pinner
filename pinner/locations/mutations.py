@@ -64,6 +64,11 @@ class ReportLocation(graphene.Mutation):
                             toCity=profile.currentCity,
                             toCountry=profile.currentCountry
                         )
+                        models.LocationLog.objects.create(
+                            creator=user,
+                            city=profile.currentCity,
+                            country=profile.currentCountry
+                        )
                         return types.ReportLocationResponse(ok=True)
 
                     except:
@@ -79,6 +84,11 @@ class ReportLocation(graphene.Mutation):
                             fromCountry=profile.lastCountry,
                             toCity=profile.currentCity,
                             toCountry=profile.currentCountry
+                        )
+                        models.LocationLog.objects.create(
+                            creator=user,
+                            city=profile.currentCity,
+                            country=profile.currentCountry
                         )
 
                 except:
@@ -98,6 +108,11 @@ class ReportLocation(graphene.Mutation):
                         fromCountry=profile.lastCountry,
                         toCity=profile.currentCity,
                         toCountry=profile.currentCountry
+                    )
+                    models.LocationLog.objects.create(
+                        creator=user,
+                        city=profile.currentCity,
+                        country=profile.currentCountry
                     )
 
                 return types.ReportLocationResponse(ok=True)
