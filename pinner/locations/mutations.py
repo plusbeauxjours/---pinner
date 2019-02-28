@@ -29,17 +29,14 @@ class ReportLocation(graphene.Mutation):
 
         try:
             profile = user.profile
-            print(currentCountryCode)
 
             if (currentCity != profile.currentCity.cityname):
-                print(currentCity, profile.currentCity)
 
                 try:
                     profile.lastLat = profile.currentLat
                     profile.lastLng = profile.currentLng
                     profile.lastCity = profile.currentCity
                     profile.lastCountry = profile.currentCountry
-                    print('last location moved done')
                 except:
                     pass
 

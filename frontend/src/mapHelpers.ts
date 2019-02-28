@@ -11,12 +11,28 @@ export const reverseGeoCode = async (lat: number, lng: number) => {
     if (!firstPlace.address_components) {
       return false;
     }
-    const city = firstPlace.address_components[0].long_name;
-    const country = firstPlace.address_components[1].long_name;
-    const countryCode = firstPlace.address_components[1].short_name;
 
-    console.log(results.reverse());
-    return { city, country, countryCode };
+    let storableLocation = {
+      city: "",
+      country: "",
+      countryCode: ""
+    };
+    console.log(results);
+    for (const components of results) {
+      for (const component of components.address_components) {
+        if (
+          component.types[0] === "locality" ||
+          component.types[0] === "sublocality"
+        ) {
+          storableLocation.city = component.long_name;
+        } else if (component.types.includes("country")) {
+          storableLocation.country = component.long_name;
+          storableLocation.countryCode = component.short_name;
+        }
+      }
+    }
+    console.log(storableLocation);
+    return { storableLocation };
   } else {
     toast.error(data.error_message);
     return false;

@@ -62,8 +62,9 @@ class LocationLog(config_models.TimeStampedModel):
         ordering = ['-created_at']
 
     def __str__(self):
-        return '{} / City: {} / Country: {} / CreatedAt:{}'.format(
+        return '{} / Creator: {} / {},{} / CreatedAt: {}'.format(
             self.id,
+            self.creator.username,
             self.city.cityname,
             self.country.countryname,
             self.created_at
