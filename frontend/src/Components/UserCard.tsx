@@ -4,6 +4,7 @@ import FollowBtn from "./FollowBtn";
 import Avatar from "./Avatar";
 import Bold from "./Bold";
 import { Link } from "react-router-dom";
+import Me from "./Me";
 
 const Container = styled.div`
   background-color: white;
@@ -42,7 +43,15 @@ const UserCard: React.SFC<IProps> = ({ id, avatar, username, isFollowing }) => {
       <Link to={`/${username}`}>
         <SBold text={username} />
       </Link>
-      <FollowBtn isFollowing={isFollowing} userId={id} />
+      <Me>
+        {user => (
+          <FollowBtn
+            isFollowing={isFollowing}
+            userId={id}
+            username={user.username}
+          />
+        )}
+      </Me>
     </Container>
   );
 };

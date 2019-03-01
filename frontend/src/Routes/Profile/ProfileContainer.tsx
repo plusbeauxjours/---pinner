@@ -74,15 +74,11 @@ class ProfileContainer extends React.Component<IProps, IState> {
         {logUserOutFn => {
           this.logUserOutFn = logUserOutFn;
           return (
-            <ProfileQuery
-              query={GET_USER}
-              variables={{ username }}
-              fetchPolicy="network-only"
-            >
+            <ProfileQuery query={GET_USER} variables={{ username }}>
               {({ data, loading }) => (
                 <EditProfileMutation
                   mutation={EDIT_PROFILE}
-                  refetchQueries={[{ query: GET_USER }]}
+                  refetchQueries={[{ query: GET_USER, variables: username }]}
                   variables={{
                     userName,
                     bio,

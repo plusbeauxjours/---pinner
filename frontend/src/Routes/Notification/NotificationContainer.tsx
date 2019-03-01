@@ -40,11 +40,7 @@ class NotificationContainer extends React.Component<any, IState> {
         variables={{ page }}
       >
         {({ data: getMoveNotifications }) => (
-          <GetNotifictionQuery
-            query={GET_NOTIFICATION}
-            variables={{ page }}
-            fetchPolicy="network-only"
-          >
+          <GetNotifictionQuery query={GET_NOTIFICATION} variables={{ page }}>
             {({ data: getNotifications, loading }) => (
               <NotificationPresenter
                 getNotifications={getNotifications}

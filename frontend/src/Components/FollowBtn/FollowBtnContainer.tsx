@@ -3,6 +3,11 @@ import FollowBtnPresenter from "./FollowBtnPresenter";
 import { Mutation, MutationFn } from "react-apollo";
 import { followUser, followUserVariables } from "../../types/api";
 import { FOLLOW_USER } from "./FollowBtnQueries";
+import { GET_USER } from "../../Routes/Profile/ProfileQueries";
+import {
+  GET_MOVE_NOTIFICATION,
+  GET_NOTIFICATION
+} from "../../Routes/Notification/NotificationQueries";
 
 class FollowMutation extends Mutation<followUser, followUserVariables> {}
 
@@ -20,12 +25,17 @@ class FollowBtnContainer extends React.Component<any, IState> {
   }
   public render() {
     const { isFollowing } = this.state;
-    const { userId } = this.props;
+    const { userId, username } = this.props;
     return (
       <FollowMutation
         mutation={FOLLOW_USER}
         variables={{ userId: parseInt(userId, 10) }}
         onCompleted={this.toggleBtn}
+        refetchQueries={[
+          { query: GET_MOVE_NOTIFICATION, variables: { page: 0 } },
+          { query: GET_NOTIFICATION, variables: { page: 0 } },
+          { query: GET_USER, variables: { username } }
+        ]}
       >
         {followUserFn => (
           <FollowBtnPresenter

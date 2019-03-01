@@ -11,6 +11,7 @@ import { RouteComponentProps } from "react-router";
 import { REPORT_LOCATION } from "../Home/HomeQueries";
 import { reverseGeoCode } from "../../mapHelpers";
 import { GET_FEED } from "./FeedQueries";
+// import { GET_USER } from "../Profile/ProfileQueries";
 
 class ReportLocationMutation extends Mutation<
   ReportLocation,
