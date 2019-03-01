@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Gear } from "../../Icons";
 import styled, { keyframes } from "../../Styles/typed-components";
 
@@ -10,7 +11,7 @@ import CardGrid from "../../Components/CardGrid";
 import FollowBtn from "../../Components/FollowBtn";
 import Input from "../../Components/Input";
 import Flag from "../../Components/Flag";
-import { Link } from "react-router-dom";
+import Blob from "../../Components/Blob/index";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -307,6 +308,7 @@ const ProfilePresenter: React.SFC<IProps> = ({
             </HeaderColumn>
           </Header>
         </SWrapper>
+        <Blob />
         <Wrapper>
           {user.cards && user.cards.length !== 0 && (
             <CardGrid cards={user.cards} />
