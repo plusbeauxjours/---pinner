@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
-import SquareCard from "./SquareCard";
+import BlobCard from "./BlobCard";
 
 const Container = styled.div`
   display: grid;
@@ -17,7 +17,7 @@ interface IProps {
 const CardGrid: React.SFC<IProps> = ({ cards, className }) => (
   <Container className={className}>
     {cards.map(card => (
-      <SquareCard
+      <BlobCard
         key={card.id}
         id={card.id}
         file={card.file}

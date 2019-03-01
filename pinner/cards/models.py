@@ -15,6 +15,7 @@ class Card(config_models.TimeStampedModel):
     country = models.ForeignKey(
         location_models.Country, on_delete=models.CASCADE, related_name='country', null=True)
     file = models.URLField(null=True, blank=True)
+    borderRadius = models.CharField(max_length=40)
 
     @property
     def like_count(self):

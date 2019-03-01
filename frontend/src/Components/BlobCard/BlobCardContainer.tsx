@@ -1,5 +1,5 @@
 import React from "react";
-import BlobPresenter from "./BlobPresenter";
+import BlobCardPresenter from "./BlobCardPresenter";
 
 interface IState {
   percentage1: number;
@@ -12,7 +12,7 @@ interface IState {
   percentage41: number;
 }
 
-class BlobContainer extends React.Component<any, IState> {
+class BlobCardContainer extends React.Component<any, IState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,19 +30,18 @@ class BlobContainer extends React.Component<any, IState> {
     this.generatePercentage();
   }
   public render() {
-    const {
-      percentage1,
-      percentage11,
-      percentage2,
-      percentage21,
-      percentage3,
-      percentage31,
-      percentage4,
-      percentage41
-    } = this.state;
-    const borderRadius = `${percentage1}% ${percentage11}% ${percentage21}% ${percentage2}% ${percentage3}% ${percentage4}% ${percentage41}% ${percentage31}%`;
-    console.log(this.state);
-    return <BlobPresenter borderRadius={borderRadius} />;
+    const borderRadius = `
+    ${this.state.percentage1}% 
+    ${this.state.percentage11}% 
+    ${this.state.percentage21}% 
+    ${this.state.percentage2}% / 
+    ${this.state.percentage3}% 
+    ${this.state.percentage4}% 
+    ${this.state.percentage41}% 
+    ${this.state.percentage31}%
+    `;
+    console.log(borderRadius);
+    return <BlobCardPresenter borderRadius={borderRadius} />;
   }
   public generatePercentage = () => {
     const randomRadius = () => Math.floor(Math.random() * (75 - 25 + 1) + 25);
@@ -67,4 +66,4 @@ class BlobContainer extends React.Component<any, IState> {
   };
 }
 
-export default BlobContainer;
+export default BlobCardContainer;
