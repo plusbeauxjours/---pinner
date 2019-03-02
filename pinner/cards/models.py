@@ -7,6 +7,12 @@ from locations import models as location_models
 
 class Card(config_models.TimeStampedModel):
 
+    CATEGORY = (
+        ('blabla', 'Blabla'),
+        ('meetup', 'Meetup')
+    )
+
+    category = models.CharField(max_length=12, choices=CATEGORY, default='meetup')
     creator = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='cards')
     caption = models.TextField()
@@ -16,6 +22,11 @@ class Card(config_models.TimeStampedModel):
         location_models.Country, on_delete=models.CASCADE, related_name='country', null=True)
     file = models.URLField(null=True, blank=True)
     borderRadius = models.CharField(max_length=40)
+    bgcolor = models.CharField(max_length=20, null=True, blank=True, default='#FAFAFA')
+    fontcolor = models.CharField(max_length=20, null=True, blank=True, default='red')
+    font = models.CharField(max_length=40, null=True, blank=True, default='-apple-system')
+    isClosed = models.BooleanField(default=False)
+    isHidden = models.BooleanField(default=False)
 
     @property
     def like_count(self):

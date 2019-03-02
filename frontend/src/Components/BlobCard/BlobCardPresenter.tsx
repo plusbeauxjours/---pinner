@@ -16,9 +16,10 @@ const Blob = styled.div<IProps>`
   width: 100%;
   height: 100%;
   margin-top: 20px;
-  background: blue;
+  background: #87e3ad;
   background-size: cover;
   border-radius: ${props => props.borderRadius};
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
 `;
 
 const Overlay = styled.div`
@@ -33,6 +34,7 @@ const Overlay = styled.div`
   justify-content: center;
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
+  background-size: cover;
   cursor: pointer;
   transition: opacity 0.2s ease-in-out;
   &:hover {

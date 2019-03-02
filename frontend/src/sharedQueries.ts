@@ -5,6 +5,11 @@ export const ME = gql`
     me {
       user {
         username
+        profile {
+          currentCity {
+            cityname
+          }
+        }
       }
     }
   }

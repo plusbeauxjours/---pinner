@@ -64,7 +64,6 @@ class FeedContainer extends React.Component<IProps, IState> {
           page,
           cityname: currentCity
         }}
-        fetchPolicy="network-only"
         onCompleted={() => {
           console.log("mutationFn");
         }}

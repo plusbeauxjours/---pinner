@@ -28,9 +28,7 @@ const NotificationPresenter: React.SFC<IProps> = ({
     getMoveNotifications: { notifications: getMoveNotifications = null } = {}
   } = {},
   loading,
-  className,
-  modalOpen,
-  toggleModal
+  modalOpen
 }) => {
   if (loading) {
     return <Loader />;
@@ -44,12 +42,11 @@ const NotificationPresenter: React.SFC<IProps> = ({
             getNotifications.map(notification => {
               return (
                 <NotificationRow
-                  className={className}
                   id={notification.id}
                   key={notification.id}
                   notification={notification}
                   actor={notification.actor.profile}
-                  toggleModal={toggleModal}
+                  loading={loading}
                 />
               );
             })}
@@ -59,12 +56,11 @@ const NotificationPresenter: React.SFC<IProps> = ({
             getMoveNotifications.map(notification => {
               return (
                 <NotificationRow
-                  className={className}
                   id={notification.id}
                   key={notification.id}
                   notification={notification}
                   actor={notification.actor.profile}
-                  toggleModal={toggleModal}
+                  loading={loading}
                 />
               );
             })}

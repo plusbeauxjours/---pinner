@@ -4,6 +4,7 @@ import UserHeader from "./UserHeader";
 import Bold from "./Bold";
 import { Link } from "react-router-dom";
 import FlagHeader from "./FlagHeader";
+import Loader from "src/Components/Loader";
 
 const Container = styled.div`
   background-color: white;
@@ -68,137 +69,148 @@ const SBold = styled(Bold)`
 `;
 
 interface IProps {
-  className?: any;
   id: string;
   key: string;
   notification: any;
   actor: any;
-  toggleModal: () => void;
+  loading: boolean;
 }
-const NotificationRow: React.SFC<IProps> = ({ notification, actor }) => (
-  <>
-    {(() => {
-      switch (notification.verb) {
-        case "FOLLOW":
-          return (
-            <>
-              <Link to={`/${notification.actor.username}`}>
-                <FContainer>
-                  <UserHeader
-                    username={notification.actor.username}
-                    currentCity={actor.currentCity.cityname}
-                    avatar={actor.avatar}
-                    size={"sm"}
-                  />
-                  <Header>
-                    <SBold text={"Follow me"} />
-                    <TimeStamp>{notification.createdAt}</TimeStamp>
-                  </Header>
-                </FContainer>
-              </Link>
-            </>
-          );
-        case "COMMENT":
-          return (
-            <>
-              <Link
-                key={notification!.payload!.id}
-                to={{
-                  pathname: `/p/${notification.payload.id}`,
-                  state: { modalOpen: true }
-                }}
-              >
-                <Container>
-                  <UserHeader
-                    username={notification.actor.username}
-                    currentCity={actor.currentCity.cityname}
-                    avatar={actor.avatar}
-                    size={"sm"}
-                  />
-                  <Header>
-                    <SBold text={"Commented on card"} />
-                    <TimeStamp>{notification.createdAt}</TimeStamp>
-                  </Header>
-                  <Header>
-                    <Location>
-                      <SBold text={notification.comment.message} />
-                    </Location>
-                  </Header>
-                </Container>
-              </Link>
-            </>
-          );
-        case "LIKE":
-          return (
-            <>
-              <Link
-                key={notification!.payload!.id}
-                to={{
-                  pathname: `/p/${notification.payload.id}`,
-                  state: { modalOpen: true }
-                }}
-              >
-                <CLUContainer>
-                  <UserHeader
-                    username={notification.actor.username}
-                    currentCity={actor.currentCity.cityname}
-                    avatar={actor.avatar}
-                    size={"sm"}
-                  />
-                  <Header>
-                    <SBold text={"Liked card"} />
-                    <TimeStamp>{notification.createdAt}</TimeStamp>
-                  </Header>
-                </CLUContainer>
-              </Link>
-            </>
-          );
-        case "MOVE":
-          return (
-            <>
-              <Link to={`/${notification.actor.username}`}>
-                <MContainer>
-                  <UserHeader
-                    username={notification.actor.username}
-                    currentCity={actor.currentCity.cityname}
-                    avatar={actor.avatar}
-                    size={"sm"}
-                  />
-                  <Header>
-                    <SBold text={"Moved"} />
-                    <TimeStamp>{notification.createdAt}</TimeStamp>
-                  </Header>
-                  <MHeader>
-                    <FlagHeader
-                      cityname={notification.fromCity.cityname}
-                      countrycode={notification.fromCountry.countrycode}
-                    />
-                    <SBold text={"To"} />
-                    <FlagHeader
-                      cityname={notification.toCity.cityname}
-                      countrycode={notification.toCountry.countrycode}
-                    />
-                  </MHeader>
-                </MContainer>
-              </Link>
-            </>
-          );
-        case "UPLOAD":
-          return (
-            <>
-              <CLUContainer>
-                <Header>
-                  <SBold text={"USploaded card"} />
-                  <TimeStamp>{notification.createdAt}</TimeStamp>
-                </Header>
-              </CLUContainer>
-            </>
-          );
-        default:
-          return <p>hi</p>;
-      }
-    })()}
-  </>
-);
+const NotificationRow: React.SFC<IProps> = ({
+  notification,
+  actor,
+  loading
+}) => {
+  if (loading) {
+    return <Loader />;
+  } else if (!loading && notification.verb) {
+    return (
+      <>
+        {(() => {
+          switch (notification.verb) {
+            case "FOLLOW":
+              return (
+                <>
+                  <Link to={`/${notification.actor.username}`}>
+                    <FContainer>
+                      <UserHeader
+                        username={notification.actor.username}
+                        currentCity={actor.currentCity.cityname}
+                        avatar={actor.avatar}
+                        size={"sm"}
+                      />
+                      <Header>
+                        <SBold text={"Follow me"} />
+                        <TimeStamp>{notification.createdAt}</TimeStamp>
+                      </Header>
+                    </FContainer>
+                  </Link>
+                </>
+              );
+            case "COMMENT":
+              return (
+                <>
+                  <Link
+                    key={notification!.payload!.id}
+                    to={{
+                      pathname: `/p/${notification.payload.id}`,
+                      state: { modalOpen: true }
+                    }}
+                  >
+                    <Container>
+                      <UserHeader
+                        username={notification.actor.username}
+                        currentCity={actor.currentCity.cityname}
+                        avatar={actor.avatar}
+                        size={"sm"}
+                      />
+                      <Header>
+                        <SBold text={"Commented on card"} />
+                        <TimeStamp>{notification.createdAt}</TimeStamp>
+                      </Header>
+                      <Header>
+                        <Location>
+                          <SBold text={notification.comment.message} />
+                        </Location>
+                      </Header>
+                    </Container>
+                  </Link>
+                </>
+              );
+            case "LIKE":
+              return (
+                <>
+                  <Link
+                    key={notification!.payload!.id}
+                    to={{
+                      pathname: `/p/${notification.payload.id}`,
+                      state: { modalOpen: true }
+                    }}
+                  >
+                    <CLUContainer>
+                      <UserHeader
+                        username={notification.actor.username}
+                        currentCity={actor.currentCity.cityname}
+                        avatar={actor.avatar}
+                        size={"sm"}
+                      />
+                      <Header>
+                        <SBold text={"Liked card"} />
+                        <TimeStamp>{notification.createdAt}</TimeStamp>
+                      </Header>
+                    </CLUContainer>
+                  </Link>
+                </>
+              );
+            case "MOVE":
+              return (
+                <>
+                  <Link to={`/${notification.actor.username}`}>
+                    <MContainer>
+                      <UserHeader
+                        username={notification.actor.username}
+                        currentCity={actor.currentCity.cityname}
+                        avatar={actor.avatar}
+                        size={"sm"}
+                      />
+                      <Header>
+                        <SBold text={"Moved"} />
+                        <TimeStamp>{notification.createdAt}</TimeStamp>
+                      </Header>
+                      <MHeader>
+                        <FlagHeader
+                          cityname={notification.fromCity.cityname}
+                          countrycode={notification.fromCountry.countrycode}
+                        />
+                        <SBold text={"To"} />
+                        <FlagHeader
+                          cityname={notification.toCity.cityname}
+                          countrycode={notification.toCountry.countrycode}
+                        />
+                      </MHeader>
+                    </MContainer>
+                  </Link>
+                </>
+              );
+            case "UPLOAD":
+              return (
+                <>
+                  <CLUContainer>
+                    <Header>
+                      <SBold text={"USploaded card"} />
+                      <TimeStamp>{notification.createdAt}</TimeStamp>
+                    </Header>
+                  </CLUContainer>
+                </>
+              );
+            default:
+              return <p>hi</p>;
+          }
+        })()}
+      </>
+    );
+  } else {
+    return null;
+  }
+};
 
 export default NotificationRow;

@@ -679,6 +679,7 @@ export interface GetMoveNotifications_getMoveNotifications_notifications {
   __typename: "MoveNotificationType";
   id: string;
   actor: GetMoveNotifications_getMoveNotifications_notifications_actor;
+  verb: MoveNotificationVerb;
   fromCity: GetMoveNotifications_getMoveNotifications_notifications_fromCity | null;
   fromCountry: GetMoveNotifications_getMoveNotifications_notifications_fromCountry | null;
   toCity: GetMoveNotifications_getMoveNotifications_notifications_toCity | null;
@@ -934,12 +935,23 @@ export interface CompletePhoneVerificationVariables {
 // GraphQL query operation: me
 // ====================================================
 
+export interface me_me_user_profile_currentCity {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
+export interface me_me_user_profile {
+  __typename: "ProfileType";
+  currentCity: me_me_user_profile_currentCity | null;
+}
+
 export interface me_me_user {
   __typename: "UserType";
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
+  profile: me_me_user_profile | null;
 }
 
 export interface me_me {
@@ -1069,6 +1081,13 @@ export enum NotificationVerb {
   LIKE = "LIKE",
   MOVE = "MOVE",
   UPLOAD = "UPLOAD",
+}
+
+/**
+ * An enumeration.
+ */
+export enum MoveNotificationVerb {
+  MOVE = "MOVE",
 }
 
 //==============================================================

@@ -31,6 +31,7 @@ const SFlag = styled.img<IProps>`
   background-size: 100%;
   border-radius: 50%;
   opacity: 0.8;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15), 0 6px 20px 0 rgba(0, 0, 0, 0.11);
 `;
 
 const Overlay = styled.div<IProps>`

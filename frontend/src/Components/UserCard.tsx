@@ -48,7 +48,8 @@ const UserCard: React.SFC<IProps> = ({ id, avatar, username, isFollowing }) => {
           <FollowBtn
             isFollowing={isFollowing}
             userId={id}
-            username={user.username}
+            username={username}
+            cityname={user.profile.currentCity.cityname}
           />
         )}
       </Me>
