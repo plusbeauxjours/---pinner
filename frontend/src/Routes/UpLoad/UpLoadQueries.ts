@@ -6,7 +6,7 @@ export const UPLOAD_CARD = gql`
     $caption: String!
     $city: String!
     $country: String!
-    $fontColor: String!
+    $fontColor: String
     $font: String
     $fontSize: String
     $borderRadius: String!

@@ -3,6 +3,7 @@ from django.db import IntegrityError
 from . import models, types
 from graphql_jwt.decorators import login_required
 from notifications import models as notification_models
+from locations import models as location_models
 
 
 class LikeCard(graphene.Mutation):
@@ -228,7 +229,7 @@ class UploadCard(graphene.Mutation):
         caption = graphene.String(required=True)
         city = graphene.String(required=True)
         country = graphene.String(required=True)
-        fontColor = graphene.String(required=True)
+        fontColor = graphene.String()
         font = graphene.String()
         fontSize = graphene.String()
         borderRadius = graphene.String(required=True)
@@ -247,8 +248,14 @@ class UploadCard(graphene.Mutation):
         borderRadius = kwargs.get('borderRadius')
 
         try:
+            country = location_models.Country.objects.get(countryname=country)
+            city = location_models.City.objects.get(cityname=city)
             card = models.Card.objects.create(
-                creator=user, caption=caption, country=country, city=city, fontColor=fontColor,
+                creator=user,
+                caption=caption,
+                city=city,
+                country=country,
+                fontcolor=fontColor,
                 font=font)
             notification_models.Notification.objects.create(
                 actor=user, target=card.creator, verb="cards", payload=card

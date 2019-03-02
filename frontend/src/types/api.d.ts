@@ -979,7 +979,7 @@ export interface UploadCardVariables {
   caption: string;
   city: string;
   country: string;
-  fontColor: string;
+  fontColor?: string | null;
   font?: string | null;
   fontSize?: string | null;
   borderRadius: string;
