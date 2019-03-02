@@ -18,6 +18,7 @@ import Footprint from "../Routes/Footprint";
 import VerifyPhone from "../Routes/VerifyPhone";
 import PhoneLogin from "../Routes/PhoneLogin";
 import FeedByLocation from "../Routes/FeedByLocation";
+import UpLoad from "../Routes/UpLoad";
 
 import Explore from "../Routes/Explore";
 import Header from "./Header";
@@ -35,7 +36,7 @@ const LoggedInPages = () => (
       <Route path="/" exact={true} component={Feed} />
       <Route path="/p/:id" component={CardDetail} />
       <Route path="/search" component={Search} />
-
+      <Route path="/upload" component={UpLoad} />
       <Route path="/explore" component={Explore} />
       <Route path="/location" exact={true} component={Location} />
       <Route path="/notification" component={Notification} />

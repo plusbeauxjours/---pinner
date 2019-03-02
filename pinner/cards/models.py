@@ -25,6 +25,8 @@ class Card(config_models.TimeStampedModel):
     bgcolor = models.CharField(max_length=20, null=True, blank=True, default='#FAFAFA')
     fontcolor = models.CharField(max_length=20, null=True, blank=True, default='red')
     font = models.CharField(max_length=40, null=True, blank=True, default='-apple-system')
+    fontsize = models.CharField(max_length=10, null=True, blank=True, default='10px')
+
     isClosed = models.BooleanField(default=False)
     isHidden = models.BooleanField(default=False)
 

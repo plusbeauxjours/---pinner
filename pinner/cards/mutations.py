@@ -225,10 +225,13 @@ class DeleteCard(graphene.Mutation):
 class UploadCard(graphene.Mutation):
 
     class Arguments:
-        fileUrl = graphene.String(required=True)
         caption = graphene.String(required=True)
-        country = graphene.String()
-        city = graphene.String()
+        city = graphene.String(required=True)
+        country = graphene.String(required=True)
+        fontColor = graphene.String(required=True)
+        font = graphene.String()
+        fontSize = graphene.String()
+        borderRadius = graphene.String(required=True)
 
     Output = types.UploadCardResponse
 
@@ -236,20 +239,21 @@ class UploadCard(graphene.Mutation):
     def mutate(self, info, **kwargs):
 
         user = info.context.user
-        ok = True
-        error = None
-        fileUrl = kwargs.get('fileUrl')
         caption = kwargs.get('caption')
-        country = kwargs.get('country')
         city = kwargs.get('city')
+        country = kwargs.get('country')
+        fontColor = kwargs.get('fontColor')
+        font = kwargs.get('font')
+        borderRadius = kwargs.get('borderRadius')
 
         try:
             card = models.Card.objects.create(
-                creator=user, caption=caption, country=country, city=city, file=fileUrl)
+                creator=user, caption=caption, country=country, city=city, fontColor=fontColor,
+                font=font)
             notification_models.Notification.objects.create(
                 actor=user, target=card.creator, verb="cards", payload=card
             )
-            return types.UploadCardResponse(card=card)
+            return types.UploadCardResponse(ok=True, card=card)
         except IntegrityError as e:
             print(e)
             raise Exception("Can't create the card")

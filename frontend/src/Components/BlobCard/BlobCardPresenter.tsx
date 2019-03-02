@@ -8,7 +8,6 @@ const BlobWrapper = styled.div`
   max-width: 400px;
   height: 250px;
   width: 250px;
-
   margin: 0 auto;
 `;
 
@@ -16,8 +15,9 @@ const Blob = styled.div<IProps>`
   width: 100%;
   height: 100%;
   margin-top: 20px;
-  background: #87e3ad;
+  background: #fafafa;
   background-size: cover;
+  border: 1px;
   border-radius: ${props => props.borderRadius};
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
 `;

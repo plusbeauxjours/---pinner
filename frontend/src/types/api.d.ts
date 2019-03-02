@@ -909,6 +909,87 @@ export interface searchTermsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: UploadCard
+// ====================================================
+
+export interface UploadCard_uploadCard_card_country {
+  __typename: "CountryType";
+  countryname: string | null;
+}
+
+export interface UploadCard_uploadCard_card_city {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
+export interface UploadCard_uploadCard_card_comments_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface UploadCard_uploadCard_card_comments {
+  __typename: "CommentType";
+  id: string;
+  message: string;
+  creator: UploadCard_uploadCard_card_comments_creator | null;
+}
+
+export interface UploadCard_uploadCard_card_creator_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface UploadCard_uploadCard_card_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: UploadCard_uploadCard_card_creator_profile | null;
+}
+
+export interface UploadCard_uploadCard_card {
+  __typename: "CardType";
+  id: string;
+  file: string | null;
+  caption: string;
+  country: UploadCard_uploadCard_card_country | null;
+  city: UploadCard_uploadCard_card_city | null;
+  likeCount: number | null;
+  commentCount: number | null;
+  isLiked: boolean | null;
+  createdAt: string | null;
+  comments: (UploadCard_uploadCard_card_comments | null)[] | null;
+  creator: UploadCard_uploadCard_card_creator;
+}
+
+export interface UploadCard_uploadCard {
+  __typename: "UploadCardResponse";
+  card: UploadCard_uploadCard_card | null;
+}
+
+export interface UploadCard {
+  uploadCard: UploadCard_uploadCard;
+}
+
+export interface UploadCardVariables {
+  caption: string;
+  city: string;
+  country: string;
+  fontColor: string;
+  font?: string | null;
+  fontSize?: string | null;
+  borderRadius: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CompletePhoneVerification
 // ====================================================
 
