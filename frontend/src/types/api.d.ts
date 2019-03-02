@@ -282,6 +282,11 @@ export interface explore_latestCards_cards {
   id: string;
   likeCount: number | null;
   commentCount: number | null;
+  borderRadius: string;
+  bgColor: string | null;
+  font: string | null;
+  fontColor: string | null;
+  fontSize: string | null;
   file: string | null;
 }
 
@@ -761,6 +766,11 @@ export interface userProfile_userProfile_user_cards {
   id: string;
   likeCount: number | null;
   commentCount: number | null;
+  borderRadius: string;
+  bgColor: string | null;
+  font: string | null;
+  fontColor: string | null;
+  fontSize: string | null;
   file: string | null;
 }
 
@@ -887,6 +897,11 @@ export interface searchTerms_searchCards_cards {
   id: string;
   likeCount: number | null;
   commentCount: number | null;
+  borderRadius: string;
+  bgColor: string | null;
+  font: string | null;
+  fontColor: string | null;
+  fontSize: string | null;
   file: string | null;
 }
 
@@ -1081,6 +1096,11 @@ export interface CardParts {
   id: string;
   likeCount: number | null;
   commentCount: number | null;
+  borderRadius: string;
+  bgColor: string | null;
+  font: string | null;
+  fontColor: string | null;
+  fontSize: string | null;
   file: string | null;
 }
 

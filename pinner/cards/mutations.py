@@ -255,10 +255,11 @@ class UploadCard(graphene.Mutation):
                 caption=caption,
                 city=city,
                 country=country,
-                fontcolor=fontColor,
+                font_color=fontColor,
+                border_radius=borderRadius,
                 font=font)
             notification_models.Notification.objects.create(
-                actor=user, target=card.creator, verb="cards", payload=card
+                actor=user, verb="upload", payload=card
             )
             return types.UploadCardResponse(ok=True, card=card)
         except IntegrityError as e:

@@ -9,10 +9,17 @@ def resolve_get_notifications(self, info, **kwargs):
     page = kwargs.get('page', 0)
     offset = 15 * page
 
-    notifications = models.Notification.objects.filter(target=user).order_by(
+    following_profiles = user.profile.following.all()
+
+    upload_notifications = models.Notification.objects.filter(
+        actor__profile__in=following_profiles, verb='upload')
+    print(upload_notifications)
+
+    notifications = models.Notification.objects.filter(target=user)
+    combined = notifications.union(upload_notifications).order_by(
         '-created_at')[offset:15 + offset]
 
-    return types.GetNotificationsResponse(ok=True, notifications=notifications)
+    return types.GetNotificationsResponse(ok=True, notifications=combined)
 
 
 @login_required

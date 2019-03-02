@@ -11,7 +11,7 @@ const BlobWrapper = styled.div`
   margin: 0 auto;
 `;
 
-const Blob = styled.div<IProps>`
+const Blob = styled.div<ITheme>`
   width: 100%;
   height: 100%;
   margin-top: 20px;
@@ -57,12 +57,24 @@ const CountNumber = styled.div`
   margin-left: 10px;
 `;
 
-interface IProps {
-  id?: string;
-  file?: string;
-  commentCount?: number;
-  likeCount?: number;
+interface ITheme {
   borderRadius: string;
+  bgColor?: string;
+  font?: string;
+  fontColor?: string;
+  fontSize?: string;
+}
+
+interface IProps {
+  id: string;
+  likeCount: number;
+  commentCount: number;
+  borderRadius: string;
+  bgColor: string;
+  font: string;
+  fontColor: string;
+  fontSize: string;
+  file?: string;
 }
 
 const BlobCardPresenter: React.SFC<IProps> = ({

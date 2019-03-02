@@ -34,6 +34,7 @@ class NotificationContainer extends React.Component<any, IState> {
   }
   public render() {
     const { page, modalOpen } = this.state;
+    console.log("hi");
     return (
       <GetMoveNotifictionQuery
         query={GET_MOVE_NOTIFICATION}

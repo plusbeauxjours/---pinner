@@ -20,9 +20,13 @@ const CardGrid: React.SFC<IProps> = ({ cards, className }) => (
       <BlobCard
         key={card.id}
         id={card.id}
-        file={card.file}
         likeCount={card.likeCount}
         commentCount={card.commentCount}
+        borderRadius={card.borderRadius}
+        bgColor={card.bgColor}
+        font={card.font}
+        fontColor={card.fontColor}
+        fontSize={card.fontSize}
       />
     ))}
   </Container>

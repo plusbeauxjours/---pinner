@@ -10,6 +10,10 @@ interface IThemeInterface {
   darkBlueColor: string;
   size: string;
   bg: string;
+  borderRadius: string;
+  font: string;
+  fontColor: string;
+  fontSize: string;
 }
 
 const {

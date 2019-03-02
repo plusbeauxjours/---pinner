@@ -194,12 +194,20 @@ const NotificationRow: React.SFC<IProps> = ({
             case "UPLOAD":
               return (
                 <>
-                  <CLUContainer>
-                    <Header>
-                      <SBold text={"USploaded card"} />
-                      <TimeStamp>{notification.createdAt}</TimeStamp>
-                    </Header>
-                  </CLUContainer>
+                  <Link to={`/${notification.actor.username}`}>
+                    <CLUContainer>
+                      <UserHeader
+                        username={notification.actor.username}
+                        currentCity={actor.currentCity.cityname}
+                        avatar={actor.avatar}
+                        size={"sm"}
+                      />
+                      <Header>
+                        <SBold text={"Uploaded card"} />
+                        <TimeStamp>{notification.createdAt}</TimeStamp>
+                      </Header>
+                    </CLUContainer>
+                  </Link>
                 </>
               );
             default:

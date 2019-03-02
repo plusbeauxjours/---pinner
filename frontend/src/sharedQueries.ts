@@ -31,6 +31,11 @@ export const CARD_FRAGMENT = gql`
     id
     likeCount
     commentCount
+    borderRadius
+    bgColor
+    font
+    fontColor
+    fontSize
     file
   }
 `;

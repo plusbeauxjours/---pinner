@@ -21,14 +21,14 @@ class Card(config_models.TimeStampedModel):
     country = models.ForeignKey(
         location_models.Country, on_delete=models.CASCADE, related_name='country', null=True)
     file = models.URLField(null=True, blank=True)
-    borderRadius = models.CharField(max_length=40)
-    bgcolor = models.CharField(max_length=20, null=True, blank=True, default='#FAFAFA')
-    fontcolor = models.CharField(max_length=20, null=True, blank=True, default='red')
+    border_radius = models.CharField(max_length=40)
+    bg_color = models.CharField(max_length=20, null=True, blank=True, default='#FAFAFA')
     font = models.CharField(max_length=40, null=True, blank=True, default='-apple-system')
-    fontsize = models.CharField(max_length=10, null=True, blank=True, default='10px')
+    font_color = models.CharField(max_length=20, null=True, blank=True, default='red')
+    font_size = models.CharField(max_length=10, null=True, blank=True, default='10px')
 
-    isClosed = models.BooleanField(default=False)
-    isHidden = models.BooleanField(default=False)
+    is_closed = models.BooleanField(default=False)
+    is_hidden = models.BooleanField(default=False)
 
     @property
     def like_count(self):
