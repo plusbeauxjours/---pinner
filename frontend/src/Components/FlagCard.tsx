@@ -21,12 +21,24 @@ const SFlag = styled(Flag)`
 interface IProps {
   countryname: string;
   countrycode: string;
+  citycount: string;
+  cityname: string;
 }
 
-const FlagCard: React.SFC<IProps> = ({ countryname, countrycode }) => {
+const FlagCard: React.SFC<IProps> = ({
+  countryname,
+  countrycode,
+  cityname,
+  citycount
+}) => {
+  console.log(citycount);
   return (
     <Container>
       <Link to={`/location/${countryname}`}>
+        <p>
+          {cityname}
+          {citycount}
+        </p>
         <SFlag
           countrycode={require(`../Images/countryFlag/${countrycode}.svg`)}
           size="sm"

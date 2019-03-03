@@ -5,10 +5,10 @@ import styled from "styled-components";
 import { HeartFilled, BubbleFilled } from "../Icons";
 
 const BlobWrapper = styled.div`
-  max-width: 160px;
-  height: 160px;
-  width: 160px;
-  margin: 0 auto;
+  max-width: 170px;
+  height: 170px;
+  width: 170px;
+  margin: 4 auto;
 `;
 
 const Blob = styled.div<ITheme>`
@@ -18,7 +18,7 @@ const Blob = styled.div<ITheme>`
   width: 100%;
   height: 100%;
   margin-top: 20px;
-  background: white;
+  background: ${props => props.file || "white"};
   background-size: cover;
   border: 1px;
   border-radius: ${props => props.borderRadius};
@@ -79,6 +79,7 @@ interface ITheme {
   font?: string;
   fontColor?: string;
   fontSize?: string;
+  file?: string;
 }
 
 interface IProps {
@@ -103,7 +104,12 @@ const BlobCard: React.SFC<IProps> = ({
 }) => (
   <Link to={`/p/${id}`}>
     <BlobWrapper>
-      <Blob borderRadius={borderRadius}>
+      <Blob
+        borderRadius={borderRadius}
+        file={
+          "http://pet.chosun.com/images/news/healthchosun_pet_201802/20180205193238_1635_4749_2414.jpg"
+        }
+      >
         <Caption>{caption}</Caption>
         <Overlay borderRadius={borderRadius}>
           <Count>

@@ -3,19 +3,19 @@ from . import types, mutations, queries
 
 
 class Query(object):
-    getCountries = graphene.Field(
+    get_countries = graphene.Field(
         types.CountriesResponse,
         resolver=queries.resolve_get_countries,
         required=True
     )
 
-    getCities = graphene.Field(
+    get_cities = graphene.Field(
         types.CitiesResponse,
         resolver=queries.resolve_get_cities,
         required=True
     )
 
-    getFootprints = graphene.Field(
+    get_footprints = graphene.Field(
         types.FootprintsResponse,
         resolver=queries.resolve_get_footprints,
         required=True

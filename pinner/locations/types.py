@@ -5,6 +5,7 @@ from config import types as config_types
 
 
 class CountryType(DjangoObjectType):
+    city_count = graphene.Int(source='city_count')
 
     class Meta:
         model = models.Country

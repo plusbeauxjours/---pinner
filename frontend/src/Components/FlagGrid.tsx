@@ -13,17 +13,19 @@ const Container = styled.div`
 `;
 
 interface IProps {
-  countries?: any;
+  cities?: any;
   className?: string;
 }
 
-const FlagGrid: React.SFC<IProps> = ({ countries, className }) => (
+const FlagGrid: React.SFC<IProps> = ({ cities, className }) => (
   <Container className={className}>
-    {countries.map(country => (
+    {cities.map(city => (
       <FlagCard
-        key={country.id}
-        countryname={country.countryname}
-        countrycode={country.countrycode}
+        key={city.id}
+        countryname={city.country.countryname}
+        countrycode={city.country.countrycode}
+        citycount={city.country.cityCount}
+        cityname={city.cityname}
       />
     ))}
   </Container>

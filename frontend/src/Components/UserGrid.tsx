@@ -1,11 +1,16 @@
 import React from "react";
 import styled from "../Styles/typed-components";
 import UserCard from "./UserCard";
+import Wrapper from "./Wrapper";
 
 const Container = styled.div`
-  display: inline-flex;
-  margin-bottom: 85px;
-  overflow: hidden;
+  border: 4px;
+  display: flex;
+  align-self: flex-start;
+  flex-direction: row;
+  position: absolute;
+  -webkit-box-flex: 0;
+  flex: 0 0 auto;
 `;
 
 interface IProps {
@@ -14,18 +19,22 @@ interface IProps {
 }
 
 const UserGrid: React.SFC<IProps> = ({ users, className }) => (
-  <Container className={className}>
-    {users.map(user => (
-      <UserCard
-        key={user.id}
-        id={user.id}
-        avatar={user.profile.avatar}
-        username={user.username}
-        cityname={user.profile.currentCity.cityname}
-        isFollowing={user.profile.isFollowing}
-      />
-    ))}
-  </Container>
+  <Wrapper>
+    <p>recommand user</p>
+    <p>see all</p>
+    <Container className={className}>
+      {users.map(user => (
+        <UserCard
+          key={user.id}
+          id={user.id}
+          avatar={user.profile.avatar}
+          username={user.username}
+          cityname={user.profile.currentCity.cityname}
+          isFollowing={user.profile.isFollowing}
+        />
+      ))}
+    </Container>
+  </Wrapper>
 );
 
 export default UserGrid;

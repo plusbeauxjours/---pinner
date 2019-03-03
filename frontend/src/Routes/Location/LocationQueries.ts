@@ -1,5 +1,21 @@
 import gql from "graphql-tag";
 
+export const GET_CITY = gql`
+  query GetCities {
+    getCities {
+      cities {
+        id
+        cityname
+        country {
+          id
+          countryname
+          countrycode
+        }
+      }
+    }
+  }
+`;
+
 export const GET_COUNTRY = gql`
   query GetCountries {
     getCountries {
@@ -7,17 +23,6 @@ export const GET_COUNTRY = gql`
         id
         countryname
         countrycode
-      }
-    }
-  }
-`;
-
-export const GET_CITY = gql`
-  query GetCities {
-    getCities {
-      cities {
-        id
-        cityname
       }
     }
   }

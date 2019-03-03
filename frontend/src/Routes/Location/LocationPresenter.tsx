@@ -2,7 +2,7 @@ import React from "react";
 import Loader from "src/Components/Loader";
 import styled from "src/Styles/typed-components";
 import Wrapper from "src/Components/Wrapper";
-import { GetCountries } from "../../types/api";
+import { GetCities } from "../../types/api";
 import FlagGrid from "../../Components/FlagGrid";
 
 const TallWrapper = styled(Wrapper)`
@@ -11,22 +11,18 @@ const TallWrapper = styled(Wrapper)`
 `;
 
 interface IProps {
-  data?: GetCountries;
+  data?: GetCities;
   loading: boolean;
 }
 
 const LocationPresenter: React.SFC<IProps> = ({
-  data: { getCountries: { countries = null } = {} } = {},
+  data: { getCities: { cities = null } = {} } = {},
   loading
 }) => {
   if (loading) {
     return <Loader />;
-  } else if (!loading && countries) {
-    return (
-      <TallWrapper>
-        {countries && <FlagGrid countries={countries} />}
-      </TallWrapper>
-    );
+  } else if (!loading && cities) {
+    return <TallWrapper>{cities && <FlagGrid cities={cities} />}</TallWrapper>;
   } else {
     return null;
   }

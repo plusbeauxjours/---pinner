@@ -6,22 +6,22 @@ import Bold from "./Bold";
 import { Link } from "react-router-dom";
 
 const BlobWrapper = styled.div`
-  display: inline-flex;
-  flex-direction: row;
-  max-width: 160px;
-  height: 160px;
-  width: 160px;
-  margin: 0 auto;
+  max-width: 170px;
+  height: 170px;
+  width: 170px;
+  margin: 10px;
 `;
 
 const Blob = styled.div<ITheme>`
+  display: flex;
+  overflow: auto;
+  flex: 1;
   z-index: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
-  margin-top: 20px;
   background: white;
   background-size: cover;
   border: 1px;
@@ -64,8 +64,8 @@ const UserCard: React.SFC<IProps> = ({
   return (
     <BlobWrapper>
       <Blob borderRadius={"46% 54% 69% 31% / 30% 49% 51% 70%"}>
+        <SAvatar url={avatar} size="md" />
         <Link to={`/${username}`}>
-          <SAvatar url={avatar} size="md" />
           <SBold text={username} />
         </Link>
         <FollowBtn

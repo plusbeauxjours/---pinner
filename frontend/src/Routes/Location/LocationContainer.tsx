@@ -1,10 +1,10 @@
 import React from "react";
 import LocationPresenter from "./LocationPresenter";
 import { Query } from "react-apollo";
-import { GET_COUNTRY } from "./LocationQueries";
-import { GetCountries } from "../../types/api";
+import { GET_CITY } from "./LocationQueries";
+import { GetCities } from "../../types/api";
 
-class CountryQuery extends Query<GetCountries> {}
+class CityQuery extends Query<GetCities> {}
 
 interface IState {
   page: number;
@@ -16,11 +16,11 @@ class LocationContainer extends React.Component<any, IState> {
   };
   public render() {
     return (
-      <CountryQuery query={GET_COUNTRY}>
+      <CityQuery query={GET_CITY}>
         {({ data, loading }) => (
           <LocationPresenter data={data} loading={loading} />
         )}
-      </CountryQuery>
+      </CityQuery>
     );
   }
 }

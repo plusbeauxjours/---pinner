@@ -505,6 +505,37 @@ export interface ReportLocationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetCities
+// ====================================================
+
+export interface GetCities_getCities_cities_country {
+  __typename: "CountryType";
+  id: string;
+  countryname: string | null;
+  countrycode: string | null;
+}
+
+export interface GetCities_getCities_cities {
+  __typename: "CityType";
+  id: string;
+  cityname: string | null;
+  country: GetCities_getCities_cities_country;
+}
+
+export interface GetCities_getCities {
+  __typename: "CitiesResponse";
+  cities: (GetCities_getCities_cities | null)[] | null;
+}
+
+export interface GetCities {
+  getCities: GetCities_getCities;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetCountries
 // ====================================================
 
@@ -522,29 +553,6 @@ export interface GetCountries_getCountries {
 
 export interface GetCountries {
   getCountries: GetCountries_getCountries;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetCities
-// ====================================================
-
-export interface GetCities_getCities_cities {
-  __typename: "CityType";
-  id: string;
-  cityname: string | null;
-}
-
-export interface GetCities_getCities {
-  __typename: "CitiesResponse";
-  cities: (GetCities_getCities_cities | null)[] | null;
-}
-
-export interface GetCities {
-  getCities: GetCities_getCities;
 }
 
 
