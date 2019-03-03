@@ -194,7 +194,13 @@ const NotificationRow: React.SFC<IProps> = ({
             case "UPLOAD":
               return (
                 <>
-                  <Link to={`/${notification.actor.username}`}>
+                  <Link
+                    key={notification!.payload!.id}
+                    to={{
+                      pathname: `/p/${notification.payload.id}`,
+                      state: { modalOpen: true }
+                    }}
+                  >
                     <CLUContainer>
                       <UserHeader
                         username={notification.actor.username}

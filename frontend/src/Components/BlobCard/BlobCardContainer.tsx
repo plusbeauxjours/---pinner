@@ -2,14 +2,14 @@ import React from "react";
 import BlobCardPresenter from "./BlobCardPresenter";
 
 interface IProps {
-  id: string;
-  likeCount: number;
-  commentCount: number;
+  id?: string;
+  likeCount?: number;
+  commentCount?: number;
   borderRadius: string;
-  bgColor: string;
-  font: string;
-  fontColor: string;
-  fontSize: string;
+  bgColor?: string;
+  font?: string;
+  fontColor?: string;
+  fontSize?: string;
 }
 
 class BlobCardContainer extends React.Component<IProps> {

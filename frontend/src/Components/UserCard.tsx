@@ -4,7 +4,6 @@ import FollowBtn from "./FollowBtn";
 import Avatar from "./Avatar";
 import Bold from "./Bold";
 import { Link } from "react-router-dom";
-import Me from "./Me";
 
 const Container = styled.div`
   background-color: white;
@@ -29,10 +28,17 @@ interface IProps {
   id: string;
   avatar?: string;
   username: string;
+  cityname: string;
   isFollowing: boolean;
 }
 
-const UserCard: React.SFC<IProps> = ({ id, avatar, username, isFollowing }) => {
+const UserCard: React.SFC<IProps> = ({
+  id,
+  avatar,
+  username,
+  cityname,
+  isFollowing
+}) => {
   return (
     <Container>
       {avatar && (
@@ -43,16 +49,13 @@ const UserCard: React.SFC<IProps> = ({ id, avatar, username, isFollowing }) => {
       <Link to={`/${username}`}>
         <SBold text={username} />
       </Link>
-      <Me>
-        {user => (
-          <FollowBtn
-            isFollowing={isFollowing}
-            userId={id}
-            username={username}
-            cityname={user.profile.currentCity.cityname}
-          />
-        )}
-      </Me>
+
+      <FollowBtn
+        isFollowing={isFollowing}
+        userId={id}
+        username={username}
+        cityname={cityname}
+      />
     </Container>
   );
 };

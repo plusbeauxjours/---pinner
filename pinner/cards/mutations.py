@@ -227,8 +227,6 @@ class UploadCard(graphene.Mutation):
 
     class Arguments:
         caption = graphene.String(required=True)
-        city = graphene.String(required=True)
-        country = graphene.String(required=True)
         fontColor = graphene.String()
         font = graphene.String()
         fontSize = graphene.String()
@@ -240,9 +238,10 @@ class UploadCard(graphene.Mutation):
     def mutate(self, info, **kwargs):
 
         user = info.context.user
+        city = user.profile.current_city
+        country = user.profile.current_country
+
         caption = kwargs.get('caption')
-        city = kwargs.get('city')
-        country = kwargs.get('country')
         fontColor = kwargs.get('fontColor')
         font = kwargs.get('font')
         borderRadius = kwargs.get('borderRadius')

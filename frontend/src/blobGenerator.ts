@@ -8,16 +8,7 @@ export const blobRadiusBorderGenerator = () => {
   const percentage31 = 100 - percentage3;
   const percentage4 = randomRadius();
   const percentage41 = 100 - percentage4;
-  const borderRadius = `
-    ${percentage1}% 
-    ${percentage11}% 
-    ${percentage21}% 
-    ${percentage2}% / 
-    ${percentage3}% 
-    ${percentage4}% 
-    ${percentage41}% 
-    ${percentage31}%
-    `;
+  const borderRadius = `${percentage1}% ${percentage11}% ${percentage21}% ${percentage2}% / ${percentage3}% ${percentage4}% ${percentage41}% ${percentage31}%`;
   return borderRadius;
 };
 

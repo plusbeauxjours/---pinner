@@ -15,7 +15,7 @@ const Blob = styled.div<ITheme>`
   width: 100%;
   height: 100%;
   margin-top: 20px;
-  background: #fafafa;
+  background: white;
   background-size: cover;
   border: 1px;
   border-radius: ${props => props.borderRadius};

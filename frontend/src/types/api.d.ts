@@ -256,10 +256,16 @@ export interface cardDetailVariables {
 // GraphQL query operation: explore
 // ====================================================
 
+export interface explore_latestUsers_users_profile_currentCity {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
 export interface explore_latestUsers_users_profile {
   __typename: "ProfileType";
   isFollowing: boolean | null;
   avatar: string;
+  currentCity: explore_latestUsers_users_profile_currentCity | null;
 }
 
 export interface explore_latestUsers_users {
@@ -871,10 +877,16 @@ export interface DeleteProfile {
 // GraphQL query operation: searchTerms
 // ====================================================
 
+export interface searchTerms_searchUsers_users_profile_currentCity {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
 export interface searchTerms_searchUsers_users_profile {
   __typename: "ProfileType";
   isFollowing: boolean | null;
   avatar: string;
+  currentCity: searchTerms_searchUsers_users_profile_currentCity | null;
 }
 
 export interface searchTerms_searchUsers_users {
@@ -983,6 +995,7 @@ export interface UploadCard_uploadCard_card {
 
 export interface UploadCard_uploadCard {
   __typename: "UploadCardResponse";
+  ok: boolean | null;
   card: UploadCard_uploadCard_card | null;
 }
 
@@ -992,8 +1005,6 @@ export interface UploadCard {
 
 export interface UploadCardVariables {
   caption: string;
-  city: string;
-  country: string;
   fontColor?: string | null;
   font?: string | null;
   fontSize?: string | null;
@@ -1028,35 +1039,35 @@ export interface CompletePhoneVerificationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: me
+// GraphQL query operation: Me
 // ====================================================
 
-export interface me_me_user_profile_currentCity {
+export interface Me_me_user_profile_currentCity {
   __typename: "CityType";
   cityname: string | null;
 }
 
-export interface me_me_user_profile {
+export interface Me_me_user_profile {
   __typename: "ProfileType";
-  currentCity: me_me_user_profile_currentCity | null;
+  currentCity: Me_me_user_profile_currentCity | null;
 }
 
-export interface me_me_user {
+export interface Me_me_user {
   __typename: "UserType";
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
-  profile: me_me_user_profile | null;
+  profile: Me_me_user_profile | null;
 }
 
-export interface me_me {
+export interface Me_me {
   __typename: "UserProfileResponse";
-  user: me_me_user | null;
+  user: Me_me_user | null;
 }
 
-export interface me {
-  me: me_me;
+export interface Me {
+  me: Me_me;
 }
 
 
@@ -1067,10 +1078,16 @@ export interface me {
 // GraphQL fragment: UserParts
 // ====================================================
 
+export interface UserParts_profile_currentCity {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
 export interface UserParts_profile {
   __typename: "ProfileType";
   isFollowing: boolean | null;
   avatar: string;
+  currentCity: UserParts_profile_currentCity | null;
 }
 
 export interface UserParts {

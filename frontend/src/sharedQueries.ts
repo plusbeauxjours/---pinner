@@ -1,7 +1,7 @@
 import { gql } from "apollo-boost";
 
 export const ME = gql`
-  query me {
+  query Me {
     me {
       user {
         username
@@ -22,6 +22,9 @@ export const USER_FRAGMENT = gql`
     profile {
       isFollowing
       avatar
+      currentCity {
+        cityname
+      }
     }
   }
 `;

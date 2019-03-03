@@ -2,6 +2,8 @@ import React from "react";
 import Wrapper from "src/Components/Wrapper";
 import styled from "styled-components";
 import { keyframes } from "styled-components";
+// import BlobCard from "src/Components/BlobCard";
+import Textarea from "react-expanding-textarea";
 
 const ModalContainer = styled.div`
   display: flex;
@@ -34,24 +36,56 @@ const ModalAnimation = keyframes`
 
 const Modal = styled.div`
   background-color: white;
+  border-radius: 50%;
   width: 100;
   max-width: 935px;
   z-index: 5;
   animation: ${ModalAnimation} 0.1s linear;
 `;
 
+const STextArea = styled(Textarea)`
+  width: 100%;
+  border: 0;
+  resize: none;
+  font-size: 14px;
+  padding: 15px 0px;
+`;
+
 interface IProps {
   back: any;
+  borderRadius: string;
+  caption: string;
+  uploadNewCard: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  modalOpen: boolean;
 }
 
-const UpLoadPresenter: React.SFC<IProps> = ({ back }) => {
+const UpLoadPresenter: React.SFC<IProps> = ({
+  back,
+  borderRadius,
+  caption,
+  uploadNewCard,
+  onKeyUp,
+  modalOpen
+}) => {
   return (
-    <ModalContainer>
-      <ModalOverlay onClick={back} />
-      <Modal>
-        <Wrapper />
-      </Modal>
-    </ModalContainer>
+    <>
+      {modalOpen && (
+        <ModalContainer>
+          <ModalOverlay onClick={back} />
+          <Modal>
+            <Wrapper>
+              <STextArea
+                placeholder="Add a comment..."
+                onChange={uploadNewCard}
+                value={caption}
+                onKeyUp={onKeyUp}
+              />
+            </Wrapper>
+          </Modal>
+        </ModalContainer>
+      )}
+    </>
   );
 };
 

@@ -30,23 +30,23 @@ class Profile(config_models.TimeStampedModel):
     followers = models.ManyToManyField(
         'self', blank=True, symmetrical=False, related_name='followed_by')
 
-    phoneNumber = models.CharField(max_length=20, blank=True, null=True)
-    verifiedPhoneNumber = models.BooleanField(default=False)
-    verifiedEmail = models.BooleanField(default=False)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    verified_phone_number = models.BooleanField(default=False)
+    verified_email = models.BooleanField(default=False)
     fbId = models.CharField(blank=True, null=True, max_length=20)
 
-    currentLat = models.FloatField(blank=True, null=True)
-    currentLng = models.FloatField(blank=True, null=True)
-    currentCity = models.ForeignKey(
+    current_lat = models.FloatField(blank=True, null=True)
+    current_lng = models.FloatField(blank=True, null=True)
+    current_city = models.ForeignKey(
         locations_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCity', )
-    currentCountry = models.ForeignKey(
+    current_country = models.ForeignKey(
         locations_models.Country, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCountry', )
 
-    lastLat = models.FloatField(blank=True, null=True)
-    lastLng = models.FloatField(blank=True, null=True)
-    lastCity = models.ForeignKey(
+    last_lat = models.FloatField(blank=True, null=True)
+    last_lng = models.FloatField(blank=True, null=True)
+    last_city = models.ForeignKey(
         locations_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='lastCity', )
-    lastCountry = models.ForeignKey(
+    last_country = models.ForeignKey(
         locations_models.Country, on_delete=models.SET_NULL, null=True, blank=True, related_name='lastCountry', )
 
     def __str__(self):

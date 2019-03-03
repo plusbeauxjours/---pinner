@@ -111,7 +111,9 @@ const HeaderPresenter: React.SFC<IProps> = ({ onSubmit, onChange, search }) => (
           </Me>
         </Icon>
         <Icon>
-          <Upload />
+          <Link to="/upload">
+            <Upload />
+          </Link>
         </Icon>
       </Column>
     </SWrapper>

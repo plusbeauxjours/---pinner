@@ -30,41 +30,41 @@ class ReportLocation(graphene.Mutation):
         try:
             profile = user.profile
 
-            if (currentCity != profile.currentCity.cityname):
+            if (currentCity != profile.current_city.cityname):
 
                 try:
-                    profile.lastLat = profile.currentLat
-                    profile.lastLng = profile.currentLng
-                    profile.lastCity = profile.currentCity
-                    profile.lastCountry = profile.currentCountry
+                    profile.last_lat = profile.current_lat
+                    profile.last_lng = profile.current_lng
+                    profile.last_city = profile.current_city
+                    profile.last_country = profile.current_country
                 except:
                     pass
 
-                profile.currentLat = currentLat
-                profile.currentLng = currentLng
+                profile.current_lat = currentLat
+                profile.current_lng = currentLng
 
                 try:
                     existing_country = models.Country.objects.get(countryname=currentCountry)
 
-                    profile.currentCountry = existing_country
+                    profile.current_country = existing_country
 
                     try:
                         existing_city = models.City.objects.get(cityname=currentCity)
 
-                        profile.currentCity = existing_city
+                        profile.current_city = existing_city
                         profile.save()
                         notification_models.MoveNotification.objects.create(
                             actor=user,
                             verb="move",
-                            fromCity=profile.lastCity,
-                            fromCountry=profile.lastCountry,
-                            toCity=profile.currentCity,
-                            toCountry=profile.currentCountry
+                            fromCity=profile.last_city,
+                            fromCountry=profile.last_country,
+                            toCity=profile.current_city,
+                            toCountry=profile.current_country
                         )
                         models.LocationLog.objects.create(
                             creator=user,
-                            city=profile.currentCity,
-                            country=profile.currentCountry
+                            city=profile.current_city,
+                            country=profile.current_country
                         )
                         return types.ReportLocationResponse(ok=True)
 
@@ -72,20 +72,20 @@ class ReportLocation(graphene.Mutation):
                         new_city = models.City.objects.create(cityname=currentCity, country=existing_country)
                         new_city.save()
 
-                        profile.currentCity = new_city
+                        profile.current_city = new_city
                         profile.save()
                         notification_models.MoveNotification.objects.create(
                             actor=user,
                             verb="move",
-                            fromCity=profile.lastCity,
-                            fromCountry=profile.lastCountry,
-                            toCity=profile.currentCity,
-                            toCountry=profile.currentCountry
+                            fromCity=profile.last_city,
+                            fromCountry=profile.last_country,
+                            toCity=profile.current_city,
+                            toCountry=profile.current_country
                         )
                         models.LocationLog.objects.create(
                             creator=user,
-                            city=profile.currentCity,
-                            country=profile.currentCountry
+                            city=profile.current_city,
+                            country=profile.current_country
                         )
 
                 except:
@@ -95,21 +95,21 @@ class ReportLocation(graphene.Mutation):
                     new_city = models.City.objects.create(cityname=currentCity, country=new_country)
                     new_city.save()
 
-                    profile.currentCity = new_city
-                    profile.currentCountry = new_country
+                    profile.current_city = new_city
+                    profile.current_country = new_country
                     profile.save()
                     notification_models.MoveNotification.objects.create(
                         actor=user,
                         verb="move",
-                        fromCity=profile.lastCity,
-                        fromCountry=profile.lastCountry,
-                        toCity=profile.currentCity,
-                        toCountry=profile.currentCountry
+                        fromCity=profile.last_city,
+                        fromCountry=profile.last_country,
+                        toCity=profile.current_city,
+                        toCountry=profile.current_country
                     )
                     models.LocationLog.objects.create(
                         creator=user,
-                        city=profile.currentCity,
-                        country=profile.currentCountry
+                        city=profile.current_city,
+                        country=profile.current_country
                     )
 
                 return types.ReportLocationResponse(ok=True)
