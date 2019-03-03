@@ -3,12 +3,9 @@ import styled from "../Styles/typed-components";
 import UserCard from "./UserCard";
 
 const Container = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 200px));
-  grid-template-rows: 175px;
-  grid-auto-rows: 175px;
-  grid-gap: 25px;
+  display: inline-flex;
   margin-bottom: 85px;
+  overflow: hidden;
 `;
 
 interface IProps {

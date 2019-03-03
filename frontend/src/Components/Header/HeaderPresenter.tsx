@@ -1,19 +1,20 @@
 import React from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+
+import styled from "styled-components";
+import { Profile, Compass, HeartEmpty, HeaderMap } from "../../Icons";
 import Wrapper from "../Wrapper";
-import { Profile, Compass, HeartEmpty, HeaderMap, Upload } from "../../Icons";
 import Me from "../Me";
 
 const Header = styled.header`
   background-color: white;
   height: 75px;
+  width: 100%;
   border: ${props => props.theme.boxBorder};
   border-top: none;
   position: fixed;
   top: 0;
-  width: 100%;
-  z-index: 1;
+  z-index: 10;
 `;
 
 const SWrapper = styled(Wrapper)`
@@ -109,11 +110,6 @@ const HeaderPresenter: React.SFC<IProps> = ({ onSubmit, onChange, search }) => (
               </Link>
             )}
           </Me>
-        </Icon>
-        <Icon>
-          <Link to="/upload">
-            <Upload />
-          </Link>
         </Icon>
       </Column>
     </SWrapper>

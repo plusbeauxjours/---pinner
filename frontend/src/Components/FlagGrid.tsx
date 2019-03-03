@@ -4,9 +4,10 @@ import FlagCard from "./FlagCard";
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 200px));
-  grid-template-rows: 175px;
-  grid-auto-rows: 175px;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 295px));
+  grid-template-rows: 200px;
+  grid-auto-rows: 200px;
   grid-gap: 25px;
   margin-bottom: 85px;
 `;

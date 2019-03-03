@@ -4,9 +4,11 @@ import BlobCard from "./BlobCard";
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 295px);
-  grid-template-rows: 295px;
-  grid-auto-rows: 295px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 170px));
+  grid-template-rows: 170px;
+  grid-auto-rows: 170px;
+  grid-gap: 15px;
+  margin-bottom: 85px;
 `;
 
 interface IProps {
@@ -20,6 +22,7 @@ const CardGrid: React.SFC<IProps> = ({ cards, className }) => (
       <BlobCard
         key={card.id}
         id={card.id}
+        caption={card.caption}
         likeCount={card.likeCount}
         commentCount={card.commentCount}
         borderRadius={card.borderRadius}

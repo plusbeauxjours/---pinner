@@ -1,12 +1,23 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
+import { Feed } from "src/types/api";
+import { Upload } from "../../Icons";
+
 import Loader from "../../Components/Loader";
 import Photo from "../../Components/Photo";
 import Wrapper from "../../Components/Wrapper";
 import styled from "../../Styles/typed-components";
-import { Feed } from "src/types/api";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
+`;
+
+const Icon = styled.span`
+  margin-right: 30px;
+  &:last-child {
+    margin-right: 0;
+  }
 `;
 
 interface IProps {
@@ -34,6 +45,11 @@ const FeedPresenter: React.SFC<IProps> = ({
           {currentCountry}
           {currentCountryCode}
         </h1>
+        <Icon>
+          <Link to="/upload">
+            <Upload />
+          </Link>
+        </Icon>
         {cards &&
           cards.map(card => {
             return (

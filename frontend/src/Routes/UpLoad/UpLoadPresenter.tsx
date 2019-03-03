@@ -2,7 +2,6 @@ import React from "react";
 import Wrapper from "src/Components/Wrapper";
 import styled from "styled-components";
 import { keyframes } from "styled-components";
-// import BlobCard from "src/Components/BlobCard";
 import Textarea from "react-expanding-textarea";
 
 const ModalContainer = styled.div`

@@ -283,27 +283,8 @@ export interface explore_latestUsers {
   users: (explore_latestUsers_users | null)[] | null;
 }
 
-export interface explore_latestCards_cards {
-  __typename: "CardType";
-  id: string;
-  likeCount: number | null;
-  commentCount: number | null;
-  borderRadius: string;
-  bgColor: string | null;
-  font: string | null;
-  fontColor: string | null;
-  fontSize: string | null;
-  file: string | null;
-}
-
-export interface explore_latestCards {
-  __typename: "LatestCardsResponse";
-  cards: (explore_latestCards_cards | null)[] | null;
-}
-
 export interface explore {
   latestUsers: explore_latestUsers;
-  latestCards: explore_latestCards;
 }
 
 
@@ -770,6 +751,7 @@ export interface userProfile_userProfile_user_profile {
 export interface userProfile_userProfile_user_cards {
   __typename: "CardType";
   id: string;
+  caption: string;
   likeCount: number | null;
   commentCount: number | null;
   borderRadius: string;
@@ -907,6 +889,7 @@ export interface searchTerms_searchUsers {
 export interface searchTerms_searchCards_cards {
   __typename: "CardType";
   id: string;
+  caption: string;
   likeCount: number | null;
   commentCount: number | null;
   borderRadius: string;
@@ -1111,6 +1094,7 @@ export interface UserParts {
 export interface CardParts {
   __typename: "CardType";
   id: string;
+  caption: string;
   likeCount: number | null;
   commentCount: number | null;
   borderRadius: string;

@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { USER_FRAGMENT, CARD_FRAGMENT } from "src/sharedQueries";
+import { USER_FRAGMENT } from "src/sharedQueries";
 
 export const EXPLORE_QUERY = gql`
   query explore {
@@ -8,12 +8,6 @@ export const EXPLORE_QUERY = gql`
         ...UserParts
       }
     }
-    latestCards {
-      cards {
-        ...CardParts
-      }
-    }
   }
   ${USER_FRAGMENT}
-  ${CARD_FRAGMENT}
 `;
