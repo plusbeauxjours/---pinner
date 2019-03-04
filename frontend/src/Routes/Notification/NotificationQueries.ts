@@ -68,3 +68,11 @@ export const GET_MOVE_NOTIFICATION = gql`
     }
   }
 `;
+
+export const MARK_AS_READ = gql`
+  mutation MarkAsRead($notificationId: Int!) {
+    markAsRead(notificationId: $notificationId) {
+      ok
+    }
+  }
+`;

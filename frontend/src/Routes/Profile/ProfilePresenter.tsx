@@ -191,7 +191,6 @@ const ProfilePresenter: React.SFC<IProps> = ({
     const {
       userProfile: { user }
     } = data;
-    console.log(user.profile.currentCountry.countrycode);
     return (
       <>
         {modalOpen && (

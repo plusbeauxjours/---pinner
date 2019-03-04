@@ -85,9 +85,9 @@ class CompletePhoneVerification(graphene.Mutation):
             )
 
             try:
-                exstingUserProfile = users_models.Profile.objects.get(phoneNumber=phoneNumber)
-                if (exstingUserProfile.verifiedPhoneNumber == False):
-                    exstingUserProfile.verifiedPhoneNumber == True
+                exstingUserProfile = users_models.Profile.objects.get(phone_number=phoneNumber)
+                if (exstingUserProfile.verified_phone_number == False):
+                    exstingUserProfile.verified_phone_number == True
                     exstingUserProfile.save()
                 token = get_token(exstingUserProfile.user)
                 return types.CompletePhoneVerificationResponse(ok=True, token=token)
@@ -101,9 +101,9 @@ class CompletePhoneVerification(graphene.Mutation):
                 token = get_token(newUser)
                 newUserProfile = users_models.Profile.objects.create(
                     user=newUser,
-                    phoneNumber=phoneNumber
+                    phone_number=phoneNumber
                 )
-                newUserProfile.verifiedPhoneNumber = True
+                newUserProfile.verified_phone_number = True
                 newUserProfile.save()
                 return types.CompletePhoneVerificationResponse(ok=True, token=token)
 

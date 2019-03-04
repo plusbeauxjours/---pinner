@@ -6,7 +6,6 @@ import { keyframes } from "styled-components";
 import styled from "../../Styles/typed-components";
 
 import { Phone } from "../../Icons";
-import PhoneImage from "../../Images/phone.png";
 
 import Wrapper from "../../Components/Wrapper";
 import LogIn from "../../Components/LogIn";
@@ -21,10 +20,6 @@ const Container = styled(Wrapper)`
   align-items: center;
   margin-top: 125px;
   max-width: 745px;
-`;
-
-const Image = styled.img`
-  max-width: 360px;
 `;
 
 const Box = styled.div`
@@ -146,7 +141,6 @@ const HomePresenter: React.SFC<IProps> = ({
         </ModalContainer>
       )}
       <Container>
-        <Image src={PhoneImage} />
         <Column>
           <FormBox>{isLogIn ? <LogIn /> : <SignUp />}</FormBox>
           <SwitchBox>

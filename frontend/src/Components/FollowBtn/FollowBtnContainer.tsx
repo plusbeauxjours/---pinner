@@ -27,7 +27,6 @@ class FollowBtnContainer extends React.Component<any, IState> {
   public render() {
     const { isFollowing } = this.state;
     const { userId, username, cityname } = this.props;
-    console.log(this.props);
     return (
       <FollowMutation
         mutation={FOLLOW_USER}

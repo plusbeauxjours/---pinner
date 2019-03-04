@@ -74,11 +74,13 @@ interface IProps {
   notification: any;
   actor: any;
   loading: boolean;
+  onMarkRead: any;
 }
 const NotificationRow: React.SFC<IProps> = ({
   notification,
   actor,
-  loading
+  loading,
+  onMarkRead
 }) => {
   if (loading) {
     return <Loader />;
@@ -91,7 +93,8 @@ const NotificationRow: React.SFC<IProps> = ({
               return (
                 <>
                   <Link to={`/${notification.actor.username}`}>
-                    <FContainer>
+                    <FContainer onClick={() => onMarkRead(notification.id)}>
+                      {console.log(notification.id)}
                       <UserHeader
                         username={notification.actor.username}
                         currentCity={actor.currentCity.cityname}
@@ -140,7 +143,7 @@ const NotificationRow: React.SFC<IProps> = ({
               return (
                 <>
                   <Link
-                    key={notification!.payload!.id}
+                    key={notification.payload.id}
                     to={{
                       pathname: `/p/${notification.payload.id}`,
                       state: { modalOpen: true }

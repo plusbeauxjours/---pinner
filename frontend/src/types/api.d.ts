@@ -706,6 +706,27 @@ export interface GetMoveNotificationsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: MarkAsRead
+// ====================================================
+
+export interface MarkAsRead_markAsRead {
+  __typename: "MarkAsReadResponse";
+  ok: boolean | null;
+}
+
+export interface MarkAsRead {
+  markAsRead: MarkAsRead_markAsRead;
+}
+
+export interface MarkAsReadVariables {
+  notificationId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: StartPhoneVerification
 // ====================================================
 

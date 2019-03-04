@@ -18,6 +18,7 @@ interface IProps {
   className?: string;
   modalOpen: boolean;
   toggleModal: () => void;
+  onMarkRead: any;
 }
 
 const NotificationPresenter: React.SFC<IProps> = ({
@@ -28,12 +29,12 @@ const NotificationPresenter: React.SFC<IProps> = ({
     getMoveNotifications: { notifications: getMoveNotifications = null } = {}
   } = {},
   loading,
-  modalOpen
+  modalOpen,
+  onMarkRead
 }) => {
   if (loading) {
     return <Loader />;
   } else if (!loading && getNotifications && getMoveNotifications) {
-    console.log(getNotifications, getMoveNotifications);
     return (
       <>
         {modalOpen && <Route path="/p/:id" component={CardDetail} />}
@@ -46,6 +47,7 @@ const NotificationPresenter: React.SFC<IProps> = ({
                   key={notification.id}
                   notification={notification}
                   actor={notification.actor.profile}
+                  onMarkRead={onMarkRead}
                   loading={loading}
                 />
               );
@@ -60,6 +62,7 @@ const NotificationPresenter: React.SFC<IProps> = ({
                   key={notification.id}
                   notification={notification}
                   actor={notification.actor.profile}
+                  onMarkRead={onMarkRead}
                   loading={loading}
                 />
               );
