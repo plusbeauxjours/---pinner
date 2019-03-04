@@ -11,22 +11,23 @@ const SWrapper = styled(Wrapper)`
 interface IProps {
   data?: any;
   loading: boolean;
-  countryname: string;
+  cityname: string;
 }
 
-const FeedByLocationPresenter: React.SFC<IProps> = ({
+const FeedByCityPresenter: React.SFC<IProps> = ({
   data,
   loading,
-  countryname
+  cityname
 }) => {
   if (loading) {
     return <Loader />;
   } else if (!loading && data) {
     console.log(data);
-    const { feedByLocation: { cards = {} } = {} } = data;
+    const { feedByCity: { cards = {} } = {} } = data;
     return (
       <SWrapper>
-        <h2>{countryname}</h2>
+        <h2>{cityname}</h2>
+
         {cards &&
           cards.map(card => (
             <Photo
@@ -53,4 +54,4 @@ const FeedByLocationPresenter: React.SFC<IProps> = ({
   }
 };
 
-export default FeedByLocationPresenter;
+export default FeedByCityPresenter;

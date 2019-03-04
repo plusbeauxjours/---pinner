@@ -28,17 +28,17 @@ def resolve_feed(self, info, **kwargs):
 
 
 @login_required
-def resolve_feed_by_location(self, info, **kwargs):
+def resolve_feed_by_city(self, info, **kwargs):
 
     user = info.context.user
-    countryname = kwargs.get('countryname')
+    cityname = kwargs.get('cityname')
     page = kwargs.get('page', 0)
     offset = 5 * page
 
-    cards = models.Card.objects.filter(country__countryname=countryname).order_by(
+    cards = models.Card.objects.filter(city__cityname=cityname).order_by(
         '-created_at')[offset:5 + offset]
 
-    return types.FeedByLocationResponse(cards=cards)
+    return types.FeedByCityResponse(cards=cards)
 
 
 @login_required

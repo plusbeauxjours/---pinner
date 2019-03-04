@@ -17,7 +17,7 @@ import Footprint from "../Routes/Footprint";
 
 import VerifyPhone from "../Routes/VerifyPhone";
 import PhoneLogin from "../Routes/PhoneLogin";
-import FeedByLocation from "../Routes/FeedByLocation";
+import FeedByCity from "../Routes/FeedByCity";
 import UpLoad from "../Routes/UpLoad";
 
 import Explore from "../Routes/Explore";
@@ -40,7 +40,7 @@ const LoggedInPages = () => (
       <Route path="/explore" component={Explore} />
       <Route path="/location" exact={true} component={Location} />
       <Route path="/notification" component={Notification} />
-      <Route path="/location/:countryname" component={FeedByLocation} />
+      <Route path="/location/:cityname" component={FeedByCity} />
       <Route path="/:username/footprint" exact={true} component={Footprint} />
       <Route path="/:username" component={Profile} />
       <Redirect from="*" to="/" />

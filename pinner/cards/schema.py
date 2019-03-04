@@ -13,12 +13,12 @@ class Query(object):
             'page': graphene.Int(),
         }
     )
-    feed_by_location = graphene.Field(
-        types.FeedByLocationResponse,
-        resolver=queries.resolve_feed_by_location,
+    feed_by_city = graphene.Field(
+        types.FeedByCityResponse,
+        resolver=queries.resolve_feed_by_city,
         required=True,
         args={
-            'countryname': graphene.String(required=True),
+            'cityname': graphene.String(required=True),
             'page': graphene.Int()
         }
     )

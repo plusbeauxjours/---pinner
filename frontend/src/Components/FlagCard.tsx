@@ -39,17 +39,17 @@ const FlagCard: React.SFC<IProps> = ({
   cityname
 }) => {
   return (
-    <Container>
-      <SBold text={cityname} />
-      <Link to={`/location/${countryname}`}>
+    <Link to={`/location/${cityname}`}>
+      <Container>
+        <SBold text={cityname} />
         <Metric>
           <SFlag
             countrycode={require(`../Images/countryFlag/${countrycode}.svg`)}
             size="sm"
           />
         </Metric>
-      </Link>
-    </Container>
+      </Container>
+    </Link>
   );
 };
 export default FlagCard;

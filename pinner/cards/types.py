@@ -38,7 +38,7 @@ class FeedResponse(graphene.ObjectType):
     cards = graphene.List(CardType)
 
 
-class FeedByLocationResponse(graphene.ObjectType):
+class FeedByCityResponse(graphene.ObjectType):
     cards = graphene.List(CardType)
 
 

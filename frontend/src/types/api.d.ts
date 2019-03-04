@@ -368,20 +368,20 @@ export interface FeedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: FeedByLocaion
+// GraphQL query operation: FeedByCity
 // ====================================================
 
-export interface FeedByLocaion_feedByLocation_cards_country {
+export interface FeedByCity_feedByCity_cards_country {
   __typename: "CountryType";
   countryname: string | null;
 }
 
-export interface FeedByLocaion_feedByLocation_cards_city {
+export interface FeedByCity_feedByCity_cards_city {
   __typename: "CityType";
   cityname: string | null;
 }
 
-export interface FeedByLocaion_feedByLocation_cards_comments_creator {
+export interface FeedByCity_feedByCity_cards_comments_creator {
   __typename: "UserType";
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
@@ -389,54 +389,54 @@ export interface FeedByLocaion_feedByLocation_cards_comments_creator {
   username: string;
 }
 
-export interface FeedByLocaion_feedByLocation_cards_comments {
+export interface FeedByCity_feedByCity_cards_comments {
   __typename: "CommentType";
   id: string;
   message: string;
-  creator: FeedByLocaion_feedByLocation_cards_comments_creator | null;
+  creator: FeedByCity_feedByCity_cards_comments_creator | null;
 }
 
-export interface FeedByLocaion_feedByLocation_cards_creator_profile {
+export interface FeedByCity_feedByCity_cards_creator_profile {
   __typename: "ProfileType";
   avatar: string;
 }
 
-export interface FeedByLocaion_feedByLocation_cards_creator {
+export interface FeedByCity_feedByCity_cards_creator {
   __typename: "UserType";
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
-  profile: FeedByLocaion_feedByLocation_cards_creator_profile | null;
+  profile: FeedByCity_feedByCity_cards_creator_profile | null;
 }
 
-export interface FeedByLocaion_feedByLocation_cards {
+export interface FeedByCity_feedByCity_cards {
   __typename: "CardType";
   id: string;
   file: string | null;
   caption: string;
-  country: FeedByLocaion_feedByLocation_cards_country | null;
-  city: FeedByLocaion_feedByLocation_cards_city | null;
+  country: FeedByCity_feedByCity_cards_country | null;
+  city: FeedByCity_feedByCity_cards_city | null;
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;
   createdAt: string | null;
-  comments: (FeedByLocaion_feedByLocation_cards_comments | null)[] | null;
-  creator: FeedByLocaion_feedByLocation_cards_creator;
+  comments: (FeedByCity_feedByCity_cards_comments | null)[] | null;
+  creator: FeedByCity_feedByCity_cards_creator;
 }
 
-export interface FeedByLocaion_feedByLocation {
-  __typename: "FeedByLocationResponse";
-  cards: (FeedByLocaion_feedByLocation_cards | null)[] | null;
+export interface FeedByCity_feedByCity {
+  __typename: "FeedByCityResponse";
+  cards: (FeedByCity_feedByCity_cards | null)[] | null;
 }
 
-export interface FeedByLocaion {
-  feedByLocation: FeedByLocaion_feedByLocation;
+export interface FeedByCity {
+  feedByCity: FeedByCity_feedByCity;
 }
 
-export interface FeedByLocaionVariables {
+export interface FeedByCityVariables {
   page: number;
-  countryname: string;
+  cityname: string;
 }
 
 
@@ -529,30 +529,6 @@ export interface GetCities_getCities {
 
 export interface GetCities {
   getCities: GetCities_getCities;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetCountries
-// ====================================================
-
-export interface GetCountries_getCountries_countries {
-  __typename: "CountryType";
-  id: string;
-  countryname: string | null;
-  countrycode: string | null;
-}
-
-export interface GetCountries_getCountries {
-  __typename: "CountriesResponse";
-  countries: (GetCountries_getCountries_countries | null)[] | null;
-}
-
-export interface GetCountries {
-  getCountries: GetCountries_getCountries;
 }
 
 

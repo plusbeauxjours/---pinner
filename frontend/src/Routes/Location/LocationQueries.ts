@@ -15,15 +15,3 @@ export const GET_CITY = gql`
     }
   }
 `;
-
-export const GET_COUNTRY = gql`
-  query GetCountries {
-    getCountries {
-      countries {
-        id
-        countryname
-        countrycode
-      }
-    }
-  }
-`;
