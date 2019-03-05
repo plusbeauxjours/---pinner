@@ -28,9 +28,9 @@ const Blob = styled.div<ITheme>`
 const Caption = styled.div<ITheme>`
   z-index: 2;
   position: absolute;
-  font: ${props => props.fontColor || "Roboto"};
+  font-family: ${props => props.fontFamily || "Roboto"};
   color: ${props => props.fontColor || "#2F5567"};
-  font-size: ${props => props.fontSize || "20px"};
+  font-size: ${props => props.fontSize || "40px"};
   font-weight: 200;
   text-align: center;
   text-transform: capitalize;
@@ -76,7 +76,7 @@ const CountNumber = styled.div`
 interface ITheme {
   borderRadius?: string;
   bgColor?: string;
-  font?: string;
+  fontFamily?: string;
   fontColor?: string;
   fontSize?: string;
   file?: string;
@@ -104,13 +104,8 @@ const BlobCard: React.SFC<IProps> = ({
 }) => (
   <Link to={`/p/${id}`}>
     <BlobWrapper>
-      <Blob
-        borderRadius={borderRadius}
-        file={
-          "http://pet.chosun.com/images/news/healthchosun_pet_201802/20180205193238_1635_4749_2414.jpg"
-        }
-      >
-        <Caption>{caption}</Caption>
+      <Blob borderRadius={borderRadius}>
+        <Caption fontFamily={"Qwigley"}>{caption}</Caption>
         <Overlay borderRadius={borderRadius}>
           <Count>
             <HeartFilled />

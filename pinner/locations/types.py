@@ -37,3 +37,8 @@ class FootprintsResponse(graphene.ObjectType):
 
 class ReportLocationResponse(graphene.ObjectType):
     ok = graphene.Boolean()
+
+
+class GetUsersByCityResponse(graphene.ObjectType):
+    users = graphene.List(LocationLogType)
+    ok = graphene.Boolean()

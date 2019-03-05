@@ -94,7 +94,6 @@ const NotificationRow: React.SFC<IProps> = ({
                 <>
                   <Link to={`/${notification.actor.username}`}>
                     <FContainer onClick={() => onMarkRead(notification.id)}>
-                      {console.log(notification.id)}
                       <UserHeader
                         username={notification.actor.username}
                         currentCity={actor.currentCity.cityname}

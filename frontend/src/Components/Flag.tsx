@@ -26,7 +26,6 @@ const SFlag = styled.img<IProps>`
       return "30px";
     }
   }};
-  display: flex;
   background-position: center center;
   background-size: 100%;
   border-radius: 50%;

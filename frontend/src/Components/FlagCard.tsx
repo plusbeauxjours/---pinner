@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 import Flag from "../Components/Flag";
 import Bold from "../Components/Bold";
 
-const Container = styled.div`
+const SLink = styled(Link)`
   display: flex;
+  flex-direction: column-reverse;
   background-color: white;
   border-radius: 3px;
   border: ${props => props.theme.boxBorder};
@@ -17,7 +18,7 @@ const SFlag = styled(Flag)`
 
 const SBold = styled(Bold)`
   display: flex;
-  align-items: center;
+  align-self: center;
 `;
 
 const Metric = styled.div`
@@ -39,17 +40,15 @@ const FlagCard: React.SFC<IProps> = ({
   cityname
 }) => {
   return (
-    <Link to={`/location/${cityname}`}>
-      <Container>
-        <SBold text={cityname} />
-        <Metric>
-          <SFlag
-            countrycode={require(`../Images/countryFlag/${countrycode}.svg`)}
-            size="sm"
-          />
-        </Metric>
-      </Container>
-    </Link>
+    <SLink to={`/city/${cityname}`}>
+      <Metric>
+        <SFlag
+          countrycode={require(`../Images/countryFlag/${countrycode}.svg`)}
+          size="sm"
+        />
+      </Metric>
+      <SBold text={cityname} />
+    </SLink>
   );
 };
 export default FlagCard;

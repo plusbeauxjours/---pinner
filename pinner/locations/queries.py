@@ -31,3 +31,14 @@ def resolve_get_footprints(self, info, **kwargs):
     footprints = user.locationlogs.all().order_by('-created_at')[offset:10 + offset]
 
     return types.FootprintsResponse(footprints=footprints)
+
+
+@login_required
+def resolve_get_users_by_city(self, info, **kwargs):
+
+    user = info.context.user
+    currentCity = kwargs.get('currentCity')
+
+    users = models.LocationLog.objects.filter(city__cityname=currentCity).order_by('-creator').distinct('creator')
+
+    return types.GetUsersByCityResponse(ok=True, users=users)
