@@ -9,25 +9,32 @@ const SWrapper = styled(Wrapper)`
 `;
 
 interface IProps {
-  data?: any;
+  getUserData?: any;
+  getFeedData?: any;
   loading: boolean;
   cityname: string;
 }
 
 const FeedByCityPresenter: React.SFC<IProps> = ({
-  data,
+  getUserData,
+  getFeedData,
   loading,
   cityname
 }) => {
   if (loading) {
     return <Loader />;
-  } else if (!loading && data) {
-    console.log(data);
-    const { feedByCity: { cards = {} } = {} } = data;
+  } else if (!loading && getUserData && getFeedData) {
+    console.log(getUserData, getFeedData);
+
+    const { feedByCity: { cards = {} } = {} } = getFeedData;
+    const { getUsersByCity: { locationLogs = {} } = {} } = getUserData;
     return (
       <SWrapper>
         <h2>{cityname}</h2>
-
+        {locationLogs &&
+          locationLogs.map(locationLog => (
+            <p>{locationLog.creator.username}</p>
+          ))}
         {cards &&
           cards.map(card => (
             <Photo

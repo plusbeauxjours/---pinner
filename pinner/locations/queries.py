@@ -37,8 +37,9 @@ def resolve_get_footprints(self, info, **kwargs):
 def resolve_get_users_by_city(self, info, **kwargs):
 
     user = info.context.user
-    currentCity = kwargs.get('currentCity')
+    cityname = kwargs.get('cityname')
 
-    users = models.LocationLog.objects.filter(city__cityname=currentCity).order_by('-creator').distinct('creator')
+    location_logs = models.LocationLog.objects.filter(
+        city__cityname=cityname).order_by('-creator').distinct('creator')
 
-    return types.GetUsersByCityResponse(ok=True, users=users)
+    return types.GetUsersByCityResponse(ok=True, location_logs=location_logs)

@@ -444,6 +444,46 @@ export interface FeedByCityVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetUsersByCity
+// ====================================================
+
+export interface GetUsersByCity_getUsersByCity_locationLogs_creator_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface GetUsersByCity_getUsersByCity_locationLogs_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: GetUsersByCity_getUsersByCity_locationLogs_creator_profile | null;
+}
+
+export interface GetUsersByCity_getUsersByCity_locationLogs {
+  __typename: "LocationLogType";
+  creator: GetUsersByCity_getUsersByCity_locationLogs_creator | null;
+}
+
+export interface GetUsersByCity_getUsersByCity {
+  __typename: "GetUsersByCityResponse";
+  locationLogs: (GetUsersByCity_getUsersByCity_locationLogs | null)[] | null;
+}
+
+export interface GetUsersByCity {
+  getUsersByCity: GetUsersByCity_getUsersByCity;
+}
+
+export interface GetUsersByCityVariables {
+  cityname: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetFootprints
 // ====================================================
 

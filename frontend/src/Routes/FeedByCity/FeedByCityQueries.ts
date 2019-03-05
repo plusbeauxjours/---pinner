@@ -11,3 +11,18 @@ export const GET_FEED_BY_CITY = gql`
   }
   ${DETAIL_CARD_FRAGMENT}
 `;
+
+export const GET_USERS_BY_CITY = gql`
+  query GetUsersByCity($cityname: String!) {
+    getUsersByCity(cityname: $cityname) {
+      locationLogs {
+        creator {
+          username
+          profile {
+            avatar
+          }
+        }
+      }
+    }
+  }
+`;

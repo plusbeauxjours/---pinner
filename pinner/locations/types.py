@@ -40,5 +40,5 @@ class ReportLocationResponse(graphene.ObjectType):
 
 
 class GetUsersByCityResponse(graphene.ObjectType):
-    users = graphene.List(LocationLogType)
+    location_logs = graphene.List(LocationLogType)
     ok = graphene.Boolean()

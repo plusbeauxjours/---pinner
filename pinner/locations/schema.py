@@ -24,7 +24,7 @@ class Query(object):
         types.GetUsersByCityResponse,
         resolver=queries.resolve_get_users_by_city,
         required=True,
-        args={'currentCity': graphene.String(required=True)}
+        args={'cityname': graphene.String(required=True)}
     )
 
 
