@@ -20,12 +20,6 @@ class Query(object):
         resolver=queries.resolve_get_footprints,
         required=True
     )
-    get_users_by_city = graphene.Field(
-        types.GetUsersByCityResponse,
-        resolver=queries.resolve_get_users_by_city,
-        required=True,
-        args={'cityname': graphene.String(required=True)}
-    )
 
 
 class Mutation(object):

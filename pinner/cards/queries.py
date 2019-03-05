@@ -1,6 +1,7 @@
 from django.db import IntegrityError
 from . import types, models
 from graphql_jwt.decorators import login_required
+from django.contrib.auth.models import User
 
 
 @login_required
@@ -38,7 +39,9 @@ def resolve_feed_by_city(self, info, **kwargs):
     cards = models.Card.objects.filter(city__cityname=cityname).order_by(
         '-created_at')[offset:5 + offset]
 
-    return types.FeedByCityResponse(cards=cards)
+    users = User.objects.filter(
+        profile__current_city__cityname=cityname).order_by('-username').distinct('username')[:3]
+    return types.FeedByCityResponse(cards=cards, users=users)
 
 
 @login_required

@@ -425,9 +425,25 @@ export interface FeedByCity_feedByCity_cards {
   creator: FeedByCity_feedByCity_cards_creator;
 }
 
+export interface FeedByCity_feedByCity_users_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface FeedByCity_feedByCity_users {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: FeedByCity_feedByCity_users_profile | null;
+}
+
 export interface FeedByCity_feedByCity {
   __typename: "FeedByCityResponse";
   cards: (FeedByCity_feedByCity_cards | null)[] | null;
+  users: (FeedByCity_feedByCity_users | null)[] | null;
 }
 
 export interface FeedByCity {
@@ -436,46 +452,6 @@ export interface FeedByCity {
 
 export interface FeedByCityVariables {
   page: number;
-  cityname: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetUsersByCity
-// ====================================================
-
-export interface GetUsersByCity_getUsersByCity_locationLogs_creator_profile {
-  __typename: "ProfileType";
-  avatar: string;
-}
-
-export interface GetUsersByCity_getUsersByCity_locationLogs_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: GetUsersByCity_getUsersByCity_locationLogs_creator_profile | null;
-}
-
-export interface GetUsersByCity_getUsersByCity_locationLogs {
-  __typename: "LocationLogType";
-  creator: GetUsersByCity_getUsersByCity_locationLogs_creator | null;
-}
-
-export interface GetUsersByCity_getUsersByCity {
-  __typename: "GetUsersByCityResponse";
-  locationLogs: (GetUsersByCity_getUsersByCity_locationLogs | null)[] | null;
-}
-
-export interface GetUsersByCity {
-  getUsersByCity: GetUsersByCity_getUsersByCity;
-}
-
-export interface GetUsersByCityVariables {
   cityname: string;
 }
 

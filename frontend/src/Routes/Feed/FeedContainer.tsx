@@ -64,9 +64,6 @@ class FeedContainer extends React.Component<IProps, IState> {
           page,
           cityname: currentCity
         }}
-        onCompleted={() => {
-          console.log("mutationFn");
-        }}
       >
         {({ data, loading }) => (
           <ReportLocationMutation

@@ -7,22 +7,14 @@ export const GET_FEED_BY_CITY = gql`
       cards {
         ...DetailParts
       }
-    }
-  }
-  ${DETAIL_CARD_FRAGMENT}
-`;
-
-export const GET_USERS_BY_CITY = gql`
-  query GetUsersByCity($cityname: String!) {
-    getUsersByCity(cityname: $cityname) {
-      locationLogs {
-        creator {
-          username
-          profile {
-            avatar
-          }
+      users {
+        id
+        username
+        profile {
+          avatar
         }
       }
     }
   }
+  ${DETAIL_CARD_FRAGMENT}
 `;

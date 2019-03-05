@@ -3,38 +3,52 @@ import Loader from "../../Components/Loader";
 import Photo from "../../Components/Photo";
 import Wrapper from "../../Components/Wrapper";
 import styled from "../../Styles/typed-components";
+import Avatar from "../../Components/Avatar";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
 `;
 
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+
+  margin: 30px;
+`;
+
+const SAvatar = styled(Avatar)`
+  margin: 3px;
+`;
+
 interface IProps {
-  getUserData?: any;
-  getFeedData?: any;
+  data?: any;
   loading: boolean;
   cityname: string;
 }
 
 const FeedByCityPresenter: React.SFC<IProps> = ({
-  getUserData,
-  getFeedData,
+  data,
   loading,
   cityname
 }) => {
   if (loading) {
     return <Loader />;
-  } else if (!loading && getUserData && getFeedData) {
-    console.log(getUserData, getFeedData);
+  } else if (!loading && data) {
+    console.log(data);
 
-    const { feedByCity: { cards = {} } = {} } = getFeedData;
-    const { getUsersByCity: { locationLogs = {} } = {} } = getUserData;
+    const { feedByCity: { cards = {}, users = {} } = {} } = data;
     return (
       <SWrapper>
         <h2>{cityname}</h2>
-        {locationLogs &&
-          locationLogs.map(locationLog => (
-            <p>{locationLog.creator.username}</p>
-          ))}
+        <Container>
+          {users &&
+            users.map(user => (
+              <SAvatar size={"sm"} key={user.id} url={user.profile.avatar}>
+                {user.username}
+              </SAvatar>
+            ))}
+        </Container>
+
         {cards &&
           cards.map(card => (
             <Photo

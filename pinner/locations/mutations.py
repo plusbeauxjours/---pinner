@@ -53,6 +53,7 @@ class ReportLocation(graphene.Mutation):
 
                         profile.current_city = existing_city
                         profile.save()
+
                         notification_models.MoveNotification.objects.create(
                             actor=user,
                             verb="move",
@@ -87,6 +88,7 @@ class ReportLocation(graphene.Mutation):
                             city=profile.current_city,
                             country=profile.current_country
                         )
+                        return types.ReportLocationResponse(ok=True)
 
                 except:
                     new_country = models.Country.objects.create(

@@ -2,6 +2,7 @@ import graphene
 from graphene_django.types import DjangoObjectType
 from . import models
 from config import types as config_types
+from users import types as users_types
 
 
 class CardType(DjangoObjectType):
@@ -40,6 +41,7 @@ class FeedResponse(graphene.ObjectType):
 
 class FeedByCityResponse(graphene.ObjectType):
     cards = graphene.List(CardType)
+    users = graphene.List(users_types.UserType)
 
 
 class LikeCardResponse(graphene.ObjectType):
