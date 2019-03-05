@@ -69,6 +69,7 @@ const FeedPresenter: React.SFC<IProps> = ({
                   comments={card.comments}
                   createdAt={card.createdAt}
                   isLiked={card.isLiked}
+                  borderRadius={card.borderRadius}
                 />
               </>
             );

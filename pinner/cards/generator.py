@@ -25,3 +25,8 @@ def generatePercentage(min=25, max=75):
     )
     print(borderRadius)
     return borderRadius
+
+
+def generateFontFamily():
+    print('')
+    return ""

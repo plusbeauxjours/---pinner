@@ -2,7 +2,7 @@ import React from "react";
 import Loader from "src/Components/Loader";
 import Wrapper from "src/Components/Wrapper";
 import Photo from "src/Components/Photo";
-import { cardDetail } from "src/types/api";
+import { CardDetail } from "src/types/api";
 import styled from "styled-components";
 import { keyframes } from "styled-components";
 
@@ -44,7 +44,7 @@ const Modal = styled.div`
 `;
 
 interface IProps {
-  data: cardDetail;
+  data: CardDetail;
   loading: boolean;
   back: any;
 }
@@ -76,6 +76,11 @@ const CardDetailPresenter: React.SFC<IProps> = ({ data, loading, back }) => {
               comments={card.comments}
               createdAt={card.createdAt}
               isLiked={card.isLiked}
+              borderRadius={card.borderRadius}
+              bgColor={card.bgColor}
+              font={card.font}
+              fontColor={card.fontColor}
+              fontSize={card.fontSize}
             />
           </Wrapper>
         </Modal>

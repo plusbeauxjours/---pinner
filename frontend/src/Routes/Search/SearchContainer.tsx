@@ -1,11 +1,11 @@
 import React from "react";
 import SearchPresenter from "./SearchPresenter";
 import { Query } from "react-apollo";
-import { searchTerms, searchTermsVariables } from "../../types/api";
+import { SearchTerms, SearchTermsVariables } from "../../types/api";
 import { withRouter, RouteComponentProps } from "react-router";
 import { SEARCH } from "./SearchQueries";
 
-class SearchQuery extends Query<searchTerms, searchTermsVariables> {}
+class SearchQuery extends Query<SearchTerms, SearchTermsVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
 

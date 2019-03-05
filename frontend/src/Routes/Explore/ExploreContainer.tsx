@@ -2,9 +2,9 @@ import React from "react";
 import ExplorePresenter from "./ExplorePresenter";
 import { Query } from "react-apollo";
 import { EXPLORE_QUERY } from "./ExploreQueries";
-import { explore } from "src/types/api";
+import { Explore } from "src/types/api";
 
-class ExploreQuery extends Query<explore> {}
+class ExploreQuery extends Query<Explore> {}
 
 class ExploreContainer extends React.Component<any> {
   public render = () => {

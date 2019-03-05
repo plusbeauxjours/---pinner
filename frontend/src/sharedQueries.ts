@@ -72,5 +72,10 @@ export const DETAIL_CARD_FRAGMENT = gql`
         avatar
       }
     }
+    borderRadius
+    bgColor
+    font
+    fontColor
+    fontSize
   }
 `;

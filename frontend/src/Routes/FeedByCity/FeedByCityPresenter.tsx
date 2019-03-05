@@ -4,6 +4,7 @@ import Photo from "../../Components/Photo";
 import Wrapper from "../../Components/Wrapper";
 import styled from "../../Styles/typed-components";
 import Avatar from "../../Components/Avatar";
+import { Link } from "react-router-dom";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -43,9 +44,9 @@ const FeedByCityPresenter: React.SFC<IProps> = ({
         <Container>
           {users &&
             users.map(user => (
-              <SAvatar size={"sm"} key={user.id} url={user.profile.avatar}>
-                {user.username}
-              </SAvatar>
+              <Link to={`/${user.username}`}>
+                <SAvatar size={"sm"} key={user.id} url={user.profile.avatar} />
+              </Link>
             ))}
         </Container>
 
@@ -66,6 +67,7 @@ const FeedByCityPresenter: React.SFC<IProps> = ({
               comments={card.comments}
               createdAt={card.createdAt}
               isLiked={card.isLiked}
+              borderRadius={card.borderRadius}
             />
           ))}
       </SWrapper>

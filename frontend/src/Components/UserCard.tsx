@@ -50,17 +50,10 @@ interface IProps {
   id: string;
   avatar?: string;
   username: string;
-  cityname: string;
   isFollowing: boolean;
 }
 
-const UserCard: React.SFC<IProps> = ({
-  id,
-  avatar,
-  username,
-  cityname,
-  isFollowing
-}) => {
+const UserCard: React.SFC<IProps> = ({ id, avatar, username, isFollowing }) => {
   return (
     <BlobWrapper>
       <Blob borderRadius={"46% 54% 69% 31% / 30% 49% 51% 70%"}>
@@ -68,12 +61,7 @@ const UserCard: React.SFC<IProps> = ({
         <Link to={`/${username}`}>
           <SBold text={username} />
         </Link>
-        <FollowBtn
-          isFollowing={isFollowing}
-          userId={id}
-          username={username}
-          cityname={cityname}
-        />
+        <FollowBtn isFollowing={isFollowing} userId={id} username={username} />
       </Blob>
     </BlobWrapper>
   );

@@ -83,15 +83,15 @@ interface ITheme {
 }
 
 interface IProps {
-  id: string;
-  caption: string;
-  likeCount: number;
-  commentCount: number;
-  borderRadius: string;
-  bgColor: string;
-  font: string;
-  fontColor: string;
-  fontSize: string;
+  id?: string;
+  caption?: string;
+  likeCount?: number;
+  commentCount?: number;
+  borderRadius?: string;
+  bgColor?: string;
+  font?: string;
+  fontColor?: string;
+  fontSize?: string;
   file?: string;
 }
 

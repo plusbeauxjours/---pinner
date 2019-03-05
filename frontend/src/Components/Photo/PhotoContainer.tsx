@@ -7,19 +7,19 @@ import { GET_USER } from "../../Routes/Profile/ProfileQueries";
 import { GET_NOTIFICATION } from "../../Routes/Notification/NotificationQueries";
 import { GET_FEED } from "../../Routes/Feed/FeedQueries";
 import {
-  likeCard,
-  likeCardVariables,
-  addComment,
-  addCommentVariables
+  LikeCard,
+  LikeCardVariables,
+  AddComment,
+  AddCommentVariables
 } from "src/types/api";
 import Me from "../Me";
 
-class AddCommentMutation extends Mutation<addComment, addCommentVariables> {}
+class AddCommentMutation extends Mutation<AddComment, AddCommentVariables> {}
 class DeleteCommentMutation extends Mutation<
   DeleteComment,
   DeleteCommentVariables
 > {}
-class ToggleLikeMutation extends Mutation<likeCard, likeCardVariables> {}
+class ToggleLikeMutation extends Mutation<LikeCard, LikeCardVariables> {}
 
 interface IProps {
   inline: boolean;
@@ -35,6 +35,11 @@ interface IProps {
   comments: any;
   isLiked: boolean;
   id: string;
+  borderRadius: string;
+  bgColor?: string;
+  font?: string;
+  fontColor?: string;
+  fontSize?: string;
 }
 
 interface IState {
@@ -75,7 +80,12 @@ class PhotoContainer extends React.Component<IProps, IState> {
       caption,
       createdAt,
       comments,
-      id
+      id,
+      borderRadius,
+      bgColor,
+      font,
+      fontColor,
+      fontSize
     } = this.props;
     const {
       newComment,
@@ -159,6 +169,11 @@ class PhotoContainer extends React.Component<IProps, IState> {
                               modalOpen={modalOpen}
                               toggleModal={this.toggleModal}
                               getCommentId={this.getCommentId}
+                              borderRadius={borderRadius}
+                              bgColor={bgColor}
+                              font={font}
+                              fontColor={fontColor}
+                              fontSize={fontSize}
                             />
                           );
                         }}

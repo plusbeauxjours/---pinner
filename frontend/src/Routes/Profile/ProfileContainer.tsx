@@ -1,7 +1,7 @@
 import React from "react";
 import ProfilePresenter from "./ProfilePresenter";
 import { Query, Mutation, MutationFn } from "react-apollo";
-import { userProfile, userProfileVariables } from "src/types/api";
+import { UserProfile, UserProfileVariables } from "src/types/api";
 import { GET_USER, EDIT_PROFILE, DELETE_PROFILE } from "./ProfileQueries";
 import { withRouter, RouteComponentProps } from "react-router";
 import { LOG_USER_OUT } from "src/sharedQueries.local";
@@ -12,7 +12,7 @@ import {
 } from "../../types/api";
 import { toast } from "react-toastify";
 
-class ProfileQuery extends Query<userProfile, userProfileVariables> {}
+class ProfileQuery extends Query<UserProfile, UserProfileVariables> {}
 class EditProfileMutation extends Mutation<EditProfile, EditProfileVariables> {}
 class DeleteProfileMutation extends Mutation<DeleteProfile> {}
 class LogOutMutation extends Mutation {}

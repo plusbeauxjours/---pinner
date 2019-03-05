@@ -63,7 +63,7 @@ const DetailContainer = styled.div`
   overflow: hidden;
   height: 600px;
   border: ${props => props.theme.boxBorder};
-  ${Meta} {
+  */ ${Meta} {
     flex-grow: 1;
     padding: 20px;
     overflow: scroll;
@@ -135,6 +135,15 @@ const ModalLink = styled.div`
   }
 `;
 
+// interface ITheme {
+//   borderRadius?: string;
+//   bgColor?: string;
+//   fontFamily?: string;
+//   fontColor?: string;
+//   fontSize?: string;
+//   file?: string;
+// }
+
 interface IProps {
   inline: boolean;
   creatorAvatar: string;
@@ -159,6 +168,11 @@ interface IProps {
   modalOpen: boolean;
   toggleModal: () => void;
   getCommentId: any;
+  borderRadius: string;
+  bgColor?: string;
+  font?: string;
+  fontColor?: string;
+  fontSize?: string;
 }
 
 const PhotoPresenter: React.SFC<IProps> = ({
@@ -183,7 +197,8 @@ const PhotoPresenter: React.SFC<IProps> = ({
   onSubmit,
   modalOpen,
   toggleModal,
-  getCommentId
+  getCommentId,
+  borderRadius
 }) => {
   if (inline) {
     return (

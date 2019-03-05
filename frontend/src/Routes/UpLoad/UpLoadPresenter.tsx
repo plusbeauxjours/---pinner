@@ -35,8 +35,9 @@ const ModalAnimation = keyframes`
 
 const Modal = styled.div`
   background-color: white;
-  border-radius: 50%;
-  width: 100;
+  border-radius: 44% 56% 46% 54% / 26% 74% 26% 74%;
+  width: 100%;
+  height: 50%;
   max-width: 935px;
   z-index: 5;
   animation: ${ModalAnimation} 0.1s linear;

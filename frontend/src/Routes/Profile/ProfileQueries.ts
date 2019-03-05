@@ -2,7 +2,7 @@ import { gql } from "apollo-boost";
 import { CARD_FRAGMENT } from "src/sharedQueries";
 
 export const GET_USER = gql`
-  query userProfile($username: String!) {
+  query UserProfile($username: String!) {
     userProfile(username: $username) {
       user {
         id
