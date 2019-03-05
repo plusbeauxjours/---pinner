@@ -6,15 +6,34 @@ import { Explore } from "src/types/api";
 
 class ExploreQuery extends Query<Explore> {}
 
-class ExploreContainer extends React.Component<any> {
+interface IState {
+  inline: boolean;
+}
+
+class ExploreContainer extends React.Component<any, IState> {
+  public state = {
+    inline: false
+  };
   public render = () => {
+    const { inline } = this.state;
     return (
       <ExploreQuery query={EXPLORE_QUERY} fetchPolicy="network-only">
         {({ data, loading }) => (
-          <ExplorePresenter data={data} loading={loading} />
+          <ExplorePresenter
+            data={data}
+            loading={loading}
+            inline={inline}
+            toggleInline={this.toggleInline}
+          />
         )}
       </ExploreQuery>
     );
+  };
+  public toggleInline = () => {
+    const { inline } = this.state;
+    this.setState({
+      inline: !inline
+    });
   };
 }
 

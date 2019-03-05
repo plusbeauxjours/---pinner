@@ -56,7 +56,7 @@ def resolve_card_likes(self, info, **kwargs):
         raise Exception('Card not found')
 
     likes = card.likes.all()
-    return types.PhotoLikeResponse(likes=likes)
+    return types.CardLikeResponse(likes=likes)
 
 
 @login_required

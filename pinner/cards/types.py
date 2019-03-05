@@ -48,6 +48,10 @@ class LikeCardResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
 
+class CardLikeResponse(graphene.ObjectType):
+    likes = graphene.List(LikeType)
+
+
 class AddCommentResponse(graphene.ObjectType):
     comment = graphene.Field(CommentType)
 
