@@ -5,6 +5,7 @@ import Bold from "./Bold";
 import { Link } from "react-router-dom";
 import FlagHeader from "./FlagHeader";
 import Loader from "src/Components/Loader";
+import { RedDot } from "src/Icons";
 
 const Container = styled.div`
   background-color: white;
@@ -48,6 +49,14 @@ const MHeader = styled(Header)`
   border-radius: 3px;
 `;
 
+const ICon = styled.div`
+  position: absolute;
+  svg {
+    margin-left: 10px;
+    fill: red;
+  }
+`;
+
 const Location = styled.span`
   margin-top: 5px;
   display: block;
@@ -75,12 +84,14 @@ interface IProps {
   actor: any;
   loading: boolean;
   onMarkRead: any;
+  isRead: boolean;
 }
 const NotificationRow: React.SFC<IProps> = ({
   notification,
   actor,
   loading,
-  onMarkRead
+  onMarkRead,
+  isRead
 }) => {
   if (loading) {
     return <Loader />;
@@ -93,6 +104,11 @@ const NotificationRow: React.SFC<IProps> = ({
               return (
                 <>
                   <Link to={`/${notification.actor.username}`}>
+                    {!isRead ? (
+                      <ICon>
+                        <RedDot />
+                      </ICon>
+                    ) : null}
                     <FContainer onClick={() => onMarkRead(notification.id)}>
                       <UserHeader
                         username={notification.actor.username}
@@ -118,7 +134,13 @@ const NotificationRow: React.SFC<IProps> = ({
                       pathname: `/p/${notification.payload.id}`,
                       state: { modalOpen: true }
                     }}
+                    onClick={() => onMarkRead(notification.id)}
                   >
+                    {!isRead ? (
+                      <ICon>
+                        <RedDot />
+                      </ICon>
+                    ) : null}
                     <Container>
                       <UserHeader
                         username={notification.actor.username}
@@ -150,7 +172,12 @@ const NotificationRow: React.SFC<IProps> = ({
                       state: { modalOpen: true }
                     }}
                   >
-                    <CLUContainer>
+                    {!isRead ? (
+                      <ICon>
+                        <RedDot />
+                      </ICon>
+                    ) : null}
+                    <CLUContainer onClick={() => onMarkRead(notification.id)}>
                       <UserHeader
                         username={notification.actor.username}
                         currentCity={actor.currentCity.cityname}
@@ -170,7 +197,12 @@ const NotificationRow: React.SFC<IProps> = ({
               return (
                 <>
                   <Link to={`/${notification.actor.username}`}>
-                    <MContainer>
+                    {!isRead ? (
+                      <ICon>
+                        <RedDot />
+                      </ICon>
+                    ) : null}
+                    <MContainer onClick={() => onMarkRead(notification.id)}>
                       <UserHeader
                         username={notification.actor.username}
                         currentCity={actor.currentCity.cityname}
@@ -206,7 +238,13 @@ const NotificationRow: React.SFC<IProps> = ({
                       pathname: `/p/${notification.payload.id}`,
                       state: { modalOpen: true }
                     }}
+                    onClick={() => onMarkRead(notification.id, isRead)}
                   >
+                    {!isRead ? (
+                      <ICon>
+                        <RedDot />
+                      </ICon>
+                    ) : null}
                     <CLUContainer>
                       <UserHeader
                         username={notification.actor.username}

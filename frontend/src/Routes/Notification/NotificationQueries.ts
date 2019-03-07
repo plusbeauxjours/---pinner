@@ -69,6 +69,7 @@ export const GET_MOVE_NOTIFICATION = gql`
           countryname
           countrycode
         }
+        read
         createdAt
       }
     }

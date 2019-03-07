@@ -646,10 +646,72 @@ export interface GetNotifictions_getNotifications_notifications {
   createdAt: string | null;
 }
 
+export interface GetNotifictions_getNotifications_moveNotifications_actor_profile_currentCity_country {
+  __typename: "CountryType";
+  countryname: string | null;
+}
+
+export interface GetNotifictions_getNotifications_moveNotifications_actor_profile_currentCity {
+  __typename: "CityType";
+  cityname: string | null;
+  country: GetNotifictions_getNotifications_moveNotifications_actor_profile_currentCity_country;
+}
+
+export interface GetNotifictions_getNotifications_moveNotifications_actor_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  currentCity: GetNotifictions_getNotifications_moveNotifications_actor_profile_currentCity | null;
+}
+
+export interface GetNotifictions_getNotifications_moveNotifications_actor {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: GetNotifictions_getNotifications_moveNotifications_actor_profile | null;
+}
+
+export interface GetNotifictions_getNotifications_moveNotifications_fromCity {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
+export interface GetNotifictions_getNotifications_moveNotifications_fromCountry {
+  __typename: "CountryType";
+  countryname: string | null;
+  countrycode: string | null;
+}
+
+export interface GetNotifictions_getNotifications_moveNotifications_toCity {
+  __typename: "CityType";
+  cityname: string | null;
+}
+
+export interface GetNotifictions_getNotifications_moveNotifications_toCountry {
+  __typename: "CountryType";
+  countryname: string | null;
+  countrycode: string | null;
+}
+
+export interface GetNotifictions_getNotifications_moveNotifications {
+  __typename: "MoveNotificationType";
+  id: string;
+  actor: GetNotifictions_getNotifications_moveNotifications_actor;
+  verb: MoveNotificationVerb;
+  fromCity: GetNotifictions_getNotifications_moveNotifications_fromCity | null;
+  fromCountry: GetNotifictions_getNotifications_moveNotifications_fromCountry | null;
+  toCity: GetNotifictions_getNotifications_moveNotifications_toCity | null;
+  toCountry: GetNotifictions_getNotifications_moveNotifications_toCountry | null;
+  read: boolean;
+  createdAt: string | null;
+}
+
 export interface GetNotifictions_getNotifications {
   __typename: "GetNotificationsResponse";
   ok: boolean | null;
   notifications: (GetNotifictions_getNotifications_notifications | null)[] | null;
+  moveNotifications: (GetNotifictions_getNotifications_moveNotifications | null)[] | null;
 }
 
 export interface GetNotifictions {
@@ -725,6 +787,7 @@ export interface GetMoveNotifications_getMoveNotifications_notifications {
   fromCountry: GetMoveNotifications_getMoveNotifications_notifications_fromCountry | null;
   toCity: GetMoveNotifications_getMoveNotifications_notifications_toCity | null;
   toCountry: GetMoveNotifications_getMoveNotifications_notifications_toCountry | null;
+  read: boolean;
   createdAt: string | null;
 }
 

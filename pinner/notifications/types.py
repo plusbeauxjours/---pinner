@@ -20,6 +20,7 @@ class MoveNotificationType(DjangoObjectType):
 
 class GetNotificationsResponse(graphene.ObjectType):
     notifications = graphene.List(NotificationType)
+    move_notifications = graphene.List(MoveNotificationType)
     ok = graphene.Boolean()
 
 

@@ -54,6 +54,9 @@ class NotificationContainer extends React.Component<any, IState> {
               <MarkAsReadMutation
                 mutation={MARK_AS_READ}
                 variables={{ notificationId: parseInt(notificationId, 10) }}
+                // refetchQueries={[
+                //   { query: GET_NOTIFICATION, variables: { page } }
+                // ]}
               >
                 {markAsReadFn => {
                   this.markAsReadFn = markAsReadFn;
@@ -81,11 +84,13 @@ class NotificationContainer extends React.Component<any, IState> {
       modalOpen: !modalOpen
     } as any);
   };
-  public onMarkRead = notificationId => {
+  public onMarkRead = (notificationId: string, isRead: boolean) => {
     this.setState({
-      notificationId
-    });
-    console.log(this.state);
+      notificationId,
+      isRead,
+      ko: "sexman"
+    } as any);
+    console.log(isRead, this.state);
     this.markAsReadFn({ variables: { notificationId } });
   };
 }

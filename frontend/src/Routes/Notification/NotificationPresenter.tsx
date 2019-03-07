@@ -49,6 +49,7 @@ const NotificationPresenter: React.SFC<IProps> = ({
                   actor={notification.actor.profile}
                   onMarkRead={onMarkRead}
                   loading={loading}
+                  isRead={notification.read}
                 />
               );
             })}
@@ -64,6 +65,7 @@ const NotificationPresenter: React.SFC<IProps> = ({
                   actor={notification.actor.profile}
                   onMarkRead={onMarkRead}
                   loading={loading}
+                  isRead={notification.read}
                 />
               );
             })}
