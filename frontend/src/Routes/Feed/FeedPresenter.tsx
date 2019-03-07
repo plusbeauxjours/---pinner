@@ -14,6 +14,7 @@ const SWrapper = styled(Wrapper)`
 `;
 
 const Container = styled.div`
+  border: 1px;
   display: flex;
   justify-content: center;
   margin: 30px;
@@ -46,6 +47,7 @@ const FeedPresenter: React.SFC<IProps> = ({ data, loading, currentCity }) => {
     return (
       <SWrapper>
         <h1>welcome to {currentCity}</h1>
+        <h1>see all</h1>
         <Container>
           {users &&
             users.map(user => (

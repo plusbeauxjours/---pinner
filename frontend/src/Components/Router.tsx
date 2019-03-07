@@ -6,21 +6,23 @@ import {
   Redirect
 } from "react-router-dom";
 import styled from "styled-components";
-import Home from "../Routes/Home";
+
 import Feed from "../Routes/Feed";
-import Profile from "../Routes/Profile";
 import CardDetail from "../Routes/CardDetail";
 import Search from "../Routes/Search";
+import UpLoad from "../Routes/UpLoad";
+import Explore from "../Routes/Explore";
+import UserList from "../Routes/UserList";
 import Location from "../Routes/Location";
 import Notification from "../Routes/Notification";
+import FeedByCity from "../Routes/FeedByCity";
 import Footprint from "../Routes/Footprint";
+import Profile from "../Routes/Profile";
 
+import Home from "../Routes/Home";
 import VerifyPhone from "../Routes/VerifyPhone";
 import PhoneLogin from "../Routes/PhoneLogin";
-import FeedByCity from "../Routes/FeedByCity";
-import UpLoad from "../Routes/UpLoad";
 
-import Explore from "../Routes/Explore";
 import Header from "./Header";
 
 const Wrapper = styled.div`
@@ -37,7 +39,8 @@ const LoggedInPages = () => (
       <Route path="/p/:id" component={CardDetail} />
       <Route path="/search" component={Search} />
       <Route path="/upload" component={UpLoad} />
-      <Route path="/explore" component={Explore} />
+      <Route path="/explore" exact={true} component={Explore} />
+      <Route path="/explore/userlist" component={UserList} />
       <Route path="/location" exact={true} component={Location} />
       <Route path="/notification" component={Notification} />
       <Route path="/city/:cityname" component={FeedByCity} />

@@ -31,7 +31,7 @@ const SearchPresenter: React.SFC<IProps> = ({ data, empty, loading }) => {
     } = data;
     return (
       <TallWrapper>
-        {users && users.length > 0 && <UserGrid users={users} inline={false} />}
+        {users && users.length > 0 && <UserGrid users={users} />}
         {cards && cards.length > 0 && <CardGrid cards={cards} />}
         {users && users.length === 0 && cards && cards.length === 0 && (
           <Bold text="Nothing found..." />

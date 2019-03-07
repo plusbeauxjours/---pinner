@@ -11,29 +11,14 @@ interface IState {
 }
 
 class ExploreContainer extends React.Component<any, IState> {
-  public state = {
-    inline: true
-  };
   public render = () => {
-    const { inline } = this.state;
     return (
       <ExploreQuery query={EXPLORE_QUERY} fetchPolicy="network-only">
         {({ data, loading }) => (
-          <ExplorePresenter
-            data={data}
-            loading={loading}
-            inline={inline}
-            toggleInline={this.toggleInline}
-          />
+          <ExplorePresenter data={data} loading={loading} />
         )}
       </ExploreQuery>
     );
-  };
-  public toggleInline = () => {
-    const { inline } = this.state;
-    this.setState({
-      inline: !inline
-    });
   };
 }
 

@@ -38,6 +38,12 @@ class Query(object):
         required=True
     )
 
+    user_list = graphene.Field(
+        types.UserListResponse,
+        resolver=queries.resolve_user_list,
+        required=True
+    )
+
 
 class Mutation(object):
 

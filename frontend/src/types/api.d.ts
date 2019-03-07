@@ -1080,6 +1080,51 @@ export interface UploadCardVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: UserList
+// ====================================================
+
+export interface UserList_userList_users_profile_currentCity_country {
+  __typename: "CountryType";
+  countryname: string | null;
+}
+
+export interface UserList_userList_users_profile_currentCity {
+  __typename: "CityType";
+  country: UserList_userList_users_profile_currentCity_country;
+  cityname: string | null;
+}
+
+export interface UserList_userList_users_profile {
+  __typename: "ProfileType";
+  isFollowing: boolean | null;
+  avatar: string;
+  currentCity: UserList_userList_users_profile_currentCity | null;
+}
+
+export interface UserList_userList_users {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: UserList_userList_users_profile | null;
+}
+
+export interface UserList_userList {
+  __typename: "UserListResponse";
+  users: (UserList_userList_users | null)[] | null;
+}
+
+export interface UserList {
+  userList: UserList_userList;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CompletePhoneVerification
 // ====================================================
 

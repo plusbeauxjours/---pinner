@@ -4,7 +4,7 @@ import Button from "../Button";
 import { MutationFn } from "react-apollo";
 
 const SButton = styled(Button)`
-  z-index: 10;
+  z-index: 1;
   width: 50%;
 `;
 
