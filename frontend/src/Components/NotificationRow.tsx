@@ -97,6 +97,7 @@ const NotificationRow: React.SFC<IProps> = ({
                       <UserHeader
                         username={notification.actor.username}
                         currentCity={actor.currentCity.cityname}
+                        currentCountry={actor.currentCity.country.countryname}
                         avatar={actor.avatar}
                         size={"sm"}
                       />
@@ -122,6 +123,7 @@ const NotificationRow: React.SFC<IProps> = ({
                       <UserHeader
                         username={notification.actor.username}
                         currentCity={actor.currentCity.cityname}
+                        currentCountry={actor.currentCity.country.countryname}
                         avatar={actor.avatar}
                         size={"sm"}
                       />
@@ -152,6 +154,7 @@ const NotificationRow: React.SFC<IProps> = ({
                       <UserHeader
                         username={notification.actor.username}
                         currentCity={actor.currentCity.cityname}
+                        currentCountry={actor.currentCity.country.countryname}
                         avatar={actor.avatar}
                         size={"sm"}
                       />
@@ -171,6 +174,7 @@ const NotificationRow: React.SFC<IProps> = ({
                       <UserHeader
                         username={notification.actor.username}
                         currentCity={actor.currentCity.cityname}
+                        currentCountry={actor.currentCity.country.countryname}
                         avatar={actor.avatar}
                         size={"sm"}
                       />
@@ -207,6 +211,7 @@ const NotificationRow: React.SFC<IProps> = ({
                       <UserHeader
                         username={notification.actor.username}
                         currentCity={actor.currentCity.cityname}
+                        currentCountry={actor.currentCity.country.countryname}
                         avatar={actor.avatar}
                         size={"sm"}
                       />

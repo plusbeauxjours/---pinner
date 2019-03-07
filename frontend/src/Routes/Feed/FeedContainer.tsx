@@ -83,8 +83,6 @@ class FeedContainer extends React.Component<IProps, IState> {
                   loading={loading}
                   data={data}
                   currentCity={currentCity}
-                  currentCountry={currentCountry}
-                  currentCountryCode={currentCountryCode}
                 />
               );
             }}

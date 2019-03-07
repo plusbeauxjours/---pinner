@@ -37,6 +37,7 @@ class CommentType(DjangoObjectType):
 
 class FeedResponse(graphene.ObjectType):
     cards = graphene.List(CardType)
+    users = graphene.List(users_types.UserType)
 
 
 class FeedByCityResponse(graphene.ObjectType):

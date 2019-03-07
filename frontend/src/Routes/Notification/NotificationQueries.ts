@@ -12,6 +12,9 @@ export const GET_NOTIFICATION = gql`
             avatar
             currentCity {
               cityname
+              country {
+                countryname
+              }
             }
           }
         }
@@ -45,6 +48,9 @@ export const GET_MOVE_NOTIFICATION = gql`
             avatar
             currentCity {
               cityname
+              country {
+                countryname
+              }
             }
           }
         }

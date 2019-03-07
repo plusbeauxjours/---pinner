@@ -7,6 +7,13 @@ export const GET_FEED = gql`
       cards {
         ...DetailParts
       }
+      users {
+        id
+        username
+        profile {
+          avatar
+        }
+      }
     }
   }
   ${DETAIL_CARD_FRAGMENT}

@@ -365,9 +365,25 @@ export interface Feed_feed_cards {
   fontSize: string | null;
 }
 
+export interface Feed_feed_users_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface Feed_feed_users {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: Feed_feed_users_profile | null;
+}
+
 export interface Feed_feed {
   __typename: "FeedResponse";
   cards: (Feed_feed_cards | null)[] | null;
+  users: (Feed_feed_users | null)[] | null;
 }
 
 export interface Feed {
@@ -576,9 +592,15 @@ export interface GetCities {
 // GraphQL query operation: GetNotifictions
 // ====================================================
 
+export interface GetNotifictions_getNotifications_notifications_actor_profile_currentCity_country {
+  __typename: "CountryType";
+  countryname: string | null;
+}
+
 export interface GetNotifictions_getNotifications_notifications_actor_profile_currentCity {
   __typename: "CityType";
   cityname: string | null;
+  country: GetNotifictions_getNotifications_notifications_actor_profile_currentCity_country;
 }
 
 export interface GetNotifictions_getNotifications_notifications_actor_profile {
@@ -646,9 +668,15 @@ export interface GetNotifictionsVariables {
 // GraphQL query operation: GetMoveNotifications
 // ====================================================
 
+export interface GetMoveNotifications_getMoveNotifications_notifications_actor_profile_currentCity_country {
+  __typename: "CountryType";
+  countryname: string | null;
+}
+
 export interface GetMoveNotifications_getMoveNotifications_notifications_actor_profile_currentCity {
   __typename: "CityType";
   cityname: string | null;
+  country: GetMoveNotifications_getMoveNotifications_notifications_actor_profile_currentCity_country;
 }
 
 export interface GetMoveNotifications_getMoveNotifications_notifications_actor_profile {

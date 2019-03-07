@@ -22,10 +22,13 @@ def resolve_feed(self, info, **kwargs):
 
     my_cards = user.cards.all()
 
+    users = User.objects.filter(
+        profile__current_city__cityname=cityname).order_by('-username').distinct('username')[:3]
+
     combined = following_cards.union(city_cards).union(my_cards).order_by(
         '-created_at')[offset:5 + offset]
 
-    return types.FeedResponse(cards=combined)
+    return types.FeedResponse(cards=combined, users=users)
 
 
 @login_required

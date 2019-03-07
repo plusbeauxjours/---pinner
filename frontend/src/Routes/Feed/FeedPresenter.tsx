@@ -1,16 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { Feed } from "src/types/api";
 import { Upload } from "../../Icons";
 
 import Loader from "../../Components/Loader";
 import Photo from "../../Components/Photo";
 import Wrapper from "../../Components/Wrapper";
 import styled from "../../Styles/typed-components";
+import Avatar from "../../Components/Avatar";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
+`;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+`;
+
+const SAvatar = styled(Avatar)`
+  margin: 3px;
 `;
 
 const Icon = styled.span`
@@ -21,30 +31,29 @@ const Icon = styled.span`
 `;
 
 interface IProps {
-  data?: Feed;
+  data?: any;
   loading: boolean;
   currentCity: string;
-  currentCountry: string;
-  currentCountryCode: string;
 }
 
-const FeedPresenter: React.SFC<IProps> = ({
-  data: { feed: { cards = null } = {} } = {},
-  loading,
-  currentCity,
-  currentCountry,
-  currentCountryCode
-}) => {
+const FeedPresenter: React.SFC<IProps> = ({ data, loading, currentCity }) => {
   if (loading) {
     return <Loader />;
-  } else if (cards) {
+  } else if (!loading && data) {
+    console.log(data);
+
+    const { feed: { cards = {}, users = {} } = {} } = data;
     return (
       <SWrapper>
-        <h1>
-          welcome to {currentCity}
-          {currentCountry}
-          {currentCountryCode}
-        </h1>
+        <h1>welcome to {currentCity}</h1>
+        <Container>
+          {users &&
+            users.map(user => (
+              <Link to={`/${user.username}`}>
+                <SAvatar size={"sm"} key={user.id} url={user.profile.avatar} />
+              </Link>
+            ))}
+        </Container>
         <Icon>
           <Link to="/upload">
             <Upload />

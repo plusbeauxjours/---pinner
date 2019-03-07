@@ -16,7 +16,6 @@ const Container = styled.div`
   &:hover {
     background-color: #e6e6e6;
   }
-  margin: 0 30px 0 30px;
 `;
 const Header = styled.header`
   padding: 12px;

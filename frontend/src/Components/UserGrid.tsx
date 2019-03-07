@@ -13,6 +13,10 @@ const Container = styled.div`
   flex: 0 0 auto;
 `;
 
+const RContainer = styled.div`
+  margin: 0 30px 0 30px;
+`;
+
 interface IProps {
   inline: boolean;
   users?: any;
@@ -22,7 +26,7 @@ interface IProps {
 const UserGrid: React.SFC<IProps> = ({ users, className, inline }) => {
   if (inline) {
     return (
-      <>
+      <RContainer className={className}>
         <p>recommand user</p>
         {users.map(user => (
           <UserRow
@@ -36,7 +40,7 @@ const UserGrid: React.SFC<IProps> = ({ users, className, inline }) => {
             size={"sm"}
           />
         ))}
-      </>
+      </RContainer>
     );
   } else {
     return (
