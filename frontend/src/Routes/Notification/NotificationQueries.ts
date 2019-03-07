@@ -21,15 +21,12 @@ export const GET_NOTIFICATION = gql`
         verb
         payload {
           id
-          city {
-            cityname
-          }
           caption
         }
-        read
         comment {
           message
         }
+        read
         createdAt
       }
     }
@@ -57,17 +54,17 @@ export const GET_MOVE_NOTIFICATION = gql`
         verb
         fromCity {
           cityname
-        }
-        fromCountry {
-          countryname
-          countrycode
+          country {
+            countryname
+            countrycode
+          }
         }
         toCity {
           cityname
-        }
-        toCountry {
-          countryname
-          countrycode
+          country {
+            countryname
+            countrycode
+          }
         }
         read
         createdAt

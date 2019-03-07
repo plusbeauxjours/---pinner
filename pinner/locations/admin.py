@@ -7,6 +7,8 @@ class CountryAdmin(admin.ModelAdmin):
     list_display = (
         'countryname',
         'city_count',
+        'user_count',
+        'user_log_count'
     )
 
 
@@ -15,6 +17,8 @@ class CityAdmin(admin.ModelAdmin):
     list_display = (
         'cityname',
         'like_count',
+        'user_count',
+        'user_log_count'
     )
 
 

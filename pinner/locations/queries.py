@@ -1,6 +1,7 @@
 from django.db import IntegrityError
 from . import types, models
 from graphql_jwt.decorators import login_required
+from django.contrib.auth.models import User
 
 
 @login_required

@@ -25,6 +25,8 @@ const FlagGrid: React.SFC<IProps> = ({ cities, className }) => (
         countryname={city.country.countryname}
         countrycode={city.country.countrycode}
         cityname={city.cityname}
+        userCount={city.userCount}
+        userLogCount={city.userLogCount}
       />
     ))}
   </Container>

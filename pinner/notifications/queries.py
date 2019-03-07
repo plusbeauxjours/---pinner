@@ -7,7 +7,7 @@ def resolve_get_notifications(self, info, **kwargs):
 
     user = info.context.user
     page = kwargs.get('page', 0)
-    offset = 15 * page
+    offset = 10 * page
 
     following_profiles = user.profile.following.all()
 
@@ -17,7 +17,7 @@ def resolve_get_notifications(self, info, **kwargs):
 
     notifications = models.Notification.objects.filter(target=user)
     combined = notifications.union(upload_notifications).order_by(
-        '-created_at')[offset:15 + offset]
+        '-created_at')[offset:10 + offset]
 
     return types.GetNotificationsResponse(ok=True, notifications=combined)
 
@@ -27,12 +27,12 @@ def resolve_get_move_notifications(self, info, **kwargs):
 
     user = info.context.user
     page = kwargs.get('page', 0)
-    offset = 15 * page
+    offset = 7 * page
 
     following_profiles = user.profile.following.all()
 
     notifications = models.MoveNotification.objects.filter(
         actor__profile__in=following_profiles, verb='move').order_by(
-        '-created_at')[offset:15 + offset]
+        '-created_at')[offset:3 + offset]
 
     return types.GetMoveNotificationsResponse(ok=True, notifications=notifications)

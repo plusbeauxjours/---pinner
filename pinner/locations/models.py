@@ -13,6 +13,14 @@ class Country (config_models.TimeStampedModel):
     def city_count(self):
         return self.cities.all().count()
 
+    @property
+    def user_count(self):
+        return self.currentCountry.all().order_by('-user_id').distinct('user_id').count()
+
+    @property
+    def user_log_count(self):
+        return self.locationlogs.all().order_by('-creator_id').distinct('creator_id').count()
+
     def __str__(self):
         return self.countryname
 
@@ -26,6 +34,14 @@ class City (config_models.TimeStampedModel):
     @property
     def like_count(self):
         return self.likes.all().count()
+
+    @property
+    def user_count(self):
+        return self.currentCity.all().order_by('-user_id').distinct('user_id').count()
+
+    @property
+    def user_log_count(self):
+        return self.locationlogs.all().order_by('-creator_id').distinct('creator_id').count()
 
     def __str__(self):
         return self.cityname

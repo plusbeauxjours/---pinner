@@ -2,16 +2,22 @@ import graphene
 from graphene_django.types import DjangoObjectType
 from . import models
 from config import types as config_types
+from users import types as users_types
 
 
 class CountryType(DjangoObjectType):
     city_count = graphene.Int(source='city_count')
+    user_count = graphene.Int(source='user_count')
+    user_log_count = graphene.Int(source='user_log_count')
 
     class Meta:
         model = models.Country
 
 
 class CityType(DjangoObjectType):
+    city_count = graphene.Int(source='city_count')
+    user_count = graphene.Int(source='user_count')
+    user_log_count = graphene.Int(source='user_log_count')
 
     class Meta:
         model = models.City
@@ -29,7 +35,6 @@ class CountriesResponse(graphene.ObjectType):
 
 class CitiesResponse(graphene.ObjectType):
     cities = graphene.List(CityType)
-
 
 class FootprintsResponse(graphene.ObjectType):
     footprints = graphene.List(LocationLogType)

@@ -100,6 +100,44 @@ const NotificationRow: React.SFC<IProps> = ({
       <>
         {(() => {
           switch (notification.verb) {
+            case "MOVE":
+              return (
+                <>
+                  <Link to={`/${notification.actor.username}`}>
+                    {!isRead ? (
+                      <ICon>
+                        <RedDot />
+                      </ICon>
+                    ) : null}
+                    <MContainer onClick={() => onMarkRead(notification.id)}>
+                      <UserHeader
+                        username={notification.actor.username}
+                        currentCity={actor.currentCity.cityname}
+                        currentCountry={actor.currentCity.country.countryname}
+                        avatar={actor.avatar}
+                        size={"sm"}
+                      />
+                      <Header>
+                        <SBold text={"Moved"} />
+                        <TimeStamp>{notification.createdAt}</TimeStamp>
+                      </Header>
+                      <MHeader>
+                        <FlagHeader
+                          cityname={notification.fromCity.cityname}
+                          countrycode={
+                            notification.fromCity.country.countrycode
+                          }
+                        />
+                        <SBold text={"To"} />
+                        <FlagHeader
+                          cityname={notification.toCity.cityname}
+                          countrycode={notification.toCity.country.countrycode}
+                        />
+                      </MHeader>
+                    </MContainer>
+                  </Link>
+                </>
+              );
             case "FOLLOW":
               return (
                 <>
@@ -193,42 +231,7 @@ const NotificationRow: React.SFC<IProps> = ({
                   </Link>
                 </>
               );
-            case "MOVE":
-              return (
-                <>
-                  <Link to={`/${notification.actor.username}`}>
-                    {!isRead ? (
-                      <ICon>
-                        <RedDot />
-                      </ICon>
-                    ) : null}
-                    <MContainer onClick={() => onMarkRead(notification.id)}>
-                      <UserHeader
-                        username={notification.actor.username}
-                        currentCity={actor.currentCity.cityname}
-                        currentCountry={actor.currentCity.country.countryname}
-                        avatar={actor.avatar}
-                        size={"sm"}
-                      />
-                      <Header>
-                        <SBold text={"Moved"} />
-                        <TimeStamp>{notification.createdAt}</TimeStamp>
-                      </Header>
-                      <MHeader>
-                        <FlagHeader
-                          cityname={notification.fromCity.cityname}
-                          countrycode={notification.fromCountry.countrycode}
-                        />
-                        <SBold text={"To"} />
-                        <FlagHeader
-                          cityname={notification.toCity.cityname}
-                          countrycode={notification.toCountry.countrycode}
-                        />
-                      </MHeader>
-                    </MContainer>
-                  </Link>
-                </>
-              );
+
             case "UPLOAD":
               return (
                 <>

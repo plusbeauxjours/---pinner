@@ -12,6 +12,8 @@ export const GET_CITY = gql`
           countrycode
         }
       }
+      userCount
+      userLogCount
     }
   }
 `;

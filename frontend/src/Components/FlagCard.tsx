@@ -32,15 +32,21 @@ interface IProps {
   countryname: string;
   countrycode: string;
   cityname: string;
+  userCount: number;
+  userLogCount: number;
 }
 
 const FlagCard: React.SFC<IProps> = ({
   countryname,
   countrycode,
-  cityname
+  cityname,
+  userCount,
+  userLogCount
 }) => {
   return (
     <SLink to={`/city/${cityname}`}>
+      <SBold text={userCount} />
+      <SBold text={userLogCount} />
       <Metric>
         <SFlag
           countrycode={require(`../Images/countryFlag/${countrycode}.svg`)}
