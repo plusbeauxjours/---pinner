@@ -41,6 +41,7 @@ def resolve_feed_by_city(self, info, **kwargs):
 
     users = User.objects.filter(
         profile__current_city__cityname=cityname).order_by('-username').distinct('username')[:3]
+
     return types.FeedByCityResponse(cards=cards, users=users)
 
 

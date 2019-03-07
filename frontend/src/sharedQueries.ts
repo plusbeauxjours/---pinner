@@ -23,6 +23,9 @@ export const USER_FRAGMENT = gql`
       isFollowing
       avatar
       currentCity {
+        country {
+          countryname
+        }
         cityname
       }
     }

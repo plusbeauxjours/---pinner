@@ -261,8 +261,14 @@ export interface CardDetailVariables {
 // GraphQL query operation: Explore
 // ====================================================
 
+export interface Explore_latestUsers_users_profile_currentCity_country {
+  __typename: "CountryType";
+  countryname: string | null;
+}
+
 export interface Explore_latestUsers_users_profile_currentCity {
   __typename: "CityType";
+  country: Explore_latestUsers_users_profile_currentCity_country;
   cityname: string | null;
 }
 
@@ -895,8 +901,14 @@ export interface DeleteProfile {
 // GraphQL query operation: SearchTerms
 // ====================================================
 
+export interface SearchTerms_searchUsers_users_profile_currentCity_country {
+  __typename: "CountryType";
+  countryname: string | null;
+}
+
 export interface SearchTerms_searchUsers_users_profile_currentCity {
   __typename: "CityType";
+  country: SearchTerms_searchUsers_users_profile_currentCity_country;
   cityname: string | null;
 }
 
@@ -1102,8 +1114,14 @@ export interface Me {
 // GraphQL fragment: UserParts
 // ====================================================
 
+export interface UserParts_profile_currentCity_country {
+  __typename: "CountryType";
+  countryname: string | null;
+}
+
 export interface UserParts_profile_currentCity {
   __typename: "CityType";
+  country: UserParts_profile_currentCity_country;
   cityname: string | null;
 }
 

@@ -12,7 +12,7 @@ interface IState {
 
 class ExploreContainer extends React.Component<any, IState> {
   public state = {
-    inline: false
+    inline: true
   };
   public render = () => {
     const { inline } = this.state;

@@ -5,7 +5,6 @@ import Bold from "./Bold";
 import Avatar from "./Avatar";
 
 const Header = styled.header`
-  width: 140px;
   padding: 12px;
   margin: 0 15px 0 15px;
   display: flex;
@@ -58,8 +57,7 @@ const UserHeader: React.SFC<IProps> = ({
       <HeaderColumn>
         <SBold text={username} />
         <Location>
-          {currentCity}
-          {currentCountry}
+          {currentCity}, {currentCountry}
         </Location>
       </HeaderColumn>
     </Header>

@@ -42,8 +42,16 @@ const SAvatar = styled(Avatar)`
 `;
 
 const SBold = styled(Bold)`
-  margin-bottom: 10px;
+  margin-bottom: 3px;
   display: block;
+`;
+
+const Location = styled.span`
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 200;
 `;
 
 interface IProps {
@@ -51,15 +59,27 @@ interface IProps {
   avatar?: string;
   username: string;
   isFollowing: boolean;
+  currentCity: string;
+  currentCountry: string;
 }
 
-const UserCard: React.SFC<IProps> = ({ id, avatar, username, isFollowing }) => {
+const UserCard: React.SFC<IProps> = ({
+  id,
+  avatar,
+  username,
+  isFollowing,
+  currentCity,
+  currentCountry
+}) => {
   return (
     <BlobWrapper>
       <Blob borderRadius={"46% 54% 69% 31% / 30% 49% 51% 70%"}>
         <SAvatar url={avatar} size="md" />
         <Link to={`/${username}`}>
           <SBold text={username} />
+          <Location>
+            {currentCity}, {currentCountry}
+          </Location>
         </Link>
         <FollowBtn isFollowing={isFollowing} userId={id} username={username} />
       </Blob>
