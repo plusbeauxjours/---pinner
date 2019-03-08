@@ -18,6 +18,7 @@ class CityType(DjangoObjectType):
     city_count = graphene.Int(source='city_count')
     user_count = graphene.Int(source='user_count')
     user_log_count = graphene.Int(source='user_log_count')
+    card_count = graphene.Int(source='card_count')
 
     class Meta:
         model = models.City
@@ -35,6 +36,7 @@ class CountriesResponse(graphene.ObjectType):
 
 class CitiesResponse(graphene.ObjectType):
     cities = graphene.List(CityType)
+
 
 class FootprintsResponse(graphene.ObjectType):
     footprints = graphene.List(LocationLogType)

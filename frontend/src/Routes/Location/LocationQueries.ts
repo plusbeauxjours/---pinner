@@ -11,9 +11,10 @@ export const GET_CITY = gql`
           countryname
           countrycode
         }
+        userCount
+        userLogCount
+        cardCount
       }
-      userCount
-      userLogCount
     }
   }
 `;

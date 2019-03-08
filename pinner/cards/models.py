@@ -17,9 +17,9 @@ class Card(config_models.TimeStampedModel):
         User, on_delete=models.CASCADE, related_name='cards')
     caption = models.TextField()
     city = models.ForeignKey(
-        location_models.City, on_delete=models.CASCADE, related_name='city', null=True)
+        location_models.City, on_delete=models.CASCADE, related_name='cards', null=True)
     country = models.ForeignKey(
-        location_models.Country, on_delete=models.CASCADE, related_name='country', null=True)
+        location_models.Country, on_delete=models.CASCADE, related_name='cards', null=True)
     file = models.URLField(null=True, blank=True)
     border_radius = models.CharField(max_length=50)
     bg_color = models.CharField(max_length=20, null=True, blank=True, default='#FAFAFA')

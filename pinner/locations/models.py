@@ -36,6 +36,10 @@ class City (config_models.TimeStampedModel):
         return self.likes.all().count()
 
     @property
+    def card_count(self):
+        return self.cards.all().count()
+
+    @property
     def user_count(self):
         return self.currentCity.all().order_by('-user_id').distinct('user_id').count()
 

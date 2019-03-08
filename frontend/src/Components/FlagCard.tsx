@@ -17,7 +17,6 @@ const SFlag = styled(Flag)`
 `;
 
 const SBold = styled(Bold)`
-  display: flex;
   align-self: center;
 `;
 
@@ -28,12 +27,17 @@ const Metric = styled.div`
   padding-right: 30px;
 `;
 
+const Counter = styled.span`
+  align-self: flex-end;
+`;
+
 interface IProps {
   countryname: string;
   countrycode: string;
   cityname: string;
   userCount: number;
   userLogCount: number;
+  cardCount: number;
 }
 
 const FlagCard: React.SFC<IProps> = ({
@@ -41,12 +45,11 @@ const FlagCard: React.SFC<IProps> = ({
   countrycode,
   cityname,
   userCount,
-  userLogCount
+  userLogCount,
+  cardCount
 }) => {
   return (
     <SLink to={`/city/${cityname}`}>
-      <SBold text={userCount} />
-      <SBold text={userLogCount} />
       <Metric>
         <SFlag
           countrycode={require(`../Images/countryFlag/${countrycode}.svg`)}
@@ -54,6 +57,19 @@ const FlagCard: React.SFC<IProps> = ({
         />
       </Metric>
       <SBold text={cityname} />
+
+      <Counter>
+        userCount:
+        <SBold text={userCount.toString()} />
+      </Counter>
+      <Counter>
+        userLogCoun:
+        <SBold text={userLogCount.toString()} />
+      </Counter>
+      <Counter>
+        cardCount:
+        <SBold text={cardCount.toString()} />
+      </Counter>
     </SLink>
   );
 };

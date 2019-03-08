@@ -573,6 +573,9 @@ export interface GetCities_getCities_cities {
   id: string;
   cityname: string | null;
   country: GetCities_getCities_cities_country;
+  userCount: number | null;
+  userLogCount: number | null;
+  cardCount: number | null;
 }
 
 export interface GetCities_getCities {
