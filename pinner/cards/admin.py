@@ -6,8 +6,8 @@ from . import models
 class CardAdmin(admin.ModelAdmin):
 
     search_fields = (
-        'country',
-        'city',
+        'country__countryname',
+        'city__cityname',
         'caption',
     )
 

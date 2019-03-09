@@ -4,9 +4,32 @@ from . import models
 
 @admin.register(models.Notification)
 class NotificationAdmin(admin.ModelAdmin):
-    pass
+
+    search_fields = (
+        'actor__username',
+    )
+
+    list_display = (
+        'id',
+        'actor',
+        'verb',
+        'read'
+    )
 
 
 @admin.register(models.MoveNotification)
 class MoveNotificationAdmin(admin.ModelAdmin):
-    pass
+
+    search_fields = (
+        'actor__username',
+    )
+
+    list_display = (
+        'id',
+        'actor',
+        'fromCity',
+        'fromCountry',
+        'toCity',
+        'toCountry',
+        'read',
+    )

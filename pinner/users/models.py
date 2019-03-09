@@ -57,8 +57,12 @@ class Profile(config_models.TimeStampedModel):
         return self.user.locationlogs.all().count()
 
     @property
-    def country_count(self):
+    def city_count(self):
         return self.user.locationlogs.all().order_by('city').distinct('city').count()
+
+    @property
+    def country_count(self):
+        return self.user.locationlogs.all().order_by('country').distinct('country').count()
 
     @property
     def country_log(self):
