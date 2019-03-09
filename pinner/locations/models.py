@@ -19,7 +19,7 @@ class Country (config_models.TimeStampedModel):
 
     @property
     def user_log_count(self):
-        return self.locationlogs.all().order_by('-creator_id').distinct('creator_id').count()
+        return self.toCountry.all().order_by('-actor_id').distinct('actor_id').count()
 
     def __str__(self):
         return self.countryname
@@ -45,7 +45,7 @@ class City (config_models.TimeStampedModel):
 
     @property
     def user_log_count(self):
-        return self.locationlogs.all().order_by('-creator_id').distinct('creator_id').count()
+        return self.toCity.all().order_by('-actor_id').distinct('actor_id').count()
 
     def __str__(self):
         return self.cityname
@@ -64,28 +64,3 @@ class Like(config_models.TimeStampedModel):
 
     def __str__(self):
         return 'User: {} - City cityname: {}'.format(self.creator.username, self.city.cityname)
-
-
-class LocationLog(config_models.TimeStampedModel):
-
-    creator = models.ForeignKey(
-        User,  on_delete=models.CASCADE, null=True, related_name='locationlogs')
-    city = models.ForeignKey(
-        City, on_delete=models.CASCADE, null=True, related_name='locationlogs')
-    country = models.ForeignKey(
-        Country, on_delete=models.CASCADE, null=True, related_name='locationlogs')
-
-    def natural_time(self):
-        return naturaltime(self.created_at)
-
-    class Meta:
-        ordering = ['-created_at']
-
-    def __str__(self):
-        return '{} / Creator: {} / {},{} / CreatedAt: {}'.format(
-            self.id,
-            self.creator.username,
-            self.city.cityname,
-            self.country.countryname,
-            self.created_at
-        )

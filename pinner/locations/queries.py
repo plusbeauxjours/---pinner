@@ -29,6 +29,6 @@ def resolve_get_footprints(self, info, **kwargs):
     page = kwargs.get('page', 0)
     offset = 10 * page
 
-    footprints = user.locationlogs.all().order_by('-created_at')[offset:10 + offset]
+    footprints = user.movenotification.all().order_by('-created_at')[offset:10 + offset]
 
     return types.FootprintsResponse(footprints=footprints)

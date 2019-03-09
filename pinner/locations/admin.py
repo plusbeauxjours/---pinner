@@ -25,8 +25,3 @@ class CityAdmin(admin.ModelAdmin):
 @admin.register(models.Like)
 class LikeAdmin(admin.ModelAdmin):
     pass
-
-
-@admin.register(models.LocationLog)
-class LocationLogAdmin(admin.ModelAdmin):
-    pass

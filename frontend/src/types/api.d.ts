@@ -500,23 +500,23 @@ export interface FeedByCityVariables {
 // GraphQL query operation: GetFootprints
 // ====================================================
 
-export interface GetFootprints_getFootprints_footprints_country {
+export interface GetFootprints_getFootprints_footprints_toCountry {
   __typename: "CountryType";
   countryname: string | null;
   countrycode: string | null;
 }
 
-export interface GetFootprints_getFootprints_footprints_city {
+export interface GetFootprints_getFootprints_footprints_toCity {
   __typename: "CityType";
   cityname: string | null;
 }
 
 export interface GetFootprints_getFootprints_footprints {
-  __typename: "LocationLogType";
+  __typename: "MoveNotificationType";
   id: string;
-  country: GetFootprints_getFootprints_footprints_country | null;
-  city: GetFootprints_getFootprints_footprints_city | null;
-  createdAt: any;
+  toCountry: GetFootprints_getFootprints_footprints_toCountry | null;
+  toCity: GetFootprints_getFootprints_footprints_toCity | null;
+  createdAt: string | null;
 }
 
 export interface GetFootprints_getFootprints {

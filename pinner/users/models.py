@@ -53,16 +53,12 @@ class Profile(config_models.TimeStampedModel):
         return self.user.username
 
     @property
-    def country_count(self):
-        return self.user.locationlogs.all().count()
-
-    @property
     def city_count(self):
-        return self.user.locationlogs.all().order_by('city').distinct('city').count()
+        return self.user.movenotification.all().order_by('toCity').distinct('toCity').count()
 
     @property
     def country_count(self):
-        return self.user.locationlogs.all().order_by('country').distinct('country').count()
+        return self.user.movenotification.all().order_by('toCountry').distinct('toCountry').count()
 
     @property
     def country_log(self):

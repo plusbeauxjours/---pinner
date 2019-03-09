@@ -3,6 +3,7 @@ from graphene_django.types import DjangoObjectType
 from . import models
 from config import types as config_types
 from users import types as users_types
+from notifications import types as notifications_types
 
 
 class CountryType(DjangoObjectType):
@@ -24,12 +25,6 @@ class CityType(DjangoObjectType):
         model = models.City
 
 
-class LocationLogType(DjangoObjectType):
-
-    class Meta:
-        model = models.LocationLog
-
-
 class CountriesResponse(graphene.ObjectType):
     countries = graphene.List(CountryType)
 
@@ -39,7 +34,7 @@ class CitiesResponse(graphene.ObjectType):
 
 
 class FootprintsResponse(graphene.ObjectType):
-    footprints = graphene.List(LocationLogType)
+    footprints = graphene.List(notifications_types.MoveNotificationType)
 
 
 class ReportLocationResponse(graphene.ObjectType):
