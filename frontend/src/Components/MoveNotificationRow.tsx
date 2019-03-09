@@ -97,12 +97,14 @@ const MoveNotificationRow: React.SFC<IProps> = ({
                       <MHeader>
                         <FlagHeader
                           cityname={notification.fromCity.cityname}
-                          countrycode={notification.fromCountry.countrycode}
+                          countrycode={
+                            notification.fromCity.country.countrycode
+                          }
                         />
                         <SBold text={"To"} />
                         <FlagHeader
                           cityname={notification.toCity.cityname}
-                          countrycode={notification.toCountry.countrycode}
+                          countrycode={notification.toCity.country.countrycode}
                         />
                       </MHeader>
                     </MContainer>

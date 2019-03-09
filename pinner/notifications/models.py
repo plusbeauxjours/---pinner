@@ -74,8 +74,8 @@ class MoveNotification(config_models.TimeStampedModel):
             self.id,
             self.actor.username,
             self.fromCity,
-            self.fromCountry,
+            self.fromCity.country.countryname,
             self.toCity,
-            self.toCountry,
+            self.toCity.country.countryname,
             self.read
         )

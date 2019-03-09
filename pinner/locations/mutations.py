@@ -58,9 +58,9 @@ class ReportLocation(graphene.Mutation):
                             actor=user,
                             verb="move",
                             fromCity=profile.last_city,
-                            fromCountry=profile.last_country,
+                            fromCity__country=profile.last_country,
                             toCity=profile.current_city,
-                            toCountry=profile.current_country
+                            toCity__country=profile.current_country
                         )
                         return types.ReportLocationResponse(ok=True)
 
@@ -74,9 +74,9 @@ class ReportLocation(graphene.Mutation):
                             actor=user,
                             verb="move",
                             fromCity=profile.last_city,
-                            fromCountry=profile.last_country,
+                            fromCity__country=profile.last_country,
                             toCity=profile.current_city,
-                            toCountry=profile.current_country
+                            toCity__country=profile.current_country
                         )
                         return types.ReportLocationResponse(ok=True)
 
@@ -94,9 +94,9 @@ class ReportLocation(graphene.Mutation):
                         actor=user,
                         verb="move",
                         fromCity=profile.last_city,
-                        fromCountry=profile.last_country,
+                        fromCity__country=profile.last_country,
                         toCity=profile.current_city,
-                        toCountry=profile.current_country
+                        toCity__country=profile.current_country
                     )
                 return types.ReportLocationResponse(ok=True)
 
