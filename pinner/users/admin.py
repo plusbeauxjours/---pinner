@@ -4,4 +4,9 @@ from . import models
 
 @admin.register(models.Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        'user',
+        'current_city',
+        'current_country',
+        'country_count'
+    )

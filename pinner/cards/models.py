@@ -43,7 +43,7 @@ class Card(config_models.TimeStampedModel):
         return naturaltime(self.created_at)
 
     def __str__(self):
-        return 'Country: {} - City: {} - Caption: {} - Creator: {}'.format(self.country, self.city, self.caption, self.creator)
+        return 'Country: {} - City: {} - Caption: {} - Creator: {} '.format(self.country, self.city, self.caption, self.creator)
 
 
 class Comment(config_models.TimeStampedModel):
