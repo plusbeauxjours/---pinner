@@ -183,12 +183,12 @@ export interface FacebookConnectVariables {
 
 export interface CardDetail_cardDetail_card_country {
   __typename: "CountryType";
-  countryname: string | null;
+  countryName: string | null;
 }
 
 export interface CardDetail_cardDetail_card_city {
   __typename: "CityType";
-  cityname: string | null;
+  cityName: string | null;
 }
 
 export interface CardDetail_cardDetail_card_comments_creator {
@@ -263,13 +263,13 @@ export interface CardDetailVariables {
 
 export interface Explore_latestUsers_users_profile_currentCity_country {
   __typename: "CountryType";
-  countryname: string | null;
+  countryName: string | null;
 }
 
 export interface Explore_latestUsers_users_profile_currentCity {
   __typename: "CityType";
   country: Explore_latestUsers_users_profile_currentCity_country;
-  cityname: string | null;
+  cityName: string | null;
 }
 
 export interface Explore_latestUsers_users_profile {
@@ -308,12 +308,12 @@ export interface Explore {
 
 export interface Feed_feed_cards_country {
   __typename: "CountryType";
-  countryname: string | null;
+  countryName: string | null;
 }
 
 export interface Feed_feed_cards_city {
   __typename: "CityType";
-  cityname: string | null;
+  cityName: string | null;
 }
 
 export interface Feed_feed_cards_comments_creator {
@@ -392,7 +392,7 @@ export interface Feed {
 
 export interface FeedVariables {
   page: number;
-  cityname: string;
+  cityName: string;
 }
 
 
@@ -405,12 +405,12 @@ export interface FeedVariables {
 
 export interface FeedByCity_feedByCity_cards_country {
   __typename: "CountryType";
-  countryname: string | null;
+  countryName: string | null;
 }
 
 export interface FeedByCity_feedByCity_cards_city {
   __typename: "CityType";
-  cityname: string | null;
+  cityName: string | null;
 }
 
 export interface FeedByCity_feedByCity_cards_comments_creator {
@@ -489,7 +489,7 @@ export interface FeedByCity {
 
 export interface FeedByCityVariables {
   page: number;
-  cityname: string;
+  cityName: string;
 }
 
 
@@ -500,21 +500,21 @@ export interface FeedByCityVariables {
 // GraphQL query operation: GetFootprints
 // ====================================================
 
-export interface GetFootprints_getFootprints_footprints_toCountry {
+export interface GetFootprints_getFootprints_footprints_toCity_country {
   __typename: "CountryType";
-  countryname: string | null;
-  countrycode: string | null;
+  countryName: string | null;
+  countryCode: string | null;
 }
 
 export interface GetFootprints_getFootprints_footprints_toCity {
   __typename: "CityType";
-  cityname: string | null;
+  cityName: string | null;
+  country: GetFootprints_getFootprints_footprints_toCity_country;
 }
 
 export interface GetFootprints_getFootprints_footprints {
   __typename: "MoveNotificationType";
   id: string;
-  toCountry: GetFootprints_getFootprints_footprints_toCountry | null;
   toCity: GetFootprints_getFootprints_footprints_toCity | null;
   createdAt: string | null;
 }
@@ -564,14 +564,14 @@ export interface ReportLocationVariables {
 export interface GetCities_getCities_cities_country {
   __typename: "CountryType";
   id: string;
-  countryname: string | null;
-  countrycode: string | null;
+  countryName: string | null;
+  countryCode: string | null;
 }
 
 export interface GetCities_getCities_cities {
   __typename: "CityType";
   id: string;
-  cityname: string | null;
+  cityName: string | null;
   country: GetCities_getCities_cities_country;
   userCount: number | null;
   userLogCount: number | null;
@@ -597,12 +597,12 @@ export interface GetCities {
 
 export interface GetNotifictions_getNotifications_notifications_actor_profile_currentCity_country {
   __typename: "CountryType";
-  countryname: string | null;
+  countryName: string | null;
 }
 
 export interface GetNotifictions_getNotifications_notifications_actor_profile_currentCity {
   __typename: "CityType";
-  cityname: string | null;
+  cityName: string | null;
   country: GetNotifictions_getNotifications_notifications_actor_profile_currentCity_country;
 }
 
@@ -667,12 +667,12 @@ export interface GetNotifictionsVariables {
 
 export interface GetMoveNotifications_getMoveNotifications_notifications_actor_profile_currentCity_country {
   __typename: "CountryType";
-  countryname: string | null;
+  countryName: string | null;
 }
 
 export interface GetMoveNotifications_getMoveNotifications_notifications_actor_profile_currentCity {
   __typename: "CityType";
-  cityname: string | null;
+  cityName: string | null;
   country: GetMoveNotifications_getMoveNotifications_notifications_actor_profile_currentCity_country;
 }
 
@@ -693,25 +693,25 @@ export interface GetMoveNotifications_getMoveNotifications_notifications_actor {
 
 export interface GetMoveNotifications_getMoveNotifications_notifications_fromCity_country {
   __typename: "CountryType";
-  countryname: string | null;
-  countrycode: string | null;
+  countryName: string | null;
+  countryCode: string | null;
 }
 
 export interface GetMoveNotifications_getMoveNotifications_notifications_fromCity {
   __typename: "CityType";
-  cityname: string | null;
+  cityName: string | null;
   country: GetMoveNotifications_getMoveNotifications_notifications_fromCity_country;
 }
 
 export interface GetMoveNotifications_getMoveNotifications_notifications_toCity_country {
   __typename: "CountryType";
-  countryname: string | null;
-  countrycode: string | null;
+  countryName: string | null;
+  countryCode: string | null;
 }
 
 export interface GetMoveNotifications_getMoveNotifications_notifications_toCity {
   __typename: "CityType";
-  cityname: string | null;
+  cityName: string | null;
   country: GetMoveNotifications_getMoveNotifications_notifications_toCity_country;
 }
 
@@ -792,13 +792,13 @@ export interface StartPhoneVerificationVariables {
 
 export interface UserProfile_userProfile_user_profile_currentCountry {
   __typename: "CountryType";
-  countryname: string | null;
-  countrycode: string | null;
+  countryName: string | null;
+  countryCode: string | null;
 }
 
 export interface UserProfile_userProfile_user_profile_currentCity {
   __typename: "CityType";
-  cityname: string | null;
+  cityName: string | null;
 }
 
 export interface UserProfile_userProfile_user_profile {
@@ -812,6 +812,8 @@ export interface UserProfile_userProfile_user_profile {
   followingCount: number | null;
   isFollowing: boolean | null;
   isSelf: boolean | null;
+  cityCount: number | null;
+  countryCount: number | null;
   currentCountry: UserProfile_userProfile_user_profile_currentCountry | null;
   currentCity: UserProfile_userProfile_user_profile_currentCity | null;
 }
@@ -929,13 +931,13 @@ export interface DeleteProfile {
 
 export interface SearchTerms_searchUsers_users_profile_currentCity_country {
   __typename: "CountryType";
-  countryname: string | null;
+  countryName: string | null;
 }
 
 export interface SearchTerms_searchUsers_users_profile_currentCity {
   __typename: "CityType";
   country: SearchTerms_searchUsers_users_profile_currentCity_country;
-  cityname: string | null;
+  cityName: string | null;
 }
 
 export interface SearchTerms_searchUsers_users_profile {
@@ -998,12 +1000,12 @@ export interface SearchTermsVariables {
 
 export interface UploadCard_uploadCard_card_country {
   __typename: "CountryType";
-  countryname: string | null;
+  countryName: string | null;
 }
 
 export interface UploadCard_uploadCard_card_city {
   __typename: "CityType";
-  cityname: string | null;
+  cityName: string | null;
 }
 
 export interface UploadCard_uploadCard_card_comments_creator {
@@ -1083,13 +1085,13 @@ export interface UploadCardVariables {
 
 export interface UserList_userList_users_profile_currentCity_country {
   __typename: "CountryType";
-  countryname: string | null;
+  countryName: string | null;
 }
 
 export interface UserList_userList_users_profile_currentCity {
   __typename: "CityType";
   country: UserList_userList_users_profile_currentCity_country;
-  cityname: string | null;
+  cityName: string | null;
 }
 
 export interface UserList_userList_users_profile {
@@ -1151,7 +1153,7 @@ export interface CompletePhoneVerificationVariables {
 
 export interface Me_me_user_profile_currentCity {
   __typename: "CityType";
-  cityname: string | null;
+  cityName: string | null;
 }
 
 export interface Me_me_user_profile {
@@ -1187,13 +1189,13 @@ export interface Me {
 
 export interface UserParts_profile_currentCity_country {
   __typename: "CountryType";
-  countryname: string | null;
+  countryName: string | null;
 }
 
 export interface UserParts_profile_currentCity {
   __typename: "CityType";
   country: UserParts_profile_currentCity_country;
-  cityname: string | null;
+  cityName: string | null;
 }
 
 export interface UserParts_profile {
@@ -1245,12 +1247,12 @@ export interface CardParts {
 
 export interface DetailParts_country {
   __typename: "CountryType";
-  countryname: string | null;
+  countryName: string | null;
 }
 
 export interface DetailParts_city {
   __typename: "CityType";
-  cityname: string | null;
+  cityName: string | null;
 }
 
 export interface DetailParts_comments_creator {

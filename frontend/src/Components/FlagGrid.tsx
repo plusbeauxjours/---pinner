@@ -22,9 +22,9 @@ const FlagGrid: React.SFC<IProps> = ({ cities, className }) => (
     {cities.map(city => (
       <FlagCard
         key={city.id}
-        countryname={city.country.countryname}
-        countrycode={city.country.countrycode}
-        cityname={city.cityname}
+        countryName={city.country.countryName}
+        countryCode={city.country.countryCode}
+        cityName={city.cityName}
         userCount={city.userCount}
         userLogCount={city.userLogCount}
         cardCount={city.cardCount}

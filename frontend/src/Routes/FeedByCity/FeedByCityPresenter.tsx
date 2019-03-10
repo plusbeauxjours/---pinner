@@ -23,13 +23,13 @@ const SAvatar = styled(Avatar)`
 interface IProps {
   data?: any;
   loading: boolean;
-  cityname: string;
+  cityName: string;
 }
 
 const FeedByCityPresenter: React.SFC<IProps> = ({
   data,
   loading,
-  cityname
+  cityName
 }) => {
   if (loading) {
     return <Loader />;
@@ -39,7 +39,7 @@ const FeedByCityPresenter: React.SFC<IProps> = ({
     const { feedByCity: { cards = {}, users = {} } = {} } = data;
     return (
       <SWrapper>
-        <h2>{cityname}</h2>
+        <h2>{cityName}</h2>
         <Container>
           {users &&
             users.map(user => (
@@ -57,8 +57,8 @@ const FeedByCityPresenter: React.SFC<IProps> = ({
               inline={true}
               creatorAvatar={card.creator.profile.avatar}
               creatorUsername={card.creator.username}
-              country={card.country.countryname}
-              city={card.city.cityname}
+              country={card.country.countryName}
+              city={card.city.cityName}
               photoUrl={card.file}
               likeCount={card.likeCount}
               commentCount={card.commentCount}

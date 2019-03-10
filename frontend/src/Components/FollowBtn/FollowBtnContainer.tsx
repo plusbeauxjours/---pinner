@@ -3,7 +3,6 @@ import FollowBtnPresenter from "./FollowBtnPresenter";
 import { Mutation, MutationFn } from "react-apollo";
 import { FollowUser, FollowUserVariables } from "../../types/api";
 import { FOLLOW_USER } from "./FollowBtnQueries";
-import { GET_USER } from "../../Routes/Profile/ProfileQueries";
 import { GET_FEED } from "../../Routes/Feed/FeedQueries";
 import Me from "src/Components/Me";
 import {
@@ -27,7 +26,7 @@ class FollowBtnContainer extends React.Component<any, IState> {
   }
   public render() {
     const { isFollowing } = this.state;
-    const { userId, username } = this.props;
+    const { userId } = this.props;
     return (
       <Me>
         {user => (
@@ -38,12 +37,11 @@ class FollowBtnContainer extends React.Component<any, IState> {
             refetchQueries={[
               { query: GET_MOVE_NOTIFICATION, variables: { page: 0 } },
               { query: GET_NOTIFICATION, variables: { page: 0 } },
-              { query: GET_USER, variables: { username } },
               {
                 query: GET_FEED,
                 variables: {
                   page: 0,
-                  cityname: user.profile.currentCity.cityname
+                  cityName: user.profile.currentCity.cityName
                 }
               }
             ]}

@@ -9,7 +9,7 @@ def resolve_feed(self, info, **kwargs):
 
     user = info.context.user
     page = kwargs.get('page', 0)
-    cityname = kwargs.get('cityname')
+    cityName = kwargs.get('cityName')
     offset = 5 * page
 
     following_profiles = user.profile.following.all()
@@ -18,12 +18,12 @@ def resolve_feed(self, info, **kwargs):
         creator__profile__in=following_profiles)
 
     city_cards = models.Card.objects.filter(
-        city__cityname=cityname)
+        city__city_name=cityName)
 
     my_cards = user.cards.all()
 
     users = User.objects.filter(
-        profile__current_city__cityname=cityname).order_by('-username').distinct('username')[:3]
+        profile__current_city__city_name=cityName).order_by('-username').distinct('username')[:3]
 
     combined = following_cards.union(city_cards).union(my_cards).order_by(
         '-created_at')[offset:5 + offset]
@@ -35,15 +35,15 @@ def resolve_feed(self, info, **kwargs):
 def resolve_feed_by_city(self, info, **kwargs):
 
     user = info.context.user
-    cityname = kwargs.get('cityname')
+    cityName = kwargs.get('cityName')
     page = kwargs.get('page', 0)
     offset = 5 * page
 
-    cards = models.Card.objects.filter(city__cityname=cityname).order_by(
+    cards = models.Card.objects.filter(city__city_name=cityName).order_by(
         '-created_at')[offset:5 + offset]
 
     users = User.objects.filter(
-        profile__current_city__cityname=cityname).order_by('-username').distinct('username')[:3]
+        profile__current_city__city_name=cityName).order_by('-username').distinct('username')[:3]
 
     return types.FeedByCityResponse(cards=cards, users=users)
 

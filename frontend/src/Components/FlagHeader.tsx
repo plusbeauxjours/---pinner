@@ -29,25 +29,25 @@ const Location = styled.span`
 `;
 
 interface IProps {
-  cityname: string;
-  countryname?: string;
-  countrycode?: string;
+  cityName: string;
+  countryName?: string;
+  countryCode?: string;
 }
 
 const FlagHeader: React.SFC<IProps> = ({
-  cityname,
-  countryname,
-  countrycode
+  cityName,
+  countryName,
+  countryCode
 }) => (
   <>
     <Header>
-      {/* <Link to={`/${countryname}`}> */}
+      {/* <Link to={`/${countryName}`}> */}
       <HeaderColumn>
         <Flag
-          countrycode={require(`../Images/countryFlag/${countrycode}.svg`)}
+          countryCode={require(`../Images/countryFlag/${countryCode}.svg`)}
           size="sm"
         />
-        <Location>{cityname}</Location>
+        <Location>{cityName}</Location>
       </HeaderColumn>
       {/* </Link> */}
     </Header>

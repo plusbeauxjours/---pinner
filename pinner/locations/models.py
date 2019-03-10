@@ -6,8 +6,8 @@ from config import models as config_models
 
 class Country (config_models.TimeStampedModel):
 
-    countryname = models.CharField(max_length=100, null=True, blank=True)
-    countrycode = models.CharField(max_length=2, null=True, blank=True)
+    country_name = models.CharField(max_length=100, null=True, blank=True)
+    country_code = models.CharField(max_length=2, null=True, blank=True)
 
     @property
     def city_count(self):
@@ -22,14 +22,15 @@ class Country (config_models.TimeStampedModel):
         return self.toCountry.all().order_by('-actor_id').distinct('actor_id').count()
 
     def __str__(self):
-        return self.countryname
+        return self.countryName
 
 
 class City (config_models.TimeStampedModel):
 
     country = models.ForeignKey(
         Country, on_delete=models.CASCADE, related_name='cities')
-    cityname = models.CharField(max_length=100, null=True, blank=True)
+    city_name = models.CharField(max_length=100, null=True, blank=True)
+    city_photo = models.URLField()
 
     @property
     def like_count(self):
@@ -48,7 +49,7 @@ class City (config_models.TimeStampedModel):
         return self.toCity.all().order_by('-actor_id').distinct('actor_id').count()
 
     def __str__(self):
-        return self.cityname
+        return self.city_name
 
 
 class Like(config_models.TimeStampedModel):
@@ -63,4 +64,4 @@ class Like(config_models.TimeStampedModel):
         return naturaltime(self.created_at)
 
     def __str__(self):
-        return 'User: {} - City cityname: {}'.format(self.creator.username, self.city.cityname)
+        return 'User: {} - City cityname: {}'.format(self.creator.username, self.city.city_name)

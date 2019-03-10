@@ -27,8 +27,8 @@ const UserGrid: React.SFC<IProps> = ({ users, className }) => {
           id={user.id}
           avatar={user.profile.avatar}
           username={user.username}
-          currentCity={user.profile.currentCity.cityname}
-          currentCountry={user.profile.currentCity.country.countryname}
+          currentCity={user.profile.currentCity.cityName}
+          currentCountry={user.profile.currentCity.country.countryName}
           isFollowing={user.profile.isFollowing}
         />
       ))}

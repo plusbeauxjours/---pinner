@@ -19,12 +19,14 @@ export const GET_USER = gql`
           followingCount
           isFollowing
           isSelf
+          cityCount
+          countryCount
           currentCountry {
-            countryname
-            countrycode
+            countryName
+            countryCode
           }
           currentCity {
-            cityname
+            cityName
           }
         }
         cards {

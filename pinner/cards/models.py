@@ -45,6 +45,9 @@ class Card(config_models.TimeStampedModel):
     def __str__(self):
         return 'Country: {} - City: {} - Caption: {} - Creator: {} '.format(self.country, self.city, self.caption, self.creator)
 
+    class Meta:
+        ordering = ['-created_at']
+
 
 class Comment(config_models.TimeStampedModel):
 

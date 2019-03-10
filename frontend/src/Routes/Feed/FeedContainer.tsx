@@ -62,7 +62,7 @@ class FeedContainer extends React.Component<IProps, IState> {
         query={GET_FEED}
         variables={{
           page,
-          cityname: currentCity
+          cityName: currentCity
         }}
       >
         {({ data, loading }) => (

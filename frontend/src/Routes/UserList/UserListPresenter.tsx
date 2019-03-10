@@ -32,8 +32,8 @@ const UserListPresent: React.SFC<IProps> = ({
               id={user.id}
               username={user.username}
               avatar={user.profile.avatar}
-              currentCity={user.profile.currentCity.cityname}
-              currentCountry={user.profile.currentCity.country.countryname}
+              currentCity={user.profile.currentCity.cityName}
+              currentCountry={user.profile.currentCity.country.countryName}
               isFollowing={user.profile.isFollowing}
               size={"sm"}
             />

@@ -43,7 +43,7 @@ const LoggedInPages = () => (
       <Route path="/explore/userlist" component={UserList} />
       <Route path="/location" exact={true} component={Location} />
       <Route path="/notification" component={Notification} />
-      <Route path="/city/:cityname" component={FeedByCity} />
+      <Route path="/city/:cityName" component={FeedByCity} />
       {/* <Route path="/country/:country" component={FeedByCity} /> */}
       <Route path="/:username/footprint" exact={true} component={Footprint} />
       <Route path="/:username" component={Profile} />

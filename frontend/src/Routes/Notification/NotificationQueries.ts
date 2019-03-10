@@ -11,9 +11,9 @@ export const GET_NOTIFICATION = gql`
           profile {
             avatar
             currentCity {
-              cityname
+              cityName
               country {
-                countryname
+                countryName
               }
             }
           }
@@ -44,26 +44,26 @@ export const GET_MOVE_NOTIFICATION = gql`
           profile {
             avatar
             currentCity {
-              cityname
+              cityName
               country {
-                countryname
+                countryName
               }
             }
           }
         }
         verb
         fromCity {
-          cityname
+          cityName
           country {
-            countryname
-            countrycode
+            countryName
+            countryCode
           }
         }
         toCity {
-          cityname
+          cityName
           country {
-            countryname
-            countrycode
+            countryName
+            countryCode
           }
         }
         read

@@ -7,7 +7,7 @@ export const ME = gql`
         username
         profile {
           currentCity {
-            cityname
+            cityName
           }
         }
       }
@@ -24,9 +24,9 @@ export const USER_FRAGMENT = gql`
       avatar
       currentCity {
         country {
-          countryname
+          countryName
         }
-        cityname
+        cityName
       }
     }
   }
@@ -53,10 +53,10 @@ export const DETAIL_CARD_FRAGMENT = gql`
     file
     caption
     country {
-      countryname
+      countryName
     }
     city {
-      cityname
+      cityName
     }
     likeCount
     commentCount

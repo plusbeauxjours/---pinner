@@ -112,8 +112,8 @@ const NotificationRow: React.SFC<IProps> = ({
                     <MContainer onClick={() => onMarkRead(notification.id)}>
                       <UserHeader
                         username={notification.actor.username}
-                        currentCity={actor.currentCity.cityname}
-                        currentCountry={actor.currentCity.country.countryname}
+                        currentCity={actor.currentCity.cityName}
+                        currentCountry={actor.currentCity.country.countryName}
                         avatar={actor.avatar}
                         size={"sm"}
                       />
@@ -123,15 +123,15 @@ const NotificationRow: React.SFC<IProps> = ({
                       </Header>
                       <MHeader>
                         <FlagHeader
-                          cityname={notification.fromCity.cityname}
-                          countrycode={
-                            notification.fromCity.country.countrycode
+                          cityName={notification.fromCity.cityName}
+                          countryCode={
+                            notification.fromCity.country.countryCode
                           }
                         />
                         <SBold text={"To"} />
                         <FlagHeader
-                          cityname={notification.toCity.cityname}
-                          countrycode={notification.toCity.country.countrycode}
+                          cityName={notification.toCity.cityName}
+                          countryCode={notification.toCity.country.countryCode}
                         />
                       </MHeader>
                     </MContainer>
@@ -150,8 +150,8 @@ const NotificationRow: React.SFC<IProps> = ({
                     <FContainer onClick={() => onMarkRead(notification.id)}>
                       <UserHeader
                         username={notification.actor.username}
-                        currentCity={actor.currentCity.cityname}
-                        currentCountry={actor.currentCity.country.countryname}
+                        currentCity={actor.currentCity.cityName}
+                        currentCountry={actor.currentCity.country.countryName}
                         avatar={actor.avatar}
                         size={"sm"}
                       />
@@ -182,8 +182,8 @@ const NotificationRow: React.SFC<IProps> = ({
                     <Container>
                       <UserHeader
                         username={notification.actor.username}
-                        currentCity={actor.currentCity.cityname}
-                        currentCountry={actor.currentCity.country.countryname}
+                        currentCity={actor.currentCity.cityName}
+                        currentCountry={actor.currentCity.country.countryName}
                         avatar={actor.avatar}
                         size={"sm"}
                       />
@@ -218,8 +218,8 @@ const NotificationRow: React.SFC<IProps> = ({
                     <CLUContainer onClick={() => onMarkRead(notification.id)}>
                       <UserHeader
                         username={notification.actor.username}
-                        currentCity={actor.currentCity.cityname}
-                        currentCountry={actor.currentCity.country.countryname}
+                        currentCity={actor.currentCity.cityName}
+                        currentCountry={actor.currentCity.country.countryName}
                         avatar={actor.avatar}
                         size={"sm"}
                       />
@@ -251,8 +251,8 @@ const NotificationRow: React.SFC<IProps> = ({
                     <CLUContainer>
                       <UserHeader
                         username={notification.actor.username}
-                        currentCity={actor.currentCity.cityname}
-                        currentCountry={actor.currentCity.country.countryname}
+                        currentCity={actor.currentCity.cityName}
+                        currentCountry={actor.currentCity.country.countryName}
                         avatar={actor.avatar}
                         size={"sm"}
                       />

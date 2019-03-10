@@ -248,22 +248,34 @@ const ProfilePresenter: React.SFC<IProps> = ({
               </UsernameRow>
               <Metrics>
                 <Metric>
-                  <CBold text={String(user.profile.currentCity.cityname)} />
+                  <CBold text={String(user.profile.currentCity.cityName)} />
                 </Metric>
                 <Metric>
+                  post
                   <SBold text={String(user.profile.postCount)} />
                 </Metric>
                 <Metric>
+                  followers
                   <SBold text={String(user.profile.followersCount)} />
                 </Metric>
                 <Metric>
+                  following
                   <SBold text={String(user.profile.followingCount)} />
                 </Metric>
                 <Metric>
+                  city
+                  <SBold text={String(user.profile.cityCount)} />
+                </Metric>
+                <Metric>
+                  country
+                  <SBold text={String(user.profile.countryCount)} />
+                </Metric>
+
+                <Metric>
                   <Flag
                     size="md"
-                    countrycode={require(`../../Images/countryFlag/${
-                      user.profile.currentCountry.countrycode
+                    countryCode={require(`../../Images/countryFlag/${
+                      user.profile.currentCountry.countryCode
                     }.svg`)}
                   />
                 </Metric>

@@ -5,7 +5,7 @@ from . import models
 @admin.register(models.Country)
 class CountryAdmin(admin.ModelAdmin):
     list_display = (
-        'countryname',
+        'country_name',
         'city_count',
         'user_count',
         'user_log_count'
@@ -15,7 +15,7 @@ class CountryAdmin(admin.ModelAdmin):
 @admin.register(models.City)
 class CityAdmin(admin.ModelAdmin):
     list_display = (
-        'cityname',
+        'city_name',
         'like_count',
         'user_count',
         'user_log_count'

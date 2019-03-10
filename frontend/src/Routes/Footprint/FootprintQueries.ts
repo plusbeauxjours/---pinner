@@ -6,10 +6,10 @@ export const GET_FOOTPRINT = gql`
       footprints {
         id
         toCity {
-          cityname
+          cityName
           country {
-            countryname
-            countrycode
+            countryName
+            countryCode
           }
         }
         createdAt

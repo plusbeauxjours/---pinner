@@ -89,16 +89,16 @@ const Overlay = styled.div<IProps>`
 `;
 
 interface IProps {
-  countrycode?: string;
+  countryCode?: string;
   size: string;
   bg?: string;
   className?: string;
 }
 
-const Flag: React.SFC<IProps> = ({ className, countrycode, size }) => (
+const Flag: React.SFC<IProps> = ({ className, countryCode, size }) => (
   <Container>
     <Overlay size={size}>
-      <SFlag className={className} src={countrycode} size={size} />
+      <SFlag className={className} src={countryCode} size={size} />
     </Overlay>
   </Container>
 );

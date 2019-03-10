@@ -137,7 +137,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
                             query: GET_FEED,
                             variables: {
                               page: 0,
-                              cityname: user.profile.currentCity.cityname
+                              cityName: user.profile.currentCity.cityName
                             }
                           }
                         ]}

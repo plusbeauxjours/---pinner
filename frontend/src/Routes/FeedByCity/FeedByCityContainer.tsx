@@ -11,29 +11,29 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   page: number;
-  cityname: string;
+  cityName: string;
 }
 
 class FeedByCityContainer extends React.Component<IProps, IState> {
   public state = {
     page: 0,
-    cityname: ""
+    cityName: ""
   };
   public render() {
     const {
       match: {
-        params: { cityname }
+        params: { cityName }
       }
     } = this.props;
     const { page } = this.state;
     return (
-      <FeedByCityQuery query={GET_FEED_BY_CITY} variables={{ page, cityname }}>
+      <FeedByCityQuery query={GET_FEED_BY_CITY} variables={{ page, cityName }}>
         {({ data, loading }) => {
           return (
             <FeedByCityPresenter
               loading={loading}
               data={data}
-              cityname={cityname}
+              cityName={cityName}
             />
           );
         }}

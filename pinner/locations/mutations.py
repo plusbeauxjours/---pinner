@@ -30,7 +30,7 @@ class ReportLocation(graphene.Mutation):
         try:
             profile = user.profile
 
-            if (currentCity != profile.current_city.cityname):
+            if (currentCity != profile.current_city.city_name):
 
                 try:
                     profile.last_lat = profile.current_lat
@@ -44,12 +44,12 @@ class ReportLocation(graphene.Mutation):
                 profile.current_lng = currentLng
 
                 try:
-                    existing_country = models.Country.objects.get(countryname=currentCountry)
+                    existing_country = models.Country.objects.get(country_name=currentCountry)
 
                     profile.current_country = existing_country
 
                     try:
-                        existing_city = models.City.objects.get(cityname=currentCity)
+                        existing_city = models.City.objects.get(city_name=currentCity)
 
                         profile.current_city = existing_city
                         profile.save()
@@ -58,14 +58,14 @@ class ReportLocation(graphene.Mutation):
                             actor=user,
                             verb="move",
                             fromCity=profile.last_city,
-                            fromCity__country=profile.last_country,
+                            fromCountry=profile.last_country,
                             toCity=profile.current_city,
-                            toCity__country=profile.current_country
+                            toCountry=profile.current_country
                         )
                         return types.ReportLocationResponse(ok=True)
 
                     except:
-                        new_city = models.City.objects.create(cityname=currentCity, country=existing_country)
+                        new_city = models.City.objects.create(city_name=currentCity, country=existing_country)
                         new_city.save()
 
                         profile.current_city = new_city
@@ -74,17 +74,17 @@ class ReportLocation(graphene.Mutation):
                             actor=user,
                             verb="move",
                             fromCity=profile.last_city,
-                            fromCity__country=profile.last_country,
+                            fromCountry=profile.last_country,
                             toCity=profile.current_city,
-                            toCity__country=profile.current_country
+                            toCountry=profile.current_country
                         )
                         return types.ReportLocationResponse(ok=True)
 
                 except:
                     new_country = models.Country.objects.create(
-                        countrycode=currentCountryCode, countryname=currentCountry)
+                        country_code=currentCountryCode, country_name=currentCountry)
                     new_country.save()
-                    new_city = models.City.objects.create(cityname=currentCity, country=new_country)
+                    new_city = models.City.objects.create(city_name=currentCity, country=new_country)
                     new_city.save()
 
                     profile.current_city = new_city
@@ -94,9 +94,9 @@ class ReportLocation(graphene.Mutation):
                         actor=user,
                         verb="move",
                         fromCity=profile.last_city,
-                        fromCity__country=profile.last_country,
+                        fromCountry=profile.last_country,
                         toCity=profile.current_city,
-                        toCity__country=profile.current_country
+                        toCountry=profile.current_country
                     )
                 return types.ReportLocationResponse(ok=True)
 

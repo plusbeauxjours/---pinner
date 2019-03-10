@@ -5,11 +5,11 @@ export const GET_CITY = gql`
     getCities {
       cities {
         id
-        cityname
+        cityName
         country {
           id
-          countryname
-          countrycode
+          countryName
+          countryCode
         }
         userCount
         userLogCount

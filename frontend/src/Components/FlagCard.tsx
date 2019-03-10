@@ -32,31 +32,31 @@ const Counter = styled.span`
 `;
 
 interface IProps {
-  countryname: string;
-  countrycode: string;
-  cityname: string;
+  countryName: string;
+  countryCode: string;
+  cityName: string;
   userCount: number;
   userLogCount: number;
   cardCount: number;
 }
 
 const FlagCard: React.SFC<IProps> = ({
-  countryname,
-  countrycode,
-  cityname,
+  countryName,
+  countryCode,
+  cityName,
   userCount,
   userLogCount,
   cardCount
 }) => {
   return (
-    <SLink to={`/city/${cityname}`}>
+    <SLink to={`/city/${cityName}`}>
       <Metric>
         <SFlag
-          countrycode={require(`../Images/countryFlag/${countrycode}.svg`)}
+          countryCode={require(`../Images/countryFlag/${countryCode}.svg`)}
           size="sm"
         />
       </Metric>
-      <SBold text={cityname} />
+      <SBold text={cityName} />
 
       <Counter>
         userCount:
