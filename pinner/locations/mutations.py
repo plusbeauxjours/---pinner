@@ -56,7 +56,6 @@ class ReportLocation(graphene.Mutation):
                         if (not existing_city.city_photo):
                             existing_city.city_photo = cityPhotoURL
                             existing_city.save()
-                            print(existing_city.city_photo)
 
                         profile.current_city = existing_city
                         profile.save()
@@ -72,7 +71,6 @@ class ReportLocation(graphene.Mutation):
                         return types.ReportLocationResponse(ok=True)
 
                     except:
-                        print(cityPhotoURL.value())
                         new_city = models.City.objects.create(
                             city_name=currentCity, country=existing_country, city_photo=cityPhotoURL)
                         new_city.save()

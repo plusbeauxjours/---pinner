@@ -18,7 +18,8 @@ class CityAdmin(admin.ModelAdmin):
         'city_name',
         'like_count',
         'user_count',
-        'user_log_count'
+        'user_log_count',
+        'city_photo'
     )
 
 

@@ -6,6 +6,7 @@ export const GET_CITY = gql`
       cities {
         id
         cityName
+        cityPhoto
         country {
           id
           countryName

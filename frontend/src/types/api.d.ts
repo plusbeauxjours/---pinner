@@ -573,6 +573,7 @@ export interface GetCities_getCities_cities {
   __typename: "CityType";
   id: string;
   cityName: string | null;
+  cityPhoto: string | null;
   country: GetCities_getCities_cities_country;
   userCount: number | null;
   userLogCount: number | null;
