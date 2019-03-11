@@ -4,6 +4,7 @@ from config import models as config_models
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django.dispatch import receiver
+from django.db.models.signals import pre_init
 
 from locations import models as locations_models
 

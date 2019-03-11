@@ -247,7 +247,7 @@ class UploadCard(graphene.Mutation):
         borderRadius = kwargs.get('borderRadius')
 
         try:
-            country = location_models.Country.objects.get(countryName=country)
+            country = location_models.Country.objects.get(country_name=country)
             city = location_models.City.objects.get(city_name=city)
             card = models.Card.objects.create(
                 creator=user,

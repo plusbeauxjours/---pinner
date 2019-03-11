@@ -551,6 +551,7 @@ export interface ReportLocationVariables {
   currentCity: string;
   currentCountry: string;
   currentCountryCode: string;
+  cityPhotoURL: string;
 }
 
 

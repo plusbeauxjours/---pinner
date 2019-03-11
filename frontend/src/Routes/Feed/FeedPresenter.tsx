@@ -51,7 +51,7 @@ const FeedPresenter: React.SFC<IProps> = ({ data, loading, currentCity }) => {
         <Container>
           {users &&
             users.map(user => (
-              <Link to={`/${user.username}`}>
+              <Link key={user.id} to={`/${user.username}`}>
                 <SAvatar size={"sm"} key={user.id} url={user.profile.avatar} />
               </Link>
             ))}
@@ -64,25 +64,23 @@ const FeedPresenter: React.SFC<IProps> = ({ data, loading, currentCity }) => {
         {cards &&
           cards.map(card => {
             return (
-              <>
-                <Photo
-                  key={card.id}
-                  id={card.id}
-                  inline={true}
-                  creatorAvatar={card.creator.profile.avatar}
-                  creatorUsername={card.creator.username}
-                  country={card.country.countryName}
-                  city={card.city.cityName}
-                  photoUrl={card.file}
-                  likeCount={card.likeCount}
-                  commentCount={card.commentCount}
-                  caption={card.caption}
-                  comments={card.comments}
-                  createdAt={card.createdAt}
-                  isLiked={card.isLiked}
-                  borderRadius={card.borderRadius}
-                />
-              </>
+              <Photo
+                key={card.id}
+                id={card.id}
+                inline={true}
+                creatorAvatar={card.creator.profile.avatar}
+                creatorUsername={card.creator.username}
+                country={card.country.countryName}
+                city={card.city.cityName}
+                photoUrl={card.file}
+                likeCount={card.likeCount}
+                commentCount={card.commentCount}
+                caption={card.caption}
+                comments={card.comments}
+                createdAt={card.createdAt}
+                isLiked={card.isLiked}
+                borderRadius={card.borderRadius}
+              />
             );
           })}
       </SWrapper>

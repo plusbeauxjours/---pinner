@@ -15,6 +15,7 @@ class ReportLocation(graphene.Mutation):
         currentCity = graphene.String(required=True)
         currentCountry = graphene.String(required=True)
         currentCountryCode = graphene.String(required=True)
+        cityPhotoURL = graphene.String(required=True)
 
     Output = types.ReportLocationResponse
 
@@ -26,6 +27,7 @@ class ReportLocation(graphene.Mutation):
         currentCity = kwargs.get('currentCity')
         currentCountry = kwargs.get('currentCountry')
         currentCountryCode = kwargs.get('currentCountryCode')
+        cityPhotoURL = kwargs.get('cityPhotoURL')
 
         try:
             profile = user.profile
@@ -51,6 +53,11 @@ class ReportLocation(graphene.Mutation):
                     try:
                         existing_city = models.City.objects.get(city_name=currentCity)
 
+                        if (not existing_city.city_photo):
+                            existing_city.city_photo = cityPhotoURL
+                            existing_city.save()
+                            print(existing_city.city_photo)
+
                         profile.current_city = existing_city
                         profile.save()
 
@@ -65,7 +72,9 @@ class ReportLocation(graphene.Mutation):
                         return types.ReportLocationResponse(ok=True)
 
                     except:
-                        new_city = models.City.objects.create(city_name=currentCity, country=existing_country)
+                        print(cityPhotoURL.value())
+                        new_city = models.City.objects.create(
+                            city_name=currentCity, country=existing_country, city_photo=cityPhotoURL)
                         new_city.save()
 
                         profile.current_city = new_city
@@ -84,7 +93,8 @@ class ReportLocation(graphene.Mutation):
                     new_country = models.Country.objects.create(
                         country_code=currentCountryCode, country_name=currentCountry)
                     new_country.save()
-                    new_city = models.City.objects.create(city_name=currentCity, country=new_country)
+                    new_city = models.City.objects.create(
+                        city_name=currentCity, country=new_country, city_photo=cityPhotoURL)
                     new_city.save()
 
                     profile.current_city = new_city

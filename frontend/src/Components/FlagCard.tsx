@@ -16,6 +16,8 @@ const SFlag = styled(Flag)`
   display: flex;
 `;
 
+const CityPhoto = styled.img``;
+
 const SBold = styled(Bold)`
   align-self: center;
 `;
@@ -50,26 +52,31 @@ const FlagCard: React.SFC<IProps> = ({
 }) => {
   return (
     <SLink to={`/city/${cityName}`}>
-      <Metric>
-        <SFlag
-          countryCode={require(`../Images/countryFlag/${countryCode}.svg`)}
-          size="sm"
-        />
-      </Metric>
-      <SBold text={cityName} />
-
-      <Counter>
-        userCount:
-        <SBold text={userCount.toString()} />
-      </Counter>
-      <Counter>
-        userLogCoun:
-        <SBold text={userLogCount.toString()} />
-      </Counter>
-      <Counter>
-        cardCount:
-        <SBold text={cardCount.toString()} />
-      </Counter>
+      <CityPhoto
+        src={
+          "https://images.unsplash.com/photo-1517164912040-bfe9a44ac04e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjYwNTkwfQ"
+        }
+      >
+        <Metric>
+          <SFlag
+            countryCode={require(`../Images/countryFlag/${countryCode}.svg`)}
+            size="sm"
+          />
+        </Metric>
+        <SBold text={cityName} />
+        <Counter>
+          userCount:
+          <SBold text={userCount.toString()} />
+        </Counter>
+        <Counter>
+          userLogCoun:
+          <SBold text={userLogCount.toString()} />
+        </Counter>
+        <Counter>
+          cardCount:
+          <SBold text={cardCount.toString()} />
+        </Counter>
+      </CityPhoto>
     </SLink>
   );
 };

@@ -11,7 +11,7 @@ import { RouteComponentProps } from "react-router";
 import { REPORT_LOCATION } from "../Home/HomeQueries";
 import { reverseGeoCode } from "../../mapHelpers";
 import { GET_FEED } from "./FeedQueries";
-// import { GET_USER } from "../Profile/ProfileQueries";
+import { locationThumbs } from "../../locationThumbs";
 
 class ReportLocationMutation extends Mutation<
   ReportLocation,
@@ -29,6 +29,7 @@ interface IState {
   currentCity: string;
   currentCountry: string;
   currentCountryCode: string;
+  cityPhotoURL: any;
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
@@ -39,7 +40,8 @@ class FeedContainer extends React.Component<IProps, IState> {
     currentLng: 0,
     currentCity: "",
     currentCountry: "",
-    currentCountryCode: ""
+    currentCountryCode: "",
+    cityPhotoURL: ""
   };
   public componentDidMount() {
     navigator.geolocation.getCurrentPosition(
@@ -55,7 +57,8 @@ class FeedContainer extends React.Component<IProps, IState> {
       currentLng,
       currentCity,
       currentCountry,
-      currentCountryCode
+      currentCountryCode,
+      cityPhotoURL
     } = this.state;
     return (
       <FeedQuery
@@ -73,7 +76,8 @@ class FeedContainer extends React.Component<IProps, IState> {
               currentLng,
               currentCity,
               currentCountry,
-              currentCountryCode
+              currentCountryCode,
+              cityPhotoURL
             }}
           >
             {ReportLocationFn => {
@@ -118,20 +122,24 @@ class FeedContainer extends React.Component<IProps, IState> {
       );
     }
   };
-  public reportLocation = (
+  public reportLocation = async (
     lat: number,
     lng: number,
     lastCity: string,
     lastCountry: string,
     currentCountryCode: string
   ) => {
+    const cityPhotoURL = await locationThumbs(lastCity);
+    console.log(cityPhotoURL);
+    this.setState({ cityPhotoURL });
     this.ReportLocationFn({
       variables: {
         lastLat: lat,
         lastLng: lng,
         lastCity,
         lastCountry,
-        currentCountryCode
+        currentCountryCode,
+        cityPhotoURL
       }
     });
     console.log(this.state);

@@ -22,7 +22,7 @@ class Country (config_models.TimeStampedModel):
         return self.toCountry.all().order_by('-actor_id').distinct('actor_id').count()
 
     def __str__(self):
-        return self.countryName
+        return self.country_name
 
 
 class City (config_models.TimeStampedModel):
@@ -30,7 +30,7 @@ class City (config_models.TimeStampedModel):
     country = models.ForeignKey(
         Country, on_delete=models.CASCADE, related_name='cities')
     city_name = models.CharField(max_length=100, null=True, blank=True)
-    city_photo = models.URLField()
+    city_photo = models.URLField(null=True, blank=True)
 
     @property
     def like_count(self):

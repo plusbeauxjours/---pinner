@@ -7,6 +7,7 @@ export const REPORT_LOCATION = gql`
     $currentCity: String!
     $currentCountry: String!
     $currentCountryCode: String!
+    $cityPhotoURL: String!
   ) {
     reportLocation(
       currentLat: $currentLat
@@ -14,6 +15,7 @@ export const REPORT_LOCATION = gql`
       currentCity: $currentCity
       currentCountry: $currentCountry
       currentCountryCode: $currentCountryCode
+      cityPhotoURL: $cityPhotoURL
     ) {
       ok
     }

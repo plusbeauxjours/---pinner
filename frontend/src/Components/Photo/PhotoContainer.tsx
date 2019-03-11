@@ -4,7 +4,6 @@ import { Mutation, MutationFn } from "react-apollo";
 import { TOGGLE_LIKE_CARD, ADD_COMMENT, DELETE_COMMENT } from "./PhotoQueries";
 import { DeleteComment, DeleteCommentVariables } from "../../types/api";
 import { GET_USER } from "../../Routes/Profile/ProfileQueries";
-import { GET_NOTIFICATION } from "../../Routes/Notification/NotificationQueries";
 import { GET_FEED } from "../../Routes/Feed/FeedQueries";
 import {
   LikeCard,
@@ -132,7 +131,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
                             query: GET_USER,
                             variables: { username: user.username }
                           },
-                          { query: GET_NOTIFICATION, variables: { page: 0 } },
                           {
                             query: GET_FEED,
                             variables: {
