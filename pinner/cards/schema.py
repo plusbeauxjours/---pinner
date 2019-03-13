@@ -9,7 +9,7 @@ class Query(object):
         resolver=queries.resolve_feed,
         required=True,
         args={
-            'city_name': graphene.String(required=True),
+            'cityName': graphene.String(required=True),
             'page': graphene.Int(),
         }
     )
@@ -18,7 +18,7 @@ class Query(object):
         resolver=queries.resolve_feed_by_city,
         required=True,
         args={
-            'city_name': graphene.String(required=True),
+            'cityName': graphene.String(required=True),
             'page': graphene.Int()
         }
     )

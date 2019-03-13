@@ -3,7 +3,7 @@ import Loader from "src/Components/Loader";
 import styled from "src/Styles/typed-components";
 import Wrapper from "src/Components/Wrapper";
 import { GetCities } from "../../types/api";
-import FlagGrid from "../../Components/FlagGrid";
+import CityGrid from "../../Components/CityGrid";
 
 const TallWrapper = styled(Wrapper)`
   height: 50vh;
@@ -22,7 +22,7 @@ const LocationPresenter: React.SFC<IProps> = ({
   if (loading) {
     return <Loader />;
   } else if (!loading && cities) {
-    return <TallWrapper>{cities && <FlagGrid cities={cities} />}</TallWrapper>;
+    return <TallWrapper>{cities && <CityGrid cities={cities} />}</TallWrapper>;
   } else {
     return null;
   }

@@ -44,6 +44,7 @@ const FeedByCityPresenter: React.SFC<IProps> = ({
           {users &&
             users.map(user => (
               <Link to={`/${user.username}`}>
+                {console.log(user)}
                 <SAvatar size={"sm"} key={user.id} url={user.profile.avatar} />
               </Link>
             ))}

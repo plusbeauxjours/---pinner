@@ -23,7 +23,7 @@ def resolve_feed(self, info, **kwargs):
     my_cards = user.cards.all()
 
     users = User.objects.filter(
-        profile__current_city__city_name=cityName).order_by('-username').distinct('username')[:3]
+        profile__current_city__city_name=cityName).order_by('-username').distinct('username')
 
     combined = following_cards.union(city_cards).union(my_cards).order_by(
         '-created_at')[offset:5 + offset]
@@ -43,7 +43,7 @@ def resolve_feed_by_city(self, info, **kwargs):
         '-created_at')[offset:5 + offset]
 
     users = User.objects.filter(
-        profile__current_city__city_name=cityName).order_by('-username').distinct('username')[:3]
+        profile__current_city__city_name=cityName).order_by('-username').distinct('username')
 
     return types.FeedByCityResponse(cards=cards, users=users)
 

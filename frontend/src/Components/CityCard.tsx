@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
 import { Link } from "react-router-dom";
-import Flag from "../Components/Flag";
-import Bold from "../Components/Bold";
+import Flag from "./Flag";
+import Bold from "./Bold";
 
 const SLink = styled(Link)`
   display: flex;
@@ -25,9 +25,13 @@ const CityPhoto = styled.img`
   z-index: 1;
 `;
 
-const SBold = styled(Bold)`
+const CityName = styled(Bold)`
+  display: flex;
   z-index: 5;
-  align-self: center;
+  font-size: 40px;
+  font-family: "Qwigley";
+  font-weight: 200;
+  color: white;
 `;
 
 const Metric = styled.div`
@@ -41,6 +45,17 @@ const Metric = styled.div`
 const Counter = styled.span`
   z-index: 5;
   align-self: flex-end;
+  font-size: 20px;
+  font-family: "Qwigley";
+  font-weight: 80;
+  color: white;
+`;
+
+const CityNameContainer = styled.span`
+  z-index: 5;
+  display: flex;
+  position: absolute;
+  align-items: center;
 `;
 
 interface IProps {
@@ -53,7 +68,7 @@ interface IProps {
   cityPhoto: string;
 }
 
-const FlagCard: React.SFC<IProps> = ({
+const CityCard: React.SFC<IProps> = ({
   countryName,
   countryCode,
   cityName,
@@ -65,27 +80,19 @@ const FlagCard: React.SFC<IProps> = ({
   return (
     <SLink to={`/city/${cityName}`}>
       <CityPhoto src={cityPhoto} />
-      {console.log(cityPhoto)}
       <Metric>
         <SFlag
           countryCode={require(`../Images/countryFlag/${countryCode}.svg`)}
           size="sm"
         />
       </Metric>
-      <SBold text={cityName} />
-      <Counter>
-        userCount:
-        <SBold text={userCount.toString()} />
-      </Counter>
-      <Counter>
-        userLogCoun:
-        <SBold text={userLogCount.toString()} />
-      </Counter>
-      <Counter>
-        cardCount:
-        <SBold text={cardCount.toString()} />
-      </Counter>
+      <CityNameContainer>
+        <CityName text={cityName} />
+      </CityNameContainer>
+      <Counter>userCount:{userCount.toString()}</Counter>
+      <Counter>userLogCoun:{userLogCount.toString()}</Counter>
+      <Counter>cardCount:{cardCount.toString()}</Counter>
     </SLink>
   );
 };
-export default FlagCard;
+export default CityCard;

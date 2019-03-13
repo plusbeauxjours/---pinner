@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "../Styles/typed-components";
-import FlagCard from "./FlagCard";
+import CityCard from "./CityCard";
 
 const Container = styled.div`
   display: grid;
@@ -17,10 +17,10 @@ interface IProps {
   className?: string;
 }
 
-const FlagGrid: React.SFC<IProps> = ({ cities, className }) => (
+const CityGrid: React.SFC<IProps> = ({ cities, className }) => (
   <Container className={className}>
     {cities.map(city => (
-      <FlagCard
+      <CityCard
         key={city.id}
         countryName={city.country.countryName}
         countryCode={city.country.countryCode}
@@ -34,4 +34,4 @@ const FlagGrid: React.SFC<IProps> = ({ cities, className }) => (
   </Container>
 );
 
-export default FlagGrid;
+export default CityGrid;
