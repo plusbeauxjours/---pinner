@@ -24,6 +24,13 @@ const Image = styled.img`
   min-width: 100%;
 `;
 
+const Caption = styled.div`
+  text-align: center;
+  font-size: 50px;
+  font-family: "Qwigley";
+  font-weight: 80;
+`;
+
 const Meta = styled.div`
   padding: 10px 15px;
   padding-bottom: 0;
@@ -221,6 +228,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
             size={"sm"}
           />
           <Image src={photoUrl} />
+          <Caption>{caption}</Caption>
           <Meta>
             <CardButtons
               isLiked={isLiked}
@@ -230,7 +238,6 @@ const PhotoPresenter: React.SFC<IProps> = ({
             />
             <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
             <Comments>
-              <Comment username={creatorUsername} comment={caption} />
               {comments &&
                 comments.map(comment => (
                   <Comment

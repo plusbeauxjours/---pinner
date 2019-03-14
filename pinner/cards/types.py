@@ -3,6 +3,7 @@ from graphene_django.types import DjangoObjectType
 from . import models
 from config import types as config_types
 from users import types as users_types
+from locations import types as location_types
 
 
 class CardType(DjangoObjectType):
@@ -36,11 +37,13 @@ class CommentType(DjangoObjectType):
 
 
 class FeedResponse(graphene.ObjectType):
+    city = graphene.Field(location_types.CityType)
     cards = graphene.List(CardType)
     users = graphene.List(users_types.UserType)
 
 
 class FeedByCityResponse(graphene.ObjectType):
+    city = graphene.Field(location_types.CityType)
     cards = graphene.List(CardType)
     users = graphene.List(users_types.UserType)
 

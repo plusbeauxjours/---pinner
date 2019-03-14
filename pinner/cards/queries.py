@@ -2,6 +2,7 @@ from django.db import IntegrityError
 from . import types, models
 from graphql_jwt.decorators import login_required
 from django.contrib.auth.models import User
+from locations import models as location_models
 
 
 @login_required
@@ -28,7 +29,9 @@ def resolve_feed(self, info, **kwargs):
     combined = following_cards.union(city_cards).union(my_cards).order_by(
         '-created_at')[offset:5 + offset]
 
-    return types.FeedResponse(cards=combined, users=users)
+    city = location_models.City.objects.get(city_name=cityName)
+
+    return types.FeedResponse(cards=combined, users=users, city=city)
 
 
 @login_required
@@ -45,7 +48,9 @@ def resolve_feed_by_city(self, info, **kwargs):
     users = User.objects.filter(
         profile__current_city__city_name=cityName).order_by('-username').distinct('username')
 
-    return types.FeedByCityResponse(cards=cards, users=users)
+    city = location_models.City.objects.get(city_name=cityName)
+
+    return types.FeedByCityResponse(cards=cards, users=users, city=city)
 
 
 @login_required

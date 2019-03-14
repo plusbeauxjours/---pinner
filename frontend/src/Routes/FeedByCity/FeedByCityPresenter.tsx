@@ -10,6 +10,17 @@ const SWrapper = styled(Wrapper)`
   max-width: 650px;
 `;
 
+const CityPhoto = styled.img`
+  display: flex;
+  width: 650px;
+  height: 200px;
+  overflow: hidden;
+  background-size: cover;
+  border-radius: 3px;
+  margin-bottom: 40px;
+  z-index: 1;
+`;
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -23,33 +34,27 @@ const SAvatar = styled(Avatar)`
 interface IProps {
   data?: any;
   loading: boolean;
-  cityName: string;
 }
 
-const FeedByCityPresenter: React.SFC<IProps> = ({
-  data,
-  loading,
-  cityName
-}) => {
+const FeedByCityPresenter: React.SFC<IProps> = ({ data, loading }) => {
   if (loading) {
     return <Loader />;
   } else if (!loading && data) {
     console.log(data);
 
-    const { feedByCity: { cards = {}, users = {} } = {} } = data;
+    const { feedByCity: { cards = {}, users = {}, city = {} } = {} } = data;
     return (
       <SWrapper>
-        <h2>{cityName}</h2>
+        <h2>{city.cityName}</h2>
+        <CityPhoto src={city.cityPhoto} />
         <Container>
           {users &&
             users.map(user => (
               <Link to={`/${user.username}`}>
-                {console.log(user)}
                 <SAvatar size={"sm"} key={user.id} url={user.profile.avatar} />
               </Link>
             ))}
         </Container>
-
         {cards &&
           cards.map(card => (
             <Photo

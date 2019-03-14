@@ -380,10 +380,26 @@ export interface Feed_feed_users {
   profile: Feed_feed_users_profile | null;
 }
 
+export interface Feed_feed_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface Feed_feed_city {
+  __typename: "CityType";
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: Feed_feed_city_country;
+  cardCount: number | null;
+  userCount: number | null;
+  userLogCount: number | null;
+}
+
 export interface Feed_feed {
   __typename: "FeedResponse";
   cards: (Feed_feed_cards | null)[] | null;
   users: (Feed_feed_users | null)[] | null;
+  city: Feed_feed_city | null;
 }
 
 export interface Feed {
@@ -477,10 +493,26 @@ export interface FeedByCity_feedByCity_users {
   profile: FeedByCity_feedByCity_users_profile | null;
 }
 
+export interface FeedByCity_feedByCity_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface FeedByCity_feedByCity_city {
+  __typename: "CityType";
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: FeedByCity_feedByCity_city_country;
+  cardCount: number | null;
+  userCount: number | null;
+  userLogCount: number | null;
+}
+
 export interface FeedByCity_feedByCity {
   __typename: "FeedByCityResponse";
   cards: (FeedByCity_feedByCity_cards | null)[] | null;
   users: (FeedByCity_feedByCity_users | null)[] | null;
+  city: (FeedByCity_feedByCity_city | null)[] | null;
 }
 
 export interface FeedByCity {

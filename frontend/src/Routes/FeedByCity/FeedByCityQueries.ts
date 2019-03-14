@@ -14,6 +14,17 @@ export const GET_FEED_BY_CITY = gql`
           avatar
         }
       }
+      city {
+        cityName
+        cityPhoto
+        country {
+          countryName
+          countryName
+        }
+        cardCount
+        userCount
+        userLogCount
+      }
     }
   }
   ${DETAIL_CARD_FRAGMENT}

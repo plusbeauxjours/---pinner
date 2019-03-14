@@ -13,6 +13,17 @@ const SWrapper = styled(Wrapper)`
   max-width: 650px;
 `;
 
+const CityPhoto = styled.img`
+  display: flex;
+  width: 650px;
+  height: 200px;
+  overflow: hidden;
+  background-size: cover;
+  border-radius: 3px;
+  margin-bottom: 40px;
+  z-index: 1;
+`;
+
 const Container = styled.div`
   border: 1px;
   display: flex;
@@ -43,11 +54,14 @@ const FeedPresenter: React.SFC<IProps> = ({ data, loading, currentCity }) => {
   } else if (!loading && data) {
     console.log(data);
 
-    const { feed: { cards = {}, users = {} } = {} } = data;
+    const { feed: { cards = {}, users = {}, city = {} } = {} } = data;
     return (
       <SWrapper>
         <h1>welcome to {currentCity}</h1>
         <h1>see all</h1>
+        <Container>
+          <CityPhoto src={city.cityPhoto} />
+        </Container>
         <Container>
           {users &&
             users.map(user => (

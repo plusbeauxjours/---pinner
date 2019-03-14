@@ -20,6 +20,8 @@ const CityPhoto = styled.img`
   display: flex;
   position: absolute;
   width: 295px;
+  height: 200px;
+  overflow: hidden;
   background-size: cover;
   border-radius: 3px;
   z-index: 1;
