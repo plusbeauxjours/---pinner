@@ -60,8 +60,12 @@ const FeedPresenter: React.SFC<IProps> = ({ data, loading, currentCity }) => {
         <h1>welcome to {currentCity}</h1>
         <h1>see all</h1>
         <Container>
+          {console.log(city)}
           <CityPhoto src={city.cityPhoto} />
         </Container>
+        <h1>cardCount {city.cardCount}</h1>
+        <h1>userCount {city.userCount}</h1>
+        <h1>userLogCount {city.userLogCount}</h1>
         <Container>
           {users &&
             users.map(user => (

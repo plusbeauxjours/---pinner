@@ -20,7 +20,6 @@ interface IProps {
 const UserGrid: React.SFC<IProps> = ({ users, className }) => {
   return (
     <Container className={className}>
-      <p>recommand user</p>
       {users.map(user => (
         <UserCard
           key={user.id}

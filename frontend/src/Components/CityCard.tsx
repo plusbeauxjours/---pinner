@@ -19,7 +19,7 @@ const SFlag = styled(Flag)`
 const CityPhoto = styled.img`
   display: flex;
   position: absolute;
-  width: 295px;
+  width: 200px;
   height: 200px;
   overflow: hidden;
   background-size: cover;

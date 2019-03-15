@@ -5,7 +5,7 @@ import CityCard from "./CityCard";
 const Container = styled.div`
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 295px));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
   grid-auto-rows: 200px;
   grid-gap: 15px;
   margin-bottom: 85px;
