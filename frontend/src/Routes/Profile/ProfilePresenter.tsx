@@ -14,8 +14,6 @@ import Flag from "../../Components/Flag";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
-  width: 45%;
-  border-bottom: 1px solid grey;
 `;
 
 const PHeader = styled.header`
@@ -41,20 +39,20 @@ const NameContainer = styled.span`
 `;
 
 const PBody = styled.div`
-  display: grid;
-  grid-template-areas: "CityPhoto Info Follow";
-  grid-template-columns: minmax(200px, 1fr);
-  grid-auto-rows: 200px;
-  grid-gap: 15px;
-  margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px 0 20px 0;
   justify-content: center;
   background: ${props => props.theme.bgColor};
+  border-bottom: 1px solid grey;
+  &:not(:last-child) {
+    border-bottom: 1px solid grey;
+  }
 `;
 
 const CityPhoto = styled.img`
-  grid-area: Photo;
+  margin-bottom: 10px;
   display: flex;
-  position: absolute;
   width: 200px;
   height: 200px;
   background-size: cover;
@@ -63,51 +61,53 @@ const CityPhoto = styled.img`
   object-fit: cover;
 `;
 
-const CityContainer = styled.div``;
+const CityContainer = styled.div`
+  margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+`;
 
 const InfoContainer = styled.div`
-  grid-area: Info;
-`;
-const FollowContainer = styled.div`
-  grid-area: Follow;
+  margin-bottom: 10px;
+  flex-direction: column;
+  width: 300px;
+  margin-right: 15px;
 `;
 
-const CityNameContainer = styled.span`
-  z-index: 5;
+const Info = styled.div`
+  display: inline-flex;
+  max-width: 100%;
+  margin-bottom: 10px;
+  height: 150px;
+  border-radius: 3px;
+  border: 1px solid grey;
+`;
+
+const FollowContainer = styled.div`
   display: flex;
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-  height: 200px;
-  width: 200px;
+  flex-direction: column;
+  min-width: 400px;
+  margin-bottom: 10px;
+`;
+
+const Follow = styled.div`
+  flex: 1;
+  margin-bottom: 10px;
+  height: 150px;
+  border-radius: 3px;
+  border: 1px solid grey;
 `;
 
 const CityName = styled(Bold)`
+  position: absolute;
   display: flex;
   z-index: 5;
   font-size: 40px;
   font-family: "Qwigley";
   font-weight: 200;
   color: white;
-`;
-
-const Metric = styled.span`
-  &:not(:first-child) {
-    margin-left: 20px;
-  }
-  height: 50px;
-  width: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-position: center center;
-  background-size: 100%;
-  border: ${props => props.theme.boxBorder};
-  border-radius: 50%;
-  &:hover {
-    opacity: 1;
-    cursor: pointer;
-  }
 `;
 
 const Fullname = styled.span`
@@ -294,87 +294,93 @@ const ProfilePresenter: React.SFC<IProps> = ({
         <SWrapper>
           <PBody>
             <CityContainer>
-              <CityPhoto src={user.profile.currentCity.cityPhoto} />
-              <CityNameContainer>
-                <CityName text={user.profile.currentCity.cityName} />
-              </CityNameContainer>
+              <Link to={`/city/${user.profile.currentCity.cityName}`}>
+                <CityPhoto src={user.profile.currentCity.cityPhoto} />
+              </Link>
+
+              <CityName text={user.profile.currentCity.cityName} />
             </CityContainer>
             <InfoContainer>
-              <Metric>
+              <Info>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with t
+              </Info>
+              <Info>
                 <CBold text={String(user.profile.currentCity.cityName)} />
-              </Metric>
-              <Metric>
                 post
                 <SBold text={String(user.profile.postCount)} />
-              </Metric>
-              <Metric>
-                followers
+                km
                 <SBold text={String(user.profile.followersCount)} />
-              </Metric>
-              <Metric>
-                following
+                trips
                 <SBold text={String(user.profile.followingCount)} />
-              </Metric>
-              <Metric>
-                city
+                cities
                 <SBold text={String(user.profile.cityCount)} />
-              </Metric>
-              <Metric>
-                country
+                countries
                 <SBold text={String(user.profile.countryCount)} />
-              </Metric>
-              <Metric>
                 <Flag
-                  size="md"
+                  size="sm"
                   countryCode={require(`../../Images/countryFlag/${
                     user.profile.currentCountry.countryCode
                   }.svg`)}
                 />
-              </Metric>
+                {editMode ? (
+                  <>
+                    <ExtendedInput
+                      onChange={onInputChange}
+                      type={"text"}
+                      value={firstName}
+                      placeholder={user.firstName || "First Name"}
+                      name={"firstName"}
+                      onKeyUp={onKeyUp}
+                    />
+                    <ExtendedInput
+                      onChange={onInputChange}
+                      type={"text"}
+                      value={lastName}
+                      placeholder={user.lastName || "Last Name"}
+                      name={"lastName"}
+                      onKeyUp={onKeyUp}
+                    />
+                  </>
+                ) : (
+                  <Fullname>{`${user.firstName} ${user.lastName}`}</Fullname>
+                )}
+                {user.profile.bio &&
+                  (editMode ? (
+                    <ExtendedInput
+                      onChange={onInputChange}
+                      type={"text"}
+                      value={bio}
+                      placeholder={user.profile.bio || "Bio"}
+                      name={"bio"}
+                      onKeyUp={onKeyUp}
+                    />
+                  ) : (
+                    <Bio>{`${user.profile.bio}`}</Bio>
+                  ))}
+              </Info>
             </InfoContainer>
-            <FollowContainer>hi</FollowContainer>
-            {editMode ? (
-              <>
-                <ExtendedInput
-                  onChange={onInputChange}
-                  type={"text"}
-                  value={firstName}
-                  placeholder={user.firstName || "First Name"}
-                  name={"firstName"}
-                  onKeyUp={onKeyUp}
-                />
-                <ExtendedInput
-                  onChange={onInputChange}
-                  type={"text"}
-                  value={lastName}
-                  placeholder={user.lastName || "Last Name"}
-                  name={"lastName"}
-                  onKeyUp={onKeyUp}
-                />
-              </>
-            ) : (
-              <Fullname>{`${user.firstName} ${user.lastName}`}</Fullname>
-            )}
-            {user.profile.bio &&
-              (editMode ? (
-                <ExtendedInput
-                  onChange={onInputChange}
-                  type={"text"}
-                  value={bio}
-                  placeholder={user.profile.bio || "Bio"}
-                  name={"bio"}
-                  onKeyUp={onKeyUp}
-                />
-              ) : (
-                <Bio>{`${user.profile.bio}`}</Bio>
-              ))}
+            <FollowContainer>
+              <Follow>
+                followers
+                <SBold text={String(user.profile.followersCount)} />
+              </Follow>
+              <Follow>
+                following
+                <SBold text={String(user.profile.followingCount)} />
+              </Follow>
+            </FollowContainer>
           </PBody>
-        </SWrapper>
-        <Wrapper>
+          <PBody>trip log</PBody>
           {user.cards && user.cards.length !== 0 && (
             <CardGrid cards={user.cards} />
           )}
-        </Wrapper>
+        </SWrapper>
       </>
     );
   }

@@ -6,7 +6,9 @@ import Bold from "./Bold";
 
 const SLink = styled(Link)`
   display: flex;
-  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  position: relative;
   background-image: white;
   border-radius: 3px;
   border: ${props => props.theme.boxBorder};
@@ -39,17 +41,8 @@ const Metric = styled.div`
 //   color: white;
 // `;
 
-const CityNameContainer = styled.span`
-  z-index: 5;
-  display: flex;
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-  height: 200px;
-  width: 200px;
-`;
-
 const CityName = styled(Bold)`
+  position: absolute;
   display: flex;
   z-index: 5;
   font-size: 40px;
@@ -86,9 +79,7 @@ const CityCard: React.SFC<IProps> = ({
           size="sm"
         />
       </Metric>
-      <CityNameContainer>
-        <CityName text={cityName} />
-      </CityNameContainer>
+      <CityName text={cityName} />
       {/* <Counter>userCount:{userCount.toString()}</Counter>
       <Counter>userLogCoun:{userLogCount.toString()}</Counter>
       <Counter>cardCount:{cardCount.toString()}</Counter> */}
