@@ -19,7 +19,7 @@ export const GET_FEED_BY_CITY = gql`
         cityPhoto
         country {
           countryName
-          countryName
+          countryCode
         }
         cardCount
         userCount

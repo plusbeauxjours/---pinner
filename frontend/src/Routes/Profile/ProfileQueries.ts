@@ -27,6 +27,11 @@ export const GET_USER = gql`
           }
           currentCity {
             cityName
+            cityPhoto
+            country {
+              countryName
+              countryCode
+            }
           }
         }
         cards {

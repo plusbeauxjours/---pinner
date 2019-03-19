@@ -12,19 +12,41 @@ const SLink = styled(Link)`
   border: ${props => props.theme.boxBorder};
 `;
 
-const SFlag = styled(Flag)`
-  display: flex;
-`;
-
 const CityPhoto = styled.img`
   display: flex;
   position: absolute;
   width: 200px;
   height: 200px;
-  overflow: hidden;
   background-size: cover;
   border-radius: 3px;
   z-index: 1;
+  object-fit: cover;
+`;
+
+const Metric = styled.div`
+  display: flex;
+  z-index: 5;
+  align-self: flex-end;
+  padding-bottom: 10px;
+  padding-right: 23px;
+`;
+
+// const Counter = styled.span`
+//   z-index: 5;
+//   font-size: 20px;
+//   font-family: "Qwigley";
+//   font-weight: 80;
+//   color: white;
+// `;
+
+const CityNameContainer = styled.span`
+  z-index: 5;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  width: 200px;
 `;
 
 const CityName = styled(Bold)`
@@ -34,30 +56,6 @@ const CityName = styled(Bold)`
   font-family: "Qwigley";
   font-weight: 200;
   color: white;
-`;
-
-const Metric = styled.div`
-  display: flex;
-  z-index: 5;
-  align-self: flex-end;
-  padding-bottom: 10px;
-  padding-right: 30px;
-`;
-
-const Counter = styled.span`
-  z-index: 5;
-  align-self: flex-end;
-  font-size: 20px;
-  font-family: "Qwigley";
-  font-weight: 80;
-  color: white;
-`;
-
-const CityNameContainer = styled.span`
-  z-index: 5;
-  display: flex;
-  position: absolute;
-  align-items: center;
 `;
 
 interface IProps {
@@ -83,7 +81,7 @@ const CityCard: React.SFC<IProps> = ({
     <SLink to={`/city/${cityName}`}>
       <CityPhoto src={cityPhoto} />
       <Metric>
-        <SFlag
+        <Flag
           countryCode={require(`../Images/countryFlag/${countryCode}.svg`)}
           size="sm"
         />
@@ -91,9 +89,9 @@ const CityCard: React.SFC<IProps> = ({
       <CityNameContainer>
         <CityName text={cityName} />
       </CityNameContainer>
-      <Counter>userCount:{userCount.toString()}</Counter>
+      {/* <Counter>userCount:{userCount.toString()}</Counter>
       <Counter>userLogCoun:{userLogCount.toString()}</Counter>
-      <Counter>cardCount:{cardCount.toString()}</Counter>
+      <Counter>cardCount:{cardCount.toString()}</Counter> */}
     </SLink>
   );
 };

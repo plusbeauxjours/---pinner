@@ -8,7 +8,7 @@ import Me from "../Me";
 
 const Header = styled.header`
   background-color: white;
-  height: 75px;
+  height: 55px;
   width: 100%;
   border: ${props => props.theme.boxBorder};
   border-top: none;

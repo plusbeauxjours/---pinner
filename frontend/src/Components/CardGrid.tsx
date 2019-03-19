@@ -4,7 +4,7 @@ import BlobCard from "./BlobCard";
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 170px));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
   grid-template-rows: 170px;
   grid-auto-rows: 170px;
   grid-gap: 15px;

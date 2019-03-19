@@ -2,11 +2,13 @@ import * as styledComponents from "styled-components";
 import { ThemedStyledComponentsModule } from "styled-components";
 
 interface IThemeInterface {
+  headerColor: string;
   bgColor: string;
   greyColor: string;
   blackColor: string;
   blueColor: string;
   boxBorder: string;
+  whiteColor: string;
   darkBlueColor: string;
   size: string;
   bg: string;

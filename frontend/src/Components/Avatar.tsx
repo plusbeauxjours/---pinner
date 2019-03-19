@@ -8,7 +8,7 @@ const Container = styled.img<IProps>`
     } else if (props.size === "sm") {
       return "30px";
     } else if (props.size === "lg") {
-      return "150px";
+      return "180px";
     } else {
       return "30px";
     }
@@ -19,7 +19,7 @@ const Container = styled.img<IProps>`
     } else if (props.size === "sm") {
       return "30px";
     } else if (props.size === "lg") {
-      return "150px";
+      return "180px";
     } else {
       return "30px";
     }

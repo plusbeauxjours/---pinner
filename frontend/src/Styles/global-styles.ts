@@ -11,8 +11,8 @@ const GlobalStyle = createGlobalStyle`
     body{
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, 'Qwigley';
         background-color: ${props => props.theme.bgColor};
-        color:${props => props.theme.blackColor};
-        font-size:14px;
+        color: ${props => props.theme.whiteColor};
+        font-size: 14px;
     }
     a{ 
         color:inherit;

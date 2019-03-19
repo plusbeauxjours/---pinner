@@ -512,7 +512,7 @@ export interface FeedByCity_feedByCity {
   __typename: "FeedByCityResponse";
   cards: (FeedByCity_feedByCity_cards | null)[] | null;
   users: (FeedByCity_feedByCity_users | null)[] | null;
-  city: (FeedByCity_feedByCity_city | null)[] | null;
+  city: FeedByCity_feedByCity_city | null;
 }
 
 export interface FeedByCity {
@@ -830,9 +830,17 @@ export interface UserProfile_userProfile_user_profile_currentCountry {
   countryCode: string | null;
 }
 
+export interface UserProfile_userProfile_user_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryCode: string | null;
+}
+
 export interface UserProfile_userProfile_user_profile_currentCity {
   __typename: "CityType";
   cityName: string | null;
+  cityPhoto: string | null;
+  country: UserProfile_userProfile_user_profile_currentCity_country;
 }
 
 export interface UserProfile_userProfile_user_profile {

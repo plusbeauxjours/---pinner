@@ -15,27 +15,80 @@ import Flag from "../../Components/Flag";
 const SWrapper = styled(Wrapper)`
   z-index: 1;
   width: 45%;
+  border-bottom: 1px solid grey;
 `;
 
-const Header = styled.header`
+const PHeader = styled.header`
   display: flex;
+  flex-direction: column;
+  height: 300px;
   align-items: center;
-  margin-bottom: 80px;
+  background: ${props => props.theme.headerColor};
 `;
 
-const HeaderColumn = styled.div`
-  margin-left: 100px;
+const PAvatar = styled(Avatar)`
+  margin: 40px;
 `;
 
 const Username = styled.span`
-  font-size: 28px;
-  font-weight: 300;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 100;
 `;
 
-const Metrics = styled.div`
+const NameContainer = styled.span`
   display: flex;
+`;
+
+const PBody = styled.div`
+  display: grid;
+  grid-template-areas: "CityPhoto Info Follow";
+  grid-template-columns: minmax(200px, 1fr);
+  grid-auto-rows: 200px;
+  grid-gap: 15px;
+  margin: 20px;
+  justify-content: center;
+  background: ${props => props.theme.bgColor};
+`;
+
+const CityPhoto = styled.img`
+  grid-area: Photo;
+  display: flex;
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+  border-radius: 3px;
+  z-index: 1;
+  object-fit: cover;
+`;
+
+const CityContainer = styled.div``;
+
+const InfoContainer = styled.div`
+  grid-area: Info;
+`;
+const FollowContainer = styled.div`
+  grid-area: Follow;
+`;
+
+const CityNameContainer = styled.span`
+  z-index: 5;
+  display: flex;
+  position: absolute;
   align-items: center;
-  margin: 20px 0px;
+  justify-content: center;
+  height: 200px;
+  width: 200px;
+`;
+
+const CityName = styled(Bold)`
+  display: flex;
+  z-index: 5;
+  font-size: 40px;
+  font-family: "Qwigley";
+  font-weight: 200;
+  color: white;
 `;
 
 const Metric = styled.span`
@@ -67,13 +120,6 @@ const Fullname = styled.span`
 const Bio = styled.p`
   font-size: 16px;
   margin-bottom: 10px;
-`;
-
-const UsernameRow = styled.div`
-  display: flex;
-  ${Username} {
-    margin-right: 20px;
-  }
 `;
 
 const ModalContainer = styled.div`
@@ -213,110 +259,116 @@ const ProfilePresenter: React.SFC<IProps> = ({
             </Modal>
           </ModalContainer>
         )}
+        <PHeader>
+          <PAvatar size="lg" url={user.profile.avatar} />
+          {editMode ? (
+            <ExtendedInput
+              onChange={onInputChange}
+              type={"text"}
+              value={userName}
+              placeholder={user.username}
+              name={"userName"}
+              onKeyUp={onKeyUp}
+            />
+          ) : (
+            <Username>{user.username}</Username>
+          )}
+          <NameContainer>
+            {user.profile.isSelf ? (
+              <GearContainer onClick={toggleModal}>
+                <Gear />
+              </GearContainer>
+            ) : (
+              <FollowBtn
+                isFollowing={user.profile.isFollowing}
+                userId={user.id}
+              />
+            )}
+            <Link to={`/${user.username}/footprint`}>
+              <GearContainer>
+                <Gear />
+              </GearContainer>
+            </Link>
+          </NameContainer>
+        </PHeader>
         <SWrapper>
-          <Header>
-            <Avatar size="lg" url={user.profile.avatar} />
-            <HeaderColumn>
-              <UsernameRow>
-                {editMode ? (
-                  <ExtendedInput
-                    onChange={onInputChange}
-                    type={"text"}
-                    value={userName}
-                    placeholder={user.username}
-                    name={"userName"}
-                    onKeyUp={onKeyUp}
-                  />
-                ) : (
-                  <Username>{user.username}</Username>
-                )}
-                {user.profile.isSelf ? (
-                  <GearContainer onClick={toggleModal}>
-                    <Gear />
-                  </GearContainer>
-                ) : (
-                  <FollowBtn
-                    isFollowing={user.profile.isFollowing}
-                    userId={user.id}
-                  />
-                )}
-                <Link to={`/${user.username}/footprint`}>
-                  <GearContainer>
-                    <Gear />
-                  </GearContainer>
-                </Link>
-              </UsernameRow>
-              <Metrics>
-                <Metric>
-                  <CBold text={String(user.profile.currentCity.cityName)} />
-                </Metric>
-                <Metric>
-                  post
-                  <SBold text={String(user.profile.postCount)} />
-                </Metric>
-                <Metric>
-                  followers
-                  <SBold text={String(user.profile.followersCount)} />
-                </Metric>
-                <Metric>
-                  following
-                  <SBold text={String(user.profile.followingCount)} />
-                </Metric>
-                <Metric>
-                  city
-                  <SBold text={String(user.profile.cityCount)} />
-                </Metric>
-                <Metric>
-                  country
-                  <SBold text={String(user.profile.countryCount)} />
-                </Metric>
-
-                <Metric>
-                  <Flag
-                    size="md"
-                    countryCode={require(`../../Images/countryFlag/${
-                      user.profile.currentCountry.countryCode
-                    }.svg`)}
-                  />
-                </Metric>
-              </Metrics>
-              {editMode ? (
-                <>
-                  <ExtendedInput
-                    onChange={onInputChange}
-                    type={"text"}
-                    value={firstName}
-                    placeholder={user.firstName || "First Name"}
-                    name={"firstName"}
-                    onKeyUp={onKeyUp}
-                  />
-                  <ExtendedInput
-                    onChange={onInputChange}
-                    type={"text"}
-                    value={lastName}
-                    placeholder={user.lastName || "Last Name"}
-                    name={"lastName"}
-                    onKeyUp={onKeyUp}
-                  />
-                </>
+          <PBody>
+            <CityContainer>
+              <CityPhoto src={user.profile.currentCity.cityPhoto} />
+              <CityNameContainer>
+                <CityName text={user.profile.currentCity.cityName} />
+              </CityNameContainer>
+            </CityContainer>
+            <InfoContainer>
+              <Metric>
+                <CBold text={String(user.profile.currentCity.cityName)} />
+              </Metric>
+              <Metric>
+                post
+                <SBold text={String(user.profile.postCount)} />
+              </Metric>
+              <Metric>
+                followers
+                <SBold text={String(user.profile.followersCount)} />
+              </Metric>
+              <Metric>
+                following
+                <SBold text={String(user.profile.followingCount)} />
+              </Metric>
+              <Metric>
+                city
+                <SBold text={String(user.profile.cityCount)} />
+              </Metric>
+              <Metric>
+                country
+                <SBold text={String(user.profile.countryCount)} />
+              </Metric>
+              <Metric>
+                <Flag
+                  size="md"
+                  countryCode={require(`../../Images/countryFlag/${
+                    user.profile.currentCountry.countryCode
+                  }.svg`)}
+                />
+              </Metric>
+            </InfoContainer>
+            <FollowContainer>hi</FollowContainer>
+            {editMode ? (
+              <>
+                <ExtendedInput
+                  onChange={onInputChange}
+                  type={"text"}
+                  value={firstName}
+                  placeholder={user.firstName || "First Name"}
+                  name={"firstName"}
+                  onKeyUp={onKeyUp}
+                />
+                <ExtendedInput
+                  onChange={onInputChange}
+                  type={"text"}
+                  value={lastName}
+                  placeholder={user.lastName || "Last Name"}
+                  name={"lastName"}
+                  onKeyUp={onKeyUp}
+                />
+              </>
+            ) : (
+              <Fullname>{`${user.firstName} ${user.lastName}`}</Fullname>
+            )}
+            {user.profile.bio &&
+              (editMode ? (
+                <ExtendedInput
+                  onChange={onInputChange}
+                  type={"text"}
+                  value={bio}
+                  placeholder={user.profile.bio || "Bio"}
+                  name={"bio"}
+                  onKeyUp={onKeyUp}
+                />
               ) : (
-                <Fullname>{`${user.firstName} ${user.lastName}`}</Fullname>
-              )}
-              {user.profile.bio &&
-                (editMode ? (
-                  <ExtendedInput
-                    onChange={onInputChange}
-                    type={"text"}
-                    value={bio}
-                    placeholder={user.profile.bio || "Bio"}
-                    name={"bio"}
-                    onKeyUp={onKeyUp}
-                  />
-                ) : (
-                  <Bio>{`${user.profile.bio}`}</Bio>
-                ))}
-            </HeaderColumn>
-          </Header>
+                <Bio>{`${user.profile.bio}`}</Bio>
+              ))}
+          </PBody>
         </SWrapper>
         <Wrapper>
           {user.cards && user.cards.length !== 0 && (
