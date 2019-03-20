@@ -16,9 +16,11 @@ export const GET_FEED_BY_CITY = gql`
       }
       usersBefore {
         id
-        username
-        profile {
-          avatar
+        actor {
+          username
+          profile {
+            avatar
+          }
         }
       }
       city {

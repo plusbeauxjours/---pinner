@@ -1,11 +1,12 @@
+import random
+import math
+import uuid
+
 from django.db import models
 from django.contrib.auth.models import User
 from config import models as config_models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-import random
-import math
-import uuid
 
 
 class Verification(config_models.TimeStampedModel):

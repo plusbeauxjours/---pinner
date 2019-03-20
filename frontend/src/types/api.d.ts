@@ -380,19 +380,24 @@ export interface Feed_feed_usersNow {
   profile: Feed_feed_usersNow_profile | null;
 }
 
-export interface Feed_feed_usersBefore_profile {
+export interface Feed_feed_usersBefore_actor_profile {
   __typename: "ProfileType";
   avatar: string;
 }
 
-export interface Feed_feed_usersBefore {
+export interface Feed_feed_usersBefore_actor {
   __typename: "UserType";
-  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
-  profile: Feed_feed_usersBefore_profile | null;
+  profile: Feed_feed_usersBefore_actor_profile | null;
+}
+
+export interface Feed_feed_usersBefore {
+  __typename: "MoveNotificationType";
+  id: string;
+  actor: Feed_feed_usersBefore_actor;
 }
 
 export interface Feed_feed_city_country {
@@ -509,19 +514,24 @@ export interface FeedByCity_feedByCity_usersNow {
   profile: FeedByCity_feedByCity_usersNow_profile | null;
 }
 
-export interface FeedByCity_feedByCity_usersBefore_profile {
+export interface FeedByCity_feedByCity_usersBefore_actor_profile {
   __typename: "ProfileType";
   avatar: string;
 }
 
-export interface FeedByCity_feedByCity_usersBefore {
+export interface FeedByCity_feedByCity_usersBefore_actor {
   __typename: "UserType";
-  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
-  profile: FeedByCity_feedByCity_usersBefore_profile | null;
+  profile: FeedByCity_feedByCity_usersBefore_actor_profile | null;
+}
+
+export interface FeedByCity_feedByCity_usersBefore {
+  __typename: "MoveNotificationType";
+  id: string;
+  actor: FeedByCity_feedByCity_usersBefore_actor;
 }
 
 export interface FeedByCity_feedByCity_city_country {

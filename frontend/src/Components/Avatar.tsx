@@ -25,8 +25,9 @@ const Container = styled.img<IProps>`
     }
   }};
   background-position: center center;
-  background-size: 100%;
   border-radius: 50%;
+  background-size: cover;
+  object-fit: cover;
 `;
 
 interface IProps {

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.humanize.templatetags.humanize import naturaltime
 
 from cards import models as card_models
-from locations import models as locations_models
+from locations import models as location_models
 
 from config import models as config_models
 
@@ -53,13 +53,13 @@ class MoveNotification(config_models.TimeStampedModel):
     actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='movenotification')
     verb = models.CharField(max_length=10, choices=VERBS, default='move')
     fromCity = models.ForeignKey(
-        locations_models.City, on_delete=models.CASCADE, null=True, blank=True, related_name='fromCity')
+        location_models.City, on_delete=models.CASCADE, null=True, blank=True, related_name='fromCity')
     fromCountry = models.ForeignKey(
-        locations_models.Country, on_delete=models.CASCADE, null=True, blank=True, related_name='fromCountry')
+        location_models.Country, on_delete=models.CASCADE, null=True, blank=True, related_name='fromCountry')
     toCity = models.ForeignKey(
-        locations_models.City, on_delete=models.CASCADE, null=True, blank=True, related_name='toCity')
+        location_models.City, on_delete=models.CASCADE, null=True, blank=True, related_name='toCity')
     toCountry = models.ForeignKey(
-        locations_models.Country, on_delete=models.CASCADE, null=True, blank=True, related_name='toCountry')
+        location_models.Country, on_delete=models.CASCADE, null=True, blank=True, related_name='toCountry')
     read = models.BooleanField(default=False)
 
     @property

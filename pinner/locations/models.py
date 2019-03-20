@@ -4,14 +4,31 @@ from django.contrib.humanize.templatetags.humanize import naturaltime
 from config import models as config_models
 
 
+class Continent (config_models.TimeStampedModel):
+
+    continent_name = models.CharField(max_length=20, null=True, blank=True)
+
+    @property
+    def country_count(self):
+        return self.countries.all().count()
+
+    def __str__(self):
+        return self.continent_name
+
+
 class Country (config_models.TimeStampedModel):
 
-    country_name = models.CharField(max_length=100, null=True, blank=True)
+    continent = models.ForeignKey(Continent, on_delete=models.CASCADE, related_name='countries')
+    country_name = models.CharField(max_length=50, null=True, blank=True)
     country_code = models.CharField(max_length=2, null=True, blank=True)
 
     @property
     def city_count(self):
         return self.cities.all().count()
+
+    @property
+    def card_count(self):
+        return self.cards.all().count()
 
     @property
     def user_count(self):
@@ -29,8 +46,19 @@ class City (config_models.TimeStampedModel):
 
     country = models.ForeignKey(
         Country, on_delete=models.CASCADE, related_name='cities')
-    city_name = models.CharField(max_length=100, null=True, blank=True)
+    city_name = models.CharField(max_length=50, null=True, blank=True)
     city_photo = models.URLField(null=True, blank=True)
+    aqi = models.IntegerField(null=True, blank=True)
+    temperature = models.IntegerField(null=True, blank=True)
+    population = models.IntegerField(null=True, blank=True)
+    area = models.IntegerField(null=True, blank=True)
+    distance = models.IntegerField(null=True, blank=True)
+    near_city = models.ManyToManyField(
+        'self',  blank=True, symmetrical=False, related_name='near_cities')
+    similare_city = models.ManyToManyField(
+        'self',  blank=True, symmetrical=False, related_name='similare_cities')
+    near_country = models.ManyToManyField(
+        Country,  blank=True, symmetrical=False, related_name='near_countries')
 
     @property
     def like_count(self):

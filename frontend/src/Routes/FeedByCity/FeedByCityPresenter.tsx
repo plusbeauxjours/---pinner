@@ -133,12 +133,6 @@ const SBold = styled(Bold)`
   font-weight: 200;
 `;
 
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 30px;
-`;
-
 const SAvatar = styled(Avatar)`
   margin: 3px;
 `;
@@ -152,12 +146,18 @@ const FeedByCityPresenter: React.SFC<IProps> = ({ data, loading }) => {
   if (loading) {
     return <Loader />;
   } else if (!loading && data) {
-    const { feedByCity: { cards = {}, users = {}, city = {} } = {} } = data;
+    const {
+      feedByCity: {
+        cards = {},
+        usersNow = {},
+        usersBefore = {},
+        city = {}
+      } = {}
+    } = data;
     return (
       <>
         <PHeader>
           <PAvatar size="lg" url={city.cityPhoto} />
-
           <Username>{city.cityName}</Username>
         </PHeader>
         <SWrapper>
@@ -217,22 +217,30 @@ const FeedByCityPresenter: React.SFC<IProps> = ({ data, loading }) => {
               <Follow>
                 CURRENT USERS
                 <SBold text={String(city.userCount)} />
-                <Container>
-                  {users &&
-                    users.map(user => (
-                      <Link to={`/${user.username}`}>
-                        <SAvatar
-                          size={"sm"}
-                          key={user.id}
-                          url={user.profile.avatar}
-                        />
-                      </Link>
-                    ))}
-                </Container>
+                {usersNow &&
+                  usersNow.map(user => (
+                    <Link to={`/${user.username}`}>
+                      <SAvatar
+                        size={"sm"}
+                        key={user.id}
+                        url={user.profile.avatar}
+                      />
+                    </Link>
+                  ))}
               </Follow>
               <Follow>
                 PASSED USERS
                 <SBold text={String(city.userLogCount)} />
+                {usersBefore &&
+                  usersBefore.map(user => (
+                    <Link to={`/${user.actor.username}`}>
+                      <SAvatar
+                        size={"sm"}
+                        key={user.id}
+                        url={user.actor.profile.avatar}
+                      />
+                    </Link>
+                  ))}
               </Follow>
             </FollowContainer>
           </PBody>

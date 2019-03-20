@@ -6,7 +6,7 @@ from imagekit.processors import ResizeToFill
 from django.dispatch import receiver
 from django.db.models.signals import pre_init
 
-from locations import models as locations_models
+from locations import models as location_models
 
 
 class Profile(config_models.TimeStampedModel):
@@ -39,16 +39,16 @@ class Profile(config_models.TimeStampedModel):
     current_lat = models.FloatField(blank=True, null=True)
     current_lng = models.FloatField(blank=True, null=True)
     current_city = models.ForeignKey(
-        locations_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCity', )
+        location_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCity', )
     current_country = models.ForeignKey(
-        locations_models.Country, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCountry', )
+        location_models.Country, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCountry', )
 
     last_lat = models.FloatField(blank=True, null=True)
     last_lng = models.FloatField(blank=True, null=True)
     last_city = models.ForeignKey(
-        locations_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='lastCity', )
+        location_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='lastCity', )
     last_country = models.ForeignKey(
-        locations_models.Country, on_delete=models.SET_NULL, null=True, blank=True, related_name='lastCountry', )
+        location_models.Country, on_delete=models.SET_NULL, null=True, blank=True, related_name='lastCountry', )
 
     def __str__(self):
         return self.user.username

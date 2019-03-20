@@ -27,8 +27,8 @@ def resolve_feed(self, info, **kwargs):
     usersNow = User.objects.filter(
         profile__current_city__city_name=cityName).order_by('-username').distinct('username')
 
-    usersBefore = notification_models.MoveNotification.filter(
-        toCity__city_name=cityName).order_by('-username').distinct('username')
+    usersBefore = notification_models.MoveNotification.objects.filter(
+        toCity__city_name=cityName).order_by('-actor_id').distinct('actor_id')
 
     combined = following_cards.union(city_cards).union(my_cards).order_by(
         '-created_at')[offset:5 + offset]
@@ -52,8 +52,8 @@ def resolve_feed_by_city(self, info, **kwargs):
     usersNow = User.objects.filter(
         profile__current_city__city_name=cityName).order_by('-username').distinct('username')
 
-    usersBefore = notification_models.MoveNotification.filter(
-        toCity__city_name=cityName).order_by('-username').distinct('username')
+    usersBefore = notification_models.MoveNotification.objects.filter(
+        toCity__city_name=cityName).order_by('-actor_id').distinct('actor_id')
 
     city = location_models.City.objects.get(city_name=cityName)
 
