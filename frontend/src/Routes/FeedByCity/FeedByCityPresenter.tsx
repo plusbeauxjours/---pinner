@@ -215,7 +215,7 @@ const FeedByCityPresenter: React.SFC<IProps> = ({ data, loading }) => {
             </InfoContainer>
             <FollowContainer>
               <Follow>
-                CURRENT USERS
+                USERS WHO IS HERE
                 <SBold text={String(city.userCount)} />
                 {usersNow &&
                   usersNow.map(user => (
@@ -229,7 +229,7 @@ const FeedByCityPresenter: React.SFC<IProps> = ({ data, loading }) => {
                   ))}
               </Follow>
               <Follow>
-                PASSED USERS
+                USERS WHO HAS BEEN HERE
                 <SBold text={String(city.userLogCount)} />
                 {usersBefore &&
                   usersBefore.map(user => (

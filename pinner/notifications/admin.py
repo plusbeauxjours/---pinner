@@ -28,8 +28,6 @@ class MoveNotificationAdmin(admin.ModelAdmin):
         'id',
         'actor',
         'fromCity',
-        'fromCountry',
         'toCity',
-        'toCountry',
         'read',
     )

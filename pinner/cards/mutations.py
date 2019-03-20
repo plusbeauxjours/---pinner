@@ -239,7 +239,7 @@ class UploadCard(graphene.Mutation):
 
         user = info.context.user
         city = user.profile.current_city
-        country = user.profile.current_country
+        country = user.profile.current_city.country
 
         caption = kwargs.get('caption')
         fontColor = kwargs.get('fontColor')

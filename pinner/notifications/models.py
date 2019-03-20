@@ -54,12 +54,8 @@ class MoveNotification(config_models.TimeStampedModel):
     verb = models.CharField(max_length=10, choices=VERBS, default='move')
     fromCity = models.ForeignKey(
         location_models.City, on_delete=models.CASCADE, null=True, blank=True, related_name='fromCity')
-    fromCountry = models.ForeignKey(
-        location_models.Country, on_delete=models.CASCADE, null=True, blank=True, related_name='fromCountry')
     toCity = models.ForeignKey(
         location_models.City, on_delete=models.CASCADE, null=True, blank=True, related_name='toCity')
-    toCountry = models.ForeignKey(
-        location_models.Country, on_delete=models.CASCADE, null=True, blank=True, related_name='toCountry')
     read = models.BooleanField(default=False)
 
     @property

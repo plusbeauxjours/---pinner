@@ -8,6 +8,7 @@ import Photo from "../../Components/Photo";
 import Wrapper from "../../Components/Wrapper";
 import styled from "../../Styles/typed-components";
 import Avatar from "../../Components/Avatar";
+import Bold from "../../Components/Bold";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -35,6 +36,20 @@ const SAvatar = styled(Avatar)`
   margin: 3px;
 `;
 
+const Follow = styled.div`
+  flex: 1;
+  margin-bottom: 10px;
+  height: 150px;
+  border-radius: 3px;
+  border: 1px solid grey;
+  padding: 5px;
+`;
+
+const SBold = styled(Bold)`
+  font-size: 20px;
+  font-weight: 200;
+`;
+
 const Icon = styled.span`
   margin-right: 30px;
   &:last-child {
@@ -54,7 +69,9 @@ const FeedPresenter: React.SFC<IProps> = ({ data, loading, currentCity }) => {
   } else if (!loading && data) {
     console.log(data);
 
-    const { feed: { cards = {}, users = {}, city = {} } = {} } = data;
+    const {
+      feed: { cards = {}, usersNow = {}, usersBefore = {}, city = {} } = {}
+    } = data;
     return (
       <SWrapper>
         <h1>welcome to {currentCity}</h1>
@@ -67,12 +84,34 @@ const FeedPresenter: React.SFC<IProps> = ({ data, loading, currentCity }) => {
         <h1>userCount {city.userCount}</h1>
         <h1>userLogCount {city.userLogCount}</h1>
         <Container>
-          {users &&
-            users.map(user => (
-              <Link key={user.id} to={`/${user.username}`}>
-                <SAvatar size={"sm"} key={user.id} url={user.profile.avatar} />
-              </Link>
-            ))}
+          <Follow>
+            USERS WHO IS HERE
+            <SBold text={String(city.userCount)} />
+            {usersNow &&
+              usersNow.map(user => (
+                <Link to={`/${user.username}`}>
+                  <SAvatar
+                    size={"sm"}
+                    key={user.id}
+                    url={user.profile.avatar}
+                  />
+                </Link>
+              ))}
+          </Follow>
+          <Follow>
+            USERS WHO HAS BEEN HERE
+            <SBold text={String(city.userLogCount)} />
+            {usersBefore &&
+              usersBefore.map(user => (
+                <Link to={`/${user.actor.username}`}>
+                  <SAvatar
+                    size={"sm"}
+                    key={user.id}
+                    url={user.actor.profile.avatar}
+                  />
+                </Link>
+              ))}
+          </Follow>
         </Container>
         <Icon>
           <Link to="/upload">

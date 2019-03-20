@@ -40,15 +40,11 @@ class Profile(config_models.TimeStampedModel):
     current_lng = models.FloatField(blank=True, null=True)
     current_city = models.ForeignKey(
         location_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCity', )
-    current_country = models.ForeignKey(
-        location_models.Country, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCountry', )
 
     last_lat = models.FloatField(blank=True, null=True)
     last_lng = models.FloatField(blank=True, null=True)
     last_city = models.ForeignKey(
         location_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='lastCity', )
-    last_country = models.ForeignKey(
-        location_models.Country, on_delete=models.SET_NULL, null=True, blank=True, related_name='lastCountry', )
 
     def __str__(self):
         return self.user.username
@@ -56,10 +52,6 @@ class Profile(config_models.TimeStampedModel):
     @property
     def city_count(self):
         return self.user.movenotification.all().order_by('toCity').distinct('toCity').count()
-
-    @property
-    def country_count(self):
-        return self.user.movenotification.all().order_by('toCountry').distinct('toCountry').count()
 
     @property
     def country_log(self):

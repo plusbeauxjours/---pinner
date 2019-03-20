@@ -16,14 +16,13 @@ class CountryAdmin(admin.ModelAdmin):
         'continent',
         'country_name',
         'city_count',
-        'user_count',
-        'user_log_count'
     )
 
 
 @admin.register(models.City)
 class CityAdmin(admin.ModelAdmin):
     list_display = (
+        'country',
         'city_name',
         'like_count',
         'user_count',

@@ -18,9 +18,12 @@ const SWrapper = styled(Wrapper)`
 const PHeader = styled.header`
   display: flex;
   flex-direction: column;
-  height: 300px;
+  height: 280px;
   align-items: center;
   background: ${props => props.theme.headerColor};
+  position: sticky;
+  top: 0;
+  z-index: 10;
 `;
 
 const PAvatar = styled(Avatar)`
@@ -320,7 +323,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               </Link>
 
               <CityName text={user.profile.currentCity.cityName} />
-              <CountryName text={user.profile.currentCountry.countryName} />
+              <CountryName
+                text={user.profile.currentCity.country.countryName}
+              />
             </CityContainer>
             <InfoContainer>
               <Info>
@@ -377,12 +382,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 
                   <InfoRow>
                     COUNTRIES
-                    <SBold text={String(user.profile.countryCount)} />
+                    <SBold text={String(user.profile.cityCount)} />
                   </InfoRow>
 
                   <InfoRow>
                     CONTINENT
-                    <SBold text={String(user.profile.countryCount)} />
+                    <SBold text={String(user.profile.cityCount)} />
                   </InfoRow>
                 </HalfInfo>
 

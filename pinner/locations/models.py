@@ -18,7 +18,7 @@ class Continent (config_models.TimeStampedModel):
 
 class Country (config_models.TimeStampedModel):
 
-    continent = models.ForeignKey(Continent, on_delete=models.CASCADE, related_name='countries')
+    continent = models.ForeignKey(Continent, null=True, blank=True, on_delete=models.CASCADE, related_name='countries')
     country_name = models.CharField(max_length=50, null=True, blank=True)
     country_code = models.CharField(max_length=2, null=True, blank=True)
 
@@ -29,14 +29,6 @@ class Country (config_models.TimeStampedModel):
     @property
     def card_count(self):
         return self.cards.all().count()
-
-    @property
-    def user_count(self):
-        return self.currentCountry.all().order_by('-user_id').distinct('user_id').count()
-
-    @property
-    def user_log_count(self):
-        return self.toCountry.all().order_by('-actor_id').distinct('actor_id').count()
 
     def __str__(self):
         return self.country_name

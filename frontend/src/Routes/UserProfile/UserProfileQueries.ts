@@ -21,10 +21,6 @@ export const GET_USER = gql`
           isSelf
           cityCount
           countryCount
-          currentCountry {
-            countryName
-            countryCode
-          }
           currentCity {
             cityName
             cityPhoto
