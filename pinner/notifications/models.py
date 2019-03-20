@@ -64,14 +64,3 @@ class MoveNotification(config_models.TimeStampedModel):
 
     class Meta:
         ordering = ['-created_at']
-
-    def __str__(self):
-        return '{} / {}, From: {},{} 👉🏻 To: {},{} Read:{}'.format(
-            self.id,
-            self.actor.username,
-            self.fromCity,
-            self.fromCity.country,
-            self.toCity,
-            self.toCity.country,
-            self.read
-        )
