@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, 'Qwigley';
         background-color: ${props => props.theme.bgColor};
         color: ${props => props.theme.whiteColor};
-        font-size: 14px;
+        font-size: 12px;
     }
     a{ 
         color:inherit;

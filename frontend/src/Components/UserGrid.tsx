@@ -1,16 +1,5 @@
 import React from "react";
-import styled from "../Styles/typed-components";
 import UserCard from "./UserCard";
-
-const Container = styled.div`
-  border: 4px;
-  display: flex;
-  align-self: flex-start;
-  flex-direction: row;
-  position: absolute;
-  -webkit-box-flex: 0;
-  flex: 0 0 auto;
-`;
 
 interface IProps {
   users?: any;
@@ -19,7 +8,7 @@ interface IProps {
 
 const UserGrid: React.SFC<IProps> = ({ users, className }) => {
   return (
-    <Container className={className}>
+    <>
       {users.map(user => (
         <UserCard
           key={user.id}
@@ -31,7 +20,7 @@ const UserGrid: React.SFC<IProps> = ({ users, className }) => {
           isFollowing={user.profile.isFollowing}
         />
       ))}
-    </Container>
+    </>
   );
 };
 

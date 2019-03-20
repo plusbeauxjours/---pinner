@@ -10,7 +10,6 @@ import Bold from "../../Components/Bold";
 import CardGrid from "../../Components/CardGrid";
 import FollowBtn from "../../Components/FollowBtn";
 import Input from "../../Components/Input";
-import Flag from "../../Components/Flag";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -61,6 +60,20 @@ const CityPhoto = styled.img`
   object-fit: cover;
 `;
 
+const CityName = styled(Bold)`
+  position: absolute;
+  display: flex;
+  z-index: 5;
+  font-size: 40px;
+  font-family: "Qwigley";
+  font-weight: 200;
+`;
+
+const CountryName = styled(CityName)`
+  font-size: 20px;
+  margin-top: 20px;
+`;
+
 const CityContainer = styled.div`
   margin-right: 15px;
   display: flex;
@@ -70,20 +83,41 @@ const CityContainer = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  margin-bottom: 10px;
+  display: flex;
   flex-direction: column;
+  margin-bottom: 10px;
   width: 300px;
   margin-right: 15px;
 `;
 
 const Info = styled.div`
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   max-width: 100%;
   margin-bottom: 10px;
-  height: 150px;
+  height: 200px;
   border-radius: 3px;
   border: 1px solid grey;
+  padding: 5px;
 `;
+
+const InfoInlineContainer = styled(InfoContainer)`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const HalfInfo = styled(Info)`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 48%;
+  height: 100px;
+  display: flex;
+  margin-bottom: 0;
+  padding-bottom: 30px;
+`;
+
+const InfoRow = styled.span``;
 
 const FollowContainer = styled.div`
   display: flex;
@@ -98,16 +132,7 @@ const Follow = styled.div`
   height: 150px;
   border-radius: 3px;
   border: 1px solid grey;
-`;
-
-const CityName = styled(Bold)`
-  position: absolute;
-  display: flex;
-  z-index: 5;
-  font-size: 40px;
-  font-family: "Qwigley";
-  font-weight: 200;
-  color: white;
+  padding: 5px;
 `;
 
 const Fullname = styled.span`
@@ -185,10 +210,6 @@ const ExtendedInput = styled(Input)`
 
 const SBold = styled(Bold)`
   font-size: 20px;
-  font-weight: 200;
-`;
-
-const CBold = styled(Bold)`
   font-weight: 200;
 `;
 
@@ -299,6 +320,7 @@ const ProfilePresenter: React.SFC<IProps> = ({
               </Link>
 
               <CityName text={user.profile.currentCity.cityName} />
+              <CountryName text={user.profile.currentCountry.countryName} />
             </CityContainer>
             <InfoContainer>
               <Info>
@@ -308,26 +330,7 @@ const ProfilePresenter: React.SFC<IProps> = ({
                 of type and scrambled it to make a type specimen book. It has
                 survived not only five centuries, but also the leap into
                 electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with t
-              </Info>
-              <Info>
-                <CBold text={String(user.profile.currentCity.cityName)} />
-                post
-                <SBold text={String(user.profile.postCount)} />
-                km
-                <SBold text={String(user.profile.followersCount)} />
-                trips
-                <SBold text={String(user.profile.followingCount)} />
-                cities
-                <SBold text={String(user.profile.cityCount)} />
-                countries
-                <SBold text={String(user.profile.countryCount)} />
-                <Flag
-                  size="sm"
-                  countryCode={require(`../../Images/countryFlag/${
-                    user.profile.currentCountry.countryCode
-                  }.svg`)}
-                />
+                popularised in the 1960s with....
                 {editMode ? (
                   <>
                     <ExtendedInput
@@ -350,6 +353,39 @@ const ProfilePresenter: React.SFC<IProps> = ({
                 ) : (
                   <Fullname>{`${user.firstName} ${user.lastName}`}</Fullname>
                 )}
+              </Info>
+              <InfoInlineContainer>
+                <HalfInfo>
+                  <InfoRow>
+                    <SBold text={String(user.profile.postCount)} />
+                    POSTS
+                  </InfoRow>
+                  <InfoRow>
+                    <SBold text={String(user.profile.postCount)} />
+                    KM
+                  </InfoRow>
+                  <InfoRow>
+                    <SBold text={String(user.profile.followersCount)} />
+                    TRIPS
+                  </InfoRow>
+                </HalfInfo>
+                <HalfInfo>
+                  <InfoRow>
+                    CITIES
+                    <SBold text={String(user.profile.cityCount)} />
+                  </InfoRow>
+
+                  <InfoRow>
+                    COUNTRIES
+                    <SBold text={String(user.profile.countryCount)} />
+                  </InfoRow>
+
+                  <InfoRow>
+                    CONTINENT
+                    <SBold text={String(user.profile.countryCount)} />
+                  </InfoRow>
+                </HalfInfo>
+
                 {user.profile.bio &&
                   (editMode ? (
                     <ExtendedInput
@@ -363,20 +399,20 @@ const ProfilePresenter: React.SFC<IProps> = ({
                   ) : (
                     <Bio>{`${user.profile.bio}`}</Bio>
                   ))}
-              </Info>
+              </InfoInlineContainer>
             </InfoContainer>
             <FollowContainer>
               <Follow>
-                followers
+                FOLLOWERS
                 <SBold text={String(user.profile.followersCount)} />
               </Follow>
               <Follow>
-                following
+                FOLLOWING
                 <SBold text={String(user.profile.followingCount)} />
               </Follow>
             </FollowContainer>
           </PBody>
-          <PBody>trip log</PBody>
+          <PBody>TRIP LOG</PBody>
           {user.cards && user.cards.length !== 0 && (
             <CardGrid cards={user.cards} />
           )}

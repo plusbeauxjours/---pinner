@@ -9,11 +9,13 @@ import styled from "../../Styles/typed-components";
 const Container = styled.div`
   border-bottom: 4px;
   display: flex;
-  align-self: flex-start;
+  align-items: center;
   flex-direction: row;
   -webkit-box-flex: 0;
   flex: 0 0 auto;
   height: 250px;
+  border-bottom: 1px solid grey;
+  padding: 20px;
 `;
 
 interface IProps {
@@ -30,18 +32,16 @@ const ExplorePresenter: React.SFC<IProps> = ({
   } else if (!loading && users) {
     return (
       <Wrapper>
-        <Container>
-          <Link to="/explore/userlist">
-            <p>see all</p>
-          </Link>
-          <p>recommand user</p>
-
-          {users && <UserGrid users={users} />}
-        </Container>
+        <Link to="/explore/userlist">
+          <p>see all</p>
+        </Link>
+        <p>recommand user</p>
+        <Container>{users && <UserGrid users={users} />}</Container>
+        <p>nearest city</p>
         <Container>
           <p>nearest city</p>
         </Container>
-
+        <p>recommand next city</p>
         <Container>
           <p>recommand next city</p>
         </Container>

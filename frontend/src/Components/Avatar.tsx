@@ -4,22 +4,22 @@ import styled from "src/Styles/typed-components";
 const Container = styled.img<IProps>`
   height: ${props => {
     if (props.size === "md") {
-      return "50px";
+      return "120px";
     } else if (props.size === "sm") {
       return "30px";
     } else if (props.size === "lg") {
-      return "180px";
+      return "170px";
     } else {
       return "30px";
     }
   }};
   width: ${props => {
     if (props.size === "md") {
-      return "50px";
+      return "120px";
     } else if (props.size === "sm") {
       return "30px";
     } else if (props.size === "lg") {
-      return "180px";
+      return "170px";
     } else {
       return "30px";
     }
