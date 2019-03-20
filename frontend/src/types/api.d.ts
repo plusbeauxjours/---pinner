@@ -627,6 +627,7 @@ export interface ReportLocationVariables {
   currentCountry: string;
   currentCountryCode: string;
   cityPhotoURL: string;
+  currentContinent: string;
 }
 
 
@@ -1066,12 +1067,6 @@ export interface UserList {
 // GraphQL query operation: UserProfile
 // ====================================================
 
-export interface UserProfile_userProfile_user_profile_currentCountry {
-  __typename: "CountryType";
-  countryName: string | null;
-  countryCode: string | null;
-}
-
 export interface UserProfile_userProfile_user_profile_currentCity_country {
   __typename: "CountryType";
   countryName: string | null;
@@ -1098,7 +1093,6 @@ export interface UserProfile_userProfile_user_profile {
   isSelf: boolean | null;
   cityCount: number | null;
   countryCount: number | null;
-  currentCountry: UserProfile_userProfile_user_profile_currentCountry | null;
   currentCity: UserProfile_userProfile_user_profile_currentCity | null;
 }
 

@@ -13,8 +13,8 @@ class ContinentAdmin(admin.ModelAdmin):
 @admin.register(models.Country)
 class CountryAdmin(admin.ModelAdmin):
     list_display = (
-        'continent',
         'country_name',
+        'continent',
         'city_count',
     )
 

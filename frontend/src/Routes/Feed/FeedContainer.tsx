@@ -12,6 +12,7 @@ import { REPORT_LOCATION } from "../Home/HomeQueries";
 import { reverseGeoCode } from "../../mapHelpers";
 import { GET_FEED } from "./FeedQueries";
 import { locationThumbs } from "../../locationThumbs";
+import continents from "../../continents";
 
 class ReportLocationMutation extends Mutation<
   ReportLocation,
@@ -29,6 +30,7 @@ interface IState {
   currentCity: string;
   currentCountry: string;
   currentCountryCode: string;
+  currentContinent: string;
   cityPhotoURL: any;
 }
 
@@ -41,6 +43,7 @@ class FeedContainer extends React.Component<IProps, IState> {
     currentCity: "",
     currentCountry: "",
     currentCountryCode: "",
+    currentContinent: "",
     cityPhotoURL: ""
   };
   public componentDidMount() {
@@ -58,6 +61,7 @@ class FeedContainer extends React.Component<IProps, IState> {
       currentCity,
       currentCountry,
       currentCountryCode,
+      currentContinent,
       cityPhotoURL
     } = this.state;
     return (
@@ -77,6 +81,7 @@ class FeedContainer extends React.Component<IProps, IState> {
               currentCity,
               currentCountry,
               currentCountryCode,
+              currentContinent,
               cityPhotoURL
             }}
           >
@@ -130,8 +135,9 @@ class FeedContainer extends React.Component<IProps, IState> {
     currentCountryCode: string
   ) => {
     const cityPhotoURL = await locationThumbs(lastCity);
-    console.log(cityPhotoURL);
-    this.setState({ cityPhotoURL });
+    const currentContinent = await continents[currentCountryCode];
+    console.log(currentContinent);
+    this.setState({ cityPhotoURL, currentContinent });
     this.ReportLocationFn({
       variables: {
         lastLat: lat,
@@ -139,6 +145,7 @@ class FeedContainer extends React.Component<IProps, IState> {
         lastCity,
         lastCountry,
         currentCountryCode,
+        currentContinent,
         cityPhotoURL
       }
     });

@@ -21,9 +21,6 @@ const PHeader = styled.header`
   height: 280px;
   align-items: center;
   background: ${props => props.theme.headerColor};
-  position: sticky;
-  top: 0;
-  z-index: 10;
 `;
 
 const PAvatar = styled(Avatar)`
