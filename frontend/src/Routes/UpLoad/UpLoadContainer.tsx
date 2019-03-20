@@ -7,7 +7,7 @@ import { UPLOAD_CARD } from "./UpLoadQueries";
 import { toast } from "react-toastify";
 import { RouteComponentProps } from "react-router";
 import Me from "src/Components/Me";
-import { GET_USER } from "../Profile/ProfileQueries";
+import { GET_USER } from "../UserProfile/UserProfileQueries";
 
 class UploadMutation extends Mutation<UploadCard, UploadCardVariables> {}
 

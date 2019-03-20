@@ -365,19 +365,34 @@ export interface Feed_feed_cards {
   fontSize: string | null;
 }
 
-export interface Feed_feed_users_profile {
+export interface Feed_feed_usersNow_profile {
   __typename: "ProfileType";
   avatar: string;
 }
 
-export interface Feed_feed_users {
+export interface Feed_feed_usersNow {
   __typename: "UserType";
   id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
-  profile: Feed_feed_users_profile | null;
+  profile: Feed_feed_usersNow_profile | null;
+}
+
+export interface Feed_feed_usersBefore_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface Feed_feed_usersBefore {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: Feed_feed_usersBefore_profile | null;
 }
 
 export interface Feed_feed_city_country {
@@ -398,7 +413,8 @@ export interface Feed_feed_city {
 export interface Feed_feed {
   __typename: "FeedResponse";
   cards: (Feed_feed_cards | null)[] | null;
-  users: (Feed_feed_users | null)[] | null;
+  usersNow: (Feed_feed_usersNow | null)[] | null;
+  usersBefore: (Feed_feed_usersBefore | null)[] | null;
   city: Feed_feed_city | null;
 }
 
@@ -478,24 +494,40 @@ export interface FeedByCity_feedByCity_cards {
   fontSize: string | null;
 }
 
-export interface FeedByCity_feedByCity_users_profile {
+export interface FeedByCity_feedByCity_usersNow_profile {
   __typename: "ProfileType";
   avatar: string;
 }
 
-export interface FeedByCity_feedByCity_users {
+export interface FeedByCity_feedByCity_usersNow {
   __typename: "UserType";
   id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
-  profile: FeedByCity_feedByCity_users_profile | null;
+  profile: FeedByCity_feedByCity_usersNow_profile | null;
+}
+
+export interface FeedByCity_feedByCity_usersBefore_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface FeedByCity_feedByCity_usersBefore {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: FeedByCity_feedByCity_usersBefore_profile | null;
 }
 
 export interface FeedByCity_feedByCity_city_country {
   __typename: "CountryType";
   countryName: string | null;
+  countryCode: string | null;
 }
 
 export interface FeedByCity_feedByCity_city {
@@ -511,7 +543,8 @@ export interface FeedByCity_feedByCity_city {
 export interface FeedByCity_feedByCity {
   __typename: "FeedByCityResponse";
   cards: (FeedByCity_feedByCity_cards | null)[] | null;
-  users: (FeedByCity_feedByCity_users | null)[] | null;
+  usersNow: (FeedByCity_feedByCity_usersNow | null)[] | null;
+  usersBefore: (FeedByCity_feedByCity_usersBefore | null)[] | null;
   city: FeedByCity_feedByCity_city | null;
 }
 
@@ -821,153 +854,6 @@ export interface StartPhoneVerificationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: UserProfile
-// ====================================================
-
-export interface UserProfile_userProfile_user_profile_currentCountry {
-  __typename: "CountryType";
-  countryName: string | null;
-  countryCode: string | null;
-}
-
-export interface UserProfile_userProfile_user_profile_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-  countryCode: string | null;
-}
-
-export interface UserProfile_userProfile_user_profile_currentCity {
-  __typename: "CityType";
-  cityName: string | null;
-  cityPhoto: string | null;
-  country: UserProfile_userProfile_user_profile_currentCity_country;
-}
-
-export interface UserProfile_userProfile_user_profile {
-  __typename: "ProfileType";
-  bio: string | null;
-  gender: string | null;
-  avatar: string;
-  website: string | null;
-  postCount: number | null;
-  followersCount: number | null;
-  followingCount: number | null;
-  isFollowing: boolean | null;
-  isSelf: boolean | null;
-  cityCount: number | null;
-  countryCount: number | null;
-  currentCountry: UserProfile_userProfile_user_profile_currentCountry | null;
-  currentCity: UserProfile_userProfile_user_profile_currentCity | null;
-}
-
-export interface UserProfile_userProfile_user_cards {
-  __typename: "CardType";
-  id: string;
-  caption: string;
-  likeCount: number | null;
-  commentCount: number | null;
-  borderRadius: string;
-  bgColor: string | null;
-  font: string | null;
-  fontColor: string | null;
-  fontSize: string | null;
-  file: string | null;
-}
-
-export interface UserProfile_userProfile_user {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  firstName: string;
-  lastName: string;
-  profile: UserProfile_userProfile_user_profile | null;
-  cards: (UserProfile_userProfile_user_cards | null)[] | null;
-}
-
-export interface UserProfile_userProfile {
-  __typename: "UserProfileResponse";
-  user: UserProfile_userProfile_user | null;
-}
-
-export interface UserProfile {
-  userProfile: UserProfile_userProfile;
-}
-
-export interface UserProfileVariables {
-  username: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: EditProfile
-// ====================================================
-
-export interface EditProfile_editProfile_user_profile {
-  __typename: "ProfileType";
-  bio: string | null;
-  gender: string | null;
-  avatar: string;
-}
-
-export interface EditProfile_editProfile_user {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  firstName: string;
-  lastName: string;
-  profile: EditProfile_editProfile_user_profile | null;
-}
-
-export interface EditProfile_editProfile {
-  __typename: "EditProfileResponse";
-  ok: boolean | null;
-  user: EditProfile_editProfile_user | null;
-}
-
-export interface EditProfile {
-  editProfile: EditProfile_editProfile;
-}
-
-export interface EditProfileVariables {
-  userName?: string | null;
-  bio?: string | null;
-  gender?: string | null;
-  avatar?: string | null;
-  firstName?: string | null;
-  lastName?: string | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: DeleteProfile
-// ====================================================
-
-export interface DeleteProfile_deleteProfile {
-  __typename: "DeleteProfileResponse";
-  ok: boolean | null;
-}
-
-export interface DeleteProfile {
-  deleteProfile: DeleteProfile_deleteProfile;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: SearchTerms
 // ====================================================
 
@@ -1160,6 +1046,153 @@ export interface UserList_userList {
 
 export interface UserList {
   userList: UserList_userList;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: UserProfile
+// ====================================================
+
+export interface UserProfile_userProfile_user_profile_currentCountry {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryCode: string | null;
+}
+
+export interface UserProfile_userProfile_user_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryCode: string | null;
+}
+
+export interface UserProfile_userProfile_user_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: UserProfile_userProfile_user_profile_currentCity_country;
+}
+
+export interface UserProfile_userProfile_user_profile {
+  __typename: "ProfileType";
+  bio: string | null;
+  gender: string | null;
+  avatar: string;
+  website: string | null;
+  postCount: number | null;
+  followersCount: number | null;
+  followingCount: number | null;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
+  cityCount: number | null;
+  countryCount: number | null;
+  currentCountry: UserProfile_userProfile_user_profile_currentCountry | null;
+  currentCity: UserProfile_userProfile_user_profile_currentCity | null;
+}
+
+export interface UserProfile_userProfile_user_cards {
+  __typename: "CardType";
+  id: string;
+  caption: string;
+  likeCount: number | null;
+  commentCount: number | null;
+  borderRadius: string;
+  bgColor: string | null;
+  font: string | null;
+  fontColor: string | null;
+  fontSize: string | null;
+  file: string | null;
+}
+
+export interface UserProfile_userProfile_user {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  firstName: string;
+  lastName: string;
+  profile: UserProfile_userProfile_user_profile | null;
+  cards: (UserProfile_userProfile_user_cards | null)[] | null;
+}
+
+export interface UserProfile_userProfile {
+  __typename: "UserProfileResponse";
+  user: UserProfile_userProfile_user | null;
+}
+
+export interface UserProfile {
+  userProfile: UserProfile_userProfile;
+}
+
+export interface UserProfileVariables {
+  username: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: EditProfile
+// ====================================================
+
+export interface EditProfile_editProfile_user_profile {
+  __typename: "ProfileType";
+  bio: string | null;
+  gender: string | null;
+  avatar: string;
+}
+
+export interface EditProfile_editProfile_user {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  firstName: string;
+  lastName: string;
+  profile: EditProfile_editProfile_user_profile | null;
+}
+
+export interface EditProfile_editProfile {
+  __typename: "EditProfileResponse";
+  ok: boolean | null;
+  user: EditProfile_editProfile_user | null;
+}
+
+export interface EditProfile {
+  editProfile: EditProfile_editProfile;
+}
+
+export interface EditProfileVariables {
+  userName?: string | null;
+  bio?: string | null;
+  gender?: string | null;
+  avatar?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: DeleteProfile
+// ====================================================
+
+export interface DeleteProfile_deleteProfile {
+  __typename: "DeleteProfileResponse";
+  ok: boolean | null;
+}
+
+export interface DeleteProfile {
+  deleteProfile: DeleteProfile_deleteProfile;
 }
 
 

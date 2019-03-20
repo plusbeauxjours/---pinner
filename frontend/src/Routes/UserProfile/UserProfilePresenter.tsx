@@ -233,7 +233,7 @@ interface IProps {
   lastName: string;
 }
 
-const ProfilePresenter: React.SFC<IProps> = ({
+const UserProfilePresenter: React.SFC<IProps> = ({
   data,
   loading,
   modalOpen,
@@ -423,4 +423,4 @@ const ProfilePresenter: React.SFC<IProps> = ({
   return null;
 };
 
-export default ProfilePresenter;
+export default UserProfilePresenter;

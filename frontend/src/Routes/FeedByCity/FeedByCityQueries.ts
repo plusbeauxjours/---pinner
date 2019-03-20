@@ -7,7 +7,14 @@ export const GET_FEED_BY_CITY = gql`
       cards {
         ...DetailParts
       }
-      users {
+      usersNow {
+        id
+        username
+        profile {
+          avatar
+        }
+      }
+      usersBefore {
         id
         username
         profile {

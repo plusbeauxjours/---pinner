@@ -39,13 +39,15 @@ class CommentType(DjangoObjectType):
 class FeedResponse(graphene.ObjectType):
     city = graphene.Field(location_types.CityType)
     cards = graphene.List(CardType)
-    users = graphene.List(users_types.UserType)
+    usersNow = graphene.List(users_types.UserType)
+    usersBefore = graphene.List(users_types.UserType)
 
 
 class FeedByCityResponse(graphene.ObjectType):
     city = graphene.Field(location_types.CityType)
     cards = graphene.List(CardType)
-    users = graphene.List(users_types.UserType)
+    usersNow = graphene.List(users_types.UserType)
+    usersBefore = graphene.List(users_types.UserType)
 
 
 class LikeCardResponse(graphene.ObjectType):

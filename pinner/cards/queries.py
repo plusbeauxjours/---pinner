@@ -3,6 +3,7 @@ from . import types, models
 from graphql_jwt.decorators import login_required
 from django.contrib.auth.models import User
 from locations import models as location_models
+from notifications import models as notification_models
 
 
 @login_required
@@ -23,15 +24,18 @@ def resolve_feed(self, info, **kwargs):
 
     my_cards = user.cards.all()
 
-    users = User.objects.filter(
+    usersNow = User.objects.filter(
         profile__current_city__city_name=cityName).order_by('-username').distinct('username')
+
+    usersBefore = notification_models.MoveNotification.filter(
+        toCity__city_name=cityName).order_by('-username').distinct('username')
 
     combined = following_cards.union(city_cards).union(my_cards).order_by(
         '-created_at')[offset:5 + offset]
 
     city = location_models.City.objects.get(city_name=cityName)
 
-    return types.FeedResponse(cards=combined, users=users, city=city)
+    return types.FeedResponse(cards=combined, usersNow=usersNow, usersBefore=usersBefore, city=city)
 
 
 @login_required
@@ -45,12 +49,15 @@ def resolve_feed_by_city(self, info, **kwargs):
     cards = models.Card.objects.filter(city__city_name=cityName).order_by(
         '-created_at')[offset:5 + offset]
 
-    users = User.objects.filter(
+    usersNow = User.objects.filter(
         profile__current_city__city_name=cityName).order_by('-username').distinct('username')
+
+    usersBefore = notification_models.MoveNotification.filter(
+        toCity__city_name=cityName).order_by('-username').distinct('username')
 
     city = location_models.City.objects.get(city_name=cityName)
 
-    return types.FeedByCityResponse(cards=cards, users=users, city=city)
+    return types.FeedByCityResponse(cards=cards, usersNow=usersNow, usersBefore=usersBefore, city=city)
 
 
 @login_required

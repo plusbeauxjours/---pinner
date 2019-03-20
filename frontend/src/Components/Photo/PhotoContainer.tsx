@@ -3,7 +3,7 @@ import PhotoPresenter from "./PhotoPresenter";
 import { Mutation, MutationFn } from "react-apollo";
 import { TOGGLE_LIKE_CARD, ADD_COMMENT, DELETE_COMMENT } from "./PhotoQueries";
 import { DeleteComment, DeleteCommentVariables } from "../../types/api";
-import { GET_USER } from "../../Routes/Profile/ProfileQueries";
+import { GET_USER } from "../../Routes/UserProfile/UserProfileQueries";
 import { GET_FEED } from "../../Routes/Feed/FeedQueries";
 import {
   LikeCard,

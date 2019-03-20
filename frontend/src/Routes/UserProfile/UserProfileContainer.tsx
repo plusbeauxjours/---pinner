@@ -1,8 +1,8 @@
 import React from "react";
-import ProfilePresenter from "./ProfilePresenter";
+import UserProfilePresenter from "./UserProfilePresenter";
 import { Query, Mutation, MutationFn } from "react-apollo";
 import { UserProfile, UserProfileVariables } from "src/types/api";
-import { GET_USER, EDIT_PROFILE, DELETE_PROFILE } from "./ProfileQueries";
+import { GET_USER, EDIT_PROFILE, DELETE_PROFILE } from "./UserProfileQueries";
 import { withRouter, RouteComponentProps } from "react-router";
 import { LOG_USER_OUT } from "src/sharedQueries.local";
 import {
@@ -12,7 +12,7 @@ import {
 } from "../../types/api";
 import { toast } from "react-toastify";
 
-class ProfileQuery extends Query<UserProfile, UserProfileVariables> {}
+class UserProfileQuery extends Query<UserProfile, UserProfileVariables> {}
 class EditProfileMutation extends Mutation<EditProfile, EditProfileVariables> {}
 class DeleteProfileMutation extends Mutation<DeleteProfile> {}
 class LogOutMutation extends Mutation {}
@@ -32,7 +32,7 @@ interface IState {
   lastName: string;
 }
 
-class ProfileContainer extends React.Component<IProps, IState> {
+class UserProfileContainer extends React.Component<IProps, IState> {
   public logUserOutFn: MutationFn;
   public editProfileFn: MutationFn;
   public deleteProfileFn: MutationFn;
@@ -74,7 +74,7 @@ class ProfileContainer extends React.Component<IProps, IState> {
         {logUserOutFn => {
           this.logUserOutFn = logUserOutFn;
           return (
-            <ProfileQuery query={GET_USER} variables={{ username }}>
+            <UserProfileQuery query={GET_USER} variables={{ username }}>
               {({ data, loading }) => (
                 <EditProfileMutation
                   mutation={EDIT_PROFILE}
@@ -116,7 +116,7 @@ class ProfileContainer extends React.Component<IProps, IState> {
                         {deleteProfileFn => {
                           this.deleteProfileFn = deleteProfileFn;
                           return (
-                            <ProfilePresenter
+                            <UserProfilePresenter
                               modalOpen={modalOpen}
                               confirmModalOpen={confirmModalOpen}
                               editMode={editMode}
@@ -142,7 +142,7 @@ class ProfileContainer extends React.Component<IProps, IState> {
                   }}
                 </EditProfileMutation>
               )}
-            </ProfileQuery>
+            </UserProfileQuery>
           );
         }}
       </LogOutMutation>
@@ -213,4 +213,4 @@ class ProfileContainer extends React.Component<IProps, IState> {
   };
 }
 
-export default withRouter(ProfileContainer);
+export default withRouter(UserProfileContainer);
