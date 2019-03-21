@@ -394,6 +394,45 @@ export interface CityProfileVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: ContinentProfile
+// ====================================================
+
+export interface ContinentProfile_continentProfile_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+  continentPhoto: string | null;
+  countryCount: number | null;
+}
+
+export interface ContinentProfile_continentProfile_countries {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+  cityCount: number | null;
+  cardCount: number | null;
+}
+
+export interface ContinentProfile_continentProfile {
+  __typename: "ContinentProfileResponse";
+  continent: ContinentProfile_continentProfile_continent | null;
+  countries: (ContinentProfile_continentProfile_countries | null)[] | null;
+}
+
+export interface ContinentProfile {
+  continentProfile: ContinentProfile_continentProfile;
+}
+
+export interface ContinentProfileVariables {
+  page: number;
+  continentName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: CountryProfile
 // ====================================================
 

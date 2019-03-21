@@ -18,6 +18,8 @@ import Notification from "../Routes/Notification";
 import Footprint from "../Routes/Footprint";
 import CityProfile from "../Routes/CityProfile";
 import CountryProfile from "../Routes/CountryProfile";
+import ContinentProfile from "../Routes/ContinentProfile";
+
 import UserProfile from "../Routes/UserProfile";
 
 import Home from "../Routes/Home";
@@ -44,6 +46,7 @@ const LoggedInPages = () => (
       <Route path="/explore/userlist" component={UserList} />
       <Route path="/location" exact={true} component={Location} />
       <Route path="/notification" component={Notification} />
+      <Route path="/continent/:continentName" component={ContinentProfile} />
       <Route path="/country/:countryName" component={CountryProfile} />
       <Route path="/city/:cityName" component={CityProfile} />
       <Route path="/:username/footprint" exact={true} component={Footprint} />

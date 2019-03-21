@@ -67,11 +67,13 @@ const CityName = styled(Bold)`
   font-size: 40px;
   font-family: "Qwigley";
   font-weight: 200;
+  pointer-events: none;
 `;
 
 const CountryName = styled(CityName)`
   font-size: 20px;
   margin-top: 20px;
+  pointer-events: none;
 `;
 
 const CityContainer = styled.div`

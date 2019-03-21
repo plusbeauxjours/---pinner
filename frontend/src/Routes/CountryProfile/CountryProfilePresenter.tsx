@@ -42,33 +42,34 @@ const PBody = styled.div`
   }
 `;
 
-// const CityPhoto = styled.img`
-//   margin-bottom: 10px;
-//   display: flex;
-//   width: 200px;
-//   height: 200px;
-//   background-size: cover;
-//   border-radius: 3px;
-//   z-index: 1;
-//   object-fit: cover;
-// `;
+const CountryPhoto = styled.img`
+  margin-bottom: 10px;
+  display: flex;
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+  border-radius: 3px;
+  z-index: 1;
+  object-fit: cover;
+`;
 
-// const CityName = styled(Bold)`
-//   position: absolute;
-//   display: flex;
-//   z-index: 5;
-//   font-size: 40px;
-//   font-family: "Qwigley";
-//   font-weight: 200;
-// `;
+const ContinentName = styled(Bold)`
+  position: absolute;
+  display: flex;
+  z-index: 5;
+  font-size: 40px;
+  font-family: "Qwigley";
+  font-weight: 200;
+  pointer-events: none;
+`;
 
-// const CityContainer = styled.div`
-//   margin-right: 15px;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   position: relative;
-// `;
+const ContinentContainer = styled.div`
+  margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+`;
 
 const InfoContainer = styled.div`
   display: flex;
@@ -157,13 +158,12 @@ const CountryProfilePresenter: React.SFC<IProps> = ({ data, loading }) => {
         </PHeader>
         <SWrapper>
           <PBody>
-            {/* <CityContainer>
-              <Link to={`/country/${city.country.countryName}`}>
-                <CityPhoto src={city.country.countryPhoto} />
+            <ContinentContainer>
+              <Link to={`/continent/${country.continent.continentName}`}>
+                <CountryPhoto src={country.continent.continentPhoto} />
               </Link>
-
-              <CityName text={city.country.countryName} />
-            </CityContainer> */}
+              <ContinentName text={country.continent.continentName} />
+            </ContinentContainer>
             <InfoContainer>
               <Info>
                 Lorem Ipsum is simply dummy text of the printing and typesetting

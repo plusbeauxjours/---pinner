@@ -71,6 +71,22 @@ def resolve_country_profile(self, info, **kwargs):
 
 
 @login_required
+def resolve_continent_profile(self, info, **kwargs):
+
+    user = info.context.user
+    continentName = kwargs.get('continentName')
+    page = kwargs.get('page', 0)
+    offset = 5 * page
+
+    continent = models.Continent.objects.get(continent_name=continentName)
+    print(continent)
+
+    countries = models.Country.objects.filter(continent__continent_name=continentName)
+
+    return types.ContinentProfileResponse(continent=continent, countries=countries)
+
+
+@login_required
 def resolve_get_footprints(self, info, **kwargs):
 
     user = info.context.user

@@ -22,6 +22,15 @@ class Query(object):
             'page': graphene.Int()
         }
     )
+    continent_profile = graphene.Field(
+        types.ContinentProfileResponse,
+        resolver=queries.resolve_continent_profile,
+        required=True,
+        args={
+            'continentName': graphene.String(required=True),
+            'page': graphene.Int()
+        }
+    )
     get_cities = graphene.Field(
         types.CitiesResponse,
         resolver=queries.resolve_get_cities,

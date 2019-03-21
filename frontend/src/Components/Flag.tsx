@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
 
-const Container = styled.div``;
-
-const SFlag = styled.img<IProps>`
+const FlagImage = styled.img<IProps>`
   height: ${props => {
     if (props.size === "md") {
       return "50px";
@@ -91,16 +89,13 @@ const Overlay = styled.div<IProps>`
 interface IProps {
   countryCode?: string;
   size: string;
-  bg?: string;
   className?: string;
 }
 
 const Flag: React.SFC<IProps> = ({ className, countryCode, size }) => (
-  <Container>
-    <Overlay size={size}>
-      <SFlag className={className} src={countryCode} size={size} />
-    </Overlay>
-  </Container>
+  <Overlay size={size}>
+    <FlagImage className={className} src={countryCode} size={size} />
+  </Overlay>
 );
 
 export default Flag;

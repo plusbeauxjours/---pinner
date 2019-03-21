@@ -4,7 +4,6 @@ from . import models
 
 from config import types as config_types
 from users import types as user_types
-from cards import types as card_types
 from cards import models as card_models
 from notifications import types as notification_types
 
@@ -68,6 +67,11 @@ class CountryProfileResponse(graphene.ObjectType):
     cards = graphene.List(CardType)
     usersNow = graphene.List(user_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
+
+
+class ContinentProfileResponse(graphene.ObjectType):
+    continent = graphene.Field(ContinentType)
+    countries = graphene.List(CountryType)
 
 
 class CountriesResponse(graphene.ObjectType):

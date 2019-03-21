@@ -1,12 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "../../Styles/typed-components";
 
 import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
-import Photo from "../../Components/Photo";
 import Bold from "../../Components/Bold";
+import CountryGrid from "src/Components/CountryGrid";
+import Flag from "../../Components/Flag";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -40,35 +40,6 @@ const PBody = styled.div`
   &:not(:last-child) {
     border-bottom: 1px solid grey;
   }
-`;
-
-const CityPhoto = styled.img`
-  margin-bottom: 10px;
-  display: flex;
-  width: 200px;
-  height: 200px;
-  background-size: cover;
-  border-radius: 3px;
-  z-index: 1;
-  object-fit: cover;
-`;
-
-const CountryName = styled(Bold)`
-  position: absolute;
-  display: flex;
-  z-index: 5;
-  font-size: 40px;
-  font-family: "Qwigley";
-  font-weight: 200;
-  pointer-events: none;
-`;
-
-const CountryContainer = styled.div`
-  margin-right: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
 `;
 
 const InfoContainer = styled.div`
@@ -116,6 +87,7 @@ const FollowContainer = styled.div`
 `;
 
 const Follow = styled.div`
+  display: flex;
   flex: 1;
   margin-bottom: 10px;
   height: 150px;
@@ -129,8 +101,11 @@ const SBold = styled(Bold)`
   font-weight: 200;
 `;
 
-const SAvatar = styled(Avatar)`
-  margin: 3px;
+const FlagGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 40px;
+  padding: 20px;
 `;
 
 interface IProps {
@@ -138,32 +113,19 @@ interface IProps {
   loading: boolean;
 }
 
-const CityProfilePresenter: React.SFC<IProps> = ({ data, loading }) => {
+const ContinentProfilePresenter: React.SFC<IProps> = ({ data, loading }) => {
   if (loading) {
     return <Loader />;
   } else if (!loading && data) {
-    const {
-      cityProfile: {
-        cards = {},
-        usersNow = {},
-        usersBefore = {},
-        city = {}
-      } = {}
-    } = data;
+    const { continentProfile: { continent = {}, countries = {} } = {} } = data;
     return (
       <>
         <PHeader>
-          <PAvatar size="lg" url={city.cityPhoto} />
-          <Username>{city.cityName}</Username>
+          <PAvatar size="lg" url={continent.continentPhoto} />
+          <Username>{continent.continentName}</Username>
         </PHeader>
         <SWrapper>
           <PBody>
-            <CountryContainer>
-              <Link to={`/country/${city.country.countryName}`}>
-                <CityPhoto src={city.country.countryPhoto} />
-              </Link>
-              <CountryName text={city.country.countryName} />
-            </CountryContainer>
             <InfoContainer>
               <Info>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -177,87 +139,56 @@ const CityProfilePresenter: React.SFC<IProps> = ({ data, loading }) => {
               <InfoInlineContainer>
                 <HalfInfo>
                   <InfoRow>
-                    <SBold text={String(city.cardCount)} />
+                    <SBold text={String(continent.countryCount)} />
                     AQI
                   </InfoRow>
                   <InfoRow>
-                    <SBold text={String(city.userCount)} />
+                    <SBold text={String(continent.countryCount)} />
                     TEMPERATURE
                   </InfoRow>
                   <InfoRow>
-                    <SBold text={String(city.userLogCount)} />
+                    <SBold text={String(continent.countryCount)} />
                     DISTANCE
                   </InfoRow>
                 </HalfInfo>
                 <HalfInfo>
                   <InfoRow>
                     cardCount
-                    <SBold text={String(city.cardCount)} />
+                    <SBold text={String(continent.countryCount)} />
                   </InfoRow>
 
                   <InfoRow>
                     userCount
-                    <SBold text={String(city.userCount)} />
+                    <SBold text={String(continent.countryCount)} />
                   </InfoRow>
 
                   <InfoRow>
                     userLogCount
-                    <SBold text={String(city.userLogCount)} />
+                    <SBold text={String(continent.countryCount)} />
                   </InfoRow>
                 </HalfInfo>
               </InfoInlineContainer>
             </InfoContainer>
             <FollowContainer>
+              COUNTRIES
+              <SBold text={String(continent.countryCount)} />
               <Follow>
-                USERS WHO IS HERE
-                <SBold text={String(city.userCount)} />
-                {usersNow &&
-                  usersNow.map(user => (
-                    <Link to={`/${user.username}`}>
-                      <SAvatar
+                <FlagGrid>
+                  {countries &&
+                    countries.map(country => (
+                      <Flag
                         size={"sm"}
-                        key={user.id}
-                        url={user.profile.avatar}
+                        key={country.id}
+                        countryCode={require(`../../Images/countryFlag/${
+                          country.countryCode
+                        }.svg`)}
                       />
-                    </Link>
-                  ))}
-              </Follow>
-              <Follow>
-                USERS WHO HAS BEEN HERE
-                <SBold text={String(city.userLogCount)} />
-                {usersBefore &&
-                  usersBefore.map(user => (
-                    <Link to={`/${user.actor.username}`}>
-                      <SAvatar
-                        size={"sm"}
-                        key={user.id}
-                        url={user.actor.profile.avatar}
-                      />
-                    </Link>
-                  ))}
+                    ))}
+                </FlagGrid>
               </Follow>
             </FollowContainer>
           </PBody>
-          {cards &&
-            cards.map(card => (
-              <Photo
-                id={card.id}
-                key={card.id}
-                inline={true}
-                creatorAvatar={card.creator.profile.avatar}
-                creatorUsername={card.creator.username}
-                country={card.country.countryName}
-                city={card.city.cityName}
-                photoUrl={card.file}
-                likeCount={card.likeCount}
-                commentCount={card.commentCount}
-                caption={card.caption}
-                comments={card.comments}
-                createdAt={card.createdAt}
-                isLiked={card.isLiked}
-                borderRadius={card.borderRadius}
-              />
-            ))}
+          {countries && <CountryGrid countries={countries} />}
         </SWrapper>
       </>
     );
@@ -265,4 +196,4 @@ const CityProfilePresenter: React.SFC<IProps> = ({ data, loading }) => {
   return null;
 };
 
-export default CityProfilePresenter;
+export default ContinentProfilePresenter;
