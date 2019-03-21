@@ -13,15 +13,6 @@ class Query(object):
             'page': graphene.Int(),
         }
     )
-    feed_by_city = graphene.Field(
-        types.FeedByCityResponse,
-        resolver=queries.resolve_feed_by_city,
-        required=True,
-        args={
-            'cityName': graphene.String(required=True),
-            'page': graphene.Int()
-        }
-    )
     card_likes = graphene.Field(
         types.CardLikeResponse,
         resolver=queries.resolve_card_likes,

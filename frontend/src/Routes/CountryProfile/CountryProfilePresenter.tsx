@@ -42,38 +42,33 @@ const PBody = styled.div`
   }
 `;
 
-const CityPhoto = styled.img`
-  margin-bottom: 10px;
-  display: flex;
-  width: 200px;
-  height: 200px;
-  background-size: cover;
-  border-radius: 3px;
-  z-index: 1;
-  object-fit: cover;
-`;
+// const CityPhoto = styled.img`
+//   margin-bottom: 10px;
+//   display: flex;
+//   width: 200px;
+//   height: 200px;
+//   background-size: cover;
+//   border-radius: 3px;
+//   z-index: 1;
+//   object-fit: cover;
+// `;
 
-const CityName = styled(Bold)`
-  position: absolute;
-  display: flex;
-  z-index: 5;
-  font-size: 40px;
-  font-family: "Qwigley";
-  font-weight: 200;
-`;
+// const CityName = styled(Bold)`
+//   position: absolute;
+//   display: flex;
+//   z-index: 5;
+//   font-size: 40px;
+//   font-family: "Qwigley";
+//   font-weight: 200;
+// `;
 
-const CountryName = styled(CityName)`
-  font-size: 20px;
-  margin-top: 20px;
-`;
-
-const CityContainer = styled.div`
-  margin-right: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-`;
+// const CityContainer = styled.div`
+//   margin-right: 15px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   position: relative;
+// `;
 
 const InfoContainer = styled.div`
   display: flex;
@@ -142,34 +137,33 @@ interface IProps {
   loading: boolean;
 }
 
-const FeedByCityPresenter: React.SFC<IProps> = ({ data, loading }) => {
+const CountryProfilePresenter: React.SFC<IProps> = ({ data, loading }) => {
   if (loading) {
     return <Loader />;
   } else if (!loading && data) {
     const {
-      feedByCity: {
+      countryProfile: {
         cards = {},
         usersNow = {},
         usersBefore = {},
-        city = {}
+        country = {}
       } = {}
     } = data;
     return (
       <>
         <PHeader>
-          <PAvatar size="lg" url={city.cityPhoto} />
-          <Username>{city.cityName}</Username>
+          <PAvatar size="lg" url={country.countryPhoto} />
+          <Username>{country.countryName}</Username>
         </PHeader>
         <SWrapper>
           <PBody>
-            <CityContainer>
-              <Link to={`/city/${city.cityName}`}>
-                <CityPhoto src={city.cityPhoto} />
+            {/* <CityContainer>
+              <Link to={`/country/${city.country.countryName}`}>
+                <CityPhoto src={city.country.countryPhoto} />
               </Link>
 
-              <CityName text={city.cityName} />
-              <CountryName text={city.country.countryName} />
-            </CityContainer>
+              <CityName text={city.country.countryName} />
+            </CityContainer> */}
             <InfoContainer>
               <Info>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -183,32 +177,32 @@ const FeedByCityPresenter: React.SFC<IProps> = ({ data, loading }) => {
               <InfoInlineContainer>
                 <HalfInfo>
                   <InfoRow>
-                    <SBold text={String(city.cardCount)} />
+                    <SBold text={String(country.cityCount)} />
                     AQI
                   </InfoRow>
                   <InfoRow>
-                    <SBold text={String(city.userCount)} />
+                    <SBold text={String(country.cityCount)} />
                     TEMPERATURE
                   </InfoRow>
                   <InfoRow>
-                    <SBold text={String(city.userLogCount)} />
+                    <SBold text={String(country.cityCount)} />
                     DISTANCE
                   </InfoRow>
                 </HalfInfo>
                 <HalfInfo>
                   <InfoRow>
                     cardCount
-                    <SBold text={String(city.cardCount)} />
+                    <SBold text={String(country.cityCount)} />
                   </InfoRow>
 
                   <InfoRow>
                     userCount
-                    <SBold text={String(city.userCount)} />
+                    <SBold text={String(country.cityCount)} />
                   </InfoRow>
 
                   <InfoRow>
                     userLogCount
-                    <SBold text={String(city.userLogCount)} />
+                    <SBold text={String(country.cityCount)} />
                   </InfoRow>
                 </HalfInfo>
               </InfoInlineContainer>
@@ -216,7 +210,7 @@ const FeedByCityPresenter: React.SFC<IProps> = ({ data, loading }) => {
             <FollowContainer>
               <Follow>
                 USERS WHO IS HERE
-                <SBold text={String(city.userCount)} />
+                <SBold text={String(country.cardCount)} />
                 {usersNow &&
                   usersNow.map(user => (
                     <Link to={`/${user.username}`}>
@@ -230,7 +224,7 @@ const FeedByCityPresenter: React.SFC<IProps> = ({ data, loading }) => {
               </Follow>
               <Follow>
                 USERS WHO HAS BEEN HERE
-                <SBold text={String(city.userLogCount)} />
+                <SBold text={String(country.cardCount)} />
                 {usersBefore &&
                   usersBefore.map(user => (
                     <Link to={`/${user.actor.username}`}>
@@ -271,4 +265,4 @@ const FeedByCityPresenter: React.SFC<IProps> = ({ data, loading }) => {
   return null;
 };
 
-export default FeedByCityPresenter;
+export default CountryProfilePresenter;

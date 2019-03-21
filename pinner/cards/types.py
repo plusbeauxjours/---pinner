@@ -1,28 +1,11 @@
 import graphene
 from graphene_django.types import DjangoObjectType
 from . import models
+
 from config import types as config_types
-from users import types as users_types
+from users import types as user_types
 from locations import types as location_types
 from notifications import types as notification_types
-
-
-class CardType(DjangoObjectType):
-    like_count = graphene.Int(source='like_count')
-    comment_count = graphene.Int(source='comment_count')
-    created_at = graphene.String(source="natural_time")
-    is_liked = graphene.Boolean()
-
-    def resolve_is_liked(self, info):
-        user = info.context.user
-        try:
-            like = models.Like.objects.get(card=self, creator=user)
-            return True
-        except models.Like.DoesNotExist:
-            return False
-
-    class Meta:
-        model = models.Card
 
 
 class LikeType(DjangoObjectType):
@@ -39,15 +22,8 @@ class CommentType(DjangoObjectType):
 
 class FeedResponse(graphene.ObjectType):
     city = graphene.Field(location_types.CityType)
-    cards = graphene.List(CardType)
-    usersNow = graphene.List(users_types.UserType)
-    usersBefore = graphene.List(notification_types.MoveNotificationType)
-
-
-class FeedByCityResponse(graphene.ObjectType):
-    city = graphene.Field(location_types.CityType)
-    cards = graphene.List(CardType)
-    usersNow = graphene.List(users_types.UserType)
+    cards = graphene.List(location_types.CardType)
+    usersNow = graphene.List(user_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 
@@ -72,11 +48,11 @@ class CardLikeResponse(graphene.ObjectType):
 
 
 class CardDetailResponse(graphene.ObjectType):
-    card = graphene.Field(CardType)
+    card = graphene.Field(location_types.CardType)
 
 
 class EditCardResponse(graphene.ObjectType, config_types.ResponseFields):
-    card = graphene.Field(CardType)
+    card = graphene.Field(location_types.CardType)
 
 
 class DeleteCardResponse(graphene.ObjectType, config_types.ResponseFields):
@@ -85,15 +61,15 @@ class DeleteCardResponse(graphene.ObjectType, config_types.ResponseFields):
 
 class UploadCardResponse(graphene.ObjectType):
     ok = graphene.Boolean()
-    card = graphene.Field(CardType)
+    card = graphene.Field(location_types.CardType)
 
 
 class SearchCardsResponse(graphene.ObjectType):
-    cards = graphene.List(CardType)
+    cards = graphene.List(location_types.CardType)
 
 
 class LatestCardsResponse(graphene.ObjectType):
-    cards = graphene.List(CardType)
+    cards = graphene.List(location_types.CardType)
 
 
 class FileInputType(graphene.InputObjectType):

@@ -54,10 +54,6 @@ class Profile(config_models.TimeStampedModel):
         return self.user.movenotification.all().order_by('toCity').distinct('toCity').count()
 
     @property
-    def country_log(self):
-        return self.lastCountry.all()
-
-    @property
     def post_count(self):
         return self.user.cards.all().count()
 

@@ -3,8 +3,10 @@ from django.db import IntegrityError
 from django.contrib.auth.models import User
 from graphql_jwt.decorators import login_required
 from graphql_jwt.shortcuts import get_token
+
 from . import models, types
-from cards import models as cards_models
+
+from cards import models as card_models
 from notifications import models as notification_models
 
 

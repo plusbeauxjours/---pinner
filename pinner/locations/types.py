@@ -1,18 +1,30 @@
 import graphene
 from graphene_django.types import DjangoObjectType
 from . import models
+
 from config import types as config_types
-from users import types as users_types
-from notifications import types as notifications_types
+from users import types as user_types
+from cards import types as card_types
+from cards import models as card_models
+from notifications import types as notification_types
 
 
-class CountryType(DjangoObjectType):
-    city_count = graphene.Int(source='city_count')
-    user_count = graphene.Int(source='user_count')
-    user_log_count = graphene.Int(source='user_log_count')
+class CardType(DjangoObjectType):
+    like_count = graphene.Int(source='like_count')
+    comment_count = graphene.Int(source='comment_count')
+    created_at = graphene.String(source="natural_time")
+    is_liked = graphene.Boolean()
+
+    def resolve_is_liked(self, info):
+        user = info.context.user
+        try:
+            like = models.Like.objects.get(card=self, creator=user)
+            return True
+        except models.Like.DoesNotExist:
+            return False
 
     class Meta:
-        model = models.Country
+        model = card_models.Card
 
 
 class CityType(DjangoObjectType):
@@ -25,16 +37,45 @@ class CityType(DjangoObjectType):
         model = models.City
 
 
-class CountriesResponse(graphene.ObjectType):
-    countries = graphene.List(CountryType)
+class CountryType(DjangoObjectType):
+    city_count = graphene.Int(source='city_count')
+    card_count = graphene.Int(source='card_count')
+
+    class Meta:
+        model = models.Country
+
+
+class ContinentType(DjangoObjectType):
+    country_count = graphene.Int(source='country_count')
+
+    class Meta:
+        model = models.Continent
+
+
+class CityProfileResponse(graphene.ObjectType):
+    city = graphene.Field(CityType)
+    cards = graphene.List(CardType)
+    usersNow = graphene.List(user_types.UserType)
+    usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 
 class CitiesResponse(graphene.ObjectType):
     cities = graphene.List(CityType)
 
 
+class CountryProfileResponse(graphene.ObjectType):
+    country = graphene.Field(CountryType)
+    cards = graphene.List(CardType)
+    usersNow = graphene.List(user_types.UserType)
+    usersBefore = graphene.List(notification_types.MoveNotificationType)
+
+
+class CountriesResponse(graphene.ObjectType):
+    countries = graphene.List(CountryType)
+
+
 class FootprintsResponse(graphene.ObjectType):
-    footprints = graphene.List(notifications_types.MoveNotificationType)
+    footprints = graphene.List(notification_types.MoveNotificationType)
 
 
 class ReportLocationResponse(graphene.ObjectType):

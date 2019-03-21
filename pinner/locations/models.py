@@ -19,10 +19,10 @@ class Continent (config_models.TimeStampedModel):
 
 class Country (config_models.TimeStampedModel):
 
-    continent = models.ForeignKey(Continent, null=True, blank=True, on_delete=models.CASCADE, related_name='countries')
     country_name = models.CharField(max_length=50, null=True, blank=True)
     country_code = models.CharField(max_length=2, null=True, blank=True)
     country_photo = models.URLField(null=True, blank=True)
+    continent = models.ForeignKey(Continent, null=True, blank=True, on_delete=models.CASCADE, related_name='countries')
 
     @property
     def city_count(self):

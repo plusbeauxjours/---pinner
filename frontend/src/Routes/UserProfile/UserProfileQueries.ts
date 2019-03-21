@@ -20,7 +20,6 @@ export const GET_USER = gql`
           isFollowing
           isSelf
           cityCount
-          countryCount
           currentCity {
             cityName
             cityPhoto

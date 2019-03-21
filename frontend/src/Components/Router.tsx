@@ -15,8 +15,9 @@ import Explore from "../Routes/Explore";
 import UserList from "../Routes/UserList";
 import Location from "../Routes/Location";
 import Notification from "../Routes/Notification";
-import FeedByCity from "../Routes/FeedByCity";
 import Footprint from "../Routes/Footprint";
+import CityProfile from "../Routes/CityProfile";
+import CountryProfile from "../Routes/CountryProfile";
 import UserProfile from "../Routes/UserProfile";
 
 import Home from "../Routes/Home";
@@ -43,8 +44,8 @@ const LoggedInPages = () => (
       <Route path="/explore/userlist" component={UserList} />
       <Route path="/location" exact={true} component={Location} />
       <Route path="/notification" component={Notification} />
-      <Route path="/city/:cityName" component={FeedByCity} />
-      {/* <Route path="/country/:country" component={FeedByCity} /> */}
+      <Route path="/country/:countryName" component={CountryProfile} />
+      <Route path="/city/:cityName" component={CityProfile} />
       <Route path="/:username/footprint" exact={true} component={Footprint} />
       <Route path="/:username" component={UserProfile} />
       <Redirect from="*" to="/" />

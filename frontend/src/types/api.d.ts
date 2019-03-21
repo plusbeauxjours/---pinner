@@ -258,6 +258,277 @@ export interface CardDetailVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: CityProfile
+// ====================================================
+
+export interface CityProfile_cityProfile_cards_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface CityProfile_cityProfile_cards_city {
+  __typename: "CityType";
+  cityName: string | null;
+}
+
+export interface CityProfile_cityProfile_cards_comments_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface CityProfile_cityProfile_cards_comments {
+  __typename: "CommentType";
+  id: string;
+  message: string;
+  creator: CityProfile_cityProfile_cards_comments_creator | null;
+}
+
+export interface CityProfile_cityProfile_cards_creator_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface CityProfile_cityProfile_cards_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: CityProfile_cityProfile_cards_creator_profile | null;
+}
+
+export interface CityProfile_cityProfile_cards {
+  __typename: "CardType";
+  id: string;
+  file: string | null;
+  caption: string;
+  country: CityProfile_cityProfile_cards_country | null;
+  city: CityProfile_cityProfile_cards_city | null;
+  likeCount: number | null;
+  commentCount: number | null;
+  isLiked: boolean | null;
+  createdAt: string | null;
+  comments: (CityProfile_cityProfile_cards_comments | null)[] | null;
+  creator: CityProfile_cityProfile_cards_creator;
+  borderRadius: string;
+  bgColor: string | null;
+  font: string | null;
+  fontColor: string | null;
+  fontSize: string | null;
+}
+
+export interface CityProfile_cityProfile_usersNow_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface CityProfile_cityProfile_usersNow {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: CityProfile_cityProfile_usersNow_profile | null;
+}
+
+export interface CityProfile_cityProfile_usersBefore_actor_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface CityProfile_cityProfile_usersBefore_actor {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: CityProfile_cityProfile_usersBefore_actor_profile | null;
+}
+
+export interface CityProfile_cityProfile_usersBefore {
+  __typename: "MoveNotificationType";
+  id: string;
+  actor: CityProfile_cityProfile_usersBefore_actor;
+}
+
+export interface CityProfile_cityProfile_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryPhoto: string | null;
+  countryCode: string | null;
+}
+
+export interface CityProfile_cityProfile_city {
+  __typename: "CityType";
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: CityProfile_cityProfile_city_country;
+  cardCount: number | null;
+  userCount: number | null;
+  userLogCount: number | null;
+}
+
+export interface CityProfile_cityProfile {
+  __typename: "CityProfileResponse";
+  cards: (CityProfile_cityProfile_cards | null)[] | null;
+  usersNow: (CityProfile_cityProfile_usersNow | null)[] | null;
+  usersBefore: (CityProfile_cityProfile_usersBefore | null)[] | null;
+  city: CityProfile_cityProfile_city | null;
+}
+
+export interface CityProfile {
+  cityProfile: CityProfile_cityProfile;
+}
+
+export interface CityProfileVariables {
+  page: number;
+  cityName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: CountryProfile
+// ====================================================
+
+export interface CountryProfile_countryProfile_cards_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface CountryProfile_countryProfile_cards_city {
+  __typename: "CityType";
+  cityName: string | null;
+}
+
+export interface CountryProfile_countryProfile_cards_comments_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface CountryProfile_countryProfile_cards_comments {
+  __typename: "CommentType";
+  id: string;
+  message: string;
+  creator: CountryProfile_countryProfile_cards_comments_creator | null;
+}
+
+export interface CountryProfile_countryProfile_cards_creator_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface CountryProfile_countryProfile_cards_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: CountryProfile_countryProfile_cards_creator_profile | null;
+}
+
+export interface CountryProfile_countryProfile_cards {
+  __typename: "CardType";
+  id: string;
+  file: string | null;
+  caption: string;
+  country: CountryProfile_countryProfile_cards_country | null;
+  city: CountryProfile_countryProfile_cards_city | null;
+  likeCount: number | null;
+  commentCount: number | null;
+  isLiked: boolean | null;
+  createdAt: string | null;
+  comments: (CountryProfile_countryProfile_cards_comments | null)[] | null;
+  creator: CountryProfile_countryProfile_cards_creator;
+  borderRadius: string;
+  bgColor: string | null;
+  font: string | null;
+  fontColor: string | null;
+  fontSize: string | null;
+}
+
+export interface CountryProfile_countryProfile_usersNow_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface CountryProfile_countryProfile_usersNow {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: CountryProfile_countryProfile_usersNow_profile | null;
+}
+
+export interface CountryProfile_countryProfile_usersBefore_actor_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface CountryProfile_countryProfile_usersBefore_actor {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: CountryProfile_countryProfile_usersBefore_actor_profile | null;
+}
+
+export interface CountryProfile_countryProfile_usersBefore {
+  __typename: "MoveNotificationType";
+  id: string;
+  actor: CountryProfile_countryProfile_usersBefore_actor;
+}
+
+export interface CountryProfile_countryProfile_country_continent {
+  __typename: "ContinentType";
+  continentPhoto: string | null;
+  continentName: string | null;
+}
+
+export interface CountryProfile_countryProfile_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+  cityCount: number | null;
+  cardCount: number | null;
+  continent: CountryProfile_countryProfile_country_continent | null;
+}
+
+export interface CountryProfile_countryProfile {
+  __typename: "CountryProfileResponse";
+  cards: (CountryProfile_countryProfile_cards | null)[] | null;
+  usersNow: (CountryProfile_countryProfile_usersNow | null)[] | null;
+  usersBefore: (CountryProfile_countryProfile_usersBefore | null)[] | null;
+  country: CountryProfile_countryProfile_country | null;
+}
+
+export interface CountryProfile {
+  countryProfile: CountryProfile_countryProfile;
+}
+
+export interface CountryProfileVariables {
+  page: number;
+  countryName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: Explore
 // ====================================================
 
@@ -403,6 +674,8 @@ export interface Feed_feed_usersBefore {
 export interface Feed_feed_city_country {
   __typename: "CountryType";
   countryName: string | null;
+  countryPhoto: string | null;
+  countryCode: string | null;
 }
 
 export interface Feed_feed_city {
@@ -428,141 +701,6 @@ export interface Feed {
 }
 
 export interface FeedVariables {
-  page: number;
-  cityName: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: FeedByCity
-// ====================================================
-
-export interface FeedByCity_feedByCity_cards_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface FeedByCity_feedByCity_cards_city {
-  __typename: "CityType";
-  cityName: string | null;
-}
-
-export interface FeedByCity_feedByCity_cards_comments_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-}
-
-export interface FeedByCity_feedByCity_cards_comments {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-  creator: FeedByCity_feedByCity_cards_comments_creator | null;
-}
-
-export interface FeedByCity_feedByCity_cards_creator_profile {
-  __typename: "ProfileType";
-  avatar: string;
-}
-
-export interface FeedByCity_feedByCity_cards_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: FeedByCity_feedByCity_cards_creator_profile | null;
-}
-
-export interface FeedByCity_feedByCity_cards {
-  __typename: "CardType";
-  id: string;
-  file: string | null;
-  caption: string;
-  country: FeedByCity_feedByCity_cards_country | null;
-  city: FeedByCity_feedByCity_cards_city | null;
-  likeCount: number | null;
-  commentCount: number | null;
-  isLiked: boolean | null;
-  createdAt: string | null;
-  comments: (FeedByCity_feedByCity_cards_comments | null)[] | null;
-  creator: FeedByCity_feedByCity_cards_creator;
-  borderRadius: string;
-  bgColor: string | null;
-  font: string | null;
-  fontColor: string | null;
-  fontSize: string | null;
-}
-
-export interface FeedByCity_feedByCity_usersNow_profile {
-  __typename: "ProfileType";
-  avatar: string;
-}
-
-export interface FeedByCity_feedByCity_usersNow {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: FeedByCity_feedByCity_usersNow_profile | null;
-}
-
-export interface FeedByCity_feedByCity_usersBefore_actor_profile {
-  __typename: "ProfileType";
-  avatar: string;
-}
-
-export interface FeedByCity_feedByCity_usersBefore_actor {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: FeedByCity_feedByCity_usersBefore_actor_profile | null;
-}
-
-export interface FeedByCity_feedByCity_usersBefore {
-  __typename: "MoveNotificationType";
-  id: string;
-  actor: FeedByCity_feedByCity_usersBefore_actor;
-}
-
-export interface FeedByCity_feedByCity_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-  countryCode: string | null;
-}
-
-export interface FeedByCity_feedByCity_city {
-  __typename: "CityType";
-  cityName: string | null;
-  cityPhoto: string | null;
-  country: FeedByCity_feedByCity_city_country;
-  cardCount: number | null;
-  userCount: number | null;
-  userLogCount: number | null;
-}
-
-export interface FeedByCity_feedByCity {
-  __typename: "FeedByCityResponse";
-  cards: (FeedByCity_feedByCity_cards | null)[] | null;
-  usersNow: (FeedByCity_feedByCity_usersNow | null)[] | null;
-  usersBefore: (FeedByCity_feedByCity_usersBefore | null)[] | null;
-  city: FeedByCity_feedByCity_city | null;
-}
-
-export interface FeedByCity {
-  feedByCity: FeedByCity_feedByCity;
-}
-
-export interface FeedByCityVariables {
   page: number;
   cityName: string;
 }
@@ -1094,7 +1232,6 @@ export interface UserProfile_userProfile_user_profile {
   isFollowing: boolean | null;
   isSelf: boolean | null;
   cityCount: number | null;
-  countryCount: number | null;
   currentCity: UserProfile_userProfile_user_profile_currentCity | null;
 }
 

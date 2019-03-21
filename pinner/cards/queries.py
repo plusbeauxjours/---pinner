@@ -1,6 +1,7 @@
 from django.db import IntegrityError
 from . import types, models
 from graphql_jwt.decorators import login_required
+
 from django.contrib.auth.models import User
 from locations import models as location_models
 from notifications import models as notification_models
@@ -36,28 +37,6 @@ def resolve_feed(self, info, **kwargs):
     city = location_models.City.objects.get(city_name=cityName)
 
     return types.FeedResponse(cards=combined, usersNow=usersNow, usersBefore=usersBefore, city=city)
-
-
-@login_required
-def resolve_feed_by_city(self, info, **kwargs):
-
-    user = info.context.user
-    cityName = kwargs.get('cityName')
-    page = kwargs.get('page', 0)
-    offset = 5 * page
-
-    cards = models.Card.objects.filter(city__city_name=cityName).order_by(
-        '-created_at')[offset:5 + offset]
-
-    usersNow = User.objects.filter(
-        profile__current_city__city_name=cityName).order_by('-username').distinct('username')
-
-    usersBefore = notification_models.MoveNotification.objects.filter(
-        toCity__city_name=cityName).order_by('-actor_id').distinct('actor_id')
-
-    city = location_models.City.objects.get(city_name=cityName)
-
-    return types.FeedByCityResponse(cards=cards, usersNow=usersNow, usersBefore=usersBefore, city=city)
 
 
 @login_required

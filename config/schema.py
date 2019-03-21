@@ -1,29 +1,29 @@
 import graphene
 
-from cards import schema as cards_schema
-from users import schema as users_schema
-from notifications import schema as notifications_schema
-from verifications import schema as verifications_schema
-from locations import schema as locations_schema
+from cards import schema as card_schema
+from users import schema as user_schema
+from notifications import schema as notification_schema
+from verifications import schema as verification_schema
+from locations import schema as location_schema
 
 
 class Query(
-    cards_schema.Query,
-    users_schema.Query,
-    notifications_schema.Query,
-    verifications_schema.Query,
-    locations_schema.Query,
+    card_schema.Query,
+    user_schema.Query,
+    notification_schema.Query,
+    verification_schema.Query,
+    location_schema.Query,
     graphene.ObjectType
 ):
     pass
 
 
 class Mutation(
-    cards_schema.Mutation,
-    users_schema.Mutation,
-    notifications_schema.Mutation,
-    verifications_schema.Mutation,
-    locations_schema.Mutation,
+    card_schema.Mutation,
+    user_schema.Mutation,
+    notification_schema.Mutation,
+    verification_schema.Mutation,
+    location_schema.Mutation,
     graphene.ObjectType
 ):
     pass

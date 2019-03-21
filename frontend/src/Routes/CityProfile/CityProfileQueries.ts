@@ -1,9 +1,9 @@
 import gql from "graphql-tag";
 import { DETAIL_CARD_FRAGMENT } from "src/sharedQueries";
 
-export const GET_FEED_BY_CITY = gql`
-  query FeedByCity($page: Int!, $cityName: String!) {
-    feedByCity(page: $page, cityName: $cityName) {
+export const CITY_PROFILE = gql`
+  query CityProfile($page: Int!, $cityName: String!) {
+    cityProfile(page: $page, cityName: $cityName) {
       cards {
         ...DetailParts
       }
@@ -28,6 +28,7 @@ export const GET_FEED_BY_CITY = gql`
         cityPhoto
         country {
           countryName
+          countryPhoto
           countryCode
         }
         cardCount
