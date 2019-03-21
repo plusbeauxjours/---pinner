@@ -10,7 +10,7 @@ import Bold from "../../Components/Bold";
 import CardGrid from "../../Components/CardGrid";
 import FollowBtn from "../../Components/FollowBtn";
 import Input from "../../Components/Input";
-
+import CityCard from "src/Components/CityCard";
 const SWrapper = styled(Wrapper)`
   z-index: 1;
 `;
@@ -44,9 +44,13 @@ const PBody = styled.div`
   justify-content: center;
   background: ${props => props.theme.bgColor};
   border-bottom: 1px solid grey;
-  &:not(:last-child) {
-    border-bottom: 1px solid grey;
-  }
+`;
+
+const PRow = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  border-bottom: 1px solid grey;
+  margin: 20px 0 20px 0;
 `;
 
 const CityPhoto = styled.img`
@@ -215,8 +219,17 @@ const SBold = styled(Bold)`
   font-weight: 200;
 `;
 
+const AvatarGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 40px;
+  padding: 20px;
+`;
+
 interface IProps {
-  data?: any;
+  userProfileData: any;
+  topCountriesData?: any;
+  frequentVisitsData?: any;
   loading: boolean;
   modalOpen: boolean;
   confirmModalOpen: boolean;
@@ -236,7 +249,9 @@ interface IProps {
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
-  data,
+  userProfileData,
+  topCountriesData,
+  frequentVisitsData,
   loading,
   modalOpen,
   confirmModalOpen,
@@ -256,15 +271,15 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 }) => {
   if (loading) {
     return <Loader />;
-  } else if (!loading && data) {
+  } else if (
+    !loading &&
+    userProfileData &&
+    topCountriesData &&
+    frequentVisitsData
+  ) {
     const {
       userProfile: { user }
-    } = data;
-    const {
-      userProfile: {
-        user: { profile }
-      }
-    } = data;
+    } = userProfileData;
     return (
       <>
         {modalOpen && (
@@ -374,7 +389,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     KM
                   </InfoRow>
                   <InfoRow>
-                    <SBold text={String(user.profile.followersCount)} />
+                    <SBold text={String(user.profile.tripCount)} />
                     TRIPS
                   </InfoRow>
                 </HalfInfo>
@@ -414,34 +429,42 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <Follow>
                 FOLLOWERS
                 <SBold text={String(user.profile.followersCount)} />
-                {profile.followers &&
-                  profile.followers.map(follower => (
-                    <Link to={`/${follower.user.username}`}>
-                      <Avatar
-                        size={"sm"}
-                        key={follower.user.id}
-                        url={follower.user.profile.avatar}
-                      />
-                    </Link>
-                  ))}
+                <AvatarGrid>
+                  {user.profile.followers &&
+                    user.profile.followers.map(follower => (
+                      <Link key={follower.id} to={`/${follower.user.username}`}>
+                        <Avatar
+                          size={"sm"}
+                          url={follower.user.profile.avatar}
+                        />
+                      </Link>
+                    ))}
+                </AvatarGrid>
               </Follow>
               <Follow>
                 FOLLOWINGS
                 <SBold text={String(user.profile.followingCount)} />
-                {profile.followings &&
-                  profile.followings.map(following => (
-                    <Link to={`/${following.user.username}`}>
-                      <Avatar
-                        size={"sm"}
-                        key={following.user.id}
-                        url={following.user.profile.avatar}
-                      />
-                    </Link>
-                  ))}
+                <AvatarGrid>
+                  {user.profile.followings &&
+                    user.profile.followings.map(following => (
+                      <Link
+                        key={following.id}
+                        to={`/${following.user.username}`}
+                      >
+                        <Avatar
+                          size={"sm"}
+                          url={following.user.profile.avatar}
+                        />
+                      </Link>
+                    ))}
+                </AvatarGrid>
               </Follow>
             </FollowContainer>
           </PBody>
-          <PBody>TRIP LOG</PBody>
+          <PRow>TRIP LOG</PRow>
+
+          <PRow>FREQUENTVISITS frequentVisits</PRow>
+          <PRow>TOP COUNTRIES topCountries</PRow>
           {user.cards && user.cards.length !== 0 && (
             <CardGrid cards={user.cards} />
           )}

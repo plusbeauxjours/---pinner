@@ -19,7 +19,7 @@ class Profile(config_models.TimeStampedModel):
     )
 
     user = models.OneToOneField(
-        User, on_delete=models.CASCADE)
+        User, on_delete=models.CASCADE, related_name='profile')
     bio = models.TextField(default='', blank=True, null=True)
     website = models.URLField(blank=True, null=True)
     gender = models.CharField(max_length=15, blank=True, null=True)
@@ -68,6 +68,10 @@ class Profile(config_models.TimeStampedModel):
     @property
     def active_stories(self):
         return self.user.stories.filter(expired=False)
+
+    @property
+    def trip_count(self):
+        return self.user.movenotification.all().count()
 
     class Meta:
         ordering = ['-created_at']

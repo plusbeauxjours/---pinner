@@ -17,6 +17,8 @@ export const GET_USER = gql`
           postCount
           followersCount
           followingCount
+          tripCount
+          cityCount
           followings {
             user {
               username
@@ -35,7 +37,6 @@ export const GET_USER = gql`
           }
           isFollowing
           isSelf
-          cityCount
           currentCity {
             cityName
             cityPhoto
@@ -95,14 +96,36 @@ export const DELETE_PROFILE = gql`
   }
 `;
 
-// export const GET_TOP_COUNTRIES = gql`
-//   query TopCountries {
-//     topCountries {
-//       countries {
-//         countryName
-//         countryCode
-//         countryPhoto
-//       }
-//     }
-//   }
-// `;
+export const TOP_COUNTRIES = gql`
+  query TopCountries {
+    topCountries {
+      footprints {
+        id
+        toCity {
+          country {
+            countryName
+            countryCode
+            countryPhoto
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const FREQUENT_VISITS = gql`
+  query FrequentVisits {
+    frequentVisits {
+      footprints {
+        id
+        toCity {
+          cityName
+          cityPhoto
+          country {
+            countryName
+          }
+        }
+      }
+    }
+  }
+`;

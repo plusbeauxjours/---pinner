@@ -10,6 +10,7 @@ class ProfileType(DjangoObjectType):
     followers_count = graphene.Int(source='following_count')
     city_count = graphene.Int(source='city_count')
     post_count = graphene.Int(source='post_count')
+    trip_count = graphene.Int(source='trip_count')
     is_following = graphene.Boolean()
     is_self = graphene.Boolean()
 

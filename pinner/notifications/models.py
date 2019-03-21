@@ -4,6 +4,7 @@ from django.contrib.humanize.templatetags.humanize import naturaltime
 
 from cards import models as card_models
 from locations import models as location_models
+from users import models as user_models
 
 from config import models as config_models
 

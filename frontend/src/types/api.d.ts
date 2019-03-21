@@ -1246,23 +1246,23 @@ export interface UserList {
 // GraphQL query operation: UserProfile
 // ====================================================
 
-export interface UserProfile_userProfile_user_profile_following_user_profile {
+export interface UserProfile_userProfile_user_profile_followings_user_profile {
   __typename: "ProfileType";
   avatar: string;
 }
 
-export interface UserProfile_userProfile_user_profile_following_user {
+export interface UserProfile_userProfile_user_profile_followings_user {
   __typename: "UserType";
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
-  profile: UserProfile_userProfile_user_profile_following_user_profile | null;
+  profile: UserProfile_userProfile_user_profile_followings_user_profile | null;
 }
 
-export interface UserProfile_userProfile_user_profile_following {
+export interface UserProfile_userProfile_user_profile_followings {
   __typename: "ProfileType";
-  user: UserProfile_userProfile_user_profile_following_user;
+  user: UserProfile_userProfile_user_profile_followings_user;
 }
 
 export interface UserProfile_userProfile_user_profile_followers_user_profile {
@@ -1306,11 +1306,12 @@ export interface UserProfile_userProfile_user_profile {
   postCount: number | null;
   followersCount: number | null;
   followingCount: number | null;
-  following: (UserProfile_userProfile_user_profile_following | null)[] | null;
+  tripCount: number | null;
+  cityCount: number | null;
+  followings: (UserProfile_userProfile_user_profile_followings | null)[] | null;
   followers: (UserProfile_userProfile_user_profile_followers | null)[] | null;
   isFollowing: boolean | null;
   isSelf: boolean | null;
-  cityCount: number | null;
   currentCity: UserProfile_userProfile_user_profile_currentCity | null;
 }
 
@@ -1415,6 +1416,76 @@ export interface DeleteProfile_deleteProfile {
 
 export interface DeleteProfile {
   deleteProfile: DeleteProfile_deleteProfile;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: TopCountries
+// ====================================================
+
+export interface TopCountries_topCountries_footprints_toCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+}
+
+export interface TopCountries_topCountries_footprints_toCity {
+  __typename: "CityType";
+  country: TopCountries_topCountries_footprints_toCity_country;
+}
+
+export interface TopCountries_topCountries_footprints {
+  __typename: "MoveNotificationType";
+  id: string;
+  toCity: TopCountries_topCountries_footprints_toCity | null;
+}
+
+export interface TopCountries_topCountries {
+  __typename: "FootprintsResponse";
+  footprints: (TopCountries_topCountries_footprints | null)[] | null;
+}
+
+export interface TopCountries {
+  topCountries: TopCountries_topCountries;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: FrequentVisits
+// ====================================================
+
+export interface FrequentVisits_frequentVisits_footprints_toCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface FrequentVisits_frequentVisits_footprints_toCity {
+  __typename: "CityType";
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: FrequentVisits_frequentVisits_footprints_toCity_country;
+}
+
+export interface FrequentVisits_frequentVisits_footprints {
+  __typename: "MoveNotificationType";
+  id: string;
+  toCity: FrequentVisits_frequentVisits_footprints_toCity | null;
+}
+
+export interface FrequentVisits_frequentVisits {
+  __typename: "FootprintsResponse";
+  footprints: (FrequentVisits_frequentVisits_footprints | null)[] | null;
+}
+
+export interface FrequentVisits {
+  frequentVisits: FrequentVisits_frequentVisits;
 }
 
 

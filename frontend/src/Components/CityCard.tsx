@@ -52,12 +52,12 @@ const CityName = styled(Bold)`
 `;
 
 interface IProps {
-  countryName: string;
+  countryName?: string;
   countryCode: string;
   cityName: string;
-  userCount: number;
-  userLogCount: number;
-  cardCount: number;
+  userCount?: number;
+  userLogCount?: number;
+  cardCount?: number;
   cityPhoto: string;
 }
 
