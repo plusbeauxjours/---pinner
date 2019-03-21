@@ -11,7 +11,11 @@ import { RouteComponentProps } from "react-router";
 import { REPORT_LOCATION } from "../Home/HomeQueries";
 import { reverseGeoCode } from "../../mapHelpers";
 import { GET_FEED } from "./FeedQueries";
-import { locationThumbs } from "../../locationThumbs";
+import {
+  cityThumbnail,
+  countryThumbnail,
+  continentThumbnail
+} from "../../locationThumbnail";
 import continents from "../../continents";
 
 class ReportLocationMutation extends Mutation<
@@ -31,7 +35,9 @@ interface IState {
   currentCountry: string;
   currentCountryCode: string;
   currentContinent: string;
-  cityPhotoURL: any;
+  cityPhotoURL: string;
+  countryPhotoURL: string;
+  continentPhotoURL: string;
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
@@ -44,7 +50,9 @@ class FeedContainer extends React.Component<IProps, IState> {
     currentCountry: "",
     currentCountryCode: "",
     currentContinent: "",
-    cityPhotoURL: ""
+    cityPhotoURL: "",
+    countryPhotoURL: "",
+    continentPhotoURL: ""
   };
   public componentDidMount() {
     navigator.geolocation.getCurrentPosition(
@@ -62,7 +70,9 @@ class FeedContainer extends React.Component<IProps, IState> {
       currentCountry,
       currentCountryCode,
       currentContinent,
-      cityPhotoURL
+      cityPhotoURL,
+      countryPhotoURL,
+      continentPhotoURL
     } = this.state;
     return (
       <FeedQuery
@@ -82,7 +92,9 @@ class FeedContainer extends React.Component<IProps, IState> {
               currentCountry,
               currentCountryCode,
               currentContinent,
-              cityPhotoURL
+              cityPhotoURL,
+              countryPhotoURL,
+              continentPhotoURL
             }}
           >
             {ReportLocationFn => {
@@ -134,10 +146,12 @@ class FeedContainer extends React.Component<IProps, IState> {
     lastCountry: string,
     currentCountryCode: string
   ) => {
-    const cityPhotoURL = await locationThumbs(lastCity);
+    const cityPhotoURL = await cityThumbnail(lastCity);
+    const countryPhotoURL = await countryThumbnail(lastCountry);
     const currentContinent = await continents[currentCountryCode];
+    const continentPhotoURL = await continentThumbnail(currentContinent);
     console.log(currentContinent);
-    this.setState({ cityPhotoURL, currentContinent });
+    this.setState({ cityPhotoURL, countryPhotoURL, currentContinent });
     this.ReportLocationFn({
       variables: {
         lastLat: lat,
@@ -146,7 +160,9 @@ class FeedContainer extends React.Component<IProps, IState> {
         lastCountry,
         currentCountryCode,
         currentContinent,
-        cityPhotoURL
+        cityPhotoURL,
+        countryPhotoURL,
+        continentPhotoURL
       }
     });
     console.log(this.state);

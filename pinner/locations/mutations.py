@@ -16,6 +16,8 @@ class ReportLocation(graphene.Mutation):
         currentCountry = graphene.String(required=True)
         currentCountryCode = graphene.String(required=True)
         cityPhotoURL = graphene.String(required=True)
+        countryPhotoURL = graphene.String(required=True)
+        continentPhotoURL = graphene.String(required=True)
         currentContinent = graphene.String(required=True)
 
     Output = types.ReportLocationResponse
@@ -29,6 +31,8 @@ class ReportLocation(graphene.Mutation):
         currentCountry = kwargs.get('currentCountry')
         currentCountryCode = kwargs.get('currentCountryCode')
         cityPhotoURL = kwargs.get('cityPhotoURL')
+        countryPhotoURL = kwargs.get('countryPhotoURL')
+        continentPhotoURL = kwargs.get('continentPhotoURL')
         currentContinent = kwargs.get('currentContinent')
 
         try:
@@ -49,7 +53,8 @@ class ReportLocation(graphene.Mutation):
                 try:
                     continent = models.Continent.objects.get(continent_name=currentContinent)
                 except:
-                    continent = models.Continent.objects.create(continent_name=currentContinent)
+                    continent = models.Continent.objects.create(
+                        continent_name=currentContinent, continent_photo=continentPhotoURL)
                     print(continent)
 
                 try:
@@ -94,7 +99,7 @@ class ReportLocation(graphene.Mutation):
                 except:
 
                     new_country = models.Country.objects.create(
-                        country_code=currentCountryCode, country_name=currentCountry, continent=continent)
+                        country_code=currentCountryCode, country_name=currentCountry, country_photo=countryPhotoURL, continent=continent)
                     new_country.save()
                     new_city = models.City.objects.create(
                         city_name=currentCity, country=new_country, city_photo=cityPhotoURL)

@@ -626,8 +626,10 @@ export interface ReportLocationVariables {
   currentCity: string;
   currentCountry: string;
   currentCountryCode: string;
-  cityPhotoURL: string;
   currentContinent: string;
+  cityPhotoURL: string;
+  countryPhotoURL: string;
+  continentPhotoURL: string;
 }
 
 

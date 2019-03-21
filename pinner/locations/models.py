@@ -7,6 +7,7 @@ from config import models as config_models
 class Continent (config_models.TimeStampedModel):
 
     continent_name = models.CharField(max_length=20, null=True, blank=True)
+    continent_photo = models.URLField(null=True, blank=True)
 
     @property
     def country_count(self):
@@ -21,6 +22,7 @@ class Country (config_models.TimeStampedModel):
     continent = models.ForeignKey(Continent, null=True, blank=True, on_delete=models.CASCADE, related_name='countries')
     country_name = models.CharField(max_length=50, null=True, blank=True)
     country_code = models.CharField(max_length=2, null=True, blank=True)
+    country_photo = models.URLField(null=True, blank=True)
 
     @property
     def city_count(self):
@@ -45,6 +47,7 @@ class City (config_models.TimeStampedModel):
     population = models.IntegerField(null=True, blank=True)
     area = models.IntegerField(null=True, blank=True)
     distance = models.IntegerField(null=True, blank=True)
+    info = models.TextField(null=True, blank=True)
     near_city = models.ManyToManyField(
         'self',  blank=True, symmetrical=False, related_name='near_cities')
     similare_city = models.ManyToManyField(
