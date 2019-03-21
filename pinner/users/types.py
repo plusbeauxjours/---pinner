@@ -15,7 +15,7 @@ class ProfileType(DjangoObjectType):
 
     def resolve_is_following(self, info):
         user = info.context.user
-        if self in user.profile.following.all():
+        if self in user.profile.followings.all():
             return True
         else:
             return False

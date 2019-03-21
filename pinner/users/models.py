@@ -26,7 +26,7 @@ class Profile(config_models.TimeStampedModel):
     avatar = models.URLField(
         blank=True,
         default="http://basmed.unilag.edu.ng/wp-content/uploads/2018/10/avatar__181424.png")
-    following = models.ManyToManyField(
+    followings = models.ManyToManyField(
         'self', blank=True, symmetrical=False, related_name='following_users')
     followers = models.ManyToManyField(
         'self', blank=True, symmetrical=False, related_name='followed_by')
@@ -59,11 +59,11 @@ class Profile(config_models.TimeStampedModel):
 
     @property
     def followers_count(self):
-        return self.followers.all().count()
+        return self.followed_by.all().count()
 
     @property
     def following_count(self):
-        return self.following.all().count()
+        return self.following_users.all().count()
 
     @property
     def active_stories(self):

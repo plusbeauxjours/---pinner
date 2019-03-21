@@ -2,6 +2,7 @@ import graphene
 from graphql_jwt.decorators import login_required
 from django.contrib.auth.models import User
 from . import types, models
+from locations import types as location_types
 
 
 def resolve_profile(self, info, **kwargs):
@@ -14,6 +15,26 @@ def resolve_profile(self, info, **kwargs):
         raise Exception('User not found')
 
     return types.UserProfileResponse(user=profile)
+
+
+@login_required
+def resolve_top_countries(self, info):
+
+    user = info.context.user
+
+    footprints = user.movenotification.all()
+
+    return location_types.FootprintsResponse(footprints=footprints)
+
+
+@login_required
+def resolve_frequent_visits(self, info):
+
+    user = info.context.user
+
+    footprints = user.movenotification.all()
+
+    return location_types.FootprintsResponse(footprints=footprints)
 
 
 @login_required

@@ -59,10 +59,6 @@ class CityProfileResponse(graphene.ObjectType):
     usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 
-class CitiesResponse(graphene.ObjectType):
-    cities = graphene.List(CityType)
-
-
 class CountryProfileResponse(graphene.ObjectType):
     country = graphene.Field(CountryType)
     cards = graphene.List(CardType)
@@ -73,6 +69,10 @@ class CountryProfileResponse(graphene.ObjectType):
 class ContinentProfileResponse(graphene.ObjectType):
     continent = graphene.Field(ContinentType)
     countries = graphene.List(CountryType)
+
+
+class CitiesResponse(graphene.ObjectType):
+    cities = graphene.List(CityType)
 
 
 class CountriesResponse(graphene.ObjectType):

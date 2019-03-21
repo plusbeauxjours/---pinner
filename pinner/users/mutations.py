@@ -30,9 +30,9 @@ class FollowUser(graphene.Mutation):
         except User.DoesNotExist:
             raise Exception('User Not Found')
 
-        if target.profile in user.profile.following.all():
+        if target.profile in user.profile.followings.all():
 
-            user.profile.following.remove(target.profile)
+            user.profile.followings.remove(target.profile)
             target.profile.followers.remove(user.profile)
 
             try:
@@ -45,7 +45,7 @@ class FollowUser(graphene.Mutation):
 
         else:
 
-            user.profile.following.add(target.profile)
+            user.profile.followings.add(target.profile)
             target.profile.followers.add(user.profile)
 
             try:

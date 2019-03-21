@@ -17,6 +17,22 @@ export const GET_USER = gql`
           postCount
           followersCount
           followingCount
+          followings {
+            user {
+              username
+              profile {
+                avatar
+              }
+            }
+          }
+          followers {
+            user {
+              username
+              profile {
+                avatar
+              }
+            }
+          }
           isFollowing
           isSelf
           cityCount

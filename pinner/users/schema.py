@@ -1,6 +1,7 @@
 import graphene
 import graphql_jwt
 from . import types, mutations, queries
+from locations import types as location_types
 
 
 class Query(object):
@@ -36,6 +37,16 @@ class Query(object):
     user_list = graphene.Field(
         types.UserListResponse,
         resolver=queries.resolve_user_list,
+        required=True
+    )
+    top_countries = graphene.Field(
+        location_types.FootprintsResponse,
+        resolver=queries.resolve_top_countries,
+        required=True
+    )
+    frequent_visits = graphene.Field(
+        location_types.FootprintsResponse,
+        resolver=queries.resolve_frequent_visits,
         required=True
     )
 

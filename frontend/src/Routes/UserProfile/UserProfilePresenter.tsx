@@ -260,6 +260,11 @@ const UserProfilePresenter: React.SFC<IProps> = ({
     const {
       userProfile: { user }
     } = data;
+    const {
+      userProfile: {
+        user: { profile }
+      }
+    } = data;
     return (
       <>
         {modalOpen && (
@@ -409,10 +414,30 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <Follow>
                 FOLLOWERS
                 <SBold text={String(user.profile.followersCount)} />
+                {profile.followers &&
+                  profile.followers.map(follower => (
+                    <Link to={`/${follower.user.username}`}>
+                      <Avatar
+                        size={"sm"}
+                        key={follower.user.id}
+                        url={follower.user.profile.avatar}
+                      />
+                    </Link>
+                  ))}
               </Follow>
               <Follow>
-                FOLLOWING
+                FOLLOWINGS
                 <SBold text={String(user.profile.followingCount)} />
+                {profile.followings &&
+                  profile.followings.map(following => (
+                    <Link to={`/${following.user.username}`}>
+                      <Avatar
+                        size={"sm"}
+                        key={following.user.id}
+                        url={following.user.profile.avatar}
+                      />
+                    </Link>
+                  ))}
               </Follow>
             </FollowContainer>
           </PBody>
