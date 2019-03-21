@@ -18,7 +18,7 @@ const CountrySelect = styled.select`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-color: white;
+  background-color: #2d3a41;
   border: 0;
   font-family: "Maven Pro";
   margin-bottom: 20px;
@@ -59,7 +59,7 @@ const ModalAnimation = keyframes`
 	`;
 
 const Modal = styled.div`
-  background-color: white;
+  background-color: #2d3a41;
   border-radius: 12px;
   width: 540px;
   height: 240px;

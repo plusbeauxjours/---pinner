@@ -4,6 +4,7 @@ from . import models
 
 from config import types as config_types
 from users import types as user_types
+from cards import types as card_types
 from cards import models as card_models
 from notifications import types as notification_types
 
@@ -17,9 +18,9 @@ class CardType(DjangoObjectType):
     def resolve_is_liked(self, info):
         user = info.context.user
         try:
-            like = models.Like.objects.get(card=self, creator=user)
+            like = card_models.Like.objects.get(card=self, creator=user)
             return True
-        except models.Like.DoesNotExist:
+        except card_models.Like.DoesNotExist:
             return False
 
     class Meta:

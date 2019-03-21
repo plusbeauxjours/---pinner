@@ -2,7 +2,6 @@ import graphene
 from graphql_jwt.decorators import login_required
 from django.contrib.auth.models import User
 from . import types, models
-from locations import models as location_models
 
 
 def resolve_profile(self, info, **kwargs):

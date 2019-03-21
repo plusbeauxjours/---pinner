@@ -122,7 +122,7 @@ const ModalAnimation = keyframes`
 	`;
 
 const Modal = styled.div`
-  background-color: white;
+  background-color: #2d3a41;
   width: 30%;
   border-radius: 12px;
   z-index: 5;

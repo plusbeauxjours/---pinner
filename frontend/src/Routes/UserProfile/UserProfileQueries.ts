@@ -78,3 +78,15 @@ export const DELETE_PROFILE = gql`
     }
   }
 `;
+
+// export const GET_TOP_COUNTRIES = gql`
+//   query TopCountries {
+//     topCountries {
+//       countries {
+//         countryName
+//         countryCode
+//         countryPhoto
+//       }
+//     }
+//   }
+// `;

@@ -261,65 +261,6 @@ export interface CardDetailVariables {
 // GraphQL query operation: CityProfile
 // ====================================================
 
-export interface CityProfile_cityProfile_cards_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface CityProfile_cityProfile_cards_city {
-  __typename: "CityType";
-  cityName: string | null;
-}
-
-export interface CityProfile_cityProfile_cards_comments_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-}
-
-export interface CityProfile_cityProfile_cards_comments {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-  creator: CityProfile_cityProfile_cards_comments_creator | null;
-}
-
-export interface CityProfile_cityProfile_cards_creator_profile {
-  __typename: "ProfileType";
-  avatar: string;
-}
-
-export interface CityProfile_cityProfile_cards_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: CityProfile_cityProfile_cards_creator_profile | null;
-}
-
-export interface CityProfile_cityProfile_cards {
-  __typename: "CardType";
-  id: string;
-  file: string | null;
-  caption: string;
-  country: CityProfile_cityProfile_cards_country | null;
-  city: CityProfile_cityProfile_cards_city | null;
-  likeCount: number | null;
-  commentCount: number | null;
-  isLiked: boolean | null;
-  createdAt: string | null;
-  comments: (CityProfile_cityProfile_cards_comments | null)[] | null;
-  creator: CityProfile_cityProfile_cards_creator;
-  borderRadius: string;
-  bgColor: string | null;
-  font: string | null;
-  fontColor: string | null;
-  fontSize: string | null;
-}
-
 export interface CityProfile_cityProfile_usersNow_profile {
   __typename: "ProfileType";
   avatar: string;
@@ -374,7 +315,6 @@ export interface CityProfile_cityProfile_city {
 
 export interface CityProfile_cityProfile {
   __typename: "CityProfileResponse";
-  cards: (CityProfile_cityProfile_cards | null)[] | null;
   usersNow: (CityProfile_cityProfile_usersNow | null)[] | null;
   usersBefore: (CityProfile_cityProfile_usersBefore | null)[] | null;
   city: CityProfile_cityProfile_city | null;
@@ -436,65 +376,6 @@ export interface ContinentProfileVariables {
 // GraphQL query operation: CountryProfile
 // ====================================================
 
-export interface CountryProfile_countryProfile_cards_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface CountryProfile_countryProfile_cards_city {
-  __typename: "CityType";
-  cityName: string | null;
-}
-
-export interface CountryProfile_countryProfile_cards_comments_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-}
-
-export interface CountryProfile_countryProfile_cards_comments {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-  creator: CountryProfile_countryProfile_cards_comments_creator | null;
-}
-
-export interface CountryProfile_countryProfile_cards_creator_profile {
-  __typename: "ProfileType";
-  avatar: string;
-}
-
-export interface CountryProfile_countryProfile_cards_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: CountryProfile_countryProfile_cards_creator_profile | null;
-}
-
-export interface CountryProfile_countryProfile_cards {
-  __typename: "CardType";
-  id: string;
-  file: string | null;
-  caption: string;
-  country: CountryProfile_countryProfile_cards_country | null;
-  city: CountryProfile_countryProfile_cards_city | null;
-  likeCount: number | null;
-  commentCount: number | null;
-  isLiked: boolean | null;
-  createdAt: string | null;
-  comments: (CountryProfile_countryProfile_cards_comments | null)[] | null;
-  creator: CountryProfile_countryProfile_cards_creator;
-  borderRadius: string;
-  bgColor: string | null;
-  font: string | null;
-  fontColor: string | null;
-  fontSize: string | null;
-}
-
 export interface CountryProfile_countryProfile_usersNow_profile {
   __typename: "ProfileType";
   avatar: string;
@@ -548,7 +429,6 @@ export interface CountryProfile_countryProfile_country {
 
 export interface CountryProfile_countryProfile {
   __typename: "CountryProfileResponse";
-  cards: (CountryProfile_countryProfile_cards | null)[] | null;
   usersNow: (CountryProfile_countryProfile_usersNow | null)[] | null;
   usersBefore: (CountryProfile_countryProfile_usersBefore | null)[] | null;
   country: CountryProfile_countryProfile_country | null;

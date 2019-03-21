@@ -55,7 +55,6 @@ def resolve_country_profile(self, info, **kwargs):
     page = kwargs.get('page', 0)
     offset = 5 * page
 
-    print(countryName)
     cards = card_models.Card.objects.filter(city__country__country_name=countryName).order_by(
         '-created_at')[offset:5 + offset]
 

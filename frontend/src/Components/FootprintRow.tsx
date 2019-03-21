@@ -4,7 +4,7 @@ import Bold from "./Bold";
 import FlagHeader from "./FlagHeader";
 
 const Container = styled.div`
-  background-color: white;
+  background-color: #2d3a41;
   border-radius: 3px;
   border: ${props => props.theme.boxBorder};
   display: flex;
