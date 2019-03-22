@@ -20,6 +20,7 @@ export const GET_USER = gql`
           tripCount
           cityCount
           followings {
+            id
             user {
               username
               profile {
@@ -28,6 +29,7 @@ export const GET_USER = gql`
             }
           }
           followers {
+            id
             user {
               username
               profile {

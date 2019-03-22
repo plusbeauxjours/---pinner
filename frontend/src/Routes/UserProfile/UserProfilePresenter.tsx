@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Gear } from "../../Icons";
 import styled, { keyframes } from "../../Styles/typed-components";
+import { UserProfile, TopCountries, FrequentVisits } from "../../types/api";
 
 import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
@@ -232,9 +233,9 @@ const AvatarGrid = styled.div`
 `;
 
 interface IProps {
-  userProfileData: any;
-  topCountriesData?: any;
-  frequentVisitsData?: any;
+  userProfileData: UserProfile;
+  topCountriesData?: TopCountries;
+  frequentVisitsData?: FrequentVisits;
   loading: boolean;
   modalOpen: boolean;
   confirmModalOpen: boolean;
@@ -254,9 +255,11 @@ interface IProps {
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
-  userProfileData,
-  topCountriesData,
-  frequentVisitsData,
+  userProfileData: { userProfile: { user = null } = {} },
+  topCountriesData: { topCountries: { footprints: topCountries = null } = {} },
+  frequentVisitsData: {
+    frequentVisits: { footprints: frequentCities = null } = {}
+  },
   loading,
   modalOpen,
   confirmModalOpen,
@@ -276,17 +279,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 }) => {
   if (loading) {
     return <Loader />;
-  } else if (
-    !loading &&
-    userProfileData &&
-    topCountriesData &&
-    frequentVisitsData
-  ) {
-    const {
-      userProfile: { user }
-    } = userProfileData;
-    const { topCountries } = topCountriesData;
-    const { frequentVisits } = frequentVisitsData;
+  } else if (!loading && user && topCountries && frequentCities) {
     return (
       <>
         {modalOpen && (
@@ -472,28 +465,30 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 
           <PRow>
             <RowText>FREQUENTVISITS</RowText>
-            {frequentVisits.footprints &&
-              frequentVisits.footprints.map(footprint => (
+            {frequentCities &&
+              frequentCities.map(frequentCity => (
                 <CityContainer>
-                  <Link to={`/city/${footprint.toCity.cityName}`}>
-                    <CityPhoto src={footprint.toCity.cityPhoto} />
+                  <Link to={`/city/${frequentCity.toCity.cityName}`}>
+                    <CityPhoto src={frequentCity.toCity.cityPhoto} />
                   </Link>
 
-                  <CityName text={footprint.toCity.cityName} />
-                  <CountryName text={footprint.toCity.country.countryName} />
+                  <CityName text={frequentCity.toCity.cityName} />
+                  <CountryName text={frequentCity.toCity.country.countryName} />
                 </CityContainer>
               ))}
           </PRow>
           <PRow>
             <RowText>TOP COUNTRIES</RowText>
-            {topCountries.footprints &&
-              topCountries.footprints.map(footprint => (
+            {topCountries &&
+              topCountries.map(topCountry => (
                 <CityContainer>
-                  <Link to={`/country/${footprint.toCity.country.countryName}`}>
-                    <CityPhoto src={footprint.toCity.country.countryPhoto} />
+                  <Link
+                    to={`/country/${topCountry.toCity.country.countryName}`}
+                  >
+                    <CityPhoto src={topCountry.toCity.country.countryPhoto} />
                   </Link>
 
-                  <CityName text={footprint.toCity.country.countryName} />
+                  <CityName text={topCountry.toCity.country.countryName} />
                 </CityContainer>
               ))}
           </PRow>

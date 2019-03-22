@@ -1316,6 +1316,7 @@ export interface UserProfile_userProfile_user_profile_followings_user {
 
 export interface UserProfile_userProfile_user_profile_followings {
   __typename: "ProfileType";
+  id: string;
   user: UserProfile_userProfile_user_profile_followings_user;
 }
 
@@ -1335,6 +1336,7 @@ export interface UserProfile_userProfile_user_profile_followers_user {
 
 export interface UserProfile_userProfile_user_profile_followers {
   __typename: "ProfileType";
+  id: string;
   user: UserProfile_userProfile_user_profile_followers_user;
 }
 
