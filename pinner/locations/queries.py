@@ -55,8 +55,7 @@ def resolve_country_profile(self, info, **kwargs):
     page = kwargs.get('page', 0)
     offset = 5 * page
 
-    cards = card_models.Card.objects.filter(city__country__country_name=countryName).order_by(
-        '-created_at')[offset:5 + offset]
+    cities = models.City.objects.filter(country__country_name=countryName)
 
     usersNow = User.objects.filter(
         profile__current_city__country__country_name=countryName).order_by('-username').distinct('username')
@@ -66,7 +65,7 @@ def resolve_country_profile(self, info, **kwargs):
 
     country = models.Country.objects.get(country_name=countryName)
 
-    return types.CountryProfileResponse(cards=cards, usersNow=usersNow, usersBefore=usersBefore, country=country)
+    return types.CountryProfileResponse(cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country)
 
 
 @login_required

@@ -138,14 +138,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                               variables={{ username }}
                             >
                               {({ data: topCountriesData }) => {
-                                console.log(topCountriesData);
                                 return (
                                   <FrequentVisitsQuery
                                     query={FREQUENT_VISITS}
                                     variables={{ username }}
                                   >
                                     {({ data: frequentVisitsData }) => {
-                                      console.log(frequentVisitsData);
                                       return (
                                         <UserProfilePresenter
                                           modalOpen={modalOpen}

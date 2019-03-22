@@ -51,7 +51,7 @@ const PRow = styled.div`
   display: flex;
   flex-wrap: nowrap;
   border-bottom: 1px solid grey;
-  margin: 20px 0 20px 0;
+  margin: 20px 10px 20px 10px;
 `;
 
 const RowText = styled.span`
@@ -432,9 +432,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 <AvatarGrid>
                   {user.profile.followers &&
                     user.profile.followers.map(follower => (
-                      <Link key={follower.id} to={`/${follower.user.username}`}>
+                      <Link to={`/${follower.user.username}`}>
                         <Avatar
                           size={"sm"}
+                          key={follower.id}
                           url={follower.user.profile.avatar}
                         />
                       </Link>
@@ -447,12 +448,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 <AvatarGrid>
                   {user.profile.followings &&
                     user.profile.followings.map(following => (
-                      <Link
-                        key={following.id}
-                        to={`/${following.user.username}`}
-                      >
+                      <Link to={`/${following.user.username}`}>
                         <Avatar
                           size={"sm"}
+                          key={following.id}
                           url={following.user.profile.avatar}
                         />
                       </Link>
@@ -462,21 +461,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </FollowContainer>
           </PBody>
           <PRow>TRIP LOG</PRow>
-
-          <PRow>
-            <RowText>FREQUENTVISITS</RowText>
-            {frequentCities &&
-              frequentCities.map(frequentCity => (
-                <CityContainer>
-                  <Link to={`/city/${frequentCity.toCity.cityName}`}>
-                    <CityPhoto src={frequentCity.toCity.cityPhoto} />
-                  </Link>
-
-                  <CityName text={frequentCity.toCity.cityName} />
-                  <CountryName text={frequentCity.toCity.country.countryName} />
-                </CityContainer>
-              ))}
-          </PRow>
           <PRow>
             <RowText>TOP COUNTRIES</RowText>
             {topCountries &&
@@ -485,10 +469,30 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <Link
                     to={`/country/${topCountry.toCity.country.countryName}`}
                   >
-                    <CityPhoto src={topCountry.toCity.country.countryPhoto} />
+                    <CityPhoto
+                      key={topCountry.id}
+                      src={topCountry.toCity.country.countryPhoto}
+                    />
                   </Link>
 
                   <CityName text={topCountry.toCity.country.countryName} />
+                </CityContainer>
+              ))}
+          </PRow>
+          <PRow>
+            <RowText>FREQUENTVISITS</RowText>
+            {frequentCities &&
+              frequentCities.map(frequentCity => (
+                <CityContainer>
+                  <Link to={`/city/${frequentCity.toCity.cityName}`}>
+                    <CityPhoto
+                      key={frequentCity.id}
+                      src={frequentCity.toCity.cityPhoto}
+                    />
+                  </Link>
+
+                  <CityName text={frequentCity.toCity.cityName} />
+                  <CountryName text={frequentCity.toCity.country.countryName} />
                 </CityContainer>
               ))}
           </PRow>

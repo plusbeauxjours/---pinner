@@ -5,7 +5,6 @@ import styled from "../../Styles/typed-components";
 import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
-import Photo from "../../Components/Photo";
 import Bold from "../../Components/Bold";
 
 const SWrapper = styled(Wrapper)`
@@ -133,6 +132,52 @@ const SAvatar = styled(Avatar)`
   margin: 3px;
 `;
 
+const Container = styled.div`
+  border-bottom: 4px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  -webkit-box-flex: 0;
+  flex: 0 0 auto;
+  height: 250px;
+  border-bottom: 1px solid grey;
+  padding: 20px;
+`;
+
+const CityContainer = styled.div`
+  margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CityPhoto = styled.img`
+  margin-bottom: 10px;
+  display: flex;
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+  border-radius: 3px;
+  z-index: 1;
+  object-fit: cover;
+`;
+
+const CityName = styled(Bold)`
+  position: absolute;
+  display: flex;
+  z-index: 5;
+  font-size: 40px;
+  font-family: "Qwigley";
+  font-weight: 200;
+  pointer-events: none;
+`;
+
+const CountryName = styled(CityName)`
+  font-size: 20px;
+  margin-top: 20px;
+  pointer-events: none;
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
@@ -144,7 +189,7 @@ const CountryProfilePresenter: React.SFC<IProps> = ({ data, loading }) => {
   } else if (!loading && data) {
     const {
       countryProfile: {
-        cards = {},
+        cities = {},
         usersNow = {},
         usersBefore = {},
         country = {}
@@ -238,26 +283,18 @@ const CountryProfilePresenter: React.SFC<IProps> = ({ data, loading }) => {
               </Follow>
             </FollowContainer>
           </PBody>
-          {cards &&
-            cards.map(card => (
-              <Photo
-                id={card.id}
-                key={card.id}
-                inline={true}
-                creatorAvatar={card.creator.profile.avatar}
-                creatorUsername={card.creator.username}
-                country={card.country.countryName}
-                city={card.city.cityName}
-                photoUrl={card.file}
-                likeCount={card.likeCount}
-                commentCount={card.commentCount}
-                caption={card.caption}
-                comments={card.comments}
-                createdAt={card.createdAt}
-                isLiked={card.isLiked}
-                borderRadius={card.borderRadius}
-              />
-            ))}
+          <Container>
+            {cities &&
+              cities.map(city => (
+                <CityContainer>
+                  <Link to={`/city/${city.cityName}`}>
+                    <CityPhoto src={city.cityPhoto} />
+                  </Link>
+                  <CityName text={city.cityName} />
+                  <CountryName text={city.country.countryName} />
+                </CityContainer>
+              ))}
+          </Container>
         </SWrapper>
       </>
     );

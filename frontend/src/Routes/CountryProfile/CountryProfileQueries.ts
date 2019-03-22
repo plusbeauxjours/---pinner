@@ -1,11 +1,14 @@
 import gql from "graphql-tag";
-import { DETAIL_CARD_FRAGMENT } from "src/sharedQueries";
-
 export const COUNTRY_PROFILE = gql`
   query CountryProfile($page: Int!, $countryName: String!) {
     countryProfile(page: $page, countryName: $countryName) {
-      cards {
-        ...DetailParts
+      cities {
+        id
+        cityName
+        cityPhoto
+        country {
+          countryName
+        }
       }
       usersNow {
         id
@@ -36,5 +39,4 @@ export const COUNTRY_PROFILE = gql`
       }
     }
   }
-  ${DETAIL_CARD_FRAGMENT}
 `;

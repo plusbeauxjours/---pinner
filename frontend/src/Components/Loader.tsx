@@ -2,6 +2,7 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 
 const Container = styled.div`
+  margin-top: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,7 +56,7 @@ const Loader = styled.div`
   width: 30px;
   height: 30px;
   position: relative;
-  border: 4px solid #262f3e;
+  border: 4px solid grey;
   top: 50%;
   animation: ${loaderAnimation} 2s linear;
 `;
@@ -64,7 +65,7 @@ const LoaderInner = styled.div`
   vertical-align: top;
   display: inline-block;
   width: 100%;
-  background-color: #262f3e;
+  background-color: grey;
   animation: ${loaderInnerAnimation} 2s linear;
 `;
 
