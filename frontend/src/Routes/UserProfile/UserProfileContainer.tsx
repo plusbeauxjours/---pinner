@@ -19,10 +19,17 @@ import {
   FrequentVisits
 } from "../../types/api";
 import { toast } from "react-toastify";
+import {
+  TopCountriesVariables,
+  FrequentVisitsVariables
+} from "../../types/api";
 
 class UserProfileQuery extends Query<UserProfile, UserProfileVariables> {}
-class TopCountriesQuery extends Query<TopCountries> {}
-class FrequentVisitsQuery extends Query<FrequentVisits> {}
+class TopCountriesQuery extends Query<TopCountries, TopCountriesVariables> {}
+class FrequentVisitsQuery extends Query<
+  FrequentVisits,
+  FrequentVisitsVariables
+> {}
 class EditProfileMutation extends Mutation<EditProfile, EditProfileVariables> {}
 class DeleteProfileMutation extends Mutation<DeleteProfile> {}
 class LogOutMutation extends Mutation {}
@@ -126,11 +133,17 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                         {deleteProfileFn => {
                           this.deleteProfileFn = deleteProfileFn;
                           return (
-                            <TopCountriesQuery query={TOP_COUNTRIES}>
+                            <TopCountriesQuery
+                              query={TOP_COUNTRIES}
+                              variables={{ username }}
+                            >
                               {({ data: topCountriesData }) => {
                                 console.log(topCountriesData);
                                 return (
-                                  <FrequentVisitsQuery query={FREQUENT_VISITS}>
+                                  <FrequentVisitsQuery
+                                    query={FREQUENT_VISITS}
+                                    variables={{ username }}
+                                  >
                                     {({ data: frequentVisitsData }) => {
                                       console.log(frequentVisitsData);
                                       return (

@@ -18,21 +18,27 @@ def resolve_profile(self, info, **kwargs):
 
 
 @login_required
-def resolve_top_countries(self, info):
+def resolve_top_countries(self, info, **kwargs):
 
     user = info.context.user
+    username = kwargs.get('username')
 
-    footprints = user.movenotification.all()
+    profile = User.objects.get(username=username)
+
+    footprints = profile.movenotification.all()
 
     return location_types.FootprintsResponse(footprints=footprints)
 
 
 @login_required
-def resolve_frequent_visits(self, info):
+def resolve_frequent_visits(self, info, **kwargs):
 
     user = info.context.user
+    username = kwargs.get('username')
 
-    footprints = user.movenotification.all()
+    profile = User.objects.get(username=username)
+
+    footprints = profile.movenotification.all()
 
     return location_types.FootprintsResponse(footprints=footprints)
 

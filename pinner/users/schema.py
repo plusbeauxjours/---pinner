@@ -42,12 +42,14 @@ class Query(object):
     top_countries = graphene.Field(
         location_types.FootprintsResponse,
         resolver=queries.resolve_top_countries,
-        required=True
+        required=True,
+        args={'username': graphene.String(required=True)}
     )
     frequent_visits = graphene.Field(
         location_types.FootprintsResponse,
         resolver=queries.resolve_frequent_visits,
-        required=True
+        required=True,
+        args={'username': graphene.String(required=True)}
     )
 
 

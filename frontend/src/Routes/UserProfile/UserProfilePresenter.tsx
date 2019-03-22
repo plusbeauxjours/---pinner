@@ -10,7 +10,7 @@ import Bold from "../../Components/Bold";
 import CardGrid from "../../Components/CardGrid";
 import FollowBtn from "../../Components/FollowBtn";
 import Input from "../../Components/Input";
-import CityCard from "src/Components/CityCard";
+
 const SWrapper = styled(Wrapper)`
   z-index: 1;
 `;
@@ -53,6 +53,12 @@ const PRow = styled.div`
   margin: 20px 0 20px 0;
 `;
 
+const RowText = styled.span`
+  display: flex;
+  position: absolute;
+  margin-bottom: 10px;
+`;
+
 const CityPhoto = styled.img`
   margin-bottom: 10px;
   display: flex;
@@ -85,7 +91,6 @@ const CityContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
 `;
 
 const InfoContainer = styled.div`
@@ -280,6 +285,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
     const {
       userProfile: { user }
     } = userProfileData;
+    const { topCountries } = topCountriesData;
+    const { frequentVisits } = frequentVisitsData;
     return (
       <>
         {modalOpen && (
@@ -463,8 +470,33 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           </PBody>
           <PRow>TRIP LOG</PRow>
 
-          <PRow>FREQUENTVISITS frequentVisits</PRow>
-          <PRow>TOP COUNTRIES topCountries</PRow>
+          <PRow>
+            <RowText>FREQUENTVISITS</RowText>
+            {frequentVisits.footprints &&
+              frequentVisits.footprints.map(footprint => (
+                <CityContainer>
+                  <Link to={`/city/${footprint.toCity.cityName}`}>
+                    <CityPhoto src={footprint.toCity.cityPhoto} />
+                  </Link>
+
+                  <CityName text={footprint.toCity.cityName} />
+                  <CountryName text={footprint.toCity.country.countryName} />
+                </CityContainer>
+              ))}
+          </PRow>
+          <PRow>
+            <RowText>TOP COUNTRIES</RowText>
+            {topCountries.footprints &&
+              topCountries.footprints.map(footprint => (
+                <CityContainer>
+                  <Link to={`/country/${footprint.toCity.country.countryName}`}>
+                    <CityPhoto src={footprint.toCity.country.countryPhoto} />
+                  </Link>
+
+                  <CityName text={footprint.toCity.country.countryName} />
+                </CityContainer>
+              ))}
+          </PRow>
           {user.cards && user.cards.length !== 0 && (
             <CardGrid cards={user.cards} />
           )}

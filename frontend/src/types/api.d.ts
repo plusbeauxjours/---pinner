@@ -1453,6 +1453,10 @@ export interface TopCountries {
   topCountries: TopCountries_topCountries;
 }
 
+export interface TopCountriesVariables {
+  username: string;
+}
+
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -1486,6 +1490,10 @@ export interface FrequentVisits_frequentVisits {
 
 export interface FrequentVisits {
   frequentVisits: FrequentVisits_frequentVisits;
+}
+
+export interface FrequentVisitsVariables {
+  username: string;
 }
 
 
