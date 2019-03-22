@@ -568,44 +568,98 @@ export interface CountryProfileVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: Explore
+// GraphQL query operation: RecommandUsers
 // ====================================================
 
-export interface Explore_latestUsers_users_profile_currentCity_country {
+export interface RecommandUsers_recommandUsers_users_profile_currentCity_country {
   __typename: "CountryType";
   countryName: string | null;
 }
 
-export interface Explore_latestUsers_users_profile_currentCity {
+export interface RecommandUsers_recommandUsers_users_profile_currentCity {
   __typename: "CityType";
-  country: Explore_latestUsers_users_profile_currentCity_country;
+  country: RecommandUsers_recommandUsers_users_profile_currentCity_country;
   cityName: string | null;
 }
 
-export interface Explore_latestUsers_users_profile {
+export interface RecommandUsers_recommandUsers_users_profile {
   __typename: "ProfileType";
   isFollowing: boolean | null;
   avatar: string;
-  currentCity: Explore_latestUsers_users_profile_currentCity | null;
+  currentCity: RecommandUsers_recommandUsers_users_profile_currentCity | null;
 }
 
-export interface Explore_latestUsers_users {
+export interface RecommandUsers_recommandUsers_users {
   __typename: "UserType";
   id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
-  profile: Explore_latestUsers_users_profile | null;
+  profile: RecommandUsers_recommandUsers_users_profile | null;
 }
 
-export interface Explore_latestUsers {
-  __typename: "LatestUsersResponse";
-  users: (Explore_latestUsers_users | null)[] | null;
+export interface RecommandUsers_recommandUsers {
+  __typename: "RecommandUsersResponse";
+  users: (RecommandUsers_recommandUsers_users | null)[] | null;
 }
 
-export interface Explore {
-  latestUsers: Explore_latestUsers;
+export interface RecommandUsers {
+  recommandUsers: RecommandUsers_recommandUsers;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: NearCities
+// ====================================================
+
+export interface NearCities_nearCities_cities_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryCode: string | null;
+}
+
+export interface NearCities_nearCities_cities {
+  __typename: "CityType";
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: NearCities_nearCities_cities_country;
+}
+
+export interface NearCities_nearCities {
+  __typename: "CitiesResponse";
+  cities: (NearCities_nearCities_cities | null)[] | null;
+}
+
+export interface NearCities {
+  nearCities: NearCities_nearCities;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: NearCountries
+// ====================================================
+
+export interface NearCountries_nearCountries_countries {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+}
+
+export interface NearCountries_nearCountries {
+  __typename: "CountriesResponse";
+  countries: (NearCountries_nearCountries_countries | null)[] | null;
+}
+
+export interface NearCountries {
+  nearCountries: NearCountries_nearCountries;
 }
 
 

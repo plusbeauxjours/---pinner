@@ -46,6 +46,16 @@ class Query(object):
         resolver=queries.resolve_get_footprints,
         required=True
     )
+    near_cities = graphene.Field(
+        types.CitiesResponse,
+        resolver=queries.resolve_near_cities,
+        required=True
+    )
+    near_countries = graphene.Field(
+        types.CountriesResponse,
+        resolver=queries.resolve_near_countries,
+        required=True
+    )
 
 
 class Mutation(object):

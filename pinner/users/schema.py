@@ -29,9 +29,9 @@ class Query(object):
         required=True,
         args={'username': graphene.String(required=True)}
     )
-    latest_users = graphene.Field(
-        types.LatestUsersResponse,
-        resolver=queries.resolve_latest_users,
+    recommand_users = graphene.Field(
+        types.RecommandUsersResponse,
+        resolver=queries.resolve_recommand_users,
         required=True
     )
     user_list = graphene.Field(

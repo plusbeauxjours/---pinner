@@ -80,13 +80,13 @@ def resolve_check_username(self, info, **kwargs):
         return types.CheckUsernameResponse(ok=True)
 
 
-def resolve_latest_users(self, info):
+def resolve_recommand_users(self, info):
 
     user = info.context.user
 
     users = models.User.objects.filter().exclude(pk=user.pk).order_by(
         '-date_joined')[:7]
-    return types.LatestUsersResponse(users=users)
+    return types.RecommandUsersResponse(users=users)
 
 
 def resolve_user_list(self, info):

@@ -34,7 +34,6 @@ class CityAdmin(admin.ModelAdmin):
         'temperature',
         'population',
         'area',
-        'distance',
     )
 
 

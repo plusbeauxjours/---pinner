@@ -8,7 +8,7 @@ from notifications import models as notification_models
 
 
 @login_required
-def resolve_get_countries(self, info, **kwargs):
+def resolve_get_countries(self, info):
 
     countries = models.Country.objects.all().order_by(
         '-created_at')
@@ -17,7 +17,7 @@ def resolve_get_countries(self, info, **kwargs):
 
 
 @login_required
-def resolve_get_cities(self, info, **kwargs):
+def resolve_get_cities(self, info):
 
     cities = models.City.objects.all().order_by(
         '-created_at')
@@ -95,3 +95,23 @@ def resolve_get_footprints(self, info, **kwargs):
     footprints = user.movenotification.all().order_by('-created_at')[offset:10 + offset]
 
     return types.FootprintsResponse(footprints=footprints)
+
+
+@login_required
+def resolve_near_cities(self, info):
+
+    user = info.context.user
+
+    cities = user.profile.current_city.near_city.all()
+
+    return types.CitiesResponse(cities=cities)
+
+
+@login_required
+def resolve_near_countries(self, info):
+
+    user = info.context.user
+
+    countries = user.profile.current_city.near_country.all()
+
+    return types.CountriesResponse(countries=countries)

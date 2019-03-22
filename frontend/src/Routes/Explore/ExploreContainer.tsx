@@ -1,10 +1,12 @@
 import React from "react";
 import ExplorePresenter from "./ExplorePresenter";
 import { Query } from "react-apollo";
-import { EXPLORE_QUERY } from "./ExploreQueries";
-import { Explore } from "src/types/api";
+import { RECOMMAND_USERS, NEAR_CITY, NEAR_COUNTRY } from "./ExploreQueries";
+import { RecommandUsers, NearCities, NearCountries } from "../../types/api";
 
-class ExploreQuery extends Query<Explore> {}
+class RecommandUsersQuery extends Query<RecommandUsers> {}
+class NearCitiesQuery extends Query<NearCities> {}
+class NearCountriesQuery extends Query<NearCountries> {}
 
 interface IState {
   inline: boolean;
@@ -13,11 +15,24 @@ interface IState {
 class ExploreContainer extends React.Component<any, IState> {
   public render = () => {
     return (
-      <ExploreQuery query={EXPLORE_QUERY} fetchPolicy="network-only">
-        {({ data, loading }) => (
-          <ExplorePresenter data={data} loading={loading} />
+      <RecommandUsersQuery query={RECOMMAND_USERS}>
+        {({ data: recommandUsersData, loading }) => (
+          <NearCitiesQuery query={NEAR_CITY}>
+            {({ data: nearCitiesData }) => (
+              <NearCountriesQuery query={NEAR_COUNTRY}>
+                {({ data: NearCountriesData }) => (
+                  <ExplorePresenter
+                    recommandUsersData={recommandUsersData}
+                    nearCitiesData={nearCitiesData}
+                    NearCountriesData={NearCountriesData}
+                    loading={loading}
+                  />
+                )}
+              </NearCountriesQuery>
+            )}
+          </NearCitiesQuery>
         )}
-      </ExploreQuery>
+      </RecommandUsersQuery>
     );
   };
 }

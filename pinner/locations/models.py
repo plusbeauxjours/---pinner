@@ -46,12 +46,9 @@ class City (config_models.TimeStampedModel):
     temperature = models.IntegerField(null=True, blank=True)
     population = models.IntegerField(null=True, blank=True)
     area = models.IntegerField(null=True, blank=True)
-    distance = models.IntegerField(null=True, blank=True)
     info = models.TextField(null=True, blank=True)
     near_city = models.ManyToManyField(
         'self',  blank=True, symmetrical=False, related_name='near_cities')
-    similare_city = models.ManyToManyField(
-        'self',  blank=True, symmetrical=False, related_name='similare_cities')
     near_country = models.ManyToManyField(
         Country,  blank=True, symmetrical=False, related_name='near_countries')
 

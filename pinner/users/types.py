@@ -77,7 +77,7 @@ class FacebookConnectResponse(graphene.ObjectType):
     token = graphene.String()
 
 
-class LatestUsersResponse(graphene.ObjectType):
+class RecommandUsersResponse(graphene.ObjectType):
     users = graphene.List(UserType)
 
 
