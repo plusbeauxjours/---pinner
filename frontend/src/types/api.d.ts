@@ -1107,9 +1107,55 @@ export interface SearchTerms_searchCards {
   cards: (SearchTerms_searchCards_cards | null)[] | null;
 }
 
+export interface SearchTerms_searchCities_cities_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface SearchTerms_searchCities_cities {
+  __typename: "CityType";
+  id: string;
+  country: SearchTerms_searchCities_cities_country;
+  cityName: string | null;
+  cityPhoto: string | null;
+}
+
+export interface SearchTerms_searchCities {
+  __typename: "CitiesResponse";
+  cities: (SearchTerms_searchCities_cities | null)[] | null;
+}
+
+export interface SearchTerms_searchCountries_countries {
+  __typename: "CountryType";
+  id: string;
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+}
+
+export interface SearchTerms_searchCountries {
+  __typename: "CountriesResponse";
+  countries: (SearchTerms_searchCountries_countries | null)[] | null;
+}
+
+export interface SearchTerms_searchContinents_continents {
+  __typename: "ContinentType";
+  id: string;
+  continentName: string | null;
+  continentPhoto: string | null;
+}
+
+export interface SearchTerms_searchContinents {
+  __typename: "ContinentsResponse";
+  continents: (SearchTerms_searchContinents_continents | null)[] | null;
+}
+
 export interface SearchTerms {
   searchUsers: SearchTerms_searchUsers;
   searchCards: SearchTerms_searchCards;
+  searchCities: SearchTerms_searchCities;
+  searchCountries: SearchTerms_searchCountries;
+  searchContinents: SearchTerms_searchContinents;
 }
 
 export interface SearchTermsVariables {
@@ -1621,6 +1667,58 @@ export interface CardParts {
   fontColor: string | null;
   fontSize: string | null;
   file: string | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: CityParts
+// ====================================================
+
+export interface CityParts_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface CityParts {
+  __typename: "CityType";
+  id: string;
+  country: CityParts_country;
+  cityName: string | null;
+  cityPhoto: string | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: CountryParts
+// ====================================================
+
+export interface CountryParts {
+  __typename: "CountryType";
+  id: string;
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: ContinentParts
+// ====================================================
+
+export interface ContinentParts {
+  __typename: "ContinentType";
+  id: string;
+  continentName: string | null;
+  continentPhoto: string | null;
 }
 
 

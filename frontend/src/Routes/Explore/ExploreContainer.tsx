@@ -20,11 +20,11 @@ class ExploreContainer extends React.Component<any, IState> {
           <NearCitiesQuery query={NEAR_CITY}>
             {({ data: nearCitiesData }) => (
               <NearCountriesQuery query={NEAR_COUNTRY}>
-                {({ data: NearCountriesData }) => (
+                {({ data: nearCountriesData }) => (
                   <ExplorePresenter
                     recommandUsersData={recommandUsersData}
                     nearCitiesData={nearCitiesData}
-                    NearCountriesData={NearCountriesData}
+                    nearCountriesData={nearCountriesData}
                     loading={loading}
                   />
                 )}

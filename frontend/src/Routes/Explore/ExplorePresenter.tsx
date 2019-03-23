@@ -57,14 +57,14 @@ const CountryName = styled(CityName)`
 interface IProps {
   recommandUsersData?: RecommandUsers;
   nearCitiesData?: NearCities;
-  NearCountriesData?: NearCountries;
+  nearCountriesData?: NearCountries;
   loading: boolean;
 }
 
 const ExplorePresenter: React.SFC<IProps> = ({
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},
   nearCitiesData: { nearCities: { cities = null } = {} } = {},
-  NearCountriesData: { nearCountries: { countries = null } = {} } = {},
+  nearCountriesData: { nearCountries: { countries = null } = {} } = {},
   loading
 }) => {
   if (loading) {
@@ -92,6 +92,7 @@ const ExplorePresenter: React.SFC<IProps> = ({
         </Container>
         <p>near countries</p>
         <Container>
+          {console.log(countries)}
           {countries &&
             countries.map(country => (
               <CityContainer>

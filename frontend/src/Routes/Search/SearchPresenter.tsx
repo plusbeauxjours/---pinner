@@ -5,6 +5,7 @@ import Bold from "../../Components/Bold";
 import UserGrid from "src/Components/UserGrid";
 import CardGrid from "src/Components/CardGrid";
 import Loader from "src/Components/Loader";
+import LocationGrid from "../../Components/LocationGrid";
 
 const TallWrapper = styled(Wrapper)`
   height: 50vh;
@@ -19,8 +20,11 @@ interface IProps {
 
 const SearchPresenter: React.SFC<IProps> = ({
   data: {
-    searchUsers: { users = null } = ({} = {}),
-    searchCards: { cards = null } = ({} = {})
+    searchUsers: { users = null } = {},
+    searchCards: { cards = null } = {},
+    searchCities: { cities = null } = {},
+    searchCountries: { countries = null } = {},
+    searchContinents: { continents = null } = {}
   },
   empty,
   loading
@@ -36,6 +40,15 @@ const SearchPresenter: React.SFC<IProps> = ({
       <TallWrapper>
         {users && users.length > 0 && <UserGrid users={users} />}
         {cards && cards.length > 0 && <CardGrid cards={cards} />}
+        {cities && cities.length > 0 && (
+          <LocationGrid cities={cities} type={"city"} />
+        )}
+        {countries && countries.length > 0 && (
+          <LocationGrid countries={countries} type={"country"} />
+        )}
+        {continents && continents.length > 0 && (
+          <LocationGrid continents={continents} type={"continent"} />
+        )}
         {users && users.length === 0 && cards && cards.length === 0 && (
           <Bold text="Nothing found..." />
         )}

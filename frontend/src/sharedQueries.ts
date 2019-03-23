@@ -47,6 +47,34 @@ export const CARD_FRAGMENT = gql`
   }
 `;
 
+export const CITY_FRAGMENT = gql`
+  fragment CityParts on CityType {
+    id
+    country {
+      countryName
+    }
+    cityName
+    cityPhoto
+  }
+`;
+
+export const COUNTRY_FRAGMENT = gql`
+  fragment CountryParts on CountryType {
+    id
+    countryName
+    countryCode
+    countryPhoto
+  }
+`;
+
+export const CONTINENT_FRAGMENT = gql`
+  fragment ContinentParts on ContinentType {
+    id
+    continentName
+    continentPhoto
+  }
+`;
+
 export const DETAIL_CARD_FRAGMENT = gql`
   fragment DetailParts on CardType {
     id

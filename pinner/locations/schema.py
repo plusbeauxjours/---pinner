@@ -53,7 +53,7 @@ class Query(object):
     )
     near_countries = graphene.Field(
         types.CountriesResponse,
-        resolver=queries.resolve_search_citiess,
+        resolver=queries.resolve_near_countries,
         required=True
     )
     search_cities = graphene.Field(

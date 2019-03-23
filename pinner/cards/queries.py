@@ -75,7 +75,7 @@ def resolve_search_cards(self, info, **kwargs):
     user = info.context.user
     term = kwargs.get('term')
 
-    if len(term) < 4:
+    if len(term) < 2:
 
         raise Exception('Search Term is too short')
 

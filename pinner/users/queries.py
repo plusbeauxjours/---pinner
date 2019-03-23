@@ -56,7 +56,7 @@ def resolve_search_users(self, info, **kwargs):
     user = info.context.user
     term = kwargs.get('term')
 
-    if len(term) < 3:
+    if len(term) < 2:
 
         raise Exception("Search Term is Too Short")
 
