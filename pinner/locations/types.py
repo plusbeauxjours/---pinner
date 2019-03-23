@@ -79,6 +79,10 @@ class CountriesResponse(graphene.ObjectType):
     countries = graphene.List(CountryType)
 
 
+class ContinentsResponse(graphene.ObjectType):
+    continents = graphene.List(ContinentType)
+
+
 class FootprintsResponse(graphene.ObjectType):
     footprints = graphene.List(notification_types.MoveNotificationType)
 

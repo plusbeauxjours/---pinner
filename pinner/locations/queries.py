@@ -26,6 +26,57 @@ def resolve_get_cities(self, info):
 
 
 @login_required
+def resolve_search_citiess(self, info, **kwargs):
+
+    user = info.context.user
+    term = kwargs.get('term')
+
+    if len(term) < 2:
+
+        raise Exception("Search Term is Too Short")
+
+    else:
+
+        cities = models.City.objects.filter(city_name__icontains=term)
+
+        return types.CitiesResponse(cities=cities)
+
+
+@login_required
+def resolve_search_countries(self, info, **kwargs):
+
+    user = info.context.user
+    term = kwargs.get('term')
+
+    if len(term) < 2:
+
+        raise Exception("Search Term is Too Short")
+
+    else:
+
+        countries = models.Country.objects.filter(country_name__icontains=term)
+
+        return types.CountriesResponse(countries=countries)
+
+
+@login_required
+def resolve_search_continents(self, info, **kwargs):
+
+    user = info.context.user
+    term = kwargs.get('term')
+
+    if len(term) < 2:
+
+        raise Exception("Search Term is Too Short")
+
+    else:
+
+        continents = models.Continent.objects.filter(continent_name__icontains=term)
+
+        return types.ContinentsResponse(continents=continents)
+
+
+@login_required
 def resolve_city_profile(self, info, **kwargs):
 
     user = info.context.user

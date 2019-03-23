@@ -53,8 +53,26 @@ class Query(object):
     )
     near_countries = graphene.Field(
         types.CountriesResponse,
-        resolver=queries.resolve_near_countries,
+        resolver=queries.resolve_search_citiess,
         required=True
+    )
+    search_cities = graphene.Field(
+        types.CitiesResponse,
+        resolver=queries.resolve_search_citiess,
+        required=True,
+        args={'term': graphene.String(required=True)}
+    )
+    search_countries = graphene.Field(
+        types.CountriesResponse,
+        resolver=queries.resolve_search_countries,
+        required=True,
+        args={'term': graphene.String(required=True)}
+    )
+    search_continents = graphene.Field(
+        types.ContinentsResponse,
+        resolver=queries.resolve_search_continents,
+        required=True,
+        args={'term': graphene.String(required=True)}
     )
 
 
