@@ -11,6 +11,7 @@ import Bold from "../../Components/Bold";
 import CardGrid from "../../Components/CardGrid";
 import FollowBtn from "../../Components/FollowBtn";
 import Input from "../../Components/Input";
+import LocationGrid from "../../Components/LocationGrid";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -463,38 +464,13 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           <PRow>TRIP LOG</PRow>
           <PRow>
             <RowText>TOP COUNTRIES</RowText>
-            {topCountries &&
-              topCountries.map(topCountry => (
-                <CityContainer>
-                  <Link
-                    to={`/country/${topCountry.toCity.country.countryName}`}
-                  >
-                    <CityPhoto
-                      key={topCountry.id}
-                      src={topCountry.toCity.country.countryPhoto}
-                    />
-                  </Link>
 
-                  <CityName text={topCountry.toCity.country.countryName} />
-                </CityContainer>
-              ))}
+            <LocationGrid countries={topCountries} type={"country"} />
           </PRow>
           <PRow>
             <RowText>FREQUENTVISITS</RowText>
-            {frequentCities &&
-              frequentCities.map(frequentCity => (
-                <CityContainer>
-                  <Link to={`/city/${frequentCity.toCity.cityName}`}>
-                    <CityPhoto
-                      key={frequentCity.id}
-                      src={frequentCity.toCity.cityPhoto}
-                    />
-                  </Link>
 
-                  <CityName text={frequentCity.toCity.cityName} />
-                  <CountryName text={frequentCity.toCity.country.countryName} />
-                </CityContainer>
-              ))}
+            <LocationGrid cities={frequentCities} type={"city"} />
           </PRow>
           {user.cards && user.cards.length !== 0 && (
             <CardGrid cards={user.cards} />
