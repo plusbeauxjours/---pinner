@@ -51,6 +51,12 @@ const CityName = styled(Bold)`
   color: white;
 `;
 
+const CountryName = styled(CityName)`
+  font-size: 20px;
+  margin-top: 20px;
+  pointer-events: none;
+`;
+
 interface IProps {
   countryName?: string;
   countryCode: string;
@@ -80,6 +86,7 @@ const CityCard: React.SFC<IProps> = ({
         />
       </Metric>
       <CityName text={cityName} />
+      <CountryName text={countryName} />
       {/* <Counter>userCount:{userCount.toString()}</Counter>
       <Counter>userLogCoun:{userLogCount.toString()}</Counter>
       <Counter>cardCount:{cardCount.toString()}</Counter> */}

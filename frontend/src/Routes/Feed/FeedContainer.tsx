@@ -99,6 +99,7 @@ class FeedContainer extends React.Component<IProps, IState> {
           >
             {ReportLocationFn => {
               this.ReportLocationFn = ReportLocationFn;
+              console.log(data);
               return (
                 <FeedPresenter
                   loading={loading}

@@ -8,7 +8,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid grey;
+  border: 1px solid ${props => props.theme.headerColor};
   min-width: 170px;
   padding: 10px;
   margin-right: 5px;

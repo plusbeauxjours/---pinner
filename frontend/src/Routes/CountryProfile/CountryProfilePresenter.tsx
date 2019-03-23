@@ -6,6 +6,7 @@ import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
+import { CountryProfile } from "../../types/api";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -179,22 +180,24 @@ const CountryName = styled(CityName)`
 `;
 
 interface IProps {
-  data?: any;
+  data?: CountryProfile;
   loading: boolean;
 }
 
-const CountryProfilePresenter: React.SFC<IProps> = ({ data, loading }) => {
+const CountryProfilePresenter: React.SFC<IProps> = ({
+  data: {
+    countryProfile: {
+      cities = null,
+      usersNow = null,
+      usersBefore = null,
+      country = null
+    } = {}
+  } = {},
+  loading
+}) => {
   if (loading) {
     return <Loader />;
-  } else if (!loading && data) {
-    const {
-      countryProfile: {
-        cities = {},
-        usersNow = {},
-        usersBefore = {},
-        country = {}
-      } = {}
-    } = data;
+  } else if (!loading && cities && usersNow && usersBefore && country) {
     return (
       <>
         <PHeader>
@@ -288,7 +291,7 @@ const CountryProfilePresenter: React.SFC<IProps> = ({ data, loading }) => {
               cities.map(city => (
                 <CityContainer>
                   <Link to={`/city/${city.cityName}`}>
-                    <CityPhoto src={city.cityPhoto} />
+                    <CityPhoto key={city.id} src={city.cityPhoto} />
                   </Link>
                   <CityName text={city.cityName} />
                   <CountryName text={city.country.countryName} />

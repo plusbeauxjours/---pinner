@@ -322,12 +322,12 @@ export interface CityProfile_cityProfile_cards {
 
 export interface CityProfile_cityProfile_usersNow_profile {
   __typename: "ProfileType";
+  id: string;
   avatar: string;
 }
 
 export interface CityProfile_cityProfile_usersNow {
   __typename: "UserType";
-  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
@@ -337,6 +337,7 @@ export interface CityProfile_cityProfile_usersNow {
 
 export interface CityProfile_cityProfile_usersBefore_actor_profile {
   __typename: "ProfileType";
+  id: string;
   avatar: string;
 }
 
@@ -351,7 +352,6 @@ export interface CityProfile_cityProfile_usersBefore_actor {
 
 export interface CityProfile_cityProfile_usersBefore {
   __typename: "MoveNotificationType";
-  id: string;
   actor: CityProfile_cityProfile_usersBefore_actor;
 }
 

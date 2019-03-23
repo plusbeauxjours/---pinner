@@ -55,7 +55,6 @@ class ReportLocation(graphene.Mutation):
                 except:
                     continent = models.Continent.objects.create(
                         continent_name=currentContinent, continent_photo=continentPhotoURL)
-                    print(continent)
 
                 try:
                     existing_country = models.Country.objects.get(country_name=currentCountry)

@@ -113,11 +113,13 @@ interface IProps {
   loading: boolean;
 }
 
-const ContinentProfilePresenter: React.SFC<IProps> = ({ data, loading }) => {
+const ContinentProfilePresenter: React.SFC<IProps> = ({
+  data: { continentProfile: { continent = {}, countries = {} } = {} } = {},
+  loading
+}) => {
   if (loading) {
     return <Loader />;
-  } else if (!loading && data) {
-    const { continentProfile: { continent = {}, countries = {} } = {} } = data;
+  } else if (!loading && continent && countries) {
     return (
       <>
         <PHeader>

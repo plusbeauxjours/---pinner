@@ -49,13 +49,14 @@ interface IProps {
   back: any;
 }
 
-const CardDetailPresenter: React.SFC<IProps> = ({ data, loading, back }) => {
+const CardDetailPresenter: React.SFC<IProps> = ({
+  data: { cardDetail: { card = null } = {} } = {},
+  loading,
+  back
+}) => {
   if (loading) {
     return <Loader />;
-  } else if (!loading && data) {
-    const {
-      cardDetail: { card }
-    } = data;
+  } else if (!loading && card) {
     console.log(typeof card.id);
     return (
       <ModalContainer>

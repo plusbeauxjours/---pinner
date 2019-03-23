@@ -17,18 +17,21 @@ interface IProps {
   loading: boolean;
 }
 
-const SearchPresenter: React.SFC<IProps> = ({ data, empty, loading }) => {
+const SearchPresenter: React.SFC<IProps> = ({
+  data: {
+    searchUsers: { users = null } = ({} = {}),
+    searchCards: { cards = null } = ({} = {})
+  },
+  empty,
+  loading
+}) => {
   if (empty) {
     return (
       <TallWrapper>
         <Bold text="Search for something..." />
       </TallWrapper>
     );
-  } else if (!loading && data) {
-    const {
-      searchUsers: { users },
-      searchCards: { cards }
-    } = data;
+  } else if (!loading && users && cards) {
     return (
       <TallWrapper>
         {users && users.length > 0 && <UserGrid users={users} />}

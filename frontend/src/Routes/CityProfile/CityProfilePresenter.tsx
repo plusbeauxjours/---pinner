@@ -138,18 +138,20 @@ interface IProps {
   loading: boolean;
 }
 
-const CityProfilePresenter: React.SFC<IProps> = ({ data, loading }) => {
+const CityProfilePresenter: React.SFC<IProps> = ({
+  data: {
+    cityProfile: {
+      cards = null,
+      usersNow = null,
+      usersBefore = null,
+      city = null
+    } = {}
+  } = {},
+  loading
+}) => {
   if (loading) {
     return <Loader />;
-  } else if (!loading && data) {
-    const {
-      cityProfile: {
-        cards = {},
-        usersNow = {},
-        usersBefore = {},
-        city = {}
-      } = {}
-    } = data;
+  } else if (!loading && cards && usersNow && usersBefore && city) {
     return (
       <>
         <PHeader>

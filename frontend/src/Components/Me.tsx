@@ -7,11 +7,8 @@ class MeQuery extends Query<Me> {}
 
 const Me: React.SFC<any> = ({ children }) => (
   <MeQuery query={ME}>
-    {({ data, loading }) => {
-      if (!loading && data) {
-        const {
-          me: { user }
-        } = data;
+    {({ data: { me: { user = null } = {} } = {}, loading }) => {
+      if (!loading && user) {
         return children(user);
       } else {
         return children(null);
