@@ -51,7 +51,7 @@ class Profile(config_models.TimeStampedModel):
 
     @property
     def city_count(self):
-        return self.user.movenotification.all().order_by('toCity').distinct('toCity').count()
+        return self.user.movenotification.all().order_by('to_city').distinct('to_city').count()
 
     @property
     def post_count(self):

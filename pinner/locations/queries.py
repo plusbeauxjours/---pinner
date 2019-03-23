@@ -40,7 +40,7 @@ def resolve_city_profile(self, info, **kwargs):
         profile__current_city__city_name=cityName).order_by('-username').distinct('username')
 
     usersBefore = notification_models.MoveNotification.objects.filter(
-        toCity__city_name=cityName).order_by('-actor_id').distinct('actor_id')
+        to_city__city_name=cityName).order_by('-actor_id').distinct('actor_id')
 
     city = models.City.objects.get(city_name=cityName)
 
@@ -61,7 +61,7 @@ def resolve_country_profile(self, info, **kwargs):
         profile__current_city__country__country_name=countryName).order_by('-username').distinct('username')
 
     usersBefore = notification_models.MoveNotification.objects.filter(
-        toCity__country__country_name=countryName).order_by('-actor_id').distinct('actor_id')
+        to_city__country__country_name=countryName).order_by('-actor_id').distinct('actor_id')
 
     country = models.Country.objects.get(country_name=countryName)
 

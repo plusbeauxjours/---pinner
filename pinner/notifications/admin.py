@@ -27,7 +27,7 @@ class MoveNotificationAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'actor',
-        'fromCity',
-        'toCity',
+        'from_city',
+        'to_city',
         'read',
     )

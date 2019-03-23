@@ -75,8 +75,8 @@ class ReportLocation(graphene.Mutation):
                         notification_models.MoveNotification.objects.create(
                             actor=user,
                             verb="move",
-                            fromCity=profile.last_city,
-                            toCity=profile.current_city,
+                            from_city=profile.last_city,
+                            to_city=profile.current_city,
                         )
                         return types.ReportLocationResponse(ok=True)
 
@@ -90,8 +90,8 @@ class ReportLocation(graphene.Mutation):
                         notification_models.MoveNotification.objects.create(
                             actor=user,
                             verb="move",
-                            fromCity=profile.last_city,
-                            toCity=profile.current_city,
+                            from_city=profile.last_city,
+                            to_city=profile.current_city,
                         )
                         return types.ReportLocationResponse(ok=True)
 
@@ -109,8 +109,8 @@ class ReportLocation(graphene.Mutation):
                     notification_models.MoveNotification.objects.create(
                         actor=user,
                         verb="move",
-                        fromCity=profile.last_city,
-                        toCity=profile.current_city,
+                        from_city=profile.last_city,
+                        to_city=profile.current_city,
                     )
                 return types.ReportLocationResponse(ok=True)
 
