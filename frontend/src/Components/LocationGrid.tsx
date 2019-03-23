@@ -3,15 +3,6 @@ import styled from "../Styles/typed-components";
 import { Link } from "react-router-dom";
 import Bold from "./Bold";
 
-const Container = styled.div`
-  display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
-  grid-auto-rows: 200px;
-  grid-gap: 15px;
-  margin-bottom: 85px;
-`;
-
 const CityPhoto = styled.img`
   margin-bottom: 10px;
   display: flex;
@@ -65,7 +56,7 @@ const LocationGrid: React.SFC<IProps> = ({
       switch (type) {
         case "city":
           return (
-            <Container className={className}>
+            <>
               {cities.map(city => (
                 <CityContainer>
                   <Link to={`/city/${city.cityName}`}>
@@ -76,11 +67,11 @@ const LocationGrid: React.SFC<IProps> = ({
                   <CountryName text={city.country.countryName} />
                 </CityContainer>
               ))}
-            </Container>
+            </>
           );
         case "country":
           return (
-            <Container className={className}>
+            <>
               {countries.map(country => (
                 <CityContainer>
                   <Link to={`/country/${country.countryName}`}>
@@ -90,11 +81,11 @@ const LocationGrid: React.SFC<IProps> = ({
                   <CityName text={country.countryName} />
                 </CityContainer>
               ))}
-            </Container>
+            </>
           );
         case "continent":
           return (
-            <Container className={className}>
+            <>
               {continents.map(continent => (
                 <CityContainer>
                   <Link to={`/continent/${continent.continentName}`}>
@@ -107,7 +98,7 @@ const LocationGrid: React.SFC<IProps> = ({
                   <CityName text={continent.continentName} />
                 </CityContainer>
               ))}
-            </Container>
+            </>
           );
         default:
           return <p>hi</p>;
