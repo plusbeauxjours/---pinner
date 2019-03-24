@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.humanize.templatetags.humanize import naturaltime
+from datetime import timedelta
 
 from cards import models as card_models
 from locations import models as location_models
@@ -59,6 +60,7 @@ class MoveNotification(config_models.TimeStampedModel):
         location_models.City, on_delete=models.CASCADE, null=True, blank=True, related_name='toCity')
     from_date = models.DateTimeField(null=True, blank=True)
     to_date = models.DateTimeField(null=True, blank=True)
+    duration = models.DurationField(default=timedelta())
     read = models.BooleanField(default=False)
 
     @property
