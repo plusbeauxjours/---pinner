@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/react-dates": "^17.1.5",
     "apollo-boost": "^0.1.27",
     "apollo-link-ws": "^1.0.12",
     "axios": "^0.18.0",
@@ -12,6 +13,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-apollo": "^2.4.1",
+    "react-dates": "^20.1.0",
     "react-dom": "^16.7.0",
     "react-expanding-textarea": "^0.2.0",
     "react-facebook-login": "^4.1.1",

@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "../../Styles/typed-components";
+import { CountryProfile } from "../../types/api";
 
 import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
-import { CountryProfile } from "../../types/api";
 import LocationGrid from "../../Components/LocationGrid";
 
 const SWrapper = styled(Wrapper)`
@@ -176,6 +176,7 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
   } else if (!loading && cities && usersNow && usersBefore && country) {
     return (
       <>
+        {console.log(cities, usersNow, usersBefore, country)}
         <PHeader>
           <PAvatar size="lg" url={country.countryPhoto} />
           <Username>{country.countryName}</Username>
@@ -202,30 +203,36 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
                 <HalfInfo>
                   <InfoRow>
                     <SBold text={String(country.cityCount)} />
-                    AQI
+                    VISA for you
                   </InfoRow>
                   <InfoRow>
                     <SBold text={String(country.cityCount)} />
-                    TEMPERATURE
+                    English Skill
                   </InfoRow>
                   <InfoRow>
                     <SBold text={String(country.cityCount)} />
-                    DISTANCE
+                    GDP
+                  </InfoRow>
+                  <InfoRow>
+                    <SBold text={String(country.cityCount)} />
+                    Flag
                   </InfoRow>
                 </HalfInfo>
                 <HalfInfo>
                   <InfoRow>
-                    cardCount
+                    AirLine
                     <SBold text={String(country.cityCount)} />
                   </InfoRow>
-
                   <InfoRow>
-                    userCount
+                    SNS
                     <SBold text={String(country.cityCount)} />
                   </InfoRow>
-
                   <InfoRow>
-                    userLogCount
+                    Capital
+                    <SBold text={String(country.cityCount)} />
+                  </InfoRow>
+                  <InfoRow>
+                    Potal
                     <SBold text={String(country.cityCount)} />
                   </InfoRow>
                 </HalfInfo>

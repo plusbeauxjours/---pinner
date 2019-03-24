@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const CONTINENT_PROFILE = gql`
-  query ContinentProfile($page: Int!, $continentName: String!) {
-    continentProfile(page: $page, continentName: $continentName) {
+  query ContinentProfile($continentName: String!) {
+    continentProfile(continentName: $continentName) {
       continent {
         continentName
         continentPhoto

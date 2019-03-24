@@ -29,16 +29,16 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
       }
     } = this.props;
     console.log(this.props);
+    console.log(countryName);
     const { page } = this.state;
     return (
       <CountryProfileQuery
         query={COUNTRY_PROFILE}
         variables={{ page, countryName }}
       >
-        {({ data, loading }) => {
-          console.log(data);
-          return <CountryProfilePresenter loading={loading} data={data} />;
-        }}
+        {({ data, loading }) => (
+          <CountryProfilePresenter loading={loading} data={data} />
+        )}
       </CountryProfileQuery>
     );
   }

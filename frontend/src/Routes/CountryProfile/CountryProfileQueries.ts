@@ -2,12 +2,15 @@ import gql from "graphql-tag";
 export const COUNTRY_PROFILE = gql`
   query CountryProfile($page: Int!, $countryName: String!) {
     countryProfile(page: $page, countryName: $countryName) {
-      cities {
-        id
-        cityName
-        cityPhoto
-        country {
-          countryName
+      country {
+        countryName
+        countryCode
+        countryPhoto
+        cityCount
+        cardCount
+        continent {
+          continentPhoto
+          continentName
         }
       }
       usersNow {
@@ -26,15 +29,12 @@ export const COUNTRY_PROFILE = gql`
           }
         }
       }
-      country {
-        countryName
-        countryCode
-        countryPhoto
-        cityCount
-        cardCount
-        continent {
-          continentPhoto
-          continentName
+      cities {
+        id
+        cityName
+        cityPhoto
+        country {
+          countryName
         }
       }
     }
