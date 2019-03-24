@@ -131,3 +131,24 @@ export const FREQUENT_VISITS = gql`
     }
   }
 `;
+
+export const GET_TRIPS = gql`
+  query GetTrips($page: Int!, $username: String!) {
+    getTrips(page: $page, username: $username) {
+      trips {
+        id
+        toCity {
+          cityName
+          cityPhoto
+          country {
+            countryName
+            countryCode
+          }
+        }
+        fromDate
+        toDate
+        createdAt
+      }
+    }
+  }
+`;

@@ -13,9 +13,8 @@ def resolve_get_notifications(self, info, **kwargs):
 
     upload_notifications = models.Notification.objects.filter(
         actor__profile__in=following_profiles, verb='upload')
-    print(upload_notifications)
-
     notifications = models.Notification.objects.filter(target=user)
+
     combined = notifications.union(upload_notifications).order_by(
         '-created_at')[offset:10 + offset]
 
@@ -33,6 +32,6 @@ def resolve_get_move_notifications(self, info, **kwargs):
 
     notifications = models.MoveNotification.objects.filter(
         actor__profile__in=following_profiles, verb='move').order_by(
-        '-created_at')[offset:3 + offset]
+        '-to_date')[offset:3 + offset]
 
     return types.GetMoveNotificationsResponse(ok=True, notifications=notifications)

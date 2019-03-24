@@ -12,6 +12,15 @@ class Query(object):
         required=True,
         args={'username': graphene.String(required=True)}
     )
+    get_trips = graphene.Field(
+        location_types.FootprintsResponse,
+        resolver=queries.resolve_get_trips,
+        required=True,
+        args={
+            'username': graphene.String(required=True),
+            'page': graphene.Int(),
+        }
+    )
     me = graphene.Field(
         types.UserProfileResponse,
         resolver=queries.resolve_me,

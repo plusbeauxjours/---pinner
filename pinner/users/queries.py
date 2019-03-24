@@ -18,6 +18,21 @@ def resolve_profile(self, info, **kwargs):
 
 
 @login_required
+def resolve_get_trips(self, info, **kwargs):
+
+    user = info.context.user
+    username = kwargs.get('username')
+    page = kwargs.get('page', 0)
+    offset = 10 * page
+
+    profile = User.objects.get(username=username)
+
+    footprints = profile.movenotification.all()
+
+    return location_types.FootprintsResponse(footprints=footprints)
+
+
+@login_required
 def resolve_top_countries(self, info, **kwargs):
 
     user = info.context.user
@@ -25,7 +40,7 @@ def resolve_top_countries(self, info, **kwargs):
 
     profile = User.objects.get(username=username)
 
-    footprints = profile.movenotification.all()
+    footprints = profile.movenotification.all().order_by('-to_city__country').distinct('to_city__country')
 
     return location_types.FootprintsResponse(footprints=footprints)
 
@@ -38,7 +53,7 @@ def resolve_frequent_visits(self, info, **kwargs):
 
     profile = User.objects.get(username=username)
 
-    footprints = profile.movenotification.all()
+    footprints = profile.movenotification.all().order_by('-to_city').distinct('to_city')
 
     return location_types.FootprintsResponse(footprints=footprints)
 
@@ -51,6 +66,7 @@ def resolve_me(self, info):
     return types.UserProfileResponse(user=user)
 
 
+@login_required
 def resolve_search_users(self, info, **kwargs):
 
     user = info.context.user
@@ -80,6 +96,7 @@ def resolve_check_username(self, info, **kwargs):
         return types.CheckUsernameResponse(ok=True)
 
 
+@login_required
 def resolve_recommand_users(self, info):
 
     user = info.context.user
@@ -89,6 +106,7 @@ def resolve_recommand_users(self, info):
     return types.RecommandUsersResponse(users=users)
 
 
+@login_required
 def resolve_user_list(self, info):
 
     user = info.context.user
