@@ -47,15 +47,17 @@ const UserCard: React.SFC<IProps> = ({
   currentCountry
 }) => {
   return (
-    <Link to={`/${username}`}>
-      <Container>
-        <SAvatar url={avatar} size="md" />
-        <SBold text={username} />
-        <Location>
-          {currentCity}, {currentCountry}
-        </Location>
-      </Container>
-    </Link>
+    <>
+      <Link to={`/${username}`}>
+        <Container>
+          <SAvatar url={avatar} size="md" />
+          <SBold text={username} />
+          <Location>
+            {currentCity}, {currentCountry}
+          </Location>
+        </Container>
+      </Link>
+    </>
   );
 };
 export default UserCard;

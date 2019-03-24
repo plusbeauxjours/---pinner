@@ -232,6 +232,8 @@ const AvatarGrid = styled.div`
   padding: 20px;
 `;
 
+const AvatarContainer = styled.div``;
+
 interface IProps {
   userProfileData: UserProfile;
   topCountriesData?: TopCountries;
@@ -434,19 +436,17 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 FOLLOWERS
                 <SBold text={String(user.profile.followersCount)} />
                 <AvatarGrid>
-                  {!userProfileLoading && user.profile.followers ? (
+                  {user.profile.followers &&
                     user.profile.followers.map(follower => (
-                      <Link to={`/${follower.user.username}`}>
-                        <Avatar
-                          size={"sm"}
-                          key={follower.id}
-                          url={follower.user.profile.avatar}
-                        />
-                      </Link>
-                    ))
-                  ) : (
-                    <Loader />
-                  )}
+                      <AvatarContainer key={follower.id}>
+                        <Link to={`/${follower.user.username}`}>
+                          <Avatar
+                            size={"sm"}
+                            url={follower.user.profile.avatar}
+                          />
+                        </Link>
+                      </AvatarContainer>
+                    ))}
                 </AvatarGrid>
               </Follow>
               <Follow>
@@ -455,13 +455,14 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 <AvatarGrid>
                   {user.profile.followings &&
                     user.profile.followings.map(following => (
-                      <Link to={`/${following.user.username}`}>
-                        <Avatar
-                          size={"sm"}
-                          key={following.id}
-                          url={following.user.profile.avatar}
-                        />
-                      </Link>
+                      <AvatarContainer key={following.id}>
+                        <Link to={`/${following.user.username}`}>
+                          <Avatar
+                            size={"sm"}
+                            url={following.user.profile.avatar}
+                          />
+                        </Link>
+                      </AvatarContainer>
                     ))}
                 </AvatarGrid>
               </Follow>
@@ -472,14 +473,11 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <RowText>TOP COUNTRIES</RowText>
             {!topCountriesLoading && topCountries ? (
               topCountries.map(topCountry => (
-                <CityContainer>
+                <CityContainer key={topCountry.id}>
                   <Link
                     to={`/country/${topCountry.toCity.country.countryName}`}
                   >
-                    <CityPhoto
-                      key={topCountry.id}
-                      src={topCountry.toCity.country.countryPhoto}
-                    />
+                    <CityPhoto src={topCountry.toCity.country.countryPhoto} />
                   </Link>
                   <CityName text={topCountry.toCity.country.countryName} />
                 </CityContainer>
@@ -492,14 +490,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <RowText>FREQUENTVISITS</RowText>
             {!frequentVisitsLoading && frequentCities ? (
               frequentCities.map(frequentCity => (
-                <CityContainer>
+                <CityContainer key={frequentCity.id}>
                   <Link to={`/city/${frequentCity.toCity.cityName}`}>
-                    <CityPhoto
-                      key={frequentCity.id}
-                      src={frequentCity.toCity.cityPhoto}
-                    />
+                    <CityPhoto src={frequentCity.toCity.cityPhoto} />
                   </Link>
-
                   <CityName text={frequentCity.toCity.cityName} />
                   <CountryName text={frequentCity.toCity.country.countryName} />
                 </CityContainer>

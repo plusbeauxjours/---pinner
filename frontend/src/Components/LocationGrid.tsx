@@ -3,7 +3,7 @@ import styled from "../Styles/typed-components";
 import { Link } from "react-router-dom";
 import Bold from "./Bold";
 
-const CityPhoto = styled.img`
+const LocationPhoto = styled.img`
   margin-bottom: 10px;
   display: flex;
   width: 200px;
@@ -14,7 +14,7 @@ const CityPhoto = styled.img`
   object-fit: cover;
 `;
 
-const CityName = styled(Bold)`
+const LocationName = styled(Bold)`
   position: absolute;
   display: flex;
   z-index: 5;
@@ -24,13 +24,13 @@ const CityName = styled(Bold)`
   pointer-events: none;
 `;
 
-const CountryName = styled(CityName)`
+const CountryName = styled(LocationName)`
   font-size: 20px;
   margin-top: 20px;
   pointer-events: none;
 `;
 
-const CityContainer = styled.div`
+const LocationContainer = styled.div`
   margin-right: 15px;
   display: flex;
   justify-content: center;
@@ -58,14 +58,13 @@ const LocationGrid: React.SFC<IProps> = ({
           return (
             <>
               {cities.map(city => (
-                <CityContainer>
+                <LocationContainer key={city.id}>
                   <Link to={`/city/${city.cityName}`}>
-                    <CityPhoto key={city.id} src={city.cityPhoto} />
+                    <LocationPhoto src={city.cityPhoto} />
                   </Link>
-
-                  <CityName text={city.cityName} />
+                  <LocationName text={city.cityName} />
                   <CountryName text={city.country.countryName} />
-                </CityContainer>
+                </LocationContainer>
               ))}
             </>
           );
@@ -73,13 +72,12 @@ const LocationGrid: React.SFC<IProps> = ({
           return (
             <>
               {countries.map(country => (
-                <CityContainer>
+                <LocationContainer key={country.id}>
                   <Link to={`/country/${country.countryName}`}>
-                    <CityPhoto key={country.id} src={country.countryPhoto} />
+                    <LocationPhoto src={country.countryPhoto} />
                   </Link>
-
-                  <CityName text={country.countryName} />
-                </CityContainer>
+                  <LocationName text={country.countryName} />
+                </LocationContainer>
               ))}
             </>
           );
@@ -87,16 +85,12 @@ const LocationGrid: React.SFC<IProps> = ({
           return (
             <>
               {continents.map(continent => (
-                <CityContainer>
+                <LocationContainer key={continent.id}>
                   <Link to={`/continent/${continent.continentName}`}>
-                    <CityPhoto
-                      key={continent.id}
-                      src={continent.continentPhoto}
-                    />
+                    <LocationPhoto src={continent.continentPhoto} />
                   </Link>
-
-                  <CityName text={continent.continentName} />
-                </CityContainer>
+                  <LocationName text={continent.continentName} />
+                </LocationContainer>
               ))}
             </>
           );

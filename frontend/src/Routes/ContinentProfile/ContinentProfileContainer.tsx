@@ -2,7 +2,7 @@ import React from "react";
 import { Query } from "react-apollo";
 import ContinentProfilePresenter from "./ContinentProfilePresenter";
 import { ContinentProfile, ContinentProfileVariables } from "../../types/api";
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps, withRouter } from "react-router";
 import { CONTINENT_PROFILE } from "./ContinentProfileQueries";
 
 class ContinentProfileQuery extends Query<
@@ -42,4 +42,4 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
   }
 }
 
-export default ContinentProfileContainer;
+export default withRouter(ContinentProfileContainer);

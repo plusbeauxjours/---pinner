@@ -2,7 +2,7 @@ import React from "react";
 import { Query } from "react-apollo";
 import CityProfilePresenter from "./CityProfilePresenter";
 import { CityProfile, CityProfileVariables } from "../../types/api";
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps, withRouter } from "react-router";
 import { CITY_PROFILE } from "./CityProfileQueries";
 
 class CityProfileQuery extends Query<CityProfile, CityProfileVariables> {}
@@ -37,4 +37,4 @@ class CityProfileContainer extends React.Component<IProps, IState> {
   }
 }
 
-export default CityProfileContainer;
+export default withRouter(CityProfileContainer);

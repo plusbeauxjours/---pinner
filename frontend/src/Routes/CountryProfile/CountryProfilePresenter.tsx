@@ -7,6 +7,7 @@ import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import { CountryProfile } from "../../types/api";
+import LocationGrid from "../../Components/LocationGrid";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -23,6 +24,15 @@ const PHeader = styled.header`
 const PAvatar = styled(Avatar)`
   margin: 40px;
 `;
+
+const AvatarGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 40px;
+  padding: 20px;
+`;
+
+const AvatarContainer = styled.div``;
 
 const Username = styled.span`
   text-align: center;
@@ -145,40 +155,6 @@ const Container = styled.div`
   padding: 20px;
 `;
 
-const CityContainer = styled.div`
-  margin-right: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const CityPhoto = styled.img`
-  margin-bottom: 10px;
-  display: flex;
-  width: 200px;
-  height: 200px;
-  background-size: cover;
-  border-radius: 3px;
-  z-index: 1;
-  object-fit: cover;
-`;
-
-const CityName = styled(Bold)`
-  position: absolute;
-  display: flex;
-  z-index: 5;
-  font-size: 40px;
-  font-family: "Qwigley";
-  font-weight: 200;
-  pointer-events: none;
-`;
-
-const CountryName = styled(CityName)`
-  font-size: 20px;
-  margin-top: 20px;
-  pointer-events: none;
-`;
-
 interface IProps {
   data?: CountryProfile;
   loading: boolean;
@@ -259,44 +235,38 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
               <Follow>
                 USERS WHO IS HERE
                 <SBold text={String(country.cardCount)} />
-                {usersNow &&
-                  usersNow.map(user => (
-                    <Link to={`/${user.username}`}>
-                      <SAvatar
-                        size={"sm"}
-                        key={user.id}
-                        url={user.profile.avatar}
-                      />
-                    </Link>
-                  ))}
+                <AvatarGrid>
+                  {usersNow &&
+                    usersNow.map(user => (
+                      <AvatarContainer key={user.id}>
+                        <Link to={`/${user.username}`}>
+                          <SAvatar size={"sm"} url={user.profile.avatar} />
+                        </Link>
+                      </AvatarContainer>
+                    ))}
+                </AvatarGrid>
               </Follow>
               <Follow>
                 USERS WHO HAS BEEN HERE
                 <SBold text={String(country.cardCount)} />
-                {usersBefore &&
-                  usersBefore.map(user => (
-                    <Link to={`/${user.actor.username}`}>
-                      <SAvatar
-                        size={"sm"}
-                        key={user.id}
-                        url={user.actor.profile.avatar}
-                      />
-                    </Link>
-                  ))}
+                <AvatarGrid>
+                  {usersBefore &&
+                    usersBefore.map(user => (
+                      <AvatarContainer key={user.id}>
+                        <Link to={`/${user.actor.username}`}>
+                          <SAvatar
+                            size={"sm"}
+                            url={user.actor.profile.avatar}
+                          />
+                        </Link>
+                      </AvatarContainer>
+                    ))}
+                </AvatarGrid>
               </Follow>
             </FollowContainer>
           </PBody>
           <Container>
-            {cities &&
-              cities.map(city => (
-                <CityContainer>
-                  <Link to={`/city/${city.cityName}`}>
-                    <CityPhoto key={city.id} src={city.cityPhoto} />
-                  </Link>
-                  <CityName text={city.cityName} />
-                  <CountryName text={city.country.countryName} />
-                </CityContainer>
-              ))}
+            {cities && <LocationGrid cities={cities} type={"city"} />}
           </Container>
         </SWrapper>
       </>

@@ -5,8 +5,9 @@ import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
-import CountryGrid from "src/Components/CountryGrid";
 import Flag from "../../Components/Flag";
+import { ContinentProfile } from "../../types/api";
+import LocationGrid from "../../Components/LocationGrid";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -108,13 +109,27 @@ const FlagGrid = styled.div`
   padding: 20px;
 `;
 
+const Container = styled.div`
+  border-bottom: 4px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  -webkit-box-flex: 0;
+  flex: 0 0 auto;
+  height: 250px;
+  border-bottom: 1px solid grey;
+  padding: 20px;
+`;
+
+const AvatarContainer = styled.div``;
+
 interface IProps {
-  data?: any;
+  data?: ContinentProfile;
   loading: boolean;
 }
 
 const ContinentProfilePresenter: React.SFC<IProps> = ({
-  data: { continentProfile: { continent = {}, countries = {} } = {} } = {},
+  data: { continentProfile: { continent = null, countries = null } = {} } = {},
   loading
 }) => {
   if (loading) {
@@ -178,19 +193,24 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
                 <FlagGrid>
                   {countries &&
                     countries.map(country => (
-                      <Flag
-                        size={"sm"}
-                        key={country.id}
-                        countryCode={require(`../../Images/countryFlag/${
-                          country.countryCode
-                        }.svg`)}
-                      />
+                      <AvatarContainer key={country.id}>
+                        <Flag
+                          size={"sm"}
+                          countryCode={require(`../../Images/countryFlag/${
+                            country.countryCode
+                          }.svg`)}
+                        />
+                      </AvatarContainer>
                     ))}
                 </FlagGrid>
               </Follow>
             </FollowContainer>
-          </PBody>
-          {countries && <CountryGrid countries={countries} />}
+          </PBody>{" "}
+          <Container>
+            {countries && (
+              <LocationGrid countries={countries} type={"country"} />
+            )}
+          </Container>
         </SWrapper>
       </>
     );

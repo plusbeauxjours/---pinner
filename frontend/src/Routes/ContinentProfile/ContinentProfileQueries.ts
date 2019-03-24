@@ -9,6 +9,7 @@ export const CONTINENT_PROFILE = gql`
         countryCount
       }
       countries {
+        id
         countryName
         countryCode
         countryPhoto

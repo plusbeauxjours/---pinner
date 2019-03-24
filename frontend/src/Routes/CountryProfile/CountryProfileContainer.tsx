@@ -2,7 +2,7 @@ import React from "react";
 import { Query } from "react-apollo";
 import CountryProfilePresenter from "./CountryProfilePresenter";
 import { CountryProfile, CountryProfileVariables } from "../../types/api";
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps, withRouter } from "react-router";
 import { COUNTRY_PROFILE } from "./CountryProfileQueries";
 
 class CountryProfileQuery extends Query<
@@ -28,6 +28,7 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
         params: { countryName }
       }
     } = this.props;
+    console.log(this.props);
     const { page } = this.state;
     return (
       <CountryProfileQuery
@@ -43,4 +44,4 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
   }
 }
 
-export default CountryProfileContainer;
+export default withRouter(CountryProfileContainer);

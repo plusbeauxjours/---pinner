@@ -406,6 +406,7 @@ export interface ContinentProfile_continentProfile_continent {
 
 export interface ContinentProfile_continentProfile_countries {
   __typename: "CountryType";
+  id: string;
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
@@ -573,14 +574,14 @@ export interface RecommandUsers {
 export interface NearCities_nearCities_cities_country {
   __typename: "CountryType";
   countryName: string | null;
-  countryCode: string | null;
 }
 
 export interface NearCities_nearCities_cities {
   __typename: "CityType";
+  id: string;
+  country: NearCities_nearCities_cities_country;
   cityName: string | null;
   cityPhoto: string | null;
-  country: NearCities_nearCities_cities_country;
 }
 
 export interface NearCities_nearCities {
@@ -602,6 +603,7 @@ export interface NearCities {
 
 export interface NearCountries_nearCountries_countries {
   __typename: "CountryType";
+  id: string;
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;

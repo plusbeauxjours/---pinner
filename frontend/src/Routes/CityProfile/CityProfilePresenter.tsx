@@ -24,6 +24,15 @@ const PAvatar = styled(Avatar)`
   margin: 40px;
 `;
 
+const AvatarGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 40px;
+  padding: 20px;
+`;
+
+const AvatarContainer = styled.div``;
+
 const Username = styled.span`
   text-align: center;
   font-size: 22px;
@@ -213,30 +222,38 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               <Follow>
                 USERS WHO IS HERE
                 <SBold text={String(city.userCount)} />
-                {usersNow &&
-                  usersNow.map(user => (
-                    <Link to={`/${user.username}`}>
-                      <SAvatar
-                        size={"sm"}
-                        key={user.id}
-                        url={user.profile.avatar}
-                      />
-                    </Link>
-                  ))}
+                <AvatarGrid>
+                  {usersNow &&
+                    usersNow.map(user => (
+                      <AvatarContainer key={user.id}>
+                        <Link to={`/${user.username}`}>
+                          <SAvatar
+                            size={"sm"}
+                            key={user.id}
+                            url={user.profile.avatar}
+                          />
+                        </Link>
+                      </AvatarContainer>
+                    ))}
+                </AvatarGrid>
               </Follow>
               <Follow>
                 USERS WHO HAS BEEN HERE
                 <SBold text={String(city.userLogCount)} />
-                {usersBefore &&
-                  usersBefore.map(user => (
-                    <Link to={`/${user.actor.username}`}>
-                      <SAvatar
-                        size={"sm"}
-                        key={user.id}
-                        url={user.actor.profile.avatar}
-                      />
-                    </Link>
-                  ))}
+                <AvatarGrid>
+                  {usersBefore &&
+                    usersBefore.map(user => (
+                      <AvatarContainer key={user.id}>
+                        <Link to={`/${user.actor.username}`}>
+                          <SAvatar
+                            size={"sm"}
+                            key={user.id}
+                            url={user.actor.profile.avatar}
+                          />
+                        </Link>
+                      </AvatarContainer>
+                    ))}
+                </AvatarGrid>
               </Follow>
             </FollowContainer>
           </PBody>
