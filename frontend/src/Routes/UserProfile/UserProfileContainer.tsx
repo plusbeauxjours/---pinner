@@ -19,6 +19,8 @@ import {
   FrequentVisits
 } from "../../types/api";
 import { toast } from "react-toastify";
+import { GetTrips, GetTripsVariables } from "../../types/api";
+import { GET_TRIPS } from "./UserProfileQueries";
 import {
   TopCountriesVariables,
   FrequentVisitsVariables
@@ -30,6 +32,7 @@ class FrequentVisitsQuery extends Query<
   FrequentVisits,
   FrequentVisitsVariables
 > {}
+class GetTiprsQuery extends Query<GetTrips, GetTripsVariables> {}
 class EditProfileMutation extends Mutation<EditProfile, EditProfileVariables> {}
 class DeleteProfileMutation extends Mutation<DeleteProfile> {}
 class LogOutMutation extends Mutation {}
@@ -140,17 +143,23 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                               {({
                                 data: topCountriesData,
                                 loading: topCountriesLoading
-                              }) => {
-                                return (
-                                  <FrequentVisitsQuery
-                                    query={FREQUENT_VISITS}
-                                    variables={{ username }}
-                                  >
-                                    {({
-                                      data: frequentVisitsData,
-                                      loading: frequentVisitsLoading
-                                    }) => {
-                                      return (
+                              }) => (
+                                <FrequentVisitsQuery
+                                  query={FREQUENT_VISITS}
+                                  variables={{ username }}
+                                >
+                                  {({
+                                    data: frequentVisitsData,
+                                    loading: frequentVisitsLoading
+                                  }) => (
+                                    <GetTiprsQuery
+                                      query={GET_TRIPS}
+                                      variables={{ username }}
+                                    >
+                                      {({
+                                        data: getTripsData,
+                                        loading: getTipsLoading
+                                      }) => (
                                         <UserProfilePresenter
                                           modalOpen={modalOpen}
                                           confirmModalOpen={confirmModalOpen}
@@ -164,20 +173,22 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                             this.toggleConfirmModal
                                           }
                                           openEditMode={this.openEditMode}
+                                          userProfileData={userProfileData}
                                           userProfileLoading={
                                             userProfileLoading
                                           }
+                                          topCountriesData={topCountriesData}
                                           topCountriesLoading={
                                             topCountriesLoading
+                                          }
+                                          frequentVisitsData={
+                                            frequentVisitsData
                                           }
                                           frequentVisitsLoading={
                                             frequentVisitsLoading
                                           }
-                                          userProfileData={userProfileData}
-                                          topCountriesData={topCountriesData}
-                                          frequentVisitsData={
-                                            frequentVisitsData
-                                          }
+                                          getTripsData={getTripsData}
+                                          getTipsLoading={getTipsLoading}
                                           onInputChange={this.onInputChange}
                                           onKeyUp={this.onKeyUp}
                                           userName={userName}
@@ -186,11 +197,11 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                           firstName={firstName}
                                           lastName={lastName}
                                         />
-                                      );
-                                    }}
-                                  </FrequentVisitsQuery>
-                                );
-                              }}
+                                      )}
+                                    </GetTiprsQuery>
+                                  )}
+                                </FrequentVisitsQuery>
+                              )}
                             </TopCountriesQuery>
                           );
                         }}

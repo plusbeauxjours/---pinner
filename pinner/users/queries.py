@@ -11,10 +11,12 @@ def resolve_profile(self, info, **kwargs):
 
     try:
         profile = User.objects.get(username=username)
+        footprints = profile.movenotification.all().order_by('fromDate')[:3]
+
     except User.DoesNotExist:
         raise Exception('User not found')
 
-    return types.UserProfileResponse(user=profile)
+    return types.UserProfileResponse(user=profile, footprints=footprints)
 
 
 @login_required
@@ -22,12 +24,9 @@ def resolve_get_trips(self, info, **kwargs):
 
     user = info.context.user
     username = kwargs.get('username')
-    page = kwargs.get('page', 0)
-    offset = 10 * page
 
     profile = User.objects.get(username=username)
-
-    footprints = profile.movenotification.all()
+    footprints = profile.movenotification.all().order_by('from_date')
 
     return location_types.FootprintsResponse(footprints=footprints)
 

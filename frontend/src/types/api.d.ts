@@ -1558,6 +1558,49 @@ export interface FrequentVisitsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetTrips
+// ====================================================
+
+export interface GetTrips_getTrips_footprints_toCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryCode: string | null;
+}
+
+export interface GetTrips_getTrips_footprints_toCity {
+  __typename: "CityType";
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: GetTrips_getTrips_footprints_toCity_country;
+}
+
+export interface GetTrips_getTrips_footprints {
+  __typename: "MoveNotificationType";
+  id: string;
+  toCity: GetTrips_getTrips_footprints_toCity | null;
+  fromDate: any | null;
+  toDate: any | null;
+  createdAt: string | null;
+}
+
+export interface GetTrips_getTrips {
+  __typename: "FootprintsResponse";
+  footprints: (GetTrips_getTrips_footprints | null)[] | null;
+}
+
+export interface GetTrips {
+  getTrips: GetTrips_getTrips;
+}
+
+export interface GetTripsVariables {
+  username: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CompletePhoneVerification
 // ====================================================
 
