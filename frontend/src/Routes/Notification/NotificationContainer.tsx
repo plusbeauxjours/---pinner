@@ -48,9 +48,12 @@ class NotificationContainer extends React.Component<any, IState> {
         query={GET_MOVE_NOTIFICATION}
         variables={{ page }}
       >
-        {({ data: getMoveNotifications }) => (
+        {({
+          data: getMoveNotifications,
+          loading: getMoveNotificationsLoading
+        }) => (
           <GetNotifictionQuery query={GET_NOTIFICATION} variables={{ page }}>
-            {({ data: getNotifications, loading }) => (
+            {({ data: getNotifications, loading: getNotificationsLoading }) => (
               <MarkAsReadMutation
                 mutation={MARK_AS_READ}
                 variables={{ notificationId: parseInt(notificationId, 10) }}
@@ -60,11 +63,13 @@ class NotificationContainer extends React.Component<any, IState> {
               >
                 {markAsReadFn => {
                   this.markAsReadFn = markAsReadFn;
+                  console.log(getNotifications, getMoveNotifications);
                   return (
                     <NotificationPresenter
                       getNotifications={getNotifications}
                       getMoveNotifications={getMoveNotifications}
-                      loading={loading}
+                      getNotificationsLoading={getNotificationsLoading}
+                      getMoveNotificationsLoading={getMoveNotificationsLoading}
                       modalOpen={modalOpen}
                       toggleModal={this.toggleModal}
                       onMarkRead={this.onMarkRead}

@@ -11,7 +11,6 @@ import Bold from "../../Components/Bold";
 import CardGrid from "../../Components/CardGrid";
 import FollowBtn from "../../Components/FollowBtn";
 import Input from "../../Components/Input";
-import LocationGrid from "../../Components/LocationGrid";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -237,7 +236,9 @@ interface IProps {
   userProfileData: UserProfile;
   topCountriesData?: TopCountries;
   frequentVisitsData?: FrequentVisits;
-  loading: boolean;
+  userProfileLoading: boolean;
+  topCountriesLoading: boolean;
+  frequentVisitsLoading: boolean;
   modalOpen: boolean;
   confirmModalOpen: boolean;
   editMode: boolean;
@@ -261,7 +262,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   frequentVisitsData: {
     frequentVisits: { footprints: frequentCities = null } = {}
   },
-  loading,
+  userProfileLoading,
+  topCountriesLoading,
+  frequentVisitsLoading,
   modalOpen,
   confirmModalOpen,
   editMode,
@@ -278,9 +281,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   firstName,
   lastName
 }) => {
-  if (loading) {
+  if (userProfileLoading) {
     return <Loader />;
-  } else if (!loading && user && topCountries && frequentCities) {
+  } else if (user && topCountries && frequentCities) {
     return (
       <>
         {modalOpen && (
@@ -431,7 +434,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 FOLLOWERS
                 <SBold text={String(user.profile.followersCount)} />
                 <AvatarGrid>
-                  {user.profile.followers &&
+                  {!userProfileLoading && user.profile.followers ? (
                     user.profile.followers.map(follower => (
                       <Link to={`/${follower.user.username}`}>
                         <Avatar
@@ -440,7 +443,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                           url={follower.user.profile.avatar}
                         />
                       </Link>
-                    ))}
+                    ))
+                  ) : (
+                    <Loader />
+                  )}
                 </AvatarGrid>
               </Follow>
               <Follow>
@@ -464,13 +470,43 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           <PRow>TRIP LOG</PRow>
           <PRow>
             <RowText>TOP COUNTRIES</RowText>
-
-            <LocationGrid countries={topCountries} type={"country"} />
+            {!topCountriesLoading && topCountries ? (
+              topCountries.map(topCountry => (
+                <CityContainer>
+                  <Link
+                    to={`/country/${topCountry.toCity.country.countryName}`}
+                  >
+                    <CityPhoto
+                      key={topCountry.id}
+                      src={topCountry.toCity.country.countryPhoto}
+                    />
+                  </Link>
+                  <CityName text={topCountry.toCity.country.countryName} />
+                </CityContainer>
+              ))
+            ) : (
+              <Loader />
+            )}
           </PRow>
           <PRow>
             <RowText>FREQUENTVISITS</RowText>
+            {!frequentVisitsLoading && frequentCities ? (
+              frequentCities.map(frequentCity => (
+                <CityContainer>
+                  <Link to={`/city/${frequentCity.toCity.cityName}`}>
+                    <CityPhoto
+                      key={frequentCity.id}
+                      src={frequentCity.toCity.cityPhoto}
+                    />
+                  </Link>
 
-            <LocationGrid cities={frequentCities} type={"city"} />
+                  <CityName text={frequentCity.toCity.cityName} />
+                  <CountryName text={frequentCity.toCity.country.countryName} />
+                </CityContainer>
+              ))
+            ) : (
+              <Loader />
+            )}
           </PRow>
           {user.cards && user.cards.length !== 0 && (
             <CardGrid cards={user.cards} />

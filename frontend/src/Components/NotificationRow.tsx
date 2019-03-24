@@ -4,7 +4,6 @@ import UserHeader from "./UserHeader";
 import Bold from "./Bold";
 import { Link } from "react-router-dom";
 import FlagHeader from "./FlagHeader";
-import Loader from "src/Components/Loader";
 import { RedDot } from "src/Icons";
 
 const Container = styled.div`
@@ -82,20 +81,16 @@ interface IProps {
   key: string;
   notification: any;
   actor: any;
-  loading: boolean;
   onMarkRead: any;
   isRead: boolean;
 }
 const NotificationRow: React.SFC<IProps> = ({
   notification,
   actor,
-  loading,
   onMarkRead,
   isRead
 }) => {
-  if (loading) {
-    return <Loader />;
-  } else if (!loading && notification.verb) {
+  if (notification.verb) {
     return (
       <>
         {(() => {
@@ -265,7 +260,7 @@ const NotificationRow: React.SFC<IProps> = ({
                 </>
               );
             default:
-              return <p>hi</p>;
+              return null;
           }
         })()}
       </>

@@ -6,6 +6,12 @@ import styled from "../../Styles/typed-components";
 import Loader from "../../Components/Loader";
 import UserGrid from "../../Components/UserGrid";
 import LocationGrid from "../../Components/LocationGrid";
+import Wrapper from "../../Components/Wrapper";
+
+const TallWrapper = styled(Wrapper)`
+  height: 50vh;
+  text-align: center;
+`;
 
 const Container = styled.div`
   border-bottom: 4px;
@@ -23,35 +29,50 @@ interface IProps {
   recommandUsersData?: RecommandUsers;
   nearCitiesData?: NearCities;
   nearCountriesData?: NearCountries;
-  loading: boolean;
+  recommandUsersLoading: boolean;
+  nearCitiesLoading: boolean;
+  nearCountriesLoading: boolean;
 }
 
 const ExplorePresenter: React.SFC<IProps> = ({
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},
   nearCitiesData: { nearCities: { cities = null } = {} } = {},
   nearCountriesData: { nearCountries: { countries = null } = {} } = {},
-  loading
+  recommandUsersLoading,
+  nearCitiesLoading,
+  nearCountriesLoading
 }) => {
-  if (loading) {
-    return <Loader />;
-  } else if (!loading && users) {
+  if (users || cities || countries) {
     return (
-      <>
-        {" "}
+      <TallWrapper>
         <Link to="/explore/userlist">
           <p>see all</p>
         </Link>
         <p>recommand user</p>
-        <Container>{users && <UserGrid users={users} />}</Container>
+        <Container>
+          {!recommandUsersLoading && users ? (
+            <UserGrid users={users} />
+          ) : (
+            <Loader />
+          )}
+        </Container>
         <p>near cities</p>
         <Container>
-          {cities && <LocationGrid cities={cities} type={"city"} />}
+          {!nearCitiesLoading && cities ? (
+            <LocationGrid cities={cities} type={"city"} />
+          ) : (
+            <Loader />
+          )}
         </Container>
         <p>near countries</p>
         <Container>
-          {countries && <LocationGrid countries={countries} type={"country"} />}
+          {!nearCountriesLoading && countries ? (
+            <LocationGrid countries={countries} type={"country"} />
+          ) : (
+            <Loader />
+          )}
         </Container>
-      </>
+      </TallWrapper>
     );
   } else {
     return null;

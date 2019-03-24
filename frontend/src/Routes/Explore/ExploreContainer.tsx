@@ -16,16 +16,21 @@ class ExploreContainer extends React.Component<any, IState> {
   public render = () => {
     return (
       <RecommandUsersQuery query={RECOMMAND_USERS}>
-        {({ data: recommandUsersData, loading }) => (
+        {({ data: recommandUsersData, loading: recommandUsersLoading }) => (
           <NearCitiesQuery query={NEAR_CITY}>
-            {({ data: nearCitiesData }) => (
+            {({ data: nearCitiesData, loading: nearCitiesLoading }) => (
               <NearCountriesQuery query={NEAR_COUNTRY}>
-                {({ data: nearCountriesData }) => (
+                {({
+                  data: nearCountriesData,
+                  loading: nearCountriesLoading
+                }) => (
                   <ExplorePresenter
                     recommandUsersData={recommandUsersData}
                     nearCitiesData={nearCitiesData}
                     nearCountriesData={nearCountriesData}
-                    loading={loading}
+                    recommandUsersLoading={recommandUsersLoading}
+                    nearCitiesLoading={nearCitiesLoading}
+                    nearCountriesLoading={nearCountriesLoading}
                   />
                 )}
               </NearCountriesQuery>

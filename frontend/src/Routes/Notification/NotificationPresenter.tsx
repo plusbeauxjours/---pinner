@@ -14,7 +14,8 @@ const SWrapper = styled(Wrapper)`
 interface IProps {
   getNotifications?: GetNotifictions;
   getMoveNotifications?: GetMoveNotifications;
-  loading: boolean;
+  getNotificationsLoading: boolean;
+  getMoveNotificationsLoading: boolean;
   className?: string;
   modalOpen: boolean;
   toggleModal: () => void;
@@ -28,18 +29,17 @@ const NotificationPresenter: React.SFC<IProps> = ({
   getMoveNotifications: {
     getMoveNotifications: { notifications: getMoveNotifications = null } = {}
   } = {},
-  loading,
+  getNotificationsLoading,
+  getMoveNotificationsLoading,
   modalOpen,
   onMarkRead
 }) => {
-  if (loading) {
-    return <Loader />;
-  } else if (!loading && getNotifications && getMoveNotifications) {
+  if (getNotifications && getMoveNotifications) {
     return (
       <>
         {modalOpen && <Route path="/p/:id" component={CardDetail} />}
         <SWrapper>
-          {getNotifications &&
+          {!getNotificationsLoading && getNotifications ? (
             getNotifications.map(notification => {
               return (
                 <NotificationRow
@@ -48,14 +48,16 @@ const NotificationPresenter: React.SFC<IProps> = ({
                   notification={notification}
                   actor={notification.actor.profile}
                   onMarkRead={onMarkRead}
-                  loading={loading}
                   isRead={notification.read}
                 />
               );
-            })}
+            })
+          ) : (
+            <Loader />
+          )}
         </SWrapper>
         <SWrapper>
-          {getMoveNotifications &&
+          {!getMoveNotificationsLoading && getMoveNotifications ? (
             getMoveNotifications.map(notification => {
               return (
                 <NotificationRow
@@ -64,11 +66,13 @@ const NotificationPresenter: React.SFC<IProps> = ({
                   notification={notification}
                   actor={notification.actor.profile}
                   onMarkRead={onMarkRead}
-                  loading={loading}
                   isRead={notification.read}
                 />
               );
-            })}
+            })
+          ) : (
+            <Loader />
+          )}
         </SWrapper>
       </>
     );

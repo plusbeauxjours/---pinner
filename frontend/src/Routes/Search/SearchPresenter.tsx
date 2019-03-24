@@ -35,6 +35,8 @@ const SearchPresenter: React.SFC<IProps> = ({
         <Bold text="Search for something..." />
       </TallWrapper>
     );
+  } else if (loading) {
+    return <Loader />;
   } else if (!loading && users && cards) {
     return (
       <TallWrapper>

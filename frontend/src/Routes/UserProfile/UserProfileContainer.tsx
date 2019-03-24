@@ -92,7 +92,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
           this.logUserOutFn = logUserOutFn;
           return (
             <UserProfileQuery query={GET_USER} variables={{ username }}>
-              {({ data: userProfileData, loading }) => (
+              {({ data: userProfileData, loading: userProfileLoading }) => (
                 <EditProfileMutation
                   mutation={EDIT_PROFILE}
                   refetchQueries={[{ query: GET_USER, variables: username }]}
@@ -137,13 +137,19 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                               query={TOP_COUNTRIES}
                               variables={{ username }}
                             >
-                              {({ data: topCountriesData }) => {
+                              {({
+                                data: topCountriesData,
+                                loading: topCountriesLoading
+                              }) => {
                                 return (
                                   <FrequentVisitsQuery
                                     query={FREQUENT_VISITS}
                                     variables={{ username }}
                                   >
-                                    {({ data: frequentVisitsData }) => {
+                                    {({
+                                      data: frequentVisitsData,
+                                      loading: frequentVisitsLoading
+                                    }) => {
                                       return (
                                         <UserProfilePresenter
                                           modalOpen={modalOpen}
@@ -158,7 +164,15 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                             this.toggleConfirmModal
                                           }
                                           openEditMode={this.openEditMode}
-                                          loading={loading}
+                                          userProfileLoading={
+                                            userProfileLoading
+                                          }
+                                          topCountriesLoading={
+                                            topCountriesLoading
+                                          }
+                                          frequentVisitsLoading={
+                                            frequentVisitsLoading
+                                          }
                                           userProfileData={userProfileData}
                                           topCountriesData={topCountriesData}
                                           frequentVisitsData={
