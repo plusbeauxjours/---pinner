@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import React from "react";
-import { NearCities, NearCountries, RecommandUsers } from "../../types/api";
+import {
+  NearCities,
+  NearCountries,
+  RecommandUsers,
+  LatestCities
+} from "../../types/api";
 import styled from "../../Styles/typed-components";
 
 import Loader from "../../Components/Loader";
@@ -27,22 +32,26 @@ const Container = styled.div`
 
 interface IProps {
   recommandUsersData?: RecommandUsers;
-  nearCitiesData?: NearCities;
-  nearCountriesData?: NearCountries;
   recommandUsersLoading: boolean;
+  nearCitiesData?: NearCities;
   nearCitiesLoading: boolean;
+  nearCountriesData?: NearCountries;
   nearCountriesLoading: boolean;
+  latestCitiesData?: LatestCities;
+  latestCitiesLoading: boolean;
 }
 
 const ExplorePresenter: React.SFC<IProps> = ({
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},
-  nearCitiesData: { nearCities: { cities = null } = {} } = {},
-  nearCountriesData: { nearCountries: { countries = null } = {} } = {},
   recommandUsersLoading,
+  nearCitiesData: { nearCities: { cities: nearCities = null } = {} } = {},
   nearCitiesLoading,
-  nearCountriesLoading
+  nearCountriesData: { nearCountries: { countries = null } = {} } = {},
+  nearCountriesLoading,
+  latestCitiesData: { latestCities: { cities: latestCities = null } = {} } = {},
+  latestCitiesLoading
 }) => {
-  if (users || cities || countries) {
+  if (users || nearCities || countries || latestCities) {
     return (
       <TallWrapper>
         <Link to="/explore/userlist">
@@ -58,8 +67,8 @@ const ExplorePresenter: React.SFC<IProps> = ({
         </Container>
         <p>near cities</p>
         <Container>
-          {!nearCitiesLoading && cities ? (
-            <LocationGrid cities={cities} type={"city"} />
+          {!nearCitiesLoading && nearCities ? (
+            <LocationGrid cities={nearCities} type={"city"} />
           ) : (
             <Loader />
           )}
@@ -68,6 +77,14 @@ const ExplorePresenter: React.SFC<IProps> = ({
         <Container>
           {!nearCountriesLoading && countries ? (
             <LocationGrid countries={countries} type={"country"} />
+          ) : (
+            <Loader />
+          )}
+        </Container>
+        <p>latest cities</p>
+        <Container>
+          {!latestCitiesLoading && latestCities ? (
+            <LocationGrid cities={latestCities} type={"city"} />
           ) : (
             <Loader />
           )}

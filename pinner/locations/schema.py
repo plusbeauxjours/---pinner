@@ -31,11 +31,6 @@ class Query(object):
             'page': graphene.Int()
         }
     )
-    get_cities = graphene.Field(
-        types.CitiesResponse,
-        resolver=queries.resolve_get_cities,
-        required=True
-    )
     get_countries = graphene.Field(
         types.CountriesResponse,
         resolver=queries.resolve_get_countries,
@@ -54,6 +49,11 @@ class Query(object):
     near_countries = graphene.Field(
         types.CountriesResponse,
         resolver=queries.resolve_near_countries,
+        required=True
+    )
+    latest_cities = graphene.Field(
+        types.CitiesResponse,
+        resolver=queries.resolve_latest_cities,
         required=True
     )
     search_cities = graphene.Field(

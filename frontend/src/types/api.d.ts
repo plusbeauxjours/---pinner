@@ -622,6 +622,36 @@ export interface NearCountries {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: LatestCities
+// ====================================================
+
+export interface LatestCities_latestCities_cities_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface LatestCities_latestCities_cities {
+  __typename: "CityType";
+  id: string;
+  country: LatestCities_latestCities_cities_country;
+  cityName: string | null;
+  cityPhoto: string | null;
+}
+
+export interface LatestCities_latestCities {
+  __typename: "CitiesResponse";
+  cities: (LatestCities_latestCities_cities | null)[] | null;
+}
+
+export interface LatestCities {
+  latestCities: LatestCities_latestCities;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: Feed
 // ====================================================
 
@@ -816,41 +846,6 @@ export interface ReportLocationVariables {
   cityPhotoURL: string;
   countryPhotoURL: string;
   continentPhotoURL: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetCities
-// ====================================================
-
-export interface GetCities_getCities_cities_country {
-  __typename: "CountryType";
-  id: string;
-  countryName: string | null;
-  countryCode: string | null;
-}
-
-export interface GetCities_getCities_cities {
-  __typename: "CityType";
-  id: string;
-  cityName: string | null;
-  cityPhoto: string | null;
-  country: GetCities_getCities_cities_country;
-  userCount: number | null;
-  userLogCount: number | null;
-  cardCount: number | null;
-}
-
-export interface GetCities_getCities {
-  __typename: "CitiesResponse";
-  cities: (GetCities_getCities_cities | null)[] | null;
-}
-
-export interface GetCities {
-  getCities: GetCities_getCities;
 }
 
 

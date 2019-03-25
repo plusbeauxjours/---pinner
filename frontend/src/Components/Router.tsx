@@ -13,7 +13,6 @@ import Search from "../Routes/Search";
 import UpLoad from "../Routes/UpLoad";
 import Explore from "../Routes/Explore";
 import UserList from "../Routes/UserList";
-import Location from "../Routes/Location";
 import Notification from "../Routes/Notification";
 import Footprint from "../Routes/Footprint";
 import CityProfile from "../Routes/CityProfile";
@@ -44,7 +43,6 @@ const LoggedInPages = () => (
       <Route path="/upload" component={UpLoad} />
       <Route path="/explore" exact={true} component={Explore} />
       <Route path="/explore/userlist" component={UserList} />
-      <Route path="/location" exact={true} component={Location} />
       <Route path="/notification" component={Notification} />
       <Route path="/continent/:continentName" component={ContinentProfile} />
       <Route path="/country/:countryName" component={CountryProfile} />

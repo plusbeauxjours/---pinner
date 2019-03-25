@@ -16,7 +16,7 @@ export const RECOMMAND_USERS = gql`
   ${USER_FRAGMENT}
 `;
 
-export const NEAR_CITY = gql`
+export const NEAR_CITIES = gql`
   query NearCities {
     nearCities {
       cities {
@@ -27,7 +27,7 @@ export const NEAR_CITY = gql`
   ${CITY_FRAGMENT}
 `;
 
-export const NEAR_COUNTRY = gql`
+export const NEAR_COUNTRIES = gql`
   query NearCountries {
     nearCountries {
       countries {
@@ -36,4 +36,15 @@ export const NEAR_COUNTRY = gql`
     }
   }
   ${COUNTRY_FRAGMENT}
+`;
+
+export const LATEST_CITIES = gql`
+  query LatestCities {
+    latestCities {
+      cities {
+        ...CityParts
+      }
+    }
+  }
+  ${CITY_FRAGMENT}
 `;

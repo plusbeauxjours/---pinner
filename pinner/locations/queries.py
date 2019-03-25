@@ -17,15 +17,6 @@ def resolve_get_countries(self, info):
 
 
 @login_required
-def resolve_get_cities(self, info):
-
-    cities = models.City.objects.all().order_by(
-        '-created_at')
-
-    return types.CitiesResponse(cities=cities)
-
-
-@login_required
 def resolve_search_citiess(self, info, **kwargs):
 
     user = info.context.user
@@ -165,3 +156,12 @@ def resolve_near_countries(self, info):
     countries = user.profile.current_city.near_country.all()
 
     return types.CountriesResponse(countries=countries)
+
+
+@login_required
+def resolve_latest_cities(self, info):
+
+    cities = models.City.objects.all().order_by(
+        '-created_at')
+
+    return types.CitiesResponse(cities=cities)
