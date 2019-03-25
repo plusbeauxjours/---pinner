@@ -35,6 +35,19 @@ class CardLikeResponse(graphene.ObjectType):
     likes = graphene.List(LikeType)
 
 
+class UploadCardResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
+    card = graphene.Field(location_types.CardType)
+
+
+class EditCardResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
+
+
+class DeleteCardResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
+
+
 class AddCommentResponse(graphene.ObjectType):
     comment = graphene.Field(CommentType)
 
@@ -43,24 +56,7 @@ class DeleteCommentResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
 
-class CardLikeResponse(graphene.ObjectType):
-    likes = graphene.List(LikeType)
-
-
 class CardDetailResponse(graphene.ObjectType):
-    card = graphene.Field(location_types.CardType)
-
-
-class EditCardResponse(graphene.ObjectType, config_types.ResponseFields):
-    card = graphene.Field(location_types.CardType)
-
-
-class DeleteCardResponse(graphene.ObjectType, config_types.ResponseFields):
-    pass
-
-
-class UploadCardResponse(graphene.ObjectType):
-    ok = graphene.Boolean()
     card = graphene.Field(location_types.CardType)
 
 

@@ -19,6 +19,8 @@ import Input from "../../Components/Input";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
+  height: 50vh;
+  text-align: center;
 `;
 
 const PHeader = styled.header`
@@ -59,11 +61,11 @@ const PRow = styled.div`
   margin: 20px 10px 20px 10px;
 `;
 
-const RowText = styled.span`
-  display: flex;
-  position: absolute;
-  margin-bottom: 10px;
-`;
+// const RowText = styled.span`
+//   display: flex;
+//   position: absolute;
+//   margin-bottom: 10px;
+// `;
 
 const CityPhoto = styled.img<ITheme>`
   margin-bottom: 10px;
@@ -521,23 +523,23 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </FollowContainer>
           </PBody>
           <TripRow>
-            <RowText>TRIP LOG</RowText>
+            <p>TRIP LOG</p>
             {!getTipsLoading && getTrips ? (
               getTrips.map(getTrip => (
                 <TripContainer key={getTrip.id}>
                   <CityPhoto src={getTrip.toCity.cityPhoto} size={"sm"} />
-                  <TripText>{getTrip.fromDate}</TripText>
-                  <TripText>{getTrip.toDate}</TripText>
                   <TripText>{getTrip.toCity.cityName}</TripText>
                   <TripText>{getTrip.toCity.country.countryName}</TripText>
+                  <TripText>{getTrip.fromDate}</TripText>
+                  <TripText>{getTrip.toDate}</TripText>
                 </TripContainer>
               ))
             ) : (
               <Loader />
             )}
           </TripRow>
+          <p>TOP COUNTRIES</p>
           <PRow>
-            <RowText>TOP COUNTRIES</RowText>
             {!topCountriesLoading && topCountries ? (
               topCountries.map(topCountry => (
                 <CityContainer key={topCountry.id}>
@@ -556,8 +558,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <Loader />
             )}
           </PRow>
+          <p>FREQUENTVISITS</p>
           <PRow>
-            <RowText>FREQUENTVISITS</RowText>
             {!frequentVisitsLoading && frequentCities ? (
               frequentCities.map(frequentCity => (
                 <CityContainer key={frequentCity.id}>
