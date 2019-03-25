@@ -193,6 +193,8 @@ const ModalContainer = styled.div`
   top: 0;
 `;
 
+const FromModalContainer = styled(ModalContainer)``;
+
 const GearContainer = styled.span`
   margin-left: 15px;
   cursor: pointer;
@@ -224,6 +226,11 @@ const Modal = styled.div`
   border-radius: 12px;
   z-index: 10;
   animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const FormModal = styled(Modal)`
+  width: 80%;
+  height: 30%;
 `;
 
 const ModalLink = styled.div`
@@ -305,6 +312,7 @@ interface IProps {
 
   tripModalOpen: boolean;
   tripConfirmModalOpen: boolean;
+  tripFromModalOpen: boolean;
 
   editMode: boolean;
   openEditMode: () => void;
@@ -320,6 +328,7 @@ interface IProps {
 
   toggleTripModal: any;
   toggleTripConfirmModal: () => void;
+  toggleAddTripModal: () => void;
 
   logUserOutFn: () => void;
 
@@ -348,11 +357,13 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   tripModalOpen,
   confirmModalOpen,
   tripConfirmModalOpen,
-  toggleTripConfirmModal,
+  tripFromModalOpen,
   editMode,
   toggleModal,
   toggleConfirmModal,
   toggleTripModal,
+  toggleTripConfirmModal,
+  toggleAddTripModal,
   openEditMode,
   logUserOutFn,
   confirmDeleteProfile,
@@ -394,23 +405,31 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleTripModal} />
             <Modal>
-              <ModalLink onClick={openEditMode}>Add Trip</ModalLink>
-              <ModalLink onClick={toggleConfirmModal}>Edit Trip</ModalLink>
+              <ModalLink onClick={toggleAddTripModal}>Add Trip</ModalLink>
+              <ModalLink onClick={toggleAddTripModal}>Edit Trip</ModalLink>
               <ModalLink onClick={toggleTripConfirmModal}>
                 Delete Trip
               </ModalLink>
-              <ModalLink onClick={toggleModal}>Cancel</ModalLink>
+              <ModalLink onClick={toggleTripModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>
         )}
         {tripConfirmModalOpen && (
           <ModalContainer>
-            <ModalOverlay onClick={toggleConfirmModal} />
+            <ModalOverlay onClick={toggleTripConfirmModal} />
             <Modal>
               <ModalLink onClick={confirmDeleteTrip}>Yes</ModalLink>
-              <ModalLink onClick={toggleConfirmModal}>No</ModalLink>
+              <ModalLink onClick={toggleTripConfirmModal}>No</ModalLink>
             </Modal>
           </ModalContainer>
+        )}
+        {tripFromModalOpen && (
+          <FromModalContainer>
+            <ModalOverlay onClick={toggleAddTripModal} />
+            <FormModal>
+              <p>hihi</p>
+            </FormModal>
+          </FromModalContainer>
         )}
         <PHeader>
           <PAvatar size="lg" url={user.profile.avatar} />

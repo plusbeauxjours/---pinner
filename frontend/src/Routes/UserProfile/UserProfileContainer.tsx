@@ -56,9 +56,10 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   modalOpen: boolean;
-  tripModalOpen: boolean;
   confirmModalOpen: boolean;
+  tripModalOpen: boolean;
   tripConfirmModalOpen: boolean;
+  tripFromModalOpen: boolean;
   editMode: boolean;
   id: string;
   userName: string;
@@ -84,9 +85,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       modalOpen: false,
-      tripModalOpen: false,
       confirmModalOpen: false,
+      tripModalOpen: false,
       tripConfirmModalOpen: false,
+      tripFromModalOpen: false,
       editMode: false,
       id: props.id,
       userName: props.username,
@@ -113,6 +115,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       confirmModalOpen,
       tripModalOpen,
       tripConfirmModalOpen,
+      tripFromModalOpen,
       editMode,
       userName,
       bio,
@@ -252,6 +255,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                             tripConfirmModalOpen={
                                                               tripConfirmModalOpen
                                                             }
+                                                            tripFromModalOpen={
+                                                              tripFromModalOpen
+                                                            }
                                                             editMode={editMode}
                                                             logUserOutFn={
                                                               logUserOutFn
@@ -278,6 +284,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                             toggleTripConfirmModal={
                                                               this
                                                                 .toggleTripConfirmModal
+                                                            }
+                                                            toggleAddTripModal={
+                                                              this
+                                                                .toggleAddTripModal
                                                             }
                                                             openEditMode={
                                                               this.openEditMode
@@ -357,7 +367,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     const { modalOpen } = this.state;
     this.setState({
       modalOpen: !modalOpen
-    });
+    } as any);
   };
   public toggleTripModal = moveNotificationId => {
     const { tripModalOpen } = this.state;
@@ -371,18 +381,25 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     this.setState({
       confirmModalOpen: !confirmModalOpen,
       modalOpen: !modalOpen
-    });
+    } as any);
   };
   public toggleTripConfirmModal = () => {
     const { tripConfirmModalOpen, tripModalOpen } = this.state;
     this.setState({
       tripConfirmModalOpen: !tripConfirmModalOpen,
       tripModalOpen: !tripModalOpen
+    } as any);
+  };
+  public toggleAddTripModal = () => {
+    const { tripModalOpen, tripFromModalOpen } = this.state;
+    this.setState({
+      tripFromModalOpen: !tripFromModalOpen,
+      tripModalOpen: !tripModalOpen
     });
   };
 
   //
-  // CONFIRM DELETE
+  // DELETE
   //
 
   public confirmDeleteProfile = () => {
@@ -405,8 +422,52 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   };
 
   //
+  // CREATE
+  //
+
+  public addMoveNotification = () => {
+    const { cityName, fromDate, toDate, tripConfirmModalOpen } = this.state;
+    this.setState({
+      tripModalOpen: false
+    });
+    this.addTripFn({
+      variables: { cityName, fromDate, toDate }
+    });
+    this.setState({
+      tripConfirmModalOpen: !tripConfirmModalOpen,
+      moveNotificationId: "",
+      cityName: "",
+      fromDate: "",
+      toDate: ""
+    });
+  };
+
+  //
   // EDIT
   //
+
+  public editMoveNotification = () => {
+    const {
+      moveNotificationId,
+      cityName,
+      fromDate,
+      toDate,
+      tripConfirmModalOpen
+    } = this.state;
+    this.setState({
+      tripModalOpen: false
+    });
+    this.editTripFn({
+      variables: { moveNotificationId, cityName, fromDate, toDate }
+    });
+    this.setState({
+      tripConfirmModalOpen: !tripConfirmModalOpen,
+      moveNotificationId: "",
+      cityName: "",
+      fromDate: "",
+      toDate: ""
+    });
+  };
 
   public openEditMode = () => {
     const { modalOpen } = this.state;
@@ -431,6 +492,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } as any);
     console.log(this.state);
   };
+
   public onKeyUp = event => {
     const { userName, bio, gender, avatar, firstName, lastName } = this.state;
     const { keyCode } = event;
