@@ -143,22 +143,22 @@ class FeedContainer extends React.Component<IProps, IState> {
   public reportLocation = async (
     lat: number,
     lng: number,
-    lastCity: string,
-    lastCountry: string,
+    currentCity: string,
+    currentCountry: string,
     currentCountryCode: string
   ) => {
-    const cityPhotoURL = await cityThumbnail(lastCity);
-    const countryPhotoURL = await countryThumbnail(lastCountry);
+    const cityPhotoURL = await cityThumbnail(currentCity);
+    const countryPhotoURL = await countryThumbnail(currentCountry);
     const currentContinent = await continents[currentCountryCode];
     const continentPhotoURL = await continentThumbnail(currentContinent);
     console.log(currentContinent);
     this.setState({ cityPhotoURL, countryPhotoURL, currentContinent });
     this.ReportLocationFn({
       variables: {
-        lastLat: lat,
-        lastLng: lng,
-        lastCity,
-        lastCountry,
+        currentLat: lat,
+        currentLng: lng,
+        currentCity,
+        currentCountry,
         currentCountryCode,
         currentContinent,
         cityPhotoURL,

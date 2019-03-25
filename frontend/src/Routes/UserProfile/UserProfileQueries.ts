@@ -103,7 +103,7 @@ export const TOP_COUNTRIES = gql`
     topCountries(username: $username) {
       footprints {
         id
-        toCity {
+        city {
           country {
             countryName
             countryCode
@@ -120,7 +120,7 @@ export const FREQUENT_VISITS = gql`
     frequentVisits(username: $username) {
       footprints {
         id
-        toCity {
+        city {
           cityName
           cityPhoto
           country {
@@ -137,7 +137,7 @@ export const GET_TRIPS = gql`
     getTrips(username: $username) {
       footprints {
         id
-        toCity {
+        city {
           cityName
           cityPhoto
           country {

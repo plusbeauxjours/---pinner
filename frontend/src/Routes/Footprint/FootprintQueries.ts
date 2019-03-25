@@ -5,7 +5,7 @@ export const GET_FOOTPRINT = gql`
     getFootprints {
       footprints {
         id
-        toCity {
+        city {
           cityName
           country {
             countryName

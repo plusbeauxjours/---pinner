@@ -52,14 +52,7 @@ export const GET_MOVE_NOTIFICATION = gql`
           }
         }
         verb
-        fromCity {
-          cityName
-          country {
-            countryName
-            countryCode
-          }
-        }
-        toCity {
+        city {
           cityName
           country {
             countryName

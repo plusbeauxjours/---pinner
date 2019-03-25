@@ -54,12 +54,10 @@ class MoveNotification(config_models.TimeStampedModel):
 
     actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='movenotification')
     verb = models.CharField(max_length=10, choices=VERBS, default='move')
-    from_city = models.ForeignKey(
-        location_models.City, on_delete=models.CASCADE, null=True, blank=True, related_name='fromCity')
-    to_city = models.ForeignKey(
-        location_models.City, on_delete=models.CASCADE, null=True, blank=True, related_name='toCity')
-    from_date = models.DateTimeField(null=True, blank=True)
-    to_date = models.DateTimeField(null=True, blank=True)
+    city = models.ForeignKey(
+        location_models.City, on_delete=models.CASCADE, null=True, blank=True, related_name='city')
+    from_date = models.DateField(null=True, blank=True)
+    to_date = models.DateField(null=True, blank=True)
     duration = models.DurationField(default=timedelta())
     read = models.BooleanField(default=False)
 

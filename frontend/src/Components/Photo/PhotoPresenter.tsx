@@ -8,7 +8,7 @@ import { keyframes } from "styled-components";
 import UserHeader from "../UserHeader";
 
 const Container = styled.div`
-  background-color: white;
+  background-color: grey;
   border: ${props => props.theme.boxBorder};
   border-radius: 3px;
 `;

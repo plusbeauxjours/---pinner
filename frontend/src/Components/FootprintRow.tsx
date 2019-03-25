@@ -61,8 +61,8 @@ const FootprintRow: React.SFC<IProps> = ({ footprint }) => (
     </Header>
     <MHeader>
       <FlagHeader
-        cityName={footprint.toCity.cityName}
-        countryCode={footprint.toCity.country.countryCode}
+        cityName={footprint.city.cityName}
+        countryCode={footprint.city.country.countryCode}
       />
     </MHeader>
   </Container>

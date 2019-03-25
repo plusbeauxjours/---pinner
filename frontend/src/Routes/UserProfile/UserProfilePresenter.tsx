@@ -257,17 +257,26 @@ const AvatarGrid = styled.div`
 
 const AvatarContainer = styled.div``;
 
-const TripRow = styled.div`
+const TripContainer = styled.div`
   display: grid;
   flex-direction: column;
   border-bottom: 1px solid grey;
   margin: 20px 10px 20px 10px;
 `;
 
-const TripContainer = styled.div`
+const TripRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #2d3a41;
+  border-radius: 3px;
+  border: ${props => props.theme.boxBorder};
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: grey;
+  }
 `;
 
 const TripText = styled.div`
@@ -522,36 +531,35 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               </Follow>
             </FollowContainer>
           </PBody>
-          <TripRow>
+          <TripContainer>
             <p>TRIP LOG</p>
+            {console.log(getTrips)}
             {!getTipsLoading && getTrips ? (
               getTrips.map(getTrip => (
-                <TripContainer key={getTrip.id}>
-                  <CityPhoto src={getTrip.toCity.cityPhoto} size={"sm"} />
-                  <TripText>{getTrip.toCity.cityName}</TripText>
-                  <TripText>{getTrip.toCity.country.countryName}</TripText>
+                <TripRow key={getTrip.id}>
+                  <CityPhoto src={getTrip.city.cityPhoto} size={"sm"} />
+                  <TripText>{getTrip.city.cityName}</TripText>
+                  <TripText>{getTrip.city.country.countryName}</TripText>
                   <TripText>{getTrip.fromDate}</TripText>
                   <TripText>{getTrip.toDate}</TripText>
-                </TripContainer>
+                </TripRow>
               ))
             ) : (
               <Loader />
             )}
-          </TripRow>
+          </TripContainer>
           <p>TOP COUNTRIES</p>
           <PRow>
             {!topCountriesLoading && topCountries ? (
               topCountries.map(topCountry => (
                 <CityContainer key={topCountry.id}>
-                  <Link
-                    to={`/country/${topCountry.toCity.country.countryName}`}
-                  >
+                  <Link to={`/country/${topCountry.city.country.countryName}`}>
                     <CityPhoto
-                      src={topCountry.toCity.country.countryPhoto}
+                      src={topCountry.city.country.countryPhoto}
                       size={"md"}
                     />
                   </Link>
-                  <CityName text={topCountry.toCity.country.countryName} />
+                  <CityName text={topCountry.city.country.countryName} />
                 </CityContainer>
               ))
             ) : (
@@ -563,14 +571,11 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             {!frequentVisitsLoading && frequentCities ? (
               frequentCities.map(frequentCity => (
                 <CityContainer key={frequentCity.id}>
-                  <Link to={`/city/${frequentCity.toCity.cityName}`}>
-                    <CityPhoto
-                      src={frequentCity.toCity.cityPhoto}
-                      size={"md"}
-                    />
+                  <Link to={`/city/{${frequentCity.city.cityName}`}>
+                    <CityPhoto src={frequentCity.city.cityPhoto} size={"md"} />
                   </Link>
-                  <CityName text={frequentCity.toCity.cityName} />
-                  <CountryName text={frequentCity.toCity.country.countryName} />
+                  <CityName text={frequentCity.city.cityName} />
+                  <CountryName text={frequentCity.city.country.countryName} />
                 </CityContainer>
               ))
             ) : (

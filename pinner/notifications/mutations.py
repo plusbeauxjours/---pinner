@@ -34,23 +34,37 @@ class MarkAsRead(graphene.Mutation):
 class AddTrips(graphene.Mutation):
 
     class Arguments:
-        to_city = graphene.String(required=True)
-        from_date = graphene.String(required=True)
-        to_date = graphene.String(required=True)
+        cityName = graphene.String(required=True)
+        fromDate = graphene.String(required=True)
+        toDate = graphene.String(required=True)
 
     Output = types.AddTripsResponse
 
     @login_required
     def mutate(self, info, **kwargs):
 
-        moveNotificationId = kwargs.get('moveNotificationId')
+        cityName = kwargs.get('cityName')
+        fromDate = kwargs.get('fromDate')
+        toDate = kwargs.get('toDate')
         user = info.context.user
 
-        # if user.is_authenticated:
+        if user.is_authenticated:
 
-        # else:
-        #     error = 'You need to log in'
-        #     return types.ChangePasswordResponse(ok=False)
+            try:
+                moveNotification = models.MoveNotification.objects.create(
+                    actor=user,
+                    city=location_models.City.objects.get(city_name=cityName),
+                    from_date=fromDate,
+                    to_date=toDate
+                )
+                return types.AddTripsResponse(ok=True, moveNotification=moveNotification)
+            except IntegrityError as e:
+                print(e)
+                raise Exception("Can't create the trip")
+
+        else:
+            error = "You need to log in"
+            return types.DeleteTripsResponse(ok=False)
 
 
 class EditTrips(graphene.Mutation):
@@ -73,8 +87,6 @@ class EditTrips(graphene.Mutation):
 
             try:
                 moveNotification = user.movenotification.get(id=moveNotificationId)
-                print(moveNotification.id)
-                print(moveNotification)
             except user.movenotification.DoesNotExist:
                 error = "Trip Not Found"
                 return types.EditTripsResponse(ok=False)
@@ -87,12 +99,11 @@ class EditTrips(graphene.Mutation):
             else:
 
                 try:
-                    cityName = kwargs.get('cityName', moveNotification.to_city.city_name)
-                    print(cityName)
+                    cityName = kwargs.get('cityName', moveNotification.city.city_name)
                     from_date = kwargs.get('fromDate', moveNotification.from_date)
                     to_date = kwargs.get('toDate', moveNotification.to_date)
 
-                    moveNotification.to_city = location_models.City.objects.get(city_name=cityName)
+                    moveNotification.city = location_models.City.objects.get(city_name=cityName)
                     moveNotification.from_date = from_date
                     moveNotification.to_date = to_date
 

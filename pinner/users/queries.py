@@ -26,7 +26,7 @@ def resolve_get_trips(self, info, **kwargs):
     username = kwargs.get('username')
 
     profile = User.objects.get(username=username)
-    footprints = profile.movenotification.all().order_by('from_date')
+    footprints = profile.movenotification.all().order_by('-id')
 
     return location_types.FootprintsResponse(footprints=footprints)
 
@@ -39,7 +39,7 @@ def resolve_top_countries(self, info, **kwargs):
 
     profile = User.objects.get(username=username)
 
-    footprints = profile.movenotification.all().order_by('-to_city__country').distinct('to_city__country')
+    footprints = profile.movenotification.all().order_by('-city__country').distinct('city__country')
 
     return location_types.FootprintsResponse(footprints=footprints)
 
@@ -52,7 +52,7 @@ def resolve_frequent_visits(self, info, **kwargs):
 
     profile = User.objects.get(username=username)
 
-    footprints = profile.movenotification.all().order_by('-to_city').distinct('to_city')
+    footprints = profile.movenotification.all().order_by('-city').distinct('city')
 
     return location_types.FootprintsResponse(footprints=footprints)
 

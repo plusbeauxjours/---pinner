@@ -40,13 +40,6 @@ class ReportLocation(graphene.Mutation):
 
             if (currentCity != profile.current_city.city_name):
 
-                try:
-                    profile.last_lat = profile.current_lat
-                    profile.last_lng = profile.current_lng
-                    profile.last_city = profile.current_city
-                except:
-                    pass
-
                 profile.current_lat = currentLat
                 profile.current_lng = currentLng
 
@@ -75,8 +68,7 @@ class ReportLocation(graphene.Mutation):
                         notification_models.MoveNotification.objects.create(
                             actor=user,
                             verb="move",
-                            from_city=profile.last_city,
-                            to_city=profile.current_city,
+                            city=profile.current_city,
                         )
                         return types.ReportLocationResponse(ok=True)
 
@@ -90,8 +82,7 @@ class ReportLocation(graphene.Mutation):
                         notification_models.MoveNotification.objects.create(
                             actor=user,
                             verb="move",
-                            from_city=profile.last_city,
-                            to_city=profile.current_city,
+                            city=profile.current_city,
                         )
                         return types.ReportLocationResponse(ok=True)
 
@@ -109,8 +100,7 @@ class ReportLocation(graphene.Mutation):
                     notification_models.MoveNotification.objects.create(
                         actor=user,
                         verb="move",
-                        from_city=profile.last_city,
-                        to_city=profile.current_city,
+                        city=profile.current_city,
                     )
                 return types.ReportLocationResponse(ok=True)
 

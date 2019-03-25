@@ -41,17 +41,12 @@ class Profile(config_models.TimeStampedModel):
     current_city = models.ForeignKey(
         location_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCity', )
 
-    last_lat = models.FloatField(blank=True, null=True)
-    last_lng = models.FloatField(blank=True, null=True)
-    last_city = models.ForeignKey(
-        location_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='lastCity', )
-
     def __str__(self):
         return self.user.username
 
     @property
     def city_count(self):
-        return self.user.movenotification.all().order_by('to_city').distinct('to_city').count()
+        return self.user.movenotification.all().order_by('city').distinct('city').count()
 
     @property
     def post_count(self):

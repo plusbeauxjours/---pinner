@@ -7,7 +7,7 @@ import { UPLOAD_CARD } from "./UpLoadQueries";
 import { toast } from "react-toastify";
 import { RouteComponentProps } from "react-router";
 import Me from "src/Components/Me";
-import { GET_USER } from "../UserProfile/UserProfileQueries";
+// import { GET_USER } from "../UserProfile/UserProfileQueries";
 
 class UploadMutation extends Mutation<UploadCard, UploadCardVariables> {}
 
@@ -71,9 +71,9 @@ class UpLoadContainer extends React.Component<IProps, IState> {
                 toast.error("Could not send you a Key");
               }
             }}
-            refetchQueries={[
-              { query: GET_USER, variables: { username: user.username } }
-            ]}
+            // refetchQueries={[
+            //   { query: GET_USER, variables: { username: user.username } }
+            // ]}
           >
             {UploadFn => {
               this.UploadFn = UploadFn;

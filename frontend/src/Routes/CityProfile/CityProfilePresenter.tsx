@@ -5,8 +5,8 @@ import styled from "../../Styles/typed-components";
 import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
-import Photo from "../../Components/Photo";
 import Bold from "../../Components/Bold";
+import CardGrid from "../../Components/CardGrid";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -257,26 +257,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               </Follow>
             </FollowContainer>
           </PBody>
-          {cards &&
-            cards.map(card => (
-              <Photo
-                id={card.id}
-                key={card.id}
-                inline={true}
-                creatorAvatar={card.creator.profile.avatar}
-                creatorUsername={card.creator.username}
-                country={card.country.countryName}
-                city={card.city.cityName}
-                photoUrl={card.file}
-                likeCount={card.likeCount}
-                commentCount={card.commentCount}
-                caption={card.caption}
-                comments={card.comments}
-                createdAt={card.createdAt}
-                isLiked={card.isLiked}
-                borderRadius={card.borderRadius}
-              />
-            ))}
+          {cards && cards.length !== 0 && <CardGrid cards={cards} />}
         </SWrapper>
       </>
     );

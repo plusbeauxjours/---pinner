@@ -117,16 +117,10 @@ const NotificationRow: React.SFC<IProps> = ({
                         <TimeStamp>{notification.createdAt}</TimeStamp>
                       </Header>
                       <MHeader>
-                        <FlagHeader
-                          cityName={notification.fromCity.cityName}
-                          countryCode={
-                            notification.fromCity.country.countryCode
-                          }
-                        />
                         <SBold text={"To"} />
                         <FlagHeader
-                          cityName={notification.toCity.cityName}
-                          countryCode={notification.toCity.country.countryCode}
+                          cityName={notification.city.cityName}
+                          countryCode={notification.city.country.countryCode}
                         />
                       </MHeader>
                     </MContainer>

@@ -1,6 +1,6 @@
 import React from "react";
 import Helmet from "react-helmet";
-import countries from "../../countries";
+import { countries } from "../../countryData";
 import Input from "../../Components/Input";
 import styled from "src/Styles/typed-components";
 import { keyframes } from "styled-components";
@@ -104,8 +104,8 @@ const PhoneLoginPresenter: React.SFC<IProps> = ({
                 onChange={onInputChange}
               >
                 {countries.map((country, index) => (
-                  <CountryOption key={index} value={country.dial_code}>
-                    {country.flag} {country.name} ({country.dial_code})
+                  <CountryOption key={index} value={country.phone}>
+                    {country.emoji} {country.name} ({country.phone})
                   </CountryOption>
                 ))}
               </CountrySelect>
