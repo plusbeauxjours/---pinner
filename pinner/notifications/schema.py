@@ -21,6 +21,6 @@ class Query(object):
 class Mutation(object):
 
     mark_as_read = mutations.MarkAsRead.Field(required=True)
-    add_trips = mutations.AddTrips.Field(required=True)
-    edit_trips = mutations.EditTrips.Field(required=True)
-    delete_trips = mutations.DeleteTrips.Field(required=True)
+    add_trip = mutations.AddTrip.Field(required=True)
+    edit_trip = mutations.EditTrip.Field(required=True)
+    delete_trip = mutations.DeleteTrip.Field(required=True)

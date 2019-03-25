@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { CARD_FRAGMENT } from "src/sharedQueries";
+import { CARD_FRAGMENT, CITY_FRAGMENT } from "src/sharedQueries";
 
 export const GET_USER = gql`
   query UserProfile($username: String!) {
@@ -151,4 +151,24 @@ export const GET_TRIPS = gql`
       }
     }
   }
+`;
+
+export const ADD_TRIP = gql`
+  mutation AddTrip($cityName: String!, $fromDate: String!, $toDate: String!) {
+    addTrip(cityName: $cityName, fromDate: $fromDate, toDate: $toDate) {
+      moveNotification {
+        fromDate
+        toDate
+        city {
+          cityName
+          cityPhoto
+          country {
+            countryName
+          }
+        }
+      }
+      ok
+    }
+  }
+  ${CITY_FRAGMENT}
 `;

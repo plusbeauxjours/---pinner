@@ -58,7 +58,6 @@ class MoveNotification(config_models.TimeStampedModel):
         location_models.City, on_delete=models.CASCADE, null=True, blank=True, related_name='city')
     from_date = models.DateField(null=True, blank=True)
     to_date = models.DateField(null=True, blank=True)
-    duration = models.DurationField(default=timedelta())
     read = models.BooleanField(default=False)
 
     @property

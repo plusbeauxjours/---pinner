@@ -1588,6 +1588,49 @@ export interface GetTripsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: AddTrip
+// ====================================================
+
+export interface AddTrip_addTrip_moveNotification_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface AddTrip_addTrip_moveNotification_city {
+  __typename: "CityType";
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: AddTrip_addTrip_moveNotification_city_country;
+}
+
+export interface AddTrip_addTrip_moveNotification {
+  __typename: "MoveNotificationType";
+  fromDate: any | null;
+  toDate: any | null;
+  city: AddTrip_addTrip_moveNotification_city | null;
+}
+
+export interface AddTrip_addTrip {
+  __typename: "AddTripResponse";
+  moveNotification: AddTrip_addTrip_moveNotification | null;
+  ok: boolean | null;
+}
+
+export interface AddTrip {
+  addTrip: AddTrip_addTrip;
+}
+
+export interface AddTripVariables {
+  cityName: string;
+  fromDate: string;
+  toDate: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CompletePhoneVerification
 // ====================================================
 

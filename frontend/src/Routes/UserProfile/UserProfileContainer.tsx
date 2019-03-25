@@ -1,7 +1,7 @@
 import React from "react";
 import UserProfilePresenter from "./UserProfilePresenter";
 import { Query, Mutation, MutationFn } from "react-apollo";
-import { UserProfile, UserProfileVariables } from "src/types/api";
+import { UserProfile, UserProfileVariables, AddTrip } from "src/types/api";
 import {
   GET_USER,
   EDIT_PROFILE,
@@ -19,8 +19,8 @@ import {
   FrequentVisits
 } from "../../types/api";
 import { toast } from "react-toastify";
-import { GetTrips, GetTripsVariables } from "../../types/api";
-import { GET_TRIPS } from "./UserProfileQueries";
+import { GetTrips, GetTripsVariables, AddTripVariables } from "../../types/api";
+import { GET_TRIPS, ADD_TRIP } from "./UserProfileQueries";
 import {
   TopCountriesVariables,
   FrequentVisitsVariables
@@ -32,6 +32,7 @@ class FrequentVisitsQuery extends Query<
   FrequentVisits,
   FrequentVisitsVariables
 > {}
+class AddTripMutation extends Mutation<AddTrip, AddTripVariables> {}
 class GetTiprsQuery extends Query<GetTrips, GetTripsVariables> {}
 class EditProfileMutation extends Mutation<EditProfile, EditProfileVariables> {}
 class DeleteProfileMutation extends Mutation<DeleteProfile> {}
@@ -50,12 +51,17 @@ interface IState {
   avatar: string;
   firstName: string;
   lastName: string;
+  cityName: string;
+  fromDate: string;
+  toDate: string;
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
   public logUserOutFn: MutationFn;
   public editProfileFn: MutationFn;
   public deleteProfileFn: MutationFn;
+  public AddTripFn: MutationFn;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -68,7 +74,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       gender: props.gender,
       avatar: props.avatar,
       firstName: props.FirstName,
-      lastName: props.lastName
+      lastName: props.lastName,
+      cityName: "",
+      fromDate: "",
+      toDate: ""
     };
   }
   public render() {
@@ -87,7 +96,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       gender,
       avatar,
       firstName,
-      lastName
+      lastName,
+      cityName,
+      fromDate,
+      toDate
     } = this.state;
     return (
       <LogOutMutation mutation={LOG_USER_OUT}>
@@ -160,43 +172,65 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                         data: getTripsData,
                                         loading: getTipsLoading
                                       }) => (
-                                        <UserProfilePresenter
-                                          modalOpen={modalOpen}
-                                          confirmModalOpen={confirmModalOpen}
-                                          editMode={editMode}
-                                          logUserOutFn={logUserOutFn}
-                                          confirmDeleteProfile={
-                                            this.confirmDeleteProfile
-                                          }
-                                          toggleModal={this.toggleModal}
-                                          toggleConfirmModal={
-                                            this.toggleConfirmModal
-                                          }
-                                          openEditMode={this.openEditMode}
-                                          userProfileData={userProfileData}
-                                          userProfileLoading={
-                                            userProfileLoading
-                                          }
-                                          topCountriesData={topCountriesData}
-                                          topCountriesLoading={
-                                            topCountriesLoading
-                                          }
-                                          frequentVisitsData={
-                                            frequentVisitsData
-                                          }
-                                          frequentVisitsLoading={
-                                            frequentVisitsLoading
-                                          }
-                                          getTripsData={getTripsData}
-                                          getTipsLoading={getTipsLoading}
-                                          onInputChange={this.onInputChange}
-                                          onKeyUp={this.onKeyUp}
-                                          userName={userName}
-                                          bio={bio}
-                                          gender={gender}
-                                          firstName={firstName}
-                                          lastName={lastName}
-                                        />
+                                        <AddTripMutation
+                                          mutation={ADD_TRIP}
+                                          variables={{
+                                            cityName,
+                                            fromDate,
+                                            toDate
+                                          }}
+                                        >
+                                          {AddTripFn => {
+                                            this.AddTripFn = AddTripFn;
+                                            return (
+                                              <UserProfilePresenter
+                                                modalOpen={modalOpen}
+                                                confirmModalOpen={
+                                                  confirmModalOpen
+                                                }
+                                                editMode={editMode}
+                                                logUserOutFn={logUserOutFn}
+                                                confirmDeleteProfile={
+                                                  this.confirmDeleteProfile
+                                                }
+                                                toggleModal={this.toggleModal}
+                                                toggleConfirmModal={
+                                                  this.toggleConfirmModal
+                                                }
+                                                openEditMode={this.openEditMode}
+                                                userProfileData={
+                                                  userProfileData
+                                                }
+                                                userProfileLoading={
+                                                  userProfileLoading
+                                                }
+                                                topCountriesData={
+                                                  topCountriesData
+                                                }
+                                                topCountriesLoading={
+                                                  topCountriesLoading
+                                                }
+                                                frequentVisitsData={
+                                                  frequentVisitsData
+                                                }
+                                                frequentVisitsLoading={
+                                                  frequentVisitsLoading
+                                                }
+                                                getTripsData={getTripsData}
+                                                getTipsLoading={getTipsLoading}
+                                                onInputChange={
+                                                  this.onInputChange
+                                                }
+                                                onKeyUp={this.onKeyUp}
+                                                userName={userName}
+                                                bio={bio}
+                                                gender={gender}
+                                                firstName={firstName}
+                                                lastName={lastName}
+                                              />
+                                            );
+                                          }}
+                                        </AddTripMutation>
                                       )}
                                     </GetTiprsQuery>
                                   )}

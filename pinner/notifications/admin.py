@@ -29,4 +29,6 @@ class MoveNotificationAdmin(admin.ModelAdmin):
         'actor',
         'city',
         'read',
+        'from_date',
+        'to_date',
     )

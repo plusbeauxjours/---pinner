@@ -31,14 +31,14 @@ class MarkAsRead(graphene.Mutation):
             raise Exception('Notification Not Found')
 
 
-class AddTrips(graphene.Mutation):
+class AddTrip(graphene.Mutation):
 
     class Arguments:
         cityName = graphene.String(required=True)
         fromDate = graphene.String(required=True)
         toDate = graphene.String(required=True)
 
-    Output = types.AddTripsResponse
+    Output = types.AddTripResponse
 
     @login_required
     def mutate(self, info, **kwargs):
@@ -57,17 +57,17 @@ class AddTrips(graphene.Mutation):
                     from_date=fromDate,
                     to_date=toDate
                 )
-                return types.AddTripsResponse(ok=True, moveNotification=moveNotification)
+                return types.AddTripResponse(ok=True, moveNotification=moveNotification)
             except IntegrityError as e:
                 print(e)
                 raise Exception("Can't create the trip")
 
         else:
             error = "You need to log in"
-            return types.DeleteTripsResponse(ok=False)
+            return types.DeleteTripResponse(ok=False)
 
 
-class EditTrips(graphene.Mutation):
+class EditTrip(graphene.Mutation):
 
     class Arguments:
         moveNotificationId = graphene.Int(required=True)
@@ -75,7 +75,7 @@ class EditTrips(graphene.Mutation):
         fromDate = graphene.String()
         toDate = graphene.String()
 
-    Output = types.EditTripsResponse
+    Output = types.EditTripResponse
 
     @login_required
     def mutate(self, info, **kwargs):
@@ -89,12 +89,12 @@ class EditTrips(graphene.Mutation):
                 moveNotification = user.movenotification.get(id=moveNotificationId)
             except user.movenotification.DoesNotExist:
                 error = "Trip Not Found"
-                return types.EditTripsResponse(ok=False)
+                return types.EditTripResponse(ok=False)
 
             if moveNotification.actor.id != user.id:
 
                 error = "Unauthorized"
-                return types.EditTripsResponse(ok=False)
+                return types.EditTripResponse(ok=False)
 
             else:
 
@@ -108,23 +108,23 @@ class EditTrips(graphene.Mutation):
                     moveNotification.to_date = to_date
 
                     moveNotification.save()
-                    return types.EditTripsResponse(ok=True, moveNotification=moveNotification)
+                    return types.EditTripResponse(ok=True, moveNotification=moveNotification)
                 except IntegrityError as e:
                     print(e)
                     error = "Can't Save Trip"
-                    return types.EditTripsResponse(ok=False)
+                    return types.EditTripResponse(ok=False)
 
         else:
             error = "You need to log in"
-            return types.DeleteTripsResponse(ok=False)
+            return types.DeleteTripResponse(ok=False)
 
 
-class DeleteTrips(graphene.Mutation):
+class DeleteTrip(graphene.Mutation):
 
     class Arguments:
         moveNotificationId = graphene.Int(required=True)
 
-    Output = types.DeleteTripsResponse
+    Output = types.DeleteTripResponse
 
     @login_required
     def mutate(self, info, **kwargs):
@@ -138,18 +138,18 @@ class DeleteTrips(graphene.Mutation):
                 moveNotification = user.movenotification.get(id=moveNotificationId)
             except user.movenotification.DoesNotExist:
                 error = "Trip Not Found"
-                return types.DeleteTripsResponse(ok=False)
+                return types.DeleteTripResponse(ok=False)
 
             if moveNotification.actor.id == user.id:
 
                 moveNotification.delete()
-                return types.DeleteTripsResponse(ok=True)
+                return types.DeleteTripResponse(ok=True)
 
             else:
 
                 error = "Unauthorized"
-                return types.DeleteTripsResponse(ok=False)
+                return types.DeleteTripResponse(ok=False)
 
         else:
             error = "You need to log in"
-            return types.DeleteTripsResponse(ok=False)
+            return types.DeleteTripResponse(ok=False)
