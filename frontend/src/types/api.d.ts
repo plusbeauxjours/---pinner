@@ -1631,6 +1631,71 @@ export interface AddTripVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: EditTrip
+// ====================================================
+
+export interface EditTrip_editTrip_moveNotification_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface EditTrip_editTrip_moveNotification_city {
+  __typename: "CityType";
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: EditTrip_editTrip_moveNotification_city_country;
+}
+
+export interface EditTrip_editTrip_moveNotification {
+  __typename: "MoveNotificationType";
+  fromDate: any | null;
+  toDate: any | null;
+  city: EditTrip_editTrip_moveNotification_city | null;
+}
+
+export interface EditTrip_editTrip {
+  __typename: "EditTripResponse";
+  moveNotification: EditTrip_editTrip_moveNotification | null;
+  ok: boolean | null;
+}
+
+export interface EditTrip {
+  editTrip: EditTrip_editTrip;
+}
+
+export interface EditTripVariables {
+  moveNotificationId: number;
+  cityName?: string | null;
+  fromDate?: string | null;
+  toDate?: string | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: DeleteTrip
+// ====================================================
+
+export interface DeleteTrip_deleteTrip {
+  __typename: "DeleteTripResponse";
+  ok: boolean | null;
+}
+
+export interface DeleteTrip {
+  deleteTrip: DeleteTrip_deleteTrip;
+}
+
+export interface DeleteTripVariables {
+  moveNotificationId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CompletePhoneVerification
 // ====================================================
 

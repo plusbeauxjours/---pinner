@@ -290,27 +290,44 @@ interface ITheme {
 interface IProps {
   userProfileData: UserProfile;
   userProfileLoading: boolean;
+
   topCountriesData?: TopCountries;
   topCountriesLoading: boolean;
+
   frequentVisitsData?: FrequentVisits;
   frequentVisitsLoading: boolean;
+
   getTripsData?: GetTrips;
   getTipsLoading: boolean;
+
   modalOpen: boolean;
   confirmModalOpen: boolean;
+
+  tripModalOpen: boolean;
+  tripConfirmModalOpen: boolean;
+
   editMode: boolean;
   openEditMode: () => void;
-  toggleModal: () => void;
-  toggleConfirmModal: () => void;
-  logUserOutFn: () => void;
-  confirmDeleteProfile: () => void;
-  onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+
   userName: string;
   bio: string;
   gender: string;
   firstName: string;
   lastName: string;
+
+  toggleModal: () => void;
+  toggleConfirmModal: () => void;
+
+  toggleTripModal: any;
+  toggleTripConfirmModal: () => void;
+
+  logUserOutFn: () => void;
+
+  confirmDeleteProfile: () => void;
+  confirmDeleteTrip: () => void;
+
+  onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
@@ -328,13 +345,18 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   getTripsData: { getTrips: { footprints: getTrips = null } = {} } = {},
   getTipsLoading,
   modalOpen,
+  tripModalOpen,
   confirmModalOpen,
+  tripConfirmModalOpen,
+  toggleTripConfirmModal,
   editMode,
   toggleModal,
   toggleConfirmModal,
+  toggleTripModal,
   openEditMode,
   logUserOutFn,
   confirmDeleteProfile,
+  confirmDeleteTrip,
   onInputChange,
   onKeyUp,
   userName,
@@ -364,6 +386,28 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <ModalOverlay onClick={toggleConfirmModal} />
             <Modal>
               <ModalLink onClick={confirmDeleteProfile}>Yes</ModalLink>
+              <ModalLink onClick={toggleConfirmModal}>No</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
+        {tripModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleTripModal} />
+            <Modal>
+              <ModalLink onClick={openEditMode}>Add Trip</ModalLink>
+              <ModalLink onClick={toggleConfirmModal}>Edit Trip</ModalLink>
+              <ModalLink onClick={toggleTripConfirmModal}>
+                Delete Trip
+              </ModalLink>
+              <ModalLink onClick={toggleModal}>Cancel</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
+        {tripConfirmModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleConfirmModal} />
+            <Modal>
+              <ModalLink onClick={confirmDeleteTrip}>Yes</ModalLink>
               <ModalLink onClick={toggleConfirmModal}>No</ModalLink>
             </Modal>
           </ModalContainer>
@@ -533,10 +577,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           </PBody>
           <TripContainer>
             <p>TRIP LOG</p>
-            {console.log(getTrips)}
             {!getTipsLoading && getTrips ? (
               getTrips.map(getTrip => (
-                <TripRow key={getTrip.id}>
+                <TripRow
+                  key={getTrip.id}
+                  onClick={() => toggleTripModal(getTrip.id)}
+                >
                   <CityPhoto src={getTrip.city.cityPhoto} size={"sm"} />
                   <TripText>{getTrip.city.cityName}</TripText>
                   <TripText>{getTrip.city.country.countryName}</TripText>

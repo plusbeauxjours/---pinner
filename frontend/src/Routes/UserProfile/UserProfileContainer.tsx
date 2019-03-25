@@ -19,8 +19,20 @@ import {
   FrequentVisits
 } from "../../types/api";
 import { toast } from "react-toastify";
-import { GetTrips, GetTripsVariables, AddTripVariables } from "../../types/api";
-import { GET_TRIPS, ADD_TRIP } from "./UserProfileQueries";
+import {
+  GetTrips,
+  GetTripsVariables,
+  AddTripVariables,
+  EditTrip,
+  EditTripVariables
+} from "../../types/api";
+import {
+  GET_TRIPS,
+  ADD_TRIP,
+  EDIT_TRIP,
+  DELETE_TRIP
+} from "./UserProfileQueries";
+import { DeleteTrip, DeleteTripVariables } from "../../types/api";
 import {
   TopCountriesVariables,
   FrequentVisitsVariables
@@ -33,6 +45,8 @@ class FrequentVisitsQuery extends Query<
   FrequentVisitsVariables
 > {}
 class AddTripMutation extends Mutation<AddTrip, AddTripVariables> {}
+class EditTripMutation extends Mutation<EditTrip, EditTripVariables> {}
+class DeleteTripMutation extends Mutation<DeleteTrip, DeleteTripVariables> {}
 class GetTiprsQuery extends Query<GetTrips, GetTripsVariables> {}
 class EditProfileMutation extends Mutation<EditProfile, EditProfileVariables> {}
 class DeleteProfileMutation extends Mutation<DeleteProfile> {}
@@ -42,7 +56,9 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   modalOpen: boolean;
+  tripModalOpen: boolean;
   confirmModalOpen: boolean;
+  tripConfirmModalOpen: boolean;
   editMode: boolean;
   id: string;
   userName: string;
@@ -54,19 +70,23 @@ interface IState {
   cityName: string;
   fromDate: string;
   toDate: string;
+  moveNotificationId: string;
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
   public logUserOutFn: MutationFn;
   public editProfileFn: MutationFn;
   public deleteProfileFn: MutationFn;
-  public AddTripFn: MutationFn;
-
+  public addTripFn: MutationFn;
+  public editTripFn: MutationFn;
+  public deleteTripFn: MutationFn;
   constructor(props) {
     super(props);
     this.state = {
       modalOpen: false,
+      tripModalOpen: false,
       confirmModalOpen: false,
+      tripConfirmModalOpen: false,
       editMode: false,
       id: props.id,
       userName: props.username,
@@ -77,7 +97,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       lastName: props.lastName,
       cityName: "",
       fromDate: "",
-      toDate: ""
+      toDate: "",
+      moveNotificationId: ""
     };
   }
   public render() {
@@ -90,6 +111,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     const {
       modalOpen,
       confirmModalOpen,
+      tripModalOpen,
+      tripConfirmModalOpen,
       editMode,
       userName,
       bio,
@@ -99,7 +122,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       lastName,
       cityName,
       fromDate,
-      toDate
+      toDate,
+      moveNotificationId
     } = this.state;
     return (
       <LogOutMutation mutation={LOG_USER_OUT}>
@@ -180,54 +204,128 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                             toDate
                                           }}
                                         >
-                                          {AddTripFn => {
-                                            this.AddTripFn = AddTripFn;
+                                          {addTripFn => {
+                                            this.addTripFn = addTripFn;
                                             return (
-                                              <UserProfilePresenter
-                                                modalOpen={modalOpen}
-                                                confirmModalOpen={
-                                                  confirmModalOpen
-                                                }
-                                                editMode={editMode}
-                                                logUserOutFn={logUserOutFn}
-                                                confirmDeleteProfile={
-                                                  this.confirmDeleteProfile
-                                                }
-                                                toggleModal={this.toggleModal}
-                                                toggleConfirmModal={
-                                                  this.toggleConfirmModal
-                                                }
-                                                openEditMode={this.openEditMode}
-                                                userProfileData={
-                                                  userProfileData
-                                                }
-                                                userProfileLoading={
-                                                  userProfileLoading
-                                                }
-                                                topCountriesData={
-                                                  topCountriesData
-                                                }
-                                                topCountriesLoading={
-                                                  topCountriesLoading
-                                                }
-                                                frequentVisitsData={
-                                                  frequentVisitsData
-                                                }
-                                                frequentVisitsLoading={
-                                                  frequentVisitsLoading
-                                                }
-                                                getTripsData={getTripsData}
-                                                getTipsLoading={getTipsLoading}
-                                                onInputChange={
-                                                  this.onInputChange
-                                                }
-                                                onKeyUp={this.onKeyUp}
-                                                userName={userName}
-                                                bio={bio}
-                                                gender={gender}
-                                                firstName={firstName}
-                                                lastName={lastName}
-                                              />
+                                              <EditTripMutation
+                                                mutation={EDIT_TRIP}
+                                                variables={{
+                                                  moveNotificationId: parseInt(
+                                                    moveNotificationId,
+                                                    10
+                                                  ),
+                                                  cityName,
+                                                  fromDate,
+                                                  toDate
+                                                }}
+                                              >
+                                                {editTripFn => {
+                                                  this.editTripFn = editTripFn;
+                                                  return (
+                                                    <DeleteTripMutation
+                                                      mutation={DELETE_TRIP}
+                                                      variables={{
+                                                        moveNotificationId: parseInt(
+                                                          moveNotificationId,
+                                                          10
+                                                        )
+                                                      }}
+                                                      onCompleted={() =>
+                                                        this.setState({
+                                                          moveNotificationId: ""
+                                                        })
+                                                      }
+                                                    >
+                                                      {deleteTripFn => {
+                                                        this.deleteTripFn = deleteTripFn;
+                                                        return (
+                                                          <UserProfilePresenter
+                                                            modalOpen={
+                                                              modalOpen
+                                                            }
+                                                            tripModalOpen={
+                                                              tripModalOpen
+                                                            }
+                                                            confirmModalOpen={
+                                                              confirmModalOpen
+                                                            }
+                                                            tripConfirmModalOpen={
+                                                              tripConfirmModalOpen
+                                                            }
+                                                            editMode={editMode}
+                                                            logUserOutFn={
+                                                              logUserOutFn
+                                                            }
+                                                            confirmDeleteProfile={
+                                                              this
+                                                                .confirmDeleteProfile
+                                                            }
+                                                            confirmDeleteTrip={
+                                                              this
+                                                                .confirmDeleteTrip
+                                                            }
+                                                            toggleModal={
+                                                              this.toggleModal
+                                                            }
+                                                            toggleConfirmModal={
+                                                              this
+                                                                .toggleConfirmModal
+                                                            }
+                                                            toggleTripModal={
+                                                              this
+                                                                .toggleTripModal
+                                                            }
+                                                            toggleTripConfirmModal={
+                                                              this
+                                                                .toggleTripConfirmModal
+                                                            }
+                                                            openEditMode={
+                                                              this.openEditMode
+                                                            }
+                                                            userProfileData={
+                                                              userProfileData
+                                                            }
+                                                            userProfileLoading={
+                                                              userProfileLoading
+                                                            }
+                                                            topCountriesData={
+                                                              topCountriesData
+                                                            }
+                                                            topCountriesLoading={
+                                                              topCountriesLoading
+                                                            }
+                                                            frequentVisitsData={
+                                                              frequentVisitsData
+                                                            }
+                                                            frequentVisitsLoading={
+                                                              frequentVisitsLoading
+                                                            }
+                                                            getTripsData={
+                                                              getTripsData
+                                                            }
+                                                            getTipsLoading={
+                                                              getTipsLoading
+                                                            }
+                                                            onInputChange={
+                                                              this.onInputChange
+                                                            }
+                                                            onKeyUp={
+                                                              this.onKeyUp
+                                                            }
+                                                            userName={userName}
+                                                            bio={bio}
+                                                            gender={gender}
+                                                            firstName={
+                                                              firstName
+                                                            }
+                                                            lastName={lastName}
+                                                          />
+                                                        );
+                                                      }}
+                                                    </DeleteTripMutation>
+                                                  );
+                                                }}
+                                              </EditTripMutation>
                                             );
                                           }}
                                         </AddTripMutation>
@@ -250,31 +348,71 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       </LogOutMutation>
     );
   }
+
+  //
+  // MODAL
+  //
+
   public toggleModal = () => {
-    this.setState(state => {
-      return {
-        modalOpen: !state.modalOpen
-      };
+    const { modalOpen } = this.state;
+    this.setState({
+      modalOpen: !modalOpen
     });
+  };
+  public toggleTripModal = moveNotificationId => {
+    const { tripModalOpen } = this.state;
+    this.setState({
+      tripModalOpen: !tripModalOpen,
+      moveNotificationId
+    } as any);
   };
   public toggleConfirmModal = () => {
-    this.setState(state => {
-      return {
-        confirmModalOpen: !state.confirmModalOpen,
-        modalOpen: !state.modalOpen
-      };
+    const { confirmModalOpen, modalOpen } = this.state;
+    this.setState({
+      confirmModalOpen: !confirmModalOpen,
+      modalOpen: !modalOpen
     });
   };
+  public toggleTripConfirmModal = () => {
+    const { tripConfirmModalOpen, tripModalOpen } = this.state;
+    this.setState({
+      tripConfirmModalOpen: !tripConfirmModalOpen,
+      tripModalOpen: !tripModalOpen
+    });
+  };
+
+  //
+  // CONFIRM DELETE
+  //
+
   public confirmDeleteProfile = () => {
     this.deleteProfileFn();
     this.logUserOutFn();
   };
+  public confirmDeleteTrip = () => {
+    const { moveNotificationId, tripConfirmModalOpen } = this.state;
+    this.setState({
+      tripModalOpen: false
+    });
+    this.deleteTripFn({
+      variables: { moveNotificationId }
+    });
+    console.log(this.state);
+    this.setState({
+      tripConfirmModalOpen: !tripConfirmModalOpen,
+      moveNotificationId: ""
+    });
+  };
+
+  //
+  // EDIT
+  //
+
   public openEditMode = () => {
-    this.setState(state => {
-      return {
-        modalOpen: !state.modalOpen,
-        editMode: true
-      };
+    const { modalOpen } = this.state;
+    this.setState({
+      modalOpen: !modalOpen,
+      editMode: true
     });
     console.log(this.state);
   };
@@ -283,6 +421,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       editMode: false
     });
   };
+
   public onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value }
