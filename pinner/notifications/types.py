@@ -35,12 +35,12 @@ class MarkAsReadResponse(graphene.ObjectType):
 
 class AddTripsResponse(graphene.ObjectType):
     ok = graphene.Boolean()
-    move_notifications = graphene.List(MoveNotificationType)
+    moveNotification = graphene.Field(MoveNotificationType)
 
 
 class EditTripsResponse(graphene.ObjectType):
     ok = graphene.Boolean()
-    move_notifications = graphene.List(MoveNotificationType)
+    moveNotification = graphene.Field(MoveNotificationType)
 
 
 class DeleteTripsResponse(graphene.ObjectType):
