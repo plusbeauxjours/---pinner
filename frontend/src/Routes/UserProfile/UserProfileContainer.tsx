@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import UserProfilePresenter from "./UserProfilePresenter";
 import { Query, Mutation, MutationFn } from "react-apollo";
 import { UserProfile, UserProfileVariables, AddTrip } from "src/types/api";
@@ -69,8 +70,9 @@ interface IState {
   firstName: string;
   lastName: string;
   cityName: string;
-  fromDate: string;
-  toDate: string;
+  fromDate: moment.Moment | null;
+  toDate: moment.Moment | null;
+  focusedInput: any;
   moveNotificationId: string;
 }
 
@@ -98,8 +100,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       firstName: props.FirstName,
       lastName: props.lastName,
       cityName: "",
-      fromDate: "",
-      toDate: "",
+      fromDate: null,
+      toDate: null,
+      focusedInput: null,
       moveNotificationId: ""
     };
   }
@@ -126,6 +129,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       cityName,
       fromDate,
       toDate,
+      focusedInput,
       moveNotificationId
     } = this.state;
     return (
@@ -329,6 +333,18 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                               firstName
                                                             }
                                                             lastName={lastName}
+                                                            cityName={cityName}
+                                                            fromDate={fromDate}
+                                                            toDate={toDate}
+                                                            focusedInput={
+                                                              focusedInput
+                                                            }
+                                                            onDatesChange={
+                                                              this.onDatesChange
+                                                            }
+                                                            onFocusChange={
+                                                              this.onFocusChange
+                                                            }
                                                           />
                                                         );
                                                       }}
@@ -437,9 +453,16 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripConfirmModalOpen: !tripConfirmModalOpen,
       moveNotificationId: "",
       cityName: "",
-      fromDate: "",
-      toDate: ""
+      fromDate: null,
+      toDate: null
     });
+  };
+  public onDatesChange = ({ fromDate, toDate }) => {
+    this.setState({ fromDate, toDate });
+  };
+  public onFocusChange = focusedInput => {
+    console.log("on focus change", focusedInput);
+    this.setState({ focusedInput });
   };
 
   //
@@ -464,8 +487,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripConfirmModalOpen: !tripConfirmModalOpen,
       moveNotificationId: "",
       cityName: "",
-      fromDate: "",
-      toDate: ""
+      fromDate: null,
+      toDate: null
     });
   };
 

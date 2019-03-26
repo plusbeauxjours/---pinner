@@ -35,8 +35,8 @@ class AddTrip(graphene.Mutation):
 
     class Arguments:
         cityName = graphene.String(required=True)
-        fromDate = graphene.String(required=True)
-        toDate = graphene.String(required=True)
+        fromDate = graphene.types.datetime.Date(required=True)
+        toDate = graphene.types.datetime.Date(required=True)
 
     Output = types.AddTripResponse
 
@@ -72,8 +72,8 @@ class EditTrip(graphene.Mutation):
     class Arguments:
         moveNotificationId = graphene.Int(required=True)
         cityName = graphene.String()
-        fromDate = graphene.String()
-        toDate = graphene.String()
+        fromDate = graphene.types.datetime.Date()
+        toDate = graphene.types.datetime.Date()
 
     Output = types.EditTripResponse
 

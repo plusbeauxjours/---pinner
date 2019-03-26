@@ -1617,8 +1617,8 @@ export interface AddTrip {
 
 export interface AddTripVariables {
   cityName: string;
-  fromDate: string;
-  toDate: string;
+  fromDate: any;
+  toDate: any;
 }
 
 
@@ -1661,8 +1661,8 @@ export interface EditTrip {
 export interface EditTripVariables {
   moveNotificationId: number;
   cityName?: string | null;
-  fromDate?: string | null;
-  toDate?: string | null;
+  fromDate?: any | null;
+  toDate?: any | null;
 }
 
 

@@ -2,6 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Gear } from "../../Icons";
 import styled, { keyframes } from "../../Styles/typed-components";
+import "react-dates/lib/css/_datepicker.css";
+import "react-dates/initialize";
+import { DateRangePicker } from "react-dates";
+
 import {
   UserProfile,
   TopCountries,
@@ -322,6 +326,12 @@ interface IProps {
   gender: string;
   firstName: string;
   lastName: string;
+  cityName: any;
+  fromDate: any;
+  toDate: any;
+  focusedInput: any;
+  onDatesChange: any;
+  onFocusChange: any;
 
   toggleModal: () => void;
   toggleConfirmModal: () => void;
@@ -374,7 +384,13 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   bio,
   gender,
   firstName,
-  lastName
+  lastName,
+  cityName,
+  fromDate,
+  toDate,
+  focusedInput,
+  onDatesChange,
+  onFocusChange
 }) => {
   if (userProfileLoading) {
     return <Loader />;
@@ -427,7 +443,16 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           <FromModalContainer>
             <ModalOverlay onClick={toggleAddTripModal} />
             <FormModal>
-              <p>hihi</p>
+              <DateRangePicker
+                startDateId="startDate"
+                endDateId="endDate"
+                startDate={fromDate}
+                endDate={toDate}
+                onDatesChange={onDatesChange}
+                onFocusChange={onFocusChange}
+                focusedInput={focusedInput}
+              />
+              {console.log(fromDate, toDate, focusedInput)}
             </FormModal>
           </FromModalContainer>
         )}
