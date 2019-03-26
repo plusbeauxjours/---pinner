@@ -1560,8 +1560,8 @@ export interface GetTrips_getTrips_footprints {
   __typename: "MoveNotificationType";
   id: string;
   city: GetTrips_getTrips_footprints_city | null;
-  fromDate: any | null;
-  toDate: any | null;
+  startDate: any | null;
+  endDate: any | null;
   createdAt: string | null;
 }
 
@@ -1600,8 +1600,8 @@ export interface AddTrip_addTrip_moveNotification_city {
 
 export interface AddTrip_addTrip_moveNotification {
   __typename: "MoveNotificationType";
-  fromDate: any | null;
-  toDate: any | null;
+  startDate: any | null;
+  endDate: any | null;
   city: AddTrip_addTrip_moveNotification_city | null;
 }
 
@@ -1617,8 +1617,8 @@ export interface AddTrip {
 
 export interface AddTripVariables {
   cityName: string;
-  fromDate: any;
-  toDate: any;
+  startDate: any;
+  endDate: any;
 }
 
 
@@ -1643,8 +1643,8 @@ export interface EditTrip_editTrip_moveNotification_city {
 
 export interface EditTrip_editTrip_moveNotification {
   __typename: "MoveNotificationType";
-  fromDate: any | null;
-  toDate: any | null;
+  startDate: any | null;
+  endDate: any | null;
   city: EditTrip_editTrip_moveNotification_city | null;
 }
 
@@ -1661,8 +1661,8 @@ export interface EditTrip {
 export interface EditTripVariables {
   moveNotificationId: number;
   cityName?: string | null;
-  fromDate?: any | null;
-  toDate?: any | null;
+  startDate?: any | null;
+  endDate?: any | null;
 }
 
 

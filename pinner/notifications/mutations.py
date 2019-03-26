@@ -35,8 +35,8 @@ class AddTrip(graphene.Mutation):
 
     class Arguments:
         cityName = graphene.String(required=True)
-        fromDate = graphene.types.datetime.Date(required=True)
-        toDate = graphene.types.datetime.Date(required=True)
+        startDate = graphene.types.datetime.DateTime(required=True)
+        endDate = graphene.types.datetime.DateTime(required=True)
 
     Output = types.AddTripResponse
 
@@ -44,8 +44,8 @@ class AddTrip(graphene.Mutation):
     def mutate(self, info, **kwargs):
 
         cityName = kwargs.get('cityName')
-        fromDate = kwargs.get('fromDate')
-        toDate = kwargs.get('toDate')
+        startDate = kwargs.get('startDate')
+        endDate = kwargs.get('endDate')
         user = info.context.user
 
         if user.is_authenticated:
@@ -54,8 +54,8 @@ class AddTrip(graphene.Mutation):
                 moveNotification = models.MoveNotification.objects.create(
                     actor=user,
                     city=location_models.City.objects.get(city_name=cityName),
-                    from_date=fromDate,
-                    to_date=toDate
+                    start_date=startDate,
+                    end_date=endDate
                 )
                 return types.AddTripResponse(ok=True, moveNotification=moveNotification)
             except IntegrityError as e:
@@ -72,8 +72,8 @@ class EditTrip(graphene.Mutation):
     class Arguments:
         moveNotificationId = graphene.Int(required=True)
         cityName = graphene.String()
-        fromDate = graphene.types.datetime.Date()
-        toDate = graphene.types.datetime.Date()
+        startDate = graphene.types.datetime.DateTime()
+        endDate = graphene.types.datetime.DateTime()
 
     Output = types.EditTripResponse
 
@@ -100,12 +100,12 @@ class EditTrip(graphene.Mutation):
 
                 try:
                     cityName = kwargs.get('cityName', moveNotification.city.city_name)
-                    from_date = kwargs.get('fromDate', moveNotification.from_date)
-                    to_date = kwargs.get('toDate', moveNotification.to_date)
+                    start_date = kwargs.get('startDate', moveNotification.start_date)
+                    end_date = kwargs.get('endDate', moveNotification.end_date)
 
                     moveNotification.city = location_models.City.objects.get(city_name=cityName)
-                    moveNotification.from_date = from_date
-                    moveNotification.to_date = to_date
+                    moveNotification.start_date = start_date
+                    moveNotification.end_date = end_date
 
                     moveNotification.save()
                     return types.EditTripResponse(ok=True, moveNotification=moveNotification)

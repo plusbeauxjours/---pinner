@@ -145,8 +145,8 @@ export const GET_TRIPS = gql`
             countryCode
           }
         }
-        fromDate
-        toDate
+        startDate
+        endDate
         createdAt
       }
     }
@@ -154,11 +154,15 @@ export const GET_TRIPS = gql`
 `;
 
 export const ADD_TRIP = gql`
-  mutation AddTrip($cityName: String!, $fromDate: Date!, $toDate: Date!) {
-    addTrip(cityName: $cityName, fromDate: $fromDate, toDate: $toDate) {
+  mutation AddTrip(
+    $cityName: String!
+    $startDate: DateTime!
+    $endDate: DateTime!
+  ) {
+    addTrip(cityName: $cityName, startDate: $startDate, endDate: $endDate) {
       moveNotification {
-        fromDate
-        toDate
+        startDate
+        endDate
         city {
           cityName
           cityPhoto
@@ -176,18 +180,18 @@ export const EDIT_TRIP = gql`
   mutation EditTrip(
     $moveNotificationId: Int!
     $cityName: String
-    $fromDate: Date
-    $toDate: Date
+    $startDate: DateTime
+    $endDate: DateTime
   ) {
     editTrip(
       moveNotificationId: $moveNotificationId
       cityName: $cityName
-      fromDate: $fromDate
-      toDate: $toDate
+      startDate: $startDate
+      endDate: $endDate
     ) {
       moveNotification {
-        fromDate
-        toDate
+        startDate
+        endDate
         city {
           cityName
           cityPhoto

@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import { Link } from "react-router-dom";
 import { Gear } from "../../Icons";
 import styled, { keyframes } from "../../Styles/typed-components";
@@ -316,7 +317,8 @@ interface IProps {
 
   tripModalOpen: boolean;
   tripConfirmModalOpen: boolean;
-  tripFromModalOpen: boolean;
+  tripAddModalOpen: boolean;
+  tripEditModalOpen: boolean;
 
   editMode: boolean;
   openEditMode: () => void;
@@ -326,12 +328,16 @@ interface IProps {
   gender: string;
   firstName: string;
   lastName: string;
-  cityName: any;
-  fromDate: any;
-  toDate: any;
-  focusedInput: any;
-  onDatesChange: any;
-  onFocusChange: any;
+  cityName: string;
+
+  startDate: moment.Moment | null;
+  endDate: moment.Moment | null;
+  focusedInput: "startDate" | "endDate" | null;
+  onDatesChange: (arg: {
+    startDate: moment.Moment | null;
+    endDate: moment.Moment | null;
+  }) => void;
+  onFocusChange: (arg: "startDate" | "endDate" | null) => void;
 
   toggleModal: () => void;
   toggleConfirmModal: () => void;
@@ -339,11 +345,14 @@ interface IProps {
   toggleTripModal: any;
   toggleTripConfirmModal: () => void;
   toggleAddTripModal: () => void;
+  toggleEditTripModal: () => void;
 
   logUserOutFn: () => void;
 
   confirmDeleteProfile: () => void;
-  confirmDeleteTrip: () => void;
+  deleteTrip: () => void;
+  addTrip: () => void;
+  editTrip: () => void;
 
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
@@ -367,17 +376,21 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   tripModalOpen,
   confirmModalOpen,
   tripConfirmModalOpen,
-  tripFromModalOpen,
+  tripAddModalOpen,
+  tripEditModalOpen,
   editMode,
   toggleModal,
   toggleConfirmModal,
   toggleTripModal,
   toggleTripConfirmModal,
   toggleAddTripModal,
+  toggleEditTripModal,
   openEditMode,
   logUserOutFn,
   confirmDeleteProfile,
-  confirmDeleteTrip,
+  deleteTrip,
+  addTrip,
+  editTrip,
   onInputChange,
   onKeyUp,
   userName,
@@ -386,8 +399,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   firstName,
   lastName,
   cityName,
-  fromDate,
-  toDate,
+  startDate,
+  endDate,
   focusedInput,
   onDatesChange,
   onFocusChange
@@ -422,7 +435,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <ModalOverlay onClick={toggleTripModal} />
             <Modal>
               <ModalLink onClick={toggleAddTripModal}>Add Trip</ModalLink>
-              <ModalLink onClick={toggleAddTripModal}>Edit Trip</ModalLink>
+              <ModalLink onClick={toggleEditTripModal}>Edit Trip</ModalLink>
               <ModalLink onClick={toggleTripConfirmModal}>
                 Delete Trip
               </ModalLink>
@@ -434,25 +447,42 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleTripConfirmModal} />
             <Modal>
-              <ModalLink onClick={confirmDeleteTrip}>Yes</ModalLink>
+              <ModalLink onClick={deleteTrip}>Yes</ModalLink>
               <ModalLink onClick={toggleTripConfirmModal}>No</ModalLink>
             </Modal>
           </ModalContainer>
         )}
-        {tripFromModalOpen && (
+        {tripAddModalOpen && (
           <FromModalContainer>
-            <ModalOverlay onClick={toggleAddTripModal} />
+            <ModalOverlay onClick={addTrip} />
             <FormModal>
               <DateRangePicker
                 startDateId="startDate"
                 endDateId="endDate"
-                startDate={fromDate}
-                endDate={toDate}
+                startDate={startDate}
+                endDate={endDate}
                 onDatesChange={onDatesChange}
                 onFocusChange={onFocusChange}
                 focusedInput={focusedInput}
               />
-              {console.log(fromDate, toDate, focusedInput)}
+              {console.log(startDate, endDate, focusedInput)}
+            </FormModal>
+          </FromModalContainer>
+        )}
+        {tripEditModalOpen && (
+          <FromModalContainer>
+            <ModalOverlay onClick={editTrip} />
+            <FormModal>
+              <DateRangePicker
+                startDateId="startDate"
+                endDateId="endDate"
+                startDate={startDate}
+                endDate={endDate}
+                onDatesChange={onDatesChange}
+                onFocusChange={onFocusChange}
+                focusedInput={focusedInput}
+              />
+              {console.log(startDate, endDate, focusedInput)}
             </FormModal>
           </FromModalContainer>
         )}
@@ -630,8 +660,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <CityPhoto src={getTrip.city.cityPhoto} size={"sm"} />
                   <TripText>{getTrip.city.cityName}</TripText>
                   <TripText>{getTrip.city.country.countryName}</TripText>
-                  <TripText>{getTrip.fromDate}</TripText>
-                  <TripText>{getTrip.toDate}</TripText>
+                  <TripText>{getTrip.startDate}</TripText>
+                  <TripText>{getTrip.endDate}</TripText>
                 </TripRow>
               ))
             ) : (
