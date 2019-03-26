@@ -704,12 +704,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <Loader />
             )}
           </PRow>
-          <p>FREQUENTVISITS</p>
+          <p>FREQUENT VISITS</p>
           <PRow>
             {!frequentVisitsLoading && frequentCities ? (
               frequentCities.map(frequentCity => (
                 <CityContainer key={frequentCity.id}>
-                  <Link to={`/city/{${frequentCity.city.cityName}`}>
+                  <Link to={`/city/${frequentCity.city.cityName}`}>
                     <CityPhoto src={frequentCity.city.cityPhoto} size={"md"} />
                   </Link>
                   <CityName text={frequentCity.city.cityName} />
