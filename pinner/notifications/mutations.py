@@ -100,12 +100,12 @@ class EditTrip(graphene.Mutation):
 
                 try:
                     cityName = kwargs.get('cityName', moveNotification.city.city_name)
-                    start_date = kwargs.get('startDate', moveNotification.start_date)
-                    end_date = kwargs.get('endDate', moveNotification.end_date)
+                    startDate = kwargs.get('startDate', moveNotification.start_date)
+                    endDate = kwargs.get('endDate', moveNotification.end_date)
 
                     moveNotification.city = location_models.City.objects.get(city_name=cityName)
-                    moveNotification.start_date = start_date
-                    moveNotification.end_date = end_date
+                    moveNotification.start_date = startDate
+                    moveNotification.end_date = endDate
 
                     moveNotification.save()
                     return types.EditTripResponse(ok=True, moveNotification=moveNotification)

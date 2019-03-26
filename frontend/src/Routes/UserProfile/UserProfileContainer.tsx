@@ -102,11 +102,11 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       avatar: props.avatar,
       firstName: props.FirstName,
       lastName: props.lastName,
-      cityName: "",
-      startDate: null,
-      endDate: null,
+      cityName: props.cityName,
+      startDate: props.cityName,
+      endDate: props.cityName,
       focusedInput: null,
-      moveNotificationId: ""
+      moveNotificationId: null
     };
   }
   public render() {
@@ -334,6 +334,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                             onKeyUp={
                                                               this.onKeyUp
                                                             }
+                                                            onKeyUpTrip={
+                                                              this.onKeyUpTrip
+                                                            }
                                                             userName={userName}
                                                             bio={bio}
                                                             gender={gender}
@@ -451,17 +454,32 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       editMode: false
     });
   };
+  public onKeyUpTrip = event => {
+    const { startDate, endDate, cityName } = this.state;
+    const { keyCode } = event;
+    if (keyCode === 13) {
+      this.setState({
+        startDate,
+        endDate,
+        cityName
+      } as any);
+    } else {
+      return null;
+    }
+  };
 
   //
   // TRIP
   //
 
-  public toggleTripModal = moveNotificationId => {
+  public toggleTripModal = (moveNotificationId, cityName) => {
     const { tripModalOpen } = this.state;
     this.setState({
       tripModalOpen: !tripModalOpen,
-      moveNotificationId
+      moveNotificationId,
+      cityName
     } as any);
+    console.log(this.state);
   };
   public toggleTripConfirmModal = () => {
     const { tripConfirmModalOpen, tripModalOpen } = this.state;
@@ -500,27 +518,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       endDate: null
     });
   };
-  public deleteTrip = () => {
-    const { moveNotificationId, tripConfirmModalOpen } = this.state;
-    this.setState({
-      tripModalOpen: false
-    });
-    this.deleteTripFn({
-      variables: { moveNotificationId }
-    });
-    console.log(this.state);
-    this.setState({
-      tripConfirmModalOpen: !tripConfirmModalOpen,
-      moveNotificationId: ""
-    });
-  };
-  public onDatesChange = ({ startDate, endDate }) => {
-    this.setState({ startDate, endDate });
-  };
-  public onFocusChange = focusedInput => {
-    console.log("onFocusChange: ", focusedInput);
-    this.setState({ focusedInput });
-  };
   public editTrip = () => {
     const {
       moveNotificationId,
@@ -537,12 +534,32 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     });
     this.setState({
       tripEditModalOpen: !tripEditModalOpen,
-      moveNotificationId: "",
-      cityName: "",
+      moveNotificationId: null,
+      cityName: null,
       startDate: null,
       endDate: null
     });
   };
+  public deleteTrip = () => {
+    const { moveNotificationId, tripConfirmModalOpen } = this.state;
+    this.setState({
+      tripModalOpen: false
+    });
+    this.deleteTripFn({
+      variables: { moveNotificationId }
+    });
+    this.setState({
+      tripConfirmModalOpen: !tripConfirmModalOpen,
+      moveNotificationId: null
+    });
+  };
+  public onDatesChange = ({ startDate, endDate }) => {
+    this.setState({ startDate, endDate });
+  };
+  public onFocusChange = focusedInput => {
+    this.setState({ focusedInput });
+  };
+
   public onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value }

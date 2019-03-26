@@ -355,7 +355,8 @@ interface IProps {
   editTrip: () => void;
 
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onKeyUpTrip: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
@@ -393,6 +394,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   editTrip,
   onInputChange,
   onKeyUp,
+  onKeyUpTrip,
   userName,
   bio,
   gender,
@@ -465,7 +467,13 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 onFocusChange={onFocusChange}
                 focusedInput={focusedInput}
               />
-              {console.log(startDate, endDate, focusedInput)}
+              <ExtendedInput
+                onChange={onInputChange}
+                type={"text"}
+                placeholder={"Search a City"}
+                name={"cityName"}
+                onKeyUp={onKeyUpTrip}
+              />
             </FormModal>
           </FromModalContainer>
         )}
@@ -482,7 +490,15 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 onFocusChange={onFocusChange}
                 focusedInput={focusedInput}
               />
-              {console.log(startDate, endDate, focusedInput)}
+              <ExtendedInput
+                onChange={onInputChange}
+                type={"text"}
+                value={cityName}
+                placeholder={cityName || "cityName"}
+                name={"cityName"}
+                onKeyUp={onKeyUpTrip}
+              />
+              {console.log(cityName)}
             </FormModal>
           </FromModalContainer>
         )}
@@ -655,7 +671,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               getTrips.map(getTrip => (
                 <TripRow
                   key={getTrip.id}
-                  onClick={() => toggleTripModal(getTrip.id)}
+                  onClick={() =>
+                    toggleTripModal(getTrip.id, getTrip.city.cityName)
+                  }
                 >
                   <CityPhoto src={getTrip.city.cityPhoto} size={"sm"} />
                   <TripText>{getTrip.city.cityName}</TripText>

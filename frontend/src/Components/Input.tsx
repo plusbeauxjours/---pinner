@@ -4,7 +4,7 @@ import styled from "../Styles/typed-components";
 const Container = styled.input`
   border: none;
   border: ${props => props.theme.boxBorder};
-  background-color: ${props => props.theme.bgColor};
+  background-color: ${props => props.theme.whiteColor};
   border-radius: 3px;
   padding: 12.5px 10px;
   width: 100%;
@@ -19,8 +19,8 @@ const Container = styled.input`
 `;
 
 interface IProps {
-  value: string;
-  placeholder: string;
+  value?: string;
+  placeholder?: string;
   type?: string;
   name: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
