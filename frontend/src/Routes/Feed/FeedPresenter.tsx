@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { Upload } from "../../Icons";
-
 import Loader from "../../Components/Loader";
 import Photo from "../../Components/Photo";
 import Wrapper from "../../Components/Wrapper";
@@ -57,13 +55,6 @@ const Follow = styled.div`
 const SBold = styled(Bold)`
   font-size: 20px;
   font-weight: 200;
-`;
-
-const Icon = styled.span`
-  margin-right: 30px;
-  &:last-child {
-    margin-right: 0;
-  }
 `;
 
 interface IProps {
@@ -127,11 +118,6 @@ const FeedPresenter: React.SFC<IProps> = ({
             </AvatarGrid>
           </Follow>
         </Container>
-        <Icon>
-          <Link to="/upload">
-            <Upload />
-          </Link>
-        </Icon>
         {cards &&
           cards.map(card => {
             return (

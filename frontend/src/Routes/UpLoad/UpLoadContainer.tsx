@@ -1,6 +1,5 @@
 import React from "react";
 import UpLoadPresenter from "./UpLoadPresenter";
-import { blobRadiusBorderGenerator } from "../../blobGenerator";
 import { Mutation, MutationFn } from "react-apollo";
 import { UploadCard, UploadCardVariables } from "../../types/api";
 import { UPLOAD_CARD } from "./UpLoadQueries";
@@ -36,10 +35,6 @@ class UpLoadContainer extends React.Component<IProps, IState> {
       modalOpen: true,
       userName: ""
     };
-  }
-  public componentDidMount() {
-    this.blobGenerate();
-    console.log(this.blobGenerate());
   }
   public render() {
     const {
@@ -93,12 +88,7 @@ class UpLoadContainer extends React.Component<IProps, IState> {
       </Me>
     );
   }
-  public blobGenerate = () => {
-    const borderRadius = blobRadiusBorderGenerator();
-    this.setState({
-      borderRadius
-    });
-  };
+
   public back = event => {
     event.stopPropagation();
     this.props.history.goBack();

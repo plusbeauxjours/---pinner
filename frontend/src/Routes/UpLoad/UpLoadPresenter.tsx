@@ -35,7 +35,6 @@ const ModalAnimation = keyframes`
 
 const Modal = styled.div`
   background-color: #2d3a41;
-  border-radius: 44% 56% 46% 54% / 26% 74% 26% 74%;
   width: 100%;
   height: 50%;
   max-width: 935px;
@@ -62,7 +61,6 @@ interface IProps {
 
 const UpLoadPresenter: React.SFC<IProps> = ({
   back,
-  borderRadius,
   caption,
   uploadNewCard,
   onKeyUp,
