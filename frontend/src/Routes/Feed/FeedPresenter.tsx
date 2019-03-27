@@ -8,6 +8,8 @@ import styled from "../../Styles/typed-components";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import Flag from "../../Components/Flag";
+import UserRow from "../../Components/UserRow";
+import { keyframes } from "styled-components";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -90,10 +92,55 @@ const SAvatar = styled(Avatar)`
   margin-right: -15px;
 `;
 
+const ModalAnimation = keyframes`
+	  from{
+	    opacity:0;
+	    transform:scale(1.1);
+	  }
+	  to{
+	    opacity:1;
+	    transform:none;
+	  }
+	`;
+
+const ModalContainer = styled.div`
+  z-index: 8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+`;
+
+const ModalOverlay = styled.div`
+  z-index: 5;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+`;
+
+const Modal = styled.div`
+  z-index: 10;
+  animation: ${ModalAnimation} 0.1s linear;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  margin-top: 150px;
+  justify-content: center;
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
   currentCity: string;
+  nowModalOpen: boolean;
+  beforeModalOpen: boolean;
+  toggleNowModal: () => void;
+  toggleBeforeModal: () => void;
 }
 
 const FeedPresenter: React.SFC<IProps> = ({
@@ -106,13 +153,63 @@ const FeedPresenter: React.SFC<IProps> = ({
     } = {}
   },
   loading,
-  currentCity
+  currentCity,
+  nowModalOpen,
+  beforeModalOpen,
+  toggleNowModal,
+  toggleBeforeModal
 }) => {
   if (loading) {
     return <Loader />;
   } else if (!loading && cards && usersNow && usersBefore && city) {
     return (
       <>
+        {nowModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleNowModal} />
+            <Modal>
+              <Wrapper>
+                {usersNow.map(user => (
+                  <UserRow
+                    key={user.id}
+                    id={user.id}
+                    username={user.username}
+                    avatar={user.profile.avatar}
+                    currentCity={user.profile.currentCity.cityName}
+                    currentCountry={
+                      user.profile.currentCity.country.countryName
+                    }
+                    isFollowing={user.profile.isFollowing}
+                    size={"sm"}
+                  />
+                ))}
+              </Wrapper>
+            </Modal>
+          </ModalContainer>
+        )}
+        {beforeModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleBeforeModal} />
+            <Modal>
+              <Wrapper>
+                {usersBefore.map(user => (
+                  <UserRow
+                    key={user.id}
+                    id={user.id}
+                    username={user.username}
+                    avatar={user.profile.avatar}
+                    currentCity={user.profile.currentCity.cityName}
+                    currentCountry={
+                      user.profile.currentCity.country.countryName
+                    }
+                    isFollowing={user.profile.isFollowing}
+                    size={"sm"}
+                  />
+                ))}
+              </Wrapper>
+            </Modal>
+          </ModalContainer>
+        )}
         <SWrapper>
           <PHeader>
             <LocationContainer>
@@ -129,34 +226,30 @@ const FeedPresenter: React.SFC<IProps> = ({
               <p>AQI</p>
             </LocationContainer>
             <UserContainer>
-              <User>
+              <User onClick={toggleNowModal}>
                 {usersNow &&
                   usersNow.map(user => (
-                    <Link to="/explore/userlist">
-                      <AvatarContainer key={user.id}>
-                        <SAvatar
-                          size={"sm"}
-                          key={user.id}
-                          url={user.profile.avatar}
-                        />
-                      </AvatarContainer>
-                    </Link>
+                    <AvatarContainer key={user.id}>
+                      <SAvatar
+                        size={"sm"}
+                        key={user.id}
+                        url={user.profile.avatar}
+                      />
+                    </AvatarContainer>
                   ))}
                 <UBold text={String(city.userCount)} />
                 <UBold text={"USERS IS HERE, NOW"} />
               </User>
-              <User>
+              <User onClick={toggleBeforeModal}>
                 {usersBefore &&
                   usersBefore.map(user => (
-                    <Link to="/explore/userlist">
-                      <AvatarContainer key={user.id}>
-                        <SAvatar
-                          size={"sm"}
-                          key={user.id}
-                          url={user.actor.profile.avatar}
-                        />
-                      </AvatarContainer>
-                    </Link>
+                    <AvatarContainer key={user.id}>
+                      <SAvatar
+                        size={"sm"}
+                        key={user.id}
+                        url={user.actor.profile.avatar}
+                      />
+                    </AvatarContainer>
                   ))}
                 <UBold text={String(city.userLogCount)} />
                 <UBold text={"USERS HAS BEEN HERE"} />

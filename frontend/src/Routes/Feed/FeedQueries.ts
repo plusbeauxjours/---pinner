@@ -12,6 +12,13 @@ export const GET_FEED = gql`
         username
         profile {
           avatar
+          currentCity {
+            cityName
+            country {
+              countryName
+            }
+          }
+          isFollowing
         }
       }
       usersBefore {
@@ -20,6 +27,13 @@ export const GET_FEED = gql`
           username
           profile {
             avatar
+            currentCity {
+              cityName
+              country {
+                countryName
+              }
+            }
+            isFollowing
           }
         }
       }

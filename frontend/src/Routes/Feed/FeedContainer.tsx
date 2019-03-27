@@ -29,6 +29,8 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   page: number;
+  nowModalOpen: boolean;
+  beforeModalOpen: boolean;
   currentLat: number;
   currentLng: number;
   currentCity: string;
@@ -44,6 +46,8 @@ class FeedContainer extends React.Component<IProps, IState> {
   public ReportLocationFn: MutationFn;
   public state = {
     page: 0,
+    nowModalOpen: false,
+    beforeModalOpen: false,
     currentLat: 0,
     currentLng: 0,
     currentCity: "",
@@ -64,6 +68,8 @@ class FeedContainer extends React.Component<IProps, IState> {
   public render() {
     const {
       page,
+      nowModalOpen,
+      beforeModalOpen,
       currentLat,
       currentLng,
       currentCity,
@@ -105,6 +111,10 @@ class FeedContainer extends React.Component<IProps, IState> {
                   loading={loading}
                   data={data}
                   currentCity={currentCity}
+                  nowModalOpen={nowModalOpen}
+                  beforeModalOpen={beforeModalOpen}
+                  toggleNowModal={this.toggleNowModal}
+                  toggleBeforeModal={this.toggleBeforeModal}
                 />
               );
             }}
@@ -170,6 +180,18 @@ class FeedContainer extends React.Component<IProps, IState> {
   };
   public handleGeoError = () => {
     console.log("No location");
+  };
+  public toggleNowModal = () => {
+    const { nowModalOpen } = this.state;
+    this.setState({
+      nowModalOpen: !nowModalOpen
+    } as any);
+  };
+  public toggleBeforeModal = () => {
+    const { beforeModalOpen } = this.state;
+    this.setState({
+      beforeModalOpen: !beforeModalOpen
+    } as any);
   };
 }
 

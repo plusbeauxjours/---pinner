@@ -12,6 +12,7 @@ import UserGrid from "../../Components/UserGrid";
 import LocationGrid from "../../Components/LocationGrid";
 import Wrapper from "../../Components/Wrapper";
 import { keyframes } from "styled-components";
+import UserRow from "../../Components/UserRow";
 
 const TallWrapper = styled(Wrapper)`
   height: 50vh;
@@ -41,14 +42,6 @@ const ModalAnimation = keyframes`
 	  }
 	`;
 
-const Modal = styled.div`
-  background-color: #2d3a41;
-  width: 30%;
-  border-radius: 12px;
-  z-index: 10;
-  animation: ${ModalAnimation} 0.1s linear;
-`;
-
 const ModalContainer = styled.div`
   z-index: 8;
   display: flex;
@@ -69,17 +62,14 @@ const ModalOverlay = styled.div`
   background-color: rgba(0, 0, 0, 0.6);
 `;
 
-const ModalLink = styled.div`
+const Modal = styled.div`
+  z-index: 10;
+  animation: ${ModalAnimation} 0.1s linear;
   text-align: center;
-  min-height: 50px;
-  width: 100%;
-  cursor: pointer;
   display: flex;
   align-items: center;
+  margin-top: 150px;
   justify-content: center;
-  :not(:last-child) {
-    border-bottom: 1px solid #efefef;
-  }
 `;
 
 interface IProps {
@@ -109,53 +99,66 @@ const ExplorePresenter: React.SFC<IProps> = ({
 }) => {
   if (users || nearCities || countries || latestCities) {
     return (
-      <TallWrapper>
+      <>
         {modalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleModal} />
             <Modal>
-              <ModalLink onClick={toggleModal}>Edit Profile</ModalLink>
+              <Wrapper>
+                {users.map(user => (
+                  <UserRow
+                    key={user.id}
+                    id={user.id}
+                    username={user.username}
+                    avatar={user.profile.avatar}
+                    currentCity={user.profile.currentCity.cityName}
+                    currentCountry={
+                      user.profile.currentCity.country.countryName
+                    }
+                    isFollowing={user.profile.isFollowing}
+                    size={"sm"}
+                  />
+                ))}
+              </Wrapper>
             </Modal>
           </ModalContainer>
         )}
-
-        <Container onClick={toggleModal}>
-          <p>see all</p>
-        </Container>
-
-        <p>recommand user</p>
-        <Container>
-          {!recommandUsersLoading && users ? (
-            <UserGrid users={users} />
-          ) : (
-            <Loader />
-          )}
-        </Container>
-        <p>near cities</p>
-        <Container>
-          {!nearCitiesLoading && nearCities ? (
-            <LocationGrid cities={nearCities} type={"city"} />
-          ) : (
-            <Loader />
-          )}
-        </Container>
-        <p>near countries</p>
-        <Container>
-          {!nearCountriesLoading && countries ? (
-            <LocationGrid countries={countries} type={"country"} />
-          ) : (
-            <Loader />
-          )}
-        </Container>
-        <p>latest cities</p>
-        <Container>
-          {!latestCitiesLoading && latestCities ? (
-            <LocationGrid cities={latestCities} type={"city"} />
-          ) : (
-            <Loader />
-          )}
-        </Container>
-      </TallWrapper>
+        <TallWrapper>
+          <p>recommand user</p>
+          <p onClick={toggleModal}>see all</p>
+          <Container>
+            {!recommandUsersLoading && users ? (
+              <UserGrid users={users} />
+            ) : (
+              <Loader />
+            )}
+          </Container>
+          <p>near cities</p>
+          <Container>
+            {!nearCitiesLoading && nearCities ? (
+              <LocationGrid cities={nearCities} type={"city"} />
+            ) : (
+              <Loader />
+            )}
+          </Container>
+          <p>near countries</p>
+          <Container>
+            {!nearCountriesLoading && countries ? (
+              <LocationGrid countries={countries} type={"country"} />
+            ) : (
+              <Loader />
+            )}
+          </Container>
+          <p>latest cities</p>
+          <Container>
+            {!latestCitiesLoading && latestCities ? (
+              <LocationGrid cities={latestCities} type={"city"} />
+            ) : (
+              <Loader />
+            )}
+          </Container>
+        </TallWrapper>
+      </>
     );
   } else {
     return null;

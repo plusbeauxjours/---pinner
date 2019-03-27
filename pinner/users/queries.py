@@ -101,7 +101,7 @@ def resolve_recommand_users(self, info):
     user = info.context.user
 
     users = models.User.objects.filter().exclude(pk=user.pk).order_by(
-        '-date_joined')[:7]
+        '-date_joined')
     return types.RecommandUsersResponse(users=users)
 
 

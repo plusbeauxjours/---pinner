@@ -11,7 +11,6 @@ const Header = styled.header`
   align-items: center;
   border-radius: 3px;
   cursor: pointer;
-  max-width: 200px;
   transition: background-color 0.2s ease-in-out;
 `;
 
