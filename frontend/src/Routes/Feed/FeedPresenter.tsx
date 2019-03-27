@@ -125,12 +125,11 @@ const ModalOverlay = styled.div`
 
 const Modal = styled.div`
   z-index: 10;
-  animation: ${ModalAnimation} 0.1s linear;
-  text-align: center;
   display: flex;
-  align-items: center;
-  margin-top: 150px;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  animation: ${ModalAnimation} 0.1s linear;
 `;
 
 interface IProps {
@@ -191,22 +190,20 @@ const FeedPresenter: React.SFC<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleBeforeModal} />
             <Modal>
-              <Wrapper>
-                {usersBefore.map(user => (
-                  <UserRow
-                    key={user.id}
-                    id={user.id}
-                    username={user.username}
-                    avatar={user.profile.avatar}
-                    currentCity={user.profile.currentCity.cityName}
-                    currentCountry={
-                      user.profile.currentCity.country.countryName
-                    }
-                    isFollowing={user.profile.isFollowing}
-                    size={"sm"}
-                  />
-                ))}
-              </Wrapper>
+              {usersBefore.map(user => (
+                <UserRow
+                  key={user.id}
+                  id={user.id}
+                  username={user.actor.username}
+                  avatar={user.actor.profile.avatar}
+                  currentCity={user.actor.profile.currentCity.cityName}
+                  currentCountry={
+                    user.actor.profile.currentCity.country.countryName
+                  }
+                  isFollowing={user.actor.profile.isFollowing}
+                  size={"sm"}
+                />
+              ))}
             </Modal>
           </ModalContainer>
         )}

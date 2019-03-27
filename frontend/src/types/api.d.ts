@@ -714,9 +714,22 @@ export interface Feed_feed_cards {
   fontSize: string | null;
 }
 
+export interface Feed_feed_usersNow_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface Feed_feed_usersNow_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: Feed_feed_usersNow_profile_currentCity_country;
+}
+
 export interface Feed_feed_usersNow_profile {
   __typename: "ProfileType";
   avatar: string;
+  currentCity: Feed_feed_usersNow_profile_currentCity | null;
+  isFollowing: boolean | null;
 }
 
 export interface Feed_feed_usersNow {
@@ -729,9 +742,22 @@ export interface Feed_feed_usersNow {
   profile: Feed_feed_usersNow_profile | null;
 }
 
+export interface Feed_feed_usersBefore_actor_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface Feed_feed_usersBefore_actor_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: Feed_feed_usersBefore_actor_profile_currentCity_country;
+}
+
 export interface Feed_feed_usersBefore_actor_profile {
   __typename: "ProfileType";
   avatar: string;
+  currentCity: Feed_feed_usersBefore_actor_profile_currentCity | null;
+  isFollowing: boolean | null;
 }
 
 export interface Feed_feed_usersBefore_actor {

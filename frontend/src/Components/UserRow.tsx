@@ -5,6 +5,7 @@ import UserHeader from "./UserHeader";
 
 const Container = styled.div`
   background-color: #2d3a41;
+  width: 600px;
   border-radius: 3px;
   border: ${props => props.theme.boxBorder};
   display: flex;
