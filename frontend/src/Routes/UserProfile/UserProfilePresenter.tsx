@@ -187,6 +187,17 @@ const Bio = styled.p`
   margin-bottom: 10px;
 `;
 
+const ModalAnimation = keyframes`
+	  from{
+	    opacity:0;
+	    transform:scale(1.1);
+	  }
+	  to{
+	    opacity:1;
+	    transform:none;
+	  }
+	`;
+
 const ModalContainer = styled.div`
   z-index: 8;
   display: flex;
@@ -205,26 +216,6 @@ const GearContainer = styled.span`
   cursor: pointer;
 `;
 
-const ModalOverlay = styled.div`
-  z-index: 5;
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-`;
-
-const ModalAnimation = keyframes`
-	  from{
-	    opacity:0;
-	    transform:scale(1.1);
-	  }
-	  to{
-	    opacity:1;
-	    transform:none;
-	  }
-	`;
-
 const Modal = styled.div`
   background-color: #2d3a41;
   width: 30%;
@@ -234,8 +225,21 @@ const Modal = styled.div`
 `;
 
 const FormModal = styled(Modal)`
-  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
   height: 30%;
+`;
+
+const ModalOverlay = styled.div`
+  z-index: 5;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
 `;
 
 const ModalLink = styled.div`
@@ -252,6 +256,9 @@ const ModalLink = styled.div`
 `;
 
 const ExtendedInput = styled(Input)`
+  width: 287px;
+  height: 48px;
+  margin-top: 10px;
   margin-bottom: 30px;
 `;
 

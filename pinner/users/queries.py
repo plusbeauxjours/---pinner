@@ -11,7 +11,7 @@ def resolve_profile(self, info, **kwargs):
 
     try:
         profile = User.objects.get(username=username)
-        footprints = profile.movenotification.all().order_by('fromDate')[:3]
+        footprints = profile.movenotification.all().order_by('start_date')[:3]
 
     except User.DoesNotExist:
         raise Exception('User not found')
@@ -26,7 +26,7 @@ def resolve_get_trips(self, info, **kwargs):
     username = kwargs.get('username')
 
     profile = User.objects.get(username=username)
-    footprints = profile.movenotification.all().order_by('-id')
+    footprints = profile.movenotification.all().order_by('-start_date')
 
     return location_types.FootprintsResponse(footprints=footprints)
 
