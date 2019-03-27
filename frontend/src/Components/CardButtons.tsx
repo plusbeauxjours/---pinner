@@ -15,9 +15,7 @@ const Button = styled.span<IProps>`
   svg {
     transition: all 0.3s ease-in-out;
     fill: ${props =>
-      props.isLiked || props.openedComment
-        ? "#EC4956"
-        : props.theme.blackColor};
+      props.isLiked || props.openedComment ? "#EC4956" : props.theme.greyColor};
   }
 `;
 

@@ -36,7 +36,6 @@ const ModalAnimation = keyframes`
 	`;
 
 const Modal = styled.div`
-  background-color: #2d3a41;
   width: 100;
   max-width: 935px;
   z-index: 5;
@@ -77,11 +76,6 @@ const CardDetailPresenter: React.SFC<IProps> = ({
               comments={card.comments}
               createdAt={card.createdAt}
               isLiked={card.isLiked}
-              borderRadius={card.borderRadius}
-              bgColor={card.bgColor}
-              font={card.font}
-              fontColor={card.fontColor}
-              fontSize={card.fontSize}
             />
           </Wrapper>
         </Modal>

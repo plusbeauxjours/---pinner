@@ -8,8 +8,7 @@ import { keyframes } from "styled-components";
 import UserHeader from "../UserHeader";
 
 const Container = styled.div`
-  background-color: grey;
-  border: ${props => props.theme.boxBorder};
+  border: ${props => props.theme.greyColor};
   border-radius: 3px;
 `;
 
@@ -34,7 +33,6 @@ const Caption = styled.div`
 const Meta = styled.div`
   padding: 10px 15px;
   padding-bottom: 0;
-  background-color: white;
 `;
 
 const Comments = styled.div`
@@ -65,11 +63,10 @@ const STextArea = styled(Textarea)`
 
 const DetailContainer = styled.div`
   display: flex;
-  background-color: white;
   border-radius: 3px;
   overflow: hidden;
   height: 600px;
-  border: ${props => props.theme.boxBorder};
+  border: ${props => props.theme.greyColor};
   */ ${Meta} {
     flex-grow: 1;
     padding: 20px;
@@ -175,11 +172,6 @@ interface IProps {
   modalOpen: boolean;
   toggleModal: () => void;
   getCommentId: any;
-  borderRadius: string;
-  bgColor?: string;
-  font?: string;
-  fontColor?: string;
-  fontSize?: string;
 }
 
 const PhotoPresenter: React.SFC<IProps> = ({
@@ -204,8 +196,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
   onSubmit,
   modalOpen,
   toggleModal,
-  getCommentId,
-  borderRadius
+  getCommentId
 }) => {
   if (inline) {
     return (

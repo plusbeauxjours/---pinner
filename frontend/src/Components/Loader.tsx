@@ -62,7 +62,6 @@ const Loader = styled.div`
 `;
 
 const LoaderInner = styled.div`
-  vertical-align: top;
   display: inline-block;
   width: 100%;
   background-color: grey;

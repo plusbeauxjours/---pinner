@@ -21,10 +21,19 @@ class LatestCitiesQuery extends Query<LatestCities> {}
 
 interface IState {
   inline: boolean;
+  modalOpen: boolean;
 }
 
 class ExploreContainer extends React.Component<any, IState> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inline: false,
+      modalOpen: false
+    };
+  }
   public render = () => {
+    const { modalOpen } = this.state;
     return (
       <RecommandUsersQuery query={RECOMMAND_USERS}>
         {({ data: recommandUsersData, loading: recommandUsersLoading }) => (
@@ -49,6 +58,8 @@ class ExploreContainer extends React.Component<any, IState> {
                         nearCountriesLoading={nearCountriesLoading}
                         latestCitiesData={latestCitiesData}
                         latestCitiesLoading={latestCitiesLoading}
+                        modalOpen={modalOpen}
+                        toggleModal={this.toggleModal}
                       />
                     )}
                   </LatestCitiesQuery>
@@ -59,6 +70,12 @@ class ExploreContainer extends React.Component<any, IState> {
         )}
       </RecommandUsersQuery>
     );
+  };
+  public toggleModal = () => {
+    const { modalOpen } = this.state;
+    this.setState({
+      modalOpen: !modalOpen
+    } as any);
   };
 }
 

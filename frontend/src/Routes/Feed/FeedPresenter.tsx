@@ -7,54 +7,87 @@ import Wrapper from "../../Components/Wrapper";
 import styled from "../../Styles/typed-components";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
+import Flag from "../../Components/Flag";
 
 const SWrapper = styled(Wrapper)`
-  max-width: 650px;
-`;
-
-const CityPhoto = styled.img`
-  display: flex;
-  width: 650px;
-  height: 200px;
-  overflow: hidden;
-  background-size: cover;
-  border-radius: 3px;
-  margin-bottom: 40px;
   z-index: 1;
 `;
 
-const Container = styled.div`
-  border: 1px;
-  display: flex;
-  justify-content: center;
-  margin: 30px;
-`;
-
-const AvatarGrid = styled.div`
+const PHeader = styled.header`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 40px;
-  padding: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  height: 55px;
+
+  border: 1px;
+  border-color: white;
+  margin-top: 20px;
 `;
 
-const AvatarContainer = styled.div``;
-
-const SAvatar = styled(Avatar)`
-  margin: 3px;
+const LocationContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
 `;
 
-const Follow = styled.div`
-  flex: 1;
-  margin-bottom: 10px;
-  height: 150px;
+const LocationHeader = styled.header`
+  padding: 12px;
+  margin: 0 15px 0 15px;
+  display: flex;
+  align-items: center;
   border-radius: 3px;
-  border: 1px solid grey;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+`;
+
+const HeaderColumn = styled.div`
+  margin-left: 30px;
+`;
+
+const Location = styled.span`
+  margin-top: 5px;
+  display: block;
+  font-size: 12px;
+  font-weight: 200;
+`;
+
+const AvatarContainer = styled.div`
+  display: flex;
+`;
+
+const PBody = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px 0 20px 0;
+  justify-content: center;
+  background: ${props => props.theme.bgColor};
+  border-bottom: 1px solid grey;
+  &:not(:last-child) {
+    border-bottom: 1px solid grey;
+  }
+`;
+
+const UserContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+`;
+
+const User = styled.div`
+  display: flex;
   padding: 5px;
 `;
 
 const SBold = styled(Bold)`
-  font-size: 20px;
-  font-weight: 200;
+  display: flex;
+  align-self: flex-end;
+`;
+
+const UBold = styled(SBold)`
+  font-weight: 100;
+  font-size: 7px;
+`;
+
+const SAvatar = styled(Avatar)`
+  margin-right: -15px;
 `;
 
 interface IProps {
@@ -79,48 +112,60 @@ const FeedPresenter: React.SFC<IProps> = ({
     return <Loader />;
   } else if (!loading && cards && usersNow && usersBefore && city) {
     return (
-      <SWrapper>
-        <h1>welcome to {currentCity}</h1>
-        <h1>see all</h1>
-        <Container>
-          <CityPhoto src={city.cityPhoto} />
-        </Container>
-        <h1>cardCount {city.cardCount}</h1>
-        <h1>userCount {city.userCount}</h1>
-        <h1>userLogCount {city.userLogCount}</h1>
-        <Container>
-          <Follow>
-            USERS WHO IS HERE
-            <SBold text={String(city.userCount)} />
-            <AvatarGrid>
-              {usersNow &&
-                usersNow.map(user => (
-                  <AvatarContainer key={user.id}>
-                    <Link to={`/${user.username}`}>
-                      <SAvatar size={"sm"} url={user.profile.avatar} />
+      <>
+        <SWrapper>
+          <PHeader>
+            <LocationContainer>
+              <Link to={`/city/${city.cityName}`}>
+                <LocationHeader>
+                  <Flag countryCode={city.country.countryCode} size={"sm"} />
+                  <HeaderColumn>
+                    <SBold text={city.cityName} />
+                    <Location>{city.country.countryName}</Location>
+                  </HeaderColumn>
+                </LocationHeader>
+              </Link>
+              <p>Temp</p>
+              <p>AQI</p>
+            </LocationContainer>
+            <UserContainer>
+              <User>
+                {usersNow &&
+                  usersNow.map(user => (
+                    <Link to="/explore/userlist">
+                      <AvatarContainer key={user.id}>
+                        <SAvatar
+                          size={"sm"}
+                          key={user.id}
+                          url={user.profile.avatar}
+                        />
+                      </AvatarContainer>
                     </Link>
-                  </AvatarContainer>
-                ))}
-            </AvatarGrid>
-          </Follow>
-          <Follow>
-            USERS WHO HAS BEEN HERE
-            <SBold text={String(city.userLogCount)} />
-            <AvatarGrid>
-              {usersBefore &&
-                usersBefore.map(user => (
-                  <AvatarContainer key={user.id}>
-                    <Link to={`/${user.actor.username}`}>
-                      <SAvatar size={"sm"} url={user.actor.profile.avatar} />
+                  ))}
+                <UBold text={String(city.userCount)} />
+                <UBold text={"USERS IS HERE, NOW"} />
+              </User>
+              <User>
+                {usersBefore &&
+                  usersBefore.map(user => (
+                    <Link to="/explore/userlist">
+                      <AvatarContainer key={user.id}>
+                        <SAvatar
+                          size={"sm"}
+                          key={user.id}
+                          url={user.actor.profile.avatar}
+                        />
+                      </AvatarContainer>
                     </Link>
-                  </AvatarContainer>
-                ))}
-            </AvatarGrid>
-          </Follow>
-        </Container>
-        {cards &&
-          cards.map(card => {
-            return (
+                  ))}
+                <UBold text={String(city.userLogCount)} />
+                <UBold text={"USERS HAS BEEN HERE"} />
+              </User>
+            </UserContainer>
+          </PHeader>
+          <PBody />
+          {cards &&
+            cards.map(card => (
               <Photo
                 key={card.id}
                 id={card.id}
@@ -136,15 +181,13 @@ const FeedPresenter: React.SFC<IProps> = ({
                 comments={card.comments}
                 createdAt={card.createdAt}
                 isLiked={card.isLiked}
-                borderRadius={card.borderRadius}
               />
-            );
-          })}
-      </SWrapper>
+            ))}
+        </SWrapper>
+      </>
     );
-  } else {
-    return null;
   }
+  return null;
 };
 
 export default FeedPresenter;

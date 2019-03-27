@@ -34,11 +34,6 @@ interface IProps {
   comments: any;
   isLiked: boolean;
   id: string;
-  borderRadius: string;
-  bgColor?: string;
-  font?: string;
-  fontColor?: string;
-  fontSize?: string;
 }
 
 interface IState {
@@ -79,12 +74,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
       caption,
       createdAt,
       comments,
-      id,
-      borderRadius,
-      bgColor,
-      font,
-      fontColor,
-      fontSize
+      id
     } = this.props;
     const {
       newComment,
@@ -167,11 +157,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
                               modalOpen={modalOpen}
                               toggleModal={this.toggleModal}
                               getCommentId={this.getCommentId}
-                              borderRadius={borderRadius}
-                              bgColor={bgColor}
-                              font={font}
-                              fontColor={fontColor}
-                              fontSize={fontSize}
                             />
                           );
                         }}

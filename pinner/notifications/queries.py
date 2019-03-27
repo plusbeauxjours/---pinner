@@ -32,6 +32,6 @@ def resolve_get_move_notifications(self, info, **kwargs):
 
     notifications = models.MoveNotification.objects.filter(
         actor__profile__in=following_profiles, verb='move').order_by(
-        '-end_date')[offset:3 + offset]
+        '-start_date')[offset:3 + offset]
 
     return types.GetMoveNotificationsResponse(ok=True, notifications=notifications)

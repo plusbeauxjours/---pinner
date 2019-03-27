@@ -9,7 +9,6 @@ const Container = styled.div`
   grid-auto-rows: 200px;
   grid-gap: 15px;
   margin-bottom: 85px;
-  justify-content: center;
 `;
 
 interface IProps {

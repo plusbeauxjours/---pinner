@@ -94,7 +94,11 @@ interface IProps {
 
 const Flag: React.SFC<IProps> = ({ className, countryCode, size }) => (
   <Overlay size={size}>
-    <FlagImage className={className} src={countryCode} size={size} />
+    <FlagImage
+      className={className}
+      src={require(`../Images/countryFlag/${countryCode}.svg`)}
+      size={size}
+    />
   </Overlay>
 );
 

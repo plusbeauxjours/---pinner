@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/react-dates": "^17.1.5",
     "apollo-boost": "^0.1.27",
     "apollo-link-ws": "^1.0.12",
     "axios": "^0.18.0",
@@ -41,6 +40,7 @@
     "@types/node": "^10.12.19",
     "@types/prop-types": "^15.5.8",
     "@types/react": "^16.7.22",
+    "@types/react-dates": "^17.1.5",
     "@types/react-dom": "^16.0.11",
     "@types/react-helmet": "^5.0.8",
     "@types/react-router-dom": "^4.3.1",

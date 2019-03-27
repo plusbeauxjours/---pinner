@@ -284,7 +284,8 @@ const TripContainer = styled.div`
 `;
 
 const TripRow = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
   justify-content: space-between;
   align-items: center;
   background-color: #2d3a41;
@@ -473,6 +474,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 onDatesChange={onDatesChange}
                 onFocusChange={onFocusChange}
                 focusedInput={focusedInput}
+                isOutsideRange={() => false}
               />
               <ExtendedInput
                 onChange={onInputChange}
@@ -496,6 +498,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 onDatesChange={onDatesChange}
                 onFocusChange={onFocusChange}
                 focusedInput={focusedInput}
+                isOutsideRange={() => false}
               />
               <ExtendedInput
                 onChange={onInputChange}

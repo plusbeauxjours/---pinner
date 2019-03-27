@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Bold from "./Bold";
 import Avatar from "./Avatar";
 
@@ -11,10 +11,8 @@ const Header = styled.header`
   align-items: center;
   border-radius: 3px;
   cursor: pointer;
+  max-width: 200px;
   transition: background-color 0.2s ease-in-out;
-  &:hover {
-    background-color: #e6e6e6;
-  }
 `;
 
 const HeaderColumn = styled.div`
@@ -28,6 +26,12 @@ const Location = styled.span`
   font-weight: 200;
 `;
 
+const SAvatar = styled(Avatar)``;
+
+const SBold = styled(Bold)`
+  display: flex;
+`;
+
 interface IProps {
   username: string;
   avatar: string;
@@ -36,12 +40,6 @@ interface IProps {
   size?: string;
 }
 
-const SAvatar = styled(Avatar)``;
-
-const SBold = styled(Bold)`
-  display: flex;
-`;
-
 const UserHeader: React.SFC<IProps> = ({
   username,
   avatar,
@@ -49,11 +47,9 @@ const UserHeader: React.SFC<IProps> = ({
   currentCountry,
   size
 }) => (
-  <>
+  <Link to={`/${username}`}>
     <Header>
-      {/* <Link to={`/${username}`}> */}
       <SAvatar size={size} url={avatar} />
-      {/* </Link> */}
       <HeaderColumn>
         <SBold text={username} />
         <Location>
@@ -61,7 +57,7 @@ const UserHeader: React.SFC<IProps> = ({
         </Location>
       </HeaderColumn>
     </Header>
-  </>
+  </Link>
 );
 
 export default UserHeader;

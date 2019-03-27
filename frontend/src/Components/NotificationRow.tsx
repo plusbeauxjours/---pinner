@@ -10,7 +10,8 @@ const Container = styled.div`
   background-color: #2d3a41;
   border-radius: 3px;
   border: ${props => props.theme.boxBorder};
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
   padding: 10px;
   cursor: pointer;
@@ -18,18 +19,6 @@ const Container = styled.div`
   &:hover {
     background-color: #e6e6e6;
   }
-`;
-
-const FContainer = styled(Container)`
-  justify-content: flex-start;
-`;
-
-const MContainer = styled(Container)`
-  justify-content: space-between;
-`;
-
-const CLUContainer = styled(Container)`
-  justify-content: flex-start;
 `;
 
 const Header = styled.header`
@@ -104,7 +93,7 @@ const NotificationRow: React.SFC<IProps> = ({
                         <RedDot />
                       </ICon>
                     ) : null}
-                    <MContainer onClick={() => onMarkRead(notification.id)}>
+                    <Container onClick={() => onMarkRead(notification.id)}>
                       <UserHeader
                         username={notification.actor.username}
                         currentCity={actor.currentCity.cityName}
@@ -113,17 +102,16 @@ const NotificationRow: React.SFC<IProps> = ({
                         size={"sm"}
                       />
                       <Header>
-                        <SBold text={"Moved"} />
+                        <SBold text={"Moved to"} />
                         <TimeStamp>{notification.createdAt}</TimeStamp>
                       </Header>
                       <MHeader>
-                        <SBold text={"To"} />
                         <FlagHeader
                           cityName={notification.city.cityName}
                           countryCode={notification.city.country.countryCode}
                         />
                       </MHeader>
-                    </MContainer>
+                    </Container>
                   </Link>
                 </>
               );
@@ -136,7 +124,7 @@ const NotificationRow: React.SFC<IProps> = ({
                         <RedDot />
                       </ICon>
                     ) : null}
-                    <FContainer onClick={() => onMarkRead(notification.id)}>
+                    <Container onClick={() => onMarkRead(notification.id)}>
                       <UserHeader
                         username={notification.actor.username}
                         currentCity={actor.currentCity.cityName}
@@ -148,7 +136,7 @@ const NotificationRow: React.SFC<IProps> = ({
                         <SBold text={"Follow me"} />
                         <TimeStamp>{notification.createdAt}</TimeStamp>
                       </Header>
-                    </FContainer>
+                    </Container>
                   </Link>
                 </>
               );
@@ -204,7 +192,7 @@ const NotificationRow: React.SFC<IProps> = ({
                         <RedDot />
                       </ICon>
                     ) : null}
-                    <CLUContainer onClick={() => onMarkRead(notification.id)}>
+                    <Container onClick={() => onMarkRead(notification.id)}>
                       <UserHeader
                         username={notification.actor.username}
                         currentCity={actor.currentCity.cityName}
@@ -216,7 +204,7 @@ const NotificationRow: React.SFC<IProps> = ({
                         <SBold text={"Liked card"} />
                         <TimeStamp>{notification.createdAt}</TimeStamp>
                       </Header>
-                    </CLUContainer>
+                    </Container>
                   </Link>
                 </>
               );
@@ -237,7 +225,7 @@ const NotificationRow: React.SFC<IProps> = ({
                         <RedDot />
                       </ICon>
                     ) : null}
-                    <CLUContainer>
+                    <Container>
                       <UserHeader
                         username={notification.actor.username}
                         currentCity={actor.currentCity.cityName}
@@ -249,7 +237,7 @@ const NotificationRow: React.SFC<IProps> = ({
                         <SBold text={"Uploaded card"} />
                         <TimeStamp>{notification.createdAt}</TimeStamp>
                       </Header>
-                    </CLUContainer>
+                    </Container>
                   </Link>
                 </>
               );
