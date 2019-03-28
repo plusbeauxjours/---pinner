@@ -71,10 +71,7 @@ const CountryCard: React.SFC<IProps> = ({
     <SLink to={`/country/${countryName}`}>
       <CityPhoto src={countryPhoto} />
       <Metric>
-        <Flag
-          countryCode={require(`../Images/countryFlag/${countryCode}.svg`)}
-          size="sm"
-        />
+        <Flag countryCode={countryCode} size="sm" />
       </Metric>
       <CityName text={countryName} />
       {/* <Counter>cityCount:{cityCount.toString()}</Counter>

@@ -28,7 +28,19 @@ const Container = styled.div`
   flex: 0 0 auto;
   height: 250px;
   border-bottom: 1px solid grey;
-  padding: 20px;
+  padding: 15px;
+`;
+
+const Box = styled.div`
+  width: 905px;
+
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  /* ::-webkit-scrollbar {
+    display: none;
+  } */
 `;
 
 const ModalAnimation = keyframes`
@@ -127,35 +139,44 @@ const ExplorePresenter: React.SFC<IProps> = ({
           <p>recommand user</p>
           <p onClick={toggleModal}>see all</p>
           <Container>
-            {!recommandUsersLoading && users ? (
-              <UserGrid users={users} />
-            ) : (
-              <Loader />
-            )}
+            <Box>
+              {!recommandUsersLoading && users ? (
+                <UserGrid users={users} />
+              ) : (
+                <Loader />
+              )}
+            </Box>
           </Container>
           <p>near cities</p>
           <Container>
-            {!nearCitiesLoading && nearCities ? (
-              <LocationGrid cities={nearCities} type={"city"} />
-            ) : (
-              <Loader />
-            )}
+            <Box>
+              {!nearCitiesLoading && nearCities ? (
+                <LocationGrid cities={nearCities} type={"city"} />
+              ) : (
+                <Loader />
+              )}
+            </Box>
           </Container>
           <p>near countries</p>
           <Container>
-            {!nearCountriesLoading && countries ? (
-              <LocationGrid countries={countries} type={"country"} />
-            ) : (
-              <Loader />
-            )}
+            <Box>
+              {!nearCountriesLoading && countries ? (
+                <LocationGrid countries={countries} type={"country"} />
+              ) : (
+                <Loader />
+              )}
+            </Box>
           </Container>
           <p>latest cities</p>
           <Container>
-            {!latestCitiesLoading && latestCities ? (
-              <LocationGrid cities={latestCities} type={"city"} />
-            ) : (
-              <Loader />
-            )}
+            <Box>
+              {!latestCitiesLoading && latestCities ? (
+                <LocationGrid cities={latestCities} type={"city"} />
+              ) : (
+                <Loader />
+              )}
+              )}
+            </Box>
           </Container>
         </TallWrapper>
       </>

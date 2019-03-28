@@ -66,6 +66,22 @@ const PRow = styled.div`
   margin: 20px 10px 20px 10px;
 `;
 
+const ScrollContainer = styled.div`
+  position: relative;
+  display: flex;
+`;
+
+const Box = styled.div`
+  width: 905px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  /* ::-webkit-scrollbar {
+    display: none;
+  } */
+`;
+
 // const RowText = styled.span`
 //   display: flex;
 //   position: absolute;
@@ -117,6 +133,7 @@ const CountryName = styled(CityName)`
 
 const CityContainer = styled.div`
   margin-right: 15px;
+  margin-bottom: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -698,37 +715,52 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           </TripContainer>
           <p>TOP COUNTRIES</p>
           <PRow>
-            {!topCountriesLoading && topCountries ? (
-              topCountries.map(topCountry => (
-                <CityContainer key={topCountry.id}>
-                  <Link to={`/country/${topCountry.city.country.countryName}`}>
-                    <CityPhoto
-                      src={topCountry.city.country.countryPhoto}
-                      size={"md"}
-                    />
-                  </Link>
-                  <CityName text={topCountry.city.country.countryName} />
-                </CityContainer>
-              ))
-            ) : (
-              <Loader />
-            )}
+            <Box>
+              <ScrollContainer>
+                {!topCountriesLoading && topCountries ? (
+                  topCountries.map(topCountry => (
+                    <CityContainer key={topCountry.id}>
+                      <Link
+                        to={`/country/${topCountry.city.country.countryName}`}
+                      >
+                        <CityPhoto
+                          src={topCountry.city.country.countryPhoto}
+                          size={"md"}
+                        />
+                      </Link>
+                      <CityName text={topCountry.city.country.countryName} />
+                    </CityContainer>
+                  ))
+                ) : (
+                  <Loader />
+                )}
+              </ScrollContainer>
+            </Box>
           </PRow>
           <p>FREQUENT VISITS</p>
           <PRow>
-            {!frequentVisitsLoading && frequentCities ? (
-              frequentCities.map(frequentCity => (
-                <CityContainer key={frequentCity.id}>
-                  <Link to={`/city/${frequentCity.city.cityName}`}>
-                    <CityPhoto src={frequentCity.city.cityPhoto} size={"md"} />
-                  </Link>
-                  <CityName text={frequentCity.city.cityName} />
-                  <CountryName text={frequentCity.city.country.countryName} />
-                </CityContainer>
-              ))
-            ) : (
-              <Loader />
-            )}
+            <Box>
+              <ScrollContainer>
+                {!frequentVisitsLoading && frequentCities ? (
+                  frequentCities.map(frequentCity => (
+                    <CityContainer key={frequentCity.id}>
+                      <Link to={`/city/${frequentCity.city.cityName}`}>
+                        <CityPhoto
+                          src={frequentCity.city.cityPhoto}
+                          size={"md"}
+                        />
+                      </Link>
+                      <CityName text={frequentCity.city.cityName} />
+                      <CountryName
+                        text={frequentCity.city.country.countryName}
+                      />
+                    </CityContainer>
+                  ))
+                ) : (
+                  <Loader />
+                )}
+              </ScrollContainer>
+            </Box>
           </PRow>
           {user.cards && user.cards.length !== 0 && (
             <CardGrid cards={user.cards} />

@@ -52,10 +52,6 @@ const Location = styled.span`
   font-weight: 200;
 `;
 
-const AvatarContainer = styled.div`
-  display: flex;
-`;
-
 const PBody = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -88,8 +84,12 @@ const UBold = styled(SBold)`
   font-size: 7px;
 `;
 
+const AvatarContainer = styled.div`
+  display: flex;
+`;
+
 const SAvatar = styled(Avatar)`
-  margin-right: -15px;
+  margin-right: -12px;
 `;
 
 const ModalAnimation = keyframes`

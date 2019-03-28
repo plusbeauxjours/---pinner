@@ -2,15 +2,10 @@ import React from "react";
 import Footprint from "../Footprint";
 import FootprintRow from "../../Components/FootprintRow";
 import styled from "src/Styles/typed-components";
-import Wrapper from "src/Components/Wrapper";
 import { GetFootprints } from "../../types/api";
 import Loader from "src/Components/Loader";
 import { Route } from "react-router";
 import { keyframes } from "styled-components";
-
-const SWrapper = styled(Wrapper)`
-  max-width: 650px;
-`;
 
 const ModalContainer = styled.div`
   display: flex;
@@ -78,20 +73,18 @@ const FootprintPresenter: React.SFC<IProps> = ({
         <ModalContainer>
           <ModalOverlay onClick={back} />
           <Modal>
-            <SWrapper>
-              {footprints &&
-                footprints.map(footprint => {
-                  return (
-                    <FootprintRow
-                      className={className}
-                      id={footprint.id}
-                      key={footprint.id}
-                      footprint={footprint}
-                      toggleModal={toggleModal}
-                    />
-                  );
-                })}
-            </SWrapper>
+            {footprints &&
+              footprints.map(footprint => {
+                return (
+                  <FootprintRow
+                    className={className}
+                    id={footprint.id}
+                    key={footprint.id}
+                    footprint={footprint}
+                    toggleModal={toggleModal}
+                  />
+                );
+              })}
           </Modal>
         </ModalContainer>
       </>

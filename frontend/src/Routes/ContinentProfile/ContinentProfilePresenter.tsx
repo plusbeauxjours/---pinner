@@ -196,9 +196,9 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
                       <AvatarContainer key={country.id}>
                         <Flag
                           size={"sm"}
-                          countryCode={require(`../../Images/countryFlag/${
-                            country.countryCode
-                          }.svg`)}
+                          countryCode=
+                          {country.countryCode}
+                          
                         />
                       </AvatarContainer>
                     ))}

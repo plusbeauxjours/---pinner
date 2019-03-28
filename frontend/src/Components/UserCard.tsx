@@ -12,6 +12,7 @@ const Container = styled.div`
   min-width: 170px;
   padding: 10px;
   margin-right: 5px;
+  margin-bottom: 25px;
 `;
 
 const SAvatar = styled(Avatar)`

@@ -43,10 +43,7 @@ const FlagHeader: React.SFC<IProps> = ({
     <Header>
       {/* <Link to={`/${countryName}`}> */}
       <HeaderColumn>
-        <Flag
-          countryCode={require(`../Images/countryFlag/${countryCode}.svg`)}
-          size="sm"
-        />
+        <Flag countryCode={countryCode} size={"sm"} />
         <Location>{cityName}</Location>
       </HeaderColumn>
       {/* </Link> */}
