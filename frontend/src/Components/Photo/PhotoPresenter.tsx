@@ -70,7 +70,7 @@ const DetailContainer = styled.div`
   */ ${Meta} {
     flex-grow: 1;
     padding: 20px;
-    overflow: scroll;
+    overflow-y: scroll;
     ${Header} {
       padding: 0;
       padding-bottom: 20px;
@@ -83,8 +83,12 @@ const DetailContainer = styled.div`
     width: 550px;
   }
   ${Comments} {
-    min-height: 50%;
-    overflow: scroll;
+    height: 350px;
+    width: 250px;
+    word-break:break-all
+    flex-wrap: nowrap;
+    overflow-x: visible;
+    overflow-y: auto;
     margin-bottom: 30px;
   }
 `;
