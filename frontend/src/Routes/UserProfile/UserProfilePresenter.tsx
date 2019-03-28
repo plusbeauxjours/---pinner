@@ -22,12 +22,6 @@ import CardGrid from "../../Components/CardGrid";
 import FollowBtn from "../../Components/FollowBtn";
 import Input from "../../Components/Input";
 
-const SWrapper = styled(Wrapper)`
-  z-index: 1;
-  height: 50vh;
-  text-align: center;
-`;
-
 const PHeader = styled.header`
   display: flex;
   flex-direction: column;
@@ -50,46 +44,54 @@ const NameContainer = styled.span`
   display: flex;
 `;
 
+const GearContainer = styled.span`
+  margin-left: 15px;
+  cursor: pointer;
+`;
+
+const SWrapper = styled(Wrapper)`
+  z-index: 1;
+  height: 50vh;
+  text-align: center;
+`;
+
 const PBody = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-auto-rows: 200px;
+  grid-gap: 15px;
   flex-wrap: wrap;
-  margin: 20px 0 20px 0;
+  height: 100%;
   justify-content: center;
   background: ${props => props.theme.bgColor};
-  border-bottom: 1px solid grey;
+  padding: 15px;
 `;
 
-const PRow = styled.div`
+const Container = styled.div`
   display: flex;
-  flex-wrap: nowrap;
-  border-bottom: 1px solid grey;
-  margin: 20px 10px 20px 10px;
+  align-items: center;
+  flex-direction: row;
+  -webkit-box-flex: 0;
+  flex: 0 0 auto;
+  height: 280px;
+  padding: 15px;
 `;
 
-const ScrollContainer = styled.div`
-  position: relative;
+const Title = styled.div`
   display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 `;
 
-const Box = styled.div`
-  width: 905px;
+const CityContainer = styled.div`
   display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  /* ::-webkit-scrollbar {
-    display: none;
-  } */
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+  margin-bottom: 25px;
 `;
-
-// const RowText = styled.span`
-//   display: flex;
-//   position: absolute;
-//   margin-bottom: 10px;
-// `;
 
 const CityPhoto = styled.img<ITheme>`
-  margin-bottom: 10px;
   display: flex;
   width: ${props => {
     if (props.size === "md") {
@@ -97,7 +99,7 @@ const CityPhoto = styled.img<ITheme>`
     } else if (props.size === "sm") {
       return "50px";
     } else {
-      return "50px";
+      return "200px";
     }
   }};
   height: ${props => {
@@ -106,7 +108,7 @@ const CityPhoto = styled.img<ITheme>`
     } else if (props.size === "sm") {
       return "50px";
     } else {
-      return "50px";
+      return "200px";
     }
   }};
   background-size: cover;
@@ -131,72 +133,9 @@ const CountryName = styled(CityName)`
   pointer-events: none;
 `;
 
-const CityContainer = styled.div`
-  margin-right: 15px;
-  margin-bottom: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const InfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
-  width: 300px;
-  margin-right: 15px;
-`;
-
-const Info = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 100%;
-  margin-bottom: 10px;
-  height: 200px;
-  border-radius: 3px;
-  border: 1px solid grey;
-  padding: 5px;
-`;
-
-const InfoInlineContainer = styled(InfoContainer)`
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const HalfInfo = styled(Info)`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 48%;
-  height: 100px;
-  display: flex;
-  margin-bottom: 0;
-  padding-bottom: 30px;
-`;
-
-const InfoRow = styled.span``;
-
-const FollowContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-width: 400px;
-  margin-bottom: 10px;
-`;
-
-const Follow = styled.div`
-  flex: 1;
-  margin-bottom: 10px;
-  height: 150px;
-  border-radius: 3px;
-  border: 1px solid grey;
-  padding: 5px;
-`;
-
-const Fullname = styled.span`
-  font-size: 16px;
-  margin-bottom: 10px;
-  display: block;
-  font-weight: 500;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
 `;
 
 const Bio = styled.p`
@@ -213,7 +152,31 @@ const ModalAnimation = keyframes`
 	    opacity:1;
 	    transform:none;
 	  }
-	`;
+  `;
+
+const ColumnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Row = styled.div`
+  display: flex;
+  padding: 5px;
+  border: 1px solid grey;
+`;
+
+const AvatarContainer = styled.div``;
+
+const UBold = styled(Bold)`
+  display: flex;
+  align-self: flex-end;
+  font-weight: 100;
+  font-size: 7px;
+`;
+
+const SAvatar = styled(Avatar)`
+  margin-right: -12px;
+`;
 
 const ModalContainer = styled.div`
   z-index: 8;
@@ -227,11 +190,6 @@ const ModalContainer = styled.div`
 `;
 
 const FromModalContainer = styled(ModalContainer)``;
-
-const GearContainer = styled.span`
-  margin-left: 15px;
-  cursor: pointer;
-`;
 
 const Modal = styled.div`
   background-color: #2d3a41;
@@ -275,29 +233,23 @@ const ModalLink = styled.div`
 const ExtendedInput = styled(Input)`
   width: 287px;
   height: 48px;
-  margin-top: 10px;
-  margin-bottom: 30px;
 `;
-
-const SBold = styled(Bold)`
-  font-size: 20px;
-  font-weight: 200;
-`;
-
-const AvatarGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 40px;
-  padding: 20px;
-`;
-
-const AvatarContainer = styled.div``;
 
 const TripContainer = styled.div`
   display: grid;
   flex-direction: column;
-  border-bottom: 1px solid grey;
   margin: 20px 10px 20px 10px;
+`;
+
+const GreyLine = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid grey;
+`;
+
+const SBold = styled(Bold)`
+  font-size: 20px;
+  font-weight: 100;
 `;
 
 const TripRow = styled.div`
@@ -307,7 +259,7 @@ const TripRow = styled.div`
   align-items: center;
   background-color: #2d3a41;
   border-radius: 3px;
-  border: ${props => props.theme.boxBorder};
+  border: 1px solid grey
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
@@ -318,6 +270,22 @@ const TripRow = styled.div`
 
 const TripText = styled.div`
   display: flex;
+`;
+
+const ScrollContainer = styled.div`
+  position: relative;
+  display: flex;
+`;
+
+const TripBox = styled.div`
+  width: 905px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  /* ::-webkit-scrollbar {
+    display: none;
+  } */
 `;
 
 interface ITheme {
@@ -437,6 +405,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   } else if (user && topCountries && frequentCities) {
     return (
       <>
+        {/* 
+        ////////////// MODAL //////////////
+        */}
+
         {modalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleModal} />
@@ -529,6 +501,11 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </FormModal>
           </FromModalContainer>
         )}
+
+        {/* 
+        ////////////// HEADER //////////////
+        */}
+
         <PHeader>
           <PAvatar size="lg" url={user.profile.avatar} />
           {editMode ? (
@@ -561,30 +538,38 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </Link>
           </NameContainer>
         </PHeader>
+
+        {/* 
+        ////////////// BODY //////////////
+        */}
+
         <SWrapper>
           <PBody>
-            <CityContainer>
-              <Link to={`/city/${user.profile.currentCity.cityName}`}>
-                <CityPhoto
-                  src={user.profile.currentCity.cityPhoto}
-                  size={"md"}
-                />
-              </Link>
-
-              <CityName text={user.profile.currentCity.cityName} />
-              <CountryName
-                text={user.profile.currentCity.country.countryName}
-              />
-            </CityContainer>
             <InfoContainer>
-              <Info>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with....
+              <CityContainer>
+                <Link to={`/city/${user.profile.currentCity.cityName}`}>
+                  <CityPhoto
+                    src={user.profile.currentCity.cityPhoto}
+                    size={"md"}
+                  />
+                </Link>
+
+                <CityName text={user.profile.currentCity.cityName} />
+                <CountryName
+                  text={user.profile.currentCity.country.countryName}
+                />
+              </CityContainer>
+              <ColumnContainer>
+                <p>
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the industry's
+                  standard dummy text ever since the 1500s, when an unknown
+                  printer took a galley of type and scrambled it to make a type
+                  specimen book. It has survived not only five centuries, but
+                  also the leap into electronic typesetting, remaining
+                  essentially unchanged. It was popularised in the 1960s
+                  with....
+                </p>
                 {editMode ? (
                   <>
                     <ExtendedInput
@@ -605,41 +590,38 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     />
                   </>
                 ) : (
-                  <Fullname>{`${user.firstName} ${user.lastName}`}</Fullname>
+                  <p>
+                    {user.firstName} {user.lastName}
+                  </p>
                 )}
-              </Info>
-              <InfoInlineContainer>
-                <HalfInfo>
-                  <InfoRow>
-                    <SBold text={String(user.profile.postCount)} />
-                    POSTS
-                  </InfoRow>
-                  <InfoRow>
-                    <SBold text={String(user.profile.postCount)} />
-                    KM
-                  </InfoRow>
-                  <InfoRow>
-                    <SBold text={String(user.profile.tripCount)} />
-                    TRIPS
-                  </InfoRow>
-                </HalfInfo>
-                <HalfInfo>
-                  <InfoRow>
-                    CITIES
-                    <SBold text={String(user.profile.cityCount)} />
-                  </InfoRow>
-
-                  <InfoRow>
-                    COUNTRIES
-                    <SBold text={String(user.profile.cityCount)} />
-                  </InfoRow>
-
-                  <InfoRow>
-                    CONTINENT
-                    <SBold text={String(user.profile.cityCount)} />
-                  </InfoRow>
-                </HalfInfo>
-
+              </ColumnContainer>
+            </InfoContainer>
+            <InfoContainer>
+              <ColumnContainer>
+                <Row>
+                  <UBold text={String(user.profile.postCount)} />
+                  <UBold text={"POSTS"} />
+                </Row>
+                <Row>
+                  <UBold text={String(user.profile.postCount)} />
+                  <UBold text={"KM"} />
+                </Row>
+                <Row>
+                  <UBold text={String(user.profile.tripCount)} />
+                  <UBold text={"TRIPS"} />
+                </Row>
+                <Row>
+                  <UBold text={"CITIES"} />
+                  <UBold text={String(user.profile.cityCount)} />
+                </Row>
+                <Row>
+                  <UBold text={"COUNTRIES"} />
+                  <UBold text={String(user.profile.cityCount)} />
+                </Row>
+                <Row>
+                  <UBold text={"CONTINENT"} />
+                  <UBold text={String(user.profile.cityCount)} />
+                </Row>
                 {user.profile.bio &&
                   (editMode ? (
                     <ExtendedInput
@@ -653,47 +635,92 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   ) : (
                     <Bio>{`${user.profile.bio}`}</Bio>
                   ))}
-              </InfoInlineContainer>
-            </InfoContainer>
-            <FollowContainer>
-              <Follow>
-                FOLLOWERS
-                <SBold text={String(user.profile.followersCount)} />
-                <AvatarGrid>
+              </ColumnContainer>
+              <ColumnContainer>
+                <Row>
                   {user.profile.followers &&
                     user.profile.followers.map(follower => (
-                      <AvatarContainer key={follower.id}>
-                        <Link to={`/${follower.user.username}`}>
-                          <Avatar
-                            size={"sm"}
-                            url={follower.user.profile.avatar}
-                          />
-                        </Link>
+                      <AvatarContainer key={user.id}>
+                        <SAvatar
+                          size={"sm"}
+                          key={user.id}
+                          url={follower.user.profile.avatar}
+                        />
                       </AvatarContainer>
                     ))}
-                </AvatarGrid>
-              </Follow>
-              <Follow>
-                FOLLOWINGS
-                <SBold text={String(user.profile.followingCount)} />
-                <AvatarGrid>
+                  <UBold text={String(user.profile.followersCount)} />
+                  <UBold text={"CONTRIES"} />
+                </Row>
+                <Row>
+                  {user.profile.followers &&
+                    user.profile.followers.map(follower => (
+                      <AvatarContainer key={user.id}>
+                        <SAvatar
+                          size={"sm"}
+                          key={user.id}
+                          url={follower.user.profile.avatar}
+                        />
+                      </AvatarContainer>
+                    ))}
+                  <UBold text={String(user.profile.followersCount)} />
+                  <UBold text={"MATCHINGS"} />
+                </Row>
+                <Row>
+                  {user.profile.followers &&
+                    user.profile.followers.map(follower => (
+                      <AvatarContainer key={user.id}>
+                        <SAvatar
+                          size={"sm"}
+                          key={user.id}
+                          url={follower.user.profile.avatar}
+                        />
+                      </AvatarContainer>
+                    ))}
+                  <UBold text={String(user.profile.followersCount)} />
+                  <UBold text={"PEOPLE THEY CROSS PATHS WITH MOST"} />
+                </Row>
+                <Row>
+                  {user.profile.followers &&
+                    user.profile.followers.map(follower => (
+                      <AvatarContainer key={user.id}>
+                        <SAvatar
+                          size={"sm"}
+                          key={user.id}
+                          url={follower.user.profile.avatar}
+                        />
+                      </AvatarContainer>
+                    ))}
+                  <UBold text={String(user.profile.followersCount)} />
+                  <UBold text={"FOLLOWERS"} />
+                </Row>
+                <Row>
                   {user.profile.followings &&
                     user.profile.followings.map(following => (
-                      <AvatarContainer key={following.id}>
-                        <Link to={`/${following.user.username}`}>
-                          <Avatar
-                            size={"sm"}
-                            url={following.user.profile.avatar}
-                          />
-                        </Link>
+                      <AvatarContainer key={user.id}>
+                        <SAvatar
+                          size={"sm"}
+                          key={user.id}
+                          url={following.user.profile.avatar}
+                        />
                       </AvatarContainer>
                     ))}
-                </AvatarGrid>
-              </Follow>
-            </FollowContainer>
+                  <UBold text={String(user.profile.followingCount)} />
+                  <UBold text={"FOLLOWINGS"} />
+                </Row>
+              </ColumnContainer>
+            </InfoContainer>
           </PBody>
+          <GreyLine />
+
+          {/* 
+          ////////////// TRIPS //////////////
+          */}
+
+          <Title>
+            <SBold text={"TRIP LOG"} />
+            <p onClick={toggleModal}>SEE ALL</p>
+          </Title>
           <TripContainer>
-            <p>TRIP LOG</p>
             {!getTipsLoading && getTrips ? (
               getTrips.map(getTrip => (
                 <TripRow
@@ -713,9 +740,18 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <Loader />
             )}
           </TripContainer>
-          <p>TOP COUNTRIES</p>
-          <PRow>
-            <Box>
+          <GreyLine />
+
+          {/* 
+          ////////////// LOCATIONS //////////////
+          */}
+
+          <Title>
+            <SBold text={"TOP COUNTRIES"} />
+            <p onClick={toggleModal}>SEE ALL</p>
+          </Title>
+          <Container>
+            <TripBox>
               <ScrollContainer>
                 {!topCountriesLoading && topCountries ? (
                   topCountries.map(topCountry => (
@@ -735,11 +771,16 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <Loader />
                 )}
               </ScrollContainer>
-            </Box>
-          </PRow>
-          <p>FREQUENT VISITS</p>
-          <PRow>
-            <Box>
+            </TripBox>
+          </Container>
+          <GreyLine />
+
+          <Title>
+            <SBold text={"FREQUENT VISITS"} />
+            <p onClick={toggleModal}>SEE ALL</p>
+          </Title>
+          <Container>
+            <TripBox>
               <ScrollContainer>
                 {!frequentVisitsLoading && frequentCities ? (
                   frequentCities.map(frequentCity => (
@@ -760,8 +801,14 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <Loader />
                 )}
               </ScrollContainer>
-            </Box>
-          </PRow>
+            </TripBox>
+          </Container>
+          <GreyLine />
+
+          <Title>
+            <SBold text={"POSTS"} />
+            <p onClick={toggleModal}>SEE ALL</p>
+          </Title>
           {user.cards && user.cards.length !== 0 && (
             <CardGrid cards={user.cards} />
           )}

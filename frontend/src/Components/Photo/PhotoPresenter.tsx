@@ -36,6 +36,7 @@ const Meta = styled.div`
 `;
 
 const Comments = styled.div`
+  word-break: break-all;
   margin-top: 10px;
 `;
 

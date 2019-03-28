@@ -9,10 +9,14 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   border: 1px solid ${props => props.theme.headerColor};
-  min-width: 170px;
+  width: 170px;
+  height: 200px;
   padding: 10px;
   margin-right: 5px;
   margin-bottom: 25px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const SAvatar = styled(Avatar)`

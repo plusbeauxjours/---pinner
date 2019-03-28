@@ -13,6 +13,7 @@ import LocationGrid from "../../Components/LocationGrid";
 import Wrapper from "../../Components/Wrapper";
 import { keyframes } from "styled-components";
 import UserRow from "../../Components/UserRow";
+import Bold from "../../Components/Bold";
 
 const TallWrapper = styled(Wrapper)`
   height: 50vh;
@@ -26,14 +27,24 @@ const Container = styled.div`
   flex-direction: row;
   -webkit-box-flex: 0;
   flex: 0 0 auto;
-  height: 250px;
-  border-bottom: 1px solid grey;
+  height: 280px;
   padding: 15px;
+`;
+
+const GreyLine = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid grey;
+`;
+
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 `;
 
 const Box = styled.div`
   width: 905px;
-
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
@@ -63,6 +74,11 @@ const ModalContainer = styled.div`
   height: 100%;
   width: 100%;
   top: 0;
+`;
+
+const SBold = styled(Bold)`
+  font-size: 20px;
+  font-weight: 100;
 `;
 
 const ModalOverlay = styled.div`
@@ -136,8 +152,10 @@ const ExplorePresenter: React.SFC<IProps> = ({
           </ModalContainer>
         )}
         <TallWrapper>
-          <p>recommand user</p>
-          <p onClick={toggleModal}>see all</p>
+          <Title>
+            <SBold text={"RECOMMAND USER"} />
+            <p onClick={toggleModal}>SEE ALL</p>
+          </Title>
           <Container>
             <Box>
               {!recommandUsersLoading && users ? (
@@ -147,7 +165,12 @@ const ExplorePresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
-          <p>near cities</p>
+          <GreyLine />
+
+          <Title>
+            <SBold text={"NEAR CITIES"} />
+            <p onClick={toggleModal}>SEE ALL</p>
+          </Title>
           <Container>
             <Box>
               {!nearCitiesLoading && nearCities ? (
@@ -157,7 +180,12 @@ const ExplorePresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
-          <p>near countries</p>
+          <GreyLine />
+
+          <Title>
+            <SBold text={"NEAR COUNTRIES"} />
+            <p onClick={toggleModal}>SEE ALL</p>
+          </Title>
           <Container>
             <Box>
               {!nearCountriesLoading && countries ? (
@@ -167,14 +195,18 @@ const ExplorePresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
-          <p>latest cities</p>
+          <GreyLine />
+
+          <Title>
+            <SBold text={"LATEST CITIES"} />
+            <p onClick={toggleModal}>SEE ALL</p>
+          </Title>
           <Container>
             <Box>
               {!latestCitiesLoading && latestCities ? (
                 <LocationGrid cities={latestCities} type={"city"} />
               ) : (
                 <Loader />
-              )}
               )}
             </Box>
           </Container>
