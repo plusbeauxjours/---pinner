@@ -98,43 +98,9 @@ export const DELETE_PROFILE = gql`
   }
 `;
 
-export const TOP_COUNTRIES = gql`
-  query TopCountries($username: String!) {
-    topCountries(username: $username) {
-      footprints {
-        id
-        city {
-          country {
-            countryName
-            countryCode
-            countryPhoto
-          }
-        }
-      }
-    }
-  }
-`;
-
-export const FREQUENT_VISITS = gql`
-  query FrequentVisits($username: String!) {
-    frequentVisits(username: $username) {
-      footprints {
-        id
-        city {
-          cityName
-          cityPhoto
-          country {
-            countryName
-          }
-        }
-      }
-    }
-  }
-`;
-
 export const GET_TRIPS = gql`
-  query GetTrips($username: String!) {
-    getTrips(username: $username) {
+  query GetTrips($username: String!, $tripPage: Int) {
+    getTrips(username: $username, tripPage: $tripPage) {
       footprints {
         id
         city {
@@ -209,6 +175,40 @@ export const DELETE_TRIP = gql`
   mutation DeleteTrip($moveNotificationId: Int!) {
     deleteTrip(moveNotificationId: $moveNotificationId) {
       ok
+    }
+  }
+`;
+
+export const TOP_COUNTRIES = gql`
+  query TopCountries($username: String!, $countryPage: Int) {
+    topCountries(username: $username, countryPage: $countryPage) {
+      footprints {
+        id
+        city {
+          country {
+            countryName
+            countryCode
+            countryPhoto
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const FREQUENT_VISITS = gql`
+  query FrequentVisits($username: String!, $cityPage: Int) {
+    frequentVisits(username: $username, cityPage: $cityPage) {
+      footprints {
+        id
+        city {
+          cityName
+          cityPhoto
+          country {
+            countryName
+          }
+        }
+      }
     }
   }
 `;

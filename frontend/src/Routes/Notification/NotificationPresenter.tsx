@@ -24,8 +24,8 @@ interface IProps {
 
 const NotificationPresenter: React.SFC<IProps> = ({
   getNotifications: {
-    getNotifications: { notifications: getNotifications = null } = null
-  } = null,
+    getNotifications: { notifications: getNotifications = null } = {}
+  } = {},
   getMoveNotifications: {
     getMoveNotifications: { notifications: getMoveNotifications = null } = {}
   } = {},

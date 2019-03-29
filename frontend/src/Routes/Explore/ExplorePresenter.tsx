@@ -50,7 +50,7 @@ const Box = styled.div`
   overflow-x: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   ::-webkit-scrollbar {
-    width: 12px;
+    height: 6px;
   }
   ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);

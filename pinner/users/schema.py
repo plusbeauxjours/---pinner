@@ -10,7 +10,10 @@ class Query(object):
         types.UserProfileResponse,
         resolver=queries.resolve_profile,
         required=True,
-        args={'username': graphene.String(required=True)}
+        args={
+            'username': graphene.String(required=True),
+            'page': graphene.Int(),
+        }
     )
     get_trips = graphene.Field(
         location_types.FootprintsResponse,
@@ -18,7 +21,7 @@ class Query(object):
         required=True,
         args={
             'username': graphene.String(required=True),
-            'page': graphene.Int(),
+            'tripPage': graphene.Int(),
         }
     )
     me = graphene.Field(
@@ -52,13 +55,19 @@ class Query(object):
         location_types.FootprintsResponse,
         resolver=queries.resolve_top_countries,
         required=True,
-        args={'username': graphene.String(required=True)}
+        args={
+            'username': graphene.String(required=True),
+            'countryPage': graphene.Int(),
+        }
     )
     frequent_visits = graphene.Field(
         location_types.FootprintsResponse,
         resolver=queries.resolve_frequent_visits,
         required=True,
-        args={'username': graphene.String(required=True)}
+        args={
+            'username': graphene.String(required=True),
+            'cityPage': graphene.Int(),
+        }
     )
 
 

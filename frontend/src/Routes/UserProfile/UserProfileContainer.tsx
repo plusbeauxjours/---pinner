@@ -38,6 +38,7 @@ import {
   TopCountriesVariables,
   FrequentVisitsVariables
 } from "../../types/api";
+import client from "src/Apollo/client";
 
 class UserProfileQuery extends Query<UserProfile, UserProfileVariables> {}
 class TopCountriesQuery extends Query<TopCountries, TopCountriesVariables> {}
@@ -62,7 +63,6 @@ interface IState {
   tripConfirmModalOpen: boolean;
   tripAddModalOpen: boolean;
   tripEditModalOpen: boolean;
-
   editMode: boolean;
   id: string;
   userName: string;
@@ -76,6 +76,9 @@ interface IState {
   endDate: moment.Moment | null;
   focusedInput: "startDate" | "endDate" | null;
   moveNotificationId: string;
+  tripPage: number;
+  cityPage: number;
+  countryPage: number;
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
@@ -85,6 +88,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   public addTripFn: MutationFn;
   public editTripFn: MutationFn;
   public deleteTripFn: MutationFn;
+  public fetchMore;
   constructor(props) {
     super(props);
     this.state = {
@@ -106,7 +110,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       startDate: props.cityName,
       endDate: props.cityName,
       focusedInput: null,
-      moveNotificationId: null
+      moveNotificationId: null,
+      tripPage: 0,
+      cityPage: 0,
+      countryPage: 0
     };
   }
   public render() {
@@ -134,7 +141,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       startDate,
       endDate,
       focusedInput,
-      moveNotificationId
+      moveNotificationId,
+      tripPage,
+      cityPage,
+      countryPage
     } = this.state;
     return (
       <LogOutMutation mutation={LOG_USER_OUT}>
@@ -145,7 +155,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
               {({ data: userProfileData, loading: userProfileLoading }) => (
                 <EditProfileMutation
                   mutation={EDIT_PROFILE}
-                  refetchQueries={[{ query: GET_USER, variables: username }]}
+                  refetchQueries={[
+                    { query: GET_USER, variables: { username } }
+                  ]}
                   variables={{
                     userName,
                     bio,
@@ -185,7 +197,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                           return (
                             <TopCountriesQuery
                               query={TOP_COUNTRIES}
-                              variables={{ username }}
+                              variables={{ username, countryPage }}
                             >
                               {({
                                 data: topCountriesData,
@@ -193,7 +205,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                               }) => (
                                 <FrequentVisitsQuery
                                   query={FREQUENT_VISITS}
-                                  variables={{ username }}
+                                  variables={{ username, cityPage }}
                                 >
                                   {({
                                     data: frequentVisitsData,
@@ -201,183 +213,206 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                   }) => (
                                     <GetTiprsQuery
                                       query={GET_TRIPS}
-                                      variables={{ username }}
+                                      variables={{ username, tripPage }}
                                     >
                                       {({
                                         data: getTripsData,
-                                        loading: getTipsLoading
-                                      }) => (
-                                        <AddTripMutation
-                                          mutation={ADD_TRIP}
-                                          variables={{
-                                            cityName,
-                                            startDate,
-
-                                            endDate
-                                          }}
-                                        >
-                                          {addTripFn => {
-                                            this.addTripFn = addTripFn;
-                                            return (
-                                              <EditTripMutation
-                                                mutation={EDIT_TRIP}
-                                                variables={{
-                                                  moveNotificationId: parseInt(
-                                                    moveNotificationId,
-                                                    10
-                                                  ),
-                                                  cityName,
-                                                  startDate,
-                                                  endDate
-                                                }}
-                                              >
-                                                {editTripFn => {
-                                                  this.editTripFn = editTripFn;
-                                                  return (
-                                                    <DeleteTripMutation
-                                                      mutation={DELETE_TRIP}
-                                                      variables={{
-                                                        moveNotificationId: parseInt(
-                                                          moveNotificationId,
-                                                          10
-                                                        )
-                                                      }}
-                                                      onCompleted={() =>
-                                                        this.setState({
-                                                          moveNotificationId: ""
-                                                        })
-                                                      }
-                                                    >
-                                                      {deleteTripFn => {
-                                                        this.deleteTripFn = deleteTripFn;
-                                                        return (
-                                                          <UserProfilePresenter
-                                                            modalOpen={
-                                                              modalOpen
-                                                            }
-                                                            tripModalOpen={
-                                                              tripModalOpen
-                                                            }
-                                                            confirmModalOpen={
-                                                              confirmModalOpen
-                                                            }
-                                                            tripConfirmModalOpen={
-                                                              tripConfirmModalOpen
-                                                            }
-                                                            tripAddModalOpen={
-                                                              tripAddModalOpen
-                                                            }
-                                                            tripEditModalOpen={
-                                                              tripEditModalOpen
-                                                            }
-                                                            editMode={editMode}
-                                                            logUserOutFn={
-                                                              logUserOutFn
-                                                            }
-                                                            confirmDeleteProfile={
-                                                              this
-                                                                .confirmDeleteProfile
-                                                            }
-                                                            toggleModal={
-                                                              this.toggleModal
-                                                            }
-                                                            toggleConfirmModal={
-                                                              this
-                                                                .toggleConfirmModal
-                                                            }
-                                                            toggleTripModal={
-                                                              this
-                                                                .toggleTripModal
-                                                            }
-                                                            toggleTripConfirmModal={
-                                                              this
-                                                                .toggleTripConfirmModal
-                                                            }
-                                                            toggleAddTripModal={
-                                                              this
-                                                                .toggleAddTripModal
-                                                            }
-                                                            toggleEditTripModal={
-                                                              this
-                                                                .toggleEditTripModal
-                                                            }
-                                                            openEditMode={
-                                                              this.openEditMode
-                                                            }
-                                                            userProfileData={
-                                                              userProfileData
-                                                            }
-                                                            userProfileLoading={
-                                                              userProfileLoading
-                                                            }
-                                                            topCountriesData={
-                                                              topCountriesData
-                                                            }
-                                                            topCountriesLoading={
-                                                              topCountriesLoading
-                                                            }
-                                                            frequentVisitsData={
-                                                              frequentVisitsData
-                                                            }
-                                                            frequentVisitsLoading={
-                                                              frequentVisitsLoading
-                                                            }
-                                                            getTripsData={
-                                                              getTripsData
-                                                            }
-                                                            getTipsLoading={
-                                                              getTipsLoading
-                                                            }
-                                                            onInputChange={
-                                                              this.onInputChange
-                                                            }
-                                                            onKeyUp={
-                                                              this.onKeyUp
-                                                            }
-                                                            onKeyUpTrip={
-                                                              this.onKeyUpTrip
-                                                            }
-                                                            userName={userName}
-                                                            bio={bio}
-                                                            gender={gender}
-                                                            firstName={
-                                                              firstName
-                                                            }
-                                                            lastName={lastName}
-                                                            cityName={cityName}
-                                                            startDate={
-                                                              startDate
-                                                            }
-                                                            endDate={endDate}
-                                                            focusedInput={
-                                                              focusedInput
-                                                            }
-                                                            onDatesChange={
-                                                              this.onDatesChange
-                                                            }
-                                                            onFocusChange={
-                                                              this.onFocusChange
-                                                            }
-                                                            addTrip={
-                                                              this.addTrip
-                                                            }
-                                                            editTrip={
-                                                              this.editTrip
-                                                            }
-                                                            deleteTrip={
-                                                              this.deleteTrip
-                                                            }
-                                                          />
-                                                        );
-                                                      }}
-                                                    </DeleteTripMutation>
-                                                  );
-                                                }}
-                                              </EditTripMutation>
-                                            );
-                                          }}
-                                        </AddTripMutation>
-                                      )}
+                                        loading: getTipsLoading,
+                                        fetchMore
+                                      }) => {
+                                        this.fetchMore = fetchMore;
+                                        return (
+                                          <AddTripMutation
+                                            mutation={ADD_TRIP}
+                                            variables={{
+                                              cityName,
+                                              startDate,
+                                              endDate
+                                            }}
+                                          >
+                                            {addTripFn => {
+                                              this.addTripFn = addTripFn;
+                                              return (
+                                                <EditTripMutation
+                                                  mutation={EDIT_TRIP}
+                                                  variables={{
+                                                    moveNotificationId: parseInt(
+                                                      moveNotificationId,
+                                                      10
+                                                    ),
+                                                    cityName,
+                                                    startDate,
+                                                    endDate
+                                                  }}
+                                                >
+                                                  {editTripFn => {
+                                                    this.editTripFn = editTripFn;
+                                                    return (
+                                                      <DeleteTripMutation
+                                                        mutation={DELETE_TRIP}
+                                                        variables={{
+                                                          moveNotificationId: parseInt(
+                                                            moveNotificationId,
+                                                            10
+                                                          )
+                                                        }}
+                                                        onCompleted={() =>
+                                                          this.setState({
+                                                            moveNotificationId:
+                                                              ""
+                                                          })
+                                                        }
+                                                      >
+                                                        {deleteTripFn => {
+                                                          this.deleteTripFn = deleteTripFn;
+                                                          return (
+                                                            <UserProfilePresenter
+                                                              modalOpen={
+                                                                modalOpen
+                                                              }
+                                                              tripModalOpen={
+                                                                tripModalOpen
+                                                              }
+                                                              confirmModalOpen={
+                                                                confirmModalOpen
+                                                              }
+                                                              tripConfirmModalOpen={
+                                                                tripConfirmModalOpen
+                                                              }
+                                                              tripAddModalOpen={
+                                                                tripAddModalOpen
+                                                              }
+                                                              tripEditModalOpen={
+                                                                tripEditModalOpen
+                                                              }
+                                                              editMode={
+                                                                editMode
+                                                              }
+                                                              logUserOutFn={
+                                                                logUserOutFn
+                                                              }
+                                                              confirmDeleteProfile={
+                                                                this
+                                                                  .confirmDeleteProfile
+                                                              }
+                                                              toggleTripSeeAll={
+                                                                this
+                                                                  .toggleTripSeeAll
+                                                              }
+                                                              toggleModal={
+                                                                this.toggleModal
+                                                              }
+                                                              toggleConfirmModal={
+                                                                this
+                                                                  .toggleConfirmModal
+                                                              }
+                                                              toggleTripModal={
+                                                                this
+                                                                  .toggleTripModal
+                                                              }
+                                                              toggleTripConfirmModal={
+                                                                this
+                                                                  .toggleTripConfirmModal
+                                                              }
+                                                              toggleAddTripModal={
+                                                                this
+                                                                  .toggleAddTripModal
+                                                              }
+                                                              toggleEditTripModal={
+                                                                this
+                                                                  .toggleEditTripModal
+                                                              }
+                                                              openEditMode={
+                                                                this
+                                                                  .openEditMode
+                                                              }
+                                                              userProfileData={
+                                                                userProfileData
+                                                              }
+                                                              userProfileLoading={
+                                                                userProfileLoading
+                                                              }
+                                                              topCountriesData={
+                                                                topCountriesData
+                                                              }
+                                                              topCountriesLoading={
+                                                                topCountriesLoading
+                                                              }
+                                                              frequentVisitsData={
+                                                                frequentVisitsData
+                                                              }
+                                                              frequentVisitsLoading={
+                                                                frequentVisitsLoading
+                                                              }
+                                                              getTripsData={
+                                                                getTripsData
+                                                              }
+                                                              getTipsLoading={
+                                                                getTipsLoading
+                                                              }
+                                                              fetchMore={
+                                                                fetchMore
+                                                              }
+                                                              onInputChange={
+                                                                this
+                                                                  .onInputChange
+                                                              }
+                                                              onKeyUp={
+                                                                this.onKeyUp
+                                                              }
+                                                              onKeyUpTrip={
+                                                                this.onKeyUpTrip
+                                                              }
+                                                              userName={
+                                                                userName
+                                                              }
+                                                              bio={bio}
+                                                              gender={gender}
+                                                              firstName={
+                                                                firstName
+                                                              }
+                                                              lastName={
+                                                                lastName
+                                                              }
+                                                              cityName={
+                                                                cityName
+                                                              }
+                                                              startDate={
+                                                                startDate
+                                                              }
+                                                              endDate={endDate}
+                                                              focusedInput={
+                                                                focusedInput
+                                                              }
+                                                              onDatesChange={
+                                                                this
+                                                                  .onDatesChange
+                                                              }
+                                                              onFocusChange={
+                                                                this
+                                                                  .onFocusChange
+                                                              }
+                                                              addTrip={
+                                                                this.addTrip
+                                                              }
+                                                              editTrip={
+                                                                this.editTrip
+                                                              }
+                                                              deleteTrip={
+                                                                this.deleteTrip
+                                                              }
+                                                            />
+                                                          );
+                                                        }}
+                                                      </DeleteTripMutation>
+                                                    );
+                                                  }}
+                                                </EditTripMutation>
+                                              );
+                                            }}
+                                          </AddTripMutation>
+                                        );
+                                      }}
                                     </GetTiprsQuery>
                                   )}
                                 </FrequentVisitsQuery>
@@ -471,6 +506,89 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   //
   // TRIP
   //
+
+  public toggleTripSeeAll = () => {
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    console.log(username);
+    this.fetchMore({
+      query: GET_TRIPS,
+      variables: {
+        tripPage: 1,
+        username
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return previousResult;
+        }
+        const {
+          getTrips: { footprints: oldTrips }
+        } = previousResult;
+        const {
+          getTrips: { footprints: newTrips }
+        } = fetchMoreResult;
+        // const oldTrips = previousResult.getTrips.footprints;
+        // const newTrips = fetchMoreResult.getTrips.footprints;
+        console.log(oldTrips);
+        console.log(newTrips);
+        const getTripsData = [...oldTrips, ...newTrips];
+        console.log(getTripsData);
+        client.writeQuery({
+          query: GET_TRIPS,
+          variables: {
+            tripPage: 1,
+            username
+          },
+          data: getTripsData
+        });
+        // return getTripsData;
+        return {
+          getTrips: {
+            ...previousResult.getTrips,
+            footprints: {
+              startDate: [...oldTrips.startDate, ...newTrips.startDate],
+              endDate: [...oldTrips.endDate, ...newTrips.endDate],
+              createdAt: [...oldTrips.createdAt, ...newTrips.createdAt],
+              city: {
+                ...oldTrips.city,
+                cityName: [
+                  ...newTrips.city.cityName,
+                  ...oldTrips.city.cityName
+                ],
+                cityPhoto: [
+                  ...oldTrips.city.cityPhoto,
+                  ...newTrips.city.cityPhoto
+                ],
+                country: {
+                  ...oldTrips.city.country,
+                  countryName: [
+                    ...oldTrips.city.country.countryName,
+                    ...newTrips.city.country.countryName
+                  ],
+                  countryCode: [
+                    ...oldTrips.city.country.countryName,
+                    ...newTrips.city.country.countryName
+                  ]
+                }
+              }
+            }
+          }
+        };
+        // console.log(newTripData);
+
+        // const newData = {
+        //   ...previousResult,
+        //   getTrips: newTripData
+        // };
+        // console.log(newData);
+
+        // return newData;
+      }
+    });
+  };
 
   public toggleTripModal = (moveNotificationId, cityName) => {
     const { tripModalOpen } = this.state;

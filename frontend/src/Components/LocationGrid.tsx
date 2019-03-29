@@ -63,9 +63,9 @@ const LocationGrid: React.SFC<IProps> = ({
           return (
             <>
               {cities.map(city => (
-                <ScrollContainer>
+                <ScrollContainer key={city.id}>
                   <Link to={`/city/${city.cityName}`}>
-                    <LocationContainer key={city.id}>
+                    <LocationContainer>
                       <LocationPhoto src={city.cityPhoto} />
                       <LocationName text={city.cityName} />
                       <CountryName text={city.country.countryName} />
@@ -79,9 +79,9 @@ const LocationGrid: React.SFC<IProps> = ({
           return (
             <>
               {countries.map(country => (
-                <ScrollContainer>
+                <ScrollContainer key={country.id}>
                   <Link to={`/country/${country.countryName}`}>
-                    <LocationContainer key={country.id}>
+                    <LocationContainer>
                       <LocationPhoto src={country.countryPhoto} />
                       <LocationName text={country.countryName} />
                     </LocationContainer>
@@ -94,9 +94,9 @@ const LocationGrid: React.SFC<IProps> = ({
           return (
             <>
               {continents.map(continent => (
-                <ScrollContainer>
+                <ScrollContainer key={continent.id}>
                   <Link to={`/continent/${continent.continentName}`}>
-                    <LocationContainer key={continent.id}>
+                    <LocationContainer>
                       <LocationPhoto src={continent.continentPhoto} />
                       <LocationName text={continent.continentName} />
                     </LocationContainer>

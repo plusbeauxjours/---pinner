@@ -1488,84 +1488,6 @@ export interface DeleteProfile {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: TopCountries
-// ====================================================
-
-export interface TopCountries_topCountries_footprints_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-  countryCode: string | null;
-  countryPhoto: string | null;
-}
-
-export interface TopCountries_topCountries_footprints_city {
-  __typename: "CityType";
-  country: TopCountries_topCountries_footprints_city_country;
-}
-
-export interface TopCountries_topCountries_footprints {
-  __typename: "MoveNotificationType";
-  id: string;
-  city: TopCountries_topCountries_footprints_city | null;
-}
-
-export interface TopCountries_topCountries {
-  __typename: "FootprintsResponse";
-  footprints: (TopCountries_topCountries_footprints | null)[] | null;
-}
-
-export interface TopCountries {
-  topCountries: TopCountries_topCountries;
-}
-
-export interface TopCountriesVariables {
-  username: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: FrequentVisits
-// ====================================================
-
-export interface FrequentVisits_frequentVisits_footprints_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface FrequentVisits_frequentVisits_footprints_city {
-  __typename: "CityType";
-  cityName: string | null;
-  cityPhoto: string | null;
-  country: FrequentVisits_frequentVisits_footprints_city_country;
-}
-
-export interface FrequentVisits_frequentVisits_footprints {
-  __typename: "MoveNotificationType";
-  id: string;
-  city: FrequentVisits_frequentVisits_footprints_city | null;
-}
-
-export interface FrequentVisits_frequentVisits {
-  __typename: "FootprintsResponse";
-  footprints: (FrequentVisits_frequentVisits_footprints | null)[] | null;
-}
-
-export interface FrequentVisits {
-  frequentVisits: FrequentVisits_frequentVisits;
-}
-
-export interface FrequentVisitsVariables {
-  username: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: GetTrips
 // ====================================================
 
@@ -1602,6 +1524,7 @@ export interface GetTrips {
 
 export interface GetTripsVariables {
   username: string;
+  tripPage?: number | null;
 }
 
 
@@ -1710,6 +1633,86 @@ export interface DeleteTrip {
 
 export interface DeleteTripVariables {
   moveNotificationId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: TopCountries
+// ====================================================
+
+export interface TopCountries_topCountries_footprints_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+}
+
+export interface TopCountries_topCountries_footprints_city {
+  __typename: "CityType";
+  country: TopCountries_topCountries_footprints_city_country;
+}
+
+export interface TopCountries_topCountries_footprints {
+  __typename: "MoveNotificationType";
+  id: string;
+  city: TopCountries_topCountries_footprints_city | null;
+}
+
+export interface TopCountries_topCountries {
+  __typename: "FootprintsResponse";
+  footprints: (TopCountries_topCountries_footprints | null)[] | null;
+}
+
+export interface TopCountries {
+  topCountries: TopCountries_topCountries;
+}
+
+export interface TopCountriesVariables {
+  username: string;
+  countryPage?: number | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: FrequentVisits
+// ====================================================
+
+export interface FrequentVisits_frequentVisits_footprints_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface FrequentVisits_frequentVisits_footprints_city {
+  __typename: "CityType";
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: FrequentVisits_frequentVisits_footprints_city_country;
+}
+
+export interface FrequentVisits_frequentVisits_footprints {
+  __typename: "MoveNotificationType";
+  id: string;
+  city: FrequentVisits_frequentVisits_footprints_city | null;
+}
+
+export interface FrequentVisits_frequentVisits {
+  __typename: "FootprintsResponse";
+  footprints: (FrequentVisits_frequentVisits_footprints | null)[] | null;
+}
+
+export interface FrequentVisits {
+  frequentVisits: FrequentVisits_frequentVisits;
+}
+
+export interface FrequentVisitsVariables {
+  username: string;
+  cityPage?: number | null;
 }
 
 

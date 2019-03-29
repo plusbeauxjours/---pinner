@@ -283,9 +283,20 @@ const TripBox = styled.div`
   flex-wrap: nowrap;
   overflow-x: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
-  /* ::-webkit-scrollbar {
-    display: none;
-  } */
+  ::-webkit-scrollbar {
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: ${props => props.theme.bgColor};
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    background-color: ${props => props.theme.greyColor};
+  }
 `;
 
 interface ITheme {
@@ -304,6 +315,7 @@ interface IProps {
 
   getTripsData?: GetTrips;
   getTipsLoading: boolean;
+  fetchMore: any;
 
   modalOpen: boolean;
   confirmModalOpen: boolean;
@@ -332,6 +344,7 @@ interface IProps {
   }) => void;
   onFocusChange: (arg: "startDate" | "endDate" | null) => void;
 
+  toggleTripSeeAll: () => void;
   toggleModal: () => void;
   toggleConfirmModal: () => void;
 
@@ -366,6 +379,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 
   getTripsData: { getTrips: { footprints: getTrips = null } = {} } = {},
   getTipsLoading,
+  fetchMore,
   modalOpen,
   tripModalOpen,
   confirmModalOpen,
@@ -373,6 +387,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   tripAddModalOpen,
   tripEditModalOpen,
   editMode,
+  toggleTripSeeAll,
   toggleModal,
   toggleConfirmModal,
   toggleTripModal,
@@ -600,27 +615,27 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <ColumnContainer>
                 <Row>
                   <UBold text={String(user.profile.postCount)} />
-                  <UBold text={"POSTS"} />
+                  <UBold text={" POSTS - done"} />
                 </Row>
                 <Row>
                   <UBold text={String(user.profile.postCount)} />
-                  <UBold text={"KM"} />
+                  <UBold text={" KM"} />
                 </Row>
                 <Row>
                   <UBold text={String(user.profile.tripCount)} />
-                  <UBold text={"TRIPS"} />
+                  <UBold text={" TRIPS - done"} />
                 </Row>
                 <Row>
-                  <UBold text={"CITIES"} />
                   <UBold text={String(user.profile.cityCount)} />
+                  <UBold text={" CITIES - done"} />
                 </Row>
                 <Row>
-                  <UBold text={"COUNTRIES"} />
                   <UBold text={String(user.profile.cityCount)} />
+                  <UBold text={" COUNTRIES"} />
                 </Row>
                 <Row>
-                  <UBold text={"CONTINENT"} />
                   <UBold text={String(user.profile.cityCount)} />
+                  <UBold text={" CONTINENT"} />
                 </Row>
                 {user.profile.bio &&
                   (editMode ? (
@@ -691,7 +706,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                       </AvatarContainer>
                     ))}
                   <UBold text={String(user.profile.followersCount)} />
-                  <UBold text={"FOLLOWERS"} />
+                  <UBold text={"FOLLOWERS - done"} />
                 </Row>
                 <Row>
                   {user.profile.followings &&
@@ -705,7 +720,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                       </AvatarContainer>
                     ))}
                   <UBold text={String(user.profile.followingCount)} />
-                  <UBold text={"FOLLOWINGS"} />
+                  <UBold text={"FOLLOWINGS - done"} />
                 </Row>
               </ColumnContainer>
             </InfoContainer>
@@ -718,7 +733,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 
           <Title>
             <SBold text={"TRIP LOG"} />
-            <p onClick={toggleModal}>SEE ALL</p>
+
+            <p onClick={() => toggleTripSeeAll()}>SEE ALL</p>
+            <p onClick={() => console.log(getTrips)}>hihi</p>
           </Title>
           <TripContainer>
             {!getTipsLoading && getTrips ? (
