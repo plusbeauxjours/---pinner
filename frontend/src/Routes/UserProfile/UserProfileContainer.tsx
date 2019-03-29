@@ -38,7 +38,6 @@ import {
   TopCountriesVariables,
   FrequentVisitsVariables
 } from "../../types/api";
-import client from "src/Apollo/client";
 
 class UserProfileQuery extends Query<UserProfile, UserProfileVariables> {}
 class TopCountriesQuery extends Query<TopCountries, TopCountriesVariables> {}
@@ -79,6 +78,7 @@ interface IState {
   tripPage: number;
   cityPage: number;
   countryPage: number;
+  tripList: {};
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
@@ -113,7 +113,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       moveNotificationId: null,
       tripPage: 0,
       cityPage: 0,
-      countryPage: 0
+      countryPage: 0,
+      tripList: {}
     };
   }
   public render() {
@@ -350,9 +351,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                               getTipsLoading={
                                                                 getTipsLoading
                                                               }
-                                                              fetchMore={
-                                                                fetchMore
-                                                              }
                                                               onInputChange={
                                                                 this
                                                                   .onInputChange
@@ -513,7 +511,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         params: { username }
       }
     } = this.props;
-    console.log(username);
     this.fetchMore({
       query: GET_TRIPS,
       variables: {
@@ -524,73 +521,18 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         if (!fetchMoreResult) {
           return previousResult;
         }
-        const {
-          getTrips: { footprints: oldTrips }
-        } = previousResult;
-        const {
-          getTrips: { footprints: newTrips }
-        } = fetchMoreResult;
-        // const oldTrips = previousResult.getTrips.footprints;
-        // const newTrips = fetchMoreResult.getTrips.footprints;
-        console.log(oldTrips);
-        console.log(newTrips);
-        const getTripsData = [...oldTrips, ...newTrips];
-        console.log(getTripsData);
-        client.writeQuery({
-          query: GET_TRIPS,
-          variables: {
-            tripPage: 1,
-            username
-          },
-          data: getTripsData
+        const koko = Object.assign({}, previousResult.getTrips, {
+          footprints: [
+            ...previousResult.getTrips.footprints,
+            ...fetchMoreResult.getTrips.footprints
+          ]
         });
-        // return getTripsData;
-        return getTripsData;
+        this.setState({ tripList: koko });
 
-        // return {
-        //   getTrips: {
-        //     ...previousResult.getTrips,
-        //     footprints: {
-        //       startDate: [...oldTrips.startDate, ...newTrips.startDate],
-        //       endDate: [...oldTrips.endDate, ...newTrips.endDate],
-        //       createdAt: [...oldTrips.createdAt, ...newTrips.createdAt],
-        //       city: {
-        //         ...oldTrips.city,
-        //         cityName: [
-        //           ...newTrips.city.cityName,
-        //           ...oldTrips.city.cityName
-        //         ],
-        //         cityPhoto: [
-        //           ...oldTrips.city.cityPhoto,
-        //           ...newTrips.city.cityPhoto
-        //         ],
-        //         country: {
-        //           ...oldTrips.city.country,
-        //           countryName: [
-        //             ...oldTrips.city.country.countryName,
-        //             ...newTrips.city.country.countryName
-        //           ],
-        //           countryCode: [
-        //             ...oldTrips.city.country.countryName,
-        //             ...newTrips.city.country.countryName
-        //           ]
-        //         }
-        //       }
-        //     }
-        //   }
-        // };
-
-        // console.log(newTripData);
-
-        // const newData = {
-        //   ...previousResult,
-        //   getTrips: newTripData
-        // };
-        // console.log(newData);
-
-        // return newData;
+        console.log(koko);
       }
     });
+    console.log(this.state);
   };
 
   public toggleTripModal = (moveNotificationId, cityName) => {

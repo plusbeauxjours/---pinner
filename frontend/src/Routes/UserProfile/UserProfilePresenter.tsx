@@ -321,7 +321,6 @@ interface IProps {
 
   getTripsData?: GetTrips;
   getTipsLoading: boolean;
-  fetchMore: any;
 
   modalOpen: boolean;
   confirmModalOpen: boolean;
@@ -385,7 +384,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 
   getTripsData: { getTrips: { footprints: getTrips = null } = {} } = {},
   getTipsLoading,
-  fetchMore,
   modalOpen,
   tripModalOpen,
   confirmModalOpen,
@@ -744,6 +742,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <p onClick={() => console.log(getTrips)}>hihi</p>
           </Title>
           <TripContainer>
+            {console.log(getTrips)}
             {!getTipsLoading && getTrips ? (
               getTrips.map(getTrip => (
                 <TripRow
