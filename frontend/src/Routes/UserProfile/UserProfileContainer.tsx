@@ -545,38 +545,41 @@ class UserProfileContainer extends React.Component<IProps, IState> {
           data: getTripsData
         });
         // return getTripsData;
-        return {
-          getTrips: {
-            ...previousResult.getTrips,
-            footprints: {
-              startDate: [...oldTrips.startDate, ...newTrips.startDate],
-              endDate: [...oldTrips.endDate, ...newTrips.endDate],
-              createdAt: [...oldTrips.createdAt, ...newTrips.createdAt],
-              city: {
-                ...oldTrips.city,
-                cityName: [
-                  ...newTrips.city.cityName,
-                  ...oldTrips.city.cityName
-                ],
-                cityPhoto: [
-                  ...oldTrips.city.cityPhoto,
-                  ...newTrips.city.cityPhoto
-                ],
-                country: {
-                  ...oldTrips.city.country,
-                  countryName: [
-                    ...oldTrips.city.country.countryName,
-                    ...newTrips.city.country.countryName
-                  ],
-                  countryCode: [
-                    ...oldTrips.city.country.countryName,
-                    ...newTrips.city.country.countryName
-                  ]
-                }
-              }
-            }
-          }
-        };
+        return getTripsData;
+
+        // return {
+        //   getTrips: {
+        //     ...previousResult.getTrips,
+        //     footprints: {
+        //       startDate: [...oldTrips.startDate, ...newTrips.startDate],
+        //       endDate: [...oldTrips.endDate, ...newTrips.endDate],
+        //       createdAt: [...oldTrips.createdAt, ...newTrips.createdAt],
+        //       city: {
+        //         ...oldTrips.city,
+        //         cityName: [
+        //           ...newTrips.city.cityName,
+        //           ...oldTrips.city.cityName
+        //         ],
+        //         cityPhoto: [
+        //           ...oldTrips.city.cityPhoto,
+        //           ...newTrips.city.cityPhoto
+        //         ],
+        //         country: {
+        //           ...oldTrips.city.country,
+        //           countryName: [
+        //             ...oldTrips.city.country.countryName,
+        //             ...newTrips.city.country.countryName
+        //           ],
+        //           countryCode: [
+        //             ...oldTrips.city.country.countryName,
+        //             ...newTrips.city.country.countryName
+        //           ]
+        //         }
+        //       }
+        //     }
+        //   }
+        // };
+
         // console.log(newTripData);
 
         // const newData = {

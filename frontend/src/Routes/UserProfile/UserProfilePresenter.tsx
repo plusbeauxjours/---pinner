@@ -299,6 +299,12 @@ const TripBox = styled.div`
   }
 `;
 
+const SeeAll = styled.p`
+  font-size: 12px;
+  font-weight: 100;
+  cursor: pointer;
+`;
+
 interface ITheme {
   size: string;
 }
@@ -734,7 +740,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           <Title>
             <SBold text={"TRIP LOG"} />
 
-            <p onClick={() => toggleTripSeeAll()}>SEE ALL</p>
+            <SeeAll onClick={() => toggleTripSeeAll()}>SEE ALL</SeeAll>
             <p onClick={() => console.log(getTrips)}>hihi</p>
           </Title>
           <TripContainer>
@@ -765,7 +771,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 
           <Title>
             <SBold text={"TOP COUNTRIES"} />
-            <p onClick={toggleModal}>SEE ALL</p>
+            <SeeAll onClick={toggleModal}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <TripBox>
@@ -794,7 +800,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 
           <Title>
             <SBold text={"FREQUENT VISITS"} />
-            <p onClick={toggleModal}>SEE ALL</p>
+            <SeeAll onClick={toggleModal}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <TripBox>
@@ -824,7 +830,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 
           <Title>
             <SBold text={"POSTS"} />
-            <p onClick={toggleModal}>SEE ALL</p>
+            <SeeAll onClick={toggleModal}>SEE ALL</SeeAll>
           </Title>
           {user.cards && user.cards.length !== 0 && (
             <CardGrid cards={user.cards} />
