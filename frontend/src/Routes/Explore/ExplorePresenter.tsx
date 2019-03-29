@@ -49,9 +49,20 @@ const Box = styled.div`
   flex-wrap: nowrap;
   overflow-x: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
-  /* ::-webkit-scrollbar {
-    display: none;
-  } */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: ${props => props.theme.bgColor};
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    background-color: ${props => props.theme.greyColor};
+  }
 `;
 
 const ModalAnimation = keyframes`

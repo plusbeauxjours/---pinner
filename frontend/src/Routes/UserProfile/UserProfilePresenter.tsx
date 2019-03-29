@@ -259,7 +259,7 @@ const TripRow = styled.div`
   align-items: center;
   background-color: #2d3a41;
   border-radius: 3px;
-  border: 1px solid grey
+  border: 1px solid grey;
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
