@@ -144,15 +144,6 @@ const ModalLink = styled.div`
   }
 `;
 
-// interface ITheme {
-//   borderRadius?: string;
-//   bgColor?: string;
-//   fontFamily?: string;
-//   fontColor?: string;
-//   fontSize?: string;
-//   file?: string;
-// }
-
 interface IProps {
   inline: boolean;
   creatorAvatar: string;
@@ -224,6 +215,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
             size={"sm"}
           />
           <Image src={photoUrl} />
+
           <Caption>{caption}</Caption>
           <Meta>
             <CardButtons
@@ -233,28 +225,31 @@ const PhotoPresenter: React.SFC<IProps> = ({
               onClick={onLikeClick}
             />
             <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
-            <Comments>
-              {comments &&
-                comments.map(comment => (
-                  <Comment
-                    id={comment.id}
-                    key={comment.id}
-                    username={comment.creator.username}
-                    comment={comment.message}
-                    getCommentId={getCommentId}
-                  />
-                ))}
-              {selfComments &&
-                selfComments.map(comment => (
-                  <Comment
-                    id={comment.id}
-                    key={comment.id}
-                    username={comment.username}
-                    comment={comment.message}
-                    getCommentId={getCommentId}
-                  />
-                ))}
-            </Comments>
+            <Comment username={creatorUsername} comment={caption} />
+            {openedComment && (
+              <Comments>
+                {comments &&
+                  comments.map(comment => (
+                    <Comment
+                      id={comment.id}
+                      key={comment.id}
+                      username={comment.creator.username}
+                      comment={comment.message}
+                      getCommentId={getCommentId}
+                    />
+                  ))}
+                {selfComments &&
+                  selfComments.map(comment => (
+                    <Comment
+                      id={comment.id}
+                      key={comment.id}
+                      username={comment.username}
+                      comment={comment.message}
+                      getCommentId={getCommentId}
+                    />
+                  ))}
+              </Comments>
+            )}
             <TimeStamp>{createdAt}</TimeStamp>
             {openedComment && (
               <AddComment>

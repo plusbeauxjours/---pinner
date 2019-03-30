@@ -739,9 +739,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 
           <Title>
             <SBold text={"TRIP LOG"} />
-
             <SeeAll onClick={() => toggleTripSeeAll()}>SEE ALL</SeeAll>
-            <p onClick={() => console.log(getTrips)}>hihi</p>
           </Title>
           <TripContainer>
             {console.log(getTrips)}
@@ -815,7 +813,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </TripBox>
           </Container>
           <GreyLine />
-
           <Title>
             <SBold text={"FREQUENT VISITS"} />
             <SeeAll onClick={toggleModal}>SEE ALL</SeeAll>
@@ -845,7 +842,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </TripBox>
           </Container>
           <GreyLine />
-
           <Title>
             <SBold text={"POSTS"} />
             <SeeAll onClick={toggleModal}>SEE ALL</SeeAll>
