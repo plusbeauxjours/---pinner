@@ -1,16 +1,27 @@
 import React from "react";
 import PhotoPresenter from "./PhotoPresenter";
 import { Mutation, MutationFn } from "react-apollo";
-import { TOGGLE_LIKE_CARD, ADD_COMMENT, DELETE_COMMENT } from "./PhotoQueries";
-import { DeleteComment, DeleteCommentVariables } from "../../types/api";
-import { GET_USER } from "../../Routes/UserProfile/UserProfileQueries";
-import { GET_FEED } from "../../Routes/Feed/FeedQueries";
 import {
+  TOGGLE_LIKE_CARD,
+  ADD_COMMENT,
+  DELETE_COMMENT,
+  DELETE_CARD
+} from "./PhotoQueries";
+import {
+  DeleteComment,
+  DeleteCommentVariables,
+  FollowUser,
+  FollowUserVariables,
+  DeleteCardVariables,
+  DeleteCard,
   LikeCard,
   LikeCardVariables,
   AddComment,
   AddCommentVariables
-} from "src/types/api";
+} from "../../types/api";
+import { GET_USER } from "../../Routes/UserProfile/UserProfileQueries";
+import { GET_FEED } from "../../Routes/Feed/FeedQueries";
+import { FOLLOW_USER } from "../FollowBtn/FollowBtnQueries";
 import Me from "../Me";
 
 class AddCommentMutation extends Mutation<AddComment, AddCommentVariables> {}
@@ -19,6 +30,8 @@ class DeleteCommentMutation extends Mutation<
   DeleteCommentVariables
 > {}
 class ToggleLikeMutation extends Mutation<LikeCard, LikeCardVariables> {}
+class FollowMutation extends Mutation<FollowUser, FollowUserVariables> {}
+class DeleteCardMutation extends Mutation<DeleteCard, DeleteCardVariables> {}
 
 interface IProps {
   inline: boolean;
@@ -34,32 +47,46 @@ interface IProps {
   comments: any;
   isLiked: boolean;
   id: string;
+  creatorId?: string;
+  isFollowing?: boolean;
+  isSelf?: boolean;
 }
 
 interface IState {
-  newComment: string;
-  isLiked: boolean;
-  likeCount: number;
-  selfComments: any;
-  openedComment: boolean;
+  userId: string;
+  cardId: string;
   commentId: string;
   modalOpen: boolean;
+  modalMenuOpen: boolean;
+  newComment: string;
+  selfComments: any;
+  openedComment: boolean;
+  likeCount: number;
+  isSelf: boolean;
+  isLiked: boolean;
+  isFollowing: boolean;
 }
 
 class PhotoContainer extends React.Component<IProps, IState> {
   public addCommentFn: MutationFn;
   public deleteCommentFn: MutationFn;
   public toggleLikeFn: MutationFn;
+  public deleteCardFn: MutationFn;
   constructor(props) {
     super(props);
     this.state = {
+      userId: props.creatorId,
+      cardId: props.id,
+      commentId: "",
+      modalOpen: false,
+      modalMenuOpen: false,
       newComment: "",
-      isLiked: props.isLiked,
-      likeCount: props.likeCount,
       openedComment: false,
       selfComments: [],
-      commentId: "",
-      modalOpen: false
+      likeCount: props.likeCount,
+      isSelf: props.isSelf,
+      isLiked: props.isLiked,
+      isFollowing: props.isFollowing
     };
   }
   public render() {
@@ -73,24 +100,28 @@ class PhotoContainer extends React.Component<IProps, IState> {
       commentCount,
       caption,
       createdAt,
-      comments,
-      id
+      comments
     } = this.props;
     const {
-      newComment,
-      isLiked,
-      openedComment,
-      likeCount,
-      selfComments,
+      userId,
+      cardId,
       commentId,
-      modalOpen
+      modalOpen,
+      modalMenuOpen,
+      newComment,
+      openedComment,
+      selfComments,
+      likeCount,
+      isSelf,
+      isLiked,
+      isFollowing
     } = this.state;
     return (
       <Me>
         {user => (
           <AddCommentMutation
             mutation={ADD_COMMENT}
-            variables={{ cardId: parseInt(id, 10), message: newComment }}
+            variables={{ cardId: parseInt(cardId, 10), message: newComment }}
             onCompleted={this.addSelfComment}
             refetchQueries={[
               {
@@ -102,68 +133,101 @@ class PhotoContainer extends React.Component<IProps, IState> {
             {addCommentFn => {
               this.addCommentFn = addCommentFn;
               return (
-                <DeleteCommentMutation
-                  mutation={DELETE_COMMENT}
-                  variables={{
-                    cardId: parseInt(id, 10),
-                    commentId: parseInt(commentId, 10)
-                  }}
-                  onCompleted={() => this.setState({ commentId: "" })}
+                <FollowMutation
+                  mutation={FOLLOW_USER}
+                  variables={{ userId: parseInt(userId, 10) }}
+                  onCompleted={() =>
+                    this.setState({ modalMenuOpen: !modalMenuOpen })
+                  }
                 >
-                  {deleteCommentFn => {
-                    this.deleteCommentFn = deleteCommentFn;
-                    return (
-                      <ToggleLikeMutation
-                        mutation={TOGGLE_LIKE_CARD}
-                        variables={{ cardId: parseInt(id, 10) }}
-                        refetchQueries={[
-                          {
-                            query: GET_USER,
-                            variables: { username: user.username }
-                          },
-                          {
-                            query: GET_FEED,
-                            variables: {
-                              page: 0,
-                              cityName: user.profile.currentCity.cityName
-                            }
-                          }
-                        ]}
-                      >
-                        {toggleLikeFn => {
-                          this.toggleLikeFn = toggleLikeFn;
-                          return (
-                            <PhotoPresenter
-                              inline={inline}
-                              creatorAvatar={creatorAvatar}
-                              creatorUsername={creatorUsername}
-                              country={country}
-                              city={city}
-                              photoUrl={photoUrl}
-                              likeCount={likeCount}
-                              commentCount={commentCount}
-                              caption={caption}
-                              createdAt={createdAt}
-                              comments={comments}
-                              updateNewComment={this.updateNewComment}
-                              newComment={newComment}
-                              isLiked={isLiked}
-                              onLikeClick={this.onLikeClick}
-                              selfComments={selfComments}
-                              toggleCommentClick={this.toggleCommentClick}
-                              openedComment={openedComment}
-                              onKeyUp={this.onKeyUp}
-                              onSubmit={this.onSubmit}
-                              modalOpen={modalOpen}
-                              toggleModal={this.toggleModal}
-                              getCommentId={this.getCommentId}
-                            />
-                          );
-                        }}
-                      </ToggleLikeMutation>
-                    );
-                  }}
-                </DeleteCommentMutation>
+                  {followUserFn => (
+                    <DeleteCommentMutation
+                      mutation={DELETE_COMMENT}
+                      variables={{
+                        cardId: parseInt(cardId, 10),
+                        commentId: parseInt(commentId, 10)
+                      }}
+                      onCompleted={() => this.setState({ commentId: "" })}
+                    >
+                      {deleteCommentFn => {
+                        this.deleteCommentFn = deleteCommentFn;
+                        return (
+                          <ToggleLikeMutation
+                            mutation={TOGGLE_LIKE_CARD}
+                            variables={{ cardId: parseInt(cardId, 10) }}
+                            refetchQueries={[
+                              {
+                                query: GET_USER,
+                                variables: { username: user.username }
+                              },
+                              {
+                                query: GET_FEED,
+                                variables: {
+                                  page: 0,
+                                  cityName: user.profile.currentCity.cityName
+                                }
+                              }
+                            ]}
+                          >
+                            {toggleLikeFn => {
+                              this.toggleLikeFn = toggleLikeFn;
+                              return (
+                                <DeleteCardMutation
+                                  mutation={DELETE_CARD}
+                                  variables={{ cardId: parseInt(cardId, 10) }}
+                                  onCompleted={() =>
+                                    this.setState({
+                                      modalMenuOpen: !modalMenuOpen
+                                    })
+                                  }
+                                >
+                                  {deleteCardFn => {
+                                    this.deleteCardFn = deleteCardFn;
+                                    return (
+                                      <PhotoPresenter
+                                        inline={inline}
+                                        creatorAvatar={creatorAvatar}
+                                        creatorUsername={creatorUsername}
+                                        country={country}
+                                        city={city}
+                                        photoUrl={photoUrl}
+                                        likeCount={likeCount}
+                                        commentCount={commentCount}
+                                        caption={caption}
+                                        createdAt={createdAt}
+                                        comments={comments}
+                                        updateNewComment={this.updateNewComment}
+                                        newComment={newComment}
+                                        isLiked={isLiked}
+                                        onLikeClick={this.onLikeClick}
+                                        selfComments={selfComments}
+                                        toggleCommentClick={
+                                          this.toggleCommentClick
+                                        }
+                                        openedComment={openedComment}
+                                        onKeyUp={this.onKeyUp}
+                                        onSubmit={this.onSubmit}
+                                        modalOpen={modalOpen}
+                                        modalMenuOpen={modalMenuOpen}
+                                        toggleModal={this.toggleModal}
+                                        toggleMenuModal={this.toggleMenuModal}
+                                        getCommentId={this.getCommentId}
+                                        isFollowing={isFollowing}
+                                        isSelf={isSelf}
+                                        followUserFn={followUserFn}
+                                        deleteCardFn={deleteCardFn}
+                                      />
+                                    );
+                                  }}
+                                </DeleteCardMutation>
+                              );
+                            }}
+                          </ToggleLikeMutation>
+                        );
+                      }}
+                    </DeleteCommentMutation>
+                  )}
+                </FollowMutation>
               );
             }}
           </AddCommentMutation>
@@ -246,6 +310,16 @@ class PhotoContainer extends React.Component<IProps, IState> {
         modalOpen: !state.modalOpen
       };
     });
+  };
+  public toggleMenuModal = () => {
+    this.setState(state => {
+      return {
+        modalMenuOpen: !state.modalMenuOpen
+      };
+    });
+    {
+      console.log(this.state);
+    }
   };
   public getCommentId = commentId => {
     const { modalOpen } = this.state;

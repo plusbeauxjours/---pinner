@@ -68,6 +68,27 @@ export interface LikeCardVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: DeleteCard
+// ====================================================
+
+export interface DeleteCard_deleteCard {
+  __typename: "DeleteCardResponse";
+  ok: boolean | null;
+}
+
+export interface DeleteCard {
+  deleteCard: DeleteCard_deleteCard;
+}
+
+export interface DeleteCardVariables {
+  cardId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: AddComment
 // ====================================================
 
@@ -209,10 +230,12 @@ export interface CardDetail_cardDetail_card_comments {
 export interface CardDetail_cardDetail_card_creator_profile {
   __typename: "ProfileType";
   avatar: string;
+  isFollowing: boolean | null;
 }
 
 export interface CardDetail_cardDetail_card_creator {
   __typename: "UserType";
+  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
@@ -233,11 +256,6 @@ export interface CardDetail_cardDetail_card {
   createdAt: string | null;
   comments: (CardDetail_cardDetail_card_comments | null)[] | null;
   creator: CardDetail_cardDetail_card_creator;
-  borderRadius: string;
-  bgColor: string | null;
-  font: string | null;
-  fontColor: string | null;
-  fontSize: string | null;
 }
 
 export interface CardDetail_cardDetail {
@@ -289,10 +307,12 @@ export interface CityProfile_cityProfile_cards_comments {
 export interface CityProfile_cityProfile_cards_creator_profile {
   __typename: "ProfileType";
   avatar: string;
+  isFollowing: boolean | null;
 }
 
 export interface CityProfile_cityProfile_cards_creator {
   __typename: "UserType";
+  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
@@ -313,11 +333,6 @@ export interface CityProfile_cityProfile_cards {
   createdAt: string | null;
   comments: (CityProfile_cityProfile_cards_comments | null)[] | null;
   creator: CityProfile_cityProfile_cards_creator;
-  borderRadius: string;
-  bgColor: string | null;
-  font: string | null;
-  fontColor: string | null;
-  fontSize: string | null;
 }
 
 export interface CityProfile_cityProfile_usersNow_profile {
@@ -699,10 +714,12 @@ export interface Feed_feed_cards_comments {
 export interface Feed_feed_cards_creator_profile {
   __typename: "ProfileType";
   avatar: string;
+  isFollowing: boolean | null;
 }
 
 export interface Feed_feed_cards_creator {
   __typename: "UserType";
+  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
@@ -723,11 +740,6 @@ export interface Feed_feed_cards {
   createdAt: string | null;
   comments: (Feed_feed_cards_comments | null)[] | null;
   creator: Feed_feed_cards_creator;
-  borderRadius: string;
-  bgColor: string | null;
-  font: string | null;
-  fontColor: string | null;
-  fontSize: string | null;
 }
 
 export interface Feed_feed_usersNow_profile_currentCity_country {
@@ -775,6 +787,7 @@ export interface Feed_feed_usersBefore_actor_profile {
   avatar: string;
   currentCity: Feed_feed_usersBefore_actor_profile_currentCity | null;
   isFollowing: boolean | null;
+  isSelf: boolean | null;
 }
 
 export interface Feed_feed_usersBefore_actor {
@@ -1224,10 +1237,12 @@ export interface UploadCard_uploadCard_card_comments {
 export interface UploadCard_uploadCard_card_creator_profile {
   __typename: "ProfileType";
   avatar: string;
+  isFollowing: boolean | null;
 }
 
 export interface UploadCard_uploadCard_card_creator {
   __typename: "UserType";
+  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
@@ -1248,11 +1263,6 @@ export interface UploadCard_uploadCard_card {
   createdAt: string | null;
   comments: (UploadCard_uploadCard_card_comments | null)[] | null;
   creator: UploadCard_uploadCard_card_creator;
-  borderRadius: string;
-  bgColor: string | null;
-  font: string | null;
-  fontColor: string | null;
-  fontSize: string | null;
 }
 
 export interface UploadCard_uploadCard {
@@ -1937,10 +1947,12 @@ export interface DetailParts_comments {
 export interface DetailParts_creator_profile {
   __typename: "ProfileType";
   avatar: string;
+  isFollowing: boolean | null;
 }
 
 export interface DetailParts_creator {
   __typename: "UserType";
+  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
@@ -1961,11 +1973,6 @@ export interface DetailParts {
   createdAt: string | null;
   comments: (DetailParts_comments | null)[] | null;
   creator: DetailParts_creator;
-  borderRadius: string;
-  bgColor: string | null;
-  font: string | null;
-  fontColor: string | null;
-  fontSize: string | null;
 }
 
 /* tslint:disable */

@@ -98,15 +98,13 @@ export const DETAIL_CARD_FRAGMENT = gql`
       }
     }
     creator {
+      id
       username
       profile {
         avatar
+        isFollowing
+        isSelf
       }
     }
-    borderRadius
-    bgColor
-    font
-    fontColor
-    fontSize
   }
 `;

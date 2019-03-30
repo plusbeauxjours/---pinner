@@ -23,7 +23,6 @@ interface IProps {
   id?: number;
   username: string;
   comment: string;
-  toggleModal?: () => void;
   getCommentId?: any;
   onClick?: any;
 }

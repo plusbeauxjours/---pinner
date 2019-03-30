@@ -8,6 +8,14 @@ export const TOGGLE_LIKE_CARD = gql`
   }
 `;
 
+export const DELETE_CARD = gql`
+  mutation DeleteCard($cardId: Int!) {
+    deleteCard(cardId: $cardId) {
+      ok
+    }
+  }
+`;
+
 export const ADD_COMMENT = gql`
   mutation AddComment($cardId: Int!, $message: String!) {
     addComment(cardId: $cardId, message: $message) {

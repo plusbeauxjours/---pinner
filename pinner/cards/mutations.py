@@ -146,8 +146,6 @@ class EditCard(graphene.Mutation):
 
         user = info.context.user
         cardId = kwargs.get('cardId')
-        ok = True
-        error = None
 
         if user.is_authenticated:
 
@@ -155,12 +153,12 @@ class EditCard(graphene.Mutation):
                 card = models.Card.objects.get(id=cardId)
             except models.Card.DoesNotExist:
                 error = "Card Not Found"
-                return types.EditCardResponse(ok=not ok, error=error)
+                return types.EditCardResponse(ok=False)
 
             if card.creator.id != user.id:
 
                 error = "Unauthorized"
-                return types.EditCardResponse(ok=not ok, error=error)
+                return types.EditCardResponse(ok=False)
 
             else:
 
@@ -175,15 +173,15 @@ class EditCard(graphene.Mutation):
                     card.city = city
 
                     card.save()
-                    return types.EditCardResponse(ok=ok, error=error, card=card)
+                    return types.EditCardResponse(ok=True, card=card)
                 except IntegrityError as e:
                     print(e)
                     error = "Can't Save Card"
-                    return types.EditCardResponse(ok=not ok, error=error)
+                    return types.EditCardResponse(ok=False)
 
         else:
             error = "You need to log in"
-            return types.EditCardResponse(ok=not ok, error=error)
+            return types.EditCardResponse(ok=False)
 
 
 class DeleteCard(graphene.Mutation):
@@ -197,8 +195,6 @@ class DeleteCard(graphene.Mutation):
 
         user = info.context.user
         cardId = kwargs.get('cardId')
-        ok = True
-        error = None
 
         if user.is_authenticated:
 
@@ -206,21 +202,21 @@ class DeleteCard(graphene.Mutation):
                 card = models.Card.objects.get(id=cardId)
             except models.Card.DoesNotExist:
                 error = "Card Not Found"
-                return types.EditCardResponse(ok=not ok, error=error)
+                return types.DeleteCardResponse(ok=False)
 
             if card.creator.id == user.id:
 
                 card.delete()
-                return types.DeleteCardResponse(ok=ok, error=error)
+                return types.DeleteCardResponse(ok=True)
 
             else:
 
                 error = "Unauthorized"
-                return types.EditCardResponse(ok=not ok, error=error)
+                return types.DeleteCardResponse(ok=False)
 
         else:
             error = "You need to log in"
-            return types.EditCardResponse(ok=not ok, error=error)
+            return types.DeleteCardResponse(ok=False)
 
 
 class UploadCard(graphene.Mutation):

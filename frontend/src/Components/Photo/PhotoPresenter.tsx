@@ -7,6 +7,7 @@ import CardButtons from "../CardButtons";
 import { keyframes } from "styled-components";
 import UserHeader from "../UserHeader";
 import { List } from "src/Icons";
+import { MutationFn } from "react-apollo";
 
 const Container = styled.div`
   border: ${props => props.theme.greyColor};
@@ -26,7 +27,6 @@ const PhotoHeader = styled.div`
   svg {
     fill: white;
   }
-  padding-right: 15px;
 `;
 
 const Image = styled.img`
@@ -97,7 +97,7 @@ const DetailContainer = styled.div`
   ${Comments} {
     height: 350px;
     width: 250px;
-    word-break:break-all
+    word-break: break-all;
     flex-wrap: nowrap;
     overflow-x: visible;
     overflow-y: auto;
@@ -155,6 +155,11 @@ const ModalLink = styled.div`
   }
 `;
 
+const Icon = styled.span`
+  margin-right: 15px;
+  cursor: pointer;
+`;
+
 interface IProps {
   inline: boolean;
   creatorAvatar: string;
@@ -176,9 +181,15 @@ interface IProps {
   toggleCommentClick: () => void;
   onKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onSubmit: any;
+  modalMenuOpen: boolean;
   modalOpen: boolean;
   toggleModal: () => void;
+  toggleMenuModal: () => void;
   getCommentId: any;
+  isFollowing: boolean;
+  isSelf: boolean;
+  followUserFn: MutationFn;
+  deleteCardFn: MutationFn;
 }
 
 const PhotoPresenter: React.SFC<IProps> = ({
@@ -202,8 +213,14 @@ const PhotoPresenter: React.SFC<IProps> = ({
   onKeyUp,
   onSubmit,
   modalOpen,
+  modalMenuOpen,
   toggleModal,
-  getCommentId
+  toggleMenuModal,
+  getCommentId,
+  isFollowing,
+  isSelf,
+  followUserFn,
+  deleteCardFn
 }) => {
   if (inline) {
     return (
@@ -217,6 +234,25 @@ const PhotoPresenter: React.SFC<IProps> = ({
             </Modal>
           </ModalContainer>
         )}
+        {modalMenuOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleMenuModal} />
+            <Modal>
+              <ModalLink onClick={() => console.log("ho?")}>
+                Report Card
+              </ModalLink>
+              <ModalLink onClick={() => followUserFn()}>
+                {isFollowing ? "Unfollow" : "Follow"}
+              </ModalLink>
+              {isSelf && (
+                <ModalLink onClick={() => deleteCardFn()}>
+                  Delete Card
+                </ModalLink>
+              )}
+              <ModalLink onClick={toggleMenuModal}>Cancel</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
         <Container>
           <PhotoHeader>
             <UserHeader
@@ -226,7 +262,9 @@ const PhotoPresenter: React.SFC<IProps> = ({
               currentCountry={country}
               size={"sm"}
             />
-            <List />
+            <Icon onClick={toggleMenuModal}>
+              <List />
+            </Icon>
           </PhotoHeader>
           <Image src={photoUrl} />
 
