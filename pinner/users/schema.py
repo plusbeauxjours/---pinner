@@ -1,7 +1,7 @@
-import graphene
-import graphql_jwt
-from . import types, mutations, queries
 from locations import types as location_types
+from . import types, mutations, queries
+import graphql_jwt
+import graphene
 
 
 class Query(object):
@@ -58,7 +58,7 @@ class Query(object):
         required=True,
         args={
             'username': graphene.String(required=True),
-            'countryPage': graphene.Int(),
+            'topCountryPage': graphene.Int(),
         }
     )
     frequent_visits = graphene.Field(
@@ -67,7 +67,7 @@ class Query(object):
         required=True,
         args={
             'username': graphene.String(required=True),
-            'cityPage': graphene.Int(),
+            'frequentVisitPage': graphene.Int(),
         }
     )
 

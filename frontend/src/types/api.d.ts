@@ -1688,7 +1688,7 @@ export interface TopCountries {
 
 export interface TopCountriesVariables {
   username: string;
-  countryPage?: number | null;
+  topCountryPage?: number | null;
 }
 
 
@@ -1728,7 +1728,7 @@ export interface FrequentVisits {
 
 export interface FrequentVisitsVariables {
   username: string;
-  cityPage?: number | null;
+  frequentVisitPage?: number | null;
 }
 
 

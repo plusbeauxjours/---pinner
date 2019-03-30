@@ -62,6 +62,8 @@ interface IState {
   tripConfirmModalOpen: boolean;
   tripAddModalOpen: boolean;
   tripEditModalOpen: boolean;
+  topCountriesModalOpen: boolean;
+  frequentVisitsModalOpen: boolean;
   editMode: boolean;
   id: string;
   userName: string;
@@ -79,6 +81,8 @@ interface IState {
   cityPage: number;
   countryPage: number;
   tripList: any;
+  topCountriesList: any;
+  frequentVisitsList: any;
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
@@ -98,6 +102,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripConfirmModalOpen: false,
       tripAddModalOpen: false,
       tripEditModalOpen: false,
+      topCountriesModalOpen: false,
+      frequentVisitsModalOpen: false,
       editMode: false,
       id: props.id,
       userName: props.username,
@@ -114,7 +120,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripPage: 0,
       cityPage: 0,
       countryPage: 0,
-      tripList: null
+      tripList: null,
+      topCountriesList: null,
+      frequentVisitsList: null
     };
   }
   public render() {
@@ -131,6 +139,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripConfirmModalOpen,
       tripAddModalOpen,
       tripEditModalOpen,
+      topCountriesModalOpen,
+      frequentVisitsModalOpen,
       editMode,
       userName,
       bio,
@@ -146,7 +156,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripPage,
       cityPage,
       countryPage,
-      tripList
+      tripList,
+      topCountriesList,
+      frequentVisitsList
     } = this.state;
     return (
       <LogOutMutation mutation={LOG_USER_OUT}>
@@ -287,6 +299,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                               tripEditModalOpen={
                                                                 tripEditModalOpen
                                                               }
+                                                              topCountriesModalOpen={
+                                                                topCountriesModalOpen
+                                                              }
+                                                              frequentVisitsModalOpen={
+                                                                frequentVisitsModalOpen
+                                                              }
                                                               editMode={
                                                                 editMode
                                                               }
@@ -300,6 +318,14 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                               toggleTripSeeAll={
                                                                 this
                                                                   .toggleTripSeeAll
+                                                              }
+                                                              toggleTopCountriesSeeAll={
+                                                                this
+                                                                  .toggleTopCountriesSeeAll
+                                                              }
+                                                              toggleFrequentVisitsSeeAll={
+                                                                this
+                                                                  .toggleFrequentVisitsSeeAll
                                                               }
                                                               toggleModal={
                                                                 this.toggleModal
@@ -323,6 +349,14 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                               toggleEditTripModal={
                                                                 this
                                                                   .toggleEditTripModal
+                                                              }
+                                                              toggleTopCountriesModal={
+                                                                this
+                                                                  .toggleTopCountriesModal
+                                                              }
+                                                              toggleFrequentVisitsModal={
+                                                                this
+                                                                  .toggleFrequentVisitsModal
                                                               }
                                                               openEditMode={
                                                                 this
@@ -351,6 +385,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                               }
                                                               tripList={
                                                                 tripList
+                                                              }
+                                                              topCountriesList={
+                                                                topCountriesList
+                                                              }
+                                                              frequentVisitsList={
+                                                                frequentVisitsList
                                                               }
                                                               getTipsLoading={
                                                                 getTipsLoading
@@ -536,6 +576,56 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     console.log(this.state);
   };
 
+  public toggleTopCountriesSeeAll = () => {
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    this.fetchMore({
+      query: GET_TRIPS,
+      variables: {
+        tripPage: 1,
+        username
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return previousResult;
+        }
+        this.setState({
+          tripList: [
+            ...previousResult.topCountries.footprints,
+            ...fetchMoreResult.topCountries.footprints
+          ]
+        });
+      }
+    });
+  };
+  public toggleFrequentVisitsSeeAll = () => {
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    this.fetchMore({
+      query: GET_TRIPS,
+      variables: {
+        tripPage: 1,
+        username
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return previousResult;
+        }
+        this.setState({
+          tripList: [
+            ...previousResult.frequentVisits.footprints,
+            ...fetchMoreResult.frequentVisits.footprints
+          ]
+        });
+      }
+    });
+  };
   public toggleTripModal = (moveNotificationId, cityName) => {
     const { tripModalOpen } = this.state;
     this.setState({
@@ -566,6 +656,19 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripModalOpen: !tripModalOpen
     });
   };
+  public toggleTopCountriesModal = () => {
+    const { topCountriesModalOpen } = this.state;
+    this.setState({
+      topCountriesModalOpen: !topCountriesModalOpen
+    });
+  };
+  public toggleFrequentVisitsModal = () => {
+    const { frequentVisitsModalOpen } = this.state;
+    this.setState({
+      frequentVisitsModalOpen: !frequentVisitsModalOpen
+    });
+  };
+
   public addTrip = () => {
     const { cityName, startDate, endDate, tripAddModalOpen } = this.state;
     this.setState({

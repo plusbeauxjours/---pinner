@@ -21,6 +21,7 @@ import Bold from "../../Components/Bold";
 import CardGrid from "../../Components/CardGrid";
 import FollowBtn from "../../Components/FollowBtn";
 import Input from "../../Components/Input";
+import LocationRow from "src/Components/LocationRow";
 
 const PHeader = styled.header`
   display: flex;
@@ -322,6 +323,8 @@ interface IProps {
   getTripsData?: GetTrips;
   getTipsLoading: boolean;
   tripList: any;
+  topCountriesList: any;
+  frequentVisitsList: any;
 
   modalOpen: boolean;
   confirmModalOpen: boolean;
@@ -330,6 +333,8 @@ interface IProps {
   tripConfirmModalOpen: boolean;
   tripAddModalOpen: boolean;
   tripEditModalOpen: boolean;
+  topCountriesModalOpen: boolean;
+  frequentVisitsModalOpen: boolean;
 
   editMode: boolean;
   openEditMode: () => void;
@@ -351,6 +356,8 @@ interface IProps {
   onFocusChange: (arg: "startDate" | "endDate" | null) => void;
 
   toggleTripSeeAll: () => void;
+  toggleTopCountriesSeeAll: () => void;
+  toggleFrequentVisitsSeeAll: () => void;
   toggleModal: () => void;
   toggleConfirmModal: () => void;
 
@@ -358,6 +365,8 @@ interface IProps {
   toggleTripConfirmModal: () => void;
   toggleAddTripModal: () => void;
   toggleEditTripModal: () => void;
+  toggleTopCountriesModal: () => void;
+  toggleFrequentVisitsModal: () => void;
 
   logUserOutFn: () => void;
 
@@ -386,20 +395,28 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   getTripsData: { getTrips: { footprints: getTrips = null } = {} } = {},
   getTipsLoading,
   tripList,
+  topCountriesList,
+  frequentVisitsList,
   modalOpen,
   tripModalOpen,
   confirmModalOpen,
   tripConfirmModalOpen,
   tripAddModalOpen,
   tripEditModalOpen,
+  topCountriesModalOpen,
+  frequentVisitsModalOpen,
   editMode,
   toggleTripSeeAll,
+  toggleTopCountriesSeeAll,
+  toggleFrequentVisitsSeeAll,
   toggleModal,
   toggleConfirmModal,
   toggleTripModal,
   toggleTripConfirmModal,
   toggleAddTripModal,
   toggleEditTripModal,
+  toggleTopCountriesModal,
+  toggleFrequentVisitsModal,
   openEditMode,
   logUserOutFn,
   confirmDeleteProfile,
@@ -429,7 +446,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
         {/* 
         ////////////// MODAL //////////////
         */}
-
         {modalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleModal} />
@@ -522,11 +538,46 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </FormModal>
           </FromModalContainer>
         )}
-
+        {topCountriesModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleTopCountriesModal} />
+            <Modal>
+              <Wrapper>
+                {topCountriesList.map(country => (
+                  <LocationRow
+                    key={country.id}
+                    id={country.id}
+                    avatar={country.countryPhoto}
+                    countryName={country.countryName}
+                    type={"topCountries"}
+                  />
+                ))}
+              </Wrapper>
+            </Modal>
+          </ModalContainer>
+        )}
+        {frequentVisitsModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleFrequentVisitsModal} />
+            <Modal>
+              <Wrapper>
+                {frequentVisitsList.map(city => (
+                  <LocationRow
+                    key={city.id}
+                    id={city.id}
+                    cityName={city.cityName}
+                    avatar={city.cityPhoto}
+                    countryName={city.country.countryName}
+                    type={"frequentVisits"}
+                  />
+                ))}
+              </Wrapper>
+            </Modal>
+          </ModalContainer>
+        )}
         {/* 
         ////////////// HEADER //////////////
         */}
-
         <PHeader>
           <PAvatar size="lg" url={user.profile.avatar} />
           {editMode ? (
@@ -559,11 +610,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </Link>
           </NameContainer>
         </PHeader>
-
         {/* 
         ////////////// BODY //////////////
         */}
-
         <SWrapper>
           <PBody>
             <InfoContainer>
@@ -732,14 +781,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </InfoContainer>
           </PBody>
           <GreyLine />
-
           {/* 
           ////////////// TRIPS //////////////
           */}
-
           <Title>
             <SBold text={"TRIP LOG"} />
-            <SeeAll onClick={() => toggleTripSeeAll()}>SEE ALL</SeeAll>
+            <SeeAll onClick={toggleTripSeeAll}>SEE ALL</SeeAll>
           </Title>
           <TripContainer>
             {console.log(getTrips)}
@@ -780,14 +827,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             )}
           </TripContainer>
           <GreyLine />
-
           {/* 
           ////////////// LOCATIONS //////////////
           */}
-
           <Title>
             <SBold text={"TOP COUNTRIES"} />
-            <SeeAll onClick={toggleModal}>SEE ALL</SeeAll>
+            <SeeAll onClick={toggleTopCountriesSeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <TripBox>
@@ -815,7 +860,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           <GreyLine />
           <Title>
             <SBold text={"FREQUENT VISITS"} />
-            <SeeAll onClick={toggleModal}>SEE ALL</SeeAll>
+            <SeeAll onClick={toggleFrequentVisitsSeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <TripBox>
