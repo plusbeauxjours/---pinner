@@ -78,7 +78,7 @@ interface IState {
   tripPage: number;
   cityPage: number;
   countryPage: number;
-  tripList: {};
+  tripList: any;
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
@@ -114,7 +114,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripPage: 0,
       cityPage: 0,
       countryPage: 0,
-      tripList: {}
+      tripList: null
     };
   }
   public render() {
@@ -145,7 +145,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       moveNotificationId,
       tripPage,
       cityPage,
-      countryPage
+      countryPage,
+      tripList
     } = this.state;
     return (
       <LogOutMutation mutation={LOG_USER_OUT}>
@@ -348,6 +349,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                               getTripsData={
                                                                 getTripsData
                                                               }
+                                                              tripList={
+                                                                tripList
+                                                              }
                                                               getTipsLoading={
                                                                 getTipsLoading
                                                               }
@@ -521,15 +525,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         if (!fetchMoreResult) {
           return previousResult;
         }
-        const koko = Object.assign({}, previousResult.getTrips, {
-          footprints: [
+        this.setState({
+          tripList: [
             ...previousResult.getTrips.footprints,
             ...fetchMoreResult.getTrips.footprints
           ]
         });
-        this.setState({ tripList: koko });
-
-        console.log(koko);
       }
     });
     console.log(this.state);

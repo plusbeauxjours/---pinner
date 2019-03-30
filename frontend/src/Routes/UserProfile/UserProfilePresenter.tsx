@@ -321,6 +321,7 @@ interface IProps {
 
   getTripsData?: GetTrips;
   getTipsLoading: boolean;
+  tripList: any;
 
   modalOpen: boolean;
   confirmModalOpen: boolean;
@@ -384,6 +385,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 
   getTripsData: { getTrips: { footprints: getTrips = null } = {} } = {},
   getTipsLoading,
+  tripList,
   modalOpen,
   tripModalOpen,
   confirmModalOpen,
@@ -756,6 +758,23 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <TripText>{getTrip.city.country.countryName}</TripText>
                   <TripText>{getTrip.startDate}</TripText>
                   <TripText>{getTrip.endDate}</TripText>
+                </TripRow>
+              ))
+            ) : (
+              <Loader />
+            )}
+            {console.log(tripList)}
+            {!getTipsLoading && tripList ? (
+              tripList.map(trip => (
+                <TripRow
+                  key={trip.id}
+                  onClick={() => toggleTripModal(trip.id, trip.city.cityName)}
+                >
+                  <CityPhoto src={trip.city.cityPhoto} size={"sm"} />
+                  <TripText>{trip.city.cityName}</TripText>
+                  <TripText>{trip.city.country.countryName}</TripText>
+                  <TripText>{trip.startDate}</TripText>
+                  <TripText>{trip.endDate}</TripText>
                 </TripRow>
               ))
             ) : (
