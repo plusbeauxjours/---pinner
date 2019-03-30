@@ -104,12 +104,18 @@ def resolve_check_username(self, info, **kwargs):
 
 
 @login_required
-def resolve_recommand_users(self, info):
+def resolve_recommand_users(self, info, **kwargs):
 
     user = info.context.user
+    recommandUserPage = kwargs.get('recommandUserPage', 0)
 
-    users = models.User.objects.filter().exclude(pk=user.pk).order_by(
-        '-date_joined')
+    if (recommandUserPage is 0):
+        users = models.User.objects.filter().exclude(pk=user.pk).order_by(
+            '-date_joined')[:9]
+    else:
+        users = models.User.objects.filter().exclude(pk=user.pk).order_by(
+            '-date_joined')[9:18]
+
     return types.RecommandUsersResponse(users=users)
 
 

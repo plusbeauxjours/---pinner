@@ -139,29 +139,43 @@ def resolve_get_footprints(self, info, **kwargs):
 
 
 @login_required
-def resolve_near_cities(self, info):
+def resolve_near_cities(self, info, **kwargs):
 
     user = info.context.user
+    nearCityPage = kwargs.get('nearCityPage', 0)
 
-    cities = user.profile.current_city.near_city.all()
+    if (nearCityPage is 0):
+        cities = user.profile.current_city.near_city.all()[:6]
+    else:
+        cities = user.profile.current_city.near_city.all()[6:12]
 
     return types.CitiesResponse(cities=cities)
 
 
 @login_required
-def resolve_near_countries(self, info):
+def resolve_near_countries(self, info, **kwargs):
 
     user = info.context.user
+    nearCountryPage = kwargs.get('nearCountryPage', 0)
 
-    countries = user.profile.current_city.near_country.all()
+    if (nearCountryPage is 0):
+        countries = user.profile.current_city.near_country.all()[:6]
+    else:
+        countries = user.profile.current_city.near_country.all()[6:12]
 
     return types.CountriesResponse(countries=countries)
 
 
 @login_required
-def resolve_latest_cities(self, info):
+def resolve_latest_cities(self, info, **kwargs):
 
-    cities = models.City.objects.all().order_by(
-        '-created_at')
+    latestCityPage = kwargs.get('latestCityPage', 0)
+
+    if (latestCityPage is 0):
+        cities = models.City.objects.all().order_by(
+            '-created_at')[:6]
+    else:
+        cities = models.City.objects.all().order_by(
+            '-created_at')[6:12]
 
     return types.CitiesResponse(cities=cities)

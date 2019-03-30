@@ -44,17 +44,26 @@ class Query(object):
     near_cities = graphene.Field(
         types.CitiesResponse,
         resolver=queries.resolve_near_cities,
-        required=True
+        required=True,
+        args={
+            'nearCityPage': graphene.Int()
+        }
     )
     near_countries = graphene.Field(
         types.CountriesResponse,
         resolver=queries.resolve_near_countries,
-        required=True
+        required=True,
+        args={
+            'nearCountryPage': graphene.Int()
+        }
     )
     latest_cities = graphene.Field(
         types.CitiesResponse,
         resolver=queries.resolve_latest_cities,
-        required=True
+        required=True,
+        args={
+            'latestCityPage': graphene.Int()
+        }
     )
     search_cities = graphene.Field(
         types.CitiesResponse,

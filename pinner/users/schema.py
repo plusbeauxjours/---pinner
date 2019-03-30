@@ -44,7 +44,8 @@ class Query(object):
     recommand_users = graphene.Field(
         types.RecommandUsersResponse,
         resolver=queries.resolve_recommand_users,
-        required=True
+        required=True,
+        args={'recommandUserPage': graphene.Int()}
     )
     user_list = graphene.Field(
         types.UserListResponse,
