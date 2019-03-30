@@ -209,6 +209,15 @@ const FormModal = styled(Modal)`
   height: 30%;
 `;
 
+const RowModal = styled.div`
+  z-index: 10;
+  animation: ${ModalAnimation} 0.1s linear;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const ModalOverlay = styled.div`
   z-index: 5;
   height: 100%;
@@ -541,40 +550,41 @@ const UserProfilePresenter: React.SFC<IProps> = ({
         {topCountriesModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleTopCountriesModal} />
-            <Modal>
+            <RowModal>
               <Wrapper>
                 {topCountriesList.map(country => (
                   <LocationRow
                     key={country.id}
                     id={country.id}
-                    avatar={country.countryPhoto}
-                    countryName={country.countryName}
+                    avatar={country.city.country.countryPhoto}
+                    countryName={country.city.country.countryName}
                     type={"topCountries"}
                   />
                 ))}
               </Wrapper>
-            </Modal>
+            </RowModal>
           </ModalContainer>
         )}
         {frequentVisitsModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleFrequentVisitsModal} />
-            <Modal>
+            <RowModal>
               <Wrapper>
                 {frequentVisitsList.map(city => (
                   <LocationRow
                     key={city.id}
                     id={city.id}
-                    cityName={city.cityName}
-                    avatar={city.cityPhoto}
-                    countryName={city.country.countryName}
+                    cityName={city.city.cityName}
+                    avatar={city.city.cityPhoto}
+                    countryName={city.city.country.countryName}
                     type={"frequentVisits"}
                   />
                 ))}
               </Wrapper>
-            </Modal>
+            </RowModal>
           </ModalContainer>
         )}
+
         {/* 
         ////////////// HEADER //////////////
         */}
@@ -808,7 +818,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             ) : (
               <Loader />
             )}
-            {console.log(tripList)}
             {!getTipsLoading && tripList ? (
               tripList.map(trip => (
                 <TripRow

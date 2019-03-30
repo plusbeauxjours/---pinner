@@ -6,11 +6,11 @@ import Avatar from "./Avatar";
 
 const Container = styled.div`
   background-color: #2d3a41;
-  width: 600px;
+  width: 100%;
   border-radius: 3px;
   border: ${props => props.theme.boxBorder};
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 40px;
   padding: 20px;
   align-items: center;

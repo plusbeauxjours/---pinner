@@ -108,7 +108,6 @@ const Modal = styled.div`
   text-align: center;
   display: flex;
   align-items: center;
-  margin-top: 150px;
   justify-content: center;
 `;
 
