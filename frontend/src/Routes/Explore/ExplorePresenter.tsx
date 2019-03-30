@@ -14,6 +14,7 @@ import Wrapper from "../../Components/Wrapper";
 import { keyframes } from "styled-components";
 import UserRow from "../../Components/UserRow";
 import Bold from "../../Components/Bold";
+import LocationRow from "src/Components/LocationRow";
 
 const TallWrapper = styled(Wrapper)`
   height: 50vh;
@@ -111,6 +112,12 @@ const Modal = styled.div`
   justify-content: center;
 `;
 
+const SeeAll = styled.p`
+  font-size: 12px;
+  font-weight: 100;
+  cursor: pointer;
+`;
+
 interface IProps {
   recommandUsersData?: RecommandUsers;
   recommandUsersLoading: boolean;
@@ -190,10 +197,66 @@ const ExplorePresenter: React.SFC<IProps> = ({
             </Modal>
           </ModalContainer>
         )}
+        {nearCityModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleNearCityModal} />
+            <Modal>
+              <Wrapper>
+                {nearCityList.map(city => (
+                  <LocationRow
+                    key={city.id}
+                    id={city.id}
+                    cityName={city.cityName}
+                    avatar={city.cityPhoto}
+                    countryName={city.country.countryName}
+                    type={"nearCity"}
+                  />
+                ))}
+              </Wrapper>
+            </Modal>
+          </ModalContainer>
+        )}
+        {nearCountryModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleNearCountryModal} />
+            <Modal>
+              <Wrapper>
+                {nearCountryList.map(country => (
+                  <LocationRow
+                    key={country.id}
+                    id={country.id}
+                    avatar={country.countryPhoto}
+                    countryName={country.countryName}
+                    type={"nearCountry"}
+                  />
+                ))}
+              </Wrapper>
+            </Modal>
+          </ModalContainer>
+        )}
+        {latestCityModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleLatestCityModal} />
+            <Modal>
+              <Wrapper>
+                {latestCityList.map(city => (
+                  <LocationRow
+                    key={city.id}
+                    id={city.id}
+                    cityName={city.cityName}
+                    avatar={city.cityPhoto}
+                    countryName={city.country.countryName}
+                    type={"latestCity"}
+                  />
+                ))}
+              </Wrapper>
+            </Modal>
+          </ModalContainer>
+        )}
         <TallWrapper>
           <Title>
             <SBold text={"RECOMMAND USER"} />
-            <p onClick={toggleRecommandUserSeeAll}>SEE ALL</p>
+            <SeeAll onClick={toggleRecommandUserSeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <Box>
@@ -205,30 +268,9 @@ const ExplorePresenter: React.SFC<IProps> = ({
             </Box>
           </Container>
           <GreyLine />
-
-          {nearCityModalOpen && (
-            <ModalContainer>
-              <ModalOverlay onClick={toggleNearCityModal} />
-              <Modal>
-                <Wrapper>
-                  {nearCityList.map(city => (
-                    <UserRow
-                      key={city.id}
-                      id={city.id}
-                      username={city.cityName}
-                      avatar={city.cityPhoto}
-                      currentCity={city.cityName}
-                      currentCountry={city.country.countryName}
-                      size={"sm"}
-                    />
-                  ))}
-                </Wrapper>
-              </Modal>
-            </ModalContainer>
-          )}
           <Title>
             <SBold text={"NEAR CITIES"} />
-            <p onClick={toggleNearCitySeeAll}>SEE ALL</p>
+            <SeeAll onClick={toggleNearCitySeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <Box>
@@ -241,29 +283,9 @@ const ExplorePresenter: React.SFC<IProps> = ({
           </Container>
           <GreyLine />
 
-          {nearCountryModalOpen && (
-            <ModalContainer>
-              <ModalOverlay onClick={toggleNearCountryModal} />
-              <Modal>
-                <Wrapper>
-                  {nearCountryList.map(country => (
-                    <UserRow
-                      key={country.id}
-                      id={country.id}
-                      username={country.countryName}
-                      avatar={country.countryPhoto}
-                      currentCity={country.countryName}
-                      currentCountry={country.countryName}
-                      size={"sm"}
-                    />
-                  ))}
-                </Wrapper>
-              </Modal>
-            </ModalContainer>
-          )}
           <Title>
             <SBold text={"NEAR COUNTRIES"} />
-            <p onClick={toggleNearCountrySeeAll}>SEE ALL</p>
+            <SeeAll onClick={toggleNearCountrySeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <Box>
@@ -275,30 +297,9 @@ const ExplorePresenter: React.SFC<IProps> = ({
             </Box>
           </Container>
           <GreyLine />
-
-          {latestCityModalOpen && (
-            <ModalContainer>
-              <ModalOverlay onClick={toggleLatestCityModal} />
-              <Modal>
-                <Wrapper>
-                  {latestCityList.map(city => (
-                    <UserRow
-                      key={city.id}
-                      id={city.id}
-                      username={city.cityName}
-                      avatar={city.cityPhoto}
-                      currentCity={city.cityName}
-                      currentCountry={city.country.countryName}
-                      size={"sm"}
-                    />
-                  ))}
-                </Wrapper>
-              </Modal>
-            </ModalContainer>
-          )}
           <Title>
             <SBold text={"LATEST CITIES"} />
-            <p onClick={toggleLatestCitySeeAll}>SEE ALL</p>
+            <SeeAll onClick={toggleLatestCitySeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <Box>
