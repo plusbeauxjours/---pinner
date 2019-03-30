@@ -562,6 +562,10 @@ export interface RecommandUsers {
   recommandUsers: RecommandUsers_recommandUsers;
 }
 
+export interface RecommandUsersVariables {
+  recommandUserPage?: number | null;
+}
+
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -592,6 +596,10 @@ export interface NearCities {
   nearCities: NearCities_nearCities;
 }
 
+export interface NearCitiesVariables {
+  nearCityPage?: number | null;
+}
+
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -615,6 +623,10 @@ export interface NearCountries_nearCountries {
 
 export interface NearCountries {
   nearCountries: NearCountries_nearCountries;
+}
+
+export interface NearCountriesVariables {
+  nearCountryPage?: number | null;
 }
 
 
@@ -645,6 +657,10 @@ export interface LatestCities_latestCities {
 
 export interface LatestCities {
   latestCities: LatestCities_latestCities;
+}
+
+export interface LatestCitiesVariables {
+  latestCityPage?: number | null;
 }
 
 

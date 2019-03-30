@@ -6,8 +6,8 @@ import {
 } from "src/sharedQueries";
 
 export const RECOMMAND_USERS = gql`
-  query RecommandUsers {
-    recommandUsers {
+  query RecommandUsers($recommandUserPage: Int) {
+    recommandUsers(recommandUserPage: $recommandUserPage) {
       users {
         ...UserParts
       }
@@ -17,8 +17,8 @@ export const RECOMMAND_USERS = gql`
 `;
 
 export const NEAR_CITIES = gql`
-  query NearCities {
-    nearCities {
+  query NearCities($nearCityPage: Int) {
+    nearCities(nearCityPage: $nearCityPage) {
       cities {
         ...CityParts
       }
@@ -28,8 +28,8 @@ export const NEAR_CITIES = gql`
 `;
 
 export const NEAR_COUNTRIES = gql`
-  query NearCountries {
-    nearCountries {
+  query NearCountries($nearCountryPage: Int) {
+    nearCountries(nearCountryPage: $nearCountryPage) {
       countries {
         ...CountryParts
       }
@@ -39,8 +39,8 @@ export const NEAR_COUNTRIES = gql`
 `;
 
 export const LATEST_CITIES = gql`
-  query LatestCities {
-    latestCities {
+  query LatestCities($latestCityPage: Int) {
+    latestCities(latestCityPage: $latestCityPage) {
       cities {
         ...CityParts
       }
