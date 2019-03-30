@@ -40,7 +40,8 @@ const MHeader = styled(Header)`
 const ICon = styled.div`
   position: absolute;
   svg {
-    margin-left: 10px;
+    margin-left: 5px;
+    margin-top: 5px;
     fill: red;
   }
 `;

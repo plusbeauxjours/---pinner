@@ -11,10 +11,9 @@ const Container = styled.div`
   border: ${props => props.theme.boxBorder};
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 40px;
-  padding: 20px;
-  align-items: center;
+  grid-gap: 10px;
   padding: 10px;
+  align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {

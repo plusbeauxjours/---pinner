@@ -746,6 +746,7 @@ export interface Feed_feed_usersNow_profile {
   avatar: string;
   currentCity: Feed_feed_usersNow_profile_currentCity | null;
   isFollowing: boolean | null;
+  isSelf: boolean | null;
 }
 
 export interface Feed_feed_usersNow {

@@ -179,6 +179,7 @@ const FeedPresenter: React.SFC<IProps> = ({
                       user.profile.currentCity.country.countryName
                     }
                     isFollowing={user.profile.isFollowing}
+                    isSelf={user.profile.isSelf}
                     size={"sm"}
                   />
                 ))}
@@ -201,6 +202,7 @@ const FeedPresenter: React.SFC<IProps> = ({
                     user.actor.profile.currentCity.country.countryName
                   }
                   isFollowing={user.actor.profile.isFollowing}
+                  isSelf={user.actor.profile.isSelf}
                   size={"sm"}
                 />
               ))}

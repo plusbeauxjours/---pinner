@@ -19,6 +19,7 @@ export const GET_FEED = gql`
             }
           }
           isFollowing
+          isSelf
         }
       }
       usersBefore {
@@ -34,6 +35,7 @@ export const GET_FEED = gql`
               }
             }
             isFollowing
+            isSelf
           }
         }
       }

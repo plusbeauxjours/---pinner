@@ -8,23 +8,25 @@ const Container = styled.div`
   width: 100%;
   border-radius: 3px;
   border: ${props => props.theme.boxBorder};
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
   padding: 10px;
+  align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {
     background-color: #e6e6e6;
   }
 `;
-const Header = styled.header`
-  padding: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-`;
+
+// const Header = styled.header`
+//   padding: 12px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   flex-direction: row;
+// `;
 
 interface IProps {
   id: string;
@@ -33,6 +35,7 @@ interface IProps {
   currentCity: string;
   currentCountry: string;
   isFollowing?: boolean;
+  isSelf?: boolean;
   size: string;
 }
 
@@ -42,6 +45,7 @@ const UserRow: React.SFC<IProps> = ({
   username,
   currentCity,
   currentCountry,
+  isSelf,
   isFollowing
 }) => {
   return (
@@ -53,10 +57,9 @@ const UserRow: React.SFC<IProps> = ({
         avatar={avatar}
         size={"sm"}
       />
-      {console.log(currentCity)}
-      <Header>
+      {!isSelf && (
         <FollowBtn isFollowing={isFollowing} userId={id} username={username} />
-      </Header>
+      )}
     </Container>
   );
 };

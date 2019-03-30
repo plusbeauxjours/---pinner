@@ -6,6 +6,7 @@ import Comment from "../Comment";
 import CardButtons from "../CardButtons";
 import { keyframes } from "styled-components";
 import UserHeader from "../UserHeader";
+import { List } from "src/Icons";
 
 const Container = styled.div`
   border: ${props => props.theme.greyColor};
@@ -16,6 +17,16 @@ const Header = styled.header`
   padding: 15px;
   display: flex;
   align-items: center;
+`;
+
+const PhotoHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  svg {
+    fill: white;
+  }
+  padding-right: 15px;
 `;
 
 const Image = styled.img`
@@ -207,13 +218,16 @@ const PhotoPresenter: React.SFC<IProps> = ({
           </ModalContainer>
         )}
         <Container>
-          <UserHeader
-            username={creatorUsername}
-            avatar={creatorAvatar}
-            currentCity={city}
-            currentCountry={country}
-            size={"sm"}
-          />
+          <PhotoHeader>
+            <UserHeader
+              username={creatorUsername}
+              avatar={creatorAvatar}
+              currentCity={city}
+              currentCountry={country}
+              size={"sm"}
+            />
+            <List />
+          </PhotoHeader>
           <Image src={photoUrl} />
 
           <Caption>{caption}</Caption>
