@@ -120,8 +120,22 @@ interface IProps {
   nearCountriesLoading: boolean;
   latestCitiesData?: LatestCities;
   latestCitiesLoading: boolean;
-  modalOpen: boolean;
-  toggleModal: () => void;
+  toggleRecommandUserSeeAll: () => void;
+  toggleNearCitySeeAll: () => void;
+  toggleNearCountrySeeAll: () => void;
+  toggleLatestCitySeeAll: () => void;
+  recommandUserList: any;
+  nearCityList: any;
+  nearCountryList: any;
+  latestCityList: any;
+  nearCityModalOpen: boolean;
+  nearCountryModalOpen: boolean;
+  latestCityModalOpen: boolean;
+  recommandUserModalOpen: boolean;
+  toggleNearCityModal: () => void;
+  toggleNearCountryModal: () => void;
+  toggleLatestCityModal: () => void;
+  toggleRecommandUserModal: () => void;
 }
 
 const ExplorePresenter: React.SFC<IProps> = ({
@@ -133,18 +147,32 @@ const ExplorePresenter: React.SFC<IProps> = ({
   nearCountriesLoading,
   latestCitiesData: { latestCities: { cities: latestCities = null } = {} } = {},
   latestCitiesLoading,
-  modalOpen,
-  toggleModal
+  toggleRecommandUserSeeAll,
+  toggleNearCitySeeAll,
+  toggleNearCountrySeeAll,
+  toggleLatestCitySeeAll,
+  recommandUserList,
+  nearCityList,
+  nearCountryList,
+  latestCityList,
+  toggleRecommandUserModal,
+  toggleNearCityModal,
+  toggleNearCountryModal,
+  toggleLatestCityModal,
+  recommandUserModalOpen,
+  nearCityModalOpen,
+  nearCountryModalOpen,
+  latestCityModalOpen
 }) => {
   if (users || nearCities || countries || latestCities) {
     return (
       <>
-        {modalOpen && (
+        {recommandUserModalOpen && (
           <ModalContainer>
-            <ModalOverlay onClick={toggleModal} />
+            <ModalOverlay onClick={toggleRecommandUserModal} />
             <Modal>
               <Wrapper>
-                {users.map(user => (
+                {recommandUserList.map(user => (
                   <UserRow
                     key={user.id}
                     id={user.id}
@@ -165,7 +193,7 @@ const ExplorePresenter: React.SFC<IProps> = ({
         <TallWrapper>
           <Title>
             <SBold text={"RECOMMAND USER"} />
-            <p onClick={toggleModal}>SEE ALL</p>
+            <p onClick={toggleRecommandUserSeeAll}>SEE ALL</p>
           </Title>
           <Container>
             <Box>
@@ -178,9 +206,29 @@ const ExplorePresenter: React.SFC<IProps> = ({
           </Container>
           <GreyLine />
 
+          {nearCityModalOpen && (
+            <ModalContainer>
+              <ModalOverlay onClick={toggleNearCityModal} />
+              <Modal>
+                <Wrapper>
+                  {nearCityList.map(city => (
+                    <UserRow
+                      key={city.id}
+                      id={city.id}
+                      username={city.cityName}
+                      avatar={city.cityPhoto}
+                      currentCity={city.cityName}
+                      currentCountry={city.country.countryName}
+                      size={"sm"}
+                    />
+                  ))}
+                </Wrapper>
+              </Modal>
+            </ModalContainer>
+          )}
           <Title>
             <SBold text={"NEAR CITIES"} />
-            <p onClick={toggleModal}>SEE ALL</p>
+            <p onClick={toggleNearCitySeeAll}>SEE ALL</p>
           </Title>
           <Container>
             <Box>
@@ -193,9 +241,29 @@ const ExplorePresenter: React.SFC<IProps> = ({
           </Container>
           <GreyLine />
 
+          {nearCountryModalOpen && (
+            <ModalContainer>
+              <ModalOverlay onClick={toggleNearCountryModal} />
+              <Modal>
+                <Wrapper>
+                  {nearCountryList.map(country => (
+                    <UserRow
+                      key={country.id}
+                      id={country.id}
+                      username={country.countryName}
+                      avatar={country.countryPhoto}
+                      currentCity={country.countryName}
+                      currentCountry={country.countryName}
+                      size={"sm"}
+                    />
+                  ))}
+                </Wrapper>
+              </Modal>
+            </ModalContainer>
+          )}
           <Title>
             <SBold text={"NEAR COUNTRIES"} />
-            <p onClick={toggleModal}>SEE ALL</p>
+            <p onClick={toggleNearCountrySeeAll}>SEE ALL</p>
           </Title>
           <Container>
             <Box>
@@ -208,9 +276,29 @@ const ExplorePresenter: React.SFC<IProps> = ({
           </Container>
           <GreyLine />
 
+          {latestCityModalOpen && (
+            <ModalContainer>
+              <ModalOverlay onClick={toggleLatestCityModal} />
+              <Modal>
+                <Wrapper>
+                  {latestCityList.map(city => (
+                    <UserRow
+                      key={city.id}
+                      id={city.id}
+                      username={city.cityName}
+                      avatar={city.cityPhoto}
+                      currentCity={city.cityName}
+                      currentCountry={city.country.countryName}
+                      size={"sm"}
+                    />
+                  ))}
+                </Wrapper>
+              </Modal>
+            </ModalContainer>
+          )}
           <Title>
             <SBold text={"LATEST CITIES"} />
-            <p onClick={toggleModal}>SEE ALL</p>
+            <p onClick={toggleLatestCitySeeAll}>SEE ALL</p>
           </Title>
           <Container>
             <Box>

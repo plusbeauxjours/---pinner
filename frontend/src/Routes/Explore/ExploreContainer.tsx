@@ -21,7 +21,6 @@ class LatestCitiesQuery extends Query<LatestCities> {}
 
 interface IState {
   inline: boolean;
-  modalOpen: boolean;
   recommandUserList: any;
   nearCityList: any;
   nearCountryList: any;
@@ -30,6 +29,10 @@ interface IState {
   nearCountryPage: number;
   latestCityPage: number;
   recommandUserPage: number;
+  recommandUserModalOpen: boolean;
+  nearCityModalOpen: boolean;
+  nearCountryModalOpen: boolean;
+  latestCityModalOpen: boolean;
 }
 
 class ExploreContainer extends React.Component<any, IState> {
@@ -41,24 +44,34 @@ class ExploreContainer extends React.Component<any, IState> {
     super(props);
     this.state = {
       inline: false,
-      modalOpen: false,
       recommandUserList: null,
       nearCityList: null,
       nearCountryList: null,
       latestCityList: null,
+      recommandUserPage: 0,
       nearCityPage: 0,
       nearCountryPage: 0,
       latestCityPage: 0,
-      recommandUserPage: 0
+      recommandUserModalOpen: false,
+      nearCityModalOpen: false,
+      nearCountryModalOpen: false,
+      latestCityModalOpen: false
     };
   }
   public render = () => {
     const {
-      modalOpen,
       nearCityPage,
       nearCountryPage,
       latestCityPage,
-      recommandUserPage
+      recommandUserPage,
+      recommandUserList,
+      nearCityList,
+      nearCountryList,
+      latestCityList,
+      recommandUserModalOpen,
+      nearCityModalOpen,
+      nearCountryModalOpen,
+      latestCityModalOpen
     } = this.state;
     return (
       <RecommandUsersQuery
@@ -111,8 +124,34 @@ class ExploreContainer extends React.Component<any, IState> {
                                 nearCountriesLoading={nearCountriesLoading}
                                 latestCitiesData={latestCitiesData}
                                 latestCitiesLoading={latestCitiesLoading}
-                                modalOpen={modalOpen}
-                                toggleModal={this.toggleModal}
+                                toggleRecommandUserSeeAll={
+                                  this.toggleRecommandUserSeeAll
+                                }
+                                toggleNearCitySeeAll={this.toggleNearCitySeeAll}
+                                toggleNearCountrySeeAll={
+                                  this.toggleNearCountrySeeAll
+                                }
+                                toggleLatestCitySeeAll={
+                                  this.toggleLatestCitySeeAll
+                                }
+                                recommandUserList={recommandUserList}
+                                nearCityList={nearCityList}
+                                nearCountryList={nearCountryList}
+                                latestCityList={latestCityList}
+                                recommandUserModalOpen={recommandUserModalOpen}
+                                nearCityModalOpen={nearCityModalOpen}
+                                nearCountryModalOpen={nearCountryModalOpen}
+                                latestCityModalOpen={latestCityModalOpen}
+                                toggleNearCityModal={this.toggleNearCityModal}
+                                toggleNearCountryModal={
+                                  this.toggleNearCountryModal
+                                }
+                                toggleLatestCityModal={
+                                  this.toggleLatestCityModal
+                                }
+                                toggleRecommandUserModal={
+                                  this.toggleRecommandUserModal
+                                }
                               />
                             );
                           }}
@@ -128,13 +167,32 @@ class ExploreContainer extends React.Component<any, IState> {
       </RecommandUsersQuery>
     );
   };
-  public toggleModal = () => {
-    const { modalOpen } = this.state;
+  public toggleRecommandUserModal = () => {
+    const { recommandUserModalOpen } = this.state;
     this.setState({
-      modalOpen: !modalOpen
+      recommandUserModalOpen: !recommandUserModalOpen
+    } as any);
+  };
+  public toggleNearCityModal = () => {
+    const { nearCityModalOpen } = this.state;
+    this.setState({
+      nearCityModalOpen: !nearCityModalOpen
+    } as any);
+  };
+  public toggleNearCountryModal = () => {
+    const { nearCountryModalOpen } = this.state;
+    this.setState({
+      nearCountryModalOpen: !nearCountryModalOpen
+    } as any);
+  };
+  public toggleLatestCityModal = () => {
+    const { latestCityModalOpen } = this.state;
+    this.setState({
+      latestCityModalOpen: !latestCityModalOpen
     } as any);
   };
   public toggleRecommandUserSeeAll = () => {
+    const { recommandUserModalOpen } = this.state;
     this.recommandUsersFetchMore({
       query: RECOMMAND_USERS,
       variables: { recommandUserPage: 1 },
@@ -146,12 +204,14 @@ class ExploreContainer extends React.Component<any, IState> {
           recommandUserList: [
             ...previousResult.recommandUsers.users,
             ...fetchMoreResult.recommandUsers.users
-          ]
-        });
+          ],
+          recommandUserModalOpen: !recommandUserModalOpen
+        } as any);
       }
     });
   };
   public toggleNearCitySeeAll = () => {
+    const { nearCityModalOpen } = this.state;
     this.nearCitiesFetchMore({
       query: NEAR_CITIES,
       variables: { nearCityPage: 1 },
@@ -163,12 +223,14 @@ class ExploreContainer extends React.Component<any, IState> {
           nearCityList: [
             ...previousResult.nearCities.cities,
             ...fetchMoreResult.nearCities.cities
-          ]
+          ],
+          nearCityModalOpen: !nearCityModalOpen
         });
       }
     });
   };
   public toggleNearCountrySeeAll = () => {
+    const { nearCountryModalOpen } = this.state;
     this.nearCountriesFetchMore({
       query: NEAR_COUNTRIES,
       variables: { nearCountryPage: 1 },
@@ -180,12 +242,14 @@ class ExploreContainer extends React.Component<any, IState> {
           nearCountryList: [
             ...previousResult.nearCountries.countries,
             ...fetchMoreResult.nearCountries.countries
-          ]
+          ],
+          nearCountryModalOpen: !nearCountryModalOpen
         });
       }
     });
   };
   public toggleLatestCitySeeAll = () => {
+    const { latestCityModalOpen } = this.state;
     this.latestCitiesFetchMore({
       query: LATEST_CITIES,
       variables: { latestCityPage: 1 },
@@ -197,7 +261,8 @@ class ExploreContainer extends React.Component<any, IState> {
           latestCityList: [
             ...previousResult.latestCities.cities,
             ...fetchMoreResult.latestCities.cities
-          ]
+          ],
+          latestCityModalOpen: !latestCityModalOpen
         });
       }
     });

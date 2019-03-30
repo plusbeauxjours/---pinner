@@ -32,7 +32,7 @@ interface IProps {
   username: string;
   currentCity: string;
   currentCountry: string;
-  isFollowing: boolean;
+  isFollowing?: boolean;
   size: string;
 }
 
