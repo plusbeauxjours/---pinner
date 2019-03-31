@@ -9,5 +9,7 @@ class ProfileAdmin(admin.ModelAdmin):
         'user',
         'current_city',
         'city_count',
-        'trip_count'
+        'trip_count',
+        'country_count',
+        'continent_count'
     )

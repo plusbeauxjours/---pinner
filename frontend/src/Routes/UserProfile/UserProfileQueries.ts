@@ -19,6 +19,8 @@ export const GET_USER = gql`
           followingCount
           tripCount
           cityCount
+          countryCount
+          continentCount
           followings {
             id
             user {

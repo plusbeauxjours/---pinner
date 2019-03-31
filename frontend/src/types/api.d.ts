@@ -231,6 +231,7 @@ export interface CardDetail_cardDetail_card_creator_profile {
   __typename: "ProfileType";
   avatar: string;
   isFollowing: boolean | null;
+  isSelf: boolean | null;
 }
 
 export interface CardDetail_cardDetail_card_creator {
@@ -308,6 +309,7 @@ export interface CityProfile_cityProfile_cards_creator_profile {
   __typename: "ProfileType";
   avatar: string;
   isFollowing: boolean | null;
+  isSelf: boolean | null;
 }
 
 export interface CityProfile_cityProfile_cards_creator {
@@ -715,6 +717,7 @@ export interface Feed_feed_cards_creator_profile {
   __typename: "ProfileType";
   avatar: string;
   isFollowing: boolean | null;
+  isSelf: boolean | null;
 }
 
 export interface Feed_feed_cards_creator {
@@ -1238,6 +1241,7 @@ export interface UploadCard_uploadCard_card_creator_profile {
   __typename: "ProfileType";
   avatar: string;
   isFollowing: boolean | null;
+  isSelf: boolean | null;
 }
 
 export interface UploadCard_uploadCard_card_creator {
@@ -1400,6 +1404,8 @@ export interface UserProfile_userProfile_user_profile {
   followingCount: number | null;
   tripCount: number | null;
   cityCount: number | null;
+  countryCount: number | null;
+  continentCount: number | null;
   followings: (UserProfile_userProfile_user_profile_followings | null)[] | null;
   followers: (UserProfile_userProfile_user_profile_followers | null)[] | null;
   isFollowing: boolean | null;
@@ -1948,6 +1954,7 @@ export interface DetailParts_creator_profile {
   __typename: "ProfileType";
   avatar: string;
   isFollowing: boolean | null;
+  isSelf: boolean | null;
 }
 
 export interface DetailParts_creator {

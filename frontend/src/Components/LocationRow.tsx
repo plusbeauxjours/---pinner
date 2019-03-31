@@ -43,7 +43,9 @@ const Location = styled.span`
   font-weight: 200;
 `;
 
-const SAvatar = styled(Avatar)``;
+const SAvatar = styled(Avatar)`
+  border-radius: 3px;
+`;
 
 const SBold = styled(Bold)`
   display: flex;

@@ -695,12 +695,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <UBold text={" CITIES - done"} />
                 </Row>
                 <Row>
-                  <UBold text={String(user.profile.cityCount)} />
-                  <UBold text={" COUNTRIES"} />
+                  <UBold text={String(user.profile.countryCount)} />
+                  <UBold text={" COUNTRIES - done"} />
                 </Row>
                 <Row>
-                  <UBold text={String(user.profile.cityCount)} />
-                  <UBold text={" CONTINENT"} />
+                  <UBold text={String(user.profile.continentCount)} />
+                  <UBold text={" CONTINENT - done"} />
                 </Row>
                 {user.profile.bio &&
                   (editMode ? (
@@ -717,20 +717,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   ))}
               </ColumnContainer>
               <ColumnContainer>
-                <Row>
-                  {user.profile.followers &&
-                    user.profile.followers.map(follower => (
-                      <AvatarContainer key={user.id}>
-                        <SAvatar
-                          size={"sm"}
-                          key={user.id}
-                          url={follower.user.profile.avatar}
-                        />
-                      </AvatarContainer>
-                    ))}
-                  <UBold text={String(user.profile.followersCount)} />
-                  <UBold text={"CONTRIES"} />
-                </Row>
                 <Row>
                   {user.profile.followers &&
                     user.profile.followers.map(follower => (

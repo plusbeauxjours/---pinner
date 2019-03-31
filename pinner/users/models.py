@@ -49,6 +49,14 @@ class Profile(config_models.TimeStampedModel):
         return self.user.movenotification.all().order_by('city').distinct('city').count()
 
     @property
+    def country_count(self):
+        return self.user.movenotification.all().order_by('city__country').distinct('city__country').count()
+
+    @property
+    def continent_count(self):
+        return self.user.movenotification.all().order_by('city__country__continent').distinct('city__country__continent').count()
+
+    @property
     def post_count(self):
         return self.user.cards.all().count()
 
