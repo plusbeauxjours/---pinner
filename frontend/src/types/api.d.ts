@@ -1753,6 +1753,126 @@ export interface FrequentVisitsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetCities
+// ====================================================
+
+export interface GetCities_getCities_footprints_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetCities_getCities_footprints_city {
+  __typename: "CityType";
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: GetCities_getCities_footprints_city_country;
+}
+
+export interface GetCities_getCities_footprints {
+  __typename: "MoveNotificationType";
+  id: string;
+  city: GetCities_getCities_footprints_city | null;
+}
+
+export interface GetCities_getCities {
+  __typename: "FootprintsResponse";
+  footprints: (GetCities_getCities_footprints | null)[] | null;
+}
+
+export interface GetCities {
+  getCities: GetCities_getCities;
+}
+
+export interface GetCitiesVariables {
+  username: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GtCountries
+// ====================================================
+
+export interface GtCountries_getCountries_footprints_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryPhoto: string | null;
+}
+
+export interface GtCountries_getCountries_footprints_city {
+  __typename: "CityType";
+  country: GtCountries_getCountries_footprints_city_country;
+}
+
+export interface GtCountries_getCountries_footprints {
+  __typename: "MoveNotificationType";
+  id: string;
+  city: GtCountries_getCountries_footprints_city | null;
+}
+
+export interface GtCountries_getCountries {
+  __typename: "FootprintsResponse";
+  footprints: (GtCountries_getCountries_footprints | null)[] | null;
+}
+
+export interface GtCountries {
+  getCountries: GtCountries_getCountries;
+}
+
+export interface GtCountriesVariables {
+  username: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetContinent
+// ====================================================
+
+export interface GetContinent_getContinent_footprints_city_country_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+  continentPhoto: string | null;
+}
+
+export interface GetContinent_getContinent_footprints_city_country {
+  __typename: "CountryType";
+  continent: GetContinent_getContinent_footprints_city_country_continent | null;
+}
+
+export interface GetContinent_getContinent_footprints_city {
+  __typename: "CityType";
+  country: GetContinent_getContinent_footprints_city_country;
+}
+
+export interface GetContinent_getContinent_footprints {
+  __typename: "MoveNotificationType";
+  id: string;
+  city: GetContinent_getContinent_footprints_city | null;
+}
+
+export interface GetContinent_getContinent {
+  __typename: "FootprintsResponse";
+  footprints: (GetContinent_getContinent_footprints | null)[] | null;
+}
+
+export interface GetContinent {
+  getContinent: GetContinent_getContinent;
+}
+
+export interface GetContinentVariables {
+  username: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CompletePhoneVerification
 // ====================================================
 

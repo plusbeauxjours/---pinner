@@ -214,3 +214,52 @@ export const FREQUENT_VISITS = gql`
     }
   }
 `;
+
+export const GET_CITIES = gql`
+  query GetCities($username: String!) {
+    getCities(username: $username) {
+      footprints {
+        id
+        city {
+          cityName
+          cityPhoto
+          country {
+            countryName
+          }
+        }
+      }
+    }
+  }
+`;
+export const GET_COUNTRIES = gql`
+  query GtCountries($username: String!) {
+    getCountries(username: $username) {
+      footprints {
+        id
+        city {
+          country {
+            countryName
+            countryPhoto
+          }
+        }
+      }
+    }
+  }
+`;
+export const GET_CONTINENTS = gql`
+  query GetContinent($username: String!) {
+    getContinent(username: $username) {
+      footprints {
+        id
+        city {
+          country {
+            continent {
+              continentName
+              continentPhoto
+            }
+          }
+        }
+      }
+    }
+  }
+`;

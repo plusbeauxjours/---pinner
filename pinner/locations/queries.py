@@ -8,12 +8,36 @@ from notifications import models as notification_models
 
 
 @login_required
-def resolve_get_countries(self, info):
+def resolve_get_cities(self, info, **kwargs):
 
-    countries = models.Country.objects.all().order_by(
-        '-created_at')
+    username = kwargs.get('username')
+    profile = User.objects.get(username=username)
 
-    return types.CountriesResponse(countries=countries)
+    cities = profile.movenotification.all().order_by('city').distinct('city')
+
+    return types.FootprintsResponse(footprints=cities)
+
+
+@login_required
+def resolve_get_countries(self, info, **kwargs):
+
+    username = kwargs.get('username')
+    profile = User.objects.get(username=username)
+
+    countries = profile.movenotification.all().order_by('city__countryt').distinct('city__countryt')
+
+    return types.FootprintsResponse(footprints=countries)
+
+
+@login_required
+def resolve_get_continent(self, info, **kwargs):
+
+    username = kwargs.get('username')
+    profile = User.objects.get(username=username)
+
+    continents = profile.movenotification.all().order_by('city__country__continent').distinct('city__country__continent')
+
+    return types.FootprintsResponse(footprints=continents)
 
 
 @login_required
@@ -133,7 +157,7 @@ def resolve_get_footprints(self, info, **kwargs):
     page = kwargs.get('page', 0)
     offset = 10 * page
 
-    footprints = user.movenotification.all().order_by('-created_at')[offset:10 + offset]
+    footprints = user.movenotification.all().order_by('-start_date')[offset:10 + offset]
 
     return types.FootprintsResponse(footprints=footprints)
 

@@ -31,11 +31,6 @@ class Query(object):
             'page': graphene.Int()
         }
     )
-    get_countries = graphene.Field(
-        types.CountriesResponse,
-        resolver=queries.resolve_get_countries,
-        required=True
-    )
     get_footprints = graphene.Field(
         types.FootprintsResponse,
         resolver=queries.resolve_get_footprints,
@@ -82,6 +77,30 @@ class Query(object):
         resolver=queries.resolve_search_continents,
         required=True,
         args={'term': graphene.String(required=True)}
+    )
+    get_cities = graphene.Field(
+        types.FootprintsResponse,
+        resolver=queries.resolve_get_cities,
+        required=True,
+        args={
+            'username': graphene.String(required=True),
+        }
+    )
+    get_countries = graphene.Field(
+        types.FootprintsResponse,
+        resolver=queries.resolve_get_countries,
+        required=True,
+        args={
+            'username': graphene.String(required=True),
+        }
+    )
+    get_continent = graphene.Field(
+        types.FootprintsResponse,
+        resolver=queries.resolve_get_continent,
+        required=True,
+        args={
+            'username': graphene.String(required=True),
+        }
     )
 
 
