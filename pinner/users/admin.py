@@ -6,7 +6,7 @@ from . import models
 class ProfileAdmin(admin.ModelAdmin):
 
     list_display = (
-        'user',
+        'username',
         'current_city',
         'city_count',
         'trip_count',

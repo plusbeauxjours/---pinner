@@ -70,6 +70,22 @@ class Query(object):
             'frequentVisitPage': graphene.Int(),
         }
     )
+    get_followers = graphene.Field(
+        types.ProfileListResponse,
+        resolver=queries.resolve_get_followers,
+        required=True,
+        args={
+            'username': graphene.String(required=True),
+        }
+    )
+    get_followings = graphene.Field(
+        types.ProfileListResponse,
+        resolver=queries.resolve_get_followings,
+        required=True,
+        args={
+            'username': graphene.String(required=True),
+        }
+    )
 
 
 class Mutation(object):

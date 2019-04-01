@@ -4,13 +4,16 @@ import { Query } from "react-apollo";
 import { GetCountries, GetCountriesVariables } from "src/types/api";
 import { GET_COUNTRIES } from "src/Routes/UserProfile/UserProfileQueries";
 import LocationRow from "./LocationRow";
+import Loader from "./Loader";
 
 class GetCountriesQuery extends Query<GetCountries, GetCountriesVariables> {}
 
 const GetCountries: React.SFC<any> = username => (
   <GetCountriesQuery query={GET_COUNTRIES} variables={username}>
     {({ data: { getCountries: { footprints = null } = {} } = {}, loading }) => {
-      if (!loading && footprints) {
+      if (loading) {
+        return <Loader />;
+      } else if (!loading && footprints) {
         console.log(footprints);
         return footprints.map(country => (
           <LocationRow

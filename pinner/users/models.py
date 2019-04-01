@@ -45,6 +45,10 @@ class Profile(config_models.TimeStampedModel):
         return self.user.username
 
     @property
+    def username(self):
+        return self.user.username
+
+    @property
     def city_count(self):
         return self.user.movenotification.all().order_by('city').distinct('city').count()
 

@@ -7,6 +7,7 @@ from notifications import types as notification_types
 
 
 class ProfileType(DjangoObjectType):
+    username = graphene.String(source='username')
     following_count = graphene.Int(source='followers_count')
     followers_count = graphene.Int(source='following_count')
     city_count = graphene.Int(source='city_count')
@@ -91,3 +92,7 @@ class ReportLocationResponse(graphene.ObjectType):
 
 class UserListResponse(graphene.ObjectType):
     users = graphene.List(UserType)
+
+
+class ProfileListResponse(graphene.ObjectType):
+    profiles = graphene.List(ProfileType)

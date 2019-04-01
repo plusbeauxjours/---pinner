@@ -4,6 +4,7 @@ import { Query } from "react-apollo";
 import { GetContinentsVariables, GetContinents } from "src/types/api";
 import { GET_CONTINENTS } from "src/Routes/UserProfile/UserProfileQueries";
 import LocationRow from "./LocationRow";
+import Loader from "./Loader";
 
 class GetContinentQuery extends Query<GetContinents, GetContinentsVariables> {}
 
@@ -13,7 +14,9 @@ const GetContinents: React.SFC<any> = username => (
       data: { getContinents: { footprints = null } = {} } = {},
       loading
     }) => {
-      if (!loading && footprints) {
+      if (loading) {
+        return <Loader />;
+      } else if (!loading && footprints) {
         return footprints.map(continent => (
           <LocationRow
             key={continent.id}

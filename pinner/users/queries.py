@@ -133,3 +133,33 @@ def resolve_user_list(self, info):
         '-date_joined')
 
     return types.UserListResponse(users=users)
+
+
+@login_required
+def resolve_get_followers(self, info, **kwargs):
+
+    username = kwargs.get('username')
+
+    try:
+        users = User.objects.get(username=username)
+        followers_profile = users.profile.followers.all()
+
+    except User.DoesNotExist:
+        raise Exception('User not found')
+
+    return types.ProfileListResponse(profiles=followers_profile)
+
+
+@login_required
+def resolve_get_followings(self, info, **kwargs):
+
+    username = kwargs.get('username')
+
+    try:
+        users = User.objects.get(username=username)
+        following_profile = users.profile.followings.all()
+
+    except User.DoesNotExist:
+        raise Exception('User not found')
+
+    return types.ProfileListResponse(profiles=following_profile)
