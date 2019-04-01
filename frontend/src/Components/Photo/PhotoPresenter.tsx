@@ -170,7 +170,7 @@ interface IProps {
   likeCount: number;
   commentCount: number;
   caption: string;
-  createdAt: string;
+  naturalTime: string;
   comments: any;
   updateNewComment: (event: React.ChangeEvent<HTMLInputElement>) => void;
   newComment: string;
@@ -201,7 +201,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
   photoUrl,
   likeCount,
   caption,
-  createdAt,
+  naturalTime,
   comments,
   updateNewComment,
   newComment,
@@ -302,7 +302,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                   ))}
               </Comments>
             )}
-            <TimeStamp>{createdAt}</TimeStamp>
+            <TimeStamp>{naturalTime}</TimeStamp>
             {openedComment && (
               <AddComment>
                 <STextArea
@@ -363,7 +363,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
             </Comments>
             <CardButtons isLiked={isLiked} onClick={onLikeClick} />
             <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
-            <TimeStamp>{createdAt}</TimeStamp>
+            <TimeStamp>{naturalTime}</TimeStamp>
             <AddComment>
               <STextArea
                 placeholder="Add a comment..."

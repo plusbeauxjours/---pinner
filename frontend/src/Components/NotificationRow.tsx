@@ -104,7 +104,7 @@ const NotificationRow: React.SFC<IProps> = ({
                       />
                       <Header>
                         <SBold text={"Moved to"} />
-                        <TimeStamp>{notification.createdAt}</TimeStamp>
+                        <TimeStamp>{notification.naturalTime}</TimeStamp>
                       </Header>
                       <MHeader>
                         <FlagHeader
@@ -135,7 +135,7 @@ const NotificationRow: React.SFC<IProps> = ({
                       />
                       <Header>
                         <SBold text={"Follow me"} />
-                        <TimeStamp>{notification.createdAt}</TimeStamp>
+                        <TimeStamp>{notification.naturalTime}</TimeStamp>
                       </Header>
                     </Container>
                   </Link>
@@ -167,7 +167,7 @@ const NotificationRow: React.SFC<IProps> = ({
                       />
                       <Header>
                         <SBold text={"Commented on card"} />
-                        <TimeStamp>{notification.createdAt}</TimeStamp>
+                        <TimeStamp>{notification.naturalTime}</TimeStamp>
                       </Header>
                       <Header>
                         <Location>
@@ -203,7 +203,7 @@ const NotificationRow: React.SFC<IProps> = ({
                       />
                       <Header>
                         <SBold text={"Liked card"} />
-                        <TimeStamp>{notification.createdAt}</TimeStamp>
+                        <TimeStamp>{notification.naturalTime}</TimeStamp>
                       </Header>
                     </Container>
                   </Link>
@@ -236,7 +236,7 @@ const NotificationRow: React.SFC<IProps> = ({
                       />
                       <Header>
                         <SBold text={"Uploaded card"} />
-                        <TimeStamp>{notification.createdAt}</TimeStamp>
+                        <TimeStamp>{notification.naturalTime}</TimeStamp>
                       </Header>
                     </Container>
                   </Link>

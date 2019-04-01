@@ -27,7 +27,7 @@ export const GET_NOTIFICATION = gql`
           message
         }
         read
-        createdAt
+        naturalTime
       }
     }
   }
@@ -60,7 +60,7 @@ export const GET_MOVE_NOTIFICATION = gql`
           }
         }
         read
-        createdAt
+        naturalTime
       }
     }
   }

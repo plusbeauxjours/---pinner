@@ -273,7 +273,7 @@ const FeedPresenter: React.SFC<IProps> = ({
                 commentCount={card.commentCount}
                 caption={card.caption}
                 comments={card.comments}
-                createdAt={card.createdAt}
+                naturalTime={card.naturalTime}
                 isLiked={card.isLiked}
               />
             ))}

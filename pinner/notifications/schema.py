@@ -24,9 +24,9 @@ class Query(object):
               'startDate': graphene.Date(required=True),
               'endDate': graphene.Date(required=True)}
     )
-    get_duration_trip = graphene.Field(
+    get_duration_users = graphene.Field(
         types.DurationTripsResponse,
-        resolver=queries.resolve_get_duration_trip,
+        resolver=queries.resolve_get_duration_users,
         required=True,
         args={'cityName': graphene.String(required=True),
               'startDate': graphene.Date(required=True),

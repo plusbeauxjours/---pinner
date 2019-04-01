@@ -43,7 +43,7 @@ interface IProps {
   likeCount: number;
   commentCount: number;
   caption: string;
-  createdAt: string;
+  naturalTime: string;
   comments: any;
   isLiked: boolean;
   id: string;
@@ -99,7 +99,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
       photoUrl,
       commentCount,
       caption,
-      createdAt,
+      naturalTime,
       comments
     } = this.props;
     const {
@@ -194,7 +194,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
                                         likeCount={likeCount}
                                         commentCount={commentCount}
                                         caption={caption}
-                                        createdAt={createdAt}
+                                        naturalTime={naturalTime}
                                         comments={comments}
                                         updateNewComment={this.updateNewComment}
                                         newComment={newComment}

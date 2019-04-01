@@ -5,14 +5,16 @@ from . import models
 
 
 class NotificationType(DjangoObjectType):
-    created_at = graphene.String(source="natural_time")
+    natural_time = graphene.String(source="natural_time")
+    created_at = graphene.Date(source="created_at")
 
     class Meta:
         model = models.Notification
 
 
 class MoveNotificationType(DjangoObjectType):
-    created_at = graphene.String(source="natural_time")
+    natural_time = graphene.String(source="natural_time")
+    created_at = graphene.Date(source="created_at")
 
     class Meta:
         model = models.MoveNotification

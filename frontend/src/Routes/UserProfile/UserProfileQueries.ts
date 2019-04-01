@@ -115,7 +115,7 @@ export const GET_TRIPS = gql`
         }
         startDate
         endDate
-        createdAt
+        naturalTime
       }
     }
   }

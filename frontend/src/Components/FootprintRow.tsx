@@ -57,7 +57,7 @@ const FootprintRow: React.SFC<IProps> = ({ footprint }) => (
   <Container>
     <Header>
       <SBold text={"Moved"} />
-      <TimeStamp>{footprint.createdAt}</TimeStamp>
+      <TimeStamp>{footprint.naturalTime}</TimeStamp>
     </Header>
     <MHeader>
       <FlagHeader

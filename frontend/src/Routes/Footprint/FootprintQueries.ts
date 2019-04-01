@@ -12,7 +12,7 @@ export const GET_FOOTPRINT = gql`
             countryCode
           }
         }
-        createdAt
+        naturalTime
       }
     }
   }

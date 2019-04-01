@@ -92,7 +92,7 @@ export const DETAIL_CARD_FRAGMENT = gql`
     likeCount
     commentCount
     isLiked
-    createdAt
+    naturalTime
     comments {
       id
       message

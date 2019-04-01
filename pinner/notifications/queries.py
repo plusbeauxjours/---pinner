@@ -1,8 +1,6 @@
 from . import types, models
 from graphql_jwt.decorators import login_required
 from locations import models as location_models
-from cards import models as card_models
-from users import models as user_models
 
 
 @login_required
@@ -49,29 +47,29 @@ def resolve_get_duration_my_trip(self, info, **kwargs):
     endDate = kwargs.get('endDate')
 
     try:
-        my_footprints = user.movenotification.filter(city__city_name=cityName, start_date__range=(
+        my_trip = user.movenotification.filter(city__city_name=cityName, start_date__range=(
             startDate, endDate)) | user.movenotification.filter(city__city_name=cityName, end_date__range=(startDate, endDate))
 
-        return types.DurationTripsResponse(moveNotifications=my_footprints)
+        return types.DurationTripsResponse(moveNotifications=my_trip)
 
     except models.MoveNotification.DoesNotExist:
         raise Exception("You've never been there at the same time")
 
 
 @login_required
-def resolve_get_duration_trip(self, info, **kwargs):
+def resolve_get_duration_users(self, info, **kwargs):
 
     user = info.context.user
     cityName = kwargs.get('cityName')
     startDate = kwargs.get('startDate')
     endDate = kwargs.get('endDate')
 
-    profile = User.profile.objects.get(username=username)
     try:
-        my_footprints = user.movenotification.filter(city__city_name=cityName, start_date__range=(
-            startDate, endDate)) | user.movenotification.filter(city__city_name=cityName, end_date__range=(startDate, endDate))
+        city = location_models.City.objects.get(city_name=cityName)
+        trip = city.city.filter(start_date__range=(
+            startDate, endDate)) | city.city.filter(end_date__range=(startDate, endDate))
 
-        return types.DurationTripsResponse(moveNotifications=my_footprints)
+        return types.DurationTripsResponse(moveNotifications=trip)
 
     except models.MoveNotification.DoesNotExist:
         raise Exception("You've never been there at the same time")
