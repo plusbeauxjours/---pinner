@@ -162,3 +162,20 @@ def resolve_get_followings(self, info, **kwargs):
         raise Exception('User not found')
 
     return types.ProfileListResponse(profiles=following_profile)
+
+
+@login_required
+def resolve_get_duration_users(self, info, **kwargs):
+
+    user = info.context.user
+    cityName = kwargs.get('cityName')
+    startDate = kwargs.get('startDate')
+    endDate = kwargs.get('endDate')
+
+    try:
+        users = User.Profile.objects.filter(city__city_name=cityName, start_date__range=(startDate, endDate))
+
+    except User.DoesNotExist:
+        raise Exception('User not found')
+
+    return types.DurationUsersResponse(users=users)

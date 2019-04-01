@@ -27,6 +27,10 @@ class FeedResponse(graphene.ObjectType):
     usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 
+class DurationCardsResponse(graphene.ObjectType):
+    cards = graphene.List(location_types.CardType)
+
+
 class LikeCardResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 

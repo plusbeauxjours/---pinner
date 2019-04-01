@@ -3,7 +3,6 @@ from graphene_django.types import DjangoObjectType
 from . import models
 from django.contrib.auth.models import User
 from config import types as config_types
-from notifications import types as notification_types
 
 
 class ProfileType(DjangoObjectType):
@@ -41,6 +40,10 @@ class UserType(DjangoObjectType):
     class Meta:
         model = User
         exclude_fields = ('password',)
+
+
+class DurationUsersResponse(graphene.ObjectType):
+    users = graphene.List(ProfileType)
 
 
 class UserProfileResponse(graphene.ObjectType):

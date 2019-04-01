@@ -16,9 +16,17 @@ class Query(object):
         required=True,
         args={'page': graphene.Int()}
     )
-    get_trip_profile = graphene.Field(
-        types.TripProfileResponse,
-        resolver=queries.resolve_get_trip_profile,
+    get_duration_my_trip = graphene.Field(
+        types.DurationTripsResponse,
+        resolver=queries.resolve_get_duration_my_trip,
+        required=True,
+        args={'cityName': graphene.String(required=True),
+              'startDate': graphene.Date(required=True),
+              'endDate': graphene.Date(required=True)}
+    )
+    get_duration_trip = graphene.Field(
+        types.DurationTripsResponse,
+        resolver=queries.resolve_get_duration_trip,
         required=True,
         args={'cityName': graphene.String(required=True),
               'startDate': graphene.Date(required=True),

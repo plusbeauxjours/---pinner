@@ -36,6 +36,14 @@ class Query(object):
         resolver=queries.resolve_latest_cards,
         required=True
     )
+    get_duration_cards = graphene.Field(
+        types.DurationCardsResponse,
+        resolver=queries.resolve_get_duration_cards,
+        required=True,
+        args={'cityName': graphene.String('cityName'),
+              'startDate': graphene.Date('startDate'),
+              'endDate': graphene.Date('endDate')}
+    )
 
 
 class Mutation(object):

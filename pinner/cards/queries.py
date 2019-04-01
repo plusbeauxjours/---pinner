@@ -91,5 +91,22 @@ def resolve_latest_cards(self, info):
 
     user = info.context.user
 
-    cards = models.Card.objects.filter().order_by('-created_at')[:10]
+    cards = models.Card.objects.all().order_by('-created_at')[:10]
     return types.LatestCardsResponse(cards=cards)
+
+
+@login_required
+def resolve_get_duration_cards(self, info, **kwargs):
+
+    user = info.context.user
+    cityName = kwargs.get('cityName')
+    startDate = kwargs.get('startDate')
+    endDate = kwargs.get('endDate')
+
+    try:
+        cards = models.Card.objects.filter(city__city_name=cityName, created_at__range=(startDate, endDate))
+
+        return types.DurationCardsResponse(cards=cards)
+
+    except models.Card.DoesNotExist:
+        raise Exception('Card not found')

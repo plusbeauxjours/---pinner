@@ -12,7 +12,8 @@ from notifications import types as notification_types
 class CardType(DjangoObjectType):
     like_count = graphene.Int(source='like_count')
     comment_count = graphene.Int(source='comment_count')
-    created_at = graphene.String(source="natural_time")
+    crated_at = graphene.Date(source='created_at')
+    natural_time = graphene.String(source="natural_time")
     is_liked = graphene.Boolean()
 
     def resolve_is_liked(self, info):

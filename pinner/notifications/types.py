@@ -18,6 +18,10 @@ class MoveNotificationType(DjangoObjectType):
         model = models.MoveNotification
 
 
+class DurationTripsResponse(graphene.ObjectType):
+    moveNotifications = graphene.List(MoveNotificationType)
+
+
 class GetNotificationsResponse(graphene.ObjectType):
     notifications = graphene.List(NotificationType)
     move_notifications = graphene.List(MoveNotificationType)
@@ -45,7 +49,3 @@ class EditTripResponse(graphene.ObjectType):
 
 class DeleteTripResponse(graphene.ObjectType):
     ok = graphene.Boolean()
-
-
-class TripProfileResponse(graphene.ObjectType):
-    moveNotifications = graphene.List(MoveNotificationType)

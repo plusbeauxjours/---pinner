@@ -24,6 +24,7 @@ class CardAdmin(admin.ModelAdmin):
         'creator',
         'caption',
         'created_at',
+        'natural_time',
         'updated_at',
     )
 
