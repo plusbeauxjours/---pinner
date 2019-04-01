@@ -1897,6 +1897,88 @@ export interface GetContinentsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetFollowers
+// ====================================================
+
+export interface GetFollowers_getFollowers_profiles_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetFollowers_getFollowers_profiles_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetFollowers_getFollowers_profiles_currentCity_country;
+}
+
+export interface GetFollowers_getFollowers_profiles {
+  __typename: "ProfileType";
+  id: string;
+  username: string | null;
+  avatar: string;
+  isFollowing: boolean | null;
+  currentCity: GetFollowers_getFollowers_profiles_currentCity | null;
+}
+
+export interface GetFollowers_getFollowers {
+  __typename: "ProfileListResponse";
+  profiles: (GetFollowers_getFollowers_profiles | null)[] | null;
+}
+
+export interface GetFollowers {
+  getFollowers: GetFollowers_getFollowers;
+}
+
+export interface GetFollowersVariables {
+  username: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetFollowings
+// ====================================================
+
+export interface GetFollowings_getFollowings_profiles_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetFollowings_getFollowings_profiles_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetFollowings_getFollowings_profiles_currentCity_country;
+}
+
+export interface GetFollowings_getFollowings_profiles {
+  __typename: "ProfileType";
+  id: string;
+  username: string | null;
+  avatar: string;
+  isFollowing: boolean | null;
+  currentCity: GetFollowings_getFollowings_profiles_currentCity | null;
+}
+
+export interface GetFollowings_getFollowings {
+  __typename: "ProfileListResponse";
+  profiles: (GetFollowings_getFollowings_profiles | null)[] | null;
+}
+
+export interface GetFollowings {
+  getFollowings: GetFollowings_getFollowings;
+}
+
+export interface GetFollowingsVariables {
+  username: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CompletePhoneVerification
 // ====================================================
 

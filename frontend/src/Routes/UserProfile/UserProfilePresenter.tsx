@@ -18,6 +18,8 @@ import LocationRow from "../../Components/LocationRow";
 import GetCities from "../../Components/GetCities";
 import GetCountries from "../../Components/GetCountries";
 import GetContinents from "../../Components/GetContinents";
+import GetFollowers from "src/Components/GetFollowers";
+import GetFollowings from "src/Components/GetFollowings";
 
 const PHeader = styled.header`
   display: flex;
@@ -345,6 +347,8 @@ interface IProps {
   cityModalOpen: boolean;
   countryModalOpen: boolean;
   continentModalOpen: boolean;
+  followersModalOpen: boolean;
+  followingsModalOpen: boolean;
 
   editMode: boolean;
   openEditMode: () => void;
@@ -380,6 +384,8 @@ interface IProps {
   toggleCityModal: () => void;
   toggleCountryModal: () => void;
   toggleContinentModal: () => void;
+  toggleFollowersModal: () => void;
+  toggleFollowingsModal: () => void;
 
   logUserOutFn: () => void;
 
@@ -424,6 +430,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   cityModalOpen,
   countryModalOpen,
   continentModalOpen,
+  followersModalOpen,
+  followingsModalOpen,
   editMode,
   toggleTripSeeAll,
   toggleTopCountriesSeeAll,
@@ -439,6 +447,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleCityModal,
   toggleCountryModal,
   toggleContinentModal,
+  toggleFollowersModal,
+  toggleFollowingsModal,
   openEditMode,
   logUserOutFn,
   confirmDeleteProfile,
@@ -514,6 +524,26 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <RowModal>
               <Wrapper>
                 <GetContinents username={user.username} />
+              </Wrapper>
+            </RowModal>
+          </ModalContainer>
+        )}
+        {followersModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleFollowersModal} />
+            <RowModal>
+              <Wrapper>
+                <GetFollowers username={user.username} />
+              </Wrapper>
+            </RowModal>
+          </ModalContainer>
+        )}
+        {followingsModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleFollowingsModal} />
+            <RowModal>
+              <Wrapper>
+                <GetFollowings username={user.username} />
               </Wrapper>
             </RowModal>
           </ModalContainer>
@@ -788,7 +818,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <UBold text={String(user.profile.followersCount)} />
                   <UBold text={"PEOPLE THEY CROSS PATHS WITH MOST"} />
                 </Row>
-                <Row>
+                <Row onClick={toggleFollowersModal}>
                   {user.profile.followers &&
                     user.profile.followers.map(follower => (
                       <AvatarContainer key={user.id}>
@@ -802,7 +832,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <UBold text={String(user.profile.followersCount)} />
                   <UBold text={"FOLLOWERS - done"} />
                 </Row>
-                <Row>
+                <Row onClick={toggleFollowingsModal}>
                   {user.profile.followings &&
                     user.profile.followings.map(following => (
                       <AvatarContainer key={user.id}>

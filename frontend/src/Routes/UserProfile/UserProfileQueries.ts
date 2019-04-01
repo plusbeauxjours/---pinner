@@ -234,6 +234,7 @@ export const GET_CITIES = gql`
     }
   }
 `;
+
 export const GET_COUNTRIES = gql`
   query GetCountries($username: String!) {
     getCountries(username: $username) {
@@ -252,6 +253,7 @@ export const GET_COUNTRIES = gql`
     }
   }
 `;
+
 export const GET_CONTINENTS = gql`
   query GetContinents($username: String!) {
     getContinents(username: $username) {
@@ -263,6 +265,44 @@ export const GET_CONTINENTS = gql`
               continentName
               continentPhoto
             }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_FOLLOWERS = gql`
+  query GetFollowers($username: String!) {
+    getFollowers(username: $username) {
+      profiles {
+        id
+        username
+        avatar
+        isFollowing
+        currentCity {
+          cityName
+          country {
+            countryName
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_FOLLOWINGS = gql`
+  query GetFollowings($username: String!) {
+    getFollowings(username: $username) {
+      profiles {
+        id
+        username
+        avatar
+        isFollowing
+        currentCity {
+          cityName
+          country {
+            countryName
           }
         }
       }

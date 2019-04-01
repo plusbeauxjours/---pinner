@@ -1,35 +1,37 @@
 import React from "react";
 
 import { Query } from "react-apollo";
-import { GetCities, GetCitiesVariables } from "src/types/api";
-import { GET_CITIES } from "src/Routes/UserProfile/UserProfileQueries";
-import LocationRow from "./LocationRow";
+import { GetFollowingsVariables, GetFollowings } from "src/types/api";
+import { GET_FOLLOWINGS } from "src/Routes/UserProfile/UserProfileQueries";
 import Loader from "./Loader";
+import UserRow from "./UserRow";
 
-class GetCitiesQuery extends Query<GetCities, GetCitiesVariables> {}
+class GetFollowingsQuery extends Query<GetFollowings, GetFollowingsVariables> {}
 
-const GetCities: React.SFC<any> = username => (
-  <GetCitiesQuery query={GET_CITIES} variables={username}>
-    {({ data: { getCities: { footprints = null } = {} } = {}, loading }) => {
+const GetFollowings: React.SFC<any> = username => (
+  <GetFollowingsQuery query={GET_FOLLOWINGS} variables={username}>
+    {({ data: { getFollowings: { profiles = null } = {} } = {}, loading }) => {
       if (loading) {
         return <Loader />;
-      } else if (!loading && footprints) {
-        console.log(footprints);
-        return footprints.map(city => (
-          <LocationRow
-            key={city.id}
-            id={city.id}
-            cityName={city.city.cityName}
-            avatar={city.city.cityPhoto}
-            countryName={city.city.country.countryName}
-            type={"getCities"}
+      } else if (!loading && profiles) {
+        console.log(profiles);
+        return profiles.map(profile => (
+          <UserRow
+            key={profile.id}
+            id={profile.id}
+            username={profile.username}
+            avatar={profile.avatar}
+            currentCity={profile.currentCity.cityName}
+            currentCountry={profile.currentCity.country.countryName}
+            isFollowing={profile.isFollowing}
+            size={"sm"}
           />
         ));
       } else {
         return null;
       }
     }}
-  </GetCitiesQuery>
+  </GetFollowingsQuery>
 );
 
-export default GetCities;
+export default GetFollowings;

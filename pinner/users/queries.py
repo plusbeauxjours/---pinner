@@ -141,8 +141,8 @@ def resolve_get_followers(self, info, **kwargs):
     username = kwargs.get('username')
 
     try:
-        users = User.objects.get(username=username)
-        followers_profile = users.profile.followers.all()
+        user = User.objects.get(username=username)
+        followers_profile = user.profile.followers.all()
 
     except User.DoesNotExist:
         raise Exception('User not found')
@@ -156,8 +156,8 @@ def resolve_get_followings(self, info, **kwargs):
     username = kwargs.get('username')
 
     try:
-        users = User.objects.get(username=username)
-        following_profile = users.profile.followings.all()
+        user = User.objects.get(username=username)
+        following_profile = user.profile.followings.all()
 
     except User.DoesNotExist:
         raise Exception('User not found')

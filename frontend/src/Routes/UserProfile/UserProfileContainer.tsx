@@ -64,6 +64,8 @@ interface IState {
   cityModalOpen: boolean;
   countryModalOpen: boolean;
   continentModalOpen: boolean;
+  followersModalOpen: boolean;
+  followingsModalOpen: boolean;
   editMode: boolean;
   id: string;
   userName: string;
@@ -109,6 +111,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       cityModalOpen: false,
       countryModalOpen: false,
       continentModalOpen: false,
+      followersModalOpen: false,
+      followingsModalOpen: false,
       editMode: false,
       id: props.id,
       userName: props.username,
@@ -149,6 +153,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       cityModalOpen,
       countryModalOpen,
       continentModalOpen,
+      followersModalOpen,
+      followingsModalOpen,
       editMode,
       userName,
       bio,
@@ -333,6 +339,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                   continentModalOpen={
                                                                     continentModalOpen
                                                                   }
+                                                                  followersModalOpen={
+                                                                    followersModalOpen
+                                                                  }
+                                                                  followingsModalOpen={
+                                                                    followingsModalOpen
+                                                                  }
                                                                   editMode={
                                                                     editMode
                                                                   }
@@ -398,6 +410,14 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                   toggleContinentModal={
                                                                     this
                                                                       .toggleContinentModal
+                                                                  }
+                                                                  toggleFollowersModal={
+                                                                    this
+                                                                      .toggleFollowersModal
+                                                                  }
+                                                                  toggleFollowingsModal={
+                                                                    this
+                                                                      .toggleFollowingsModal
                                                                   }
                                                                   openEditMode={
                                                                     this
@@ -735,6 +755,14 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     this.setState({
       continentModalOpen: !continentModalOpen
     });
+  };
+  public toggleFollowersModal = () => {
+    const { followersModalOpen } = this.state;
+    this.setState({ followersModalOpen: !followersModalOpen });
+  };
+  public toggleFollowingsModal = () => {
+    const { followingsModalOpen } = this.state;
+    this.setState({ followingsModalOpen: !followingsModalOpen });
   };
   public addTrip = () => {
     const { cityName, startDate, endDate, tripAddModalOpen } = this.state;
