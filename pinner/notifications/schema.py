@@ -16,6 +16,14 @@ class Query(object):
         required=True,
         args={'page': graphene.Int()}
     )
+    get_trip_profile = graphene.Field(
+        types.TripProfileResponse,
+        resolver=queries.resolve_get_trip_profile,
+        required=True,
+        args={'cityName': graphene.String(required=True),
+              'startDate': graphene.Date(required=True),
+              'endDate': graphene.Date(required=True)}
+    )
 
 
 class Mutation(object):

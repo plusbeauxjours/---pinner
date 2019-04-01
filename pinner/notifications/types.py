@@ -45,3 +45,7 @@ class EditTripResponse(graphene.ObjectType):
 
 class DeleteTripResponse(graphene.ObjectType):
     ok = graphene.Boolean()
+
+
+class TripProfileResponse(graphene.ObjectType):
+    moveNotifications = graphene.List(MoveNotificationType)

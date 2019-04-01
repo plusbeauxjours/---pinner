@@ -11,12 +11,11 @@ def resolve_profile(self, info, **kwargs):
 
     try:
         profile = User.objects.get(username=username)
-        footprints = profile.movenotification.all().order_by('start_date')[:3]
 
     except User.DoesNotExist:
         raise Exception('User not found')
 
-    return types.UserProfileResponse(user=profile, footprints=footprints)
+    return types.UserProfileResponse(user=profile)
 
 
 @login_required

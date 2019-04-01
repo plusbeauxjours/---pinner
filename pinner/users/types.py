@@ -45,7 +45,10 @@ class UserType(DjangoObjectType):
 
 class UserProfileResponse(graphene.ObjectType):
     user = graphene.Field(UserType)
-    footprints = graphene.List(notification_types.MoveNotificationType)
+
+
+class ProfileListResponse(graphene.ObjectType):
+    profiles = graphene.List(ProfileType)
 
 
 class FollowUnfollowResponse(graphene.ObjectType):
@@ -92,7 +95,3 @@ class ReportLocationResponse(graphene.ObjectType):
 
 class UserListResponse(graphene.ObjectType):
     users = graphene.List(UserType)
-
-
-class ProfileListResponse(graphene.ObjectType):
-    profiles = graphene.List(ProfileType)

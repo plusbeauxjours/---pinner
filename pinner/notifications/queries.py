@@ -1,5 +1,6 @@
 from . import types, models
 from graphql_jwt.decorators import login_required
+from locations import models as location_models
 
 
 @login_required
@@ -35,3 +36,21 @@ def resolve_get_move_notifications(self, info, **kwargs):
         '-start_date')[offset:3 + offset]
 
     return types.GetMoveNotificationsResponse(ok=True, notifications=notifications)
+
+
+@login_required
+def resolve_get_trip_profile(self, info, **kwargs):
+
+    user = info.context.user
+    cityName = kwargs.get('cityName')
+    startDate = kwargs.get('startDate')
+    endDate = kwargs.get('endDate')
+
+    try:
+        my_footprints = user.movenotification.filter(city__city_name=cityName, start_date__range=(
+            startDate, endDate)) | user.movenotification.filter(city__city_name=cityName, end_date__range=(startDate, endDate))
+
+        return types.TripProfileResponse(moveNotifications=my_footprints)
+
+    except models.MoveNotification.DoesNotExist:
+        raise Exception("You've never been there at the same time")
