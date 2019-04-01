@@ -50,11 +50,11 @@ export const CARD_FRAGMENT = gql`
 export const CITY_FRAGMENT = gql`
   fragment CityParts on CityType {
     id
+    cityName
+    cityPhoto
     country {
       countryName
     }
-    cityName
-    cityPhoto
   }
 `;
 
@@ -64,6 +64,9 @@ export const COUNTRY_FRAGMENT = gql`
     countryName
     countryCode
     countryPhoto
+    continent {
+      continentName
+    }
   }
 `;
 

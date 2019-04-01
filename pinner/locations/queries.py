@@ -24,13 +24,13 @@ def resolve_get_countries(self, info, **kwargs):
     username = kwargs.get('username')
     profile = User.objects.get(username=username)
 
-    countries = profile.movenotification.all().order_by('city__countryt').distinct('city__countryt')
+    countries = profile.movenotification.all().order_by('city__country').distinct('city__country')
 
     return types.FootprintsResponse(footprints=countries)
 
 
 @login_required
-def resolve_get_continent(self, info, **kwargs):
+def resolve_get_continents(self, info, **kwargs):
 
     username = kwargs.get('username')
     profile = User.objects.get(username=username)

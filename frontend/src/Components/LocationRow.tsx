@@ -55,7 +55,8 @@ interface IProps {
   id: string;
   avatar: string;
   cityName?: string;
-  countryName: string;
+  countryName?: string;
+  continentName?: string;
   type: string;
 }
 
@@ -64,6 +65,7 @@ const LocationRow: React.SFC<IProps> = ({
   avatar,
   cityName,
   countryName,
+  continentName,
   type
 }) => (
   <>
@@ -72,8 +74,8 @@ const LocationRow: React.SFC<IProps> = ({
         case "nearCity":
           return (
             <>
-              <Container>
-                <Link to={`/city/${cityName}`}>
+              <Link to={`/city/${cityName}`}>
+                <Container>
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />
                     <HeaderColumn>
@@ -81,23 +83,24 @@ const LocationRow: React.SFC<IProps> = ({
                       <Location>{countryName}</Location>
                     </HeaderColumn>
                   </Header>
-                </Link>
-              </Container>
+                </Container>
+              </Link>
             </>
           );
         case "nearCountry":
           return (
             <>
-              <Container>
-                <Link to={`/country/${countryName}`}>
+              <Link to={`/country/${countryName}`}>
+                <Container>
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />
                     <HeaderColumn>
                       <SBold text={countryName} />
+                      <Location>{continentName}</Location>
                     </HeaderColumn>
                   </Header>
-                </Link>
-              </Container>
+                </Container>
+              </Link>
             </>
           );
         case "latestCity":
@@ -119,23 +122,24 @@ const LocationRow: React.SFC<IProps> = ({
         case "topCountries":
           return (
             <>
-              <Container>
-                <Link to={`/country/${countryName}`}>
+              <Link to={`/country/${countryName}`}>
+                <Container>
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />
                     <HeaderColumn>
                       <SBold text={countryName} />
+                      <Location>{continentName}</Location>
                     </HeaderColumn>
                   </Header>
-                </Link>
-              </Container>
+                </Container>
+              </Link>
             </>
           );
         case "frequentVisits":
           return (
             <>
-              <Container>
-                <Link to={`/city/${cityName}`}>
+              <Link to={`/city/${cityName}`}>
+                <Container>
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />
                     <HeaderColumn>
@@ -143,8 +147,55 @@ const LocationRow: React.SFC<IProps> = ({
                       <Location>{countryName}</Location>
                     </HeaderColumn>
                   </Header>
-                </Link>
-              </Container>
+                </Container>
+              </Link>
+            </>
+          );
+        case "getCities":
+          return (
+            <>
+              <Link to={`/city/${cityName}`}>
+                <Container>
+                  <Header>
+                    <SAvatar size={"sm"} url={avatar} />
+                    <HeaderColumn>
+                      <SBold text={cityName} />
+                      <Location>{countryName}</Location>
+                    </HeaderColumn>
+                  </Header>
+                </Container>
+              </Link>
+            </>
+          );
+        case "getCountries":
+          return (
+            <>
+              <Link to={`/country/${countryName}`}>
+                <Container>
+                  <Header>
+                    <SAvatar size={"sm"} url={avatar} />
+                    <HeaderColumn>
+                      <SBold text={countryName} />
+                      <Location>{continentName}</Location>
+                    </HeaderColumn>
+                  </Header>
+                </Container>
+              </Link>
+            </>
+          );
+        case "getContinent":
+          return (
+            <>
+              <Link to={`/continent/${continentName}`}>
+                <Container>
+                  <Header>
+                    <SAvatar size={"sm"} url={avatar} />
+                    <HeaderColumn>
+                      <SBold text={continentName} />
+                    </HeaderColumn>
+                  </Header>
+                </Container>
+              </Link>
             </>
           );
         default:

@@ -2,42 +2,39 @@ import React from "react";
 import moment from "moment";
 import UserProfilePresenter from "./UserProfilePresenter";
 import { Query, Mutation, MutationFn } from "react-apollo";
-import { UserProfile, UserProfileVariables, AddTrip } from "src/types/api";
+import {
+  UserProfile,
+  UserProfileVariables,
+  EditProfile,
+  EditProfileVariables,
+  DeleteProfile,
+  TopCountries,
+  TopCountriesVariables,
+  FrequentVisits,
+  FrequentVisitsVariables,
+  AddTrip,
+  GetTrips,
+  GetTripsVariables,
+  AddTripVariables,
+  EditTrip,
+  EditTripVariables,
+  DeleteTrip,
+  DeleteTripVariables
+} from "src/types/api";
 import {
   GET_USER,
   EDIT_PROFILE,
   DELETE_PROFILE,
   TOP_COUNTRIES,
-  FREQUENT_VISITS
-} from "./UserProfileQueries";
-import { withRouter, RouteComponentProps } from "react-router";
-import { LOG_USER_OUT } from "src/sharedQueries.local";
-import {
-  EditProfile,
-  EditProfileVariables,
-  DeleteProfile,
-  TopCountries,
-  FrequentVisits
-} from "../../types/api";
-import { toast } from "react-toastify";
-import {
-  GetTrips,
-  GetTripsVariables,
-  AddTripVariables,
-  EditTrip,
-  EditTripVariables
-} from "../../types/api";
-import {
+  FREQUENT_VISITS,
   GET_TRIPS,
   ADD_TRIP,
   EDIT_TRIP,
   DELETE_TRIP
 } from "./UserProfileQueries";
-import { DeleteTrip, DeleteTripVariables } from "../../types/api";
-import {
-  TopCountriesVariables,
-  FrequentVisitsVariables
-} from "../../types/api";
+import { withRouter, RouteComponentProps } from "react-router";
+import { LOG_USER_OUT } from "src/sharedQueries.local";
+import { toast } from "react-toastify";
 
 class UserProfileQuery extends Query<UserProfile, UserProfileVariables> {}
 class TopCountriesQuery extends Query<TopCountries, TopCountriesVariables> {}
@@ -64,6 +61,9 @@ interface IState {
   tripEditModalOpen: boolean;
   topCountriesModalOpen: boolean;
   frequentVisitsModalOpen: boolean;
+  cityModalOpen: boolean;
+  countryModalOpen: boolean;
+  continentModalOpen: boolean;
   editMode: boolean;
   id: string;
   userName: string;
@@ -106,6 +106,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripEditModalOpen: false,
       topCountriesModalOpen: false,
       frequentVisitsModalOpen: false,
+      cityModalOpen: false,
+      countryModalOpen: false,
+      continentModalOpen: false,
       editMode: false,
       id: props.id,
       userName: props.username,
@@ -143,6 +146,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripEditModalOpen,
       topCountriesModalOpen,
       frequentVisitsModalOpen,
+      cityModalOpen,
+      countryModalOpen,
+      continentModalOpen,
       editMode,
       userName,
       bio,
@@ -235,7 +241,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                       return (
                                         <GetTiprsQuery
                                           query={GET_TRIPS}
-                                          variables={{ username, tripPage }}
+                                          variables={{
+                                            username,
+                                            tripPage
+                                          }}
                                         >
                                           {({
                                             data: getTripsData,
@@ -315,6 +324,15 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                   frequentVisitsModalOpen={
                                                                     frequentVisitsModalOpen
                                                                   }
+                                                                  cityModalOpen={
+                                                                    cityModalOpen
+                                                                  }
+                                                                  countryModalOpen={
+                                                                    countryModalOpen
+                                                                  }
+                                                                  continentModalOpen={
+                                                                    continentModalOpen
+                                                                  }
                                                                   editMode={
                                                                     editMode
                                                                   }
@@ -368,6 +386,18 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                   toggleFrequentVisitsModal={
                                                                     this
                                                                       .toggleFrequentVisitsModal
+                                                                  }
+                                                                  toggleCityModal={
+                                                                    this
+                                                                      .toggleCityModal
+                                                                  }
+                                                                  toggleCountryModal={
+                                                                    this
+                                                                      .toggleCountryModal
+                                                                  }
+                                                                  toggleContinentModal={
+                                                                    this
+                                                                      .toggleContinentModal
                                                                   }
                                                                   openEditMode={
                                                                     this
@@ -688,7 +718,24 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       frequentVisitsModalOpen: !frequentVisitsModalOpen
     });
   };
-
+  public toggleCityModal = () => {
+    const { cityModalOpen } = this.state;
+    this.setState({
+      cityModalOpen: !cityModalOpen
+    });
+  };
+  public toggleCountryModal = () => {
+    const { countryModalOpen } = this.state;
+    this.setState({
+      countryModalOpen: !countryModalOpen
+    });
+  };
+  public toggleContinentModal = () => {
+    const { continentModalOpen } = this.state;
+    this.setState({
+      continentModalOpen: !continentModalOpen
+    });
+  };
   public addTrip = () => {
     const { cityName, startDate, endDate, tripAddModalOpen } = this.state;
     this.setState({

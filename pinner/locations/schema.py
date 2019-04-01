@@ -94,9 +94,9 @@ class Query(object):
             'username': graphene.String(required=True),
         }
     )
-    get_continent = graphene.Field(
+    get_continents = graphene.Field(
         types.FootprintsResponse,
-        resolver=queries.resolve_get_continent,
+        resolver=queries.resolve_get_continents,
         required=True,
         args={
             'username': graphene.String(required=True),

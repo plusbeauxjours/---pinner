@@ -226,6 +226,7 @@ const ExplorePresenter: React.SFC<IProps> = ({
                     id={country.id}
                     avatar={country.countryPhoto}
                     countryName={country.countryName}
+                    continentName={country.continent.continentName}
                     type={"nearCountry"}
                   />
                 ))}

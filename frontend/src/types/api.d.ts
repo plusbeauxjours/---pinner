@@ -599,9 +599,9 @@ export interface NearCities_nearCities_cities_country {
 export interface NearCities_nearCities_cities {
   __typename: "CityType";
   id: string;
-  country: NearCities_nearCities_cities_country;
   cityName: string | null;
   cityPhoto: string | null;
+  country: NearCities_nearCities_cities_country;
 }
 
 export interface NearCities_nearCities {
@@ -625,12 +625,18 @@ export interface NearCitiesVariables {
 // GraphQL query operation: NearCountries
 // ====================================================
 
+export interface NearCountries_nearCountries_countries_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
 export interface NearCountries_nearCountries_countries {
   __typename: "CountryType";
   id: string;
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  continent: NearCountries_nearCountries_countries_continent | null;
 }
 
 export interface NearCountries_nearCountries {
@@ -662,9 +668,9 @@ export interface LatestCities_latestCities_cities_country {
 export interface LatestCities_latestCities_cities {
   __typename: "CityType";
   id: string;
-  country: LatestCities_latestCities_cities_country;
   cityName: string | null;
   cityPhoto: string | null;
+  country: LatestCities_latestCities_cities_country;
 }
 
 export interface LatestCities_latestCities {
@@ -1157,14 +1163,19 @@ export interface SearchTerms_searchCities_cities_country {
 export interface SearchTerms_searchCities_cities {
   __typename: "CityType";
   id: string;
-  country: SearchTerms_searchCities_cities_country;
   cityName: string | null;
   cityPhoto: string | null;
+  country: SearchTerms_searchCities_cities_country;
 }
 
 export interface SearchTerms_searchCities {
   __typename: "CitiesResponse";
   cities: (SearchTerms_searchCities_cities | null)[] | null;
+}
+
+export interface SearchTerms_searchCountries_countries_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
 }
 
 export interface SearchTerms_searchCountries_countries {
@@ -1173,6 +1184,7 @@ export interface SearchTerms_searchCountries_countries {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  continent: SearchTerms_searchCountries_countries_continent | null;
 }
 
 export interface SearchTerms_searchCountries {
@@ -1676,11 +1688,17 @@ export interface DeleteTripVariables {
 // GraphQL query operation: TopCountries
 // ====================================================
 
+export interface TopCountries_topCountries_footprints_city_country_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
 export interface TopCountries_topCountries_footprints_city_country {
   __typename: "CountryType";
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  continent: TopCountries_topCountries_footprints_city_country_continent | null;
 }
 
 export interface TopCountries_topCountries_footprints_city {
@@ -1792,36 +1810,42 @@ export interface GetCitiesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GtCountries
+// GraphQL query operation: GetCountries
 // ====================================================
 
-export interface GtCountries_getCountries_footprints_city_country {
+export interface GetCountries_getCountries_footprints_city_country_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
+export interface GetCountries_getCountries_footprints_city_country {
   __typename: "CountryType";
   countryName: string | null;
   countryPhoto: string | null;
+  continent: GetCountries_getCountries_footprints_city_country_continent | null;
 }
 
-export interface GtCountries_getCountries_footprints_city {
+export interface GetCountries_getCountries_footprints_city {
   __typename: "CityType";
-  country: GtCountries_getCountries_footprints_city_country;
+  country: GetCountries_getCountries_footprints_city_country;
 }
 
-export interface GtCountries_getCountries_footprints {
+export interface GetCountries_getCountries_footprints {
   __typename: "MoveNotificationType";
   id: string;
-  city: GtCountries_getCountries_footprints_city | null;
+  city: GetCountries_getCountries_footprints_city | null;
 }
 
-export interface GtCountries_getCountries {
+export interface GetCountries_getCountries {
   __typename: "FootprintsResponse";
-  footprints: (GtCountries_getCountries_footprints | null)[] | null;
+  footprints: (GetCountries_getCountries_footprints | null)[] | null;
 }
 
-export interface GtCountries {
-  getCountries: GtCountries_getCountries;
+export interface GetCountries {
+  getCountries: GetCountries_getCountries;
 }
 
-export interface GtCountriesVariables {
+export interface GetCountriesVariables {
   username: string;
 }
 
@@ -1830,41 +1854,41 @@ export interface GtCountriesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetContinent
+// GraphQL query operation: GetContinents
 // ====================================================
 
-export interface GetContinent_getContinent_footprints_city_country_continent {
+export interface GetContinents_getContinents_footprints_city_country_continent {
   __typename: "ContinentType";
   continentName: string | null;
   continentPhoto: string | null;
 }
 
-export interface GetContinent_getContinent_footprints_city_country {
+export interface GetContinents_getContinents_footprints_city_country {
   __typename: "CountryType";
-  continent: GetContinent_getContinent_footprints_city_country_continent | null;
+  continent: GetContinents_getContinents_footprints_city_country_continent | null;
 }
 
-export interface GetContinent_getContinent_footprints_city {
+export interface GetContinents_getContinents_footprints_city {
   __typename: "CityType";
-  country: GetContinent_getContinent_footprints_city_country;
+  country: GetContinents_getContinents_footprints_city_country;
 }
 
-export interface GetContinent_getContinent_footprints {
+export interface GetContinents_getContinents_footprints {
   __typename: "MoveNotificationType";
   id: string;
-  city: GetContinent_getContinent_footprints_city | null;
+  city: GetContinents_getContinents_footprints_city | null;
 }
 
-export interface GetContinent_getContinent {
+export interface GetContinents_getContinents {
   __typename: "FootprintsResponse";
-  footprints: (GetContinent_getContinent_footprints | null)[] | null;
+  footprints: (GetContinents_getContinents_footprints | null)[] | null;
 }
 
-export interface GetContinent {
-  getContinent: GetContinent_getContinent;
+export interface GetContinents {
+  getContinents: GetContinents_getContinents;
 }
 
-export interface GetContinentVariables {
+export interface GetContinentsVariables {
   username: string;
 }
 
@@ -2001,9 +2025,9 @@ export interface CityParts_country {
 export interface CityParts {
   __typename: "CityType";
   id: string;
-  country: CityParts_country;
   cityName: string | null;
   cityPhoto: string | null;
+  country: CityParts_country;
 }
 
 
@@ -2014,12 +2038,18 @@ export interface CityParts {
 // GraphQL fragment: CountryParts
 // ====================================================
 
+export interface CountryParts_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
 export interface CountryParts {
   __typename: "CountryType";
   id: string;
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  continent: CountryParts_continent | null;
 }
 
 

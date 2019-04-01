@@ -191,6 +191,9 @@ export const TOP_COUNTRIES = gql`
             countryName
             countryCode
             countryPhoto
+            continent {
+              continentName
+            }
           }
         }
       }
@@ -232,7 +235,7 @@ export const GET_CITIES = gql`
   }
 `;
 export const GET_COUNTRIES = gql`
-  query GtCountries($username: String!) {
+  query GetCountries($username: String!) {
     getCountries(username: $username) {
       footprints {
         id
@@ -240,6 +243,9 @@ export const GET_COUNTRIES = gql`
           country {
             countryName
             countryPhoto
+            continent {
+              continentName
+            }
           }
         }
       }
@@ -247,8 +253,8 @@ export const GET_COUNTRIES = gql`
   }
 `;
 export const GET_CONTINENTS = gql`
-  query GetContinent($username: String!) {
-    getContinent(username: $username) {
+  query GetContinents($username: String!) {
+    getContinents(username: $username) {
       footprints {
         id
         city {

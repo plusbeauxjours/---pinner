@@ -7,13 +7,6 @@ import "react-dates/lib/css/_datepicker.css";
 import "react-dates/initialize";
 import { DateRangePicker } from "react-dates";
 
-import {
-  UserProfile,
-  TopCountries,
-  FrequentVisits,
-  GetTrips
-} from "../../types/api";
-
 import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
@@ -21,7 +14,10 @@ import Bold from "../../Components/Bold";
 import CardGrid from "../../Components/CardGrid";
 import FollowBtn from "../../Components/FollowBtn";
 import Input from "../../Components/Input";
-import LocationRow from "src/Components/LocationRow";
+import LocationRow from "../../Components/LocationRow";
+import GetCities from "../../Components/GetCities";
+import GetCountries from "../../Components/GetCountries";
+import GetContinents from "../../Components/GetContinents";
 
 const PHeader = styled.header`
   display: flex;
@@ -173,6 +169,7 @@ const UBold = styled(Bold)`
   align-self: flex-end;
   font-weight: 100;
   font-size: 7px;
+  cursor: pointer;
 `;
 
 const SAvatar = styled(Avatar)`
@@ -320,17 +317,18 @@ interface ITheme {
 }
 
 interface IProps {
-  userProfileData: UserProfile;
+  userProfileData: any;
   userProfileLoading: boolean;
 
-  topCountriesData?: TopCountries;
+  topCountriesData?: any;
   topCountriesLoading: boolean;
 
-  frequentVisitsData?: FrequentVisits;
+  frequentVisitsData?: any;
   frequentVisitsLoading: boolean;
 
-  getTripsData?: GetTrips;
+  getTripsData?: any;
   getTipsLoading: boolean;
+
   tripList: any;
   topCountriesList: any;
   frequentVisitsList: any;
@@ -344,6 +342,9 @@ interface IProps {
   tripEditModalOpen: boolean;
   topCountriesModalOpen: boolean;
   frequentVisitsModalOpen: boolean;
+  cityModalOpen: boolean;
+  countryModalOpen: boolean;
+  continentModalOpen: boolean;
 
   editMode: boolean;
   openEditMode: () => void;
@@ -376,6 +377,9 @@ interface IProps {
   toggleEditTripModal: () => void;
   toggleTopCountriesModal: () => void;
   toggleFrequentVisitsModal: () => void;
+  toggleCityModal: () => void;
+  toggleCountryModal: () => void;
+  toggleContinentModal: () => void;
 
   logUserOutFn: () => void;
 
@@ -390,19 +394,22 @@ interface IProps {
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
-  userProfileData: { userProfile: { user = null } = {} },
+  userProfileData: { userProfile: { user = null } = {} } = {},
   userProfileLoading,
 
-  topCountriesData: { topCountries: { footprints: topCountries = null } = {} },
+  topCountriesData: {
+    topCountries: { footprints: topCountries = null } = {}
+  } = {},
   topCountriesLoading,
 
   frequentVisitsData: {
     frequentVisits: { footprints: frequentCities = null } = {}
-  },
+  } = {},
   frequentVisitsLoading,
 
   getTripsData: { getTrips: { footprints: getTrips = null } = {} } = {},
   getTipsLoading,
+
   tripList,
   topCountriesList,
   frequentVisitsList,
@@ -414,6 +421,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   tripEditModalOpen,
   topCountriesModalOpen,
   frequentVisitsModalOpen,
+  cityModalOpen,
+  countryModalOpen,
+  continentModalOpen,
   editMode,
   toggleTripSeeAll,
   toggleTopCountriesSeeAll,
@@ -426,6 +436,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleEditTripModal,
   toggleTopCountriesModal,
   toggleFrequentVisitsModal,
+  toggleCityModal,
+  toggleCountryModal,
+  toggleContinentModal,
   openEditMode,
   logUserOutFn,
   confirmDeleteProfile,
@@ -473,6 +486,36 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <ModalLink onClick={confirmDeleteProfile}>Yes</ModalLink>
               <ModalLink onClick={toggleConfirmModal}>No</ModalLink>
             </Modal>
+          </ModalContainer>
+        )}
+        {cityModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleCityModal} />
+            <RowModal>
+              <Wrapper>
+                <GetCities username={user.username} />
+              </Wrapper>
+            </RowModal>
+          </ModalContainer>
+        )}
+        {countryModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleCountryModal} />
+            <RowModal>
+              <Wrapper>
+                <GetCountries username={user.username} />
+              </Wrapper>
+            </RowModal>
+          </ModalContainer>
+        )}
+        {continentModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleContinentModal} />
+            <RowModal>
+              <Wrapper>
+                <GetContinents username={user.username} />
+              </Wrapper>
+            </RowModal>
           </ModalContainer>
         )}
         {tripModalOpen && (
@@ -690,15 +733,15 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <UBold text={String(user.profile.tripCount)} />
                   <UBold text={" TRIPS - done"} />
                 </Row>
-                <Row>
+                <Row onClick={toggleCityModal}>
                   <UBold text={String(user.profile.cityCount)} />
                   <UBold text={" CITIES - done"} />
                 </Row>
-                <Row>
+                <Row onClick={toggleCountryModal}>
                   <UBold text={String(user.profile.countryCount)} />
                   <UBold text={" COUNTRIES - done"} />
                 </Row>
-                <Row>
+                <Row onClick={toggleContinentModal}>
                   <UBold text={String(user.profile.continentCount)} />
                   <UBold text={" CONTINENT - done"} />
                 </Row>
@@ -785,7 +828,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <SeeAll onClick={toggleTripSeeAll}>SEE ALL</SeeAll>
           </Title>
           <TripContainer>
-            {console.log(getTrips)}
             {!getTipsLoading && getTrips ? (
               getTrips.map(getTrip => (
                 <TripRow
