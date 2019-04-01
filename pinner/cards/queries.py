@@ -102,6 +102,7 @@ def resolve_get_duration_cards(self, info, **kwargs):
     cityName = kwargs.get('cityName')
     startDate = kwargs.get('startDate')
     endDate = kwargs.get('endDate')
+    page = kwargs.get('page', 0)
 
     try:
         cards = models.Card.objects.filter(city__city_name=cityName, created_at__range=(startDate, endDate))

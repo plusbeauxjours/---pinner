@@ -20,17 +20,23 @@ class Query(object):
         types.DurationTripsResponse,
         resolver=queries.resolve_get_duration_my_trip,
         required=True,
-        args={'cityName': graphene.String(required=True),
-              'startDate': graphene.Date(required=True),
-              'endDate': graphene.Date(required=True)}
+        args={
+            'page': graphene.Int(),
+            'cityName': graphene.String(required=True),
+            'startDate': graphene.Date(required=True),
+            'endDate': graphene.Date(required=True)
+        }
     )
     get_duration_users = graphene.Field(
         types.DurationTripsResponse,
         resolver=queries.resolve_get_duration_users,
         required=True,
-        args={'cityName': graphene.String(required=True),
-              'startDate': graphene.Date(required=True),
-              'endDate': graphene.Date(required=True)}
+        args={
+            'page': graphene.Int(),
+            'cityName': graphene.String(required=True),
+            'startDate': graphene.Date(required=True),
+            'endDate': graphene.Date(required=True)
+        }
     )
 
 

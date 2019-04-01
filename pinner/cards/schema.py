@@ -40,9 +40,12 @@ class Query(object):
         types.DurationCardsResponse,
         resolver=queries.resolve_get_duration_cards,
         required=True,
-        args={'cityName': graphene.String('cityName'),
-              'startDate': graphene.Date('startDate'),
-              'endDate': graphene.Date('endDate')}
+        args={
+            'page': graphene.Int(),
+            'cityName': graphene.String(required=True),
+            'startDate': graphene.Date(required=True),
+            'endDate': graphene.Date(required=True)
+        }
     )
 
 

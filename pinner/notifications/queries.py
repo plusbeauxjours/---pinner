@@ -63,13 +63,14 @@ def resolve_get_duration_users(self, info, **kwargs):
     cityName = kwargs.get('cityName')
     startDate = kwargs.get('startDate')
     endDate = kwargs.get('endDate')
+    page = kwargs.get('page', 0)
 
     try:
         city = location_models.City.objects.get(city_name=cityName)
-        trip = city.city.filter(start_date__range=(
+        trips = city.city.filter(start_date__range=(
             startDate, endDate)) | city.city.filter(end_date__range=(startDate, endDate))
 
-        return types.DurationTripsResponse(moveNotifications=trip)
+        return types.DurationTripsResponse(moveNotifications=trips)
 
     except models.MoveNotification.DoesNotExist:
         raise Exception("You've never been there at the same time")

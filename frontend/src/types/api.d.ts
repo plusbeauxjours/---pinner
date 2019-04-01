@@ -254,7 +254,7 @@ export interface CardDetail_cardDetail_card {
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;
-  createdAt: string | null;
+  naturalTime: string | null;
   comments: (CardDetail_cardDetail_card_comments | null)[] | null;
   creator: CardDetail_cardDetail_card_creator;
 }
@@ -332,7 +332,7 @@ export interface CityProfile_cityProfile_cards {
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;
-  createdAt: string | null;
+  naturalTime: string | null;
   comments: (CityProfile_cityProfile_cards_comments | null)[] | null;
   creator: CityProfile_cityProfile_cards_creator;
 }
@@ -746,7 +746,7 @@ export interface Feed_feed_cards {
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;
-  createdAt: string | null;
+  naturalTime: string | null;
   comments: (Feed_feed_cards_comments | null)[] | null;
   creator: Feed_feed_cards_creator;
 }
@@ -872,7 +872,7 @@ export interface GetFootprints_getFootprints_footprints {
   __typename: "MoveNotificationType";
   id: string;
   city: GetFootprints_getFootprints_footprints_city | null;
-  createdAt: string | null;
+  naturalTime: string | null;
 }
 
 export interface GetFootprints_getFootprints {
@@ -966,7 +966,7 @@ export interface GetNotifictions_getNotifications_notifications {
   payload: GetNotifictions_getNotifications_notifications_payload | null;
   comment: GetNotifictions_getNotifications_notifications_comment | null;
   read: boolean;
-  createdAt: string | null;
+  naturalTime: string | null;
 }
 
 export interface GetNotifictions_getNotifications {
@@ -1036,7 +1036,7 @@ export interface GetMoveNotifications_getMoveNotifications_notifications {
   verb: MoveNotificationVerb;
   city: GetMoveNotifications_getMoveNotifications_notifications_city | null;
   read: boolean;
-  createdAt: string | null;
+  naturalTime: string | null;
 }
 
 export interface GetMoveNotifications_getMoveNotifications {
@@ -1221,6 +1221,97 @@ export interface SearchTermsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetDurationUsers
+// ====================================================
+
+export interface GetDurationUsers_getDurationUsers_moveNotifications_actor_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  cityPhoto: string | null;
+}
+
+export interface GetDurationUsers_getDurationUsers_moveNotifications_actor_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  currentCity: GetDurationUsers_getDurationUsers_moveNotifications_actor_profile_currentCity | null;
+}
+
+export interface GetDurationUsers_getDurationUsers_moveNotifications_actor {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: GetDurationUsers_getDurationUsers_moveNotifications_actor_profile | null;
+}
+
+export interface GetDurationUsers_getDurationUsers_moveNotifications {
+  __typename: "MoveNotificationType";
+  id: string;
+  actor: GetDurationUsers_getDurationUsers_moveNotifications_actor;
+  startDate: any | null;
+  endDate: any | null;
+}
+
+export interface GetDurationUsers_getDurationUsers {
+  __typename: "DurationTripsResponse";
+  moveNotifications: (GetDurationUsers_getDurationUsers_moveNotifications | null)[] | null;
+}
+
+export interface GetDurationUsers {
+  getDurationUsers: GetDurationUsers_getDurationUsers;
+}
+
+export interface GetDurationUsersVariables {
+  page: number;
+  cityName: string;
+  startDate: any;
+  endDate: any;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetDurationCards
+// ====================================================
+
+export interface GetDurationCards_getDurationCards_cards {
+  __typename: "CardType";
+  id: string;
+  caption: string;
+  likeCount: number | null;
+  commentCount: number | null;
+  borderRadius: string;
+  bgColor: string | null;
+  font: string | null;
+  fontColor: string | null;
+  fontSize: string | null;
+  file: string | null;
+}
+
+export interface GetDurationCards_getDurationCards {
+  __typename: "DurationCardsResponse";
+  cards: (GetDurationCards_getDurationCards_cards | null)[] | null;
+}
+
+export interface GetDurationCards {
+  getDurationCards: GetDurationCards_getDurationCards;
+}
+
+export interface GetDurationCardsVariables {
+  page: number;
+  cityName: string;
+  startDate: any;
+  endDate: any;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: UploadCard
 // ====================================================
 
@@ -1276,7 +1367,7 @@ export interface UploadCard_uploadCard_card {
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;
-  createdAt: string | null;
+  naturalTime: string | null;
   comments: (UploadCard_uploadCard_card_comments | null)[] | null;
   creator: UploadCard_uploadCard_card_creator;
 }
@@ -1555,7 +1646,7 @@ export interface GetTrips_getTrips_footprints {
   city: GetTrips_getTrips_footprints_city | null;
   startDate: any | null;
   endDate: any | null;
-  createdAt: string | null;
+  naturalTime: string | null;
 }
 
 export interface GetTrips_getTrips {
@@ -2209,7 +2300,7 @@ export interface DetailParts {
   likeCount: number | null;
   commentCount: number | null;
   isLiked: boolean | null;
-  createdAt: string | null;
+  naturalTime: string | null;
   comments: (DetailParts_comments | null)[] | null;
   creator: DetailParts_creator;
 }
