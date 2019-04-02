@@ -511,6 +511,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                     this
                                                                       .deleteTrip
                                                                   }
+                                                                  gotoTrip={
+                                                                    this
+                                                                      .gotoTrip
+                                                                  }
                                                                 />
                                                               );
                                                             }}
@@ -697,13 +701,21 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       }
     });
   };
-  public toggleTripModal = (moveNotificationId, cityName) => {
+  public toggleTripModal = (
+    moveNotificationId,
+    cityName,
+    startDate,
+    endDate
+  ) => {
     const { tripModalOpen } = this.state;
     this.setState({
       tripModalOpen: !tripModalOpen,
       moveNotificationId,
-      cityName
+      cityName,
+      startDate,
+      endDate
     } as any);
+    console.log(this.state);
   };
   public toggleTripConfirmModal = () => {
     const { tripConfirmModalOpen, tripModalOpen } = this.state;
@@ -829,6 +841,16 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     this.setState({
       [name]: value
     } as any);
+  };
+  public gotoTrip = (cityName, startDate, endDate) => {
+    this.props.history.push({
+      pathname: `/city/${cityName}/${startDate}${" "}${endDate}`,
+      state: {
+        cityName,
+        startDate,
+        endDate
+      }
+    });
   };
 }
 

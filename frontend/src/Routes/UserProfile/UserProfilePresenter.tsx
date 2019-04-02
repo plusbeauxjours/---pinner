@@ -390,9 +390,14 @@ interface IProps {
   logUserOutFn: () => void;
 
   confirmDeleteProfile: () => void;
-  deleteTrip: () => void;
   addTrip: () => void;
   editTrip: () => void;
+  deleteTrip: () => void;
+  gotoTrip: (
+    cityName: string,
+    startDate: moment.Moment | null,
+    endDate: moment.Moment | null
+  ) => void;
 
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
@@ -452,9 +457,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   openEditMode,
   logUserOutFn,
   confirmDeleteProfile,
-  deleteTrip,
   addTrip,
   editTrip,
+  deleteTrip,
+  gotoTrip,
   onInputChange,
   onKeyUp,
   onKeyUpTrip,
@@ -548,32 +554,22 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </RowModal>
           </ModalContainer>
         )}
-        {user.profile.isSelf
-          ? tripModalOpen && (
-              <ModalContainer>
-                <ModalOverlay onClick={toggleTripModal} />
-                <Modal>
-                  <ModalLink onClick={toggleAddTripModal}>Add Trip</ModalLink>
-                  <ModalLink onClick={toggleEditTripModal}>Edit Trip</ModalLink>
-                  <ModalLink onClick={toggleTripConfirmModal}>
-                    Delete Trip
-                  </ModalLink>
-                  <ModalLink onClick={toggleTripModal}>Cancel</ModalLink>
-                </Modal>
-              </ModalContainer>
-            )
-          : tripModalOpen && (
-              <ModalContainer>
-                <ModalOverlay onClick={toggleTripModal} />
-                <Modal>
-                  <ModalLink onClick={toggleTripConfirmModal}>
-                    Delete Trip
-                  </ModalLink>
-                  <ModalLink onClick={toggleTripModal}>Cancel</ModalLink>
-                </Modal>
-              </ModalContainer>
-            )}
-        } tripModalOpen
+        {tripModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleTripModal} />
+            <Modal>
+              <ModalLink onClick={() => gotoTrip(cityName, startDate, endDate)}>
+                Goto Trip
+              </ModalLink>
+              <ModalLink onClick={toggleAddTripModal}>Add Trip</ModalLink>
+              <ModalLink onClick={toggleEditTripModal}>Edit Trip</ModalLink>
+              <ModalLink onClick={toggleTripConfirmModal}>
+                Delete Trip
+              </ModalLink>
+              <ModalLink onClick={toggleTripModal}>Cancel</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
         {tripConfirmModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleTripConfirmModal} />
@@ -874,9 +870,16 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               getTrips.map(getTrip => (
                 <TripRow
                   key={getTrip.id}
-                  onClick={() =>
-                    toggleTripModal(getTrip.id, getTrip.city.cityName)
-                  }
+                  onClick={() => {
+                    user.profile.isSelf
+                      ? toggleTripModal(getTrip.id, getTrip.city.cityName, getTrip.startDate,
+                        getTrip.endDate)
+                      : gotoTrip(
+                          getTrip.city.cityName,
+                          getTrip.startDate,
+                          getTrip.endDate
+                        );
+                  }}
                 >
                   <CityPhoto src={getTrip.city.cityPhoto} size={"sm"} />
                   <TripText>{getTrip.city.cityName}</TripText>
