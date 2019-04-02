@@ -21,6 +21,7 @@ import GetContinents from "../../Components/GetContinents";
 import GetFollowers from "src/Components/GetFollowers";
 import GetFollowings from "src/Components/GetFollowings";
 import GetDurationAvatars from "src/Components/GetDurationAvatars";
+import Flag from "src/Components/Flag";
 
 const PHeader = styled.header`
   display: flex;
@@ -262,6 +263,14 @@ const SBold = styled(Bold)`
   font-weight: 100;
 `;
 
+const CountryNameText = styled.div`
+  z-index: 5;
+`;
+
+const SFlag = styled(Flag)`
+  opacity: 0.4;
+`;
+
 const TripRow = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -280,6 +289,7 @@ const TripRow = styled.div`
 
 const TripText = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const ScrollContainer = styled.div`
@@ -912,7 +922,15 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 >
                   <CityPhoto src={trip.city.cityPhoto} size={"sm"} />
                   <TripText>{trip.city.cityName}</TripText>
-                  <TripText>{trip.city.country.countryName}</TripText>
+                  <TripText>
+                    <SFlag
+                      countryCode={trip.city.country.countryCode}
+                      size={"sm"}
+                    />
+                    <CountryNameText>
+                      {trip.city.country.countryName}
+                    </CountryNameText>
+                  </TripText>
                   <TripText>{trip.startDate}</TripText>
                   <TripText>{trip.endDate}</TripText>
                   <TripText>
@@ -953,7 +971,15 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 >
                   <CityPhoto src={list.city.cityPhoto} size={"sm"} />
                   <TripText>{list.city.cityName}</TripText>
-                  <TripText>{list.city.country.countryName}</TripText>
+                  <TripText>
+                    <SFlag
+                      countryCode={list.city.country.countryCode}
+                      size={"sm"}
+                    />{" "}
+                    <CountryNameText>
+                      {list.city.country.countryName}{" "}
+                    </CountryNameText>
+                  </TripText>
                   <TripText>{list.startDate}</TripText>
                   <TripText>{list.endDate}</TripText>
                   <TripText>
