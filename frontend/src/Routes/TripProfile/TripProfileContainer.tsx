@@ -5,10 +5,16 @@ import {
   GetDurationCards,
   GetDurationCardsVariables,
   GetDurationUsers,
-  GetDurationUsersVariables
+  GetDurationUsersVariables,
+  TripProfile,
+  TripProfileVariables
 } from "../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
-import { GET_DURATION_CARDS, GET_DURATION_USERS } from "./TripProfileQueries";
+import {
+  GET_DURATION_CARDS,
+  GET_DURATION_USERS,
+  TRIP_PROFILE
+} from "./TripProfileQueries";
 import TripProfilePresenter from "./TripProfilePresenter";
 
 class GetDurationCardsQuery extends Query<
@@ -19,12 +25,15 @@ class GetDurationUsersQuery extends Query<
   GetDurationUsers,
   GetDurationUsersVariables
 > {}
+class TripProfileQuery extends Query<TripProfile, TripProfileVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   page: number;
   cityName: string;
+  cityPhoto: string;
+  countryName: string;
   startDate: moment.Moment | null;
   endDate: moment.Moment | null;
 }
@@ -39,33 +48,54 @@ class TripProfileContainer extends React.Component<IProps, IState> {
     this.state = {
       page: 0,
       cityName: state.cityName,
-      startDate: state.startDate,
-      endDate: state.endDate
+      cityPhoto: state.cityPhoto,
+      countryName: state.countryName,
+      startDate: state.tripStartDate,
+      endDate: state.tripEndDate
     };
   }
   public render() {
-    const { page, cityName, startDate, endDate } = this.state;
+    const {
+      page,
+      cityName,
+      cityPhoto,
+      countryName,
+      startDate,
+      endDate
+    } = this.state;
     return (
-      <GetDurationCardsQuery
-        query={GET_DURATION_CARDS}
-        variables={{ page, cityName, startDate, endDate }}
-      >
-        {({ data: cardsData, loading: cardsLoading }) => (
+      <TripProfileQuery query={TRIP_PROFILE} variables={{ cityName }}>
+        {({ data: profileDate, loading: profileLoading }) => (
           <GetDurationUsersQuery
             query={GET_DURATION_USERS}
             variables={{ page, cityName, startDate, endDate }}
           >
             {({ data: usersData, loading: usersLoading }) => (
-              <TripProfilePresenter
-                cardsData={cardsData}
-                cardsLoading={cardsLoading}
-                usersData={usersData}
-                usersLoading={usersLoading}
-              />
+              <GetDurationCardsQuery
+                query={GET_DURATION_CARDS}
+                variables={{ page, cityName, startDate, endDate }}
+              >
+                {({ data: cardsData, loading: cardsLoading }) => (
+                  <TripProfilePresenter
+                    cityName={cityName}
+                    cityPhoto={cityPhoto}
+                    countryName={countryName}
+                    startDate={startDate}
+                    endDate={endDate}
+                    cardsData={cardsData}
+                    cardsLoading={cardsLoading}
+                    usersData={usersData}
+                    usersLoading={usersLoading}
+                    profileDate={profileDate}
+                    profileLoading={profileLoading}
+                    state={this.state}
+                  />
+                )}
+              </GetDurationCardsQuery>
             )}
           </GetDurationUsersQuery>
         )}
-      </GetDurationCardsQuery>
+      </TripProfileQuery>
     );
   }
 }

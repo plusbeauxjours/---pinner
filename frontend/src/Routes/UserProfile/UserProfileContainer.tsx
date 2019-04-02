@@ -75,8 +75,12 @@ interface IState {
   firstName: string;
   lastName: string;
   cityName: string;
+  cityPhoto: string;
+  countryName: string;
   startDate: moment.Moment | null;
   endDate: moment.Moment | null;
+  tripStartDate: moment.Moment | null;
+  tripEndDate: moment.Moment | null;
   focusedInput: "startDate" | "endDate" | null;
   moveNotificationId: string;
   tripPage: number;
@@ -122,8 +126,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       firstName: props.FirstName,
       lastName: props.lastName,
       cityName: props.cityName,
-      startDate: props.cityName,
-      endDate: props.cityName,
+      cityPhoto: props.cityPhoto,
+      countryName: props.countryName,
+      startDate: props.startDate,
+      endDate: props.endDate,
+      tripStartDate: props.tripStartDate,
+      tripEndDate: props.tripEndDate,
       focusedInput: null,
       moveNotificationId: null,
       tripPage: 0,
@@ -163,8 +171,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       firstName,
       lastName,
       cityName,
+      cityPhoto,
+      countryName,
       startDate,
       endDate,
+      tripStartDate,
+      tripEndDate,
       focusedInput,
       moveNotificationId,
       tripPage,
@@ -483,8 +495,20 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                   cityName={
                                                                     cityName
                                                                   }
+                                                                  cityPhoto={
+                                                                    cityPhoto
+                                                                  }
+                                                                  countryName={
+                                                                    countryName
+                                                                  }
                                                                   startDate={
                                                                     startDate
+                                                                  }
+                                                                  tripStartDate={
+                                                                    tripStartDate
+                                                                  }
+                                                                  tripEndDate={
+                                                                    tripEndDate
                                                                   }
                                                                   endDate={
                                                                     endDate
@@ -704,16 +728,20 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   public toggleTripModal = (
     moveNotificationId,
     cityName,
-    startDate,
-    endDate
+    cityPhoto,
+    countryName,
+    tripStartDate,
+    tripEndDate
   ) => {
     const { tripModalOpen } = this.state;
     this.setState({
       tripModalOpen: !tripModalOpen,
       moveNotificationId,
       cityName,
-      startDate,
-      endDate
+      cityPhoto,
+      countryName,
+      tripStartDate,
+      tripEndDate
     } as any);
     console.log(this.state);
   };
@@ -842,14 +870,29 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       [name]: value
     } as any);
   };
-  public gotoTrip = (cityName, startDate, endDate) => {
+  public gotoTrip = (
+    cityName,
+    cityPhoto,
+    countryName,
+    tripStartDate,
+    tripEndDate
+  ) => {
     this.props.history.push({
-      pathname: `/city/${cityName}/${startDate}${" "}${endDate}`,
+      pathname: `/city/${cityName}/${tripStartDate}${" "}${tripEndDate}`,
       state: {
         cityName,
-        startDate,
-        endDate
+        cityPhoto,
+        countryName,
+        tripStartDate,
+        tripEndDate
       }
+    });
+    this.setState({
+      cityName: null,
+      cityPhoto: null,
+      countryName: null,
+      tripStartDate: null,
+      tripEndDate: null
     });
   };
 }

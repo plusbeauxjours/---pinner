@@ -106,7 +106,7 @@ def resolve_get_duration_cards(self, info, **kwargs):
 
     try:
         cards = models.Card.objects.filter(city__city_name=cityName, created_at__range=(startDate, endDate))
-
+        print(cards)
         return types.DurationCardsResponse(cards=cards)
 
     except models.Card.DoesNotExist:

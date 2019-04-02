@@ -6,7 +6,9 @@ import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
-import LocationGrid from "../../Components/LocationGrid";
+// import LocationGrid from "../../Components/LocationGrid";
+import moment = require("moment");
+import CardGrid from "src/Components/CardGrid";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -62,7 +64,7 @@ const CountryPhoto = styled.img`
   object-fit: cover;
 `;
 
-const ContinentName = styled(Bold)`
+const CountryName = styled(Bold)`
   position: absolute;
   display: flex;
   z-index: 5;
@@ -72,7 +74,7 @@ const ContinentName = styled(Bold)`
   pointer-events: none;
 `;
 
-const ContinentContainer = styled.div`
+const CountryContainer = styled.div`
   margin-right: 15px;
   display: flex;
   justify-content: center;
@@ -142,48 +144,83 @@ const SAvatar = styled(Avatar)`
   margin: 3px;
 `;
 
-const Container = styled.div`
-  border-bottom: 4px;
+// const Container = styled.div`
+//   border-bottom: 4px;
+//   display: flex;
+//   align-items: center;
+//   flex-direction: row;
+//   -webkit-box-flex: 0;
+//   flex: 0 0 auto;
+//   height: 250px;
+//   border-bottom: 1px solid grey;
+//   padding: 20px;
+// `;
+
+const Title = styled.div`
   display: flex;
-  align-items: center;
-  flex-direction: row;
-  -webkit-box-flex: 0;
-  flex: 0 0 auto;
-  height: 250px;
-  border-bottom: 1px solid grey;
-  padding: 20px;
+  justify-content: space-between;
+  margin-top: 10px;
+`;
+
+const SeeAll = styled.p`
+  font-size: 12px;
+  font-weight: 100;
+  cursor: pointer;
 `;
 
 interface IProps {
+  cityName: string;
+  cityPhoto: string;
+  countryName: string;
+  startDate: moment.Moment | null;
+  endDate: moment.Moment | null;
   cardsData: any;
   cardsLoading: boolean;
   usersData: any;
   usersLoading: boolean;
+  profileDate: any;
+  profileLoading: boolean;
+  state: any;
 }
 
 const TripProfilePresenter: React.SFC<IProps> = ({
-  cardsData,
+  cityName,
+  cityPhoto,
+  countryName,
+  startDate,
+  endDate,
+  cardsData: { getDurationCards: { cards = null } = {} } = {},
   cardsLoading,
-  usersData,
-  usersLoading
+  usersData: { getDurationUsers: { moveNotifications = null } = {} } = {},
+  usersLoading,
+  profileDate: { tripProfile: { usersNow = null, city = null } = {} } = {},
+  profileLoading,
+  state
 }) => {
-  if (loading) {
+  if (usersLoading) {
     return <Loader />;
-  } else if (!loading && data) {
+  } else if (!usersLoading && moveNotifications) {
     return (
       <>
         <PHeader>
-          <PAvatar size="lg" url={country.countryPhoto} />
-          <Username>{country.countryName}</Username>
+          <PAvatar size="lg" url={cityPhoto} />
+          <Username>{cityName}</Username>
+          {console.log(state)}
+          {console.log(moveNotifications)}
+          {console.log(cards)}
+          <Username>
+            {startDate}
+            {endDate}
+          </Username>
         </PHeader>
         <SWrapper>
           <PBody>
-            <ContinentContainer>
-              <Link to={`/continent/${country.continent.continentName}`}>
-                <CountryPhoto src={country.continent.continentPhoto} />
+            <CountryContainer>
+              <Link to={`/country/${countryName}`}>
+                <CountryPhoto src={city.country.countryPhoto} />
               </Link>
-              <ContinentName text={country.continent.continentName} />
-            </ContinentContainer>
+              <CountryName text={countryName} />
+            </CountryContainer>
             <InfoContainer>
               <Info>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -197,38 +234,38 @@ const TripProfilePresenter: React.SFC<IProps> = ({
               <InfoInlineContainer>
                 <HalfInfo>
                   <InfoRow>
-                    <SBold text={String(country.cityCount)} />
+                    {/* <SBold text={String(country.cityCount)} /> */}
                     VISA for you
                   </InfoRow>
                   <InfoRow>
-                    <SBold text={String(country.cityCount)} />
+                    {/* <SBold text={String(country.cityCount)} /> */}
                     English Skill
                   </InfoRow>
                   <InfoRow>
-                    <SBold text={String(country.cityCount)} />
+                    {/* <SBold text={String(country.cityCount)} /> */}
                     GDP
                   </InfoRow>
                   <InfoRow>
-                    <SBold text={String(country.cityCount)} />
+                    {/* <SBold text={String(country.cityCount)} /> */}
                     Flag
                   </InfoRow>
                 </HalfInfo>
                 <HalfInfo>
                   <InfoRow>
                     AirLine
-                    <SBold text={String(country.cityCount)} />
+                    {/* <SBold text={String(country.cityCount)} /> */}
                   </InfoRow>
                   <InfoRow>
                     SNS
-                    <SBold text={String(country.cityCount)} />
+                    {/* <SBold text={String(country.cityCount)} /> */}
                   </InfoRow>
                   <InfoRow>
                     Capital
-                    <SBold text={String(country.cityCount)} />
+                    {/* <SBold text={String(country.cityCount)} /> */}
                   </InfoRow>
                   <InfoRow>
                     Potal
-                    <SBold text={String(country.cityCount)} />
+                    {/* <SBold text={String(country.cityCount)} /> */}
                   </InfoRow>
                 </HalfInfo>
               </InfoInlineContainer>
@@ -236,13 +273,13 @@ const TripProfilePresenter: React.SFC<IProps> = ({
             <FollowContainer>
               <Follow>
                 USERS WHO IS HERE
-                <SBold text={String(country.cardCount)} />
+                {/* <SBold text={String(country.cardCount)} /> */}
                 <AvatarGrid>
                   {usersNow &&
                     usersNow.map(user => (
                       <AvatarContainer key={user.id}>
                         <Link to={`/${user.username}`}>
-                          <SAvatar size={"sm"} url={user.profile.avatar} />
+                          <SAvatar size={"sm"} url={user.avatar} />
                         </Link>
                       </AvatarContainer>
                     ))}
@@ -250,10 +287,10 @@ const TripProfilePresenter: React.SFC<IProps> = ({
               </Follow>
               <Follow>
                 USERS WHO HAS BEEN HERE
-                <SBold text={String(country.cardCount)} />
+                {/* <SBold text={String(country.cardCount)} /> */}
                 <AvatarGrid>
-                  {usersBefore &&
-                    usersBefore.map(user => (
+                  {moveNotifications &&
+                    moveNotifications.map(user => (
                       <AvatarContainer key={user.id}>
                         <Link to={`/${user.actor.username}`}>
                           <SAvatar
@@ -267,15 +304,16 @@ const TripProfilePresenter: React.SFC<IProps> = ({
               </Follow>
             </FollowContainer>
           </PBody>
-          <Container>
-            {cities && <LocationGrid cities={cities} type={"city"} />}
-          </Container>
+          <Title>
+            <SBold text={"POSTS"} />
+            <SeeAll>SEE ALL</SeeAll>
+          </Title>
+          {!cardsLoading && cards ? <CardGrid cards={cards} /> : <Loader />}
         </SWrapper>
-        "hi"
       </>
     );
   }
-  return null;
+  return <p>hihi</p>;
 };
 
 export default TripProfilePresenter;

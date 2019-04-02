@@ -4,6 +4,14 @@ from . import types, mutations, queries
 
 class Query(object):
 
+    trip_profile = graphene.Field(
+        types.TripProfileResponse,
+        resolver=queries.resolve_trip_profile,
+        required=True,
+        args={
+            'cityName': graphene.String(required=True),
+        }
+    )
     city_profile = graphene.Field(
         types.CityProfileResponse,
         resolver=queries.resolve_city_profile,

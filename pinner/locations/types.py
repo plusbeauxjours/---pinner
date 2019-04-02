@@ -60,6 +60,11 @@ class CityProfileResponse(graphene.ObjectType):
     usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 
+class TripProfileResponse(graphene.ObjectType):
+    city = graphene.Field(CityType)
+    usersNow = graphene.List(user_types.ProfileType)
+
+
 class CountryProfileResponse(graphene.ObjectType):
     country = graphene.Field(CountryType)
     cities = graphene.List(CityType)

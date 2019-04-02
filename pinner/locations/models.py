@@ -40,7 +40,7 @@ class City (config_models.TimeStampedModel):
 
     country = models.ForeignKey(
         Country, on_delete=models.CASCADE, related_name='cities')
-    city_name = models.CharField(max_length=50, null=True, blank=True)
+    city_name = models.CharField(max_length=50, null=True, blank=True, unique=True)
     city_photo = models.URLField(null=True, blank=True)
     aqi = models.IntegerField(null=True, blank=True)
     temperature = models.IntegerField(null=True, blank=True)

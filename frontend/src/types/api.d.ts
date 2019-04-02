@@ -1221,6 +1221,51 @@ export interface SearchTermsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: TripProfile
+// ====================================================
+
+export interface TripProfile_tripProfile_usersNow {
+  __typename: "ProfileType";
+  username: string | null;
+  avatar: string;
+}
+
+export interface TripProfile_tripProfile_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryPhoto: string | null;
+  countryCode: string | null;
+}
+
+export interface TripProfile_tripProfile_city {
+  __typename: "CityType";
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: TripProfile_tripProfile_city_country;
+  cardCount: number | null;
+  userCount: number | null;
+  userLogCount: number | null;
+}
+
+export interface TripProfile_tripProfile {
+  __typename: "TripProfileResponse";
+  usersNow: (TripProfile_tripProfile_usersNow | null)[] | null;
+  city: TripProfile_tripProfile_city | null;
+}
+
+export interface TripProfile {
+  tripProfile: TripProfile_tripProfile;
+}
+
+export interface TripProfileVariables {
+  cityName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetDurationUsers
 // ====================================================
 

@@ -359,9 +359,13 @@ interface IProps {
   firstName: string;
   lastName: string;
   cityName: string;
+  cityPhoto: string;
+  countryName: string;
 
   startDate: moment.Moment | null;
   endDate: moment.Moment | null;
+  tripStartDate: moment.Moment | null;
+  tripEndDate: moment.Moment | null;
   focusedInput: "startDate" | "endDate" | null;
   onDatesChange: (arg: {
     startDate: moment.Moment | null;
@@ -395,8 +399,10 @@ interface IProps {
   deleteTrip: () => void;
   gotoTrip: (
     cityName: string,
-    startDate: moment.Moment | null,
-    endDate: moment.Moment | null
+    cityPhoto: string,
+    countryName: string,
+    tripStartDate: moment.Moment | null,
+    tripEndDate: moment.Moment | null
   ) => void;
 
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -470,8 +476,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   firstName,
   lastName,
   cityName,
+  cityPhoto,
+  countryName,
   startDate,
   endDate,
+  tripStartDate,
+  tripEndDate,
   focusedInput,
   onDatesChange,
   onFocusChange
@@ -558,7 +568,17 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleTripModal} />
             <Modal>
-              <ModalLink onClick={() => gotoTrip(cityName, startDate, endDate)}>
+              <ModalLink
+                onClick={() =>
+                  gotoTrip(
+                    cityName,
+                    cityPhoto,
+                    countryName,
+                    tripStartDate,
+                    tripEndDate
+                  )
+                }
+              >
                 Goto Trip
               </ModalLink>
               <ModalLink onClick={toggleAddTripModal}>Add Trip</ModalLink>
@@ -867,41 +887,66 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           </Title>
           <TripContainer>
             {!getTipsLoading && getTrips ? (
-              getTrips.map(getTrip => (
-                <TripRow
-                  key={getTrip.id}
-                  onClick={() => {
-                    user.profile.isSelf
-                      ? toggleTripModal(getTrip.id, getTrip.city.cityName, getTrip.startDate,
-                        getTrip.endDate)
-                      : gotoTrip(
-                          getTrip.city.cityName,
-                          getTrip.startDate,
-                          getTrip.endDate
-                        );
-                  }}
-                >
-                  <CityPhoto src={getTrip.city.cityPhoto} size={"sm"} />
-                  <TripText>{getTrip.city.cityName}</TripText>
-                  <TripText>{getTrip.city.country.countryName}</TripText>
-                  <TripText>{getTrip.startDate}</TripText>
-                  <TripText>{getTrip.endDate}</TripText>
-                </TripRow>
-              ))
-            ) : (
-              <Loader />
-            )}
-            {!getTipsLoading && tripList ? (
-              tripList.map(trip => (
+              getTrips.map(trip => (
                 <TripRow
                   key={trip.id}
-                  onClick={() => toggleTripModal(trip.id, trip.city.cityName)}
+                  onClick={() => {
+                    user.profile.isSelf
+                      ? toggleTripModal(
+                          trip.id,
+                          trip.city.cityName,
+                          trip.city.cityPhoto,
+                          trip.city.country.countryName,
+                          trip.startDate,
+                          trip.endDate
+                        )
+                      : gotoTrip(
+                          trip.city.cityName,
+                          trip.city.cityPhoto,
+                          trip.city.country.countryName,
+                          trip.startDate,
+                          trip.endDate
+                        );
+                  }}
                 >
                   <CityPhoto src={trip.city.cityPhoto} size={"sm"} />
                   <TripText>{trip.city.cityName}</TripText>
                   <TripText>{trip.city.country.countryName}</TripText>
                   <TripText>{trip.startDate}</TripText>
                   <TripText>{trip.endDate}</TripText>
+                </TripRow>
+              ))
+            ) : (
+              <Loader />
+            )}
+            {!getTipsLoading && tripList ? (
+              tripList.map(list => (
+                <TripRow
+                  key={list.id}
+                  onClick={() => {
+                    user.profile.isSelf
+                      ? toggleTripModal(
+                          list.id,
+                          list.city.cityName,
+                          list.city.cityPhoto,
+                          list.city.country.countryName,
+                          list.startDate,
+                          list.endDate
+                        )
+                      : gotoTrip(
+                          list.city.cityName,
+                          list.city.cityPhoto,
+                          list.city.country.countryName,
+                          list.startDate,
+                          list.endDate
+                        );
+                  }}
+                >
+                  <CityPhoto src={list.city.cityPhoto} size={"sm"} />
+                  <TripText>{list.city.cityName}</TripText>
+                  <TripText>{list.city.country.countryName}</TripText>
+                  <TripText>{list.startDate}</TripText>
+                  <TripText>{list.endDate}</TripText>
                 </TripRow>
               ))
             ) : (

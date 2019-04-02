@@ -67,9 +67,10 @@ def resolve_get_duration_users(self, info, **kwargs):
 
     try:
         city = location_models.City.objects.get(city_name=cityName)
-        trips = city.city.filter(start_date__range=(
-            startDate, endDate)) | city.city.filter(end_date__range=(startDate, endDate))
-
+        trips = city.movenotification.filter(start_date__range=(
+            startDate, endDate)) | city.movenotification.filter(end_date__range=(startDate, endDate))
+        trips = trips.order_by('actor_id', '-end_date').distinct('actor_id')
+        print(trips)
         return types.DurationTripsResponse(moveNotifications=trips)
 
     except models.MoveNotification.DoesNotExist:

@@ -1,6 +1,29 @@
 import gql from "graphql-tag";
 import { CARD_FRAGMENT } from "src/sharedQueries";
 
+export const TRIP_PROFILE = gql`
+  query TripProfile($cityName: String!) {
+    tripProfile(cityName: $cityName) {
+      usersNow {
+        username
+        avatar
+      }
+      city {
+        cityName
+        cityPhoto
+        country {
+          countryName
+          countryPhoto
+          countryCode
+        }
+        cardCount
+        userCount
+        userLogCount
+      }
+    }
+  }
+`;
+
 export const GET_DURATION_USERS = gql`
   query GetDurationUsers(
     $page: Int!
