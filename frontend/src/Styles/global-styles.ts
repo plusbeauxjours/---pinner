@@ -4,6 +4,7 @@ import reset from "styled-reset";
 const GlobalStyle = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css?family=Maven+Pro');
     @import url('https://fonts.googleapis.com/css?family=Qwigley');
+    
     ${reset};
     * {
         box-sizing: border-box;

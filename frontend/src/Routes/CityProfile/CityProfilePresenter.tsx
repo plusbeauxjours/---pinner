@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "../../Styles/typed-components";
+import CalendarHeatmap from "react-calendar-heatmap";
+import "react-calendar-heatmap/dist/styles.css";
 
 import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
@@ -257,6 +259,15 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               </Follow>
             </FollowContainer>
           </PBody>
+          <CalendarHeatmap
+            startDate={new Date("2018-04-01")}
+            endDate={new Date("2019-04-01")}
+            values={[
+              { date: "2019-01-01" },
+              { date: "2019-01-22" },
+              { date: "2019-01-30" }
+            ]}
+          />
           {cards && cards.length !== 0 && <CardGrid cards={cards} />}
         </SWrapper>
       </>
