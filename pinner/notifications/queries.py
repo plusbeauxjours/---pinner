@@ -1,6 +1,8 @@
 from . import types, models
 from graphql_jwt.decorators import login_required
 from locations import models as location_models
+from django.contrib.auth.models import User
+from locations import types as location_types
 
 
 @login_required
@@ -39,6 +41,24 @@ def resolve_get_move_notifications(self, info, **kwargs):
 
 
 @login_required
+def resolve_get_trips(self, info, **kwargs):
+
+    user = info.context.user
+    username = kwargs.get('username')
+    profile = User.objects.get(username=username)
+    tripPage = kwargs.get('tripPage', 0)
+    offset = 30 * (tripPage - 1)
+
+    if (tripPage is 0):
+        footprints = profile.movenotification.all().order_by('-start_date')[:3]
+
+    else:
+        footprints = profile.movenotification.all().order_by('-start_date')[offset+3: 30+offset+3]
+
+    return location_types.FootprintsResponse(footprints=footprints)
+
+
+@login_required
 def resolve_get_duration_my_trip(self, info, **kwargs):
 
     user = info.context.user
@@ -57,7 +77,7 @@ def resolve_get_duration_my_trip(self, info, **kwargs):
 
 
 @login_required
-def resolve_get_duration_users(self, info, **kwargs):
+def resolve_get_duration_avatars(self, info, **kwargs):
 
     user = info.context.user
     cityName = kwargs.get('cityName')

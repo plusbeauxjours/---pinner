@@ -1226,6 +1226,7 @@ export interface SearchTermsVariables {
 
 export interface TripProfile_tripProfile_usersNow {
   __typename: "ProfileType";
+  id: string;
   username: string | null;
   avatar: string;
 }
@@ -1266,49 +1267,37 @@ export interface TripProfileVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetDurationUsers
+// GraphQL query operation: GetDurationAvatars
 // ====================================================
 
-export interface GetDurationUsers_getDurationUsers_moveNotifications_actor_profile_currentCity {
-  __typename: "CityType";
-  cityName: string | null;
-  cityPhoto: string | null;
-}
-
-export interface GetDurationUsers_getDurationUsers_moveNotifications_actor_profile {
+export interface GetDurationAvatars_getDurationAvatars_usersBefore_actor_profile {
   __typename: "ProfileType";
-  avatar: string;
-  currentCity: GetDurationUsers_getDurationUsers_moveNotifications_actor_profile_currentCity | null;
-}
-
-export interface GetDurationUsers_getDurationUsers_moveNotifications_actor {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: GetDurationUsers_getDurationUsers_moveNotifications_actor_profile | null;
-}
-
-export interface GetDurationUsers_getDurationUsers_moveNotifications {
-  __typename: "MoveNotificationType";
   id: string;
-  actor: GetDurationUsers_getDurationUsers_moveNotifications_actor;
-  startDate: any | null;
-  endDate: any | null;
+  username: string | null;
+  avatar: string;
 }
 
-export interface GetDurationUsers_getDurationUsers {
-  __typename: "DurationTripsResponse";
-  moveNotifications: (GetDurationUsers_getDurationUsers_moveNotifications | null)[] | null;
+export interface GetDurationAvatars_getDurationAvatars_usersBefore_actor {
+  __typename: "UserType";
+  profile: GetDurationAvatars_getDurationAvatars_usersBefore_actor_profile | null;
 }
 
-export interface GetDurationUsers {
-  getDurationUsers: GetDurationUsers_getDurationUsers;
+export interface GetDurationAvatars_getDurationAvatars_usersBefore {
+  __typename: "MoveNotificationType";
+  actor: GetDurationAvatars_getDurationAvatars_usersBefore_actor;
 }
 
-export interface GetDurationUsersVariables {
-  page: number;
+export interface GetDurationAvatars_getDurationAvatars {
+  __typename: "DurationAvatarsResponse";
+  usersBefore: (GetDurationAvatars_getDurationAvatars_usersBefore | null)[] | null;
+}
+
+export interface GetDurationAvatars {
+  getDurationAvatars: GetDurationAvatars_getDurationAvatars;
+}
+
+export interface GetDurationAvatarsVariables {
+  page?: number | null;
   cityName: string;
   startDate: any;
   endDate: any;

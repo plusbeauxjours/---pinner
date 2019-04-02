@@ -191,23 +191,20 @@ const TripProfilePresenter: React.SFC<IProps> = ({
   endDate,
   cardsData: { getDurationCards: { cards = null } = {} } = {},
   cardsLoading,
-  usersData: { getDurationUsers: { moveNotifications = null } = {} } = {},
+  usersData: { getDurationUsers: { usersBefore = null } = {} } = {},
   usersLoading,
   profileDate: { tripProfile: { usersNow = null, city = null } = {} } = {},
   profileLoading,
   state
 }) => {
-  if (usersLoading) {
+  if (profileLoading) {
     return <Loader />;
-  } else if (!usersLoading && moveNotifications) {
+  } else if (!profileLoading && !usersLoading && city) {
     return (
       <>
         <PHeader>
           <PAvatar size="lg" url={cityPhoto} />
           <Username>{cityName}</Username>
-          {console.log(state)}
-          {console.log(moveNotifications)}
-          {console.log(cards)}
           <Username>
             {startDate}
             {endDate}
@@ -215,12 +212,16 @@ const TripProfilePresenter: React.SFC<IProps> = ({
         </PHeader>
         <SWrapper>
           <PBody>
-            <CountryContainer>
-              <Link to={`/country/${countryName}`}>
-                <CountryPhoto src={city.country.countryPhoto} />
-              </Link>
-              <CountryName text={countryName} />
-            </CountryContainer>
+            {!profileLoading && city ? (
+              <CountryContainer>
+                <Link to={`/country/${countryName}`}>
+                  <CountryPhoto src={city.country.countryPhoto} />
+                </Link>
+                <CountryName text={countryName} />
+              </CountryContainer>
+            ) : (
+              <Loader />
+            )}
             <InfoContainer>
               <Info>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -283,14 +284,15 @@ const TripProfilePresenter: React.SFC<IProps> = ({
                         </Link>
                       </AvatarContainer>
                     ))}
+                  {console.log(usersNow, usersBefore)}
                 </AvatarGrid>
               </Follow>
               <Follow>
                 USERS WHO HAS BEEN HERE
                 {/* <SBold text={String(country.cardCount)} /> */}
                 <AvatarGrid>
-                  {moveNotifications &&
-                    moveNotifications.map(user => (
+                  {usersBefore &&
+                    usersBefore.map(user => (
                       <AvatarContainer key={user.id}>
                         <Link to={`/${user.actor.username}`}>
                           <SAvatar
@@ -313,7 +315,7 @@ const TripProfilePresenter: React.SFC<IProps> = ({
       </>
     );
   }
-  return <p>hihi</p>;
+  return <p>goodmorning</p>;
 };
 
 export default TripProfilePresenter;

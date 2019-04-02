@@ -3,6 +3,7 @@ from graphql_jwt.decorators import login_required
 from django.contrib.auth.models import User
 from . import types, models
 from locations import types as location_types
+from locations import models as location_models
 
 
 def resolve_profile(self, info, **kwargs):
@@ -16,23 +17,6 @@ def resolve_profile(self, info, **kwargs):
         raise Exception('User not found')
 
     return types.UserProfileResponse(user=profile)
-
-
-@login_required
-def resolve_get_trips(self, info, **kwargs):
-
-    user = info.context.user
-    username = kwargs.get('username')
-    profile = User.objects.get(username=username)
-    tripPage = kwargs.get('tripPage', 0)
-    offset = 30 * (tripPage - 1)
-
-    if (tripPage is 0):
-        footprints = profile.movenotification.all().order_by('-start_date')[:3]
-    else:
-        footprints = profile.movenotification.all().order_by('-start_date')[offset+3: 30+offset+3]
-
-    return location_types.FootprintsResponse(footprints=footprints)
 
 
 @login_required

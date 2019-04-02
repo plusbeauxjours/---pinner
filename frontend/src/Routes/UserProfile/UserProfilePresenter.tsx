@@ -20,6 +20,7 @@ import GetCountries from "../../Components/GetCountries";
 import GetContinents from "../../Components/GetContinents";
 import GetFollowers from "src/Components/GetFollowers";
 import GetFollowings from "src/Components/GetFollowings";
+import GetDurationAvatars from "src/Components/GetDurationAvatars";
 
 const PHeader = styled.header`
   display: flex;
@@ -914,6 +915,14 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <TripText>{trip.city.country.countryName}</TripText>
                   <TripText>{trip.startDate}</TripText>
                   <TripText>{trip.endDate}</TripText>
+                  <TripText>
+                    <GetDurationAvatars
+                      page={0}
+                      cityName={trip.city.cityName}
+                      startDate={trip.startDate}
+                      endDate={trip.endDate}
+                    />
+                  </TripText>
                 </TripRow>
               ))
             ) : (
@@ -947,6 +956,14 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <TripText>{list.city.country.countryName}</TripText>
                   <TripText>{list.startDate}</TripText>
                   <TripText>{list.endDate}</TripText>
+                  <TripText>
+                    <GetDurationAvatars
+                      page={1}
+                      cityName={list.city.cityName}
+                      startDate={list.startDate}
+                      endDate={list.endDate}
+                    />
+                  </TripText>
                 </TripRow>
               ))
             ) : (

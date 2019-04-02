@@ -96,8 +96,6 @@ def resolve_trip_profile(self, info, **kwargs):
 
     user = info.context.user
     cityName = kwargs.get('cityName')
-    # usersNow = User.objects.filter(
-    #     profile__current_city__city_name=cityName).order_by('-username').distinct('username')
 
     city = models.City.objects.get(city_name=cityName)
     usersNow = city.currentCity.all()

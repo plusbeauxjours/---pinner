@@ -1,5 +1,6 @@
 import graphene
 from . import types, queries, mutations
+from locations import types as location_types
 
 
 class Query(object):
@@ -16,6 +17,15 @@ class Query(object):
         required=True,
         args={'page': graphene.Int()}
     )
+    get_trips = graphene.Field(
+        location_types.FootprintsResponse,
+        resolver=queries.resolve_get_trips,
+        required=True,
+        args={
+            'username': graphene.String(required=True),
+            'tripPage': graphene.Int(),
+        }
+    )
     get_duration_my_trip = graphene.Field(
         types.DurationTripsResponse,
         resolver=queries.resolve_get_duration_my_trip,
@@ -27,9 +37,9 @@ class Query(object):
             'endDate': graphene.Date(required=True)
         }
     )
-    get_duration_users = graphene.Field(
-        types.DurationTripsResponse,
-        resolver=queries.resolve_get_duration_users,
+    get_duration_avatars = graphene.Field(
+        types.DurationAvatarsResponse,
+        resolver=queries.resolve_get_duration_avatars,
         required=True,
         args={
             'page': graphene.Int(),

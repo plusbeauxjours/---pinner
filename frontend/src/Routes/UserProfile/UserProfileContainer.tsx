@@ -42,10 +42,11 @@ class FrequentVisitsQuery extends Query<
   FrequentVisits,
   FrequentVisitsVariables
 > {}
+class GetTiprsQuery extends Query<GetTrips, GetTripsVariables> {}
 class AddTripMutation extends Mutation<AddTrip, AddTripVariables> {}
 class EditTripMutation extends Mutation<EditTrip, EditTripVariables> {}
 class DeleteTripMutation extends Mutation<DeleteTrip, DeleteTripVariables> {}
-class GetTiprsQuery extends Query<GetTrips, GetTripsVariables> {}
+
 class EditProfileMutation extends Mutation<EditProfile, EditProfileVariables> {}
 class DeleteProfileMutation extends Mutation<DeleteProfile> {}
 class LogOutMutation extends Mutation {}
@@ -663,10 +664,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
           return previousResult;
         }
         this.setState({
-          tripList: [
-            ...previousResult.getTrips.footprints,
-            ...fetchMoreResult.getTrips.footprints
-          ]
+          tripList: [...fetchMoreResult.getTrips.footprints]
         });
       }
     });

@@ -5,6 +5,7 @@ export const TRIP_PROFILE = gql`
   query TripProfile($cityName: String!) {
     tripProfile(cityName: $cityName) {
       usersNow {
+        id
         username
         avatar
       }
@@ -24,33 +25,27 @@ export const TRIP_PROFILE = gql`
   }
 `;
 
-export const GET_DURATION_USERS = gql`
-  query GetDurationUsers(
-    $page: Int!
+export const GET_DURATION_AVATARS = gql`
+  query GetDurationAvatars(
+    $page: Int
     $cityName: String!
     $startDate: Date!
     $endDate: Date!
   ) {
-    getDurationUsers(
+    getDurationAvatars(
       page: $page
       cityName: $cityName
       startDate: $startDate
       endDate: $endDate
     ) {
-      moveNotifications {
-        id
+      usersBefore {
         actor {
-          username
           profile {
+            id
+            username
             avatar
-            currentCity {
-              cityName
-              cityPhoto
-            }
           }
         }
-        startDate
-        endDate
       }
     }
   }

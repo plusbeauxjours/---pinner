@@ -4,15 +4,15 @@ import { Query } from "react-apollo";
 import {
   GetDurationCards,
   GetDurationCardsVariables,
-  GetDurationUsers,
-  GetDurationUsersVariables,
+  GetDurationAvatars,
+  GetDurationAvatarsVariables,
   TripProfile,
   TripProfileVariables
 } from "../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
 import {
   GET_DURATION_CARDS,
-  GET_DURATION_USERS,
+  GET_DURATION_AVATARS,
   TRIP_PROFILE
 } from "./TripProfileQueries";
 import TripProfilePresenter from "./TripProfilePresenter";
@@ -21,9 +21,9 @@ class GetDurationCardsQuery extends Query<
   GetDurationCards,
   GetDurationCardsVariables
 > {}
-class GetDurationUsersQuery extends Query<
-  GetDurationUsers,
-  GetDurationUsersVariables
+class GetDurationAvatarsQuery extends Query<
+  GetDurationAvatars,
+  GetDurationAvatarsVariables
 > {}
 class TripProfileQuery extends Query<TripProfile, TripProfileVariables> {}
 
@@ -66,8 +66,8 @@ class TripProfileContainer extends React.Component<IProps, IState> {
     return (
       <TripProfileQuery query={TRIP_PROFILE} variables={{ cityName }}>
         {({ data: profileDate, loading: profileLoading }) => (
-          <GetDurationUsersQuery
-            query={GET_DURATION_USERS}
+          <GetDurationAvatarsQuery
+            query={GET_DURATION_AVATARS}
             variables={{ page, cityName, startDate, endDate }}
           >
             {({ data: usersData, loading: usersLoading }) => (
@@ -93,7 +93,7 @@ class TripProfileContainer extends React.Component<IProps, IState> {
                 )}
               </GetDurationCardsQuery>
             )}
-          </GetDurationUsersQuery>
+          </GetDurationAvatarsQuery>
         )}
       </TripProfileQuery>
     );
