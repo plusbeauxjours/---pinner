@@ -87,11 +87,10 @@ def resolve_get_duration_avatars(self, info, **kwargs):
 
     try:
         city = location_models.City.objects.get(city_name=cityName)
-        trips = city.movenotification.filter(start_date__range=(
+        usersBefore = city.movenotification.filter(start_date__range=(
             startDate, endDate)) | city.movenotification.filter(end_date__range=(startDate, endDate))
-        trips = trips.order_by('actor_id', '-end_date').distinct('actor_id')
-        print(trips)
-        return types.DurationTripsResponse(moveNotifications=trips)
+        usersBefore = usersBefore.order_by('actor_id', '-end_date').distinct('actor_id')
+        return types.DurationAvatarsResponse(usersBefore=usersBefore)
 
     except models.MoveNotification.DoesNotExist:
         raise Exception("You've never been there at the same time")

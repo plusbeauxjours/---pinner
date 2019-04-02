@@ -191,7 +191,7 @@ const TripProfilePresenter: React.SFC<IProps> = ({
   endDate,
   cardsData: { getDurationCards: { cards = null } = {} } = {},
   cardsLoading,
-  usersData: { getDurationUsers: { usersBefore = null } = {} } = {},
+  usersData: { getDurationAvatars: { usersBefore = null } = {} } = {},
   usersLoading,
   profileDate: { tripProfile: { usersNow = null, city = null } = {} } = {},
   profileLoading,
@@ -294,7 +294,7 @@ const TripProfilePresenter: React.SFC<IProps> = ({
                   {usersBefore &&
                     usersBefore.map(user => (
                       <AvatarContainer key={user.id}>
-                        <Link to={`/${user.actor.username}`}>
+                        <Link to={`/${user.actor.profile.username}`}>
                           <SAvatar
                             size={"sm"}
                             url={user.actor.profile.avatar}

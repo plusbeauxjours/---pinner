@@ -26,7 +26,6 @@ class DurationTripsResponse(graphene.ObjectType):
 
 class DurationAvatarsResponse(graphene.ObjectType):
     usersBefore = graphene.List(MoveNotificationType)
-    usersNow = graphene.List(MoveNotificationType)
 
 
 class GetNotificationsResponse(graphene.ObjectType):

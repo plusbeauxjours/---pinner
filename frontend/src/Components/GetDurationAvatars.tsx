@@ -1,11 +1,12 @@
 import React from "react";
 import moment from "moment";
 import { Query } from "react-apollo";
-import Loader from "./Loader";
+// import Loader from "./Loader";
 import { GET_DURATION_AVATARS } from "src/Routes/TripProfile/TripProfileQueries";
 import { GetDurationAvatars, GetDurationAvatarsVariables } from "src/types/api";
 import styled from "styled-components";
 import Avatar from "./Avatar";
+import LoaderData from "./LoaderData";
 
 class GetDurationAvatarsQuery extends Query<
   GetDurationAvatars,
@@ -42,7 +43,7 @@ const GetDurationAvatars: React.SFC<IProps> = ({
       loading
     }) => {
       if (loading) {
-        return <Loader />;
+        return <LoaderData />;
       } else if (!loading && usersBefore) {
         return (
           usersBefore &&
