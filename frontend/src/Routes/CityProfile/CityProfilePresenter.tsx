@@ -144,6 +144,12 @@ const SAvatar = styled(Avatar)`
   margin: 3px;
 `;
 
+const GreyLine = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid grey;
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
@@ -268,6 +274,8 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               { date: "2019-01-30" }
             ]}
           />
+          <GreyLine />
+
           {cards && cards.length !== 0 && <CardGrid cards={cards} />}
         </SWrapper>
       </>
