@@ -14,7 +14,6 @@ const GetFollowers: React.SFC<any> = username => (
       if (loading) {
         return <Loader />;
       } else if (!loading && profiles) {
-        console.log(profiles);
         return profiles.map(profile => (
           <UserRow
             key={profile.id}

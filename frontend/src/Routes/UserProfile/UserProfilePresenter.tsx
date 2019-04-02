@@ -531,7 +531,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
         {followersModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleFollowersModal} />
-            <RowModal>
+            <RowModal onClick={toggleFollowersModal}>
               <Wrapper>
                 <GetFollowers username={user.username} />
               </Wrapper>
@@ -541,26 +541,39 @@ const UserProfilePresenter: React.SFC<IProps> = ({
         {followingsModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleFollowingsModal} />
-            <RowModal>
+            <RowModal onClick={toggleFollowingsModal}>
               <Wrapper>
                 <GetFollowings username={user.username} />
               </Wrapper>
             </RowModal>
           </ModalContainer>
         )}
-        {tripModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleTripModal} />
-            <Modal>
-              <ModalLink onClick={toggleAddTripModal}>Add Trip</ModalLink>
-              <ModalLink onClick={toggleEditTripModal}>Edit Trip</ModalLink>
-              <ModalLink onClick={toggleTripConfirmModal}>
-                Delete Trip
-              </ModalLink>
-              <ModalLink onClick={toggleTripModal}>Cancel</ModalLink>
-            </Modal>
-          </ModalContainer>
-        )}
+        {user.profile.isSelf
+          ? tripModalOpen && (
+              <ModalContainer>
+                <ModalOverlay onClick={toggleTripModal} />
+                <Modal>
+                  <ModalLink onClick={toggleAddTripModal}>Add Trip</ModalLink>
+                  <ModalLink onClick={toggleEditTripModal}>Edit Trip</ModalLink>
+                  <ModalLink onClick={toggleTripConfirmModal}>
+                    Delete Trip
+                  </ModalLink>
+                  <ModalLink onClick={toggleTripModal}>Cancel</ModalLink>
+                </Modal>
+              </ModalContainer>
+            )
+          : tripModalOpen && (
+              <ModalContainer>
+                <ModalOverlay onClick={toggleTripModal} />
+                <Modal>
+                  <ModalLink onClick={toggleTripConfirmModal}>
+                    Delete Trip
+                  </ModalLink>
+                  <ModalLink onClick={toggleTripModal}>Cancel</ModalLink>
+                </Modal>
+              </ModalContainer>
+            )}
+        } tripModalOpen
         {tripConfirmModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleTripConfirmModal} />
@@ -657,7 +670,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </RowModal>
           </ModalContainer>
         )}
-
         {/* 
         ////////////// HEADER //////////////
         */}
@@ -793,10 +805,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 <Row>
                   {user.profile.followers &&
                     user.profile.followers.map(follower => (
-                      <AvatarContainer key={user.id}>
+                      <AvatarContainer key={follower.id}>
                         <SAvatar
                           size={"sm"}
-                          key={user.id}
+                          key={follower.id}
                           url={follower.user.profile.avatar}
                         />
                       </AvatarContainer>
@@ -807,10 +819,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 <Row>
                   {user.profile.followers &&
                     user.profile.followers.map(follower => (
-                      <AvatarContainer key={user.id}>
+                      <AvatarContainer key={follower.id}>
                         <SAvatar
                           size={"sm"}
-                          key={user.id}
+                          key={follower.id}
                           url={follower.user.profile.avatar}
                         />
                       </AvatarContainer>
@@ -821,10 +833,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 <Row onClick={toggleFollowersModal}>
                   {user.profile.followers &&
                     user.profile.followers.map(follower => (
-                      <AvatarContainer key={user.id}>
+                      <AvatarContainer key={follower.id}>
                         <SAvatar
                           size={"sm"}
-                          key={user.id}
+                          key={follower.id}
                           url={follower.user.profile.avatar}
                         />
                       </AvatarContainer>
@@ -835,10 +847,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 <Row onClick={toggleFollowingsModal}>
                   {user.profile.followings &&
                     user.profile.followings.map(following => (
-                      <AvatarContainer key={user.id}>
+                      <AvatarContainer key={following.id}>
                         <SAvatar
                           size={"sm"}
-                          key={user.id}
+                          key={following.id}
                           url={following.user.profile.avatar}
                         />
                       </AvatarContainer>

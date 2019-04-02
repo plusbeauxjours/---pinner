@@ -63,8 +63,7 @@ class AddTrip(graphene.Mutation):
                 raise Exception("Can't create the trip")
 
         else:
-            error = "You need to log in"
-            return types.DeleteTripResponse(ok=False)
+            raise Exception('You need to log in')
 
 
 class EditTrip(graphene.Mutation):
@@ -88,13 +87,10 @@ class EditTrip(graphene.Mutation):
             try:
                 moveNotification = user.movenotification.get(id=moveNotificationId)
             except user.movenotification.DoesNotExist:
-                error = "Trip Not Found"
-                return types.EditTripResponse(ok=False)
+                raise Exception('Trip Not Found')
 
             if moveNotification.actor.id != user.id:
-
-                error = "Unauthorized"
-                return types.EditTripResponse(ok=False)
+                raise Exception('Unauthorized')
 
             else:
 
@@ -111,12 +107,10 @@ class EditTrip(graphene.Mutation):
                     return types.EditTripResponse(ok=True, moveNotification=moveNotification)
                 except IntegrityError as e:
                     print(e)
-                    error = "Can't Save Trip"
-                    return types.EditTripResponse(ok=False)
+                    raise Exception("Can't Save Trip")
 
         else:
-            error = "You need to log in"
-            return types.DeleteTripResponse(ok=False)
+            raise Exception('You need to log in')
 
 
 class DeleteTrip(graphene.Mutation):
@@ -137,8 +131,7 @@ class DeleteTrip(graphene.Mutation):
             try:
                 moveNotification = user.movenotification.get(id=moveNotificationId)
             except user.movenotification.DoesNotExist:
-                error = "Trip Not Found"
-                return types.DeleteTripResponse(ok=False)
+                raise Exception('Trip Not Found')
 
             if moveNotification.actor.id == user.id:
 
@@ -146,10 +139,7 @@ class DeleteTrip(graphene.Mutation):
                 return types.DeleteTripResponse(ok=True)
 
             else:
-
-                error = "Unauthorized"
-                return types.DeleteTripResponse(ok=False)
+                raise Exception('You need to log in')
 
         else:
-            error = "You need to log in"
-            return types.DeleteTripResponse(ok=False)
+            raise Exception('Unauthorized')

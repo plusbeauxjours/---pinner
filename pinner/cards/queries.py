@@ -63,8 +63,8 @@ def resolve_card_detail(self, info, **kwargs):
     if cardId:
         try:
             card = models.Card.objects.get(id=cardId)
-        except:
-            pass
+        except models.Card.DoesNotExist:
+            raise Exception('Card not found')
 
     return types.CardDetailResponse(card=card)
 
