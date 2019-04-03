@@ -1308,6 +1308,35 @@ export interface GetDurationAvatarsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetDurationDays
+// ====================================================
+
+export interface GetDurationDays_getDurationDays_myTrips {
+  __typename: "MoveNotificationType";
+  id: string;
+}
+
+export interface GetDurationDays_getDurationDays {
+  __typename: "DurationDaysResponse";
+  myTrips: (GetDurationDays_getDurationDays_myTrips | null)[] | null;
+}
+
+export interface GetDurationDays {
+  getDurationDays: GetDurationDays_getDurationDays;
+}
+
+export interface GetDurationDaysVariables {
+  page?: number | null;
+  cityName: string;
+  startDate: any;
+  endDate: any;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetDurationCards
 // ====================================================
 

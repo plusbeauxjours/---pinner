@@ -96,6 +96,29 @@ def resolve_get_duration_avatars(self, info, **kwargs):
         raise Exception("You've never been there at the same time")
 
 
+@login_required
+def resolve_get_duration_days(self, info, **kwargs):
+
+    user = info.context.user
+    cityName = kwargs.get('cityName')
+    startDate = kwargs.get('startDate')
+    endDate = kwargs.get('endDate')
+    page = kwargs.get('page', 0)
+
+    try:
+        my_trips = user.movenotification.filter(city__city_name=cityName, start_date__range=(
+            startDate, endDate)) | user.movenotification.filter(city__city_name=cityName, end_date__range=(startDate, endDate))
+
+        # city = location_models.City.objects.get(city_name=cityName)
+        # trips = city.movenotification.filter(start_date__range=(
+        #     startDate, endDate)) | city.movenotification.filter(end_date__range=(startDate, endDate))
+        # usersBefore = usersBefore.order_by('actor_id', '-end_date').distinct('actor_id')
+        return types.DurationDaysResponse(myTrips=my_trips)
+
+    except models.MoveNotification.DoesNotExist:
+        raise Exception("You've never been there at the same time")
+
+
 # @login_required
 # def resolve_get_previous_cities(self, info, **kwargs):
 

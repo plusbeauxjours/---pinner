@@ -28,6 +28,10 @@ class DurationAvatarsResponse(graphene.ObjectType):
     usersBefore = graphene.List(MoveNotificationType)
 
 
+class DurationDaysResponse(graphene.ObjectType):
+    myTrips = graphene.List(MoveNotificationType)
+
+
 class GetNotificationsResponse(graphene.ObjectType):
     notifications = graphene.List(NotificationType)
     move_notifications = graphene.List(MoveNotificationType)

@@ -22,6 +22,7 @@ import GetFollowers from "src/Components/GetFollowers";
 import GetFollowings from "src/Components/GetFollowings";
 import GetDurationAvatars from "src/Components/GetDurationAvatars";
 import Flag from "src/Components/Flag";
+import GetDurationDays from "src/Components/GetDurationDays";
 
 const PHeader = styled.header`
   display: flex;
@@ -271,7 +272,7 @@ const SFlag = styled(Flag)`
   opacity: 0.4;
 `;
 
-const TripRow = styled.div`
+const TripRow = styled.div<ITheme>`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   justify-content: space-between;
@@ -326,7 +327,7 @@ const SeeAll = styled.p`
 `;
 
 interface ITheme {
-  size: string;
+  size?: string;
 }
 
 interface IProps {
@@ -921,7 +922,15 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   }}
                 >
                   <CityPhoto src={trip.city.cityPhoto} size={"sm"} />
-                  <TripText>{trip.city.cityName}</TripText>
+                  <TripText>
+                    {trip.city.cityName}
+                    <GetDurationDays
+                      page={1}
+                      cityName={trip.city.cityName}
+                      startDate={trip.startDate}
+                      endDate={trip.endDate}
+                    />
+                  </TripText>
                   <TripText>
                     <SFlag
                       countryCode={trip.city.country.countryCode}
@@ -970,7 +979,15 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   }}
                 >
                   <CityPhoto src={list.city.cityPhoto} size={"sm"} />
-                  <TripText>{list.city.cityName}</TripText>
+                  <TripText>
+                    {list.city.cityName}
+                    <GetDurationDays
+                      page={1}
+                      cityName={list.city.cityName}
+                      startDate={list.startDate}
+                      endDate={list.endDate}
+                    />
+                  </TripText>
                   <TripText>
                     <SFlag
                       countryCode={list.city.country.countryCode}

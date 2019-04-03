@@ -51,6 +51,26 @@ export const GET_DURATION_AVATARS = gql`
   }
 `;
 
+export const GET_DURATION_DAYS = gql`
+  query GetDurationDays(
+    $page: Int
+    $cityName: String!
+    $startDate: Date!
+    $endDate: Date!
+  ) {
+    getDurationDays(
+      page: $page
+      cityName: $cityName
+      startDate: $startDate
+      endDate: $endDate
+    ) {
+      myTrips {
+        id
+      }
+    }
+  }
+`;
+
 export const GET_DURATION_CARDS = gql`
   query GetDurationCards(
     $page: Int!
