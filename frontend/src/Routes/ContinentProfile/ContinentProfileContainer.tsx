@@ -15,11 +15,13 @@ interface IProps extends RouteComponentProps<any> {}
 interface IState {
   page: number;
   continentName: string;
+  countryModalOpen: boolean;
 }
 class ContinentProfileContainer extends React.Component<IProps, IState> {
   public state = {
     page: 0,
-    continentName: ""
+    continentName: "",
+    countryModalOpen: false
   };
   public render() {
     const {
@@ -27,7 +29,7 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
         params: { continentName }
       }
     } = this.props;
-    const { page } = this.state;
+    const { page, countryModalOpen } = this.state;
     return (
       <ContinentProfileQuery
         query={CONTINENT_PROFILE}
@@ -35,11 +37,25 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
       >
         {({ data, loading }) => {
           console.log(data);
-          return <ContinentProfilePresenter loading={loading} data={data} />;
+          return (
+            <ContinentProfilePresenter
+              loading={loading}
+              data={data}
+              countryModalOpen={countryModalOpen}
+              toggleCountryModal={this.toggleCountryModal}
+            />
+          );
         }}
       </ContinentProfileQuery>
     );
   }
+
+  public toggleCountryModal = () => {
+    const { countryModalOpen } = this.state;
+    this.setState({
+      countryModalOpen: !countryModalOpen
+    } as any);
+  };
 }
 
 export default withRouter(ContinentProfileContainer);

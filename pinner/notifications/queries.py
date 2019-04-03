@@ -50,7 +50,7 @@ def resolve_get_trips(self, info, **kwargs):
     offset = 30 * (tripPage - 1)
 
     if (tripPage is 0):
-        footprints = profile.movenotification.all().order_by('-start_date')[:3]
+        footprints = profile.movenotification.order_by('-start_date')[:3]
 
     else:
         footprints = profile.movenotification.all().order_by('-start_date')[offset+3: 30+offset+3]
@@ -87,10 +87,27 @@ def resolve_get_duration_avatars(self, info, **kwargs):
 
     try:
         city = location_models.City.objects.get(city_name=cityName)
-        usersBefore = city.movenotification.filter(start_date__range=(
-            startDate, endDate)) | city.movenotification.filter(end_date__range=(startDate, endDate))
+        usersBefore = city.movenotification.filter(
+            city__city_name=cityName, end_date__range=(startDate, endDate))
         usersBefore = usersBefore.order_by('actor_id', '-end_date').distinct('actor_id')
         return types.DurationAvatarsResponse(usersBefore=usersBefore)
+
+    except models.MoveNotification.DoesNotExist:
+        raise Exception("You've never been there at the same time")
+
+
+@login_required
+def resolve_get_cross_paths_avatars(self, info, **kwargs):
+
+    user = info.context.user
+    username = kwargs.get('username')
+    page = kwargs.get('page', 0)
+
+    try:
+        profile = User.profile.objects.get(username=username)
+        users = profile.movenotification.filter(end_date__range=(startDate, endDate))
+        users = users.order_by('actor_id', '-end_date').distinct('actor_id')
+        return types.DurationAvatarsResponse(users=users)
 
     except models.MoveNotification.DoesNotExist:
         raise Exception("You've never been there at the same time")
@@ -106,8 +123,7 @@ def resolve_get_duration_days(self, info, **kwargs):
     page = kwargs.get('page', 0)
 
     try:
-        my_trips = user.movenotification.filter(city__city_name=cityName, start_date__range=(
-            startDate, endDate)) | user.movenotification.filter(city__city_name=cityName, end_date__range=(startDate, endDate))
+        my_trips = user.movenotification.filter(city__city_name=cityName, end_date__range=(startDate, endDate))
 
         # city = location_models.City.objects.get(city_name=cityName)
         # trips = city.movenotification.filter(start_date__range=(

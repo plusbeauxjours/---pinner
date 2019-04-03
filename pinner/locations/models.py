@@ -66,7 +66,7 @@ class City (config_models.TimeStampedModel):
 
     @property
     def user_log_count(self):
-        return self.city.all().order_by('-actor_id').distinct('actor_id').count()
+        return self.movenotification.all().order_by('-actor_id').distinct('actor_id').count()
 
     def __str__(self):
         return self.city_name

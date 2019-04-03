@@ -96,10 +96,42 @@ const Follow = styled.div`
   border: 1px solid grey;
   padding: 5px;
 `;
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+`;
+
+const Box = styled.div`
+  width: 905px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  ::-webkit-scrollbar {
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: ${props => props.theme.bgColor};
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    background-color: ${props => props.theme.greyColor};
+  }
+`;
 
 const SBold = styled(Bold)`
   font-size: 20px;
-  font-weight: 200;
+  font-weight: 100;
+`;
+const SeeAll = styled.p`
+  font-size: 12px;
+  font-weight: 100;
+  cursor: pointer;
 `;
 
 const FlagGrid = styled.div`
@@ -126,11 +158,15 @@ const AvatarContainer = styled.div``;
 interface IProps {
   data?: ContinentProfile;
   loading: boolean;
+  countryModalOpen: boolean;
+  toggleCountryModal: () => void;
 }
 
 const ContinentProfilePresenter: React.SFC<IProps> = ({
   data: { continentProfile: { continent = null, countries = null } = {} } = {},
-  loading
+  loading,
+  countryModalOpen,
+  toggleCountryModal
 }) => {
   if (loading) {
     return <Loader />;
@@ -194,22 +230,25 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
                   {countries &&
                     countries.map(country => (
                       <AvatarContainer key={country.id}>
-                        <Flag
-                          size={"sm"}
-                          countryCode=
-                          {country.countryCode}
-                          
-                        />
+                        <Flag size={"sm"} countryCode={country.countryCode} />
                       </AvatarContainer>
                     ))}
                 </FlagGrid>
               </Follow>
             </FollowContainer>
           </PBody>{" "}
+          <Title>
+            <SBold text={"NEAR COUNTRIES"} />
+            <SeeAll onClick={toggleCountryModal}>SEE ALL</SeeAll>
+          </Title>
           <Container>
-            {countries && (
-              <LocationGrid countries={countries} type={"country"} />
-            )}
+            <Box>
+              {!loading && countries ? (
+                <LocationGrid countries={countries} type={"country"} />
+              ) : (
+                <Loader />
+              )}
+            </Box>
           </Container>
         </SWrapper>
       </>
