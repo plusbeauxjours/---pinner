@@ -20,15 +20,15 @@ class Notification(config_models.TimeStampedModel):
         ('upload', 'Upload')
     )
 
-    actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notification')
+    actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notification_from')
     target = models.ForeignKey(
-        User, on_delete=models.CASCADE, null=True, blank=True, related_name='target')
+        User, on_delete=models.CASCADE, null=True, blank=True, related_name='notification_to')
     verb = models.CharField(max_length=10, choices=VERBS)
     payload = models.ForeignKey(
-        card_models.Card, on_delete=models.CASCADE, null=True, blank=True)
+        card_models.Card, on_delete=models.CASCADE, null=True, blank=True, related_name='notification')
     read = models.BooleanField(default=False)
     comment = models.ForeignKey(
-        card_models.Comment, on_delete=models.CASCADE, null=True, blank=True)
+        card_models.Comment, on_delete=models.CASCADE, null=True, blank=True, related_name='notification')
 
     @property
     def natural_time(self):

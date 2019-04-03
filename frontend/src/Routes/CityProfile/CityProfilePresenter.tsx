@@ -151,11 +151,13 @@ const GreyLine = styled.div`
 `;
 
 interface IProps {
+  getDate: (i: string) => void;
   data?: any;
   loading: boolean;
 }
 
 const CityProfilePresenter: React.SFC<IProps> = ({
+  getDate,
   data: {
     cityProfile: {
       cards = null,
@@ -266,13 +268,19 @@ const CityProfilePresenter: React.SFC<IProps> = ({
             </FollowContainer>
           </PBody>
           <CalendarHeatmap
-            startDate={new Date("2018-04-01")}
-            endDate={new Date("2019-04-01")}
+            startDate={getDate("before")}
+            endDate={getDate("now")}
             values={[
-              { date: "2019-01-01" },
-              { date: "2019-01-22" },
-              { date: "2019-01-30" }
+              { date: "2019-01-01", count: 3 },
+              { date: "2019-01-03", count: 4 },
+              { date: "2019-01-06", count: 2 }
             ]}
+            classForValue={value => {
+              if (!value) {
+                return "color-empty";
+              }
+              return `color-scale-${value.count}`;
+            }}
           />
           <GreyLine />
 
