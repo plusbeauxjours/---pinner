@@ -390,7 +390,7 @@ export interface CityProfile_cityProfile_city {
 }
 
 export interface CityProfile_cityProfile {
-  __typename: "CityProfileResponse";
+  __typename: "FeedResponse";
   cards: (CityProfile_cityProfile_cards | null)[] | null;
   usersNow: (CityProfile_cityProfile_usersNow | null)[] | null;
   usersBefore: (CityProfile_cityProfile_usersBefore | null)[] | null;
@@ -403,6 +403,36 @@ export interface CityProfile {
 
 export interface CityProfileVariables {
   page: number;
+  cityName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetHeatmapData
+// ====================================================
+
+export interface GetHeatmapData_getHeatmapData_cards {
+  __typename: "DataType";
+  date: string | null;
+  count: number | null;
+}
+
+export interface GetHeatmapData_getHeatmapData {
+  __typename: "GetHeatmapDataReaponse";
+  startDate: any | null;
+  endDate: any | null;
+  cards: (GetHeatmapData_getHeatmapData_cards | null)[] | null;
+}
+
+export interface GetHeatmapData {
+  getHeatmapData: GetHeatmapData_getHeatmapData;
+}
+
+export interface GetHeatmapDataVariables {
+  page?: number | null;
   cityName: string;
 }
 
@@ -1142,12 +1172,6 @@ export interface SearchTerms_searchCards_cards {
   caption: string;
   likeCount: number | null;
   commentCount: number | null;
-  borderRadius: string;
-  bgColor: string | null;
-  font: string | null;
-  fontColor: string | null;
-  fontSize: string | null;
-  file: string | null;
 }
 
 export interface SearchTerms_searchCards {
@@ -1346,12 +1370,6 @@ export interface GetDurationCards_getDurationCards_cards {
   caption: string;
   likeCount: number | null;
   commentCount: number | null;
-  borderRadius: string;
-  bgColor: string | null;
-  font: string | null;
-  fontColor: string | null;
-  fontSize: string | null;
-  file: string | null;
 }
 
 export interface GetDurationCards_getDurationCards {
@@ -1447,10 +1465,6 @@ export interface UploadCard {
 
 export interface UploadCardVariables {
   caption: string;
-  fontColor?: string | null;
-  font?: string | null;
-  fontSize?: string | null;
-  borderRadius: string;
 }
 
 
@@ -1585,12 +1599,6 @@ export interface UserProfile_userProfile_user_cards {
   caption: string;
   likeCount: number | null;
   commentCount: number | null;
-  borderRadius: string;
-  bgColor: string | null;
-  font: string | null;
-  fontColor: string | null;
-  fontSize: string | null;
-  file: string | null;
 }
 
 export interface UserProfile_userProfile_user {
@@ -2237,12 +2245,6 @@ export interface CardParts {
   caption: string;
   likeCount: number | null;
   commentCount: number | null;
-  borderRadius: string;
-  bgColor: string | null;
-  font: string | null;
-  fontColor: string | null;
-  fontSize: string | null;
-  file: string | null;
 }
 
 

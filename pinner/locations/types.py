@@ -4,7 +4,7 @@ from . import models
 
 from config import types as config_types
 from users import types as user_types
-from cards import types as card_types
+# from cards import types as card_types
 from notifications import types as notification_types
 
 
@@ -26,18 +26,18 @@ class CountryType(DjangoObjectType):
         model = models.Country
 
 
+class CityProfileResponse(graphene.ObjectType):
+    city = graphene.Field(CityType)
+    usersNow = graphene.List(user_types.UserType)
+    usersBefore = graphene.List(notification_types.MoveNotificationType)
+    # cards = graphene.List(card_types.CardType)
+
+
 class ContinentType(DjangoObjectType):
     country_count = graphene.Int(source='country_count')
 
     class Meta:
         model = models.Continent
-
-
-class CityProfileResponse(graphene.ObjectType):
-    city = graphene.Field(CityType)
-    # cards = graphene.List(card_types.CardType)
-    usersNow = graphene.List(user_types.UserType)
-    usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 
 class TripProfileResponse(graphene.ObjectType):

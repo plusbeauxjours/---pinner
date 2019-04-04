@@ -1,5 +1,6 @@
 import graphene
 from . import types, mutations, queries
+from cards import types as card_types
 
 
 class Query(object):
@@ -13,7 +14,7 @@ class Query(object):
         }
     )
     city_profile = graphene.Field(
-        types.CityProfileResponse,
+        card_types.FeedResponse,
         resolver=queries.resolve_city_profile,
         required=True,
         args={

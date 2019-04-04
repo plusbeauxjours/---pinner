@@ -4,6 +4,7 @@ from graphql_jwt.decorators import login_required
 
 from django.contrib.auth.models import User
 from cards import models as card_models
+from cards import types as card_types
 from notifications import models as notification_models
 
 
@@ -122,7 +123,7 @@ def resolve_city_profile(self, info, **kwargs):
 
     city = models.City.objects.get(city_name=cityName)
 
-    return types.CityProfileResponse(cards=cards, usersNow=usersNow, usersBefore=usersBefore, city=city)
+    return card_types.FeedResponse(cards=cards, usersNow=usersNow, usersBefore=usersBefore, city=city)
 
 
 @login_required

@@ -67,8 +67,6 @@ class Query(object):
         args={
             'page': graphene.Int(),
             'cityName': graphene.String(required=True),
-            'startDate': graphene.Date(required=True),
-            'endDate': graphene.Date(required=True)
         }
     )
 

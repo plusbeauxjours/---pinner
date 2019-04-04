@@ -10,7 +10,6 @@ from notifications import types as notification_types
 
 class CardType(DjangoObjectType):
     like_count = graphene.Int(source='like_count')
-    created_at_days = graphene.Date(source='created_at_days')
     comment_count = graphene.Int(source='comment_count')
     crated_at = graphene.Date(source='created_at')
     natural_time = graphene.String(source="natural_time")
@@ -42,9 +41,9 @@ class CommentType(DjangoObjectType):
 
 class FeedResponse(graphene.ObjectType):
     city = graphene.Field(location_types.CityType)
-    cards = graphene.List(CardType)
     usersNow = graphene.List(user_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
+    cards = graphene.List(CardType)
 
 
 class DurationCardsResponse(graphene.ObjectType):

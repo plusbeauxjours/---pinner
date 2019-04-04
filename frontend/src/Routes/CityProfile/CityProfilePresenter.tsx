@@ -151,14 +151,14 @@ const GreyLine = styled.div`
 `;
 
 interface IProps {
-  getDate: (i: string) => void;
-  data?: any;
-  loading: boolean;
+  cityData?: any;
+  cityLoading: boolean;
+  heatmapData?: any;
+  heatmapLoading: boolean;
 }
 
 const CityProfilePresenter: React.SFC<IProps> = ({
-  getDate,
-  data: {
+  cityData: {
     cityProfile: {
       cards = null,
       usersNow = null,
@@ -166,11 +166,18 @@ const CityProfilePresenter: React.SFC<IProps> = ({
       city = null
     } = {}
   } = {},
-  loading
+  cityLoading,
+  heatmapData: {
+    getHeatmapData: {
+      cards: counts = null,
+      startDate = null,
+      endDate = null
+    } = {}
+  } = {}
 }) => {
-  if (loading) {
+  if (cityLoading) {
     return <Loader />;
-  } else if (!loading && cards && usersNow && usersBefore && city) {
+  } else if (!cityLoading && cards && usersNow && usersBefore && city) {
     return (
       <>
         <PHeader>
@@ -267,14 +274,11 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               </Follow>
             </FollowContainer>
           </PBody>
+          {console.log(startDate, endDate, counts)}
           <CalendarHeatmap
-            startDate={getDate("before")}
-            endDate={getDate("now")}
-            values={[
-              { date: "2019-01-01", count: 3 },
-              { date: "2019-01-03", count: 4 },
-              { date: "2019-01-06", count: 2 }
-            ]}
+            startDate={startDate}
+            endDate={endDate}
+            values={counts.map(count => count)}
             classForValue={value => {
               if (!value) {
                 return "color-empty";
@@ -283,7 +287,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
             }}
           />
           <GreyLine />
-
           {cards && cards.length !== 0 && <CardGrid cards={cards} />}
         </SWrapper>
       </>

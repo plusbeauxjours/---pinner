@@ -1,12 +1,20 @@
 import React from "react";
 import { Query } from "react-apollo";
 import CityProfilePresenter from "./CityProfilePresenter";
-import { CityProfile, CityProfileVariables } from "../../types/api";
+import {
+  CityProfile,
+  CityProfileVariables,
+  GetHeatmapData,
+  GetHeatmapDataVariables
+} from "../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
-import { CITY_PROFILE } from "./CityProfileQueries";
+import { CITY_PROFILE, GET_HEATMAP_DATA } from "./CityProfileQueries";
 
 class CityProfileQuery extends Query<CityProfile, CityProfileVariables> {}
-
+class GetHeatmapDataQuery extends Query<
+  GetHeatmapData,
+  GetHeatmapDataVariables
+> {}
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
@@ -19,6 +27,9 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     page: 0,
     cityName: ""
   };
+  public componentDidMount() {
+    console.log("goodmorning");
+  }
   public render() {
     const {
       match: {
@@ -28,32 +39,26 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     const { page } = this.state;
     return (
       <CityProfileQuery query={CITY_PROFILE} variables={{ page, cityName }}>
-        {({ data, loading }) => {
-          console.log(data);
+        {({ data: cityData, loading: cityLoading }) => {
           return (
-            <CityProfilePresenter
-              loading={loading}
-              data={data}
-              getDate={this.getDate}
-            />
+            <GetHeatmapDataQuery
+              query={GET_HEATMAP_DATA}
+              variables={{ cityName }}
+            >
+              {({ data: heatmapData, loading: heatmapLoading }) => (
+                <CityProfilePresenter
+                  cityData={cityData}
+                  cityLoading={cityLoading}
+                  heatmapData={heatmapData}
+                  heatmapLoading={heatmapLoading}
+                />
+              )}
+            </GetHeatmapDataQuery>
           );
         }}
       </CityProfileQuery>
     );
   }
-  public getDate = i => {
-    const day = new Date().getDate();
-    const month = new Date().getMonth();
-    const nowYear = new Date().getFullYear();
-    const beforeYear = new Date().getFullYear() - 1;
-    const now = nowYear + "-" + month + "-" + day;
-    const before = beforeYear + "=" + month + "-" + day;
-    if (i === "now") {
-      return now;
-    } else {
-      return before;
-    }
-  };
 }
 
 export default withRouter(CityProfileContainer);

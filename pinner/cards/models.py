@@ -22,9 +22,6 @@ class Card(config_models.TimeStampedModel):
         location_models.Country, on_delete=models.CASCADE, related_name='cards', null=True)
     file = models.URLField(null=True, blank=True)
 
-    def days(self):
-        return self.created_at.date()
-
     @property
     def like_count(self):
         return self.likes.all().count()

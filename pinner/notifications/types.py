@@ -27,7 +27,7 @@ class DataType(graphene.ObjectType):
     count = graphene.Int()
 
     class Meta:
-            default_resolver = dict_resolver
+        default_resolver = dict_resolver
 
 
 class DurationTripsResponse(graphene.ObjectType):
@@ -50,6 +50,8 @@ class GetNotificationsResponse(graphene.ObjectType):
 
 class GetHeatmapDataReaponse(graphene.ObjectType):
     cards = graphene.List(DataType)
+    startDate = graphene.Date()
+    endDate = graphene.Date()
 
 
 class GetMoveNotificationsResponse(graphene.ObjectType):
