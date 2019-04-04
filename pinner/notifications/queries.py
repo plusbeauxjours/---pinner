@@ -1,8 +1,13 @@
 from . import types, models
+from django.db.models import Count, F
+from django.db.models.fields import DateField
+from django.db.models.functions import Trunc
+
 from graphql_jwt.decorators import login_required
 from locations import models as location_models
 from django.contrib.auth.models import User
 from locations import types as location_types
+from datetime import date
 
 
 @login_required
@@ -91,6 +96,27 @@ def resolve_get_duration_avatars(self, info, **kwargs):
             city__city_name=cityName, end_date__range=(startDate, endDate))
         usersBefore = usersBefore.order_by('actor_id', '-end_date').distinct('actor_id')
         return types.DurationAvatarsResponse(usersBefore=usersBefore)
+
+    except models.MoveNotification.DoesNotExist:
+        raise Exception("You've never been there at the same time")
+
+
+@login_required
+def resolve_get_heatmap_data(self, info, **kwargs):
+
+    user = info.context.user
+    cityName = kwargs.get('cityName')
+    startDate = kwargs.get('startDate')
+    endDate = kwargs.get('endDate')
+    page = kwargs.get('page', 0)
+
+    try:
+        city = location_models.City.objects.get(city_name=cityName)
+        cards = city.cards.filter(created_at__range=(startDate, endDate)).annotate(
+            date=Trunc('created_at', 'day', output_field=DateField()), date_field=F('created_at')).values('date').distinct().order_by(
+                '-date').annotate(count=Count('created_at'))
+        print(cards)
+        return types.GetHeatmapDataReaponse(cards=cards)
 
     except models.MoveNotification.DoesNotExist:
         raise Exception("You've never been there at the same time")

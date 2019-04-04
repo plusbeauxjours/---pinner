@@ -5,27 +5,7 @@ from . import models
 from config import types as config_types
 from users import types as user_types
 from cards import types as card_types
-from cards import models as card_models
 from notifications import types as notification_types
-
-
-class CardType(DjangoObjectType):
-    like_count = graphene.Int(source='like_count')
-    comment_count = graphene.Int(source='comment_count')
-    crated_at = graphene.Date(source='created_at')
-    natural_time = graphene.String(source="natural_time")
-    is_liked = graphene.Boolean()
-
-    def resolve_is_liked(self, info):
-        user = info.context.user
-        try:
-            like = card_models.Like.objects.get(card=self, creator=user)
-            return True
-        except card_models.Like.DoesNotExist:
-            return False
-
-    class Meta:
-        model = card_models.Card
 
 
 class CityType(DjangoObjectType):
@@ -55,7 +35,7 @@ class ContinentType(DjangoObjectType):
 
 class CityProfileResponse(graphene.ObjectType):
     city = graphene.Field(CityType)
-    cards = graphene.List(CardType)
+    # cards = graphene.List(card_types.CardType)
     usersNow = graphene.List(user_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
 

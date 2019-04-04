@@ -1,11 +1,31 @@
 import graphene
 from graphene_django.types import DjangoObjectType
 from . import models
-
 from config import types as config_types
+
 from users import types as user_types
 from locations import types as location_types
 from notifications import types as notification_types
+
+
+class CardType(DjangoObjectType):
+    like_count = graphene.Int(source='like_count')
+    created_at_days = graphene.Date(source='created_at_days')
+    comment_count = graphene.Int(source='comment_count')
+    crated_at = graphene.Date(source='created_at')
+    natural_time = graphene.String(source="natural_time")
+    is_liked = graphene.Boolean()
+
+    def resolve_is_liked(self, info):
+        user = info.context.user
+        try:
+            like = models.Like.objects.get(card=self, creator=user)
+            return True
+        except models.Like.DoesNotExist:
+            return False
+
+    class Meta:
+        model = models.Card
 
 
 class LikeType(DjangoObjectType):
@@ -22,13 +42,13 @@ class CommentType(DjangoObjectType):
 
 class FeedResponse(graphene.ObjectType):
     city = graphene.Field(location_types.CityType)
-    cards = graphene.List(location_types.CardType)
+    cards = graphene.List(CardType)
     usersNow = graphene.List(user_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 
 class DurationCardsResponse(graphene.ObjectType):
-    cards = graphene.List(location_types.CardType)
+    cards = graphene.List(CardType)
 
 
 class LikeCardResponse(graphene.ObjectType):
@@ -41,7 +61,7 @@ class CardLikeResponse(graphene.ObjectType):
 
 class UploadCardResponse(graphene.ObjectType):
     ok = graphene.Boolean()
-    card = graphene.Field(location_types.CardType)
+    card = graphene.Field(CardType)
 
 
 class EditCardResponse(graphene.ObjectType):
@@ -61,15 +81,15 @@ class DeleteCommentResponse(graphene.ObjectType):
 
 
 class CardDetailResponse(graphene.ObjectType):
-    card = graphene.Field(location_types.CardType)
+    card = graphene.Field(CardType)
 
 
 class SearchCardsResponse(graphene.ObjectType):
-    cards = graphene.List(location_types.CardType)
+    cards = graphene.List(CardType)
 
 
 class LatestCardsResponse(graphene.ObjectType):
-    cards = graphene.List(location_types.CardType)
+    cards = graphene.List(CardType)
 
 
 class FileInputType(graphene.InputObjectType):

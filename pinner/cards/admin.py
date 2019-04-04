@@ -20,6 +20,7 @@ class CardAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'country',
+        'days',
         'city',
         'creator',
         'caption',

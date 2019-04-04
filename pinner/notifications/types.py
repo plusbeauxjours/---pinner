@@ -2,6 +2,8 @@ import graphene
 from graphene_django.types import DjangoObjectType
 from config import types as config_types
 from . import models
+from cards import types as card_types
+from graphene.types.resolver import dict_resolver
 
 
 class NotificationType(DjangoObjectType):
@@ -20,6 +22,14 @@ class MoveNotificationType(DjangoObjectType):
         model = models.MoveNotification
 
 
+class DataType(graphene.ObjectType):
+    date = graphene.String()
+    count = graphene.Int()
+
+    class Meta:
+            default_resolver = dict_resolver
+
+
 class DurationTripsResponse(graphene.ObjectType):
     moveNotifications = graphene.List(MoveNotificationType)
 
@@ -36,6 +46,10 @@ class GetNotificationsResponse(graphene.ObjectType):
     notifications = graphene.List(NotificationType)
     move_notifications = graphene.List(MoveNotificationType)
     ok = graphene.Boolean()
+
+
+class GetHeatmapDataReaponse(graphene.ObjectType):
+    cards = graphene.List(DataType)
 
 
 class GetMoveNotificationsResponse(graphene.ObjectType):

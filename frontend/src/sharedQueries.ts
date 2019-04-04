@@ -38,12 +38,6 @@ export const CARD_FRAGMENT = gql`
     caption
     likeCount
     commentCount
-    borderRadius
-    bgColor
-    font
-    fontColor
-    fontSize
-    file
   }
 `;
 

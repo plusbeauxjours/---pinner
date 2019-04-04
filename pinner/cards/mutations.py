@@ -223,10 +223,6 @@ class UploadCard(graphene.Mutation):
 
     class Arguments:
         caption = graphene.String(required=True)
-        fontColor = graphene.String()
-        font = graphene.String()
-        fontSize = graphene.String()
-        borderRadius = graphene.String(required=True)
 
     Output = types.UploadCardResponse
 
@@ -238,9 +234,6 @@ class UploadCard(graphene.Mutation):
         country = user.profile.current_city.country
 
         caption = kwargs.get('caption')
-        fontColor = kwargs.get('fontColor')
-        font = kwargs.get('font')
-        borderRadius = kwargs.get('borderRadius')
 
         try:
             country = location_models.Country.objects.get(country_name=country)
@@ -250,9 +243,7 @@ class UploadCard(graphene.Mutation):
                 caption=caption,
                 city=city,
                 country=country,
-                font_color=fontColor,
-                border_radius=borderRadius,
-                font=font)
+            )
             notification_models.Notification.objects.create(
                 actor=user, verb="upload", payload=card
             )

@@ -39,3 +39,21 @@ export const CITY_PROFILE = gql`
   }
   ${DETAIL_CARD_FRAGMENT}
 `;
+
+export const GET_HEATMAP_DATA = gql`
+  query GetHeatmapData(
+    $page: Int
+    $cityName: String!
+    $startDate: Date!
+    $endDate: Date!
+  ) {
+    getHeatmapData(
+      page: $page
+      cityName: $cityName
+      startDate: $startDate
+      endDate: $endDate
+    ) {
+      cards
+    }
+  }
+`;
