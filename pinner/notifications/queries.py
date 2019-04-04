@@ -114,24 +114,25 @@ def resolve_get_heatmap_data(self, info, **kwargs):
     endDate = datetime.now()
 
     try:
+        dateList = {}
         city = location_models.City.objects.get(city_name=cityName)
         cards = city.cards.filter(created_at__gte=startDate, created_at__lt=endDate).annotate(
             date=Trunc('created_at', 'day', output_field=DateField())).values('date').distinct().order_by(
                 '-date').annotate(count=Count('created_at'))
+        print(cards)
         users = city.movenotification.filter(Q(start_date__range=(startDate, endDate)) | Q(end_date__range=(startDate, endDate))).annotate(
-            startDate=Trunc('start_date', 'day', output_field=DateField()), endDate=Trunc('end_date', 'day', output_field=DateField())).distinct().order_by(
-                '-startDate')
+            startDate=Trunc('start_date', 'day', output_field=DateField()), endDate=Trunc('end_date', 'day', output_field=DateField()))
         for i in users:
-            print('user: ', i.actor.username,   'start_date: ', i.start_date, 'end_date: ', i.end_date)
-            totalDays = (i.end_date - i.start_date).days + 1
-            print('totalDays: ', totalDays)
+            totalDays = (i.endDate - i.startDate).days + 1
+            print('user: ', i.actor.username,   'start_date: ', i.startDate,
+                  'endDate: ', i.endDate, "totalDays: ", totalDays)
 
-            # for day in range(totalDays):
+            for day in range(totalDays):
+                dateList["date"] = (i.startDate + timedelta(days=day))
+                dateList["count"] = dateList['date'].count()
+                print(dateList)
 
-            #     print('day:', day)
-            #     date = (i.start_date + timedelta(days=day)).date()
-
-            #     print('date: ', date)
+        # days = dateList.
 
         return types.GetHeatmapDataReaponse(cards=cards, startDate=startDate, endDate=endDate)
 
