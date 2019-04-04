@@ -1,5 +1,5 @@
 from . import types, models
-from django.db.models import Count, F
+from django.db.models import Count, F, Q
 from django.db.models.fields import DateField
 from django.db.models.functions import Trunc
 
@@ -7,7 +7,8 @@ from graphql_jwt.decorators import login_required
 from locations import models as location_models
 from django.contrib.auth.models import User
 from locations import types as location_types
-from datetime import date, timedelta
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 
 
 @login_required
@@ -95,7 +96,9 @@ def resolve_get_duration_avatars(self, info, **kwargs):
         usersBefore = city.movenotification.filter(
             city__city_name=cityName, end_date__range=(startDate, endDate))
         usersBefore = usersBefore.order_by('actor_id', '-end_date').distinct('actor_id')
-        return types.DurationAvatarsResponse(usersBefore=usersBefore)
+        for i in usersBefore:
+            days = (i.end_date - i.start_date).days + 1
+        return types.DurationAvatarsResponse(usersBefore=usersBefore, days=days)
 
     except models.MoveNotification.DoesNotExist:
         raise Exception("You've never been there at the same time")
@@ -107,14 +110,29 @@ def resolve_get_heatmap_data(self, info, **kwargs):
     user = info.context.user
     cityName = kwargs.get('cityName')
     page = kwargs.get('page', 0)
-    startDate = date.today() - timedelta(days=365)
-    endDate = date.today()
+    startDate = datetime.now() - relativedelta(years=1)
+    endDate = datetime.now()
 
     try:
         city = location_models.City.objects.get(city_name=cityName)
-        cards = city.cards.filter(created_at__range=(startDate, endDate)).annotate(
-            date=Trunc('created_at', 'day', output_field=DateField()), date_field=F('created_at')).values('date').distinct().order_by(
+        cards = city.cards.filter(created_at__gte=startDate, created_at__lt=endDate).annotate(
+            date=Trunc('created_at', 'day', output_field=DateField())).values('date').distinct().order_by(
                 '-date').annotate(count=Count('created_at'))
+        users = city.movenotification.filter(Q(start_date__range=(startDate, endDate)) | Q(end_date__range=(startDate, endDate))).annotate(
+            startDate=Trunc('start_date', 'day', output_field=DateField()), endDate=Trunc('end_date', 'day', output_field=DateField())).distinct().order_by(
+                '-startDate')
+        for i in users:
+            print('user: ', i.actor.username,   'start_date: ', i.start_date, 'end_date: ', i.end_date)
+            totalDays = (i.end_date - i.start_date).days + 1
+            print('totalDays: ', totalDays)
+
+            # for day in range(totalDays):
+
+            #     print('day:', day)
+            #     date = (i.start_date + timedelta(days=day)).date()
+
+            #     print('date: ', date)
+
         return types.GetHeatmapDataReaponse(cards=cards, startDate=startDate, endDate=endDate)
 
     except models.MoveNotification.DoesNotExist:

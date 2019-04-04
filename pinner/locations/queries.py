@@ -110,10 +110,10 @@ def resolve_city_profile(self, info, **kwargs):
     user = info.context.user
     cityName = kwargs.get('cityName')
     page = kwargs.get('page', 0)
-    offset = 5 * page
+    offset = 50 * page
 
     cards = card_models.Card.objects.filter(city__city_name=cityName).order_by(
-        '-created_at')[offset:5 + offset]
+        '-created_at')[offset:50 + offset]
 
     usersNow = User.objects.filter(
         profile__current_city__city_name=cityName).order_by('-username').distinct('username')

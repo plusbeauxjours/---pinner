@@ -6,6 +6,7 @@ from datetime import timedelta
 from cards import models as card_models
 from locations import models as location_models
 from users import models as user_models
+from django.core.exceptions import ValidationError
 
 from config import models as config_models
 
@@ -63,6 +64,13 @@ class MoveNotification(config_models.TimeStampedModel):
     @property
     def natural_time(self):
         return naturaltime(self.created_at)
+
+    def clean(self):
+        if UsersCards.objects.filter(card__id=self.card_id).filter(
+            Q(start_date__gte=self.start_date, start_date__lt=self.end_date)
+            | Q(end_date__gt=self.start_date, end_date__lte=self.end_date)
+        ).exists():
+            raise ValidationError("Overlapping dates")
 
     class Meta:
         ordering = ['-created_at']

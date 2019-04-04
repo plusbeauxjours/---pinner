@@ -1314,6 +1314,7 @@ export interface GetDurationAvatars_getDurationAvatars_usersBefore {
 export interface GetDurationAvatars_getDurationAvatars {
   __typename: "DurationAvatarsResponse";
   usersBefore: (GetDurationAvatars_getDurationAvatars_usersBefore | null)[] | null;
+  days: number | null;
 }
 
 export interface GetDurationAvatars {
