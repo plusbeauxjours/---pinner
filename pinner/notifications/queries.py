@@ -113,31 +113,27 @@ def resolve_get_heatmap_data(self, info, **kwargs):
     startDate = datetime.now() - relativedelta(years=1)
     endDate = datetime.now()
 
+    dateList = {}
+
     try:
-        dateList = {}
         city = location_models.City.objects.get(city_name=cityName)
         cards = city.cards.filter(created_at__gte=startDate, created_at__lt=endDate).annotate(
             date=Trunc('created_at', 'day', output_field=DateField())).values('date').distinct().order_by(
                 '-date').annotate(count=Count('created_at'))
         print(cards)
-        users = city.movenotification.filter(Q(start_date__range=(startDate, endDate)) | Q(end_date__range=(startDate, endDate))).annotate(
-            startDate=Trunc('start_date', 'day', output_field=DateField()), endDate=Trunc('end_date', 'day', output_field=DateField()))
-        for i in users:
-            totalDays = (i.endDate - i.startDate).days + 1
-            print('user: ', i.actor.username,   'start_date: ', i.startDate,
-                  'endDate: ', i.endDate, "totalDays: ", totalDays)
 
-            for day in range(totalDays):
-                dateList["date"] = (i.startDate + timedelta(days=day))
-                dateList["count"] = dateList['date'].count()
-                print(dateList)
-
-        # days = dateList.
+        # for i in range((endDate - startDate).days + 1):
+        #     date = (startDate + timedelta(days=i)).date()
+        #     users = city.movenotification.filter(Q(start_date__lte=date) & Q(
+        #         end_date__gte=(date))).annotate(
+        #         count=Count('id')).values('count')
+        #     if users.exists():
+        #         print("date: ", date, "users: ", users)
 
         return types.GetHeatmapDataReaponse(cards=cards, startDate=startDate, endDate=endDate)
 
-    except models.MoveNotification.DoesNotExist:
-        raise Exception("You've never been there at the same time")
+    except location_models.City.DoesNotExist:
+        raise Exception("Cannot find City")
 
 
 @login_required
