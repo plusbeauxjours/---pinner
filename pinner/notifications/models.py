@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from datetime import timedelta
+from django.db.models import Q
 
 from cards import models as card_models
 from locations import models as location_models
@@ -9,6 +10,8 @@ from users import models as user_models
 from django.core.exceptions import ValidationError
 
 from config import models as config_models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 
 class Notification(config_models.TimeStampedModel):
@@ -65,12 +68,15 @@ class MoveNotification(config_models.TimeStampedModel):
     def natural_time(self):
         return naturaltime(self.created_at)
 
-    def clean(self):
-        if UsersCards.objects.filter(card__id=self.card_id).filter(
-            Q(start_date__gte=self.start_date, start_date__lt=self.end_date)
-            | Q(end_date__gt=self.start_date, end_date__lte=self.end_date)
-        ).exists():
-            raise ValidationError("Overlapping dates")
-
     class Meta:
         ordering = ['-created_at']
+
+
+@receiver(pre_save, sender=MoveNotification)
+def clean(sender, **kwargs):
+    instance = kwargs.pop('instance')
+    if MoveNotification.objects.filter(actor__id=instance.actor_id).filter(
+        Q(start_date__gte=instance.start_date, start_date__lt=instance.end_date)
+        | Q(end_date__gt=instance.start_date, end_date__lte=instance.end_date)
+    ).exists():
+        raise ValidationError("Overlapping dates")
