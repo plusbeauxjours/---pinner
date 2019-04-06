@@ -438,6 +438,7 @@ export interface NearCities {
 
 export interface NearCitiesVariables {
   nearCityPage?: number | null;
+  cityName: string;
 }
 
 
@@ -473,35 +474,6 @@ export interface NearCountries {
 
 export interface NearCountriesVariables {
   nearCountryPage?: number | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetHeatmapData
-// ====================================================
-
-export interface GetHeatmapData_getHeatmapData_cards {
-  __typename: "DataType";
-  date: string | null;
-  count: number | null;
-}
-
-export interface GetHeatmapData_getHeatmapData {
-  __typename: "GetHeatmapDataReaponse";
-  startDate: any | null;
-  endDate: any | null;
-  cards: (GetHeatmapData_getHeatmapData_cards | null)[] | null;
-}
-
-export interface GetHeatmapData {
-  getHeatmapData: GetHeatmapData_getHeatmapData;
-}
-
-export interface GetHeatmapDataVariables {
-  page?: number | null;
   cityName: string;
 }
 

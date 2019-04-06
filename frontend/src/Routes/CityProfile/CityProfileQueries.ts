@@ -45,8 +45,8 @@ export const CITY_PROFILE = gql`
 `;
 
 export const NEAR_CITIES = gql`
-  query NearCities($nearCityPage: Int) {
-    nearCities(nearCityPage: $nearCityPage) {
+  query NearCities($nearCityPage: Int, $cityName: String!) {
+    nearCities(nearCityPage: $nearCityPage, cityName: $cityName) {
       cities {
         ...CityParts
       }
@@ -56,8 +56,8 @@ export const NEAR_CITIES = gql`
 `;
 
 export const NEAR_COUNTRIES = gql`
-  query NearCountries($nearCountryPage: Int) {
-    nearCountries(nearCountryPage: $nearCountryPage) {
+  query NearCountries($nearCountryPage: Int, $cityName: String!) {
+    nearCountries(nearCountryPage: $nearCountryPage, cityName: $cityName) {
       countries {
         ...CountryParts
       }

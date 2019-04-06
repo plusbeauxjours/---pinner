@@ -180,11 +180,13 @@ def resolve_near_cities(self, info, **kwargs):
 
     user = info.context.user
     nearCityPage = kwargs.get('nearCityPage', 0)
+    cityName = kwargs.get('cityName')
 
+    city = models.City.objects.get(city_name=cityName)
     if (nearCityPage is 0):
-        cities = user.profile.current_city.near_city.all()[:6]
+        cities = city.near_city.all()[:6]
     else:
-        cities = user.profile.current_city.near_city.all()[6:12]
+        cities = city.near_city.all()[6:12]
 
     return types.CitiesResponse(cities=cities)
 
@@ -194,11 +196,13 @@ def resolve_near_countries(self, info, **kwargs):
 
     user = info.context.user
     nearCountryPage = kwargs.get('nearCountryPage', 0)
+    cityName = kwargs.get('cityName')
 
+    city = models.City.objects.get(city_name=cityName)
     if (nearCountryPage is 0):
-        countries = user.profile.current_city.near_country.all()[:6]
+        countries = city.near_country.all()[:6]
     else:
-        countries = user.profile.current_city.near_country.all()[6:12]
+        countries = city.near_country.all()[6:12]
 
     return types.CountriesResponse(countries=countries)
 

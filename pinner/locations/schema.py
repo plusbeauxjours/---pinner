@@ -50,6 +50,7 @@ class Query(object):
         resolver=queries.resolve_near_cities,
         required=True,
         args={
+            'cityName': graphene.String(required=True),
             'nearCityPage': graphene.Int()
         }
     )
@@ -58,6 +59,7 @@ class Query(object):
         resolver=queries.resolve_near_countries,
         required=True,
         args={
+            'cityName': graphene.String(required=True),
             'nearCountryPage': graphene.Int()
         }
     )

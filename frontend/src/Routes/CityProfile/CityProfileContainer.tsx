@@ -5,7 +5,9 @@ import {
   CityProfile,
   CityProfileVariables,
   NearCities,
-  NearCountries
+  NearCountries,
+  NearCitiesVariables,
+  NearCountriesVariables
 } from "../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
 import {
@@ -16,8 +18,8 @@ import {
 
 class CityProfileQuery extends Query<CityProfile, CityProfileVariables> {}
 
-class NearCitiesQuery extends Query<NearCities> {}
-class NearCountriesQuery extends Query<NearCountries> {}
+class NearCitiesQuery extends Query<NearCities, NearCitiesVariables> {}
+class NearCountriesQuery extends Query<NearCountries, NearCountriesVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
 
@@ -63,7 +65,10 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       nearCountryModalOpen
     } = this.state;
     return (
-      <NearCitiesQuery query={NEAR_CITIES} variables={{ nearCityPage }}>
+      <NearCitiesQuery
+        query={NEAR_CITIES}
+        variables={{ nearCityPage, cityName }}
+      >
         {({
           data: nearCitiesData,
           loading: nearCitiesLoading,
@@ -73,7 +78,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
           return (
             <NearCountriesQuery
               query={NEAR_COUNTRIES}
-              variables={{ nearCountryPage }}
+              variables={{ nearCountryPage, cityName }}
             >
               {({
                 data: nearCountriesData,
