@@ -1,13 +1,11 @@
 import React from "react";
-import { RecommandUsers, LatestCities } from "../../types/api";
+import { LatestCities } from "../../types/api";
 import styled from "../../Styles/typed-components";
 
 import Loader from "../../Components/Loader";
-import UserGrid from "../../Components/UserGrid";
 import LocationGrid from "../../Components/LocationGrid";
 import Wrapper from "../../Components/Wrapper";
 import { keyframes } from "styled-components";
-import UserRow from "../../Components/UserRow";
 import Bold from "../../Components/Bold";
 import LocationRow from "src/Components/LocationRow";
 
@@ -113,71 +111,33 @@ const SeeAll = styled.p`
 `;
 
 interface IProps {
-  recommandUsersData?: RecommandUsers;
-  recommandUsersLoading: boolean;
-
   latestCitiesData?: LatestCities;
   latestCitiesLoading: boolean;
-  toggleRecommandUserSeeAll: () => void;
 
   toggleLatestCitySeeAll: () => void;
-  recommandUserList: any;
 
   latestCityList: any;
 
   latestCityModalOpen: boolean;
-  recommandUserModalOpen: boolean;
 
   toggleLatestCityModal: () => void;
-  toggleRecommandUserModal: () => void;
 }
 
 const ExplorePresenter: React.SFC<IProps> = ({
-  recommandUsersData: { recommandUsers: { users = null } = {} } = {},
-  recommandUsersLoading,
-
   latestCitiesData: { latestCities: { cities: latestCities = null } = {} } = {},
   latestCitiesLoading,
-  toggleRecommandUserSeeAll,
 
   toggleLatestCitySeeAll,
-  recommandUserList,
 
   latestCityList,
-  toggleRecommandUserModal,
 
   toggleLatestCityModal,
-  recommandUserModalOpen,
 
   latestCityModalOpen
 }) => {
-  if (users || latestCities) {
+  if (latestCities) {
     return (
       <>
-        {recommandUserModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleRecommandUserModal} />
-            <Modal>
-              <Wrapper>
-                {recommandUserList.map(user => (
-                  <UserRow
-                    key={user.id}
-                    id={user.id}
-                    username={user.username}
-                    avatar={user.profile.avatar}
-                    currentCity={user.profile.currentCity.cityName}
-                    currentCountry={
-                      user.profile.currentCity.country.countryName
-                    }
-                    isFollowing={user.profile.isFollowing}
-                    size={"sm"}
-                  />
-                ))}
-              </Wrapper>
-            </Modal>
-          </ModalContainer>
-        )}
-
         {latestCityModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleLatestCityModal} />
@@ -198,21 +158,6 @@ const ExplorePresenter: React.SFC<IProps> = ({
           </ModalContainer>
         )}
         <TallWrapper>
-          <Title>
-            <SBold text={"RECOMMAND USER"} />
-            <SeeAll onClick={toggleRecommandUserSeeAll}>SEE ALL</SeeAll>
-          </Title>
-          <Container>
-            <Box>
-              {!recommandUsersLoading && users ? (
-                <UserGrid users={users} />
-              ) : (
-                <Loader />
-              )}
-            </Box>
-          </Container>
-          <GreyLine />
-
           <GreyLine />
           <Title>
             <SBold text={"LATEST CITIES"} />

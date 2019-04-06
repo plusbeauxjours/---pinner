@@ -104,6 +104,8 @@ def resolve_recommand_users(self, info, **kwargs):
         users = models.User.objects.filter().exclude(pk=user.pk).order_by(
             '-date_joined')[9:18]
 
+    print(users)
+
     return types.RecommandUsersResponse(users=users)
 
 

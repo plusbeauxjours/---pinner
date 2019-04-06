@@ -10,6 +10,7 @@ import Bold from "../../Components/Bold";
 import Flag from "../../Components/Flag";
 import UserRow from "../../Components/UserRow";
 import { keyframes } from "styled-components";
+import UserGrid from "src/Components/UserGrid";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -58,10 +59,6 @@ const PBody = styled.div`
   margin: 20px 0 20px 0;
   justify-content: center;
   background: ${props => props.theme.bgColor};
-  border-bottom: 1px solid grey;
-  &:not(:last-child) {
-    border-bottom: 1px solid grey;
-  }
 `;
 
 const UserContainer = styled.div`
@@ -132,6 +129,56 @@ const Modal = styled.div`
   animation: ${ModalAnimation} 0.1s linear;
 `;
 
+const Container = styled.div`
+  border-bottom: 4px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  -webkit-box-flex: 0;
+  flex: 0 0 auto;
+  height: 280px;
+  padding: 15px;
+`;
+
+const GreyLine = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid grey;
+`;
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+`;
+
+const Box = styled.div`
+  width: 905px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  ::-webkit-scrollbar {
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: ${props => props.theme.bgColor};
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    background-color: ${props => props.theme.greyColor};
+  }
+`;
+
+const SeeAll = styled.p`
+  font-size: 12px;
+  font-weight: 100;
+  cursor: pointer;
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
@@ -140,6 +187,12 @@ interface IProps {
   beforeModalOpen: boolean;
   toggleNowModal: () => void;
   toggleBeforeModal: () => void;
+  recommandUsersData: any;
+  recommandUsersLoading: boolean;
+  recommandUserList: any;
+  recommandUserModalOpen: boolean;
+  toggleRecommandUserSeeAll: () => void;
+  toggleRecommandUserModal: () => void;
 }
 
 const FeedPresenter: React.SFC<IProps> = ({
@@ -150,18 +203,59 @@ const FeedPresenter: React.SFC<IProps> = ({
       usersBefore = null,
       city = null
     } = {}
-  },
+  } = {},
   loading,
+  recommandUsersData: { recommandUsers: { users = null } = {} } = {},
+  recommandUsersLoading,
   nowModalOpen,
   beforeModalOpen,
   toggleNowModal,
-  toggleBeforeModal
+  toggleBeforeModal,
+  toggleRecommandUserSeeAll,
+  recommandUserList,
+  toggleRecommandUserModal,
+  recommandUserModalOpen
 }) => {
   if (loading) {
     return <Loader />;
   } else if (!loading && cards && usersNow && usersBefore && city) {
     return (
       <>
+        {console.log(
+          "cards:",
+          cards,
+          "usersNow:",
+          usersNow,
+          "usersBefore:",
+          usersBefore,
+          "city:",
+          city,
+          "users:",
+          users
+        )}
+        {recommandUserModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleRecommandUserModal} />
+            <Modal>
+              <Wrapper>
+                {recommandUserList.map(user => (
+                  <UserRow
+                    key={user.id}
+                    id={user.id}
+                    username={user.username}
+                    avatar={user.profile.avatar}
+                    currentCity={user.profile.currentCity.cityName}
+                    currentCountry={
+                      user.profile.currentCity.country.countryName
+                    }
+                    isFollowing={user.profile.isFollowing}
+                    size={"sm"}
+                  />
+                ))}
+              </Wrapper>
+            </Modal>
+          </ModalContainer>
+        )}
         {nowModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleNowModal} />
@@ -254,6 +348,20 @@ const FeedPresenter: React.SFC<IProps> = ({
               </User>
             </UserContainer>
           </PHeader>
+          <Title>
+            <SBold text={"RECOMMAND USER"} />
+            <SeeAll onClick={toggleRecommandUserSeeAll}>SEE ALL</SeeAll>
+          </Title>
+          <Container>
+            <Box>
+              {!recommandUsersLoading && users ? (
+                <UserGrid users={users} />
+              ) : (
+                <Loader />
+              )}
+            </Box>
+          </Container>
+          <GreyLine />
           <PBody />
           {cards &&
             cards.map(card => (

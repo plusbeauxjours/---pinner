@@ -36,6 +36,11 @@ def resolve_feed(self, info, **kwargs):
 
     city = location_models.City.objects.get(city_name=cityName)
 
+    print("usersNow:", usersNow,
+          "usersBefore:", usersBefore,
+          "combined:", combined,
+          "city:", city)
+
     return types.FeedResponse(cards=combined, usersNow=usersNow, usersBefore=usersBefore, city=city)
 
 

@@ -503,9 +503,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   } else if (user && topCountries && frequentCities) {
     return (
       <>
-        {/* 
-        ////////////// MODAL //////////////
-        */}
         {modalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleModal} />

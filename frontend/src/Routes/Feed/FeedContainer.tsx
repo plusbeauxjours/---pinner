@@ -5,12 +5,13 @@ import {
   ReportLocation,
   ReportLocationVariables,
   Feed,
-  FeedVariables
+  FeedVariables,
+  RecommandUsers
 } from "../../types/api";
 import { RouteComponentProps } from "react-router";
 import { REPORT_LOCATION } from "../Home/HomeQueries";
 import { reverseGeoCode } from "../../mapHelpers";
-import { GET_FEED } from "./FeedQueries";
+import { GET_FEED, RECOMMAND_USERS } from "./FeedQueries";
 import {
   cityThumbnail,
   countryThumbnail,
@@ -18,16 +19,19 @@ import {
 } from "../../locationThumbnail";
 import continents from "../../continents";
 
+class RecommandUsersQuery extends Query<RecommandUsers> {}
 class ReportLocationMutation extends Mutation<
   ReportLocation,
   ReportLocationVariables
 > {}
-
 class FeedQuery extends Query<Feed, FeedVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
+  recommandUserPage: number;
+  recommandUserList: any;
+  recommandUserModalOpen: boolean;
   page: number;
   nowModalOpen: boolean;
   beforeModalOpen: boolean;
@@ -43,21 +47,28 @@ interface IState {
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
+  public recommandUsersFetchMore;
   public ReportLocationFn: MutationFn;
-  public state = {
-    page: 0,
-    nowModalOpen: false,
-    beforeModalOpen: false,
-    currentLat: 0,
-    currentLng: 0,
-    currentCity: "",
-    currentCountry: "",
-    currentCountryCode: "",
-    currentContinent: "",
-    cityPhotoURL: "",
-    countryPhotoURL: "",
-    continentPhotoURL: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      recommandUserPage: 0,
+      recommandUserList: null,
+      recommandUserModalOpen: false,
+      page: 0,
+      nowModalOpen: false,
+      beforeModalOpen: false,
+      currentLat: 0,
+      currentLng: 0,
+      currentCity: "",
+      currentCountry: "",
+      currentCountryCode: "",
+      currentContinent: "",
+      cityPhotoURL: "",
+      countryPhotoURL: "",
+      continentPhotoURL: ""
+    };
+  }
   public componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       this.handleGeoSuccess,
@@ -65,8 +76,12 @@ class FeedContainer extends React.Component<IProps, IState> {
     );
     console.log("goodmorning");
   }
+
   public render() {
     const {
+      recommandUserPage,
+      recommandUserList,
+      recommandUserModalOpen,
       page,
       nowModalOpen,
       beforeModalOpen,
@@ -88,7 +103,7 @@ class FeedContainer extends React.Component<IProps, IState> {
           cityName: currentCity
         }}
       >
-        {({ data, loading }) => (
+        {({ data: data, loading: loading }) => (
           <ReportLocationMutation
             mutation={REPORT_LOCATION}
             variables={{
@@ -106,15 +121,37 @@ class FeedContainer extends React.Component<IProps, IState> {
             {ReportLocationFn => {
               this.ReportLocationFn = ReportLocationFn;
               return (
-                <FeedPresenter
-                  loading={loading}
-                  data={data}
-                  currentCity={currentCity}
-                  nowModalOpen={nowModalOpen}
-                  beforeModalOpen={beforeModalOpen}
-                  toggleNowModal={this.toggleNowModal}
-                  toggleBeforeModal={this.toggleBeforeModal}
-                />
+                <RecommandUsersQuery
+                  query={RECOMMAND_USERS}
+                  variables={{ recommandUserPage }}
+                >
+                  {({
+                    data: recommandUsersData,
+                    loading: recommandUsersLoading,
+                    fetchMore: recommandUsersFetchMore
+                  }) => {
+                    this.recommandUsersFetchMore = recommandUsersFetchMore;
+                    return (
+                      <FeedPresenter
+                        data={data}
+                        loading={loading}
+                        currentCity={currentCity}
+                        nowModalOpen={nowModalOpen}
+                        beforeModalOpen={beforeModalOpen}
+                        toggleNowModal={this.toggleNowModal}
+                        toggleBeforeModal={this.toggleBeforeModal}
+                        recommandUsersData={recommandUsersData}
+                        recommandUsersLoading={recommandUsersLoading}
+                        recommandUserList={recommandUserList}
+                        recommandUserModalOpen={recommandUserModalOpen}
+                        toggleRecommandUserModal={this.toggleRecommandUserModal}
+                        toggleRecommandUserSeeAll={
+                          this.toggleRecommandUserSeeAll
+                        }
+                      />
+                    );
+                  }}
+                </RecommandUsersQuery>
               );
             }}
           </ReportLocationMutation>
@@ -191,6 +228,31 @@ class FeedContainer extends React.Component<IProps, IState> {
     this.setState({
       beforeModalOpen: !beforeModalOpen
     } as any);
+  };
+  public toggleRecommandUserModal = () => {
+    const { recommandUserModalOpen } = this.state;
+    this.setState({
+      recommandUserModalOpen: !recommandUserModalOpen
+    } as any);
+  };
+  public toggleRecommandUserSeeAll = () => {
+    const { recommandUserModalOpen } = this.state;
+    this.recommandUsersFetchMore({
+      query: RECOMMAND_USERS,
+      variables: { recommandUserPage: 1 },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return previousResult;
+        }
+        this.setState({
+          recommandUserList: [
+            ...previousResult.recommandUsers.users,
+            ...fetchMoreResult.recommandUsers.users
+          ],
+          recommandUserModalOpen: !recommandUserModalOpen
+        } as any);
+      }
+    });
   };
 }
 

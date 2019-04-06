@@ -726,55 +726,6 @@ export interface CountryProfileVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: RecommandUsers
-// ====================================================
-
-export interface RecommandUsers_recommandUsers_users_profile_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface RecommandUsers_recommandUsers_users_profile_currentCity {
-  __typename: "CityType";
-  country: RecommandUsers_recommandUsers_users_profile_currentCity_country;
-  cityName: string | null;
-}
-
-export interface RecommandUsers_recommandUsers_users_profile {
-  __typename: "ProfileType";
-  isFollowing: boolean | null;
-  avatar: string;
-  currentCity: RecommandUsers_recommandUsers_users_profile_currentCity | null;
-}
-
-export interface RecommandUsers_recommandUsers_users {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: RecommandUsers_recommandUsers_users_profile | null;
-}
-
-export interface RecommandUsers_recommandUsers {
-  __typename: "RecommandUsersResponse";
-  users: (RecommandUsers_recommandUsers_users | null)[] | null;
-}
-
-export interface RecommandUsers {
-  recommandUsers: RecommandUsers_recommandUsers;
-}
-
-export interface RecommandUsersVariables {
-  recommandUserPage?: number | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: LatestCities
 // ====================================================
 
@@ -944,7 +895,6 @@ export interface Feed_feed_city {
   cityName: string | null;
   cityPhoto: string | null;
   country: Feed_feed_city_country;
-  cardCount: number | null;
   userCount: number | null;
   userLogCount: number | null;
 }
@@ -964,6 +914,55 @@ export interface Feed {
 export interface FeedVariables {
   page: number;
   cityName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: RecommandUsers
+// ====================================================
+
+export interface RecommandUsers_recommandUsers_users_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface RecommandUsers_recommandUsers_users_profile_currentCity {
+  __typename: "CityType";
+  country: RecommandUsers_recommandUsers_users_profile_currentCity_country;
+  cityName: string | null;
+}
+
+export interface RecommandUsers_recommandUsers_users_profile {
+  __typename: "ProfileType";
+  isFollowing: boolean | null;
+  avatar: string;
+  currentCity: RecommandUsers_recommandUsers_users_profile_currentCity | null;
+}
+
+export interface RecommandUsers_recommandUsers_users {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: RecommandUsers_recommandUsers_users_profile | null;
+}
+
+export interface RecommandUsers_recommandUsers {
+  __typename: "RecommandUsersResponse";
+  users: (RecommandUsers_recommandUsers_users | null)[] | null;
+}
+
+export interface RecommandUsers {
+  recommandUsers: RecommandUsers_recommandUsers;
+}
+
+export interface RecommandUsersVariables {
+  recommandUserPage?: number | null;
 }
 
 
