@@ -25,7 +25,6 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   page: number;
-  cityName: string;
   nearCityList: any;
   nearCountryList: any;
   nearCityPage: number;
@@ -41,7 +40,6 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       page: 0,
-      cityName: this.props.match.params.cityName,
       nearCityList: null,
       nearCountryList: null,
       nearCityPage: 0,
@@ -55,8 +53,12 @@ class CityProfileContainer extends React.Component<IProps, IState> {
   }
   public render() {
     const {
+      match: {
+        params: { cityName }
+      }
+    } = this.props;
+    const {
       page,
-      cityName,
       nearCityList,
       nearCountryList,
       nearCityPage,
@@ -133,10 +135,15 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     } as any);
   };
   public toggleNearCitySeeAll = () => {
+    const {
+      match: {
+        params: { cityName }
+      }
+    } = this.props;
     const { nearCityModalOpen } = this.state;
     this.nearCitiesFetchMore({
       query: NEAR_CITIES,
-      variables: { nearCityPage: 1 },
+      variables: { nearCityPage: 1, cityName },
       updateQuery: (previousResult, { fetchMoreResult }) => {
         if (!fetchMoreResult) {
           return previousResult;
@@ -152,10 +159,15 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     });
   };
   public toggleNearCountrySeeAll = () => {
+    const {
+      match: {
+        params: { cityName }
+      }
+    } = this.props;
     const { nearCountryModalOpen } = this.state;
     this.nearCountriesFetchMore({
       query: NEAR_COUNTRIES,
-      variables: { nearCountryPage: 1 },
+      variables: { nearCountryPage: 1, cityName },
       updateQuery: (previousResult, { fetchMoreResult }) => {
         if (!fetchMoreResult) {
           return previousResult;

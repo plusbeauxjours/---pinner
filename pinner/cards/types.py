@@ -94,3 +94,25 @@ class LatestCardsResponse(graphene.ObjectType):
 class FileInputType(graphene.InputObjectType):
     url = graphene.String()
     is_video = graphene.Boolean()
+
+
+class FirstAnnotateRespose(graphene.ObjectType):
+    city = graphene.Field(location_types.CityType)
+    usersNow = graphene.List(user_types.UserType)
+    usersBefore = graphene.List(notification_types.MoveNotificationType)
+    cards = graphene.List(CardType)
+
+
+class SecondAnnotateRespose(graphene.ObjectType):
+    country = graphene.Field(location_types.CountryType)
+    cities = graphene.List(location_types.CityType)
+    usersNow = graphene.List(user_types.UserType)
+    usersBefore = graphene.List(notification_types.MoveNotificationType)
+    cards = graphene.List(CardType)
+
+
+class ThirdAnnotateRespose(graphene.ObjectType):
+
+    continent = graphene.Field(location_types.ContinentType)
+    countries = graphene.List(location_types.CountryType)
+    cards = graphene.List(CardType)

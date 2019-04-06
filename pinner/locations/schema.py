@@ -14,7 +14,7 @@ class Query(object):
         }
     )
     city_profile = graphene.Field(
-        card_types.FeedResponse,
+        card_types.FirstAnnotateRespose,
         resolver=queries.resolve_city_profile,
         required=True,
         args={
@@ -23,7 +23,7 @@ class Query(object):
         }
     )
     country_profile = graphene.Field(
-        types.CountryProfileResponse,
+        card_types.SecondAnnotateRespose,
         resolver=queries.resolve_country_profile,
         required=True,
         args={
@@ -32,7 +32,7 @@ class Query(object):
         }
     )
     continent_profile = graphene.Field(
-        types.ContinentProfileResponse,
+        card_types.ThirdAnnotateRespose,
         resolver=queries.resolve_continent_profile,
         required=True,
         args={

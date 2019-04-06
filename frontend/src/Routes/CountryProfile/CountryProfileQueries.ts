@@ -1,4 +1,6 @@
 import gql from "graphql-tag";
+import { DETAIL_CARD_FRAGMENT } from "src/sharedQueries";
+
 export const COUNTRY_PROFILE = gql`
   query CountryProfile($page: Int!, $countryName: String!) {
     countryProfile(page: $page, countryName: $countryName) {
@@ -37,6 +39,10 @@ export const COUNTRY_PROFILE = gql`
           countryName
         }
       }
+      cards {
+        ...DetailParts
+      }
     }
   }
+  ${DETAIL_CARD_FRAGMENT}
 `;

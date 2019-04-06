@@ -14,14 +14,20 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   page: number;
-  countryName: string;
+  cityList: any;
+  cityModalOpen: boolean;
 }
 
 class CountryProfileContainer extends React.Component<IProps, IState> {
-  public state = {
-    page: 0,
-    countryName: ""
-  };
+  public fetchMore;
+  constructor(props) {
+    super(props);
+    this.state = {
+      page: 0,
+      cityList: null,
+      cityModalOpen: false
+    };
+  }
   public render() {
     const {
       match: {
@@ -30,18 +36,58 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
     } = this.props;
     console.log(this.props);
     console.log(countryName);
-    const { page } = this.state;
+    const { page, cityList, cityModalOpen } = this.state;
     return (
       <CountryProfileQuery
         query={COUNTRY_PROFILE}
         variables={{ page, countryName }}
       >
-        {({ data, loading }) => (
-          <CountryProfilePresenter loading={loading} data={data} />
-        )}
+        {({ data, loading, fetchMore }) => {
+          this.fetchMore = fetchMore;
+          return (
+            <CountryProfilePresenter
+              loading={loading}
+              data={data}
+              cityList={cityList}
+              cityModalOpen={cityModalOpen}
+              toggleCityModal={this.toggleCityModal}
+              toggleCitySeeAll={this.toggleCitySeeAll}
+            />
+          );
+        }}
       </CountryProfileQuery>
     );
   }
+  public toggleCityModal = () => {
+    const { cityModalOpen } = this.state;
+    this.setState({
+      cityModalOpen: !cityModalOpen
+    } as any);
+  };
+  public toggleCitySeeAll = () => {
+    const {
+      match: {
+        params: { countryName }
+      }
+    } = this.props;
+    const { cityModalOpen } = this.state;
+    this.fetchMore({
+      query: COUNTRY_PROFILE,
+      variables: { page: 1, countryName },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return previousResult;
+        }
+        this.setState({
+          cityList: [
+            ...previousResult.countryProfile.cities,
+            ...fetchMoreResult.countryProfile.cities
+          ],
+          cityModalOpen: !cityModalOpen
+        });
+      }
+    });
+  };
 }
 
 export default withRouter(CountryProfileContainer);

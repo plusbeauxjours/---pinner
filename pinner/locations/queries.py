@@ -123,7 +123,7 @@ def resolve_city_profile(self, info, **kwargs):
 
     city = models.City.objects.get(city_name=cityName)
 
-    return card_types.FeedResponse(cards=cards, usersNow=usersNow, usersBefore=usersBefore, city=city)
+    return card_types.FirstAnnotateRespose(cards=cards, usersNow=usersNow, usersBefore=usersBefore, city=city)
 
 
 @login_required
@@ -134,7 +134,7 @@ def resolve_country_profile(self, info, **kwargs):
     page = kwargs.get('page', 0)
     offset = 5 * page
 
-    cities = models.City.objects.filter(country__country_name=countryName)
+    country = models.Country.objects.get(country_name=countryName)
 
     usersNow = User.objects.filter(
         profile__current_city__country__country_name=countryName).order_by('-username').distinct('username')
@@ -142,9 +142,14 @@ def resolve_country_profile(self, info, **kwargs):
     usersBefore = notification_models.MoveNotification.objects.filter(
         city__country__country_name=countryName).order_by('-actor_id').distinct('actor_id')
 
-    country = models.Country.objects.get(country_name=countryName)
+    if (page is 0):
+        cities = models.City.objects.filter(country__country_name=countryName).all()[:6]
+    else:
+        cities = models.City.objects.filter(country__country_name=countryName).all()[6:12]
 
-    return types.CountryProfileResponse(cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country)
+    cards = card_models.Card.objects.filter(city__country__country_name=countryName)
+
+    return card_types.SecondAnnotateRespose(cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country, cards=cards)
 
 
 @login_required
@@ -156,11 +161,15 @@ def resolve_continent_profile(self, info, **kwargs):
     offset = 5 * page
 
     continent = models.Continent.objects.get(continent_name=continentName)
-    print(continent)
 
-    countries = models.Country.objects.filter(continent__continent_name=continentName)
+    if (page is 0):
+        countries = models.Country.objects.filter(continent__continent_name=continentName)[:6]
+    else:
+        countries = models.Country.objects.filter(continent__continent_name=continentName)[6:12]
 
-    return types.ContinentProfileResponse(continent=continent, countries=countries)
+    cards = card_models.Card.objects.filter(city__country__continent__contienet_name=continentName)
+
+    return card_types.ThirdAnnotateRespose(continent=continent, countries=countries, cards=cards)
 
 
 @login_required

@@ -8,6 +8,9 @@ import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import LocationGrid from "../../Components/LocationGrid";
+import CardGrid from "src/Components/CardGrid";
+import { keyframes } from "styled-components";
+import LocationRow from "src/Components/LocationRow";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -134,11 +137,6 @@ const Follow = styled.div`
   padding: 5px;
 `;
 
-const SBold = styled(Bold)`
-  font-size: 20px;
-  font-weight: 200;
-`;
-
 const SAvatar = styled(Avatar)`
   margin: 3px;
 `;
@@ -150,14 +148,102 @@ const Container = styled.div`
   flex-direction: row;
   -webkit-box-flex: 0;
   flex: 0 0 auto;
-  height: 250px;
+  height: 280px;
+  padding: 15px;
+`;
+
+const SBold = styled(Bold)`
+  font-size: 20px;
+  font-weight: 100;
+`;
+
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+`;
+
+const Box = styled.div`
+  width: 905px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  ::-webkit-scrollbar {
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: ${props => props.theme.bgColor};
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    background-color: ${props => props.theme.greyColor};
+  }
+`;
+
+const ModalAnimation = keyframes`
+	  from{
+	    opacity:0;
+	    transform:scale(1.1);
+	  }
+	  to{
+	    opacity:1;
+	    transform:none;
+	  }
+	`;
+
+const ModalContainer = styled.div`
+  z-index: 8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+`;
+
+const GreyLine = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
   border-bottom: 1px solid grey;
-  padding: 20px;
+`;
+
+const ModalOverlay = styled.div`
+  z-index: 5;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+`;
+
+const Modal = styled.div`
+  z-index: 10;
+  animation: ${ModalAnimation} 0.1s linear;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SeeAll = styled.p`
+  font-size: 12px;
+  font-weight: 100;
+  cursor: pointer;
 `;
 
 interface IProps {
   data?: CountryProfile;
   loading: boolean;
+  toggleCitySeeAll: () => void;
+  cityList: any;
+  cityModalOpen: boolean;
+  toggleCityModal: () => void;
 }
 
 const CountryProfilePresenter: React.SFC<IProps> = ({
@@ -166,16 +252,40 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
       cities = null,
       usersNow = null,
       usersBefore = null,
-      country = null
+      country = null,
+      cards = null
     } = {}
   } = {},
-  loading
+  loading,
+  toggleCitySeeAll,
+  cityList,
+  cityModalOpen,
+  toggleCityModal
 }) => {
   if (loading) {
     return <Loader />;
   } else if (!loading && cities && usersNow && usersBefore && country) {
     return (
       <>
+        {cityModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleCityModal} />
+            <Modal>
+              <Wrapper>
+                {cityList.map(nearCity => (
+                  <LocationRow
+                    key={nearCity.id}
+                    id={nearCity.id}
+                    cityName={nearCity.cityName}
+                    avatar={nearCity.cityPhoto}
+                    countryName={nearCity.country.countryName}
+                    type={"nearCity"}
+                  />
+                ))}
+              </Wrapper>
+            </Modal>
+          </ModalContainer>
+        )}
         {console.log(cities, usersNow, usersBefore, country)}
         <PHeader>
           <PAvatar size="lg" url={country.countryPhoto} />
@@ -272,9 +382,22 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
               </Follow>
             </FollowContainer>
           </PBody>
+          <Title>
+            <SBold text={"CITIES"} />
+            <SeeAll onClick={toggleCitySeeAll}>SEE ALL</SeeAll>
+          </Title>
           <Container>
-            {cities && <LocationGrid cities={cities} type={"city"} />}
+            <Box>
+              {!loading && cities ? (
+                <LocationGrid cities={cities} type={"city"} />
+              ) : (
+                <Loader />
+              )}
+            </Box>
           </Container>
+          <GreyLine />
+          <SBold text={"POSTS"} />
+          {cards && cards.length !== 0 && <CardGrid cards={cards} />}
         </SWrapper>
       </>
     );

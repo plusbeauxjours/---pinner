@@ -390,7 +390,7 @@ export interface CityProfile_cityProfile_city {
 }
 
 export interface CityProfile_cityProfile {
-  __typename: "FeedResponse";
+  __typename: "FirstAnnotateRespose";
   cards: (CityProfile_cityProfile_cards | null)[] | null;
   usersNow: (CityProfile_cityProfile_usersNow | null)[] | null;
   usersBefore: (CityProfile_cityProfile_usersBefore | null)[] | null;
@@ -503,7 +503,7 @@ export interface ContinentProfile_continentProfile_countries {
 }
 
 export interface ContinentProfile_continentProfile {
-  __typename: "ContinentProfileResponse";
+  __typename: "ThirdAnnotateRespose";
   continent: ContinentProfile_continentProfile_continent | null;
   countries: (ContinentProfile_continentProfile_countries | null)[] | null;
 }
@@ -588,12 +588,70 @@ export interface CountryProfile_countryProfile_cities {
   country: CountryProfile_countryProfile_cities_country;
 }
 
+export interface CountryProfile_countryProfile_cards_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface CountryProfile_countryProfile_cards_city {
+  __typename: "CityType";
+  cityName: string | null;
+}
+
+export interface CountryProfile_countryProfile_cards_comments_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface CountryProfile_countryProfile_cards_comments {
+  __typename: "CommentType";
+  id: string;
+  message: string;
+  creator: CountryProfile_countryProfile_cards_comments_creator | null;
+}
+
+export interface CountryProfile_countryProfile_cards_creator_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
+}
+
+export interface CountryProfile_countryProfile_cards_creator {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: CountryProfile_countryProfile_cards_creator_profile | null;
+}
+
+export interface CountryProfile_countryProfile_cards {
+  __typename: "CardType";
+  id: string;
+  file: string | null;
+  caption: string;
+  country: CountryProfile_countryProfile_cards_country | null;
+  city: CountryProfile_countryProfile_cards_city | null;
+  likeCount: number | null;
+  commentCount: number | null;
+  isLiked: boolean | null;
+  naturalTime: string | null;
+  comments: (CountryProfile_countryProfile_cards_comments | null)[] | null;
+  creator: CountryProfile_countryProfile_cards_creator;
+}
+
 export interface CountryProfile_countryProfile {
-  __typename: "CountryProfileResponse";
+  __typename: "SecondAnnotateRespose";
   country: CountryProfile_countryProfile_country | null;
   usersNow: (CountryProfile_countryProfile_usersNow | null)[] | null;
   usersBefore: (CountryProfile_countryProfile_usersBefore | null)[] | null;
   cities: (CountryProfile_countryProfile_cities | null)[] | null;
+  cards: (CountryProfile_countryProfile_cards | null)[] | null;
 }
 
 export interface CountryProfile {
