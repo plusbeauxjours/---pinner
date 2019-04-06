@@ -348,6 +348,7 @@ const FeedPresenter: React.SFC<IProps> = ({
               </User>
             </UserContainer>
           </PHeader>
+          <GreyLine />
           <Title>
             <SBold text={"RECOMMAND USER"} />
             <SeeAll onClick={toggleRecommandUserSeeAll}>SEE ALL</SeeAll>
