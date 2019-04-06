@@ -60,13 +60,13 @@ class FeedContainer extends React.Component<IProps, IState> {
       beforeModalOpen: false,
       currentLat: 0,
       currentLng: 0,
-      currentCity: "",
-      currentCountry: "",
-      currentCountryCode: "",
-      currentContinent: "",
-      cityPhotoURL: "",
-      countryPhotoURL: "",
-      continentPhotoURL: ""
+      currentCity: null,
+      currentCountry: null,
+      currentCountryCode: null,
+      currentContinent: null,
+      cityPhotoURL: null,
+      countryPhotoURL: null,
+      continentPhotoURL: null
     };
   }
   public componentDidMount() {

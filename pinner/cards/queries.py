@@ -15,6 +15,8 @@ def resolve_feed(self, info, **kwargs):
     cityName = kwargs.get('cityName')
     offset = 5 * page
 
+    city = location_models.City.objects.get(city_name=cityName)
+
     following_profiles = user.profile.followings.all()
 
     following_cards = models.Card.objects.filter(
@@ -33,13 +35,6 @@ def resolve_feed(self, info, **kwargs):
 
     combined = following_cards.union(city_cards).union(my_cards).order_by(
         '-created_at')[offset:5 + offset]
-
-    city = location_models.City.objects.get(city_name=cityName)
-
-    print("usersNow:", usersNow,
-          "usersBefore:", usersBefore,
-          "combined:", combined,
-          "city:", city)
 
     return types.FeedResponse(cards=combined, usersNow=usersNow, usersBefore=usersBefore, city=city)
 

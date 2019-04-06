@@ -34,12 +34,14 @@ const NotificationPresenter: React.SFC<IProps> = ({
   modalOpen,
   onMarkRead
 }) => {
-  if (getNotifications && getMoveNotifications) {
+  if (getNotificationsLoading || getMoveNotificationsLoading) {
+    return <Loader />;
+  } else if (getNotifications && getMoveNotifications) {
     return (
       <>
         {modalOpen && <Route path="/p/:id" component={CardDetail} />}
         <SWrapper>
-          {!getNotificationsLoading && getNotifications ? (
+          {getNotifications &&
             getNotifications.map(notification => {
               return (
                 <NotificationRow
@@ -51,13 +53,10 @@ const NotificationPresenter: React.SFC<IProps> = ({
                   isRead={notification.read}
                 />
               );
-            })
-          ) : (
-            <Loader />
-          )}
+            })}
         </SWrapper>
         <SWrapper>
-          {!getMoveNotificationsLoading && getMoveNotifications ? (
+          {getMoveNotifications &&
             getMoveNotifications.map(notification => {
               return (
                 <NotificationRow
@@ -69,10 +68,7 @@ const NotificationPresenter: React.SFC<IProps> = ({
                   isRead={notification.read}
                 />
               );
-            })
-          ) : (
-            <Loader />
-          )}
+            })}
         </SWrapper>
       </>
     );
