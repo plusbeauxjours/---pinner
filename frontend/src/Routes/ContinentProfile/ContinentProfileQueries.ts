@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import { DETAIL_CARD_FRAGMENT } from "src/sharedQueries";
 
 export const CONTINENT_PROFILE = gql`
   query ContinentProfile($continentName: String!) {
@@ -16,6 +17,10 @@ export const CONTINENT_PROFILE = gql`
         cityCount
         cardCount
       }
+      cards {
+        ...DetailParts
+      }
     }
   }
+  ${DETAIL_CARD_FRAGMENT}
 `;

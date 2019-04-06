@@ -8,6 +8,9 @@ import Bold from "../../Components/Bold";
 import Flag from "../../Components/Flag";
 import { ContinentProfile } from "../../types/api";
 import LocationGrid from "../../Components/LocationGrid";
+import CardGrid from "src/Components/CardGrid";
+import LocationRow from "src/Components/LocationRow";
+import { keyframes } from "styled-components";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -37,10 +40,6 @@ const PBody = styled.div`
   margin: 20px 0 20px 0;
   justify-content: center;
   background: ${props => props.theme.bgColor};
-  border-bottom: 1px solid grey;
-  &:not(:last-child) {
-    border-bottom: 1px solid grey;
-  }
 `;
 
 const InfoContainer = styled.div`
@@ -96,6 +95,22 @@ const Follow = styled.div`
   border: 1px solid grey;
   padding: 5px;
 `;
+const Container = styled.div`
+  border-bottom: 4px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  -webkit-box-flex: 0;
+  flex: 0 0 auto;
+  height: 280px;
+  padding: 15px;
+`;
+
+const SBold = styled(Bold)`
+  font-size: 20px;
+  font-weight: 100;
+`;
+
 const Title = styled.div`
   display: flex;
   justify-content: space-between;
@@ -124,10 +139,52 @@ const Box = styled.div`
   }
 `;
 
-const SBold = styled(Bold)`
-  font-size: 20px;
-  font-weight: 100;
+const ModalAnimation = keyframes`
+	  from{
+	    opacity:0;
+	    transform:scale(1.1);
+	  }
+	  to{
+	    opacity:1;
+	    transform:none;
+	  }
+	`;
+
+const ModalContainer = styled.div`
+  z-index: 8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
 `;
+
+const GreyLine = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid grey;
+`;
+
+const ModalOverlay = styled.div`
+  z-index: 5;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+`;
+
+const Modal = styled.div`
+  z-index: 10;
+  animation: ${ModalAnimation} 0.1s linear;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const SeeAll = styled.p`
   font-size: 12px;
   font-weight: 100;
@@ -141,30 +198,24 @@ const FlagGrid = styled.div`
   padding: 20px;
 `;
 
-const Container = styled.div`
-  border-bottom: 4px;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  -webkit-box-flex: 0;
-  flex: 0 0 auto;
-  height: 250px;
-  border-bottom: 1px solid grey;
-  padding: 20px;
-`;
-
 const AvatarContainer = styled.div``;
 
 interface IProps {
   data?: ContinentProfile;
   loading: boolean;
+  toggleCountrySeeAll: () => void;
+  countryList: any;
   countryModalOpen: boolean;
   toggleCountryModal: () => void;
 }
 
 const ContinentProfilePresenter: React.SFC<IProps> = ({
-  data: { continentProfile: { continent = null, countries = null } = {} } = {},
+  data: {
+    continentProfile: { continent = null, countries = null, cards = null } = {}
+  } = {},
   loading,
+  toggleCountrySeeAll,
+  countryList,
   countryModalOpen,
   toggleCountryModal
 }) => {
@@ -173,6 +224,25 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
   } else if (!loading && continent && countries) {
     return (
       <>
+        {countryModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleCountryModal} />
+            <Modal>
+              <Wrapper>
+                {countryList.map(list => (
+                  <LocationRow
+                    key={list.id}
+                    id={list.id}
+                    cityName={list.cityName}
+                    avatar={list.cityPhoto}
+                    countryName={list.country.countryName}
+                    type={"nearCountry"}
+                  />
+                ))}
+              </Wrapper>
+            </Modal>
+          </ModalContainer>
+        )}
         <PHeader>
           <PAvatar size="lg" url={continent.continentPhoto} />
           <Username>{continent.continentName}</Username>
@@ -238,8 +308,8 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
             </FollowContainer>
           </PBody>{" "}
           <Title>
-            <SBold text={"NEAR COUNTRIES"} />
-            <SeeAll onClick={toggleCountryModal}>SEE ALL</SeeAll>
+            <SBold text={"COUNTRIES"} />
+            <SeeAll onClick={toggleCountrySeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <Box>
@@ -250,6 +320,9 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
+          <GreyLine />
+          <SBold text={"POSTS"} />
+          {cards && cards.length !== 0 && <CardGrid cards={cards} />}
         </SWrapper>
       </>
     );

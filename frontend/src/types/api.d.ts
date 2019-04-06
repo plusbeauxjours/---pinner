@@ -502,10 +502,68 @@ export interface ContinentProfile_continentProfile_countries {
   cardCount: number | null;
 }
 
+export interface ContinentProfile_continentProfile_cards_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface ContinentProfile_continentProfile_cards_city {
+  __typename: "CityType";
+  cityName: string | null;
+}
+
+export interface ContinentProfile_continentProfile_cards_comments_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface ContinentProfile_continentProfile_cards_comments {
+  __typename: "CommentType";
+  id: string;
+  message: string;
+  creator: ContinentProfile_continentProfile_cards_comments_creator | null;
+}
+
+export interface ContinentProfile_continentProfile_cards_creator_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
+}
+
+export interface ContinentProfile_continentProfile_cards_creator {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: ContinentProfile_continentProfile_cards_creator_profile | null;
+}
+
+export interface ContinentProfile_continentProfile_cards {
+  __typename: "CardType";
+  id: string;
+  file: string | null;
+  caption: string;
+  country: ContinentProfile_continentProfile_cards_country | null;
+  city: ContinentProfile_continentProfile_cards_city | null;
+  likeCount: number | null;
+  commentCount: number | null;
+  isLiked: boolean | null;
+  naturalTime: string | null;
+  comments: (ContinentProfile_continentProfile_cards_comments | null)[] | null;
+  creator: ContinentProfile_continentProfile_cards_creator;
+}
+
 export interface ContinentProfile_continentProfile {
   __typename: "ThirdAnnotateRespose";
   continent: ContinentProfile_continentProfile_continent | null;
   countries: (ContinentProfile_continentProfile_countries | null)[] | null;
+  cards: (ContinentProfile_continentProfile_cards | null)[] | null;
 }
 
 export interface ContinentProfile {

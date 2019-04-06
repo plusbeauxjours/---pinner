@@ -163,11 +163,11 @@ def resolve_continent_profile(self, info, **kwargs):
     continent = models.Continent.objects.get(continent_name=continentName)
 
     if (page is 0):
-        countries = models.Country.objects.filter(continent__continent_name=continentName)[:6]
+        countries = continent.countries.filter(continent__continent_name=continentName)[:6]
     else:
-        countries = models.Country.objects.filter(continent__continent_name=continentName)[6:12]
+        countries = continent.countries.filter(continent__continent_name=continentName)[6:12]
 
-    cards = card_models.Card.objects.filter(city__country__continent__contienet_name=continentName)
+    cards = card_models.Card.objects.filter(city__country__continent__continent_name=continentName)
 
     return card_types.ThirdAnnotateRespose(continent=continent, countries=countries, cards=cards)
 

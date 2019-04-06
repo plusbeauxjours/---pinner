@@ -272,13 +272,13 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
             <ModalOverlay onClick={toggleCityModal} />
             <Modal>
               <Wrapper>
-                {cityList.map(nearCity => (
+                {cityList.map(list => (
                   <LocationRow
-                    key={nearCity.id}
-                    id={nearCity.id}
-                    cityName={nearCity.cityName}
-                    avatar={nearCity.cityPhoto}
-                    countryName={nearCity.country.countryName}
+                    key={list.id}
+                    id={list.id}
+                    cityName={list.cityName}
+                    avatar={list.cityPhoto}
+                    countryName={list.country.countryName}
                     type={"nearCity"}
                   />
                 ))}
