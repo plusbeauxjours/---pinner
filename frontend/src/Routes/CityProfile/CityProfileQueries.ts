@@ -1,5 +1,9 @@
 import gql from "graphql-tag";
-import { DETAIL_CARD_FRAGMENT } from "src/sharedQueries";
+import {
+  DETAIL_CARD_FRAGMENT,
+  CITY_FRAGMENT,
+  COUNTRY_FRAGMENT
+} from "src/sharedQueries";
 
 export const CITY_PROFILE = gql`
   query CityProfile($page: Int!, $cityName: String!) {
@@ -40,15 +44,24 @@ export const CITY_PROFILE = gql`
   ${DETAIL_CARD_FRAGMENT}
 `;
 
-export const GET_HEATMAP_DATA = gql`
-  query GetHeatmapData($page: Int, $cityName: String!) {
-    getHeatmapData(page: $page, cityName: $cityName) {
-      startDate
-      endDate
-      cards {
-        date
-        count
+export const NEAR_CITIES = gql`
+  query NearCities($nearCityPage: Int) {
+    nearCities(nearCityPage: $nearCityPage) {
+      cities {
+        ...CityParts
       }
     }
   }
+  ${CITY_FRAGMENT}
+`;
+
+export const NEAR_COUNTRIES = gql`
+  query NearCountries($nearCountryPage: Int) {
+    nearCountries(nearCountryPage: $nearCountryPage) {
+      countries {
+        ...CountryParts
+      }
+    }
+  }
+  ${COUNTRY_FRAGMENT}
 `;

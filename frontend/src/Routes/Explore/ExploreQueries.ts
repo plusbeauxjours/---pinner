@@ -1,9 +1,5 @@
 import { gql } from "apollo-boost";
-import {
-  USER_FRAGMENT,
-  CITY_FRAGMENT,
-  COUNTRY_FRAGMENT
-} from "src/sharedQueries";
+import { USER_FRAGMENT, CITY_FRAGMENT } from "src/sharedQueries";
 
 export const RECOMMAND_USERS = gql`
   query RecommandUsers($recommandUserPage: Int) {
@@ -14,28 +10,6 @@ export const RECOMMAND_USERS = gql`
     }
   }
   ${USER_FRAGMENT}
-`;
-
-export const NEAR_CITIES = gql`
-  query NearCities($nearCityPage: Int) {
-    nearCities(nearCityPage: $nearCityPage) {
-      cities {
-        ...CityParts
-      }
-    }
-  }
-  ${CITY_FRAGMENT}
-`;
-
-export const NEAR_COUNTRIES = gql`
-  query NearCountries($nearCountryPage: Int) {
-    nearCountries(nearCountryPage: $nearCountryPage) {
-      countries {
-        ...CountryParts
-      }
-    }
-  }
-  ${COUNTRY_FRAGMENT}
 `;
 
 export const LATEST_CITIES = gql`

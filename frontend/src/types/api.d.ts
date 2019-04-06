@@ -411,6 +411,75 @@ export interface CityProfileVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: NearCities
+// ====================================================
+
+export interface NearCities_nearCities_cities_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface NearCities_nearCities_cities {
+  __typename: "CityType";
+  id: string;
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: NearCities_nearCities_cities_country;
+}
+
+export interface NearCities_nearCities {
+  __typename: "CitiesResponse";
+  cities: (NearCities_nearCities_cities | null)[] | null;
+}
+
+export interface NearCities {
+  nearCities: NearCities_nearCities;
+}
+
+export interface NearCitiesVariables {
+  nearCityPage?: number | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: NearCountries
+// ====================================================
+
+export interface NearCountries_nearCountries_countries_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
+export interface NearCountries_nearCountries_countries {
+  __typename: "CountryType";
+  id: string;
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+  continent: NearCountries_nearCountries_countries_continent | null;
+}
+
+export interface NearCountries_nearCountries {
+  __typename: "CountriesResponse";
+  countries: (NearCountries_nearCountries_countries | null)[] | null;
+}
+
+export interface NearCountries {
+  nearCountries: NearCountries_nearCountries;
+}
+
+export interface NearCountriesVariables {
+  nearCountryPage?: number | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetHeatmapData
 // ====================================================
 
@@ -611,75 +680,6 @@ export interface RecommandUsers {
 
 export interface RecommandUsersVariables {
   recommandUserPage?: number | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: NearCities
-// ====================================================
-
-export interface NearCities_nearCities_cities_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface NearCities_nearCities_cities {
-  __typename: "CityType";
-  id: string;
-  cityName: string | null;
-  cityPhoto: string | null;
-  country: NearCities_nearCities_cities_country;
-}
-
-export interface NearCities_nearCities {
-  __typename: "CitiesResponse";
-  cities: (NearCities_nearCities_cities | null)[] | null;
-}
-
-export interface NearCities {
-  nearCities: NearCities_nearCities;
-}
-
-export interface NearCitiesVariables {
-  nearCityPage?: number | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: NearCountries
-// ====================================================
-
-export interface NearCountries_nearCountries_countries_continent {
-  __typename: "ContinentType";
-  continentName: string | null;
-}
-
-export interface NearCountries_nearCountries_countries {
-  __typename: "CountryType";
-  id: string;
-  countryName: string | null;
-  countryCode: string | null;
-  countryPhoto: string | null;
-  continent: NearCountries_nearCountries_countries_continent | null;
-}
-
-export interface NearCountries_nearCountries {
-  __typename: "CountriesResponse";
-  countries: (NearCountries_nearCountries_countries | null)[] | null;
-}
-
-export interface NearCountries {
-  nearCountries: NearCountries_nearCountries;
-}
-
-export interface NearCountriesVariables {
-  nearCountryPage?: number | null;
 }
 
 

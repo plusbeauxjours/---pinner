@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  NearCities,
-  NearCountries,
-  RecommandUsers,
-  LatestCities
-} from "../../types/api";
+import { RecommandUsers, LatestCities } from "../../types/api";
 import styled from "../../Styles/typed-components";
 
 import Loader from "../../Components/Loader";
@@ -120,26 +115,19 @@ const SeeAll = styled.p`
 interface IProps {
   recommandUsersData?: RecommandUsers;
   recommandUsersLoading: boolean;
-  nearCitiesData?: NearCities;
-  nearCitiesLoading: boolean;
-  nearCountriesData?: NearCountries;
-  nearCountriesLoading: boolean;
+
   latestCitiesData?: LatestCities;
   latestCitiesLoading: boolean;
   toggleRecommandUserSeeAll: () => void;
-  toggleNearCitySeeAll: () => void;
-  toggleNearCountrySeeAll: () => void;
+
   toggleLatestCitySeeAll: () => void;
   recommandUserList: any;
-  nearCityList: any;
-  nearCountryList: any;
+
   latestCityList: any;
-  nearCityModalOpen: boolean;
-  nearCountryModalOpen: boolean;
+
   latestCityModalOpen: boolean;
   recommandUserModalOpen: boolean;
-  toggleNearCityModal: () => void;
-  toggleNearCountryModal: () => void;
+
   toggleLatestCityModal: () => void;
   toggleRecommandUserModal: () => void;
 }
@@ -147,30 +135,23 @@ interface IProps {
 const ExplorePresenter: React.SFC<IProps> = ({
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},
   recommandUsersLoading,
-  nearCitiesData: { nearCities: { cities: nearCities = null } = {} } = {},
-  nearCitiesLoading,
-  nearCountriesData: { nearCountries: { countries = null } = {} } = {},
-  nearCountriesLoading,
+
   latestCitiesData: { latestCities: { cities: latestCities = null } = {} } = {},
   latestCitiesLoading,
   toggleRecommandUserSeeAll,
-  toggleNearCitySeeAll,
-  toggleNearCountrySeeAll,
+
   toggleLatestCitySeeAll,
   recommandUserList,
-  nearCityList,
-  nearCountryList,
+
   latestCityList,
   toggleRecommandUserModal,
-  toggleNearCityModal,
-  toggleNearCountryModal,
+
   toggleLatestCityModal,
   recommandUserModalOpen,
-  nearCityModalOpen,
-  nearCountryModalOpen,
+
   latestCityModalOpen
 }) => {
-  if (users || nearCities || countries || latestCities) {
+  if (users || latestCities) {
     return (
       <>
         {recommandUserModalOpen && (
@@ -196,44 +177,7 @@ const ExplorePresenter: React.SFC<IProps> = ({
             </Modal>
           </ModalContainer>
         )}
-        {nearCityModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleNearCityModal} />
-            <Modal>
-              <Wrapper>
-                {nearCityList.map(city => (
-                  <LocationRow
-                    key={city.id}
-                    id={city.id}
-                    cityName={city.cityName}
-                    avatar={city.cityPhoto}
-                    countryName={city.country.countryName}
-                    type={"nearCity"}
-                  />
-                ))}
-              </Wrapper>
-            </Modal>
-          </ModalContainer>
-        )}
-        {nearCountryModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleNearCountryModal} />
-            <Modal>
-              <Wrapper>
-                {nearCountryList.map(country => (
-                  <LocationRow
-                    key={country.id}
-                    id={country.id}
-                    avatar={country.countryPhoto}
-                    countryName={country.countryName}
-                    continentName={country.continent.continentName}
-                    type={"nearCountry"}
-                  />
-                ))}
-              </Wrapper>
-            </Modal>
-          </ModalContainer>
-        )}
+
         {latestCityModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleLatestCityModal} />
@@ -268,34 +212,7 @@ const ExplorePresenter: React.SFC<IProps> = ({
             </Box>
           </Container>
           <GreyLine />
-          <Title>
-            <SBold text={"NEAR CITIES"} />
-            <SeeAll onClick={toggleNearCitySeeAll}>SEE ALL</SeeAll>
-          </Title>
-          <Container>
-            <Box>
-              {!nearCitiesLoading && nearCities ? (
-                <LocationGrid cities={nearCities} type={"city"} />
-              ) : (
-                <Loader />
-              )}
-            </Box>
-          </Container>
-          <GreyLine />
 
-          <Title>
-            <SBold text={"NEAR COUNTRIES"} />
-            <SeeAll onClick={toggleNearCountrySeeAll}>SEE ALL</SeeAll>
-          </Title>
-          <Container>
-            <Box>
-              {!nearCountriesLoading && countries ? (
-                <LocationGrid countries={countries} type={"country"} />
-              ) : (
-                <Loader />
-              )}
-            </Box>
-          </Container>
           <GreyLine />
           <Title>
             <SBold text={"LATEST CITIES"} />

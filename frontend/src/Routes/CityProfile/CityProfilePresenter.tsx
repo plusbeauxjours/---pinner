@@ -1,7 +1,7 @@
 import React from "react";
+import { NearCities, NearCountries } from "../../types/api";
 import { Link } from "react-router-dom";
 import styled from "../../Styles/typed-components";
-import CalendarHeatmap from "react-calendar-heatmap";
 import "react-calendar-heatmap/dist/styles.css";
 
 import Wrapper from "../../Components/Wrapper";
@@ -9,9 +9,23 @@ import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import CardGrid from "../../Components/CardGrid";
+import { keyframes } from "styled-components";
+import LocationGrid from "src/Components/LocationGrid";
+import LocationRow from "src/Components/LocationRow";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
+`;
+
+const Container = styled.div`
+  border-bottom: 4px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  -webkit-box-flex: 0;
+  flex: 0 0 auto;
+  height: 280px;
+  padding: 15px;
 `;
 
 const PHeader = styled.header`
@@ -47,10 +61,6 @@ const PBody = styled.div`
   margin: 20px 0 20px 0;
   justify-content: center;
   background: ${props => props.theme.bgColor};
-  border-bottom: 1px solid grey;
-  &:not(:last-child) {
-    border-bottom: 1px solid grey;
-  }
 `;
 
 const CityPhoto = styled.img`
@@ -137,11 +147,61 @@ const Follow = styled.div`
 
 const SBold = styled(Bold)`
   font-size: 20px;
-  font-weight: 200;
+  font-weight: 100;
 `;
 
 const SAvatar = styled(Avatar)`
   margin: 3px;
+`;
+
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+`;
+
+const Box = styled.div`
+  width: 905px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  ::-webkit-scrollbar {
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: ${props => props.theme.bgColor};
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    background-color: ${props => props.theme.greyColor};
+  }
+`;
+
+const ModalAnimation = keyframes`
+	  from{
+	    opacity:0;
+	    transform:scale(1.1);
+	  }
+	  to{
+	    opacity:1;
+	    transform:none;
+	  }
+	`;
+
+const ModalContainer = styled.div`
+  z-index: 8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
 `;
 
 const GreyLine = styled.div`
@@ -150,11 +210,45 @@ const GreyLine = styled.div`
   border-bottom: 1px solid grey;
 `;
 
+const ModalOverlay = styled.div`
+  z-index: 5;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+`;
+
+const Modal = styled.div`
+  z-index: 10;
+  animation: ${ModalAnimation} 0.1s linear;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SeeAll = styled.p`
+  font-size: 12px;
+  font-weight: 100;
+  cursor: pointer;
+`;
+
 interface IProps {
   cityData?: any;
   cityLoading: boolean;
-  heatmapData?: any;
-  heatmapLoading: boolean;
+  nearCitiesData?: NearCities;
+  nearCitiesLoading: boolean;
+  nearCountriesData?: NearCountries;
+  nearCountriesLoading: boolean;
+  toggleNearCitySeeAll: () => void;
+  toggleNearCountrySeeAll: () => void;
+  nearCityList: any;
+  nearCountryList: any;
+  nearCityModalOpen: boolean;
+  nearCountryModalOpen: boolean;
+  toggleNearCityModal: () => void;
+  toggleNearCountryModal: () => void;
 }
 
 const CityProfilePresenter: React.SFC<IProps> = ({
@@ -167,19 +261,62 @@ const CityProfilePresenter: React.SFC<IProps> = ({
     } = {}
   } = {},
   cityLoading,
-  heatmapData: {
-    getHeatmapData: {
-      cards: counts = null,
-      startDate = null,
-      endDate = null
-    } = {}
-  } = {}
+  nearCitiesData: { nearCities: { cities: nearCities = null } = {} } = {},
+  nearCitiesLoading,
+  nearCountriesData: { nearCountries: { countries = null } = {} } = {},
+  nearCountriesLoading,
+  toggleNearCitySeeAll,
+  toggleNearCountrySeeAll,
+  nearCityList,
+  nearCountryList,
+  toggleNearCityModal,
+  toggleNearCountryModal,
+  nearCityModalOpen,
+  nearCountryModalOpen
 }) => {
   if (cityLoading) {
     return <Loader />;
   } else if (!cityLoading && cards && usersNow && usersBefore && city) {
     return (
       <>
+        {nearCityModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleNearCityModal} />
+            <Modal>
+              <Wrapper>
+                {nearCityList.map(nearCity => (
+                  <LocationRow
+                    key={nearCity.id}
+                    id={nearCity.id}
+                    cityName={nearCity.cityName}
+                    avatar={nearCity.cityPhoto}
+                    countryName={nearCity.country.countryName}
+                    type={"nearCity"}
+                  />
+                ))}
+              </Wrapper>
+            </Modal>
+          </ModalContainer>
+        )}
+        {nearCountryModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleNearCountryModal} />
+            <Modal>
+              <Wrapper>
+                {nearCountryList.map(nearCountry => (
+                  <LocationRow
+                    key={nearCountry.id}
+                    id={nearCountry.id}
+                    avatar={nearCountry.countryPhoto}
+                    countryName={nearCountry.countryName}
+                    continentName={nearCountry.continent.continentName}
+                    type={"nearCountry"}
+                  />
+                ))}
+              </Wrapper>
+            </Modal>
+          </ModalContainer>
+        )}
         <PHeader>
           <PAvatar size="lg" url={city.cityPhoto} />
           <Username>{city.cityName}</Username>
@@ -274,19 +411,38 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               </Follow>
             </FollowContainer>
           </PBody>
-          {console.log(startDate, endDate, counts)}
-          <CalendarHeatmap
-            startDate={startDate}
-            endDate={endDate}
-            values={counts.map(count => count)}
-            classForValue={value => {
-              if (!value) {
-                return "color-empty";
-              }
-              return `color-scale-${value.count}`;
-            }}
-          />
           <GreyLine />
+          <Title>
+            <SBold text={"NEAR CITIES"} />
+            <SeeAll onClick={toggleNearCitySeeAll}>SEE ALL</SeeAll>
+          </Title>
+          <Container>
+            <Box>
+              {!nearCitiesLoading && nearCities ? (
+                <LocationGrid cities={nearCities} type={"city"} />
+              ) : (
+                <Loader />
+              )}
+            </Box>
+          </Container>
+          <GreyLine />
+
+          <Title>
+            <SBold text={"NEAR COUNTRIES"} />
+            <SeeAll onClick={toggleNearCountrySeeAll}>SEE ALL</SeeAll>
+          </Title>
+          <Container>
+            <Box>
+              {!nearCountriesLoading && countries ? (
+                <LocationGrid countries={countries} type={"country"} />
+              ) : (
+                <Loader />
+              )}
+            </Box>
+          </Container>
+          <GreyLine />
+          <SBold text={"POSTS"} />
+
           {cards && cards.length !== 0 && <CardGrid cards={cards} />}
         </SWrapper>
       </>
