@@ -2,7 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
-import { Profile, Compass, HeartEmpty, Upload } from "../../Icons";
+import { Profile, HeartEmpty, Upload } from "../../Icons";
+// import { Compass } from "../../Icons";
+
 import Wrapper from "../Wrapper";
 import Me from "../Me";
 
@@ -81,11 +83,11 @@ const HeaderPresenter: React.SFC<IProps> = ({ onSubmit, onChange, search }) => (
           </svg>
         </Link>
       </Column>
-      <Icon>
+      {/* <Icon>
         <Link to="/explore">
           <Compass />
         </Link>
-      </Icon>
+      </Icon> */}
       <Icon>
         <Link to="/upload">
           <Upload />

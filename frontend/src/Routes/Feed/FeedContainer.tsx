@@ -1,5 +1,5 @@
 import React from "react";
-import { Query, Mutation, MutationFn } from "react-apollo";
+import { Mutation, MutationFn, Query } from "react-apollo";
 import FeedPresenter from "./FeedPresenter";
 import {
   ReportLocation,
@@ -11,7 +11,7 @@ import {
 import { RouteComponentProps } from "react-router";
 import { REPORT_LOCATION } from "../Home/HomeQueries";
 import { reverseGeoCode } from "../../mapHelpers";
-import { GET_FEED, RECOMMAND_USERS } from "./FeedQueries";
+import { RECOMMAND_USERS, GET_FEED } from "./FeedQueries";
 import {
   cityThumbnail,
   countryThumbnail,

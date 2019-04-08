@@ -441,7 +441,10 @@ const CityProfilePresenter: React.SFC<IProps> = ({
             </Box>
           </Container>
           <GreyLine />
-          <SBold text={"POSTS"} />
+          <Title>
+            <SBold text={"POSTS"} />
+            <SeeAll>SEE ALL</SeeAll>
+          </Title>
           {cards && cards.length !== 0 && <CardGrid cards={cards} />}
         </SWrapper>
       </>

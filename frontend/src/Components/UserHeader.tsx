@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import Bold from "./Bold";
 import Avatar from "./Avatar";
 
@@ -45,8 +44,8 @@ const UserHeader: React.SFC<IProps> = ({
   currentCity,
   currentCountry,
   size
-}) => (
-  <Link to={`/${username}`}>
+}) => {
+  return (
     <Header>
       <SAvatar size={size} url={avatar} />
       <HeaderColumn>
@@ -56,7 +55,7 @@ const UserHeader: React.SFC<IProps> = ({
         </Location>
       </HeaderColumn>
     </Header>
-  </Link>
-);
+  );
+};
 
 export default UserHeader;

@@ -218,7 +218,7 @@ const FeedPresenter: React.SFC<IProps> = ({
 }) => {
   if (loading) {
     return <Loader />;
-  } else if (!loading && cards && usersNow && usersBefore && city) {
+  } else if (!loading && usersNow && usersBefore && city) {
     return (
       <>
         {console.log(

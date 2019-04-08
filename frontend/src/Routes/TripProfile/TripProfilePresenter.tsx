@@ -469,12 +469,16 @@ const TripProfilePresenter: React.SFC<IProps> = ({
             <SBold text={"POSTS"} />
             <SeeAll>SEE ALL</SeeAll>
           </Title>
-          {!cardsLoading && cards ? <CardGrid cards={cards} /> : <Loader />}
+          {!cardsLoading && cards && cards.length !== 0 ? (
+            <CardGrid cards={cards} />
+          ) : (
+            <Loader />
+          )}
         </SWrapper>
       </>
     );
   }
-  return <p>goodmorning</p>;
+  return null;
 };
 
 export default TripProfilePresenter;

@@ -98,10 +98,10 @@ def resolve_recommand_users(self, info, **kwargs):
     recommandUserPage = kwargs.get('recommandUserPage', 0)
 
     if (recommandUserPage is 0):
-        users = models.User.objects.filter().exclude(pk=user.pk).order_by(
+        users = models.User.objects.all().exclude(pk=user.pk).order_by(
             '-date_joined')[:9]
     else:
-        users = models.User.objects.filter().exclude(pk=user.pk).order_by(
+        users = models.User.objects.all().exclude(pk=user.pk).order_by(
             '-date_joined')[9:18]
 
     print(users)
@@ -114,7 +114,7 @@ def resolve_user_list(self, info):
 
     user = info.context.user
 
-    users = models.User.objects.filter().exclude(pk=user.pk).order_by(
+    users = models.User.objects.all().exclude(pk=user.pk).order_by(
         '-date_joined')
 
     return types.UserListResponse(users=users)

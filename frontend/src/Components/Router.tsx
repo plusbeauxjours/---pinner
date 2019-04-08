@@ -11,7 +11,7 @@ import Feed from "../Routes/Feed";
 import CardDetail from "../Routes/CardDetail";
 import Search from "../Routes/Search";
 import UpLoad from "../Routes/UpLoad";
-import Explore from "../Routes/Explore";
+// import Explore from "../Routes/Explore";
 import UserList from "../Routes/UserList";
 import Notification from "../Routes/Notification";
 import Footprint from "../Routes/Footprint";
@@ -42,7 +42,7 @@ const LoggedInPages = () => (
       <Route path="/p/:id" component={CardDetail} />
       <Route path="/search" component={Search} />
       <Route path="/upload" component={UpLoad} />
-      <Route path="/explore" exact={true} component={Explore} />
+      {/* <Route path="/explore" exact={true} component={Explore} /> */}
       <Route path="/explore/userlist" component={UserList} />
       <Route path="/notification" component={Notification} />
       <Route path="/continent/:continentName" component={ContinentProfile} />
