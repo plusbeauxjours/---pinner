@@ -11,6 +11,7 @@ import Flag from "../../Components/Flag";
 import UserRow from "../../Components/UserRow";
 import { keyframes } from "styled-components";
 import UserGrid from "src/Components/UserGrid";
+import { Upload } from "../../Icons";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -177,6 +178,18 @@ const SeeAll = styled.p`
   font-size: 12px;
   font-weight: 100;
   cursor: pointer;
+`;
+
+const Icon = styled.span`
+  display: flex;
+  justify-items: center;
+  margin-right: 30px;
+  &:last-child {
+    margin-right: 0;
+  }
+  svg {
+    fill: white;
+  }
 `;
 
 interface IProps {
@@ -348,6 +361,7 @@ const FeedPresenter: React.SFC<IProps> = ({
               </User>
             </UserContainer>
           </PHeader>
+          <GreyLine />
           <Title>
             <SBold text={"RECOMMAND USER"} />
             <SeeAll onClick={toggleRecommandUserSeeAll}>SEE ALL</SeeAll>
@@ -360,6 +374,14 @@ const FeedPresenter: React.SFC<IProps> = ({
                 <Loader />
               )}
             </Box>
+          </Container>
+          <GreyLine />
+          <Container>
+            <Icon>
+              <Link to="/upload">
+                <Upload />
+              </Link>
+            </Icon>
           </Container>
           <GreyLine />
           <PBody />
