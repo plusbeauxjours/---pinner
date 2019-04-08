@@ -198,20 +198,25 @@ class FeedContainer extends React.Component<IProps, IState> {
     const currentContinent = await continents[currentCountryCode];
     const continentPhotoURL = await continentThumbnail(currentContinent);
     console.log(currentContinent);
-    this.setState({ cityPhotoURL, countryPhotoURL, currentContinent });
-    this.ReportLocationFn({
-      variables: {
-        currentLat: lat,
-        currentLng: lng,
-        currentCity,
-        currentCountry,
-        currentCountryCode,
-        currentContinent,
-        cityPhotoURL,
-        countryPhotoURL,
-        continentPhotoURL
-      }
+    this.setState({
+      cityPhotoURL,
+      countryPhotoURL,
+      currentContinent,
+      continentPhotoURL
     });
+    // this.ReportLocationFn({
+    //   variables: {
+    //     currentLat: lat,
+    //     currentLng: lng,
+    //     currentCity,
+    //     currentCountry,
+    //     currentCountryCode,
+    //     currentContinent,
+    //     cityPhotoURL,
+    //     countryPhotoURL,
+    //     continentPhotoURL
+    //   }
+    // });
     console.log(this.state);
   };
   public handleGeoError = () => {
