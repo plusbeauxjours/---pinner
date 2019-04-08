@@ -2,6 +2,7 @@ import React from "react";
 import styled from "src/Styles/typed-components";
 import FollowBtn from "./FollowBtn";
 import UserHeader from "./UserHeader";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   background-color: #2d3a41;
@@ -49,18 +50,24 @@ const UserRow: React.SFC<IProps> = ({
   isFollowing
 }) => {
   return (
-    <Container>
-      <UserHeader
-        username={username}
-        currentCity={currentCity}
-        currentCountry={currentCountry}
-        avatar={avatar}
-        size={"sm"}
-      />
-      {!isSelf && (
-        <FollowBtn isFollowing={isFollowing} userId={id} username={username} />
-      )}
-    </Container>
+    <Link to={`/${username}`}>
+      <Container>
+        <UserHeader
+          username={username}
+          currentCity={currentCity}
+          currentCountry={currentCountry}
+          avatar={avatar}
+          size={"sm"}
+        />
+        {!isSelf && (
+          <FollowBtn
+            isFollowing={isFollowing}
+            userId={id}
+            username={username}
+          />
+        )}
+      </Container>
+    </Link>
   );
 };
 export default UserRow;

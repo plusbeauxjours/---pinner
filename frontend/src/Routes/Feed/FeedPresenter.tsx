@@ -7,7 +7,6 @@ import Wrapper from "../../Components/Wrapper";
 import styled from "../../Styles/typed-components";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
-import Flag from "../../Components/Flag";
 import UserRow from "../../Components/UserRow";
 import { keyframes } from "styled-components";
 import UserGrid from "src/Components/UserGrid";
@@ -20,20 +19,13 @@ const SWrapper = styled(Wrapper)`
 const PHeader = styled.header`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  height: 55px;
 
   border: 1px;
   border-color: white;
   margin-top: 20px;
 `;
 
-const LocationContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: center;
-`;
-
-const LocationHeader = styled.header`
+const Header = styled.header`
   padding: 12px;
   margin: 0 15px 0 15px;
   display: flex;
@@ -44,10 +36,11 @@ const LocationHeader = styled.header`
 `;
 
 const HeaderColumn = styled.div`
-  margin-left: 30px;
+  margin-left: 15px;
 `;
 
 const Location = styled.span`
+  display: flex;
   margin-top: 5px;
   display: block;
   font-size: 12px;
@@ -65,6 +58,7 @@ const PBody = styled.div`
 const UserContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  align-content: center;
 `;
 
 const User = styled.div`
@@ -88,6 +82,32 @@ const AvatarContainer = styled.div`
 
 const SAvatar = styled(Avatar)`
   margin-right: -12px;
+`;
+
+const CityPhoto = styled.img<ITheme>`
+  display: flex;
+  width: ${props => {
+    if (props.size === "md") {
+      return "200px";
+    } else if (props.size === "sm") {
+      return "50px";
+    } else {
+      return "200px";
+    }
+  }};
+  height: ${props => {
+    if (props.size === "md") {
+      return "200px";
+    } else if (props.size === "sm") {
+      return "50px";
+    } else {
+      return "200px";
+    }
+  }};
+  background-size: cover;
+  border-radius: 3px;
+  z-index: 1;
+  object-fit: cover;
 `;
 
 const ModalAnimation = keyframes`
@@ -191,6 +211,10 @@ const Icon = styled.span`
     fill: white;
   }
 `;
+
+interface ITheme {
+  size?: string;
+}
 
 interface IProps {
   data?: any;
@@ -317,19 +341,22 @@ const FeedPresenter: React.SFC<IProps> = ({
         )}
         <SWrapper>
           <PHeader>
-            <LocationContainer>
+            <UserContainer>
               <Link to={`/city/${city.cityName}`}>
-                <LocationHeader>
-                  <Flag countryCode={city.country.countryCode} size={"sm"} />
+                <Header>
+                  <CityPhoto src={city.cityPhoto} size={"sm"} />
+
                   <HeaderColumn>
                     <SBold text={city.cityName} />
                     <Location>{city.country.countryName}</Location>
                   </HeaderColumn>
-                </LocationHeader>
+                </Header>
               </Link>
-              <p>Temp</p>
-              <p>AQI</p>
-            </LocationContainer>
+              <UserContainer>
+                <p>Temp</p>
+                <p>AQI</p>
+              </UserContainer>
+            </UserContainer>
             <UserContainer>
               <User onClick={toggleNowModal}>
                 {usersNow &&
