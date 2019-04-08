@@ -233,9 +233,9 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
                   <LocationRow
                     key={list.id}
                     id={list.id}
-                    cityName={list.cityName}
-                    avatar={list.cityPhoto}
-                    countryName={list.country.countryName}
+                    avatar={list.countryPhoto}
+                    countryName={list.countryName}
+                    continentName={list.continent.continentName}
                     type={"nearCountry"}
                   />
                 ))}
@@ -306,7 +306,8 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
                 </FlagGrid>
               </Follow>
             </FollowContainer>
-          </PBody>{" "}
+          </PBody>
+          <GreyLine />
           <Title>
             <SBold text={"COUNTRIES"} />
             <SeeAll onClick={toggleCountrySeeAll}>SEE ALL</SeeAll>

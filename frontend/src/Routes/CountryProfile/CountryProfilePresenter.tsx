@@ -49,10 +49,6 @@ const PBody = styled.div`
   margin: 20px 0 20px 0;
   justify-content: center;
   background: ${props => props.theme.bgColor};
-  border-bottom: 1px solid grey;
-  &:not(:last-child) {
-    border-bottom: 1px solid grey;
-  }
 `;
 
 const CountryPhoto = styled.img`
@@ -382,6 +378,7 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
               </Follow>
             </FollowContainer>
           </PBody>
+          <GreyLine />
           <Title>
             <SBold text={"CITIES"} />
             <SeeAll onClick={toggleCitySeeAll}>SEE ALL</SeeAll>

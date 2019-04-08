@@ -492,12 +492,18 @@ export interface ContinentProfile_continentProfile_continent {
   countryCount: number | null;
 }
 
+export interface ContinentProfile_continentProfile_countries_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
 export interface ContinentProfile_continentProfile_countries {
   __typename: "CountryType";
   id: string;
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  continent: ContinentProfile_continentProfile_countries_continent | null;
   cityCount: number | null;
   cardCount: number | null;
 }
