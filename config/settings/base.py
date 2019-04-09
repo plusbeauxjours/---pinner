@@ -291,4 +291,4 @@ TWILIO_PHONE = "+16623301384"
 TO = "+66803832506"
 
 
-ASGI_APPLICATION = 'pinner.coffees.CoffeesConfig.application'
+ASGI_APPLICATION = 'config.routing.application'
