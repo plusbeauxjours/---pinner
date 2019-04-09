@@ -88,7 +88,9 @@ LOCAL_APPS = [
     'cards.apps.CardsConfig',
     'notifications.apps.NotificationsConfig',
     'verifications.apps.VerificationsConfig',
-    'locations.apps.LocationsConfig'
+    'locations.apps.LocationsConfig',
+    'coffees.apps.CoffeesConfig'
+
 
     # Your stuff: custom apps go here
 ]
