@@ -46,6 +46,8 @@ django-taggit-serializer = "*"
 django-cors-headers = "*"
 "boto3" = "*"
 twilio = "*"
+channels = "*"
+asgi-redis = "*"
 
 
 [dev-packages]

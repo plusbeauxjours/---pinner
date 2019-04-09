@@ -81,7 +81,8 @@ THIRD_PARTY_APPS = [
     'imagekit',
     'graphene_django',
     'corsheaders',
-    'twilio'
+    'twilio',
+    'channels',
 ]
 LOCAL_APPS = [
     'users.apps.UsersConfig',
@@ -288,3 +289,6 @@ TWILIO_SID = "ACe45be468996891a959f54a05dbaf164b"
 TWILIO_TOKEN = "f5fad23d4772fc5249af8f78945987ee"
 TWILIO_PHONE = "+16623301384"
 TO = "+66803832506"
+
+
+ASGI_APPLICATION = 'pinner.coffees.CoffeesConfig.application'

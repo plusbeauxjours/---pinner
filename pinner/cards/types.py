@@ -1,7 +1,6 @@
 import graphene
 from graphene_django.types import DjangoObjectType
 from . import models
-from config import types as config_types
 
 from users import types as user_types
 from locations import types as location_types
