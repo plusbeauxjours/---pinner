@@ -16,13 +16,18 @@ class Coffee (config_models.TimeStampedModel):
         ('canceled', 'CANCELED'),
     )
 
+    TARGET = (
+        ('everyone', 'EVERYONE'),
+        ('gender', 'GENDER'),
+        ('nationality', 'NATIONALITY'),
+        ('followers', 'FOLLOWERS'),
+    )
+
     city = models.ForeignKey(location_models.City, on_delete=models.CASCADE, null=True, blank=True)
     host = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     duration = models.DurationField(default="24:00:00")
-    status = models.CharField(max_length=10, choices=STATUS)
-
-    def __str__(self):
-        return self.duration
+    status = models.CharField(max_length=10, choices=STATUS, default='requesting')
+    target = models.CharField(max_length=10, choices=TARGET, default='everyone')
 
 
 class Match (config_models.TimeStampedModel):

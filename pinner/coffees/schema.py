@@ -43,4 +43,4 @@ class Query(object):
 
 class Mutation(object):
 
-    get_coffee = mutations.GetCoffee.Field(required=True)
+    request_coffee = mutations.RequestCoffee.Field(required=True)

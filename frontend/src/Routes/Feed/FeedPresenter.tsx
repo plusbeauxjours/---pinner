@@ -11,6 +11,7 @@ import UserRow from "../../Components/UserRow";
 import { keyframes } from "styled-components";
 import UserGrid from "src/Components/UserGrid";
 import { Upload } from "../../Icons";
+import { MutationFn } from "react-apollo";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -230,6 +231,7 @@ interface IProps {
   recommandUserModalOpen: boolean;
   toggleRecommandUserSeeAll: () => void;
   toggleRecommandUserModal: () => void;
+  requestCoffeeFn: MutationFn;
 }
 
 const FeedPresenter: React.SFC<IProps> = ({
@@ -251,7 +253,8 @@ const FeedPresenter: React.SFC<IProps> = ({
   toggleRecommandUserSeeAll,
   recommandUserList,
   toggleRecommandUserModal,
-  recommandUserModalOpen
+  recommandUserModalOpen,
+  requestCoffeeFn
 }) => {
   if (loading) {
     return <Loader />;
@@ -408,6 +411,9 @@ const FeedPresenter: React.SFC<IProps> = ({
               <Link to="/upload">
                 <Upload />
               </Link>
+            </Icon>
+            <Icon onClick={() => requestCoffeeFn()}>
+              <Upload />
             </Icon>
           </Container>
           <GreyLine />

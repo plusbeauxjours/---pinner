@@ -65,3 +65,14 @@ export const RECOMMAND_USERS = gql`
   }
   ${USER_FRAGMENT}
 `;
+
+export const REQUEST_COFFEE = gql`
+  mutation RequestCoffee($currentCity: String!, $currentCountry: String!) {
+    requestCoffee(currentCity: $currentCity, currentCountry: $currentCountry) {
+      ok
+      coffee {
+        id
+      }
+    }
+  }
+`;

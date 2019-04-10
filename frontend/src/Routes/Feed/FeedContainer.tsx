@@ -6,18 +6,26 @@ import {
   ReportLocationVariables,
   Feed,
   FeedVariables,
-  RecommandUsers
+  RecommandUsers,
+  RequestCoffee,
+  RequestCoffeeVariables
 } from "../../types/api";
 import { RouteComponentProps } from "react-router";
 import { REPORT_LOCATION } from "../Home/HomeQueries";
 import { reverseGeoCode } from "../../mapHelpers";
-import { RECOMMAND_USERS, GET_FEED } from "./FeedQueries";
+import { RECOMMAND_USERS, GET_FEED, REQUEST_COFFEE } from "./FeedQueries";
 import {
   cityThumbnail,
   countryThumbnail,
   continentThumbnail
 } from "../../locationThumbnail";
 import continents from "../../continents";
+import { toast } from "react-toastify";
+
+class RequestCoffeeMutation extends Mutation<
+  RequestCoffee,
+  RequestCoffeeVariables
+> {}
 
 class RecommandUsersQuery extends Query<RecommandUsers> {}
 class ReportLocationMutation extends Mutation<
@@ -96,67 +104,81 @@ class FeedContainer extends React.Component<IProps, IState> {
       continentPhotoURL
     } = this.state;
     return (
-      <FeedQuery
-        query={GET_FEED}
+      <RequestCoffeeMutation
+        mutation={REQUEST_COFFEE}
+        onCompleted={this.handleCoffeeRequest}
         variables={{
-          page,
-          cityName: currentCity
+          currentCity,
+          currentCountry
         }}
       >
-        {({ data: data, loading: loading }) => (
-          <ReportLocationMutation
-            mutation={REPORT_LOCATION}
+        {requestCoffeeFn => (
+          <FeedQuery
+            query={GET_FEED}
             variables={{
-              currentLat,
-              currentLng,
-              currentCity,
-              currentCountry,
-              currentCountryCode,
-              currentContinent,
-              cityPhotoURL,
-              countryPhotoURL,
-              continentPhotoURL
+              page,
+              cityName: currentCity
             }}
           >
-            {ReportLocationFn => {
-              this.ReportLocationFn = ReportLocationFn;
-              return (
-                <RecommandUsersQuery
-                  query={RECOMMAND_USERS}
-                  variables={{ recommandUserPage }}
-                >
-                  {({
-                    data: recommandUsersData,
-                    loading: recommandUsersLoading,
-                    fetchMore: recommandUsersFetchMore
-                  }) => {
-                    this.recommandUsersFetchMore = recommandUsersFetchMore;
-                    return (
-                      <FeedPresenter
-                        data={data}
-                        loading={loading}
-                        currentCity={currentCity}
-                        nowModalOpen={nowModalOpen}
-                        beforeModalOpen={beforeModalOpen}
-                        toggleNowModal={this.toggleNowModal}
-                        toggleBeforeModal={this.toggleBeforeModal}
-                        recommandUsersData={recommandUsersData}
-                        recommandUsersLoading={recommandUsersLoading}
-                        recommandUserList={recommandUserList}
-                        recommandUserModalOpen={recommandUserModalOpen}
-                        toggleRecommandUserModal={this.toggleRecommandUserModal}
-                        toggleRecommandUserSeeAll={
-                          this.toggleRecommandUserSeeAll
-                        }
-                      />
-                    );
-                  }}
-                </RecommandUsersQuery>
-              );
-            }}
-          </ReportLocationMutation>
+            {({ data: data, loading: loading }) => (
+              <ReportLocationMutation
+                mutation={REPORT_LOCATION}
+                variables={{
+                  currentLat,
+                  currentLng,
+                  currentCity,
+                  currentCountry,
+                  currentCountryCode,
+                  currentContinent,
+                  cityPhotoURL,
+                  countryPhotoURL,
+                  continentPhotoURL
+                }}
+              >
+                {ReportLocationFn => {
+                  this.ReportLocationFn = ReportLocationFn;
+                  return (
+                    <RecommandUsersQuery
+                      query={RECOMMAND_USERS}
+                      variables={{ recommandUserPage }}
+                    >
+                      {({
+                        data: recommandUsersData,
+                        loading: recommandUsersLoading,
+                        fetchMore: recommandUsersFetchMore
+                      }) => {
+                        this.recommandUsersFetchMore = recommandUsersFetchMore;
+                        return (
+                          <FeedPresenter
+                            data={data}
+                            loading={loading}
+                            currentCity={currentCity}
+                            nowModalOpen={nowModalOpen}
+                            beforeModalOpen={beforeModalOpen}
+                            toggleNowModal={this.toggleNowModal}
+                            toggleBeforeModal={this.toggleBeforeModal}
+                            recommandUsersData={recommandUsersData}
+                            recommandUsersLoading={recommandUsersLoading}
+                            recommandUserList={recommandUserList}
+                            recommandUserModalOpen={recommandUserModalOpen}
+                            toggleRecommandUserModal={
+                              this.toggleRecommandUserModal
+                            }
+                            toggleRecommandUserSeeAll={
+                              this.toggleRecommandUserSeeAll
+                            }
+                            requestCoffeeFn={requestCoffeeFn}
+                          />
+                        );
+                      }}
+                    </RecommandUsersQuery>
+                  );
+                }}
+              </ReportLocationMutation>
+            )}
+          </FeedQuery>
         )}
-      </FeedQuery>
+      </RequestCoffeeMutation>
     );
   }
   public handleGeoSuccess = (position: Position) => {
@@ -258,6 +280,16 @@ class FeedContainer extends React.Component<IProps, IState> {
         } as any);
       }
     });
+  };
+  public handleCoffeeRequest = (data: RequestCoffee) => {
+    // const { history } = this.props;
+    const { requestCoffee } = data;
+    if (requestCoffee.ok) {
+      toast.success("Drive requested, finding a driver");
+      // history.push(`/coffee/${requestCoffee.coffee.id}`);
+    } else {
+      toast.error("error");
+    }
   };
 }
 

@@ -976,6 +976,34 @@ export interface RecommandUsersVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: RequestCoffee
+// ====================================================
+
+export interface RequestCoffee_requestCoffee_coffee {
+  __typename: "CoffeeType";
+  id: string;
+}
+
+export interface RequestCoffee_requestCoffee {
+  __typename: "RequestCoffeeResponse";
+  ok: boolean | null;
+  coffee: (RequestCoffee_requestCoffee_coffee | null)[] | null;
+}
+
+export interface RequestCoffee {
+  requestCoffee: RequestCoffee_requestCoffee;
+}
+
+export interface RequestCoffeeVariables {
+  currentCity: string;
+  currentCountry: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetFootprints
 // ====================================================
 

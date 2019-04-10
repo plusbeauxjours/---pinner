@@ -2,39 +2,32 @@ import graphene
 from django.db import IntegrityError
 from . import models, types
 from graphql_jwt.decorators import login_required
-from notifications import models as notification_models
 from locations import models as location_models
 
 
-class GetCoffee(graphene.Mutation):
+class RequestCoffee(graphene.Mutation):
 
     class Arguments:
-        caption = graphene.String(required=True)
+        currentCity = graphene.String(required=True)
+        currentCountry = graphene.String(required=True)
 
-    Output = types.GetCoffeeResponse
+    Output = types.RequestCoffeeResponse
 
     @login_required
     def mutate(self, info, **kwargs):
 
         user = info.context.user
-        city = user.profile.current_city
-        country = user.profile.current_city.country
-
-        caption = kwargs.get('caption')
+        currentCity = kwargs.get('currentCity')
+        currentCountry = kwargs.get('currentCountry')
 
         try:
-            country = location_models.Country.objects.get(country_name=country)
-            city = location_models.City.objects.get(city_name=city)
-            card = models.Card.objects.create(
-                creator=user,
-                caption=caption,
-                city=city,
-                country=country,
+            currentCity = location_models.City.objects.get(city_name=currentCity)
+            print(currentCity)
+            coffee = models.Coffee.objects.create(
+                city=currentCity,
+                host=user
             )
-            notification_models.Notification.objects.create(
-                actor=user, verb="upload", payload=card
-            )
-            return types.GetCoffeeResponse(ok=True, card=card)
+            return types.RequestCoffeeResponse(ok=True, coffee=coffee)
         except IntegrityError as e:
             print(e)
             raise Exception("Can't create a coffee")
