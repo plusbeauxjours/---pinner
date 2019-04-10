@@ -21,11 +21,11 @@ class RequestCoffee(graphene.Mutation):
         user = info.context.user
         currentCity = kwargs.get('currentCity')
         currentCountry = kwargs.get('currentCountry')
-        target = kwargs.get('target')
+        target = kwargs.get('target', 'everyone')
 
         try:
             currentCity = location_models.City.objects.get(city_name=currentCity)
-            print(currentCity)
+            print(currentCity, currentCountry, target)
             coffee = models.Coffee.objects.create(
                 city=currentCity,
                 host=user,

@@ -281,7 +281,7 @@ class FeedContainer extends React.Component<IProps, IState> {
       }
     });
   };
-  public handleCoffeeRequest = (data: RequestCoffee) => {
+  public handleCoffeeRequest = data => {
     // const { history } = this.props;
     const { requestCoffee } = data;
     if (requestCoffee.ok) {

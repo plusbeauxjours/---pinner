@@ -979,9 +979,53 @@ export interface RecommandUsersVariables {
 // GraphQL mutation operation: RequestCoffee
 // ====================================================
 
+export interface RequestCoffee_requestCoffee_coffee_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface RequestCoffee_requestCoffee_coffee_city {
+  __typename: "CityType";
+  id: string;
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: RequestCoffee_requestCoffee_coffee_city_country;
+}
+
+export interface RequestCoffee_requestCoffee_coffee_host_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface RequestCoffee_requestCoffee_coffee_host_profile_currentCity {
+  __typename: "CityType";
+  country: RequestCoffee_requestCoffee_coffee_host_profile_currentCity_country;
+  cityName: string | null;
+}
+
+export interface RequestCoffee_requestCoffee_coffee_host_profile {
+  __typename: "ProfileType";
+  isFollowing: boolean | null;
+  avatar: string;
+  currentCity: RequestCoffee_requestCoffee_coffee_host_profile_currentCity | null;
+}
+
+export interface RequestCoffee_requestCoffee_coffee_host {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: RequestCoffee_requestCoffee_coffee_host_profile | null;
+}
+
 export interface RequestCoffee_requestCoffee_coffee {
   __typename: "CoffeeType";
   id: string;
+  city: RequestCoffee_requestCoffee_coffee_city;
+  host: RequestCoffee_requestCoffee_coffee_host;
+  target: CoffeeTarget;
 }
 
 export interface RequestCoffee_requestCoffee {
@@ -997,6 +1041,7 @@ export interface RequestCoffee {
 export interface RequestCoffeeVariables {
   currentCity: string;
   currentCountry: string;
+  target?: string | null;
 }
 
 
@@ -2498,6 +2543,16 @@ export interface DetailParts {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+/**
+ * An enumeration.
+ */
+export enum CoffeeTarget {
+  EVERYONE = "EVERYONE",
+  FOLLOWERS = "FOLLOWERS",
+  GENDER = "GENDER",
+  NATIONALITY = "NATIONALITY",
+}
 
 /**
  * An enumeration.

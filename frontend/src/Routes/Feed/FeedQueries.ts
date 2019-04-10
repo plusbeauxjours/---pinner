@@ -1,5 +1,9 @@
 import { gql } from "apollo-boost";
-import { DETAIL_CARD_FRAGMENT, USER_FRAGMENT } from "../../sharedQueries";
+import {
+  DETAIL_CARD_FRAGMENT,
+  USER_FRAGMENT,
+  CITY_FRAGMENT
+} from "../../sharedQueries";
 
 export const GET_FEED = gql`
   query Feed($page: Int!, $cityName: String!) {
@@ -67,12 +71,29 @@ export const RECOMMAND_USERS = gql`
 `;
 
 export const REQUEST_COFFEE = gql`
-  mutation RequestCoffee($currentCity: String!, $currentCountry: String!) {
-    requestCoffee(currentCity: $currentCity, currentCountry: $currentCountry) {
+  mutation RequestCoffee(
+    $currentCity: String!
+    $currentCountry: String!
+    $target: String
+  ) {
+    requestCoffee(
+      currentCity: $currentCity
+      currentCountry: $currentCountry
+      target: $target
+    ) {
       ok
       coffee {
         id
+        city {
+          ...CityParts
+        }
+        host {
+          ...UserParts
+        }
+        target
       }
     }
   }
+  ${USER_FRAGMENT}
+  ${CITY_FRAGMENT}
 `;
