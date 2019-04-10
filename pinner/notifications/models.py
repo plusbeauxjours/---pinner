@@ -80,3 +80,10 @@ def clean(sender, **kwargs):
         | Q(end_date__gt=instance.start_date, end_date__lte=instance.end_date)
     ).exists():
         raise ValidationError("Overlapping dates")
+
+
+@receiver(pre_save, sender=MoveNotification)
+def clean_dates(sender, **kwargs):
+    instance = kwargs.pop('instance')
+    if instance.start_date > instance.end_date:
+        raise ValidationError("Trip cannot go Back")

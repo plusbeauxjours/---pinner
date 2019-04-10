@@ -8,8 +8,11 @@ class CoffeeAdmin(admin.ModelAdmin):
     list_display = (
         'city',
         'host',
-        'duration',
         'status',
+        'created_at',
+        'duration',
+        'active'
+        # 'rest_time'
     )
 
 
