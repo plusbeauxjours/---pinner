@@ -11,7 +11,6 @@ import UserRow from "../../Components/UserRow";
 import { keyframes } from "styled-components";
 import UserGrid from "src/Components/UserGrid";
 import { Upload } from "../../Icons";
-import { MutationFn } from "react-apollo";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -238,13 +237,14 @@ interface IProps {
   recommandUserModalOpen: boolean;
   toggleRecommandUserSeeAll: () => void;
   toggleRecommandUserModal: () => void;
-  requestCoffeeFn: MutationFn;
+  requestCoffeeFn: any;
   requestModalOpen: boolean;
   coffeeModalOpen: boolean;
   coffeeList: any;
   toggleRequestModal: () => void;
   toggleCoffeeModal: () => void;
   toggleCoffeeSeeAll: () => void;
+  submitCoffee: any;
 }
 
 const FeedPresenter: React.SFC<IProps> = ({
@@ -275,7 +275,8 @@ const FeedPresenter: React.SFC<IProps> = ({
   coffeeList,
   toggleRequestModal,
   toggleCoffeeModal,
-  toggleCoffeeSeeAll
+  toggleCoffeeSeeAll,
+  submitCoffee
 }) => {
   if (feedLoading) {
     return <Loader />;
@@ -299,32 +300,16 @@ const FeedPresenter: React.SFC<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleRequestModal} />
             <Modal>
-              <ModalLink
-                onClick={() =>
-                  requestCoffeeFn({ variables: { target: "everyone" } })
-                }
-              >
+              <ModalLink onClick={() => submitCoffee("everyone")}>
                 EVERYONE
               </ModalLink>
-              <ModalLink
-                onClick={() =>
-                  requestCoffeeFn({ variables: { target: "nationality" } })
-                }
-              >
+              <ModalLink onClick={() => submitCoffee("nationality")}>
                 NATIONALITY
               </ModalLink>
-              <ModalLink
-                onClick={() =>
-                  requestCoffeeFn({ variables: { target: "gender" } })
-                }
-              >
+              <ModalLink onClick={() => submitCoffee("gender")}>
                 GENDER
               </ModalLink>
-              <ModalLink
-                onClick={() =>
-                  requestCoffeeFn({ variables: { target: "followers" } })
-                }
-              >
+              <ModalLink onClick={() => submitCoffee("followers")}>
                 FOLLOWERS
               </ModalLink>
               <ModalLink onClick={toggleRequestModal}>Cancel</ModalLink>
@@ -468,12 +453,11 @@ const FeedPresenter: React.SFC<IProps> = ({
             <SBold text={"NEED SOME COFFEE"} />
             <SeeAll onClick={toggleRecommandUserSeeAll}>SEE ALL</SeeAll>
           </Title>
-          <Container onClick={toggleRequestModal}>
+          <Container>
             <Box>
-              <Icon>
+              <Icon onClick={toggleRequestModal}>
                 <Upload />
               </Icon>
-
               {!recommandUsersLoading && users ? (
                 <UserGrid users={users} />
               ) : (
