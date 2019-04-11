@@ -14,6 +14,15 @@ class Query(object):
         }
     )
 
+    coffee_detail = graphene.Field(
+        types.CoffeeDetailResponse,
+        resolver=queries.resolve_coffee_detail,
+        required=True,
+        args={
+            'coffeeId': graphene.Int(required=True),
+        }
+    )
+
 
 class Mutation(object):
 

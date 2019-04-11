@@ -30,3 +30,18 @@ def resolve_get_coffees(self, info, **kwargs):
             '-created_at')[6:]
 
     return types.GetCoffeesResponse(coffees=combined)
+
+
+@login_required
+def resolve_coffee_detail(self, info, **kwargs):
+
+    coffeeId = kwargs.get('coffeeId')
+    user = info.context.user
+
+    if coffeeId:
+        try:
+            coffee = models.Coffee.objects.get(id=coffeeId)
+        except models.Coffee.DoesNotExist:
+            raise Exception('coffee not found')
+
+    return types.CoffeeDetailResponse(coffee=coffee)

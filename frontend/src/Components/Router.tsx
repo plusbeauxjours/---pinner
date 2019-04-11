@@ -19,6 +19,7 @@ import CityProfile from "../Routes/CityProfile";
 import CountryProfile from "../Routes/CountryProfile";
 import ContinentProfile from "../Routes/ContinentProfile";
 import TripProfile from "../Routes/TripProfile";
+import CoffeeDetail from "../Routes/CoffeeDetail";
 
 import UserProfile from "../Routes/UserProfile";
 
@@ -47,6 +48,7 @@ const LoggedInPages = () => (
       <Route path="/notification" component={Notification} />
       <Route path="/continent/:continentName" component={ContinentProfile} />
       <Route path="/country/:countryName" component={CountryProfile} />
+      <Route path="/city/:cityName/c/:id" component={CoffeeDetail} />
       <Route path="/city/:cityName/:duration" component={TripProfile} />
       <Route path="/city/:cityName" component={CityProfile} />
       <Route path="/:username/footprint" exact={true} component={Footprint} />

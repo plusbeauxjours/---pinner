@@ -9,6 +9,7 @@ interface IProps {
 const CoffeeGrid: React.SFC<IProps> = ({ coffees }) => {
   return (
     <>
+      {console.log(coffees)}
       {coffees.map(coffee => (
         <CoffeeCard
           key={coffee.id}

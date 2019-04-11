@@ -90,6 +90,7 @@ export const GET_COFFEES = gql`
   query GetCoffees($cityName: String!, $coffeePage: Int) {
     getCoffees(cityName: $cityName, coffeePage: $coffeePage) {
       coffees {
+        id
         city {
           ...CityParts
         }

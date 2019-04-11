@@ -23,3 +23,7 @@ class RequestCoffeeResponse(graphene.ObjectType):
 
 class GetCoffeesResponse(graphene.ObjectType):
     coffees = graphene.List(CoffeeType)
+
+
+class CoffeeDetailResponse(graphene.ObjectType):
+    coffee = graphene.Field(CoffeeType)

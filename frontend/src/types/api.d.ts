@@ -482,6 +482,71 @@ export interface NearCountriesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: CoffeeDetail
+// ====================================================
+
+export interface CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity_country;
+}
+
+export interface CoffeeDetail_coffeeDetail_coffee_host_profile_nationality {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface CoffeeDetail_coffeeDetail_coffee_host_profile {
+  __typename: "ProfileType";
+  gender: string | null;
+  currentCity: CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity | null;
+  isFollowing: boolean | null;
+  nationality: CoffeeDetail_coffeeDetail_coffee_host_profile_nationality | null;
+  followersCount: number | null;
+  followingCount: number | null;
+  tripCount: number | null;
+}
+
+export interface CoffeeDetail_coffeeDetail_coffee_host {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: CoffeeDetail_coffeeDetail_coffee_host_profile | null;
+}
+
+export interface CoffeeDetail_coffeeDetail_coffee {
+  __typename: "CoffeeType";
+  expires: any | null;
+  status: CoffeeStatus;
+  target: CoffeeTarget;
+  host: CoffeeDetail_coffeeDetail_coffee_host;
+}
+
+export interface CoffeeDetail_coffeeDetail {
+  __typename: "CoffeeDetailResponse";
+  coffee: CoffeeDetail_coffeeDetail_coffee | null;
+}
+
+export interface CoffeeDetail {
+  coffeeDetail: CoffeeDetail_coffeeDetail;
+}
+
+export interface CoffeeDetailVariables {
+  coffeeId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: ContinentProfile
 // ====================================================
 
@@ -1045,6 +1110,7 @@ export interface GetCoffees_getCoffees_coffees_host {
 
 export interface GetCoffees_getCoffees_coffees {
   __typename: "CoffeeType";
+  id: string;
   city: GetCoffees_getCoffees_coffees_city;
   host: GetCoffees_getCoffees_coffees_host;
   expires: any | null;

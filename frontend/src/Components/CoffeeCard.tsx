@@ -46,6 +46,7 @@ interface IProps {
 }
 
 const CoffeeCard: React.SFC<IProps> = ({
+  id,
   avatar,
   username,
   currentCity,
@@ -53,7 +54,7 @@ const CoffeeCard: React.SFC<IProps> = ({
 }) => {
   return (
     <>
-      <Link to={`/${username}`}>
+      <Link to={`/city/${currentCity}/c/${id}`}>
         <Container>
           <SAvatar url={avatar} size="md" />
           <SBold text={username} />
