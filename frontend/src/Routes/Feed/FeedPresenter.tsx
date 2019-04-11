@@ -11,6 +11,8 @@ import UserRow from "../../Components/UserRow";
 import { keyframes } from "styled-components";
 import UserGrid from "src/Components/UserGrid";
 import { Upload } from "../../Icons";
+import CoffeeGrid from "src/Components/CoffeeGrid";
+import CoffeeRow from "src/Components/CoffeeRow";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -237,7 +239,6 @@ interface IProps {
   recommandUserModalOpen: boolean;
   toggleRecommandUserSeeAll: () => void;
   toggleRecommandUserModal: () => void;
-  requestCoffeeFn: any;
   requestModalOpen: boolean;
   coffeeModalOpen: boolean;
   coffeeList: any;
@@ -257,7 +258,7 @@ const FeedPresenter: React.SFC<IProps> = ({
     } = {}
   } = {},
   feedLoading,
-  coffeeData: { GetCoffees: { coffees = null } = {} } = {},
+  coffeeData: { getCoffees: { coffees = null } = {} } = {},
   coffeeLoading,
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},
   recommandUsersLoading,
@@ -269,7 +270,6 @@ const FeedPresenter: React.SFC<IProps> = ({
   recommandUserList,
   toggleRecommandUserModal,
   recommandUserModalOpen,
-  requestCoffeeFn,
   requestModalOpen,
   coffeeModalOpen,
   coffeeList,
@@ -283,19 +283,29 @@ const FeedPresenter: React.SFC<IProps> = ({
   } else if (!feedLoading && usersNow && usersBefore && city) {
     return (
       <>
-        {console.log(
-          "cards:",
-          cards,
-          "usersNow:",
-          usersNow,
-          "usersBefore:",
-          usersBefore,
-          "city:",
-          city,
-          "users:",
-          users
+        {coffeeModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleCoffeeModal} />
+            <Modal>
+              {console.log(coffeeList)}
+              <Wrapper>
+                {coffeeList.map(list => (
+                  <CoffeeRow
+                    key={list.id}
+                    id={list.id}
+                    username={list.host.username}
+                    avatar={list.host.profile.avatar}
+                    currentCity={list.city.cityname}
+                    currentCountry={list.city.country.currentCity}
+                    isFollowing={list.host.profile.isFollowing}
+                    size={"sm"}
+                    target={list.target}
+                  />
+                ))}
+              </Wrapper>
+            </Modal>
+          </ModalContainer>
         )}
-        coffeeModalOpen
         {requestModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleRequestModal} />
@@ -451,15 +461,16 @@ const FeedPresenter: React.SFC<IProps> = ({
           <GreyLine />
           <Title>
             <SBold text={"NEED SOME COFFEE"} />
-            <SeeAll onClick={toggleRecommandUserSeeAll}>SEE ALL</SeeAll>
+            <SeeAll onClick={toggleCoffeeSeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <Box>
               <Icon onClick={toggleRequestModal}>
                 <Upload />
               </Icon>
-              {!recommandUsersLoading && users ? (
-                <UserGrid users={users} />
+              {console.log(coffees)}
+              {!coffeeLoading && coffees ? (
+                <CoffeeGrid coffees={coffees} />
               ) : (
                 <Loader />
               )}

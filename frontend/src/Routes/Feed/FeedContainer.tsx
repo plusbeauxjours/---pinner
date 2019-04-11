@@ -209,7 +209,6 @@ class FeedContainer extends React.Component<IProps, IState> {
                                     toggleRecommandUserSeeAll={
                                       this.toggleRecommandUserSeeAll
                                     }
-                                    requestCoffeeFn={requestCoffeeFn}
                                     requestModalOpen={requestModalOpen}
                                     coffeeModalOpen={coffeeModalOpen}
                                     coffeeList={coffeeList}
@@ -357,16 +356,16 @@ class FeedContainer extends React.Component<IProps, IState> {
     } as any);
   };
   public toggleCoffeeSeeAll = () => {
-    const { coffeeModalOpen } = this.state;
-    this.recommandUsersFetchMore({
+    const { coffeeModalOpen, currentCity } = this.state;
+    this.coffeeFetchMore({
       query: GET_COFFEES,
-      variables: { recommandUserPage: 1 },
+      variables: { coffeePage: 1, cityName: currentCity },
       updateQuery: (previousResult, { fetchMoreResult }) => {
         if (!fetchMoreResult) {
           return previousResult;
         }
         this.setState({
-          recommandUserList: [
+          coffeeList: [
             ...previousResult.getCoffees.coffees,
             ...fetchMoreResult.getCoffees.coffees
           ],
