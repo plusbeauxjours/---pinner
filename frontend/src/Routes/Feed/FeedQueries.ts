@@ -82,14 +82,22 @@ export const REQUEST_COFFEE = gql`
       target: $target
     ) {
       ok
-      coffee {
-        id
+    }
+  }
+`;
+
+export const GET_COFFEES = gql`
+  query GetCoffees($cityName: String!, $coffeePage: Int) {
+    getCoffees(cityName: $cityName, coffeePage: $coffeePage) {
+      coffees {
         city {
           ...CityParts
         }
         host {
           ...UserParts
         }
+        expires
+        status
         target
       }
     }

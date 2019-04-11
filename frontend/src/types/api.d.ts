@@ -979,59 +979,9 @@ export interface RecommandUsersVariables {
 // GraphQL mutation operation: RequestCoffee
 // ====================================================
 
-export interface RequestCoffee_requestCoffee_coffee_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface RequestCoffee_requestCoffee_coffee_city {
-  __typename: "CityType";
-  id: string;
-  cityName: string | null;
-  cityPhoto: string | null;
-  country: RequestCoffee_requestCoffee_coffee_city_country;
-}
-
-export interface RequestCoffee_requestCoffee_coffee_host_profile_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface RequestCoffee_requestCoffee_coffee_host_profile_currentCity {
-  __typename: "CityType";
-  country: RequestCoffee_requestCoffee_coffee_host_profile_currentCity_country;
-  cityName: string | null;
-}
-
-export interface RequestCoffee_requestCoffee_coffee_host_profile {
-  __typename: "ProfileType";
-  isFollowing: boolean | null;
-  avatar: string;
-  currentCity: RequestCoffee_requestCoffee_coffee_host_profile_currentCity | null;
-}
-
-export interface RequestCoffee_requestCoffee_coffee_host {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: RequestCoffee_requestCoffee_coffee_host_profile | null;
-}
-
-export interface RequestCoffee_requestCoffee_coffee {
-  __typename: "CoffeeType";
-  id: string;
-  city: RequestCoffee_requestCoffee_coffee_city;
-  host: RequestCoffee_requestCoffee_coffee_host;
-  target: CoffeeTarget;
-}
-
 export interface RequestCoffee_requestCoffee {
   __typename: "RequestCoffeeResponse";
   ok: boolean | null;
-  coffee: (RequestCoffee_requestCoffee_coffee | null)[] | null;
 }
 
 export interface RequestCoffee {
@@ -1042,6 +992,78 @@ export interface RequestCoffeeVariables {
   currentCity: string;
   currentCountry: string;
   target?: string | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetCoffees
+// ====================================================
+
+export interface GetCoffees_getCoffees_coffees_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetCoffees_getCoffees_coffees_city {
+  __typename: "CityType";
+  id: string;
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: GetCoffees_getCoffees_coffees_city_country;
+}
+
+export interface GetCoffees_getCoffees_coffees_host_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetCoffees_getCoffees_coffees_host_profile_currentCity {
+  __typename: "CityType";
+  country: GetCoffees_getCoffees_coffees_host_profile_currentCity_country;
+  cityName: string | null;
+}
+
+export interface GetCoffees_getCoffees_coffees_host_profile {
+  __typename: "ProfileType";
+  isFollowing: boolean | null;
+  avatar: string;
+  currentCity: GetCoffees_getCoffees_coffees_host_profile_currentCity | null;
+}
+
+export interface GetCoffees_getCoffees_coffees_host {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: GetCoffees_getCoffees_coffees_host_profile | null;
+}
+
+export interface GetCoffees_getCoffees_coffees {
+  __typename: "CoffeeType";
+  city: GetCoffees_getCoffees_coffees_city;
+  host: GetCoffees_getCoffees_coffees_host;
+  expires: any | null;
+  status: CoffeeStatus;
+  target: CoffeeTarget;
+}
+
+export interface GetCoffees_getCoffees {
+  __typename: "GetCoffeesResponse";
+  coffees: (GetCoffees_getCoffees_coffees | null)[] | null;
+}
+
+export interface GetCoffees {
+  getCoffees: GetCoffees_getCoffees;
+}
+
+export interface GetCoffeesVariables {
+  cityName: string;
+  coffeePage?: number | null;
 }
 
 
@@ -2543,6 +2565,17 @@ export interface DetailParts {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+/**
+ * An enumeration.
+ */
+export enum CoffeeStatus {
+  ACCEPTED = "ACCEPTED",
+  CANCELED = "CANCELED",
+  EXPIRED = "EXPIRED",
+  REFUSED = "REFUSED",
+  REQUESTING = "REQUESTING",
+}
 
 /**
  * An enumeration.

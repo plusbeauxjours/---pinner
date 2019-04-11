@@ -48,14 +48,6 @@ const Location = styled.span`
   font-weight: 200;
 `;
 
-const PBody = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin: 20px 0 20px 0;
-  justify-content: center;
-  background: ${props => props.theme.bgColor};
-`;
-
 const UserContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -143,12 +135,24 @@ const ModalOverlay = styled.div`
 `;
 
 const Modal = styled.div`
+  background-color: #2d3a41;
+  width: 30%;
+  border-radius: 12px;
   z-index: 10;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const ModalLink = styled.div`
+  text-align: center;
+  min-height: 50px;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  :not(:last-child) {
+    border-bottom: 1px solid #efefef;
+  }
 `;
 
 const Container = styled.div`
@@ -203,8 +207,9 @@ const SeeAll = styled.p`
 
 const Icon = styled.span`
   display: flex;
+  align-items: center;
   justify-items: center;
-  margin-right: 30px;
+  margin: 0 60px 0 60px;
   &:last-child {
     margin-right: 0;
   }
@@ -218,8 +223,10 @@ interface ITheme {
 }
 
 interface IProps {
-  data?: any;
-  loading: boolean;
+  feedData?: any;
+  feedLoading: boolean;
+  coffeeData: any;
+  coffeeLoading: boolean;
   currentCity: string;
   nowModalOpen: boolean;
   beforeModalOpen: boolean;
@@ -232,10 +239,16 @@ interface IProps {
   toggleRecommandUserSeeAll: () => void;
   toggleRecommandUserModal: () => void;
   requestCoffeeFn: MutationFn;
+  requestModalOpen: boolean;
+  coffeeModalOpen: boolean;
+  coffeeList: any;
+  toggleRequestModal: () => void;
+  toggleCoffeeModal: () => void;
+  toggleCoffeeSeeAll: () => void;
 }
 
 const FeedPresenter: React.SFC<IProps> = ({
-  data: {
+  feedData: {
     feed: {
       cards = null,
       usersNow = null,
@@ -243,7 +256,9 @@ const FeedPresenter: React.SFC<IProps> = ({
       city = null
     } = {}
   } = {},
-  loading,
+  feedLoading,
+  coffeeData: { GetCoffees: { coffees = null } = {} } = {},
+  coffeeLoading,
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},
   recommandUsersLoading,
   nowModalOpen,
@@ -254,11 +269,17 @@ const FeedPresenter: React.SFC<IProps> = ({
   recommandUserList,
   toggleRecommandUserModal,
   recommandUserModalOpen,
-  requestCoffeeFn
+  requestCoffeeFn,
+  requestModalOpen,
+  coffeeModalOpen,
+  coffeeList,
+  toggleRequestModal,
+  toggleCoffeeModal,
+  toggleCoffeeSeeAll
 }) => {
-  if (loading) {
+  if (feedLoading) {
     return <Loader />;
-  } else if (!loading && usersNow && usersBefore && city) {
+  } else if (!feedLoading && usersNow && usersBefore && city) {
     return (
       <>
         {console.log(
@@ -272,6 +293,43 @@ const FeedPresenter: React.SFC<IProps> = ({
           city,
           "users:",
           users
+        )}
+        coffeeModalOpen
+        {requestModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleRequestModal} />
+            <Modal>
+              <ModalLink
+                onClick={() =>
+                  requestCoffeeFn({ variables: { target: "everyone" } })
+                }
+              >
+                EVERYONE
+              </ModalLink>
+              <ModalLink
+                onClick={() =>
+                  requestCoffeeFn({ variables: { target: "nationality" } })
+                }
+              >
+                NATIONALITY
+              </ModalLink>
+              <ModalLink
+                onClick={() =>
+                  requestCoffeeFn({ variables: { target: "gender" } })
+                }
+              >
+                GENDER
+              </ModalLink>
+              <ModalLink
+                onClick={() =>
+                  requestCoffeeFn({ variables: { target: "followers" } })
+                }
+              >
+                FOLLOWERS
+              </ModalLink>
+              <ModalLink onClick={toggleRequestModal}>Cancel</ModalLink>
+            </Modal>
+          </ModalContainer>
         )}
         {recommandUserModalOpen && (
           <ModalContainer>
@@ -406,18 +464,29 @@ const FeedPresenter: React.SFC<IProps> = ({
             </Box>
           </Container>
           <GreyLine />
-          <Container>
-            <Icon>
-              <Link to="/upload">
+          <Title>
+            <SBold text={"NEED SOME COFFEE"} />
+            <SeeAll onClick={toggleRecommandUserSeeAll}>SEE ALL</SeeAll>
+          </Title>
+          <Container onClick={toggleRequestModal}>
+            <Box>
+              <Icon>
                 <Upload />
-              </Link>
-            </Icon>
-            <Icon onClick={() => requestCoffeeFn()}>
-              <Upload />
-            </Icon>
+              </Icon>
+
+              {!recommandUsersLoading && users ? (
+                <UserGrid users={users} />
+              ) : (
+                <Loader />
+              )}
+            </Box>
           </Container>
           <GreyLine />
-          <PBody />
+          <Icon>
+            <Link to="/upload">
+              <Upload />
+            </Link>
+          </Icon>
           {cards &&
             cards.map(card => (
               <Photo

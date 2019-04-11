@@ -4,12 +4,13 @@ from . import types, queries, mutations
 
 class Query(object):
 
-    get_coffee = graphene.Field(
-        types.GetCoffeeResponse,
-        resolver=queries.resolve_get_coffee,
+    get_coffees = graphene.Field(
+        types.GetCoffeesResponse,
+        resolver=queries.resolve_get_coffees,
         required=True,
         args={
             'cityName': graphene.String(required=True),
+            'coffeePage': graphene.Int()
         }
     )
 
