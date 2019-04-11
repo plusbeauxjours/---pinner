@@ -11,7 +11,8 @@ class CoffeeAdmin(admin.ModelAdmin):
         'status',
         'created_at',
         'duration',
-        'active'
+        'active',
+        'target'
         # 'rest_time'
     )
 

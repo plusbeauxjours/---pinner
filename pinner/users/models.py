@@ -23,6 +23,8 @@ class Profile(config_models.TimeStampedModel):
     bio = models.TextField(default='', blank=True, null=True)
     website = models.URLField(blank=True, null=True)
     gender = models.CharField(max_length=15, blank=True, null=True)
+    nationality = models.ForeignKey(location_models.Country, on_delete=models.SET_NULL,
+                                    null=True, blank=True, related_name='nationality')
     avatar = models.URLField(
         blank=True,
         default="http://basmed.unilag.edu.ng/wp-content/uploads/2018/10/avatar__181424.png")

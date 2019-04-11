@@ -18,8 +18,8 @@ class MatchType(DjangoObjectType):
 
 class RequestCoffeeResponse(graphene.ObjectType):
     ok = graphene.Boolean()
-    coffee = graphene.List(CoffeeType)
+    coffee = graphene.Field(CoffeeType)
 
 
 class GetCoffeeResponse(graphene.ObjectType):
-    coffee = graphene.List(CoffeeType)
+    coffees = graphene.List(CoffeeType)

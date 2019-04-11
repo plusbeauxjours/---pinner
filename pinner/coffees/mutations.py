@@ -29,7 +29,7 @@ class RequestCoffee(graphene.Mutation):
             coffee = models.Coffee.objects.create(
                 city=currentCity,
                 host=user,
-                target=target
+                target=target,
             )
             return types.RequestCoffeeResponse(ok=True, coffee=coffee)
         except IntegrityError as e:

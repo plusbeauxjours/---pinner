@@ -1,47 +1,25 @@
 from django.db import IntegrityError
 from . import types, models
 from graphql_jwt.decorators import login_required
+from locations import models as location_models
 
 
 @login_required
-def resolve_get_coffee_by_city(self, info, **kwargs):
+def resolve_get_coffee(self, info, **kwargs):
 
-    username = kwargs.get('username')
-    profile = User.objects.get(username=username)
+    user = info.context.user
+    cityName = kwargs.get('cityName')
 
-    cities = profile.movenotification.all().order_by('city').distinct('city')
+    city = location_models.objects.get(city_name=cityName)
+    followings = user.followed_by.all()
+    print(followings)
 
-    return types.GetCoffeeResponse(footprints=cities)
+    everyone = city.coffee.filter(target='everyone')
+    nationality = city.coffee.filter(target='nationality', host__nationality=user.natinality)
+    gender = city.coffee.filter(target='gender', host__gender=user.gender)
+    followers = city.coffee.filter(target='followers', host__in=followings)
 
+    combined = following_cards.union(city_cards).union(my_cards).order_by(
+        '-created_at')
 
-@login_required
-def resolve_get_coffee_by_gender(self, info, **kwargs):
-
-    username = kwargs.get('username')
-    profile = User.objects.get(username=username)
-
-    cities = profile.movenotification.all().order_by('city').distinct('city')
-
-    return types.GetCoffeeResponse(footprints=cities)
-
-
-@login_required
-def resolve_get_coffee_by_nationality(self, info, **kwargs):
-
-    username = kwargs.get('username')
-    profile = User.objects.get(username=username)
-
-    cities = profile.movenotification.all().order_by('city').distinct('city')
-
-    return types.GetCoffeeResponse(footprints=cities)
-
-
-@login_required
-def resolve_get_coffee_to_followers(self, info, **kwargs):
-
-    username = kwargs.get('username')
-    profile = User.objects.get(username=username)
-
-    cities = profile.movenotification.all().order_by('city').distinct('city')
-
-    return types.GetCoffeeResponse(footprints=cities)
+    return types.GetCoffeeResponse(coffees=combined)

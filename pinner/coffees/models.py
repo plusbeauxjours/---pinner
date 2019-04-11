@@ -29,12 +29,12 @@ class Coffee (config_models.TimeStampedModel):
         ('followers', 'FOLLOWERS'),
     )
 
-    city = models.ForeignKey(location_models.City, on_delete=models.CASCADE)
-    host = models.ForeignKey(User, on_delete=models.CASCADE)
+    city = models.ForeignKey(location_models.City, on_delete=models.CASCADE, related_name='coffee')
+    host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='coffee')
     duration = models.DurationField(default=datetime.timedelta(days=1))
     expires = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=10, choices=STATUS, default='requesting')
-    target = models.CharField(max_length=10, choices=TARGET, default='everyone')
+    target = models.CharField(max_length=11, choices=TARGET, default='everyone')
 
     # @property
     # def rest_time(self):
