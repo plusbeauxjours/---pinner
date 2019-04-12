@@ -503,6 +503,7 @@ export interface CoffeeDetail_coffeeDetail_coffee_host_profile_nationality {
 
 export interface CoffeeDetail_coffeeDetail_coffee_host_profile {
   __typename: "ProfileType";
+  avatar: string;
   gender: string | null;
   currentCity: CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity | null;
   isFollowing: boolean | null;
@@ -1116,7 +1117,7 @@ export interface GetCoffees_getCoffees_coffees {
   expires: any | null;
   status: CoffeeStatus;
   target: CoffeeTarget;
-  naturalTime: number | null;
+  naturalTime: string | null;
 }
 
 export interface GetCoffees_getCoffees {

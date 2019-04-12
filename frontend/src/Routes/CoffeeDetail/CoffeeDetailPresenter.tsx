@@ -3,6 +3,17 @@ import Loader from "src/Components/Loader";
 import Wrapper from "src/Components/Wrapper";
 import styled from "styled-components";
 import { keyframes } from "styled-components";
+import Avatar from "src/Components/Avatar";
+import Bold from "src/Components/Bold";
+
+const SWrapper = styled(Wrapper)`
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 280px;
+`;
 
 const ModalContainer = styled.div`
   display: flex;
@@ -43,11 +54,27 @@ const Modal = styled.div`
 
 const FormModal = styled(Modal)`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 40%;
   height: 30%;
+`;
+
+const SAvatar = styled(Avatar)`
+  margin-bottom: 15px;
+`;
+
+const SBold = styled(Bold)`
+  margin-bottom: 3px;
+  display: block;
+`;
+
+const Location = styled.span`
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 200;
 `;
 
 interface IProps {
@@ -68,21 +95,37 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
       <ModalContainer>
         <ModalOverlay onClick={back} />
         <FormModal>
-          <Wrapper>
-            {coffee.expires}
-            {coffee.status}
-            {coffee.target}
-            {coffee.host.username}
-            {coffee.host.profile.gender}
-            {coffee.host.profile.avatar}
-            {coffee.host.profile.currentCity.cityName}
-            {coffee.host.profile.currentCity.country.countryName}
-            {coffee.host.profile.isFollowing}
+          <SWrapper>
+            <SAvatar url={coffee.host.profile.avatar} size="md" />
+            <SBold text={coffee.host.username} />
+            <Location>
+              {coffee.host.profile.currentCity.cityName},
+              {coffee.host.profile.currentCity.country.countryName}
+            </Location>
+
+            <Location>
+              <SBold text={"FOLLOWERS "} />
+              {coffee.host.profile.followersCount}
+            </Location>
+            <Location>
+              <SBold text={"FOLLOWINGS "} />
+              {coffee.host.profile.followingCount}
+            </Location>
+            <Location>
+              <SBold text={"TRIPS "} />
+              {coffee.host.profile.tripCount}
+            </Location>
+
+            <SBold text={coffee.naturalTime} />
+            <Location>
+              <SBold text={coffee.target} />
+            </Location>
+            <Location>
+              <SBold text={coffee.status} />
+            </Location>
+
             {/* {coffee.host.profile.nationality.countryName} */}
-            {coffee.host.profile.followersCount}
-            {coffee.host.profile.followingCount}
-            {coffee.host.profile.tripCount}
-          </Wrapper>
+          </SWrapper>
         </FormModal>
       </ModalContainer>
     );

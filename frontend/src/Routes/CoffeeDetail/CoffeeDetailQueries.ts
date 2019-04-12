@@ -5,11 +5,13 @@ export const COFFEE_DETAIL = gql`
     coffeeDetail(coffeeId: $coffeeId) {
       coffee {
         expires
+        naturalTime
         status
         target
         host {
           username
           profile {
+            avatar
             gender
             currentCity {
               cityName
