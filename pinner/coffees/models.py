@@ -46,6 +46,14 @@ class Coffee (config_models.TimeStampedModel):
             self.status = 'requesting'
             return self.status
 
+    @property
+    def natural_time(self):
+        return naturaltime(self.expires)
+
+    def FORMAT(self):
+        from django.utils.timesince import timesince
+        return timesince(self.fecha)
+
 
 @receiver(pre_save, sender=Coffee)
 def get_expries(sender, **kwargs):

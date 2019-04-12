@@ -1116,6 +1116,7 @@ export interface GetCoffees_getCoffees_coffees {
   expires: any | null;
   status: CoffeeStatus;
   target: CoffeeTarget;
+  naturalTime: number | null;
 }
 
 export interface GetCoffees_getCoffees {

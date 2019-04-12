@@ -34,10 +34,20 @@ const ModalAnimation = keyframes`
 	`;
 
 const Modal = styled.div`
-  width: 100;
-  max-width: 935px;
-  z-index: 5;
+  background-color: #2d3a41;
+  width: 30%;
+  border-radius: 12px;
+  z-index: 10;
   animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const FormModal = styled(Modal)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 30%;
 `;
 
 interface IProps {
@@ -57,7 +67,7 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
     return (
       <ModalContainer>
         <ModalOverlay onClick={back} />
-        <Modal>
+        <FormModal>
           <Wrapper>
             {coffee.expires}
             {coffee.status}
@@ -65,15 +75,15 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
             {coffee.host.username}
             {coffee.host.profile.gender}
             {coffee.host.profile.avatar}
-            {/* {coffee.host.profile.currentCity.cityName}
-            {coffee.host.profile.currentCity.country.countryName} */}
+            {coffee.host.profile.currentCity.cityName}
+            {coffee.host.profile.currentCity.country.countryName}
             {coffee.host.profile.isFollowing}
             {/* {coffee.host.profile.nationality.countryName} */}
             {coffee.host.profile.followersCount}
             {coffee.host.profile.followingCount}
             {coffee.host.profile.tripCount}
           </Wrapper>
-        </Modal>
+        </FormModal>
       </ModalContainer>
     );
   }

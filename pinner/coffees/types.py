@@ -5,6 +5,7 @@ from config import types as config_types
 
 
 class CoffeeType(DjangoObjectType):
+    natural_time = graphene.String(source='natural_time')
 
     class Meta:
         model = models.Coffee

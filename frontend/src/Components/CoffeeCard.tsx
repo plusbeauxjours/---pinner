@@ -43,14 +43,16 @@ interface IProps {
   isFollowing: boolean;
   currentCity: string;
   currentCountry: string;
+  target: string;
+  expires: string;
 }
 
 const CoffeeCard: React.SFC<IProps> = ({
   id,
   avatar,
   username,
-  currentCity,
-  currentCountry
+  target,
+  expires
 }) => {
   return (
     <>
@@ -58,9 +60,8 @@ const CoffeeCard: React.SFC<IProps> = ({
         <Container>
           <SAvatar url={avatar} size="md" />
           <SBold text={username} />
-          <Location>
-            {currentCity}, {currentCountry}
-          </Location>
+          <Location>{target}</Location>
+          <Location>{expires}</Location>
         </Container>
       </Link>
     </>

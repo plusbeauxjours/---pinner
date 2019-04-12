@@ -288,7 +288,6 @@ const FeedPresenter: React.SFC<IProps> = ({
     return (
       <>
         {console.log(matches)}
-
         {coffeeModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleCoffeeModal} />

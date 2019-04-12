@@ -100,6 +100,7 @@ export const GET_COFFEES = gql`
         expires
         status
         target
+        naturalTime
       }
     }
   }
