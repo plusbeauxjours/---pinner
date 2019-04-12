@@ -1137,6 +1137,49 @@ export interface GetCoffeesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: Match
+// ====================================================
+
+export interface Match_match {
+  __typename: "MatchResponse";
+  ok: boolean | null;
+}
+
+export interface Match {
+  match: Match_match;
+}
+
+export interface MatchVariables {
+  coffeeId: number;
+  userId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: UnMatch
+// ====================================================
+
+export interface UnMatch_unMatch {
+  __typename: "UnMatchResponse";
+  ok: boolean | null;
+}
+
+export interface UnMatch {
+  unMatch: UnMatch_unMatch;
+}
+
+export interface UnMatchVariables {
+  matchId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetFootprints
 // ====================================================
 
@@ -2636,10 +2679,8 @@ export interface DetailParts {
  * An enumeration.
  */
 export enum CoffeeStatus {
-  ACCEPTED = "ACCEPTED",
   CANCELED = "CANCELED",
   EXPIRED = "EXPIRED",
-  REFUSED = "REFUSED",
   REQUESTING = "REQUESTING",
 }
 

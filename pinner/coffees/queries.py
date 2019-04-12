@@ -45,3 +45,20 @@ def resolve_coffee_detail(self, info, **kwargs):
             raise Exception('coffee not found')
 
     return types.CoffeeDetailResponse(coffee=coffee)
+
+
+@login_required
+def resolve_get_matches(self, info, **kwargs):
+
+    user = info.context.user
+    matchPage = kwargs.get('matchPage', 0)
+
+    host = user.host.all()
+    guest = user.guest.all()
+
+    if (matchPage is 0):
+        combined = host.union(guest).order_by('-created_at')[:6]
+    else:
+        combined = host.union(guest).order_by('-created_at')[6:]
+
+    return types.GetMatchesResponse(matches=combined)

@@ -91,7 +91,7 @@ class UnMatch(graphene.Mutation):
                 error = "Match Not Found"
                 return types.UnMatchResponse(ok=False)
 
-            if match.host.id == user.id:
+            if match.host.id == user.id or match.guest.id == user.id:
 
                 match.delete()
                 return types.UnMatchResponse(ok=True)

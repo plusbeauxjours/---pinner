@@ -13,13 +13,20 @@ class Query(object):
             'coffeePage': graphene.Int()
         }
     )
-
     coffee_detail = graphene.Field(
         types.CoffeeDetailResponse,
         resolver=queries.resolve_coffee_detail,
         required=True,
         args={
             'coffeeId': graphene.Int(required=True),
+        }
+    )
+    get_matches = graphene.Field(
+        types.GetMatchesResponse,
+        resolver=queries.resolve_get_matches,
+        required=True,
+        args={
+            'matchPage': graphene.Int()
         }
     )
 

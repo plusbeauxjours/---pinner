@@ -25,6 +25,10 @@ class GetCoffeesResponse(graphene.ObjectType):
     coffees = graphene.List(CoffeeType)
 
 
+class GetMatchesResponse(graphene.ObjectType):
+    matches = graphene.List(MatchType)
+
+
 class CoffeeDetailResponse(graphene.ObjectType):
     coffee = graphene.Field(CoffeeType)
 
