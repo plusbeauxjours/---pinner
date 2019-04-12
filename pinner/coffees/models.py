@@ -50,7 +50,7 @@ class Coffee (config_models.TimeStampedModel):
     def natural_time(self):
         return naturaltime(self.expires)
 
-    def FORMAT(self):
+    def format(self):
         from django.utils.timesince import timesince
         return timesince(self.fecha)
 
@@ -77,5 +77,6 @@ class Match (config_models.TimeStampedModel):
     def country_count(self):
         return self.countries.all().count()
 
-    def __str__(self):
-        return self.continent_name
+    @property
+    def natural_time(self):
+        return naturaltime(self.expires)

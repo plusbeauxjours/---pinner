@@ -1,10 +1,12 @@
 import React from "react";
-import Loader from "src/Components/Loader";
-import Wrapper from "src/Components/Wrapper";
 import styled from "styled-components";
 import { keyframes } from "styled-components";
-import Avatar from "src/Components/Avatar";
-import Bold from "src/Components/Bold";
+
+import Loader from "../../Components/Loader";
+import Wrapper from "../../Components/Wrapper";
+import Avatar from "../../Components/Avatar";
+import Bold from "../../Components/Bold";
+import FollowBtn from "../../Components/FollowBtn";
 
 const SWrapper = styled(Wrapper)`
   display: flex;
@@ -102,6 +104,12 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
               {coffee.host.profile.currentCity.cityName},
               {coffee.host.profile.currentCity.country.countryName}
             </Location>
+
+            <FollowBtn
+              isFollowing={coffee.host.profile.isFollowing}
+              userId={coffee.host.id}
+            />
+            <Location />
 
             <Location>
               <SBold text={"FOLLOWERS "} />

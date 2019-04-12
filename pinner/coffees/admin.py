@@ -6,6 +6,7 @@ from . import models
 class CoffeeAdmin(admin.ModelAdmin):
 
     list_display = (
+        'id',
         'city',
         'host',
         'status',

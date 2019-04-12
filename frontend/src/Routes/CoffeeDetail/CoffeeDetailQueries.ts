@@ -9,6 +9,7 @@ export const COFFEE_DETAIL = gql`
         status
         target
         host {
+          id
           username
           profile {
             avatar

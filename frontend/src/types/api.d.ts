@@ -4,6 +4,48 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: Match
+// ====================================================
+
+export interface Match_match {
+  __typename: "MatchResponse";
+  ok: boolean | null;
+}
+
+export interface Match {
+  match: Match_match;
+}
+
+export interface MatchVariables {
+  coffeeId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: UnMatch
+// ====================================================
+
+export interface UnMatch_unMatch {
+  __typename: "UnMatchResponse";
+  ok: boolean | null;
+}
+
+export interface UnMatch {
+  unMatch: UnMatch_unMatch;
+}
+
+export interface UnMatchVariables {
+  matchId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: FollowUser
 // ====================================================
 
@@ -515,6 +557,7 @@ export interface CoffeeDetail_coffeeDetail_coffee_host_profile {
 
 export interface CoffeeDetail_coffeeDetail_coffee_host {
   __typename: "UserType";
+  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
@@ -525,6 +568,7 @@ export interface CoffeeDetail_coffeeDetail_coffee_host {
 export interface CoffeeDetail_coffeeDetail_coffee {
   __typename: "CoffeeType";
   expires: any | null;
+  naturalTime: string | null;
   status: CoffeeStatus;
   target: CoffeeTarget;
   host: CoffeeDetail_coffeeDetail_coffee_host;
@@ -1132,48 +1176,6 @@ export interface GetCoffees {
 export interface GetCoffeesVariables {
   cityName: string;
   coffeePage?: number | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: Match
-// ====================================================
-
-export interface Match_match {
-  __typename: "MatchResponse";
-  ok: boolean | null;
-}
-
-export interface Match {
-  match: Match_match;
-}
-
-export interface MatchVariables {
-  coffeeId: number;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: UnMatch
-// ====================================================
-
-export interface UnMatch_unMatch {
-  __typename: "UnMatchResponse";
-  ok: boolean | null;
-}
-
-export interface UnMatch {
-  unMatch: UnMatch_unMatch;
-}
-
-export interface UnMatchVariables {
-  matchId: number;
 }
 
 

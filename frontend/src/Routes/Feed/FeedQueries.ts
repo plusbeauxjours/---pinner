@@ -108,22 +108,6 @@ export const GET_COFFEES = gql`
   ${CITY_FRAGMENT}
 `;
 
-export const MATCH = gql`
-  mutation Match($coffeeId: Int!) {
-    match(coffeeId: $coffeeId) {
-      ok
-    }
-  }
-`;
-
-export const UNMATCH = gql`
-  mutation UnMatch($matchId: Int!) {
-    unMatch(matchId: $matchId) {
-      ok
-    }
-  }
-`;
-
 export const GET_MATCHES = gql`
   query GetMatches($matchPage: Int) {
     getMatches(matchPage: $matchPage) {
