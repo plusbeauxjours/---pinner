@@ -108,8 +108,8 @@ export const GET_COFFEES = gql`
 `;
 
 export const MATCH = gql`
-  mutation Match($coffeeId: Int!, $userId: Int!) {
-    match(coffeeId: $coffeeId, userId: $userId) {
+  mutation Match($coffeeId: Int!) {
+    match(coffeeId: $coffeeId) {
       ok
     }
   }
@@ -121,4 +121,26 @@ export const UNMATCH = gql`
       ok
     }
   }
+`;
+
+export const GET_MATCHES = gql`
+  query GetMatches($matchPage: Int) {
+    getMatches(matchPage: $matchPage) {
+      matches {
+        id
+        city {
+          ...CityParts
+        }
+        host {
+          ...UserParts
+        }
+        guest {
+          ...UserParts
+        }
+        status
+      }
+    }
+  }
+  ${USER_FRAGMENT}
+  ${CITY_FRAGMENT}
 `;

@@ -41,7 +41,6 @@ class Match(graphene.Mutation):
 
     class Arguments:
         coffeeId = graphene.Int(required=True)
-        userId = graphene.Int(required=True)
 
     Output = types.MatchResponse
 
@@ -50,12 +49,6 @@ class Match(graphene.Mutation):
 
         user = info.context.user
         coffeeId = kwargs.get('coffeeId')
-        userId = kwargs.get('userId')
-
-        try:
-            guest = User.objects.get(id=userId)
-        except User.DoesNotExist:
-            raise Exception('User Not Found')
 
         try:
             coffee = models.Coffee.objects.get(id=coffeeId)
@@ -63,7 +56,7 @@ class Match(graphene.Mutation):
             match = models.Match.objects.create(
                 host=coffee.host,
                 city=coffee.city,
-                guest=guest)
+                guest=user)
             return types.MatchResponse(ok=True, match=match)
         except IntegrityError as e:
             print(e)

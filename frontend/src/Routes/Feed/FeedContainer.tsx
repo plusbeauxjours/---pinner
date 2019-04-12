@@ -10,7 +10,13 @@ import {
   RequestCoffee,
   RequestCoffeeVariables,
   GetCoffeesVariables,
-  GetCoffees
+  GetCoffees,
+  GetMatches,
+  GetMatchesVariables,
+  Match,
+  MatchVariables,
+  UnMatch,
+  UnMatchVariables
 } from "../../types/api";
 import { RouteComponentProps } from "react-router";
 import { REPORT_LOCATION } from "../Home/HomeQueries";
@@ -19,7 +25,10 @@ import {
   RECOMMAND_USERS,
   GET_FEED,
   REQUEST_COFFEE,
-  GET_COFFEES
+  GET_COFFEES,
+  GET_MATCHES,
+  MATCH,
+  UNMATCH
 } from "./FeedQueries";
 import {
   cityThumbnail,
@@ -34,14 +43,17 @@ class RequestCoffeeMutation extends Mutation<
   RequestCoffeeVariables
 > {}
 
-class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
-
 class RecommandUsersQuery extends Query<RecommandUsers> {}
 class ReportLocationMutation extends Mutation<
   ReportLocation,
   ReportLocationVariables
 > {}
 class FeedQuery extends Query<Feed, FeedVariables> {}
+
+class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
+class GetMatchesQuery extends Query<GetMatches, GetMatchesVariables> {}
+class MatchMutation extends Mutation<Match, MatchVariables> {}
+class UnMatchMutation extends Mutation<UnMatch, UnMatchVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
 
@@ -65,9 +77,14 @@ interface IState {
   coffeeModalOpen: boolean;
   coffeeList: any;
   coffeePage: number;
+  matchPage: number;
+  coffeeId: number;
+  matchId: number;
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
+  public unMatchFn;
+  public matchFn;
   public coffeeFetchMore;
   public recommandUsersFetchMore;
   public requestCoffeeFn;
@@ -93,7 +110,10 @@ class FeedContainer extends React.Component<IProps, IState> {
       requestModalOpen: false,
       coffeeModalOpen: false,
       coffeeList: null,
-      coffeePage: 0
+      coffeePage: 0,
+      matchPage: 0,
+      coffeeId: null,
+      matchId: null
     };
   }
   public componentDidMount() {
@@ -124,113 +144,166 @@ class FeedContainer extends React.Component<IProps, IState> {
       requestModalOpen,
       coffeeModalOpen,
       coffeeList,
-      coffeePage
+      coffeePage,
+      matchPage,
+      coffeeId,
+      matchId
     } = this.state;
     return (
-      <GetCoffeesQuery
-        query={GET_COFFEES}
-        variables={{ cityName: currentCity, coffeePage }}
-      >
-        {({
-          data: coffeeData,
-          loading: coffeeLoading,
-          fetchMore: coffeeFetchMore
-        }) => {
-          this.coffeeFetchMore = coffeeFetchMore;
-          return (
-            <RequestCoffeeMutation
-              mutation={REQUEST_COFFEE}
-              onCompleted={this.handleCoffeeRequest}
-              variables={{
-                currentCity,
-                currentCountry
-              }}
-            >
-              {requestCoffeeFn => {
-                this.requestCoffeeFn = requestCoffeeFn;
-                return (
-                  <FeedQuery
-                    query={GET_FEED}
-                    variables={{
-                      page,
-                      cityName: currentCity
-                    }}
-                  >
-                    {({ data: feedData, loading: feedLoading }) => (
-                      <ReportLocationMutation
-                        mutation={REPORT_LOCATION}
-                        variables={{
-                          currentLat,
-                          currentLng,
-                          currentCity,
-                          currentCountry,
-                          currentCountryCode,
-                          currentContinent,
-                          cityPhotoURL,
-                          countryPhotoURL,
-                          continentPhotoURL
-                        }}
+      <GetMatchesQuery query={GET_MATCHES} variables={{ matchPage }}>
+        {({ data: matchData, loading: matchLoading }) => (
+          <MatchMutation mutation={MATCH} variables={{ coffeeId }}>
+            {matchFn => {
+              this.matchFn = matchFn;
+              return (
+                <UnMatchMutation mutation={UNMATCH} variables={{ matchId }}>
+                  {unMatchFn => {
+                    this.unMatchFn = unMatchFn;
+                    return (
+                      <GetCoffeesQuery
+                        query={GET_COFFEES}
+                        variables={{ cityName: currentCity, coffeePage }}
                       >
-                        {ReportLocationFn => {
-                          this.ReportLocationFn = ReportLocationFn;
+                        {({
+                          data: coffeeData,
+                          loading: coffeeLoading,
+                          fetchMore: coffeeFetchMore
+                        }) => {
+                          this.coffeeFetchMore = coffeeFetchMore;
                           return (
-                            <RecommandUsersQuery
-                              query={RECOMMAND_USERS}
-                              variables={{ recommandUserPage }}
+                            <RequestCoffeeMutation
+                              mutation={REQUEST_COFFEE}
+                              onCompleted={this.handleCoffeeRequest}
+                              variables={{
+                                currentCity,
+                                currentCountry
+                              }}
                             >
-                              {({
-                                data: recommandUsersData,
-                                loading: recommandUsersLoading,
-                                fetchMore: recommandUsersFetchMore
-                              }) => {
-                                this.recommandUsersFetchMore = recommandUsersFetchMore;
+                              {requestCoffeeFn => {
+                                this.requestCoffeeFn = requestCoffeeFn;
                                 return (
-                                  <FeedPresenter
-                                    feedData={feedData}
-                                    feedLoading={feedLoading}
-                                    coffeeData={coffeeData}
-                                    coffeeLoading={coffeeLoading}
-                                    currentCity={currentCity}
-                                    nowModalOpen={nowModalOpen}
-                                    beforeModalOpen={beforeModalOpen}
-                                    toggleNowModal={this.toggleNowModal}
-                                    toggleBeforeModal={this.toggleBeforeModal}
-                                    recommandUsersData={recommandUsersData}
-                                    recommandUsersLoading={
-                                      recommandUsersLoading
-                                    }
-                                    recommandUserList={recommandUserList}
-                                    recommandUserModalOpen={
-                                      recommandUserModalOpen
-                                    }
-                                    toggleRecommandUserModal={
-                                      this.toggleRecommandUserModal
-                                    }
-                                    toggleRecommandUserSeeAll={
-                                      this.toggleRecommandUserSeeAll
-                                    }
-                                    requestModalOpen={requestModalOpen}
-                                    coffeeModalOpen={coffeeModalOpen}
-                                    coffeeList={coffeeList}
-                                    toggleCoffeeModal={this.toggleCoffeeModal}
-                                    toggleCoffeeSeeAll={this.toggleCoffeeSeeAll}
-                                    toggleRequestModal={this.toggleRequestModal}
-                                    submitCoffee={this.submitCoffee}
-                                  />
+                                  <FeedQuery
+                                    query={GET_FEED}
+                                    variables={{
+                                      page,
+                                      cityName: currentCity
+                                    }}
+                                  >
+                                    {({
+                                      data: feedData,
+                                      loading: feedLoading
+                                    }) => (
+                                      <ReportLocationMutation
+                                        mutation={REPORT_LOCATION}
+                                        variables={{
+                                          currentLat,
+                                          currentLng,
+                                          currentCity,
+                                          currentCountry,
+                                          currentCountryCode,
+                                          currentContinent,
+                                          cityPhotoURL,
+                                          countryPhotoURL,
+                                          continentPhotoURL
+                                        }}
+                                      >
+                                        {ReportLocationFn => {
+                                          this.ReportLocationFn = ReportLocationFn;
+                                          return (
+                                            <RecommandUsersQuery
+                                              query={RECOMMAND_USERS}
+                                              variables={{ recommandUserPage }}
+                                            >
+                                              {({
+                                                data: recommandUsersData,
+                                                loading: recommandUsersLoading,
+                                                fetchMore: recommandUsersFetchMore
+                                              }) => {
+                                                this.recommandUsersFetchMore = recommandUsersFetchMore;
+                                                return (
+                                                  <FeedPresenter
+                                                    feedData={feedData}
+                                                    feedLoading={feedLoading}
+                                                    coffeeData={coffeeData}
+                                                    coffeeLoading={
+                                                      coffeeLoading
+                                                    }
+                                                    matchData={matchData}
+                                                    matchLoading={matchLoading}
+                                                    currentCity={currentCity}
+                                                    nowModalOpen={nowModalOpen}
+                                                    beforeModalOpen={
+                                                      beforeModalOpen
+                                                    }
+                                                    toggleNowModal={
+                                                      this.toggleNowModal
+                                                    }
+                                                    toggleBeforeModal={
+                                                      this.toggleBeforeModal
+                                                    }
+                                                    recommandUsersData={
+                                                      recommandUsersData
+                                                    }
+                                                    recommandUsersLoading={
+                                                      recommandUsersLoading
+                                                    }
+                                                    recommandUserList={
+                                                      recommandUserList
+                                                    }
+                                                    recommandUserModalOpen={
+                                                      recommandUserModalOpen
+                                                    }
+                                                    toggleRecommandUserModal={
+                                                      this
+                                                        .toggleRecommandUserModal
+                                                    }
+                                                    toggleRecommandUserSeeAll={
+                                                      this
+                                                        .toggleRecommandUserSeeAll
+                                                    }
+                                                    requestModalOpen={
+                                                      requestModalOpen
+                                                    }
+                                                    coffeeModalOpen={
+                                                      coffeeModalOpen
+                                                    }
+                                                    coffeeList={coffeeList}
+                                                    toggleCoffeeModal={
+                                                      this.toggleCoffeeModal
+                                                    }
+                                                    toggleCoffeeSeeAll={
+                                                      this.toggleCoffeeSeeAll
+                                                    }
+                                                    toggleRequestModal={
+                                                      this.toggleRequestModal
+                                                    }
+                                                    submitCoffee={
+                                                      this.submitCoffee
+                                                    }
+                                                  />
+                                                );
+                                              }}
+                                            </RecommandUsersQuery>
+                                          );
+                                        }}
+                                      </ReportLocationMutation>
+                                    )}
+                                  </FeedQuery>
                                 );
                               }}
-                            </RecommandUsersQuery>
+                            </RequestCoffeeMutation>
                           );
                         }}
-                      </ReportLocationMutation>
-                    )}
-                  </FeedQuery>
-                );
-              }}
-            </RequestCoffeeMutation>
-          );
-        }}
-      </GetCoffeesQuery>
+                      </GetCoffeesQuery>
+                    );
+                  }}
+                  >
+                </UnMatchMutation>
+              );
+            }}
+          </MatchMutation>
+        )}
+      </GetMatchesQuery>
     );
   }
   public handleGeoSuccess = (position: Position) => {

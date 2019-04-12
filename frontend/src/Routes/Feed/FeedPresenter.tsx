@@ -228,6 +228,8 @@ interface IProps {
   feedLoading: boolean;
   coffeeData: any;
   coffeeLoading: boolean;
+  matchData: any;
+  matchLoading: boolean;
   currentCity: string;
   nowModalOpen: boolean;
   beforeModalOpen: boolean;
@@ -262,6 +264,15 @@ const FeedPresenter: React.SFC<IProps> = ({
   coffeeLoading,
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},
   recommandUsersLoading,
+  matchData: {
+    matches: {
+      city: matchCity = null,
+      host: matchHost = null,
+      guest: matchGuest = null,
+      status: matchStatus = null
+    }
+  },
+  matchLoading,
   nowModalOpen,
   beforeModalOpen,
   toggleNowModal,

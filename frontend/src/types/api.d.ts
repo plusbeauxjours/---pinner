@@ -1151,7 +1151,6 @@ export interface Match {
 
 export interface MatchVariables {
   coffeeId: number;
-  userId: number;
 }
 
 
@@ -1173,6 +1172,105 @@ export interface UnMatch {
 
 export interface UnMatchVariables {
   matchId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetMatches
+// ====================================================
+
+export interface GetMatches_getMatches_matches_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetMatches_getMatches_matches_city {
+  __typename: "CityType";
+  id: string;
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: GetMatches_getMatches_matches_city_country;
+}
+
+export interface GetMatches_getMatches_matches_host_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetMatches_getMatches_matches_host_profile_currentCity {
+  __typename: "CityType";
+  country: GetMatches_getMatches_matches_host_profile_currentCity_country;
+  cityName: string | null;
+}
+
+export interface GetMatches_getMatches_matches_host_profile {
+  __typename: "ProfileType";
+  isFollowing: boolean | null;
+  avatar: string;
+  currentCity: GetMatches_getMatches_matches_host_profile_currentCity | null;
+}
+
+export interface GetMatches_getMatches_matches_host {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: GetMatches_getMatches_matches_host_profile | null;
+}
+
+export interface GetMatches_getMatches_matches_guest_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetMatches_getMatches_matches_guest_profile_currentCity {
+  __typename: "CityType";
+  country: GetMatches_getMatches_matches_guest_profile_currentCity_country;
+  cityName: string | null;
+}
+
+export interface GetMatches_getMatches_matches_guest_profile {
+  __typename: "ProfileType";
+  isFollowing: boolean | null;
+  avatar: string;
+  currentCity: GetMatches_getMatches_matches_guest_profile_currentCity | null;
+}
+
+export interface GetMatches_getMatches_matches_guest {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: GetMatches_getMatches_matches_guest_profile | null;
+}
+
+export interface GetMatches_getMatches_matches {
+  __typename: "MatchType";
+  id: string;
+  city: GetMatches_getMatches_matches_city | null;
+  host: GetMatches_getMatches_matches_host | null;
+  guest: GetMatches_getMatches_matches_guest | null;
+  status: MatchStatus;
+}
+
+export interface GetMatches_getMatches {
+  __typename: "GetMatchesResponse";
+  matches: (GetMatches_getMatches_matches | null)[] | null;
+}
+
+export interface GetMatches {
+  getMatches: GetMatches_getMatches;
+}
+
+export interface GetMatchesVariables {
+  matchPage?: number | null;
 }
 
 
@@ -2692,6 +2790,14 @@ export enum CoffeeTarget {
   FOLLOWERS = "FOLLOWERS",
   GENDER = "GENDER",
   NATIONALITY = "NATIONALITY",
+}
+
+/**
+ * An enumeration.
+ */
+export enum MatchStatus {
+  CANCELED = "CANCELED",
+  ONGOING = "ONGOING",
 }
 
 /**
