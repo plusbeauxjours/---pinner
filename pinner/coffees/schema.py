@@ -27,4 +27,5 @@ class Query(object):
 class Mutation(object):
 
     request_coffee = mutations.RequestCoffee.Field(required=True)
-    get_match = mutations.GetMatch.Field(required=True)
+    match = mutations.Match.Field(required=True)
+    un_match = mutations.UnMatch.Field(required=True)

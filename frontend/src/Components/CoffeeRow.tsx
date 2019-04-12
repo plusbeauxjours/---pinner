@@ -52,7 +52,7 @@ const CoffeeRow: React.SFC<IProps> = ({
 }) => {
   return (
     <>
-      <Link to={`/${username}`}>
+      <Link to={`/c/${id}`}>
         <Container>
           <UserHeader
             username={username}

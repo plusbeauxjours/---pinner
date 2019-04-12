@@ -37,13 +37,13 @@ class RequestCoffee(graphene.Mutation):
             raise Exception("Can't create a coffee")
 
 
-class GetMatch(graphene.Mutation):
+class Match(graphene.Mutation):
 
     class Arguments:
-        coffeeId = graphene.String(required=True)
+        coffeeId = graphene.Int(required=True)
         userId = graphene.Int(required=True)
 
-    Output = types.RequestCoffeeResponse
+    Output = types.MatchResponse
 
     @login_required
     def mutate(self, info, **kwargs):
@@ -64,7 +64,43 @@ class GetMatch(graphene.Mutation):
                 host=coffee.host,
                 city=coffee.city,
                 guest=guest)
-            return types.RequestCoffeeResponse(ok=True, match=match)
+            return types.MatchResponse(ok=True, match=match)
         except IntegrityError as e:
             print(e)
             raise Exception("Can't create a match")
+
+
+class UnMatch(graphene.Mutation):
+
+    class Arguments:
+        matchId = graphene.Int(required=True)
+
+    Output = types.UnMatchResponse
+
+    @login_required
+    def mutate(self, info, **kwargs):
+
+        user = info.context.user
+        matchId = kwargs.get('matchId')
+
+        if user.is_authenticated:
+
+            try:
+                match = models.Match.objects.get(id=matchId)
+            except models.Card.DoesNotExist:
+                error = "Match Not Found"
+                return types.UnMatchResponse(ok=False)
+
+            if match.host.id == user.id:
+
+                match.delete()
+                return types.UnMatchResponse(ok=True)
+
+            else:
+
+                error = "Unauthorized"
+                return types.UnMatchResponse(ok=False)
+
+        else:
+            error = "You need to log in"
+            return types.UnMatchResponse(ok=False)

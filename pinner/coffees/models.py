@@ -16,10 +16,8 @@ class Coffee (config_models.TimeStampedModel):
 
     STATUS = (
         ('requesting', 'REQUESTING'),
-        ('accepted', 'ACCEPTED'),
         ('canceled', 'CANCELED'),
         ('expired', 'EXPIRED'),
-        ('refused', 'REFUSED'),
     )
 
     TARGET = (

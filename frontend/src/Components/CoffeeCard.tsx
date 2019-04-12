@@ -54,7 +54,7 @@ const CoffeeCard: React.SFC<IProps> = ({
 }) => {
   return (
     <>
-      <Link to={`/city/${currentCity}/c/${id}`}>
+      <Link to={`/c/${id}`}>
         <Container>
           <SAvatar url={avatar} size="md" />
           <SBold text={username} />

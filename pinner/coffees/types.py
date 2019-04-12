@@ -27,3 +27,12 @@ class GetCoffeesResponse(graphene.ObjectType):
 
 class CoffeeDetailResponse(graphene.ObjectType):
     coffee = graphene.Field(CoffeeType)
+
+
+class MatchResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
+    match = graphene.Field(MatchType)
+
+
+class UnMatchResponse(graphene.ObjectType):
+    ok = graphene.Boolean()

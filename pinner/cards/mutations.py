@@ -191,6 +191,7 @@ class DeleteCard(graphene.Mutation):
 
     Output = types.DeleteCardResponse
 
+    @login_required
     def mutate(self, info, **kwargs):
 
         user = info.context.user

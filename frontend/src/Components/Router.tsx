@@ -48,9 +48,9 @@ const LoggedInPages = () => (
       <Route path="/notification" component={Notification} />
       <Route path="/continent/:continentName" component={ContinentProfile} />
       <Route path="/country/:countryName" component={CountryProfile} />
-      <Route path="/city/:cityName/c/:id" component={CoffeeDetail} />
       <Route path="/city/:cityName/:duration" component={TripProfile} />
       <Route path="/city/:cityName" component={CityProfile} />
+      <Route path="/c/:id" component={CoffeeDetail} />
       <Route path="/:username/footprint" exact={true} component={Footprint} />
       <Route path="/:username" component={UserProfile} />
       <Redirect from="*" to="/" />
