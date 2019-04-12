@@ -264,14 +264,7 @@ const FeedPresenter: React.SFC<IProps> = ({
   coffeeLoading,
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},
   recommandUsersLoading,
-  matchData: {
-    matches: {
-      city: matchCity = null,
-      host: matchHost = null,
-      guest: matchGuest = null,
-      status: matchStatus = null
-    }
-  },
+  matchData: { getMatches: { matches = null } = {} } = {},
   matchLoading,
   nowModalOpen,
   beforeModalOpen,
@@ -294,6 +287,8 @@ const FeedPresenter: React.SFC<IProps> = ({
   } else if (!feedLoading && usersNow && usersBefore && city) {
     return (
       <>
+        {console.log(matches)}
+
         {coffeeModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleCoffeeModal} />
@@ -479,7 +474,6 @@ const FeedPresenter: React.SFC<IProps> = ({
               <Icon onClick={toggleRequestModal}>
                 <Upload />
               </Icon>
-              {console.log(coffees)}
               {!coffeeLoading && coffees ? (
                 <CoffeeGrid coffees={coffees} />
               ) : (

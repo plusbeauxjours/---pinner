@@ -20,7 +20,6 @@ import {
   AddCommentVariables
 } from "../../types/api";
 import { GET_USER } from "../../Routes/UserProfile/UserProfileQueries";
-import { GET_FEED } from "../../Routes/Feed/FeedQueries";
 import { FOLLOW_USER } from "../FollowBtn/FollowBtnQueries";
 import Me from "../Me";
 
@@ -155,19 +154,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
                           <ToggleLikeMutation
                             mutation={TOGGLE_LIKE_CARD}
                             variables={{ cardId: parseInt(cardId, 10) }}
-                            refetchQueries={[
-                              {
-                                query: GET_USER,
-                                variables: { username: user.username }
-                              },
-                              {
-                                query: GET_FEED,
-                                variables: {
-                                  page: 0,
-                                  cityName: user.profile.currentCity.cityName
-                                }
-                              }
-                            ]}
                           >
                             {toggleLikeFn => {
                               this.toggleLikeFn = toggleLikeFn;

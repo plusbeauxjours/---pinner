@@ -116,19 +116,15 @@ class DeleteComment(graphene.Mutation):
 
                 if comment.creator.id == user.id or card.creator.id == user.id:
                     comment.delete()
-                    return types.AddCommentResponse(comment=comment)
+                    return types.DeleteCommentResponse(ok=True)
 
                 else:
-                    error = "Can't Delete Comment"
-
-                return types.DeleteCommentResponse(ok=True)
+                    return types.DeleteCommentResponse(ok=False)
 
             except models.Comment.DoesNotExist:
-                error = 'Comment Not Found'
                 return types.DeleteCommentResponse(ok=False)
 
         except models.Card.DoesNotExist:
-            error = 'Card Not Found'
             return types.DeleteCommentResponse(ok=False)
 
 
@@ -202,7 +198,6 @@ class DeleteCard(graphene.Mutation):
             try:
                 card = models.Card.objects.get(id=cardId)
             except models.Card.DoesNotExist:
-                error = "Card Not Found"
                 return types.DeleteCardResponse(ok=False)
 
             if card.creator.id == user.id:
@@ -211,12 +206,9 @@ class DeleteCard(graphene.Mutation):
                 return types.DeleteCardResponse(ok=True)
 
             else:
-
-                error = "Unauthorized"
                 return types.DeleteCardResponse(ok=False)
 
         else:
-            error = "You need to log in"
             return types.DeleteCardResponse(ok=False)
 
 

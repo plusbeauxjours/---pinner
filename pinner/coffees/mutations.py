@@ -80,20 +80,16 @@ class UnMatch(graphene.Mutation):
 
             try:
                 match = models.Match.objects.get(id=matchId)
-            except models.Card.DoesNotExist:
-                error = "Match Not Found"
+            except models.Match.DoesNotExist:
                 return types.UnMatchResponse(ok=False)
 
             if match.host.id == user.id or match.guest.id == user.id:
-
                 match.delete()
                 return types.UnMatchResponse(ok=True)
 
             else:
 
-                error = "Unauthorized"
                 return types.UnMatchResponse(ok=False)
 
         else:
-            error = "You need to log in"
             return types.UnMatchResponse(ok=False)

@@ -297,7 +297,6 @@ class FeedContainer extends React.Component<IProps, IState> {
                       </GetCoffeesQuery>
                     );
                   }}
-                  >
                 </UnMatchMutation>
               );
             }}
@@ -351,19 +350,19 @@ class FeedContainer extends React.Component<IProps, IState> {
       currentContinent,
       continentPhotoURL
     });
-    this.ReportLocationFn({
-      variables: {
-        currentLat: lat,
-        currentLng: lng,
-        currentCity,
-        currentCountry,
-        currentCountryCode,
-        currentContinent,
-        cityPhotoURL,
-        countryPhotoURL,
-        continentPhotoURL
-      }
-    });
+    // this.ReportLocationFn({
+    //   variables: {
+    //     currentLat: lat,
+    //     currentLng: lng,
+    //     currentCity,
+    //     currentCountry,
+    //     currentCountryCode,
+    //     currentContinent,
+    //     cityPhotoURL,
+    //     countryPhotoURL,
+    //     continentPhotoURL
+    //   }
+    // });
     console.log(this.state);
   };
   public handleGeoError = () => {

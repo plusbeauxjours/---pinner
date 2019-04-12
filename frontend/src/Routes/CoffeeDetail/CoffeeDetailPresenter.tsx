@@ -65,8 +65,8 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
             {coffee.host.username}
             {coffee.host.profile.gender}
             {coffee.host.profile.avatar}
-            {coffee.host.profile.currentCity.cityName}
-            {coffee.host.profile.currentCity.country.countryName}
+            {/* {coffee.host.profile.currentCity.cityName}
+            {coffee.host.profile.currentCity.country.countryName} */}
             {coffee.host.profile.isFollowing}
             {/* {coffee.host.profile.nationality.countryName} */}
             {coffee.host.profile.followersCount}
