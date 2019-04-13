@@ -23,7 +23,7 @@ import GetFollowings from "src/Components/GetFollowings";
 import GetDurationAvatars from "src/Components/GetDurationAvatars";
 import Flag from "src/Components/Flag";
 import GetDurationDays from "src/Components/GetDurationDays";
-// import GetKnowingFollowers from "src/Components/GetKnowingFollowers";
+import GetKnowingFollowers from "src/Components/GetKnowingFollowers";
 
 const PHeader = styled.header`
   display: flex;
@@ -365,6 +365,7 @@ interface IProps {
   continentModalOpen: boolean;
   followersModalOpen: boolean;
   followingsModalOpen: boolean;
+  knowingFollowersModalOpen: boolean;
 
   editMode: boolean;
   openEditMode: () => void;
@@ -406,6 +407,7 @@ interface IProps {
   toggleContinentModal: () => void;
   toggleFollowersModal: () => void;
   toggleFollowingsModal: () => void;
+  toggleKnowingFollowersModal: () => void;
 
   logUserOutFn: () => void;
 
@@ -444,7 +446,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   getTipsLoading,
 
   knowingFollowersData: {
-    getKnowingFollowers: { profiles: knowingFollowers = null } = {}
+    getKnowingFollowers: {
+      count = null,
+      profiles: knowingFollowers = null
+    } = {}
   } = {},
   knowingFollowersLoading,
 
@@ -464,6 +469,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   continentModalOpen,
   followersModalOpen,
   followingsModalOpen,
+  knowingFollowersModalOpen,
   editMode,
   toggleTripSeeAll,
   toggleTopCountriesSeeAll,
@@ -481,6 +487,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleContinentModal,
   toggleFollowersModal,
   toggleFollowingsModal,
+  toggleKnowingFollowersModal,
   openEditMode,
   logUserOutFn,
   confirmDeleteProfile,
@@ -582,7 +589,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </RowModal>
           </ModalContainer>
         )}
-        {/* {knowingFollowersModalOpen && (
+        {knowingFollowersModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleKnowingFollowersModal} />
             <RowModal onClick={toggleKnowingFollowersModal}>
@@ -591,7 +598,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               </Wrapper>
             </RowModal>
           </ModalContainer>
-        )} */}
+        )}
         {tripModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleTripModal} />
@@ -847,20 +854,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               </ColumnContainer>
               <ColumnContainer>
                 <Row>
-                  {knowingFollowers &&
-                    knowingFollowers.map(follower => (
-                      <AvatarContainer key={follower.id}>
-                        <SAvatar
-                          size={"sm"}
-                          key={follower.id}
-                          url={follower.avatar}
-                        />
-                      </AvatarContainer>
-                    ))}
-                  <UBold text={String(user.profile.followersCount)} />
-                  <UBold text={"KNOWING FOLLOWERS"} />
-                </Row>
-                <Row>
                   {user.profile.followers &&
                     user.profile.followers.map(follower => (
                       <AvatarContainer key={follower.id}>
@@ -874,6 +867,25 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <UBold text={String(user.profile.followersCount)} />
                   <UBold text={"PEOPLE THEY CROSS PATHS WITH MOST"} />
                 </Row>
+                {!user.profile.isSelf && knowingFollowers && (
+                  <Row onClick={toggleKnowingFollowersModal}>
+                    {knowingFollowers.map(follower => (
+                      <AvatarContainer key={follower.id}>
+                        <SAvatar
+                          size={"sm"}
+                          key={follower.id}
+                          url={follower.avatar}
+                        />
+                      </AvatarContainer>
+                    ))}
+                    <UBold text={String(count)} />
+                    <UBold
+                      text={
+                        "SOME OF YOUR FOLLOWERS ARE FOLLOWING TOGETHER - done"
+                      }
+                    />
+                  </Row>
+                )}
                 <Row onClick={toggleFollowersModal}>
                   {user.profile.followers &&
                     user.profile.followers.map(follower => (

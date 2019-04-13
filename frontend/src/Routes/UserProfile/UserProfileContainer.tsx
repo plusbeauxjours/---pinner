@@ -74,6 +74,7 @@ interface IState {
   continentModalOpen: boolean;
   followersModalOpen: boolean;
   followingsModalOpen: boolean;
+  knowingFollowersModalOpen: boolean;
   editMode: boolean;
   id: string;
   userName: string;
@@ -125,6 +126,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       continentModalOpen: false,
       followersModalOpen: false,
       followingsModalOpen: false,
+      knowingFollowersModalOpen: false,
       editMode: false,
       id: props.id,
       userName: props.username,
@@ -171,6 +173,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       continentModalOpen,
       followersModalOpen,
       followingsModalOpen,
+      knowingFollowersModalOpen,
       editMode,
       userName,
       bio,
@@ -571,6 +574,13 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                           this
                                                                             .gotoTrip
                                                                         }
+                                                                        knowingFollowersModalOpen={
+                                                                          knowingFollowersModalOpen
+                                                                        }
+                                                                        toggleKnowingFollowersModal={
+                                                                          this
+                                                                            .toggleKnowingFollowersModal
+                                                                        }
                                                                       />
                                                                     );
                                                                   }}
@@ -835,6 +845,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   public toggleFollowingsModal = () => {
     const { followingsModalOpen } = this.state;
     this.setState({ followingsModalOpen: !followingsModalOpen });
+  };
+  public toggleKnowingFollowersModal = () => {
+    const { knowingFollowersModalOpen } = this.state;
+    this.setState({ knowingFollowersModalOpen: !knowingFollowersModalOpen });
   };
   public addTrip = () => {
     const { cityName, startDate, endDate, tripAddModalOpen } = this.state;

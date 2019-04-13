@@ -98,3 +98,4 @@ class UserListResponse(graphene.ObjectType):
 
 class KnowingFollowersResponse(graphene.ObjectType):
     profiles = graphene.List(ProfileType)
+    count = graphene.Int()

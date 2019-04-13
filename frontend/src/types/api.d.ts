@@ -2568,6 +2568,7 @@ export interface GetKnowingFollowers_getKnowingFollowers_profiles {
 
 export interface GetKnowingFollowers_getKnowingFollowers {
   __typename: "KnowingFollowersResponse";
+  count: number | null;
   profiles: (GetKnowingFollowers_getKnowingFollowers_profiles | null)[] | null;
 }
 
