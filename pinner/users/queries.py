@@ -161,7 +161,7 @@ def resolve_get_knowing_followers(sel, info, **kwargs):
         my_followers = me.profile.followers.all()
         user_followers = user.profile.followers.all()
         knowing_followers = my_followers & user_followers
-        return types.KnowingFollowersResponse(users=knowing_followers)
+        return types.KnowingFollowersResponse(profiles=knowing_followers)
 
     except User.DoesNotExist:
         raise Exception('User not found')

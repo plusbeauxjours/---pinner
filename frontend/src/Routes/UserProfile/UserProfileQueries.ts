@@ -309,3 +309,22 @@ export const GET_FOLLOWINGS = gql`
     }
   }
 `;
+
+export const GET_KNOWING_FOLLOWERS = gql`
+  query GetKnowingFollowers($username: String!) {
+    getKnowingFollowers(username: $username) {
+      profiles {
+        id
+        username
+        avatar
+        isFollowing
+        currentCity {
+          cityName
+          country {
+            countryName
+          }
+        }
+      }
+    }
+  }
+`;

@@ -23,6 +23,7 @@ import GetFollowings from "src/Components/GetFollowings";
 import GetDurationAvatars from "src/Components/GetDurationAvatars";
 import Flag from "src/Components/Flag";
 import GetDurationDays from "src/Components/GetDurationDays";
+// import GetKnowingFollowers from "src/Components/GetKnowingFollowers";
 
 const PHeader = styled.header`
   display: flex;
@@ -343,6 +344,9 @@ interface IProps {
   getTripsData?: any;
   getTipsLoading: boolean;
 
+  knowingFollowersData: any;
+  knowingFollowersLoading: boolean;
+
   tripList: any;
   topCountriesList: any;
   frequentVisitsList: any;
@@ -438,6 +442,11 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 
   getTripsData: { getTrips: { footprints: getTrips = null } = {} } = {},
   getTipsLoading,
+
+  knowingFollowersData: {
+    getKnowingFollowers: { profiles: knowingFollowers = null } = {}
+  } = {},
+  knowingFollowersLoading,
 
   tripList,
   topCountriesList,
@@ -573,6 +582,16 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </RowModal>
           </ModalContainer>
         )}
+        {/* {knowingFollowersModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleKnowingFollowersModal} />
+            <RowModal onClick={toggleKnowingFollowersModal}>
+              <Wrapper>
+                <GetKnowingFollowers username={user.username} />
+              </Wrapper>
+            </RowModal>
+          </ModalContainer>
+        )} */}
         {tripModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleTripModal} />
@@ -828,18 +847,18 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               </ColumnContainer>
               <ColumnContainer>
                 <Row>
-                  {user.profile.followers &&
-                    user.profile.followers.map(follower => (
+                  {knowingFollowers &&
+                    knowingFollowers.map(follower => (
                       <AvatarContainer key={follower.id}>
                         <SAvatar
                           size={"sm"}
                           key={follower.id}
-                          url={follower.user.profile.avatar}
+                          url={follower.avatar}
                         />
                       </AvatarContainer>
                     ))}
                   <UBold text={String(user.profile.followersCount)} />
-                  <UBold text={"MATCHINGS"} />
+                  <UBold text={"KNOWING FOLLOWERS"} />
                 </Row>
                 <Row>
                   {user.profile.followers &&

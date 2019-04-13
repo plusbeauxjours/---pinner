@@ -97,4 +97,4 @@ class UserListResponse(graphene.ObjectType):
 
 
 class KnowingFollowersResponse(graphene.ObjectType):
-    users = graphene.List(ProfileType)
+    profiles = graphene.List(ProfileType)

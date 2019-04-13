@@ -2543,6 +2543,47 @@ export interface GetFollowingsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetKnowingFollowers
+// ====================================================
+
+export interface GetKnowingFollowers_getKnowingFollowers_profiles_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetKnowingFollowers_getKnowingFollowers_profiles_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetKnowingFollowers_getKnowingFollowers_profiles_currentCity_country;
+}
+
+export interface GetKnowingFollowers_getKnowingFollowers_profiles {
+  __typename: "ProfileType";
+  id: string;
+  username: string | null;
+  avatar: string;
+  isFollowing: boolean | null;
+  currentCity: GetKnowingFollowers_getKnowingFollowers_profiles_currentCity | null;
+}
+
+export interface GetKnowingFollowers_getKnowingFollowers {
+  __typename: "KnowingFollowersResponse";
+  profiles: (GetKnowingFollowers_getKnowingFollowers_profiles | null)[] | null;
+}
+
+export interface GetKnowingFollowers {
+  getKnowingFollowers: GetKnowingFollowers_getKnowingFollowers;
+}
+
+export interface GetKnowingFollowersVariables {
+  username: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CompletePhoneVerification
 // ====================================================
 
