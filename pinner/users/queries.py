@@ -148,3 +148,20 @@ def resolve_get_followings(self, info, **kwargs):
         raise Exception('User not found')
 
     return types.ProfileListResponse(profiles=following_profile)
+
+
+@login_required
+def resolve_get_knowing_followers(sel, info, **kwargs):
+
+    me = info.context.user
+    username = kwargs.get('username')
+
+    try:
+        user = User.objects.get(username=username)
+        my_followers = me.profile.followers.all()
+        user_followers = user.profile.followers.all()
+        knowing_followers = my_followers & user_followers
+        return types.KnowingFollowersResponse(users=knowing_followers)
+
+    except User.DoesNotExist:
+        raise Exception('User not found')

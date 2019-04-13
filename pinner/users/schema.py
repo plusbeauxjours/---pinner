@@ -77,6 +77,14 @@ class Query(object):
             'username': graphene.String(required=True),
         }
     )
+    get_knowing_followers = graphene.types.Field(
+        types.KnowingFollowersResponse,
+        resolver=queries.resolve_get_knowing_followers,
+        required=True,
+        args={
+            'username': graphene.String(required=True)
+        }
+    )
 
 
 class Mutation(object):

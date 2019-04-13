@@ -94,3 +94,7 @@ class ReportLocationResponse(graphene.ObjectType):
 
 class UserListResponse(graphene.ObjectType):
     users = graphene.List(UserType)
+
+
+class KnowingFollowersResponse(graphene.ObjectType):
+    users = graphene.List(ProfileType)
