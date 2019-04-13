@@ -567,6 +567,7 @@ export interface CoffeeDetail_coffeeDetail_coffee_host {
 
 export interface CoffeeDetail_coffeeDetail_coffee {
   __typename: "CoffeeType";
+  id: string;
   expires: any | null;
   naturalTime: string | null;
   status: CoffeeStatus;

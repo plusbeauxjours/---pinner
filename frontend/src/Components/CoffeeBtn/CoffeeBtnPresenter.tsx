@@ -8,23 +8,13 @@ const SButton = styled(Button)`
 `;
 
 interface IProps {
-  isFollowing?: boolean;
   matchFn?: any;
   unMatchFn?: any;
 }
 
-const CoffeeBtnPresenter: React.SFC<IProps> = ({
-  isFollowing,
-  matchFn,
-  unMatchFn
-}) => (
+const CoffeeBtnPresenter: React.SFC<IProps> = ({ matchFn, unMatchFn }) => (
   <>
-    <SButton
-      active={isFollowing}
-      size={"xs"}
-      text={isFollowing ? "Unfollow" : "Follow"}
-      onClick={matchFn}
-    />
+    <SButton size={"xs"} text={"JOIN"} onClick={matchFn} />
   </>
 );
 

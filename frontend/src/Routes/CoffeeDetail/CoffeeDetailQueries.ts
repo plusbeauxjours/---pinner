@@ -4,6 +4,7 @@ export const COFFEE_DETAIL = gql`
   query CoffeeDetail($coffeeId: Int!) {
     coffeeDetail(coffeeId: $coffeeId) {
       coffee {
+        id
         expires
         naturalTime
         status

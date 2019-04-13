@@ -7,6 +7,7 @@ import Wrapper from "../../Components/Wrapper";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import FollowBtn from "../../Components/FollowBtn";
+import CoffeeBtn from "src/Components/CoffeeBtn";
 
 const SWrapper = styled(Wrapper)`
   display: flex;
@@ -131,6 +132,7 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
             <Location>
               <SBold text={coffee.status} />
             </Location>
+            <CoffeeBtn coffeeId={coffee.id} />
 
             {/* {coffee.host.profile.nationality.countryName} */}
           </SWrapper>

@@ -1,61 +1,46 @@
 import React from "react";
 import { Mutation } from "react-apollo";
-import {
-  Match,
-  MatchVariables,
-  UnMatch,
-  UnMatchVariables
-} from "../../types/api";
-import { MATCH, UNMATCH } from "./CoffeeBtnQueries";
+import { Match, MatchVariables } from "../../types/api";
+import { MATCH } from "./CoffeeBtnQueries";
 import CoffeeBtnPresenter from "./CoffeeBtnPresenter";
+import { toast } from "react-toastify";
 
 class MatchMutation extends Mutation<Match, MatchVariables> {}
-class UnMatchMutation extends Mutation<UnMatch, UnMatchVariables> {}
 
-interface IState {
-  isFollowing: boolean;
+interface IProps {
+  coffeeId: number;
 }
 
-class CoffeeBtnContainer extends React.Component<any, IState> {
-  public unMatchFn;
+class CoffeeBtnContainer extends React.Component<IProps> {
   public matchFn;
   constructor(props) {
     super(props);
-    this.state = {
-      isFollowing: props.isFollowing
-    };
   }
   public render() {
-    const { isFollowing } = this.state;
-    const { coffeeId, matchId } = this.props;
+    const { coffeeId } = this.props;
     return (
-      <MatchMutation mutation={MATCH} variables={{ coffeeId }}>
+      <MatchMutation
+        mutation={MATCH}
+        variables={{ coffeeId }}
+        onCompleted={this.handleCoffeeRequest}
+      >
         {matchFn => {
           this.matchFn = matchFn;
-          return (
-            <UnMatchMutation mutation={UNMATCH} variables={{ matchId }}>
-              {unMatchFn => {
-                this.unMatchFn = unMatchFn;
-                return (
-                  <CoffeeBtnPresenter
-                    isFollowing={isFollowing}
-                    matchFn={matchFn}
-                    unMatchFn={unMatchFn}
-                  />
-                );
-              }}
-            </UnMatchMutation>
-          );
+
+          return <CoffeeBtnPresenter matchFn={matchFn} />;
         }}
       </MatchMutation>
     );
   }
-  public toggleBtn = () => {
-    this.setState(state => {
-      return {
-        isFollowing: !state.isFollowing
-      };
-    });
+  public handleCoffeeRequest = data => {
+    // const { history } = this.props;
+    const { match } = data;
+    if (match.ok) {
+      toast.success("Match accepted, say hello");
+      // history.push(`/coffee/${requestCoffee.coffee.id}`);
+    } else {
+      toast.error("error");
+    }
   };
 }
 
