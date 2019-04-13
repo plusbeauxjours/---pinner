@@ -12,6 +12,8 @@ import CardGrid from "../../Components/CardGrid";
 import { keyframes } from "styled-components";
 import LocationGrid from "src/Components/LocationGrid";
 import LocationRow from "src/Components/LocationRow";
+import CoffeeRow from "src/Components/CoffeeRow";
+import CoffeeGrid from "src/Components/CoffeeGrid";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -241,6 +243,8 @@ interface IProps {
   nearCitiesLoading: boolean;
   nearCountriesData?: NearCountries;
   nearCountriesLoading: boolean;
+  coffeeData: any;
+  coffeeLoading: boolean;
   toggleNearCitySeeAll: () => void;
   toggleNearCountrySeeAll: () => void;
   nearCityList: any;
@@ -249,6 +253,10 @@ interface IProps {
   nearCountryModalOpen: boolean;
   toggleNearCityModal: () => void;
   toggleNearCountryModal: () => void;
+  coffeeModalOpen: boolean;
+  coffeeList: any;
+  toggleCoffeeModal: () => void;
+  toggleCoffeeSeeAll: () => void;
 }
 
 const CityProfilePresenter: React.SFC<IProps> = ({
@@ -265,6 +273,8 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   nearCitiesLoading,
   nearCountriesData: { nearCountries: { countries = null } = {} } = {},
   nearCountriesLoading,
+  coffeeData: { getCoffees: { coffees = null } = {} } = {},
+  coffeeLoading,
   toggleNearCitySeeAll,
   toggleNearCountrySeeAll,
   nearCityList,
@@ -272,13 +282,40 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   toggleNearCityModal,
   toggleNearCountryModal,
   nearCityModalOpen,
-  nearCountryModalOpen
+  nearCountryModalOpen,
+  coffeeModalOpen,
+  coffeeList,
+  toggleCoffeeModal,
+  toggleCoffeeSeeAll
 }) => {
   if (cityLoading) {
     return <Loader />;
   } else if (!cityLoading && cards && usersNow && usersBefore && city) {
     return (
       <>
+        {coffeeModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleCoffeeModal} />
+            <Modal>
+              {console.log(coffeeList)}
+              <Wrapper>
+                {coffeeList.map(list => (
+                  <CoffeeRow
+                    key={list.id}
+                    id={list.id}
+                    username={list.host.username}
+                    avatar={list.host.profile.avatar}
+                    currentCity={list.city.cityName}
+                    currentCountry={list.city.country.countryName}
+                    isFollowing={list.host.profile.isFollowing}
+                    size={"sm"}
+                    target={list.target}
+                  />
+                ))}
+              </Wrapper>
+            </Modal>
+          </ModalContainer>
+        )}
         {nearCityModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleNearCityModal} />
@@ -411,6 +448,21 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               </Follow>
             </FollowContainer>
           </PBody>
+          <GreyLine />
+
+          <Title>
+            <SBold text={"NEED SOME COFFEE"} />
+            <SeeAll onClick={toggleCoffeeSeeAll}>SEE ALL</SeeAll>
+          </Title>
+          <Container>
+            <Box>
+              {!coffeeLoading && coffees ? (
+                <CoffeeGrid coffees={coffees} />
+              ) : (
+                <Loader />
+              )}
+            </Box>
+          </Container>
           <GreyLine />
           <Title>
             <SBold text={"NEAR CITIES"} />
