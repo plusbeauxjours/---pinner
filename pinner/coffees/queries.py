@@ -56,8 +56,8 @@ def resolve_get_matches(self, info, **kwargs):
     guest = user.guest.all()
 
     if (matchPage is 0):
-        combined = host.union(guest).order_by('-created_at')[:6]
+        combined = host.union(guest).order_by('-created_at')[:20]
     else:
-        combined = host.union(guest).order_by('-created_at')[6:]
+        combined = host.union(guest).order_by('-created_at')[20:]
 
     return types.GetMatchesResponse(matches=combined)

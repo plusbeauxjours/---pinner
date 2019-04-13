@@ -107,25 +107,3 @@ export const GET_COFFEES = gql`
   ${USER_FRAGMENT}
   ${CITY_FRAGMENT}
 `;
-
-export const GET_MATCHES = gql`
-  query GetMatches($matchPage: Int) {
-    getMatches(matchPage: $matchPage) {
-      matches {
-        id
-        city {
-          ...CityParts
-        }
-        host {
-          ...UserParts
-        }
-        guest {
-          ...UserParts
-        }
-        status
-      }
-    }
-  }
-  ${USER_FRAGMENT}
-  ${CITY_FRAGMENT}
-`;

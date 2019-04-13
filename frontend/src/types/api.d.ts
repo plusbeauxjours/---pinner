@@ -1184,6 +1184,71 @@ export interface GetCoffeesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetFootprints
+// ====================================================
+
+export interface GetFootprints_getFootprints_footprints_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryCode: string | null;
+}
+
+export interface GetFootprints_getFootprints_footprints_city {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetFootprints_getFootprints_footprints_city_country;
+}
+
+export interface GetFootprints_getFootprints_footprints {
+  __typename: "MoveNotificationType";
+  id: string;
+  city: GetFootprints_getFootprints_footprints_city | null;
+  naturalTime: string | null;
+}
+
+export interface GetFootprints_getFootprints {
+  __typename: "FootprintsResponse";
+  footprints: (GetFootprints_getFootprints_footprints | null)[] | null;
+}
+
+export interface GetFootprints {
+  getFootprints: GetFootprints_getFootprints;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: ReportLocation
+// ====================================================
+
+export interface ReportLocation_reportLocation {
+  __typename: "ReportLocationResponse";
+  ok: boolean | null;
+}
+
+export interface ReportLocation {
+  reportLocation: ReportLocation_reportLocation;
+}
+
+export interface ReportLocationVariables {
+  currentLat: number;
+  currentLng: number;
+  currentCity: string;
+  currentCountry: string;
+  currentCountryCode: string;
+  currentContinent: string;
+  cityPhotoURL: string;
+  countryPhotoURL: string;
+  continentPhotoURL: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetMatches
 // ====================================================
 
@@ -1259,6 +1324,7 @@ export interface GetMatches_getMatches_matches_guest {
 export interface GetMatches_getMatches_matches {
   __typename: "MatchType";
   id: string;
+  naturalTime: string | null;
   city: GetMatches_getMatches_matches_city | null;
   host: GetMatches_getMatches_matches_host | null;
   guest: GetMatches_getMatches_matches_guest | null;
@@ -1276,71 +1342,6 @@ export interface GetMatches {
 
 export interface GetMatchesVariables {
   matchPage?: number | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetFootprints
-// ====================================================
-
-export interface GetFootprints_getFootprints_footprints_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-  countryCode: string | null;
-}
-
-export interface GetFootprints_getFootprints_footprints_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetFootprints_getFootprints_footprints_city_country;
-}
-
-export interface GetFootprints_getFootprints_footprints {
-  __typename: "MoveNotificationType";
-  id: string;
-  city: GetFootprints_getFootprints_footprints_city | null;
-  naturalTime: string | null;
-}
-
-export interface GetFootprints_getFootprints {
-  __typename: "FootprintsResponse";
-  footprints: (GetFootprints_getFootprints_footprints | null)[] | null;
-}
-
-export interface GetFootprints {
-  getFootprints: GetFootprints_getFootprints;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: ReportLocation
-// ====================================================
-
-export interface ReportLocation_reportLocation {
-  __typename: "ReportLocationResponse";
-  ok: boolean | null;
-}
-
-export interface ReportLocation {
-  reportLocation: ReportLocation_reportLocation;
-}
-
-export interface ReportLocationVariables {
-  currentLat: number;
-  currentLng: number;
-  currentCity: string;
-  currentCountry: string;
-  currentCountryCode: string;
-  currentContinent: string;
-  cityPhotoURL: string;
-  countryPhotoURL: string;
-  continentPhotoURL: string;
 }
 
 

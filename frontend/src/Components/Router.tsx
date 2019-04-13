@@ -20,6 +20,7 @@ import CountryProfile from "../Routes/CountryProfile";
 import ContinentProfile from "../Routes/ContinentProfile";
 import TripProfile from "../Routes/TripProfile";
 import CoffeeDetail from "../Routes/CoffeeDetail";
+import Match from "../Routes/Match";
 
 import UserProfile from "../Routes/UserProfile";
 
@@ -43,7 +44,7 @@ const LoggedInPages = () => (
       <Route path="/p/:id" component={CardDetail} />
       <Route path="/search" component={Search} />
       <Route path="/upload" component={UpLoad} />
-      {/* <Route path="/explore" exact={true} component={Explore} /> */}
+      <Route path="/match" exact={true} component={Match} />
       <Route path="/explore/userlist" component={UserList} />
       <Route path="/notification" component={Notification} />
       <Route path="/continent/:continentName" component={ContinentProfile} />

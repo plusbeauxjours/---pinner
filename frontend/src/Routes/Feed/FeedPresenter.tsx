@@ -228,8 +228,7 @@ interface IProps {
   feedLoading: boolean;
   coffeeData: any;
   coffeeLoading: boolean;
-  matchData: any;
-  matchLoading: boolean;
+
   currentCity: string;
   nowModalOpen: boolean;
   beforeModalOpen: boolean;
@@ -264,8 +263,6 @@ const FeedPresenter: React.SFC<IProps> = ({
   coffeeLoading,
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},
   recommandUsersLoading,
-  matchData: { getMatches: { matches = null } = {} } = {},
-  matchLoading,
   nowModalOpen,
   beforeModalOpen,
   toggleNowModal,
@@ -287,7 +284,6 @@ const FeedPresenter: React.SFC<IProps> = ({
   } else if (!feedLoading && usersNow && usersBefore && city) {
     return (
       <>
-        {console.log(matches)}
         {coffeeModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleCoffeeModal} />

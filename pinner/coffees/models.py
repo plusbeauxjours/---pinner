@@ -79,4 +79,4 @@ class Match (config_models.TimeStampedModel):
 
     @property
     def natural_time(self):
-        return naturaltime(self.expires)
+        return naturaltime(self.created_at)
