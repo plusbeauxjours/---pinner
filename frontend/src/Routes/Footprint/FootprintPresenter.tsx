@@ -2,7 +2,6 @@ import React from "react";
 import Footprint from "../Footprint";
 import FootprintRow from "../../Components/FootprintRow";
 import styled from "src/Styles/typed-components";
-import { GetFootprints } from "../../types/api";
 import Loader from "src/Components/Loader";
 import { Route } from "react-router";
 import { keyframes } from "styled-components";
@@ -45,7 +44,7 @@ const Modal = styled.div`
 `;
 
 interface IProps {
-  data?: GetFootprints;
+  data?: any;
   loading: boolean;
   className?: string;
   modalOpen: boolean;

@@ -1,5 +1,4 @@
 import React from "react";
-import { NearCities, NearCountries } from "../../types/api";
 import { Link } from "react-router-dom";
 import styled from "../../Styles/typed-components";
 import "react-calendar-heatmap/dist/styles.css";
@@ -239,9 +238,9 @@ const SeeAll = styled.p`
 interface IProps {
   cityData?: any;
   cityLoading: boolean;
-  nearCitiesData?: NearCities;
+  nearCitiesData?: any;
   nearCitiesLoading: boolean;
-  nearCountriesData?: NearCountries;
+  nearCountriesData?: any;
   nearCountriesLoading: boolean;
   coffeeData: any;
   coffeeLoading: boolean;

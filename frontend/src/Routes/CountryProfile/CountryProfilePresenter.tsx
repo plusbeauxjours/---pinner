@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "../../Styles/typed-components";
-import { CountryProfile } from "../../types/api";
 
 import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
@@ -234,7 +233,7 @@ const SeeAll = styled.p`
 `;
 
 interface IProps {
-  data?: CountryProfile;
+  data?: any;
   loading: boolean;
   toggleCitySeeAll: () => void;
   cityList: any;

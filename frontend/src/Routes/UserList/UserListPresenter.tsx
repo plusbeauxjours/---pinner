@@ -3,7 +3,6 @@ import styled from "../../Styles/typed-components";
 import Wrapper from "src/Components/Wrapper";
 import Loader from "src/Components/Loader";
 import UserRow from "../../Components/UserRow";
-import { UserList } from "src/types/api";
 // import BlurImageLoader from "../../Components/BlurImageLoader";
 
 const Container = styled.div`
@@ -11,7 +10,7 @@ const Container = styled.div`
 `;
 
 interface IProps {
-  data?: UserList;
+  data?: any;
   loading: boolean;
 }
 

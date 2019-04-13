@@ -6,7 +6,6 @@ import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import Flag from "../../Components/Flag";
-import { ContinentProfile } from "../../types/api";
 import LocationGrid from "../../Components/LocationGrid";
 import CardGrid from "src/Components/CardGrid";
 import LocationRow from "src/Components/LocationRow";
@@ -201,7 +200,7 @@ const FlagGrid = styled.div`
 const AvatarContainer = styled.div``;
 
 interface IProps {
-  data?: ContinentProfile;
+  data?: any;
   loading: boolean;
   toggleCountrySeeAll: () => void;
   countryList: any;

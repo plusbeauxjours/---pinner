@@ -3,7 +3,6 @@ import CardDetail from "../../Routes/CardDetail";
 import NotificationRow from "../../Components/NotificationRow";
 import styled from "src/Styles/typed-components";
 import Wrapper from "src/Components/Wrapper";
-import { GetNotifictions, GetMoveNotifications } from "../../types/api";
 import Loader from "src/Components/Loader";
 import { Route } from "react-router";
 
@@ -12,8 +11,8 @@ const SWrapper = styled(Wrapper)`
 `;
 
 interface IProps {
-  getNotifications?: GetNotifictions;
-  getMoveNotifications?: GetMoveNotifications;
+  getNotifications?: any;
+  getMoveNotifications?: any;
   getNotificationsLoading: boolean;
   getMoveNotificationsLoading: boolean;
   className?: string;

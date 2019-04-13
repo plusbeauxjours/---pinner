@@ -2,7 +2,6 @@ import React from "react";
 import Loader from "src/Components/Loader";
 import Wrapper from "src/Components/Wrapper";
 import Photo from "src/Components/Photo";
-import { CardDetail } from "src/types/api";
 import styled from "styled-components";
 import { keyframes } from "styled-components";
 
@@ -43,7 +42,7 @@ const Modal = styled.div`
 `;
 
 interface IProps {
-  data: CardDetail;
+  data: any;
   loading: boolean;
   back: any;
 }

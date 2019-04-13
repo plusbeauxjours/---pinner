@@ -1,5 +1,4 @@
 import React from "react";
-import { GetMatches } from "../../types/api";
 import styled from "../../Styles/typed-components";
 
 import Loader from "../../Components/Loader";
@@ -63,7 +62,7 @@ const SBold = styled(Bold)`
 `;
 
 interface IProps {
-  matchData?: GetMatches;
+  matchData?: any;
   matchLoading: boolean;
 }
 

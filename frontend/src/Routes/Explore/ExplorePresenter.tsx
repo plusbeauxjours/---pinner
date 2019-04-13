@@ -1,5 +1,4 @@
 import React from "react";
-import { LatestCities } from "../../types/api";
 import styled from "../../Styles/typed-components";
 
 import Loader from "../../Components/Loader";
@@ -111,7 +110,7 @@ const SeeAll = styled.p`
 `;
 
 interface IProps {
-  latestCitiesData?: LatestCities;
+  latestCitiesData?: any;
   latestCitiesLoading: boolean;
 
   toggleLatestCitySeeAll: () => void;
