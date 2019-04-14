@@ -12,9 +12,11 @@ const SWrapper = styled(Wrapper)`
 
 interface IProps {
   getNotifications?: any;
-  getMoveNotifications?: any;
   getNotificationsLoading: boolean;
+  getMoveNotifications?: any;
   getMoveNotificationsLoading: boolean;
+  getMatchNotificationsData?: any;
+  getMatchNotificationsLoading: boolean;
   className?: string;
   modalOpen: boolean;
   toggleModal: () => void;
@@ -25,15 +27,25 @@ const NotificationPresenter: React.SFC<IProps> = ({
   getNotifications: {
     getNotifications: { notifications: getNotifications = null } = {}
   } = {},
+  getNotificationsLoading,
   getMoveNotifications: {
     getMoveNotifications: { notifications: getMoveNotifications = null } = {}
   } = {},
-  getNotificationsLoading,
   getMoveNotificationsLoading,
+  getMatchNotificationsData: {
+    getMatchNotifications: {
+      matchNotifications: getMatchNotifications = null
+    } = {}
+  } = {},
+  getMatchNotificationsLoading,
   modalOpen,
   onMarkRead
 }) => {
-  if (getNotificationsLoading || getMoveNotificationsLoading) {
+  if (
+    getNotificationsLoading ||
+    getMoveNotificationsLoading ||
+    getMatchNotificationsLoading
+  ) {
     return <Loader />;
   } else if (getNotifications && getMoveNotifications) {
     return (
@@ -63,6 +75,22 @@ const NotificationPresenter: React.SFC<IProps> = ({
                   key={notification.id}
                   notification={notification}
                   actor={notification.actor.profile}
+                  onMarkRead={onMarkRead}
+                  isRead={notification.read}
+                />
+              );
+            })}
+        </SWrapper>
+        <SWrapper>
+          {getMatchNotifications &&
+            getMatchNotifications.map(notification => {
+              return (
+                <NotificationRow
+                  id={notification.id}
+                  key={notification.id}
+                  notification={notification}
+                  actor={notification.host.profile}
+                  city={notification}
                   onMarkRead={onMarkRead}
                   isRead={notification.read}
                 />

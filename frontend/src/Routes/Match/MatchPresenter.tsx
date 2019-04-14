@@ -12,14 +12,12 @@ const TallWrapper = styled(Wrapper)`
 `;
 
 const Container = styled.div`
-  border-bottom: 4px;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  -webkit-box-flex: 0;
-  flex: 0 0 auto;
-  height: 280px;
-  padding: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 170px));
+  grid-template-rows: 200px;
+  grid-auto-rows: 170px;
+  grid-gap: 15px;
+  margin-bottom: 85px;
 `;
 
 const GreyLine = styled.div`
@@ -32,28 +30,6 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
-`;
-
-const Box = styled.div`
-  width: 905px;
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  ::-webkit-scrollbar {
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    background-color: ${props => props.theme.bgColor};
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-    background-color: ${props => props.theme.greyColor};
-  }
 `;
 
 const SBold = styled(Bold)`
@@ -78,13 +54,11 @@ const MatchPresenter: React.SFC<IProps> = ({
             <SBold text={"MATCHES"} />
           </Title>
           <Container>
-            <Box>
-              {!matchLoading && matches ? (
-                <MatchGrid matches={matches} />
-              ) : (
-                <Loader />
-              )}
-            </Box>
+            {!matchLoading && matches ? (
+              <MatchGrid matches={matches} />
+            ) : (
+              <Loader />
+            )}
           </Container>
           <GreyLine />
         </TallWrapper>

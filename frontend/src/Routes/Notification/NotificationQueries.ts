@@ -33,6 +33,38 @@ export const GET_NOTIFICATION = gql`
   }
 `;
 
+export const GET_MATCH_NOTIFICATION = gql`
+  query GetMatchNotifications {
+    getMatchNotifications {
+      ok
+      matchNotifications {
+        id
+        host {
+          profile {
+            username
+            avatar
+            currentCity {
+              cityName
+              country {
+                countryName
+              }
+            }
+          }
+        }
+        verb
+        city {
+          cityName
+          country {
+            countryName
+          }
+        }
+        read
+        naturalTime
+      }
+    }
+  }
+`;
+
 export const GET_MOVE_NOTIFICATION = gql`
   query GetMoveNotifications($page: Int!) {
     getMoveNotifications(page: $page) {

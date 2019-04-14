@@ -18,13 +18,13 @@ class Query(object):
         required=True,
         args={'page': graphene.Int()}
     )
-    resolve_get_coffee_notifications = graphene.Field(
+    get_coffee_notifications = graphene.Field(
         types.GetCoffeeNotificationsResponse,
         resolver=queries.resolve_get_coffee_notifications,
         required=True,
     )
 
-    resolve_get_match_notifications = graphene.Field(
+    get_match_notifications = graphene.Field(
         types.GetMatchNotificationsResponse,
         resolver=queries.resolve_get_match_notifications,
         required=True,

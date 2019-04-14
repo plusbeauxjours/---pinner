@@ -71,12 +71,14 @@ interface IProps {
   key: string;
   notification: any;
   actor: any;
+  city?: any;
   onMarkRead: any;
   isRead: boolean;
 }
 const NotificationRow: React.SFC<IProps> = ({
   notification,
   actor,
+  city,
   onMarkRead,
   isRead
 }) => {
@@ -145,7 +147,6 @@ const NotificationRow: React.SFC<IProps> = ({
               return (
                 <>
                   <Link
-                    key={notification!.payload!.id}
                     to={{
                       pathname: `/p/${notification.payload.id}`,
                       state: { modalOpen: true }
@@ -182,7 +183,6 @@ const NotificationRow: React.SFC<IProps> = ({
               return (
                 <>
                   <Link
-                    key={notification.payload.id}
                     to={{
                       pathname: `/p/${notification.payload.id}`,
                       state: { modalOpen: true }
@@ -214,7 +214,6 @@ const NotificationRow: React.SFC<IProps> = ({
               return (
                 <>
                   <Link
-                    key={notification!.payload!.id}
                     to={{
                       pathname: `/p/${notification.payload.id}`,
                       state: { modalOpen: true }
@@ -236,6 +235,36 @@ const NotificationRow: React.SFC<IProps> = ({
                       />
                       <Header>
                         <SBold text={"Uploaded card"} />
+                        <TimeStamp>{notification.naturalTime}</TimeStamp>
+                      </Header>
+                    </Container>
+                  </Link>
+                </>
+              );
+            case "MATCH":
+              return (
+                <>
+                  <Link
+                    to={{
+                      pathname: `/match/`
+                    }}
+                    onClick={() => onMarkRead(notification.id, isRead)}
+                  >
+                    {!isRead ? (
+                      <ICon>
+                        <RedDot />
+                      </ICon>
+                    ) : null}
+                    <Container>
+                      <UserHeader
+                        username={actor.username}
+                        currentCity={actor.currentCity.cityName}
+                        currentCountry={actor.currentCity.country.countryName}
+                        avatar={actor.avatar}
+                        size={"sm"}
+                      />
+                      <Header>
+                        <SBold text={"You've got a Matched!"} />
                         <TimeStamp>{notification.naturalTime}</TimeStamp>
                       </Header>
                     </Container>

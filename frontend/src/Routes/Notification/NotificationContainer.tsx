@@ -4,25 +4,28 @@ import {
   GetNotifictions,
   GetNotifictionsVariables,
   GetMoveNotifications,
-  GetMoveNotificationsVariables
+  GetMoveNotificationsVariables,
+  GetMatchNotifications
 } from "../../types/api";
 
 import NotificationPresenter from "./NotificationPresenter";
 import {
   GET_NOTIFICATION,
   GET_MOVE_NOTIFICATION,
-  MARK_AS_READ
+  MARK_AS_READ,
+  GET_MATCH_NOTIFICATION
 } from "./NotificationQueries";
 import { MarkAsRead, MarkAsReadVariables } from "../../types/api";
 
-class GetNotifictionQuery extends Query<
+class GetNotifictionsQuery extends Query<
   GetNotifictions,
   GetNotifictionsVariables
 > {}
-class GetMoveNotifictionQuery extends Query<
+class GetMoveNotifictionsQuery extends Query<
   GetMoveNotifications,
   GetMoveNotificationsVariables
 > {}
+class GetMatchNotificationsQuery extends Query<GetMatchNotifications> {}
 class MarkAsReadMutation extends Mutation<MarkAsRead, MarkAsReadVariables> {}
 
 interface IState {
@@ -44,43 +47,66 @@ class NotificationContainer extends React.Component<any, IState> {
   public render() {
     const { page, modalOpen, notificationId } = this.state;
     return (
-      <GetMoveNotifictionQuery
-        query={GET_MOVE_NOTIFICATION}
-        variables={{ page }}
-      >
+      <GetMatchNotificationsQuery query={GET_MATCH_NOTIFICATION}>
         {({
-          data: getMoveNotifications,
-          loading: getMoveNotificationsLoading
+          data: getMatchNotificationsData,
+          loading: getMatchNotificationsLoading
         }) => (
-          <GetNotifictionQuery query={GET_NOTIFICATION} variables={{ page }}>
-            {({ data: getNotifications, loading: getNotificationsLoading }) => (
-              <MarkAsReadMutation
-                mutation={MARK_AS_READ}
-                variables={{ notificationId: parseInt(notificationId, 10) }}
-                // refetchQueries={[
-                //   { query: GET_NOTIFICATION, variables: { page } }
-                // ]}
+          <GetMoveNotifictionsQuery
+            query={GET_MOVE_NOTIFICATION}
+            variables={{ page }}
+          >
+            {({
+              data: getMoveNotifications,
+              loading: getMoveNotificationsLoading
+            }) => (
+              <GetNotifictionsQuery
+                query={GET_NOTIFICATION}
+                variables={{ page }}
               >
-                {markAsReadFn => {
-                  this.markAsReadFn = markAsReadFn;
-                  console.log(getNotifications, getMoveNotifications);
-                  return (
-                    <NotificationPresenter
-                      getNotifications={getNotifications}
-                      getMoveNotifications={getMoveNotifications}
-                      getNotificationsLoading={getNotificationsLoading}
-                      getMoveNotificationsLoading={getMoveNotificationsLoading}
-                      modalOpen={modalOpen}
-                      toggleModal={this.toggleModal}
-                      onMarkRead={this.onMarkRead}
-                    />
-                  );
-                }}
-              </MarkAsReadMutation>
+                {({
+                  data: getNotifications,
+                  loading: getNotificationsLoading
+                }) => (
+                  <MarkAsReadMutation
+                    mutation={MARK_AS_READ}
+                    variables={{ notificationId: parseInt(notificationId, 10) }}
+                    // refetchQueries={[
+                    //   { query: GET_NOTIFICATION, variables: { page } }
+                    // ]}
+                  >
+                    {markAsReadFn => {
+                      this.markAsReadFn = markAsReadFn;
+                      console.log(
+                        getNotifications,
+                        getMoveNotifications,
+                        getMatchNotificationsData
+                      );
+                      return (
+                        <NotificationPresenter
+                          getNotifications={getNotifications}
+                          getMoveNotifications={getMoveNotifications}
+                          getNotificationsLoading={getNotificationsLoading}
+                          getMoveNotificationsLoading={
+                            getMoveNotificationsLoading
+                          }
+                          getMatchNotificationsData={getMatchNotificationsData}
+                          getMatchNotificationsLoading={
+                            getMatchNotificationsLoading
+                          }
+                          modalOpen={modalOpen}
+                          toggleModal={this.toggleModal}
+                          onMarkRead={this.onMarkRead}
+                        />
+                      );
+                    }}
+                  </MarkAsReadMutation>
+                )}
+              </GetNotifictionsQuery>
             )}
-          </GetNotifictionQuery>
+          </GetMoveNotifictionsQuery>
         )}
-      </GetMoveNotifictionQuery>
+      </GetMatchNotificationsQuery>
     );
   }
   public toggleModal = () => {

@@ -1419,6 +1419,71 @@ export interface GetNotifictionsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetMatchNotifications
+// ====================================================
+
+export interface GetMatchNotifications_getMatchNotifications_matchNotifications_host_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetMatchNotifications_getMatchNotifications_matchNotifications_host_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetMatchNotifications_getMatchNotifications_matchNotifications_host_profile_currentCity_country;
+}
+
+export interface GetMatchNotifications_getMatchNotifications_matchNotifications_host_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  currentCity: GetMatchNotifications_getMatchNotifications_matchNotifications_host_profile_currentCity | null;
+}
+
+export interface GetMatchNotifications_getMatchNotifications_matchNotifications_host {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: GetMatchNotifications_getMatchNotifications_matchNotifications_host_profile | null;
+}
+
+export interface GetMatchNotifications_getMatchNotifications_matchNotifications_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetMatchNotifications_getMatchNotifications_matchNotifications_city {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetMatchNotifications_getMatchNotifications_matchNotifications_city_country;
+}
+
+export interface GetMatchNotifications_getMatchNotifications_matchNotifications {
+  __typename: "MatchNotificationType";
+  id: string;
+  host: GetMatchNotifications_getMatchNotifications_matchNotifications_host;
+  verb: MatchNotificationVerb;
+  city: GetMatchNotifications_getMatchNotifications_matchNotifications_city;
+  read: boolean;
+  naturalTime: string | null;
+}
+
+export interface GetMatchNotifications_getMatchNotifications {
+  __typename: "GetMatchNotificationsResponse";
+  ok: boolean | null;
+  matchNotifications: (GetMatchNotifications_getMatchNotifications_matchNotifications | null)[] | null;
+}
+
+export interface GetMatchNotifications {
+  getMatchNotifications: GetMatchNotifications_getMatchNotifications;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetMoveNotifications
 // ====================================================
 
@@ -2856,6 +2921,13 @@ export enum NotificationVerb {
   FOLLOW = "FOLLOW",
   LIKE = "LIKE",
   UPLOAD = "UPLOAD",
+}
+
+/**
+ * An enumeration.
+ */
+export enum MatchNotificationVerb {
+  MATCH = "MATCH",
 }
 
 /**
