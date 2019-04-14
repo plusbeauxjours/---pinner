@@ -57,17 +57,10 @@ class CoffeeNotification(config_models.TimeStampedModel):
             ('coffee', 'COFFEE'),
     )
 
-    TARGET = (
-        ('everyone', 'EVERYONE'),
-        ('gender', 'GENDER'),
-        ('nationality', 'NATIONALITY'),
-        ('followers', 'FOLLOWERS'),
-    )
-
     city = models.ForeignKey(location_models.City, on_delete=models.CASCADE, related_name='coffee_notification')
     host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='coffee_notification')
     verb = models.CharField(max_length=10, choices=VERBS)
-    target = models.CharField(max_length=11, choices=TARGET, default='everyone')
+    target = models.CharField(max_length=15)
     payload = models.ForeignKey(coffee_models.Coffee, on_delete=models.CASCADE,
                                 null=True, blank=True, related_name='coffee_notification')
     read = models.BooleanField(default=False)
@@ -88,7 +81,7 @@ class CoffeeNotification(config_models.TimeStampedModel):
         )
 
 
-class CoffeeNotification(config_models.TimeStampedModel):
+class MatchNotification(config_models.TimeStampedModel):
 
     VERBS = (
             ('match', 'MATCH'),

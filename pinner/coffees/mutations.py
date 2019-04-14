@@ -32,11 +32,12 @@ class RequestCoffee(graphene.Mutation):
                 host=user,
                 target=target,
             )
-            notification_models.Notification.objects.create(
-                city=currentCity,
-                actor=user,
+            notification_models.CoffeeNotification.objects.create(
                 verb="coffee",
-                coffee_target=target
+                city=currentCity,
+                host=user,
+                target=target,
+                payload=coffee
             )
             return types.RequestCoffeeResponse(ok=True, coffee=coffee)
         except IntegrityError as e:
@@ -65,11 +66,12 @@ class Match(graphene.Mutation):
                 city=coffee.city,
                 guest=user
             )
-            notification_models.Notification.objects.create(
-                city=coffee.city,
-                actor=coffee.host,
+            notification_models.MatchNotification.objects.create(
                 verb="match",
-                target=user
+                city=coffee.city,
+                host=coffee.host,
+                guest=user,
+                payload=match
             )
             return types.MatchResponse(ok=True, match=match)
         except IntegrityError as e:

@@ -2855,7 +2855,6 @@ export enum NotificationVerb {
   COMMENT = "COMMENT",
   FOLLOW = "FOLLOW",
   LIKE = "LIKE",
-  MOVE = "MOVE",
   UPLOAD = "UPLOAD",
 }
 
