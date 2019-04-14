@@ -5,10 +5,7 @@ import { FollowUser, FollowUserVariables } from "../../types/api";
 import { FOLLOW_USER } from "./FollowBtnQueries";
 import { GET_FEED } from "../../Routes/Feed/FeedQueries";
 import Me from "src/Components/Me";
-import {
-  GET_MOVE_NOTIFICATION,
-  GET_NOTIFICATION
-} from "../../Routes/Notification/NotificationQueries";
+import { GET_NOTIFICATION } from "../../Routes/Notification/NotificationQueries";
 
 class FollowMutation extends Mutation<FollowUser, FollowUserVariables> {}
 
@@ -35,7 +32,6 @@ class FollowBtnContainer extends React.Component<any, IState> {
             variables={{ userId: parseInt(userId, 10) }}
             onCompleted={this.toggleBtn}
             refetchQueries={[
-              { query: GET_MOVE_NOTIFICATION, variables: { page: 0 } },
               { query: GET_NOTIFICATION, variables: { page: 0 } },
               {
                 query: GET_FEED,

@@ -74,7 +74,6 @@ const MatchPresenter: React.SFC<IProps> = ({
     return (
       <>
         <TallWrapper>
-          <GreyLine />
           <Title>
             <SBold text={"MATCHES"} />
           </Title>
@@ -87,6 +86,7 @@ const MatchPresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
+          <GreyLine />
         </TallWrapper>
       </>
     );

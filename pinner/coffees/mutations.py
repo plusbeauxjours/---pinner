@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from . import models, types
 from graphql_jwt.decorators import login_required
 from locations import models as location_models
+from notifications import models as notification_models
 
 
 class RequestCoffee(graphene.Mutation):
@@ -31,6 +32,12 @@ class RequestCoffee(graphene.Mutation):
                 host=user,
                 target=target,
             )
+            notification_models.Notification.objects.create(
+                city=currentCity,
+                actor=user,
+                verb="coffee",
+                coffee_target=target
+            )
             return types.RequestCoffeeResponse(ok=True, coffee=coffee)
         except IntegrityError as e:
             print(e)
@@ -56,7 +63,14 @@ class Match(graphene.Mutation):
             match = models.Match.objects.create(
                 host=coffee.host,
                 city=coffee.city,
-                guest=user)
+                guest=user
+            )
+            notification_models.Notification.objects.create(
+                city=coffee.city,
+                actor=coffee.host,
+                verb="match",
+                target=user
+            )
             return types.MatchResponse(ok=True, match=match)
         except IntegrityError as e:
             print(e)

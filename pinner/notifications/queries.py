@@ -22,9 +22,12 @@ def resolve_get_notifications(self, info, **kwargs):
 
     upload_notifications = models.Notification.objects.filter(
         actor__profile__in=following_profiles, verb='upload')
+    coffee_notifications = models.Notification.objects.filter(
+        verb='coffee')
+
     notifications = models.Notification.objects.filter(target=user)
 
-    combined = notifications.union(upload_notifications).order_by(
+    combined = notifications.union(upload_notifications).union(coffee_notifications).order_by(
         '-created_at')[offset:10 + offset]
 
     return types.GetNotificationsResponse(ok=True, notifications=combined)
