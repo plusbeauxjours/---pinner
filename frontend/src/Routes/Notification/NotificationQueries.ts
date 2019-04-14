@@ -65,6 +65,43 @@ export const GET_MATCH_NOTIFICATION = gql`
   }
 `;
 
+export const GET_COFFEE_NOTIFICATION = gql`
+  query GetCoffeeNotifications {
+    getCoffeeNotifications {
+      ok
+      coffeeNotifications {
+        id
+        host {
+          profile {
+            username
+            avatar
+            currentCity {
+              cityName
+              country {
+                countryName
+              }
+            }
+          }
+        }
+        target
+        verb
+        payload {
+          id
+          expires
+        }
+        city {
+          cityName
+          country {
+            countryName
+          }
+        }
+        read
+        naturalTime
+      }
+    }
+  }
+`;
+
 export const GET_MOVE_NOTIFICATION = gql`
   query GetMoveNotifications($page: Int!) {
     getMoveNotifications(page: $page) {

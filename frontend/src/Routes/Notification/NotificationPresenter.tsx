@@ -17,6 +17,8 @@ interface IProps {
   getMoveNotificationsLoading: boolean;
   getMatchNotificationsData?: any;
   getMatchNotificationsLoading: boolean;
+  getCoffeeNotificationsData: any;
+  getCoffeeNotificationsLoading: boolean;
   className?: string;
   modalOpen: boolean;
   toggleModal: () => void;
@@ -38,13 +40,20 @@ const NotificationPresenter: React.SFC<IProps> = ({
     } = {}
   } = {},
   getMatchNotificationsLoading,
+  getCoffeeNotificationsData: {
+    getCoffeeNotifications: {
+      coffeeNotifications: getCoffeeNotifications = null
+    } = {}
+  } = {},
+  getCoffeeNotificationsLoading,
   modalOpen,
   onMarkRead
 }) => {
   if (
     getNotificationsLoading ||
     getMoveNotificationsLoading ||
-    getMatchNotificationsLoading
+    getMatchNotificationsLoading ||
+    getCoffeeNotificationsLoading
   ) {
     return <Loader />;
   } else if (getNotifications && getMoveNotifications) {
@@ -90,7 +99,24 @@ const NotificationPresenter: React.SFC<IProps> = ({
                   key={notification.id}
                   notification={notification}
                   actor={notification.host.profile}
-                  city={notification}
+                  city={notification.city}
+                  onMarkRead={onMarkRead}
+                  isRead={notification.read}
+                />
+              );
+            })}
+        </SWrapper>
+        <SWrapper>
+          {getCoffeeNotifications &&
+            getCoffeeNotifications.map(notification => {
+              return (
+                <NotificationRow
+                  id={notification.id}
+                  key={notification.id}
+                  notification={notification}
+                  actor={notification.host.profile}
+                  city={notification.city}
+                  target={notification.target}
                   onMarkRead={onMarkRead}
                   isRead={notification.read}
                 />

@@ -72,6 +72,7 @@ interface IProps {
   notification: any;
   actor: any;
   city?: any;
+  target?: string;
   onMarkRead: any;
   isRead: boolean;
 }
@@ -79,6 +80,7 @@ const NotificationRow: React.SFC<IProps> = ({
   notification,
   actor,
   city,
+  target,
   onMarkRead,
   isRead
 }) => {
@@ -265,6 +267,39 @@ const NotificationRow: React.SFC<IProps> = ({
                       />
                       <Header>
                         <SBold text={"You've got a Matched!"} />
+                        <TimeStamp>{notification.naturalTime}</TimeStamp>
+                      </Header>
+                    </Container>
+                  </Link>
+                </>
+              );
+            case "COFFEE":
+              return (
+                <>
+                  <Link
+                    to={{
+                      pathname: `/c/${notification.payload.id}`,
+                      state: { modalOpen: true }
+                    }}
+                    onClick={() => onMarkRead(notification.id, isRead)}
+                  >
+                    {!isRead ? (
+                      <ICon>
+                        <RedDot />
+                      </ICon>
+                    ) : null}
+                    <Container>
+                      <UserHeader
+                        username={actor.username}
+                        currentCity={actor.currentCity.cityName}
+                        currentCountry={actor.currentCity.country.countryName}
+                        avatar={actor.avatar}
+                        size={"sm"}
+                      />
+                      <Header>
+                        <SBold text={"Needs a Coffee with"} />
+                        <SBold text={target} />
+
                         <TimeStamp>{notification.naturalTime}</TimeStamp>
                       </Header>
                     </Container>

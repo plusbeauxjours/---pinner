@@ -1435,16 +1435,13 @@ export interface GetMatchNotifications_getMatchNotifications_matchNotifications_
 
 export interface GetMatchNotifications_getMatchNotifications_matchNotifications_host_profile {
   __typename: "ProfileType";
+  username: string | null;
   avatar: string;
   currentCity: GetMatchNotifications_getMatchNotifications_matchNotifications_host_profile_currentCity | null;
 }
 
 export interface GetMatchNotifications_getMatchNotifications_matchNotifications_host {
   __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
   profile: GetMatchNotifications_getMatchNotifications_matchNotifications_host_profile | null;
 }
 
@@ -1477,6 +1474,76 @@ export interface GetMatchNotifications_getMatchNotifications {
 
 export interface GetMatchNotifications {
   getMatchNotifications: GetMatchNotifications_getMatchNotifications;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetCoffeeNotifications
+// ====================================================
+
+export interface GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_host_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_host_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_host_profile_currentCity_country;
+}
+
+export interface GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_host_profile {
+  __typename: "ProfileType";
+  username: string | null;
+  avatar: string;
+  currentCity: GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_host_profile_currentCity | null;
+}
+
+export interface GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_host {
+  __typename: "UserType";
+  profile: GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_host_profile | null;
+}
+
+export interface GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_payload {
+  __typename: "CoffeeType";
+  id: string;
+  expires: any | null;
+}
+
+export interface GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_city {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_city_country;
+}
+
+export interface GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications {
+  __typename: "CoffeeNotificationType";
+  id: string;
+  host: GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_host;
+  target: string;
+  verb: CoffeeNotificationVerb;
+  payload: GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_payload | null;
+  city: GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_city;
+  read: boolean;
+  naturalTime: string | null;
+}
+
+export interface GetCoffeeNotifications_getCoffeeNotifications {
+  __typename: "GetCoffeeNotificationsResponse";
+  ok: boolean | null;
+  coffeeNotifications: (GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications | null)[] | null;
+}
+
+export interface GetCoffeeNotifications {
+  getCoffeeNotifications: GetCoffeeNotifications_getCoffeeNotifications;
 }
 
 
@@ -2928,6 +2995,13 @@ export enum NotificationVerb {
  */
 export enum MatchNotificationVerb {
   MATCH = "MATCH",
+}
+
+/**
+ * An enumeration.
+ */
+export enum CoffeeNotificationVerb {
+  COFFEE = "COFFEE",
 }
 
 /**

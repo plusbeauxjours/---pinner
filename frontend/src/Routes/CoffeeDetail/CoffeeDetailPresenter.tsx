@@ -83,12 +83,14 @@ const Location = styled.span`
 interface IProps {
   data: any;
   loading: boolean;
+  modalOpen: boolean;
   back: any;
 }
 
 const CoffeeDetailPresenter: React.SFC<IProps> = ({
   data: { coffeeDetail: { coffee = null } = {} } = {},
   loading,
+  modalOpen,
   back
 }) => {
   if (loading) {

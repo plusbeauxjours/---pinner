@@ -35,15 +35,24 @@ def resolve_get_notifications(self, info, **kwargs):
 def resolve_get_coffee_notifications(self, info, **kwargs):
 
     user = info.context.user
+    profile = user.profile
+    followings = profile.followed_by.all()
 
-    following_profiles = user.profile.followings.all()
+    coffee_notifications = models.CoffeeNotification.objects.filter(
+        verb='coffee', city=profile.current_city)
 
-    upload_notifications = models.Notification.objects.filter(
-        actor__profile__in=following_profiles, verb='upload')
+    everyone_coffee_notifications = coffee_notifications.filter(target='everyone')
 
-    notifications = models.Notification.objects.filter(target=user)
+    nationality_coffee_notifications = coffee_notifications.filter(
+        target='nationality', host__profile__nationality=profile.nationality)
 
-    combined = notifications.union(upload_notifications).order_by(
+    gender_coffee_notifications = coffee_notifications.filter(
+        target='gender', host__profile__gender=profile.gender)
+
+    followers_notifications = models.CoffeeNotification.objects.filter(
+        verb='coffee',  target='followers',  host__profile__in=followings)
+
+    combined = everyone_coffee_notifications.union(nationality_coffee_notifications).union(gender_coffee_notifications).union(followers_notifications).order_by(
         '-created_at')
 
     return types.GetCoffeeNotificationsResponse(ok=True, coffee_notifications=combined)

@@ -44,12 +44,14 @@ const Modal = styled.div`
 interface IProps {
   data: any;
   loading: boolean;
+  modalOpen: boolean;
   back: any;
 }
 
 const CardDetailPresenter: React.SFC<IProps> = ({
   data: { cardDetail: { card = null } = {} } = {},
   loading,
+  modalOpen,
   back
 }) => {
   if (loading) {
