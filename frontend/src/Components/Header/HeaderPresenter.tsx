@@ -49,6 +49,7 @@ const Input = styled.input`
   background-color: ${props => props.theme.bgColor};
   border-radius: 3px;
   padding: 5px;
+  color: white;
   font-size: 14px;
   &::placeholder {
     color: ${props => props.theme.greyColor};
