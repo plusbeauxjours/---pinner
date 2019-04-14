@@ -132,7 +132,6 @@ def resolve_country_profile(self, info, **kwargs):
     user = info.context.user
     countryName = kwargs.get('countryName')
     page = kwargs.get('page', 0)
-    offset = 5 * page
 
     country = models.Country.objects.get(country_name=countryName)
 
@@ -143,9 +142,9 @@ def resolve_country_profile(self, info, **kwargs):
         city__country__country_name=countryName).order_by('-actor_id').distinct('actor_id')
 
     if (page is 0):
-        cities = models.City.objects.filter(country__country_name=countryName).all()[:6]
+        cities = models.City.objects.filter(country__country_name=countryName)[:6]
     else:
-        cities = models.City.objects.filter(country__country_name=countryName).all()[6:12]
+        cities = models.City.objects.filter(country__country_name=countryName)[6:20]
 
     cards = card_models.Card.objects.filter(city__country__country_name=countryName)
 
@@ -158,18 +157,19 @@ def resolve_continent_profile(self, info, **kwargs):
     user = info.context.user
     continentName = kwargs.get('continentName')
     page = kwargs.get('page', 0)
-    offset = 5 * page
 
     continent = models.Continent.objects.get(continent_name=continentName)
 
     if (page is 0):
-        countries = continent.countries.filter(continent__continent_name=continentName)[:6]
+        countries = models.Country.objects.filter(continent__continent_name=continentName)[:6]
     else:
-        countries = continent.countries.filter(continent__continent_name=continentName)[6:12]
+        countries = models.Country.objects.filter(continent__continent_name=continentName)[6:20]
+
+    print(countries)
 
     cards = card_models.Card.objects.filter(city__country__continent__continent_name=continentName)
 
-    return card_types.ThirdAnnotateRespose(continent=continent, countries=countries, cards=cards)
+    return card_types.ThirdAnnotateRespose(countries=countries, continent=continent, cards=cards)
 
 
 @login_required

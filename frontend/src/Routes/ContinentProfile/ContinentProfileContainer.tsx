@@ -85,9 +85,9 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
           ],
           countryModalOpen: !countryModalOpen
         });
+        console.log(this.state);
       }
     });
-    console.log(this.state);
   };
 }
 

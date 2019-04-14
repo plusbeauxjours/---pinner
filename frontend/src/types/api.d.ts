@@ -688,6 +688,7 @@ export interface ContinentProfile {
 }
 
 export interface ContinentProfileVariables {
+  page?: number | null;
   continentName: string;
 }
 
@@ -834,7 +835,7 @@ export interface CountryProfile {
 }
 
 export interface CountryProfileVariables {
-  page: number;
+  page?: number | null;
   countryName: string;
 }
 

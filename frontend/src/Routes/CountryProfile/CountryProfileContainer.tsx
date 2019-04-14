@@ -34,8 +34,6 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
         params: { countryName }
       }
     } = this.props;
-    console.log(this.props);
-    console.log(countryName);
     const { page, cityList, cityModalOpen } = this.state;
     return (
       <CountryProfileQuery
