@@ -25,10 +25,38 @@ def resolve_get_notifications(self, info, **kwargs):
 
     notifications = models.Notification.objects.filter(target=user)
 
-    combined = notifications.union(upload_notifications).union(coffee_notifications).order_by(
+    combined = notifications.union(upload_notifications).order_by(
         '-created_at')[offset:10 + offset]
 
     return types.GetNotificationsResponse(ok=True, notifications=combined)
+
+
+@login_required
+def resolve_get_coffee_notifications(self, info, **kwargs):
+
+    user = info.context.user
+
+    following_profiles = user.profile.followings.all()
+
+    upload_notifications = models.Notification.objects.filter(
+        actor__profile__in=following_profiles, verb='upload')
+
+    notifications = models.Notification.objects.filter(target=user)
+
+    combined = notifications.union(upload_notifications).order_by(
+        '-created_at')
+
+    return types.GetCoffeeNotificationsResponse(ok=True, coffee_notifications=combined)
+
+
+@login_required
+def resolve_get_match_notifications(self, info, **kwargs):
+
+    user = info.context.user
+
+    match_notifications = models.Notification.objects.filter(verb='match', guest=user)
+
+    return types.GetMatchNotificationsResponse(ok=True, match_notifications=match_notifications)
 
 
 @login_required
