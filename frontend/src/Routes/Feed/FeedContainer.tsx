@@ -68,10 +68,10 @@ interface IState {
   coffeePage: number;
   aqi: number;
   icon: string;
-  windDeg: number;
   windSpeed: number;
   humidity: number;
   temp: number;
+  chill: number;
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
@@ -103,10 +103,10 @@ class FeedContainer extends React.Component<IProps, IState> {
       coffeePage: 0,
       aqi: 0,
       icon: null,
-      windDeg: 0,
       windSpeed: 0,
       humidity: 0,
-      temp: 0
+      temp: 0,
+      chill: 0
     };
   }
   public componentDidMount() {
@@ -140,10 +140,10 @@ class FeedContainer extends React.Component<IProps, IState> {
       coffeePage,
       aqi,
       icon,
-      windDeg,
       windSpeed,
       humidity,
-      temp
+      temp,
+      chill
     } = this.state;
     return (
       <GetCoffeesQuery
@@ -238,9 +238,9 @@ class FeedContainer extends React.Component<IProps, IState> {
                                     aqi={aqi}
                                     temp={temp}
                                     icon={icon}
-                                    windDeg={windDeg}
-                                    windSpeed={windSpeed}
                                     humidity={humidity}
+                                    windSpeed={windSpeed}
+                                    chill={chill}
                                   />
                                 );
                               }}
@@ -284,9 +284,17 @@ class FeedContainer extends React.Component<IProps, IState> {
         address.storableLocation.countryCode
       );
       const aqi = await AQI(lat, lng);
-      const { icon, windDeg, windSpeed, humidity, temp } = await Temp(lat, lng);
-      this.setState({ aqi, icon, windDeg, windSpeed, humidity, temp });
+      const { icon, windSpeed, humidity, temp } = await Temp(lat, lng);
+      const chill = await this.WindChill(temp, windSpeed);
+      this.setState({ aqi, icon, windSpeed, humidity, temp, chill });
     }
+  };
+  public WindChill = async (temp: number, wind: number) => {
+    const chill = await (0.0817 *
+      (3.71 * Math.pow(wind, 0.5) + 5.81 - 0.25 * wind) *
+      (temp - 91.4) +
+      91.4);
+    return chill;
   };
   public reportLocation = async (
     lat: number,

@@ -1,18 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { keyframes } from "styled-components";
+
+import { Upload } from "../../Icons";
+import styled from "../../Styles/typed-components";
 
 import Loader from "../../Components/Loader";
 import Photo from "../../Components/Photo";
 import Wrapper from "../../Components/Wrapper";
-import styled from "../../Styles/typed-components";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import UserRow from "../../Components/UserRow";
-import { keyframes } from "styled-components";
-import UserGrid from "src/Components/UserGrid";
-import { Upload } from "../../Icons";
-import CoffeeGrid from "src/Components/CoffeeGrid";
-import CoffeeRow from "src/Components/CoffeeRow";
+import UserGrid from "../../Components/UserGrid";
+import CoffeeGrid from "../../Components/CoffeeGrid";
+import CoffeeRow from "../../Components/CoffeeRow";
+import Weather from "src/Components/Weather";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -44,7 +46,7 @@ const HeaderColumn = styled.div`
 const Location = styled.span`
   display: flex;
   margin-top: 5px;
-  display: block;
+  position: block;
   font-size: 12px;
   font-weight: 200;
 `;
@@ -58,6 +60,17 @@ const UserContainer = styled.div`
 const User = styled.div`
   display: flex;
   padding: 5px;
+`;
+
+const WeatherInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const WeatherIcon = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
 `;
 
 const SBold = styled(Bold)`
@@ -249,10 +262,10 @@ interface IProps {
   submitCoffee: any;
   aqi?: number;
   temp?: number;
-  icon: string
-windDeg: number;
-windSpeed: number;
-humidity: number;
+  icon: string;
+  windSpeed: number;
+  humidity?: number;
+  chill: number;
 }
 
 const FeedPresenter: React.SFC<IProps> = ({
@@ -287,9 +300,9 @@ const FeedPresenter: React.SFC<IProps> = ({
   aqi,
   temp,
   icon,
-windDeg,
-windSpeed,
-humidity,
+  windSpeed,
+  humidity,
+  chill
 }) => {
   if (feedLoading) {
     return <Loader />;
@@ -422,9 +435,14 @@ humidity,
                 </Header>
               </Link>
               <UserContainer>
-                <p>Temp{temp}</p>
-                {console.log(aqi)}
-                <p>AQI{aqi}</p>
+                <WeatherIcon>
+                  <Weather icon={icon} size={"md"} />
+                </WeatherIcon>
+                <WeatherInfo>
+                  <p>Temp{temp.toFixed(1)} °C</p>
+                  <p>RealFeel{chill.toFixed(1)} °C</p>
+                  <p>AQI{aqi}</p>
+                </WeatherInfo>
               </UserContainer>
             </UserContainer>
             <UserContainer>
