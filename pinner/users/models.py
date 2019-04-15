@@ -38,8 +38,6 @@ class Profile(config_models.TimeStampedModel):
     verified_email = models.BooleanField(default=False)
     fbId = models.CharField(blank=True, null=True, max_length=20)
 
-    current_lat = models.FloatField(blank=True, null=True)
-    current_lng = models.FloatField(blank=True, null=True)
     current_city = models.ForeignKey(
         location_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCity', )
 

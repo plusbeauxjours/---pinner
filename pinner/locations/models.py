@@ -38,6 +38,8 @@ class Country (config_models.TimeStampedModel):
 
 class City (config_models.TimeStampedModel):
 
+    lat = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
+    lng = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
     country = models.ForeignKey(
         Country, on_delete=models.CASCADE, related_name='cities')
     city_name = models.CharField(max_length=50, null=True, blank=True)
