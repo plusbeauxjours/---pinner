@@ -137,15 +137,16 @@ class MoveNotification(config_models.TimeStampedModel):
 @receiver(pre_save, sender=MoveNotification)
 def clean(sender, **kwargs):
     instance = kwargs.pop('instance')
-    if MoveNotification.objects.filter(actor__id=instance.actor_id).filter(
-        Q(start_date__gte=instance.start_date, start_date__lt=instance.end_date)
-        | Q(end_date__gt=instance.start_date, end_date__lte=instance.end_date)
-    ).exists():
-        raise ValidationError("Overlapping dates")
+    if instance.start_date or instance.end_date:
+        if MoveNotification.objects.filter(actor__id=instance.actor_id).filter(
+            Q(start_date__gte=instance.start_date, start_date__lt=instance.end_date)
+            | Q(end_date__gt=instance.start_date, end_date__lte=instance.end_date)
+        ).exists():
+            raise ValidationError("Overlapping dates")
 
 
-@receiver(pre_save, sender=MoveNotification)
-def clean_dates(sender, **kwargs):
-    instance = kwargs.pop('instance')
-    if instance.start_date > instance.end_date:
-        raise ValidationError("Trip cannot go Back")
+# @receiver(pre_save, sender=MoveNotification)
+# def clean_dates(sender, **kwargs):
+#     instance = kwargs.pop('instance')
+#     if instance.start_date > instance.end_date:
+#         raise ValidationError("Trip cannot go Back")

@@ -60,4 +60,11 @@ class ReportLocation(graphene.Mutation):
             profile.current_city = city
             profile.save()
 
+        try:
+            latest = user.movenotification.latest('created_at')
+            if latest.city is not city:
+                notification_models.MoveNotification.objects.create(actor=user, city=city)
+        except notification_models.MoveNotification.DoesNotExist:
+            notification_models.MoveNotification.objects.create(actor=user, city=city)
+
         return types.ReportLocationResponse(ok=True)
