@@ -247,7 +247,12 @@ interface IProps {
   toggleCoffeeModal: () => void;
   toggleCoffeeSeeAll: () => void;
   submitCoffee: any;
-  aqi: number;
+  aqi?: number;
+  temp?: number;
+  icon: string
+windDeg: number;
+windSpeed: number;
+humidity: number;
 }
 
 const FeedPresenter: React.SFC<IProps> = ({
@@ -279,7 +284,12 @@ const FeedPresenter: React.SFC<IProps> = ({
   toggleCoffeeModal,
   toggleCoffeeSeeAll,
   submitCoffee,
-  aqi
+  aqi,
+  temp,
+  icon,
+windDeg,
+windSpeed,
+humidity,
 }) => {
   if (feedLoading) {
     return <Loader />;
@@ -412,7 +422,8 @@ const FeedPresenter: React.SFC<IProps> = ({
                 </Header>
               </Link>
               <UserContainer>
-                <p>Temp</p>
+                <p>Temp{temp}</p>
+                {console.log(aqi)}
                 <p>AQI{aqi}</p>
               </UserContainer>
             </UserContainer>

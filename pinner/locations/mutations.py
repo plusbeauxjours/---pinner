@@ -36,6 +36,7 @@ class ReportLocation(graphene.Mutation):
         currentContinent = kwargs.get('currentContinent')
 
         profile = user.profile
+        print('reportlocation')
 
         profile.current_lat = currentLat
         profile.current_lng = currentLng

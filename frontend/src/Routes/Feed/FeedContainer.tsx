@@ -28,7 +28,7 @@ import {
 } from "../../locationThumbnail";
 import continents from "../../continents";
 import { toast } from "react-toastify";
-import { AQI } from "src/autocompleteSearch";
+import { AQI, Temp } from "src/weatherHelper";
 
 class RequestCoffeeMutation extends Mutation<
   RequestCoffee,
@@ -67,6 +67,11 @@ interface IState {
   coffeeList: any;
   coffeePage: number;
   aqi: number;
+  icon: string;
+  windDeg: number;
+  windSpeed: number;
+  humidity: number;
+  temp: number;
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
@@ -96,7 +101,12 @@ class FeedContainer extends React.Component<IProps, IState> {
       coffeeModalOpen: false,
       coffeeList: null,
       coffeePage: 0,
-      aqi: 0
+      aqi: 0,
+      icon: null,
+      windDeg: 0,
+      windSpeed: 0,
+      humidity: 0,
+      temp: 0
     };
   }
   public componentDidMount() {
@@ -128,7 +138,12 @@ class FeedContainer extends React.Component<IProps, IState> {
       coffeeModalOpen,
       coffeeList,
       coffeePage,
-      aqi
+      aqi,
+      icon,
+      windDeg,
+      windSpeed,
+      humidity,
+      temp
     } = this.state;
     return (
       <GetCoffeesQuery
@@ -221,6 +236,11 @@ class FeedContainer extends React.Component<IProps, IState> {
                                     toggleRequestModal={this.toggleRequestModal}
                                     submitCoffee={this.submitCoffee}
                                     aqi={aqi}
+                                    temp={temp}
+                                    icon={icon}
+                                    windDeg={windDeg}
+                                    windSpeed={windSpeed}
+                                    humidity={humidity}
                                   />
                                 );
                               }}
@@ -264,7 +284,8 @@ class FeedContainer extends React.Component<IProps, IState> {
         address.storableLocation.countryCode
       );
       const aqi = await AQI(lat, lng);
-      this.setState({ aqi });
+      const { icon, windDeg, windSpeed, humidity, temp } = await Temp(lat, lng);
+      this.setState({ aqi, icon, windDeg, windSpeed, humidity, temp });
     }
   };
   public reportLocation = async (
