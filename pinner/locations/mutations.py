@@ -42,25 +42,24 @@ class ReportLocation(graphene.Mutation):
 
         try:
             continent = models.Continent.objects.get(continent_name=currentContinent)
-        except:
+        except models.Continent.DoesNotExist:
             continent = models.Continent.objects.create(
                 continent_name=currentContinent, continent_photo=continentPhotoURL)
 
         try:
             country = models.Country.objects.get(country_name=currentCountry)
-        except:
+        except models.Country.DoesNotExist:
             country = models.Country.objects.create(
                 country_code=currentCountryCode, country_name=currentCountry, country_photo=countryPhotoURL, continent=continent)
-
         try:
             city = models.City.objects.get(city_name=currentCity)
             profile.current_city = city
             profile.save()
-            return types.ReportLocationResponse(ok=True)
 
-        except:
+        except models.City.DoesNotExist:
             city = models.City.objects.create(
                 city_name=currentCity, country=country, city_photo=cityPhotoURL)
             profile.current_city = city
             profile.save()
-            return types.ReportLocationResponse(ok=True)
+
+        return types.ReportLocationResponse(ok=True)

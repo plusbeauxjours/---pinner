@@ -63,7 +63,7 @@ def resolve_get_match_notifications(self, info, **kwargs):
 
     user = info.context.user
 
-    match_notifications = models.MatchNotification.objects.filter(verb='match', guest=user)
+    match_notifications = models.MatchNotification.objects.filter(verb='match', host=user)
 
     return types.GetMatchNotificationsResponse(ok=True, match_notifications=match_notifications)
 

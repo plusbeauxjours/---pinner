@@ -75,7 +75,7 @@ class CoffeeNotification(config_models.TimeStampedModel):
     def __str__(self):
         return '{} / From: {} {} 👉🏻 To:  Read:{}'.format(
             self.id,
-            self.actor.username,
+            self.host.username,
             self.verb,
             self.read
         )
