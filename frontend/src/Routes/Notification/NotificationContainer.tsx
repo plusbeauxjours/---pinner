@@ -85,11 +85,6 @@ class NotificationContainer extends React.Component<any, IState> {
                       >
                         {markAsReadFn => {
                           this.markAsReadFn = markAsReadFn;
-                          console.log(
-                            getNotifications,
-                            getMoveNotifications,
-                            getMatchNotificationsData
-                          );
                           return (
                             <NotificationPresenter
                               getNotifications={getNotifications}

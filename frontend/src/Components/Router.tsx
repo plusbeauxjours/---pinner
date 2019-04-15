@@ -14,7 +14,6 @@ import UpLoad from "../Routes/UpLoad";
 // import Explore from "../Routes/Explore";
 import UserList from "../Routes/UserList";
 import Notification from "../Routes/Notification";
-import Footprint from "../Routes/Footprint";
 import CityProfile from "../Routes/CityProfile";
 import CountryProfile from "../Routes/CountryProfile";
 import ContinentProfile from "../Routes/ContinentProfile";
@@ -52,7 +51,6 @@ const LoggedInPages = () => (
       <Route path="/city/:cityName/:duration" component={TripProfile} />
       <Route path="/city/:cityName" component={CityProfile} />
       <Route path="/c/:id" component={CoffeeDetail} />
-      <Route path="/:username/footprint" exact={true} component={Footprint} />
       <Route path="/:username" component={UserProfile} />
       <Redirect from="*" to="/" />
     </Switch>

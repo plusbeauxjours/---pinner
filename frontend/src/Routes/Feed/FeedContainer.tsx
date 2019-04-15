@@ -28,6 +28,7 @@ import {
 } from "../../locationThumbnail";
 import continents from "../../continents";
 import { toast } from "react-toastify";
+import { AQI } from "src/autocompleteSearch";
 
 class RequestCoffeeMutation extends Mutation<
   RequestCoffee,
@@ -65,6 +66,7 @@ interface IState {
   coffeeModalOpen: boolean;
   coffeeList: any;
   coffeePage: number;
+  aqi: number;
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
@@ -93,7 +95,8 @@ class FeedContainer extends React.Component<IProps, IState> {
       requestModalOpen: false,
       coffeeModalOpen: false,
       coffeeList: null,
-      coffeePage: 0
+      coffeePage: 0,
+      aqi: 0
     };
   }
   public componentDidMount() {
@@ -124,7 +127,8 @@ class FeedContainer extends React.Component<IProps, IState> {
       requestModalOpen,
       coffeeModalOpen,
       coffeeList,
-      coffeePage
+      coffeePage,
+      aqi
     } = this.state;
     return (
       <GetCoffeesQuery
@@ -216,6 +220,7 @@ class FeedContainer extends React.Component<IProps, IState> {
                                     toggleCoffeeSeeAll={this.toggleCoffeeSeeAll}
                                     toggleRequestModal={this.toggleRequestModal}
                                     submitCoffee={this.submitCoffee}
+                                    aqi={aqi}
                                   />
                                 );
                               }}
@@ -258,6 +263,8 @@ class FeedContainer extends React.Component<IProps, IState> {
         address.storableLocation.country,
         address.storableLocation.countryCode
       );
+      const aqi = await AQI(lat, lng);
+      this.setState({ aqi });
     }
   };
   public reportLocation = async (

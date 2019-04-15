@@ -749,11 +749,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 userId={user.id}
               />
             )}
-            <Link to={`/${user.username}/footprint`}>
-              <GearContainer>
-                <Gear />
-              </GearContainer>
-            </Link>
           </NameContainer>
         </PHeader>
         {/* 

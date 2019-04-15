@@ -383,7 +383,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                   </InfoRow>
                   <InfoRow>
                     <SBold text={String(city.userCount)} />
-                    TEMPERATURE
+                    TEMPERATURE / REAL FEEL
                   </InfoRow>
                   <InfoRow>
                     <SBold text={String(city.userLogCount)} />
@@ -392,18 +392,13 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                 </HalfInfo>
                 <HalfInfo>
                   <InfoRow>
-                    cardCount
+                    cardCount - done
                     <SBold text={String(city.cardCount)} />
                   </InfoRow>
 
                   <InfoRow>
-                    userCount
+                    TIME DIFFERENCE
                     <SBold text={String(city.userCount)} />
-                  </InfoRow>
-
-                  <InfoRow>
-                    userLogCount
-                    <SBold text={String(city.userLogCount)} />
                   </InfoRow>
                 </HalfInfo>
               </InfoInlineContainer>

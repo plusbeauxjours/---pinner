@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import HeaderPresenter from "./HeaderPresenter";
+// import { autocompleteSearch } from "src/autocompleteSearch";
 
 interface IState {
   search: string;
@@ -24,6 +25,8 @@ class HeaderContainer extends React.Component<any, IState> {
     const {
       target: { value }
     } = event;
+    // autocompleteSearch(value);
+    console.log(value);
     this.setState({
       search: value
     } as any);

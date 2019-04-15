@@ -247,6 +247,7 @@ interface IProps {
   toggleCoffeeModal: () => void;
   toggleCoffeeSeeAll: () => void;
   submitCoffee: any;
+  aqi: number;
 }
 
 const FeedPresenter: React.SFC<IProps> = ({
@@ -277,7 +278,8 @@ const FeedPresenter: React.SFC<IProps> = ({
   toggleRequestModal,
   toggleCoffeeModal,
   toggleCoffeeSeeAll,
-  submitCoffee
+  submitCoffee,
+  aqi
 }) => {
   if (feedLoading) {
     return <Loader />;
@@ -411,7 +413,7 @@ const FeedPresenter: React.SFC<IProps> = ({
               </Link>
               <UserContainer>
                 <p>Temp</p>
-                <p>AQI</p>
+                <p>AQI{aqi}</p>
               </UserContainer>
             </UserContainer>
             <UserContainer>
@@ -477,11 +479,6 @@ const FeedPresenter: React.SFC<IProps> = ({
             </Box>
           </Container>
           <GreyLine />
-          <Icon>
-            <Link to="/upload">
-              <Upload />
-            </Link>
-          </Icon>
           {cards &&
             cards.map(card => (
               <Photo

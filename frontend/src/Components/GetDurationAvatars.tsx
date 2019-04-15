@@ -47,7 +47,6 @@ const GetDurationAvatars: React.SFC<IProps> = ({
       if (loading) {
         return <LoaderData />;
       } else if (!loading && usersBefore) {
-        console.log(days);
         return (
           days &&
           usersBefore &&
