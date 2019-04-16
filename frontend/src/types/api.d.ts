@@ -763,6 +763,8 @@ export interface CountryProfile_countryProfile_cities_country {
 export interface CountryProfile_countryProfile_cities {
   __typename: "CityType";
   id: string;
+  lat: number | null;
+  lng: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: CountryProfile_countryProfile_cities_country;
@@ -1097,9 +1099,45 @@ export interface RecommandUsersVariables {
 // GraphQL mutation operation: RequestCoffee
 // ====================================================
 
+export interface RequestCoffee_requestCoffee_coffee_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface RequestCoffee_requestCoffee_coffee_city {
+  __typename: "CityType";
+  cityName: string | null;
+  country: RequestCoffee_requestCoffee_coffee_city_country;
+}
+
+export interface RequestCoffee_requestCoffee_coffee_host_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  isFollowing: boolean | null;
+}
+
+export interface RequestCoffee_requestCoffee_coffee_host {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: RequestCoffee_requestCoffee_coffee_host_profile | null;
+}
+
+export interface RequestCoffee_requestCoffee_coffee {
+  __typename: "CoffeeType";
+  id: string;
+  city: RequestCoffee_requestCoffee_coffee_city;
+  host: RequestCoffee_requestCoffee_coffee_host;
+  target: CoffeeTarget;
+  naturalTime: string | null;
+}
+
 export interface RequestCoffee_requestCoffee {
   __typename: "RequestCoffeeResponse";
   ok: boolean | null;
+  coffee: RequestCoffee_requestCoffee_coffee | null;
 }
 
 export interface RequestCoffee {
@@ -2414,6 +2452,8 @@ export interface FrequentVisits_frequentVisits_footprints_city_country {
 
 export interface FrequentVisits_frequentVisits_footprints_city {
   __typename: "CityType";
+  lat: number | null;
+  lng: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: FrequentVisits_frequentVisits_footprints_city_country;

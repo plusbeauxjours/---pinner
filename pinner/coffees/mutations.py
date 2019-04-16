@@ -13,7 +13,6 @@ class RequestCoffee(graphene.Mutation):
         currentCity = graphene.String(required=True)
         currentCountry = graphene.String(required=True)
         target = graphene.String()
-        caption =graphene.String()
 
     Output = types.RequestCoffeeResponse
 
@@ -24,7 +23,6 @@ class RequestCoffee(graphene.Mutation):
         currentCity = kwargs.get('currentCity')
         currentCountry = kwargs.get('currentCountry')
         target = kwargs.get('target', 'everyone')
-        caption = kwargs.get('caption')
 
         try:
             currentCity = location_models.City.objects.get(city_name=currentCity)
@@ -33,7 +31,6 @@ class RequestCoffee(graphene.Mutation):
                 city=currentCity,
                 host=user,
                 target=target,
-                caption=caption
             )
             notification_models.CoffeeNotification.objects.create(
                 verb="coffee",

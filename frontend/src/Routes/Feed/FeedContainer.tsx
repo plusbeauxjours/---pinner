@@ -65,9 +65,7 @@ interface IState {
   coffeeModalOpen: boolean;
   coffeeList: any;
   coffeePage: number;
-  newCoffeeCaption: string
-selfComments: any
-
+  selfCoffees: any;
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
@@ -97,8 +95,7 @@ class FeedContainer extends React.Component<IProps, IState> {
       coffeeModalOpen: false,
       coffeeList: null,
       coffeePage: 0,
-        newCoffeeCaption: "",
-  selfComments: [],
+      selfCoffees: []
     };
   }
   public componentDidMount() {
@@ -129,7 +126,8 @@ class FeedContainer extends React.Component<IProps, IState> {
       requestModalOpen,
       coffeeModalOpen,
       coffeeList,
-      coffeePage
+      coffeePage,
+      selfCoffees
     } = this.state;
     return (
       <GetCoffeesQuery
@@ -145,7 +143,7 @@ class FeedContainer extends React.Component<IProps, IState> {
           return (
             <RequestCoffeeMutation
               mutation={REQUEST_COFFEE}
-              onCompleted={this.handleCoffeeRequest}
+              onCompleted={this.addSelfCoffees}
               variables={{
                 currentCity,
                 currentCountry
@@ -223,6 +221,7 @@ class FeedContainer extends React.Component<IProps, IState> {
                                     submitCoffee={this.submitCoffee}
                                     currentLat={currentLat}
                                     currentLng={currentLng}
+                                    selfCoffees={selfCoffees}
                                   />
                                 );
                               }}
@@ -340,17 +339,6 @@ class FeedContainer extends React.Component<IProps, IState> {
       }
     });
   };
-  public handleCoffeeRequest = data => {
-    // const { history } = this.props;
-    const { requestCoffee } = data;
-
-    if (requestCoffee.ok) {
-      toast.success("Coffee requested, finding a guest");
-      // history.push(`/coffee/${requestCoffee.coffee.id}`);
-    } else {
-      toast.error("error");
-    }
-  };
   public toggleCoffeeModal = () => {
     const { coffeeModalOpen } = this.state;
     this.setState({
@@ -389,6 +377,42 @@ class FeedContainer extends React.Component<IProps, IState> {
     this.setState({
       requestModalOpen: !requestModalOpen
     } as any);
+  };
+  public addSelfCoffees = data => {
+    const { selfCoffees } = this.state;
+    console.log(data);
+    const {
+      requestCoffee: { coffee }
+    } = data;
+    console.log(coffee);
+    if (coffee) {
+      this.setState({
+        selfCoffees: [
+          {
+            id: coffee.id,
+            city: {
+              cityName: coffee.city.cityName,
+              country: { countryName: coffee.city.country.countryName }
+            },
+            host: {
+              username: coffee.host.username,
+              profile: {
+                avatar: coffee.host.profile.avatar,
+                isFollowing: coffee.host.profile.isFollowing
+              }
+            },
+            target: coffee.target,
+            naturalTime: coffee.naturalTime
+          },
+          ...selfCoffees
+        ]
+      });
+    }
+    if (data.requestCoffee.ok) {
+      toast.success("Coffee requested, finding a guest");
+    } else {
+      toast.error("error");
+    }
   };
 }
 

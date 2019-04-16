@@ -19,7 +19,6 @@ import {
   AddComment,
   AddCommentVariables
 } from "../../types/api";
-import { GET_USER } from "../../Routes/UserProfile/UserProfileQueries";
 import { FOLLOW_USER } from "../FollowBtn/FollowBtnQueries";
 import Me from "../Me";
 
@@ -122,12 +121,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
             mutation={ADD_COMMENT}
             variables={{ cardId: parseInt(cardId, 10), message: newComment }}
             onCompleted={this.addSelfComment}
-            refetchQueries={[
-              {
-                query: GET_USER,
-                variables: { username: user.username }
-              }
-            ]}
           >
             {addCommentFn => {
               this.addCommentFn = addCommentFn;
