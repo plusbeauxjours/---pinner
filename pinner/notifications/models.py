@@ -64,7 +64,7 @@ class CoffeeNotification(config_models.TimeStampedModel):
     payload = models.ForeignKey(coffee_models.Coffee, on_delete=models.CASCADE,
                                 null=True, blank=True, related_name='coffee_notification')
     read = models.BooleanField(default=False)
-
+    
     @property
     def natural_time(self):
         return naturaltime(self.created_at)

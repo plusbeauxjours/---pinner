@@ -33,7 +33,7 @@ class Coffee (config_models.TimeStampedModel):
     expires = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=10, choices=STATUS, default='requesting')
     target = models.CharField(max_length=11, choices=TARGET, default='everyone')
-
+    caption = models.TextField(blank=True, null=True)
     # @property
     # def rest_time(self):
     #     return self.expires - timezone.now()

@@ -65,6 +65,9 @@ interface IState {
   coffeeModalOpen: boolean;
   coffeeList: any;
   coffeePage: number;
+  newCoffeeCaption: string
+selfComments: any
+
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
@@ -93,7 +96,9 @@ class FeedContainer extends React.Component<IProps, IState> {
       requestModalOpen: false,
       coffeeModalOpen: false,
       coffeeList: null,
-      coffeePage: 0
+      coffeePage: 0,
+        newCoffeeCaption: "",
+  selfComments: [],
     };
   }
   public componentDidMount() {
@@ -338,6 +343,7 @@ class FeedContainer extends React.Component<IProps, IState> {
   public handleCoffeeRequest = data => {
     // const { history } = this.props;
     const { requestCoffee } = data;
+
     if (requestCoffee.ok) {
       toast.success("Coffee requested, finding a guest");
       // history.push(`/coffee/${requestCoffee.coffee.id}`);

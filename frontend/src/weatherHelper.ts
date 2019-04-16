@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 export const getAqi = async (lat, lng) => {
   const URL = `https://api.waqi.info/feed/geo:${lat};${lng}/?token=${AQICN_KEY}`;
   const { data } = await axios(URL);
+  console.log(data);
 
   if (data.status === "ok") {
     const {

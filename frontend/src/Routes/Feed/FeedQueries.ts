@@ -75,11 +75,13 @@ export const REQUEST_COFFEE = gql`
     $currentCity: String!
     $currentCountry: String!
     $target: String
+    $caption: String
   ) {
     requestCoffee(
       currentCity: $currentCity
       currentCountry: $currentCountry
       target: $target
+      caption: $caption
     ) {
       ok
     }

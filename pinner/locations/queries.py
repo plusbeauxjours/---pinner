@@ -116,10 +116,10 @@ def resolve_city_profile(self, info, **kwargs):
         '-created_at')[offset:50 + offset]
 
     usersNow = User.objects.filter(
-        profile__current_city__city_name=cityName).order_by('-username').distinct('username')
+        profile__current_city__city_name=cityName).order_by('-username').distinct('username')[:3]
 
     usersBefore = notification_models.MoveNotification.objects.filter(
-        city__city_name=cityName).order_by('-actor_id').distinct('actor_id')
+        city__city_name=cityName).order_by('-actor_id').distinct('actor_id')[:3]
 
     city = models.City.objects.get(city_name=cityName)
 

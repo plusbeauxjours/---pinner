@@ -336,7 +336,9 @@ const TripProfilePresenter: React.SFC<IProps> = ({
           <PAvatar size="lg" url={cityPhoto} />
           <Username>{cityName}</Username>
           <Username>
-            {startDate}
+            From{" "}
+            {startDate}{" "}
+            To{" "}
             {endDate}
           </Username>
         </PHeader>
