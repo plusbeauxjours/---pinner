@@ -44,6 +44,8 @@ export const CARD_FRAGMENT = gql`
 export const CITY_FRAGMENT = gql`
   fragment CityParts on CityType {
     id
+    lat
+    lng
     cityName
     cityPhoto
     country {

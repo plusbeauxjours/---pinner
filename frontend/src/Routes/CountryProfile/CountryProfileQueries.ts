@@ -33,6 +33,8 @@ export const COUNTRY_PROFILE = gql`
       }
       cities {
         id
+        lat
+        lng
         cityName
         cityPhoto
         country {

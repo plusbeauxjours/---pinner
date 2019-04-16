@@ -24,6 +24,7 @@ import GetDurationAvatars from "src/Components/GetDurationAvatars";
 import Flag from "src/Components/Flag";
 import GetDurationDays from "src/Components/GetDurationDays";
 import GetKnowingFollowers from "src/Components/GetKnowingFollowers";
+import Weather from "src/Components/Weather";
 
 const PHeader = styled.header`
   display: flex;
@@ -325,6 +326,37 @@ const SeeAll = styled.p`
   font-size: 12px;
   font-weight: 100;
   cursor: pointer;
+`;
+
+const Square = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-position: cover;
+  background-size: 100%;
+`;
+
+const Overlay = styled.div`
+  color: white;
+  z-index: 1;
+  opacity: 0;
+  display: flex;
+  position: absolute;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+  svg {
+    fill: white;
+  }
+  transition: opacity 0.2s ease-in-out;
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 interface ITheme {
@@ -1046,25 +1078,30 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           </Title>
           <Container>
             <TripBox>
-              <ScrollContainer>
-                {!topCountriesLoading && topCountries ? (
-                  topCountries.map(topCountry => (
-                    <CityContainer key={topCountry.id}>
-                      <Link
-                        to={`/country/${topCountry.city.country.countryName}`}
-                      >
-                        <CityPhoto
-                          src={topCountry.city.country.countryPhoto}
-                          size={"md"}
-                        />
-                      </Link>
-                      <CityName text={topCountry.city.country.countryName} />
-                    </CityContainer>
-                  ))
-                ) : (
-                  <Loader />
-                )}
-              </ScrollContainer>
+              {!topCountriesLoading && topCountries ? (
+                topCountries.map(topCountry => (
+                  <ScrollContainer>
+                    <Link
+                      to={`/country/${topCountry.city.country.countryName}`}
+                    >
+                      <CityContainer key={topCountry.id}>
+                        <Square>
+                          <CityPhoto
+                            src={topCountry.city.country.countryPhoto}
+                            size={"md"}
+                          />
+                          <CityName
+                            text={topCountry.city.country.countryName}
+                          />
+                          <Overlay />
+                        </Square>
+                      </CityContainer>
+                    </Link>
+                  </ScrollContainer>
+                ))
+              ) : (
+                <Loader />
+              )}
             </TripBox>
           </Container>
           <GreyLine />
@@ -1074,26 +1111,34 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           </Title>
           <Container>
             <TripBox>
-              <ScrollContainer>
-                {!frequentVisitsLoading && frequentCities ? (
-                  frequentCities.map(frequentCity => (
-                    <CityContainer key={frequentCity.id}>
-                      <Link to={`/city/${frequentCity.city.cityName}`}>
-                        <CityPhoto
-                          src={frequentCity.city.cityPhoto}
-                          size={"md"}
-                        />
-                      </Link>
-                      <CityName text={frequentCity.city.cityName} />
-                      <CountryName
-                        text={frequentCity.city.country.countryName}
-                      />
-                    </CityContainer>
-                  ))
-                ) : (
-                  <Loader />
-                )}
-              </ScrollContainer>
+              {!frequentVisitsLoading && frequentCities ? (
+                frequentCities.map(frequentCity => (
+                  <ScrollContainer>
+                    <Link to={`/city/${frequentCity.city.cityName}`}>
+                      <CityContainer key={frequentCity.id}>
+                        <Square>
+                          <CityPhoto
+                            src={frequentCity.city.cityPhoto}
+                            size={"md"}
+                          />
+                          <CityName text={frequentCity.city.cityName} />
+                          <CountryName
+                            text={frequentCity.city.country.countryName}
+                          />
+                          <Overlay>
+                            <Weather
+                              lat={frequentCity.city.lat}
+                              lng={frequentCity.city.lng}
+                            />
+                          </Overlay>
+                        </Square>
+                      </CityContainer>
+                    </Link>
+                  </ScrollContainer>
+                ))
+              ) : (
+                <Loader />
+              )}
             </TripBox>
           </Container>
           <GreyLine />

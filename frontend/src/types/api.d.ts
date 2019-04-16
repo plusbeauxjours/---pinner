@@ -319,33 +319,6 @@ export interface CardDetailVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetGeo
-// ====================================================
-
-export interface GetGeo_getGeo_city {
-  __typename: "CityType";
-  lat: number | null;
-  lng: number | null;
-}
-
-export interface GetGeo_getGeo {
-  __typename: "GetGeoResponse";
-  city: GetGeo_getGeo_city | null;
-}
-
-export interface GetGeo {
-  getGeo: GetGeo_getGeo;
-}
-
-export interface GetGeoVariables {
-  cityName: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: CityProfile
 // ====================================================
 
@@ -493,6 +466,8 @@ export interface NearCities_nearCities_cities_country {
 export interface NearCities_nearCities_cities {
   __typename: "CityType";
   id: string;
+  lat: number | null;
+  lng: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: NearCities_nearCities_cities_country;
@@ -884,6 +859,8 @@ export interface LatestCities_latestCities_cities_country {
 export interface LatestCities_latestCities_cities {
   __typename: "CityType";
   id: string;
+  lat: number | null;
+  lng: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: LatestCities_latestCities_cities_country;
@@ -1151,6 +1128,8 @@ export interface GetCoffees_getCoffees_coffees_city_country {
 export interface GetCoffees_getCoffees_coffees_city {
   __typename: "CityType";
   id: string;
+  lat: number | null;
+  lng: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: GetCoffees_getCoffees_coffees_city_country;
@@ -1254,6 +1233,8 @@ export interface GetMatches_getMatches_matches_city_country {
 export interface GetMatches_getMatches_matches_city {
   __typename: "CityType";
   id: string;
+  lat: number | null;
+  lng: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: GetMatches_getMatches_matches_city_country;
@@ -1714,6 +1695,8 @@ export interface SearchTerms_searchCities_cities_country {
 export interface SearchTerms_searchCities_cities {
   __typename: "CityType";
   id: string;
+  lat: number | null;
+  lng: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: SearchTerms_searchCities_cities_country;
@@ -2833,6 +2816,8 @@ export interface CityParts_country {
 export interface CityParts {
   __typename: "CityType";
   id: string;
+  lat: number | null;
+  lng: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: CityParts_country;

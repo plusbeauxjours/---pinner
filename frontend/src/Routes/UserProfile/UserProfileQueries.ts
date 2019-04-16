@@ -207,6 +207,8 @@ export const FREQUENT_VISITS = gql`
       footprints {
         id
         city {
+          lat
+          lng
           cityName
           cityPhoto
           country {
