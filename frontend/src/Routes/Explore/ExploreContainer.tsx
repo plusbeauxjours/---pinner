@@ -22,11 +22,8 @@ class ExploreContainer extends React.Component<any, IState> {
     super(props);
     this.state = {
       inline: false,
-
       latestCityList: null,
-
       latestCityPage: 0,
-
       latestCityModalOpen: false
     };
   }

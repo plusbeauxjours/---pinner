@@ -13,6 +13,7 @@ import LocationGrid from "src/Components/LocationGrid";
 import LocationRow from "src/Components/LocationRow";
 import CoffeeRow from "src/Components/CoffeeRow";
 import CoffeeGrid from "src/Components/CoffeeGrid";
+// import Weather from "src/Components/Weather";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -235,6 +236,11 @@ const SeeAll = styled.p`
   cursor: pointer;
 `;
 
+const WeatherIcon = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+`;
+
 interface IProps {
   cityData?: any;
   cityLoading: boolean;
@@ -256,6 +262,13 @@ interface IProps {
   coffeeList: any;
   toggleCoffeeModal: () => void;
   toggleCoffeeSeeAll: () => void;
+  aqi: number;
+  icon: string;
+  humidity: number;
+  temp: number;
+  chill: number;
+  getAqi: (lat: number, lng: number) => void;
+  getWeather: (lat: number, lng: number) => void;
 }
 
 const CityProfilePresenter: React.SFC<IProps> = ({
@@ -285,7 +298,14 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   coffeeModalOpen,
   coffeeList,
   toggleCoffeeModal,
-  toggleCoffeeSeeAll
+  toggleCoffeeSeeAll,
+  aqi,
+  icon,
+  humidity,
+  temp,
+  chill,
+  getAqi,
+  getWeather
 }) => {
   if (cityLoading) {
     return <Loader />;
@@ -377,13 +397,12 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               </Info>
               <InfoInlineContainer>
                 <HalfInfo>
+                  <InfoRow>AQI {getAqi(city.lat, city.lng)} - done</InfoRow>
+                  <InfoRow>TEMP {temp.toFixed(1)} °C - done</InfoRow>
                   <InfoRow>
-                    <SBold text={String(city.cardCount)} />
-                    AQI
-                  </InfoRow>
-                  <InfoRow>
-                    <SBold text={String(city.userCount)} />
-                    TEMPERATURE / REAL FEEL
+                    REALFEEL
+                    {/* {getWeather(city.lat, city.lng)} */}
+                    {chill.toFixed(1)} °C - done
                   </InfoRow>
                   <InfoRow>
                     <SBold text={String(city.userLogCount)} />
@@ -392,9 +411,12 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                 </HalfInfo>
                 <HalfInfo>
                   <InfoRow>
-                    cardCount - done
                     <SBold text={String(city.cardCount)} />
+                    card - done
                   </InfoRow>
+                  <WeatherIcon>
+                    {/* <Weather icon={icon} size={"md"} /> */}
+                  </WeatherIcon>
 
                   <InfoRow>
                     TIME DIFFERENCE

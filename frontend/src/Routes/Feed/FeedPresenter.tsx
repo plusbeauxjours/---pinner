@@ -62,17 +62,6 @@ const User = styled.div`
   padding: 5px;
 `;
 
-const WeatherInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const WeatherIcon = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-`;
-
 const SBold = styled(Bold)`
   display: flex;
   align-self: flex-end;
@@ -260,12 +249,8 @@ interface IProps {
   toggleCoffeeModal: () => void;
   toggleCoffeeSeeAll: () => void;
   submitCoffee: any;
-  aqi?: number;
-  temp?: number;
-  icon: string;
-  windSpeed: number;
-  humidity?: number;
-  chill: number;
+  currentLat: number;
+  currentLng: number;
 }
 
 const FeedPresenter: React.SFC<IProps> = ({
@@ -297,12 +282,8 @@ const FeedPresenter: React.SFC<IProps> = ({
   toggleCoffeeModal,
   toggleCoffeeSeeAll,
   submitCoffee,
-  aqi,
-  temp,
-  icon,
-  windSpeed,
-  humidity,
-  chill
+  currentLat,
+  currentLng
 }) => {
   if (feedLoading) {
     return <Loader />;
@@ -434,16 +415,7 @@ const FeedPresenter: React.SFC<IProps> = ({
                   </HeaderColumn>
                 </Header>
               </Link>
-              <UserContainer>
-                <WeatherIcon>
-                  <Weather icon={icon} size={"md"} />
-                </WeatherIcon>
-                <WeatherInfo>
-                  <p>Temp{temp.toFixed(1)} °C</p>
-                  <p>RealFeel{chill.toFixed(1)} °C</p>
-                  <p>AQI{aqi}</p>
-                </WeatherInfo>
-              </UserContainer>
+              <Weather lat={currentLat} lng={currentLng} />
             </UserContainer>
             <UserContainer>
               <User onClick={toggleNowModal}>

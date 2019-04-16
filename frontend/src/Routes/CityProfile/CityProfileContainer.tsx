@@ -18,6 +18,7 @@ import {
   NEAR_COUNTRIES
 } from "./CityProfileQueries";
 import { GET_COFFEES } from "../Feed/FeedQueries";
+// import { getAqi, getWeather } from "../../../../Frontend/src/weatherHelper";
 
 class CityProfileQuery extends Query<CityProfile, CityProfileVariables> {}
 
@@ -29,6 +30,8 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   page: number;
+  lat: number;
+  lng: number;
   nearCityList: any;
   nearCountryList: any;
   nearCityPage: number;
@@ -38,6 +41,11 @@ interface IState {
   coffeeModalOpen: boolean;
   coffeeList: any;
   coffeePage: number;
+  aqi: number;
+  icon: string;
+  humidity: number;
+  temp: number;
+  chill: number;
 }
 
 class CityProfileContainer extends React.Component<IProps, IState> {
@@ -48,6 +56,8 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       page: 0,
+      lat: 0,
+      lng: 0,
       nearCityList: null,
       nearCountryList: null,
       nearCityPage: 0,
@@ -56,7 +66,12 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       nearCountryModalOpen: false,
       coffeeModalOpen: false,
       coffeeList: null,
-      coffeePage: 0
+      coffeePage: 0,
+      aqi: 0,
+      icon: null,
+      humidity: 0,
+      temp: 0,
+      chill: 0
     };
   }
   public componentDidMount() {
@@ -78,7 +93,12 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       nearCountryModalOpen,
       coffeeModalOpen,
       coffeeList,
-      coffeePage
+      coffeePage,
+      aqi,
+      icon,
+      humidity,
+      temp,
+      chill
     } = this.state;
     return (
       <GetCoffeesQuery query={GET_COFFEES} variables={{ cityName, coffeePage }}>
@@ -142,6 +162,13 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                                 coffeeList={coffeeList}
                                 toggleCoffeeModal={this.toggleCoffeeModal}
                                 toggleCoffeeSeeAll={this.toggleCoffeeSeeAll}
+                                aqi={aqi}
+                                icon={icon}
+                                humidity={humidity}
+                                temp={temp}
+                                chill={chill}
+                                getAqi={this.getAqi}
+                                getWeather={this.getWeather}
                               />
                             );
                           }}
@@ -157,6 +184,17 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       </GetCoffeesQuery>
     );
   }
+  public getAqi = async (lat: number, lng: number) => {
+    // const aqi = await getAqi(lat, lng);
+    // this.setState({ aqi });
+    this.setState({ lat, lng });
+    console.log(this.state);
+  };
+  public getWeather = async (lat: number, lng: number) => {
+    // const { icon, humidity, temp, chill } = await getWeather(lat, lng);
+    // this.setState({ icon, humidity, temp, chill });
+    console.log(this.state);
+  };
   public toggleNearCityModal = () => {
     const { nearCityModalOpen } = this.state;
     this.setState({

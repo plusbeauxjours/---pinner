@@ -38,14 +38,12 @@ class Country (config_models.TimeStampedModel):
 
 class City (config_models.TimeStampedModel):
 
-    lat = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
-    lng = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
+    lat = models.FloatField(blank=True, null=True)
+    lng = models.FloatField(blank=True, null=True)
     country = models.ForeignKey(
         Country, on_delete=models.CASCADE, related_name='cities')
     city_name = models.CharField(max_length=50, null=True, blank=True)
     city_photo = models.URLField(null=True, blank=True)
-    aqi = models.IntegerField(null=True, blank=True)
-    temperature = models.IntegerField(null=True, blank=True)
     population = models.IntegerField(null=True, blank=True)
     area = models.IntegerField(null=True, blank=True)
     info = models.TextField(null=True, blank=True)

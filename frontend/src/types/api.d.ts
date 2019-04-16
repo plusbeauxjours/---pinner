@@ -319,6 +319,33 @@ export interface CardDetailVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetGeo
+// ====================================================
+
+export interface GetGeo_getGeo_city {
+  __typename: "CityType";
+  lat: number | null;
+  lng: number | null;
+}
+
+export interface GetGeo_getGeo {
+  __typename: "GetGeoResponse";
+  city: GetGeo_getGeo_city | null;
+}
+
+export interface GetGeo {
+  getGeo: GetGeo_getGeo;
+}
+
+export interface GetGeoVariables {
+  cityName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: CityProfile
 // ====================================================
 
@@ -423,6 +450,8 @@ export interface CityProfile_cityProfile_city_country {
 
 export interface CityProfile_cityProfile_city {
   __typename: "CityType";
+  lat: number | null;
+  lng: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: CityProfile_cityProfile_city_country;
@@ -1178,42 +1207,6 @@ export interface GetCoffees {
 export interface GetCoffeesVariables {
   cityName: string;
   coffeePage?: number | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetFootprints
-// ====================================================
-
-export interface GetFootprints_getFootprints_footprints_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-  countryCode: string | null;
-}
-
-export interface GetFootprints_getFootprints_footprints_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetFootprints_getFootprints_footprints_city_country;
-}
-
-export interface GetFootprints_getFootprints_footprints {
-  __typename: "MoveNotificationType";
-  id: string;
-  city: GetFootprints_getFootprints_footprints_city | null;
-  naturalTime: string | null;
-}
-
-export interface GetFootprints_getFootprints {
-  __typename: "FootprintsResponse";
-  footprints: (GetFootprints_getFootprints_footprints | null)[] | null;
-}
-
-export interface GetFootprints {
-  getFootprints: GetFootprints_getFootprints;
 }
 
 

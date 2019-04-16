@@ -28,6 +28,8 @@ export const CITY_PROFILE = gql`
         }
       }
       city {
+        lat
+        lng
         cityName
         cityPhoto
         country {

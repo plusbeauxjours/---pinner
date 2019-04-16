@@ -28,7 +28,6 @@ import {
 } from "../../locationThumbnail";
 import continents from "../../continents";
 import { toast } from "react-toastify";
-import { AQI, Temp } from "src/weatherHelper";
 
 class RequestCoffeeMutation extends Mutation<
   RequestCoffee,
@@ -66,12 +65,6 @@ interface IState {
   coffeeModalOpen: boolean;
   coffeeList: any;
   coffeePage: number;
-  aqi: number;
-  icon: string;
-  windSpeed: number;
-  humidity: number;
-  temp: number;
-  chill: number;
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
@@ -100,13 +93,7 @@ class FeedContainer extends React.Component<IProps, IState> {
       requestModalOpen: false,
       coffeeModalOpen: false,
       coffeeList: null,
-      coffeePage: 0,
-      aqi: 0,
-      icon: null,
-      windSpeed: 0,
-      humidity: 0,
-      temp: 0,
-      chill: 0
+      coffeePage: 0
     };
   }
   public componentDidMount() {
@@ -137,13 +124,7 @@ class FeedContainer extends React.Component<IProps, IState> {
       requestModalOpen,
       coffeeModalOpen,
       coffeeList,
-      coffeePage,
-      aqi,
-      icon,
-      windSpeed,
-      humidity,
-      temp,
-      chill
+      coffeePage
     } = this.state;
     return (
       <GetCoffeesQuery
@@ -235,12 +216,8 @@ class FeedContainer extends React.Component<IProps, IState> {
                                     toggleCoffeeSeeAll={this.toggleCoffeeSeeAll}
                                     toggleRequestModal={this.toggleRequestModal}
                                     submitCoffee={this.submitCoffee}
-                                    aqi={aqi}
-                                    temp={temp}
-                                    icon={icon}
-                                    humidity={humidity}
-                                    windSpeed={windSpeed}
-                                    chill={chill}
+                                    currentLat={currentLat}
+                                    currentLng={currentLng}
                                   />
                                 );
                               }}
@@ -283,18 +260,7 @@ class FeedContainer extends React.Component<IProps, IState> {
         address.storableLocation.country,
         address.storableLocation.countryCode
       );
-      const aqi = await AQI(lat, lng);
-      const { icon, windSpeed, humidity, temp } = await Temp(lat, lng);
-      const chill = await this.WindChill(temp, windSpeed);
-      this.setState({ aqi, icon, windSpeed, humidity, temp, chill });
     }
-  };
-  public WindChill = async (temp: number, wind: number) => {
-    const chill = await (0.0817 *
-      (3.71 * Math.pow(wind, 0.5) + 5.81 - 0.25 * wind) *
-      (temp - 91.4) +
-      91.4);
-    return chill;
   };
   public reportLocation = async (
     lat: number,

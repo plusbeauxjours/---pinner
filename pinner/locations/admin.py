@@ -30,8 +30,6 @@ class CityAdmin(admin.ModelAdmin):
         'user_count',
         'user_log_count',
         'city_photo',
-        'aqi',
-        'temperature',
         'population',
         'area',
     )
