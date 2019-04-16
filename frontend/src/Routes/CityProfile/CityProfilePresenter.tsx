@@ -13,7 +13,7 @@ import LocationGrid from "src/Components/LocationGrid";
 import LocationRow from "src/Components/LocationRow";
 import CoffeeRow from "src/Components/CoffeeRow";
 import CoffeeGrid from "src/Components/CoffeeGrid";
-// import Weather from "src/Components/Weather";
+import Weather from "src/Components/Weather";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -107,7 +107,7 @@ const Info = styled.div`
   flex-direction: column;
   max-width: 100%;
   margin-bottom: 10px;
-  height: 200px;
+  height: 100px;
   border-radius: 3px;
   border: 1px solid grey;
   padding: 5px;
@@ -141,7 +141,7 @@ const FollowContainer = styled.div`
 const Follow = styled.div`
   flex: 1;
   margin-bottom: 10px;
-  height: 150px;
+  height: 100px;
   border-radius: 3px;
   border: 1px solid grey;
   padding: 5px;
@@ -262,13 +262,6 @@ interface IProps {
   coffeeList: any;
   toggleCoffeeModal: () => void;
   toggleCoffeeSeeAll: () => void;
-  aqi: number;
-  icon: string;
-  humidity: number;
-  temp: number;
-  chill: number;
-  getAqi: (lat: number, lng: number) => void;
-  getWeather: (lat: number, lng: number) => void;
 }
 
 const CityProfilePresenter: React.SFC<IProps> = ({
@@ -298,14 +291,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   coffeeModalOpen,
   coffeeList,
   toggleCoffeeModal,
-  toggleCoffeeSeeAll,
-  aqi,
-  icon,
-  humidity,
-  temp,
-  chill,
-  getAqi,
-  getWeather
+  toggleCoffeeSeeAll
 }) => {
   if (cityLoading) {
     return <Loader />;
@@ -384,26 +370,14 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                 <CityPhoto src={city.country.countryPhoto} />
               </Link>
               <CountryName text={city.country.countryName} />
+              {console.log(city)}
             </CountryContainer>
             <InfoContainer>
               <Info>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with....
+                <Weather lat={city.lat} lng={city.lng} />
               </Info>
               <InfoInlineContainer>
                 <HalfInfo>
-                  <InfoRow>AQI {getAqi(city.lat, city.lng)} - done</InfoRow>
-                  <InfoRow>TEMP {temp.toFixed(1)} °C - done</InfoRow>
-                  <InfoRow>
-                    REALFEEL
-                    {/* {getWeather(city.lat, city.lng)} */}
-                    {chill.toFixed(1)} °C - done
-                  </InfoRow>
                   <InfoRow>
                     <SBold text={String(city.userLogCount)} />
                     DISTANCE
