@@ -360,6 +360,15 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                     startDate,
                                                                     endDate
                                                                   }}
+                                                                  refetchQueries={[
+                                                                    {
+                                                                      query: GET_TRIPS,
+                                                                      variables: {
+                                                                        username,
+                                                                        tripPage
+                                                                      }
+                                                                    }
+                                                                  ]}
                                                                 >
                                                                   {editTripFn => {
                                                                     this.editTripFn = editTripFn;
