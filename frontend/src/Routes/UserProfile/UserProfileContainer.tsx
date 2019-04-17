@@ -105,7 +105,6 @@ interface IState {
   frequentVisitsList: any;
   newCardCaption: string;
   selfCards: any;
-  selfTrips: any;
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
@@ -161,8 +160,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       topCountriesList: null,
       frequentVisitsList: null,
       newCardCaption: "",
-      selfCards: [],
-      selfTrips: []
+      selfCards: []
     };
   }
   public render() {
@@ -211,8 +209,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       topCountriesList,
       frequentVisitsList,
       newCardCaption,
-      selfCards,
-      selfTrips
+      selfCards
     } = this.state;
     return (
       <UploadMutation
@@ -337,9 +334,15 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                               startDate,
                                                               endDate
                                                             }}
-                                                            onCompleted={
-                                                              this.addSelfTrip
-                                                            }
+                                                            refetchQueries={[
+                                                              {
+                                                                query: GET_TRIPS,
+                                                                variables: {
+                                                                  username,
+                                                                  tripPage
+                                                                }
+                                                              }
+                                                            ]}
                                                           >
                                                             {addTripFn => {
                                                               this.addTripFn = addTripFn;
@@ -638,9 +641,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                               }
                                                                               selfCards={
                                                                                 selfCards
-                                                                              }
-                                                                              selfTrips={
-                                                                                selfTrips
                                                                               }
                                                                             />
                                                                           );
@@ -1037,39 +1037,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       });
     }
     if (data.uploadCard.ok) {
-      toast.success("Card uploaded");
-    } else {
-      toast.error("error");
-    }
-  };
-  public addSelfTrip = data => {
-    const { selfTrips } = this.state;
-    console.log(data);
-    const {
-      addTrip: { moveNotification }
-    } = data;
-    console.log(moveNotification);
-    if (moveNotification) {
-      this.setState({
-        selfTrips: [
-          {
-            id: moveNotification.id,
-            city: {
-              cityName: moveNotification.city.cityName,
-              cityPhoto: moveNotification.city.cityPhoto,
-              country: {
-                countryName: moveNotification.city.country.countryName,
-                countryCode: moveNotification.city.country.countryCode
-              }
-            },
-            startDate: moveNotification.startDate,
-            endDate: moveNotification.endDate
-          },
-          ...selfTrips
-        ]
-      });
-    }
-    if (data.addTrip.ok) {
       toast.success("Card uploaded");
     } else {
       toast.error("error");
