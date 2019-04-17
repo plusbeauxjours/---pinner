@@ -6,6 +6,8 @@ import styled, { keyframes } from "../../Styles/typed-components";
 import "react-dates/lib/css/_datepicker.css";
 import "react-dates/initialize";
 import { DateRangePicker } from "react-dates";
+import Textarea from "react-expanding-textarea";
+import { Upload } from "../../Icons";
 
 import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
@@ -140,6 +142,19 @@ const CountryName = styled(CityName)`
 const InfoContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(200px, 1fr));
+`;
+
+const Icon = styled.span`
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  margin: 0 60px 0 60px;
+  &:last-child {
+    margin-right: 0;
+  }
+  svg {
+    fill: white;
+  }
 `;
 
 const Bio = styled.p`
@@ -359,6 +374,14 @@ const Overlay = styled.div`
   }
 `;
 
+const STextArea = styled(Textarea)`
+  width: 100%;
+  border: 0;
+  resize: none;
+  font-size: 14px;
+  padding: 15px 0px;
+`;
+
 interface ITheme {
   size?: string;
 }
@@ -398,6 +421,7 @@ interface IProps {
   followersModalOpen: boolean;
   followingsModalOpen: boolean;
   knowingFollowersModalOpen: boolean;
+  uploadModalOpen: boolean;
 
   editMode: boolean;
   openEditMode: () => void;
@@ -440,6 +464,7 @@ interface IProps {
   toggleFollowersModal: () => void;
   toggleFollowingsModal: () => void;
   toggleKnowingFollowersModal: () => void;
+  toggleUploadModal: () => void;
 
   logUserOutFn: () => void;
 
@@ -457,7 +482,11 @@ interface IProps {
 
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  onKeyUpTrip: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onKeyUpCard: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+
+  uploadNewCard: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  selfCards: any;
+  newCardCaption: string;
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
@@ -502,6 +531,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   followersModalOpen,
   followingsModalOpen,
   knowingFollowersModalOpen,
+  uploadModalOpen,
   editMode,
   toggleTripSeeAll,
   toggleTopCountriesSeeAll,
@@ -520,6 +550,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleFollowersModal,
   toggleFollowingsModal,
   toggleKnowingFollowersModal,
+  toggleUploadModal,
   openEditMode,
   logUserOutFn,
   confirmDeleteProfile,
@@ -529,7 +560,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   gotoTrip,
   onInputChange,
   onKeyUp,
-  onKeyUpTrip,
   userName,
   bio,
   gender,
@@ -544,13 +574,33 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   tripEndDate,
   focusedInput,
   onDatesChange,
-  onFocusChange
+  onFocusChange,
+  newCardCaption,
+  onKeyUpCard,
+  selfCards,
+  uploadNewCard
 }) => {
   if (userProfileLoading) {
     return <Loader />;
   } else if (user && topCountries && frequentCities) {
     return (
       <>
+        {uploadModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleUploadModal} />
+            <Modal>
+              <Wrapper>
+                <STextArea
+                  placeholder="Add a comment..."
+                  onChange={uploadNewCard}
+                  value={newCardCaption}
+                  onKeyUp={onKeyUpCard}
+                />
+              </Wrapper>
+            </Modal>
+          </ModalContainer>
+        )}
+
         {modalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleModal} />
@@ -685,7 +735,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 type={"text"}
                 placeholder={"Search a City"}
                 name={"cityName"}
-                onKeyUp={onKeyUpTrip}
               />
             </FormModal>
           </FromModalContainer>
@@ -710,7 +759,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 value={cityName}
                 placeholder={cityName || "cityName"}
                 name={"cityName"}
-                onKeyUp={onKeyUpTrip}
               />
               {console.log(cityName)}
             </FormModal>
@@ -1146,8 +1194,11 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <SBold text={"POSTS"} />
             <SeeAll onClick={toggleModal}>SEE ALL</SeeAll>
           </Title>
+          <Icon onClick={toggleUploadModal}>
+            <Upload />
+          </Icon>
           {user.cards && user.cards.length !== 0 && (
-            <CardGrid cards={user.cards} />
+            <CardGrid cards={user.cards} selfCards={selfCards} />
           )}
         </SWrapper>
       </>

@@ -75,10 +75,10 @@ class PhotoContainer extends React.Component<IProps, IState> {
     this.state = {
       userId: props.creatorId,
       cardId: props.id,
-      commentId: "",
+      commentId: null,
       modalOpen: false,
       modalMenuOpen: false,
-      newComment: "",
+      newComment: null,
       openedComment: false,
       selfComments: [],
       likeCount: props.likeCount,
@@ -262,24 +262,22 @@ class PhotoContainer extends React.Component<IProps, IState> {
     });
   };
   public addSelfComment = data => {
-    const { newComment } = this.state;
+    const { selfComments, newComment } = this.state;
     const {
       addComment: { comment }
     } = data;
     console.log(comment);
     if (comment) {
-      this.setState(state => {
-        return {
-          selfComments: [
-            ...state.selfComments,
-            {
-              id: comment.id,
-              username: comment.creator.username,
-              message: newComment
-            }
-          ],
-          newComment: ""
-        };
+      this.setState({
+        selfComments: [
+          ...selfComments,
+          {
+            id: comment.id,
+            username: comment.creator.username,
+            message: newComment
+          }
+        ],
+        newComment: null
       });
     }
   };

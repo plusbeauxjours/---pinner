@@ -13,11 +13,22 @@ const Container = styled.div`
 
 interface IProps {
   cards?: any;
+  selfCards?: any;
   className?: string;
 }
 
-const CardGrid: React.SFC<IProps> = ({ cards, className }) => (
+const CardGrid: React.SFC<IProps> = ({ selfCards, cards, className }) => (
   <Container className={className}>
+    {selfCards.map(selfCard => (
+      <SquareCard
+        key={selfCard.id}
+        id={selfCard.id}
+        file={selfCard.file}
+        caption={selfCard.caption}
+        likeCount={selfCard.likeCount}
+        commentCount={selfCard.commentCount}
+      />
+    ))}
     {cards.map(card => (
       <SquareCard
         key={card.id}

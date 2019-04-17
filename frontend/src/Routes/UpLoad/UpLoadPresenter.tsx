@@ -52,7 +52,6 @@ const STextArea = styled(Textarea)`
 
 interface IProps {
   back: any;
-  borderRadius: string;
   caption: string;
   uploadNewCard: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;

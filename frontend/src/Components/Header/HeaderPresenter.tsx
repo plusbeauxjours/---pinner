@@ -90,6 +90,7 @@ const HeaderPresenter: React.SFC<IProps> = ({ onSubmit, onChange, search }) => (
           <Compass />
         </Link>
       </Icon>
+
       <Column>
         <form onSubmit={onSubmit}>
           <Input placeholder="Search" value={search} onChange={onChange} />

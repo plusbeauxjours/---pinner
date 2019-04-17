@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { CARD_FRAGMENT } from "src/sharedQueries";
+import { CARD_FRAGMENT, DETAIL_CARD_FRAGMENT } from "src/sharedQueries";
 
 export const GET_USER = gql`
   query UserProfile($username: String!) {
@@ -330,4 +330,16 @@ export const GET_KNOWING_FOLLOWERS = gql`
       }
     }
   }
+`;
+
+export const UPLOAD_CARD = gql`
+  mutation UploadCard($caption: String!) {
+    uploadCard(caption: $caption) {
+      ok
+      card {
+        ...DetailParts
+      }
+    }
+  }
+  ${DETAIL_CARD_FRAGMENT}
 `;

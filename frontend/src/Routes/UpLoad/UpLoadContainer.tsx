@@ -1,90 +1,46 @@
 import React from "react";
 import UpLoadPresenter from "./UpLoadPresenter";
-import { Mutation, MutationFn } from "react-apollo";
-import { UploadCard, UploadCardVariables } from "../../types/api";
-import { UPLOAD_CARD } from "./UpLoadQueries";
-import { toast } from "react-toastify";
+import { MutationFn } from "react-apollo";
 import { RouteComponentProps } from "react-router";
 import Me from "src/Components/Me";
 // import { GET_USER } from "../UserProfile/UserProfileQueries";
 
-class UploadMutation extends Mutation<UploadCard, UploadCardVariables> {}
-
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
-  borderRadius: string;
   caption: string;
-  font: string;
-  fontColor: string;
-  fontSize: string;
   modalOpen: boolean;
-  userName: string;
+  selfCards: any;
 }
 
 class UpLoadContainer extends React.Component<IProps, IState> {
   public UploadFn: MutationFn;
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
-      borderRadius: "0",
-      caption: "",
-      font: "",
-      fontColor: "",
-      fontSize: "",
+      caption: null,
       modalOpen: true,
-      userName: ""
+      selfCards: []
     };
   }
   public render() {
     const {
-      borderRadius,
       caption,
-      font,
-      fontColor,
-      fontSize,
       modalOpen
+      // selfCards
     } = this.state;
     return (
       <Me>
-        {user => (
-          <UploadMutation
-            mutation={UPLOAD_CARD}
-            variables={{
-              borderRadius,
-              caption,
-              font,
-              fontColor,
-              fontSize
-            }}
-            onCompleted={data => {
-              const { uploadCard } = data;
-              if (uploadCard.ok) {
-                toast.success("New Card");
-                this.props.history.goBack();
-              } else {
-                toast.error("Could not send you a Key");
-              }
-            }}
-            // refetchQueries={[
-            //   { query: GET_USER, variables: { username: user.username } }
-            // ]}
-          >
-            {UploadFn => {
-              this.UploadFn = UploadFn;
-              return (
-                <UpLoadPresenter
-                  back={this.back}
-                  borderRadius={borderRadius}
-                  uploadNewCard={this.uploadNewCard}
-                  caption={caption}
-                  onKeyUp={this.onKeyUp}
-                  modalOpen={modalOpen}
-                />
-              );
-            }}
-          </UploadMutation>
-        )}
+        return (
+        <UpLoadPresenter
+          back={this.back}
+          uploadNewCard={this.uploadNewCard}
+          caption={caption}
+          onKeyUp={this.onKeyUp}
+          modalOpen={modalOpen}
+        />
+        ); }}
       </Me>
     );
   }
@@ -103,15 +59,12 @@ class UpLoadContainer extends React.Component<IProps, IState> {
   };
   public onKeyUp = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { keyCode } = event;
-    const { borderRadius } = this.state;
     if (keyCode === 13) {
       this.setState({
         modalOpen: false
       });
       this.UploadFn({
-        variables: {
-          borderRadius
-        }
+        variables: {}
       });
     } else {
       return;
