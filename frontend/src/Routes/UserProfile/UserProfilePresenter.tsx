@@ -486,6 +486,7 @@ interface IProps {
 
   uploadNewCard: (event: React.ChangeEvent<HTMLInputElement>) => void;
   selfCards: any;
+  selfTrips: any;
   newCardCaption: string;
 }
 
@@ -578,6 +579,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   newCardCaption,
   onKeyUpCard,
   selfCards,
+  selfTrips,
   uploadNewCard
 }) => {
   if (userProfileLoading) {
@@ -1058,6 +1060,60 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             ) : (
               <Loader />
             )}
+            {selfTrips &&
+              selfTrips.map(trip => (
+                <TripRow
+                  key={trip.id}
+                  onClick={() => {
+                    user.profile.isSelf
+                      ? toggleTripModal(
+                          trip.id,
+                          trip.city.cityName,
+                          trip.city.cityPhoto,
+                          trip.city.country.countryName,
+                          trip.startDate,
+                          trip.endDate
+                        )
+                      : gotoTrip(
+                          trip.city.cityName,
+                          trip.city.cityPhoto,
+                          trip.city.country.countryName,
+                          trip.startDate,
+                          trip.endDate
+                        );
+                  }}
+                >
+                  <CityPhoto src={trip.city.cityPhoto} size={"sm"} />
+                  <TripText>
+                    {trip.city.cityName}
+                    <GetDurationDays
+                      page={1}
+                      cityName={trip.city.cityName}
+                      startDate={trip.startDate}
+                      endDate={trip.endDate}
+                    />
+                  </TripText>
+                  <TripText>
+                    <SFlag
+                      countryCode={trip.city.country.countryCode}
+                      size={"sm"}
+                    />
+                    <CountryNameText>
+                      {trip.city.country.countryName}
+                    </CountryNameText>
+                  </TripText>
+                  <TripText>{trip.startDate}</TripText>
+                  <TripText>{trip.endDate}</TripText>
+                  <TripText>
+                    <GetDurationAvatars
+                      page={1}
+                      cityName={trip.city.cityName}
+                      startDate={trip.startDate}
+                      endDate={trip.endDate}
+                    />
+                  </TripText>
+                </TripRow>
+              ))}
             {!getTipsLoading && tripList ? (
               tripList.map(list => (
                 <TripRow
@@ -1095,9 +1151,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     <SFlag
                       countryCode={list.city.country.countryCode}
                       size={"sm"}
-                    />{" "}
+                    />
                     <CountryNameText>
-                      {list.city.country.countryName}{" "}
+                      {list.city.country.countryName}
                     </CountryNameText>
                   </TripText>
                   <TripText>{list.startDate}</TripText>

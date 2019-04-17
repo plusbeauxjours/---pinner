@@ -105,6 +105,7 @@ interface IState {
   frequentVisitsList: any;
   newCardCaption: string;
   selfCards: any;
+  selfTrips: any;
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
@@ -160,7 +161,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       topCountriesList: null,
       frequentVisitsList: null,
       newCardCaption: "",
-      selfCards: []
+      selfCards: [],
+      selfTrips: []
     };
   }
   public render() {
@@ -209,7 +211,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       topCountriesList,
       frequentVisitsList,
       newCardCaption,
-      selfCards
+      selfCards,
+      selfTrips
     } = this.state;
     return (
       <UploadMutation
@@ -217,7 +220,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         variables={{
           caption: newCardCaption
         }}
-        onCompleted={this.addSelfCards}
+        onCompleted={this.addSelfCard}
       >
         {uploadCardFn => {
           this.uploadCardFn = uploadCardFn;
@@ -334,6 +337,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                               startDate,
                                                               endDate
                                                             }}
+                                                            onCompleted={
+                                                              this.addSelfTrip
+                                                            }
                                                           >
                                                             {addTripFn => {
                                                               this.addTripFn = addTripFn;
@@ -627,11 +633,14 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                 this
                                                                                   .uploadNewCard
                                                                               }
+                                                                              newCardCaption={
+                                                                                newCardCaption
+                                                                              }
                                                                               selfCards={
                                                                                 selfCards
                                                                               }
-                                                                              newCardCaption={
-                                                                                newCardCaption
+                                                                              selfTrips={
+                                                                                selfTrips
                                                                               }
                                                                             />
                                                                           );
@@ -997,7 +1006,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripEndDate: null
     });
   };
-
   public uploadNewCard = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value }
@@ -1006,7 +1014,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       newCardCaption: value
     } as any);
   };
-  public addSelfCards = data => {
+  public addSelfCard = data => {
     const { selfCards, newCardCaption } = this.state;
     console.log(data);
     const {
@@ -1029,6 +1037,39 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       });
     }
     if (data.uploadCard.ok) {
+      toast.success("Card uploaded");
+    } else {
+      toast.error("error");
+    }
+  };
+  public addSelfTrip = data => {
+    const { selfTrips } = this.state;
+    console.log(data);
+    const {
+      addTrip: { moveNotification }
+    } = data;
+    console.log(moveNotification);
+    if (moveNotification) {
+      this.setState({
+        selfTrips: [
+          {
+            id: moveNotification.id,
+            city: {
+              cityName: moveNotification.city.cityName,
+              cityPhoto: moveNotification.city.cityPhoto,
+              country: {
+                countryName: moveNotification.city.country.countryName,
+                countryCode: moveNotification.city.country.countryCode
+              }
+            },
+            startDate: moveNotification.startDate,
+            endDate: moveNotification.endDate
+          },
+          ...selfTrips
+        ]
+      });
+    }
+    if (data.addTrip.ok) {
       toast.success("Card uploaded");
     } else {
       toast.error("error");

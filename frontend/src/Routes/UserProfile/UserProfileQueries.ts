@@ -128,6 +128,7 @@ export const ADD_TRIP = gql`
     $endDate: DateTime!
   ) {
     addTrip(cityName: $cityName, startDate: $startDate, endDate: $endDate) {
+      ok
       moveNotification {
         startDate
         endDate
@@ -136,10 +137,10 @@ export const ADD_TRIP = gql`
           cityPhoto
           country {
             countryName
+            countryCode
           }
         }
       }
-      ok
     }
   }
 `;
