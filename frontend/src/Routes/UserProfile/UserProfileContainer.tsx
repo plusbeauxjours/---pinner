@@ -105,6 +105,7 @@ interface IState {
   frequentVisitsList: any;
   newCardCaption: string;
   selfCards: any;
+  selfTrips: any;
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
@@ -160,7 +161,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       topCountriesList: null,
       frequentVisitsList: null,
       newCardCaption: "",
-      selfCards: []
+      selfCards: [],
+      selfTrips: []
     };
   }
   public render() {
@@ -209,7 +211,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       topCountriesList,
       frequentVisitsList,
       newCardCaption,
-      selfCards
+      selfCards,
+      selfTrips
     } = this.state;
     return (
       <UploadMutation
@@ -334,15 +337,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                               startDate,
                                                               endDate
                                                             }}
-                                                            refetchQueries={[
-                                                              {
-                                                                query: GET_TRIPS,
-                                                                variables: {
-                                                                  username,
-                                                                  tripPage
-                                                                }
-                                                              }
-                                                            ]}
+                                                            onCompleted={
+                                                              this.addSelfTrip
+                                                            }
                                                           >
                                                             {addTripFn => {
                                                               this.addTripFn = addTripFn;
@@ -360,15 +357,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                     startDate,
                                                                     endDate
                                                                   }}
-                                                                  refetchQueries={[
-                                                                    {
-                                                                      query: GET_TRIPS,
-                                                                      variables: {
-                                                                        username,
-                                                                        tripPage
-                                                                      }
-                                                                    }
-                                                                  ]}
                                                                 >
                                                                   {editTripFn => {
                                                                     this.editTripFn = editTripFn;
@@ -650,6 +638,13 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                               }
                                                                               selfCards={
                                                                                 selfCards
+                                                                              }
+                                                                              selfTrips={
+                                                                                selfTrips
+                                                                              }
+                                                                              duration={
+                                                                                this
+                                                                                  .duration
                                                                               }
                                                                             />
                                                                           );
@@ -1050,6 +1045,52 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } else {
       toast.error("error");
     }
+  };
+  public addSelfTrip = data => {
+    const { tripList } = this.state;
+    console.log(data);
+    const {
+      addTrip: { moveNotification }
+    } = data;
+    console.log(moveNotification);
+    if (moveNotification) {
+      this.setState({
+        tripList: [
+          {
+            id: moveNotification.id,
+            city: {
+              cityName: moveNotification.city.cityName,
+              cityPhoto: moveNotification.city.cityPhoto,
+              country: {
+                countryName: moveNotification.city.country.countryName,
+                countryCode: moveNotification.city.country.countryCode
+              }
+            },
+            startDate: moveNotification.startDate,
+            endDate: moveNotification.endDate
+          },
+          ...tripList
+        ].sort(this.dateDescending)
+      });
+    }
+    if (data.addTrip.ok) {
+      toast.success("Card uploaded");
+    } else {
+      toast.error("error");
+    }
+  };
+  public dateDescending = (a, b) => {
+    const {
+      selfTrips: { startDate }
+    } = this.state;
+    const dateA = new Date(a[startDate]).getTime();
+    const dateB = new Date(b[startDate]).getTime();
+    return dateA < dateB ? -1 : 1;
+  };
+  public duration = (startDate, endDate) => {
+    const startDateMoment = moment(startDate);
+    const endDateMoment = moment(endDate);
+    return endDateMoment.diff(startDateMoment, "days");
   };
 }
 

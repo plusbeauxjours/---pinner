@@ -291,7 +291,7 @@ const SFlag = styled(Flag)`
 
 const TripRow = styled.div<ITheme>`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   justify-content: space-between;
   align-items: center;
   background-color: #2d3a41;
@@ -486,7 +486,12 @@ interface IProps {
 
   uploadNewCard: (event: React.ChangeEvent<HTMLInputElement>) => void;
   selfCards: any;
+  selfTrips: any;
   newCardCaption: string;
+  duration: (
+    startDate: moment.Moment | null,
+    endDate: moment.Moment | null
+  ) => number;
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
@@ -578,7 +583,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   newCardCaption,
   onKeyUpCard,
   selfCards,
-  uploadNewCard
+  selfTrips,
+  uploadNewCard,
+  duration
 }) => {
   if (userProfileLoading) {
     return <Loader />;
@@ -1046,6 +1053,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <TripText>{trip.startDate}</TripText>
                   <TripText>{trip.endDate}</TripText>
                   <TripText>
+                    {duration(trip.startDate, trip.endDate)}
+                    <p> Days</p>
+                  </TripText>
+                  <TripText>
                     <GetDurationAvatars
                       page={0}
                       cityName={trip.city.cityName}
@@ -1102,6 +1113,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   </TripText>
                   <TripText>{list.startDate}</TripText>
                   <TripText>{list.endDate}</TripText>
+                  <TripText>
+                    {duration(list.startDate, list.endDate)}
+                    <p> Days</p>
+                  </TripText>
                   <TripText>
                     <GetDurationAvatars
                       page={1}

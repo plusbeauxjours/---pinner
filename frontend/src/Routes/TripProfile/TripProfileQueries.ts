@@ -47,7 +47,6 @@ export const GET_DURATION_AVATARS = gql`
           }
         }
       }
-      days
     }
   }
 `;

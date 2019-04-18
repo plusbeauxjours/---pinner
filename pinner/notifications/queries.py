@@ -91,13 +91,12 @@ def resolve_get_trips(self, info, **kwargs):
     username = kwargs.get('username')
     profile = User.objects.get(username=username)
     tripPage = kwargs.get('tripPage', 0)
-    offset = 30 * (tripPage - 1)
 
     if (tripPage is 0):
         footprints = profile.movenotification.order_by('-start_date')[:3]
 
     else:
-        footprints = profile.movenotification.all().order_by('-start_date')[offset+3: 30+offset+3]
+        footprints = profile.movenotification.all().order_by('-start_date')[3:30]
 
     return location_types.FootprintsResponse(footprints=footprints)
 
@@ -134,9 +133,7 @@ def resolve_get_duration_avatars(self, info, **kwargs):
         usersBefore = city.movenotification.filter(
             city__city_name=cityName, end_date__range=(startDate, endDate))
         usersBefore = usersBefore.order_by('actor_id', '-end_date').distinct('actor_id')
-        for i in usersBefore:
-            days = (i.end_date - i.start_date).days + 1
-        return types.DurationAvatarsResponse(usersBefore=usersBefore, days=days)
+        return types.DurationAvatarsResponse(usersBefore=usersBefore)
 
     except models.MoveNotification.DoesNotExist:
         raise Exception("You've never been there at the same time")
