@@ -32,19 +32,6 @@ const GlobalStyle = createGlobalStyle`
     h1,h2,h3,h4,h5,h6{
         font-family: 'Maven Pro', sans-serif;
     }
-    .react-calendar-heatmap .color-scale-1 { 
-    fill: #d6e685; 
-    }
-    .react-calendar-heatmap .color-scale-2 { 
-        fill: #8cc665; 
-    }
-    .react-calendar-heatmap .color-scale-3 {
-        fill: #44a340; 
-    }
-    .react-calendar-heatmap .color-scale-4 { 
-        fill: #1e6823; 
-    }
-
 `;
 
 export default GlobalStyle;

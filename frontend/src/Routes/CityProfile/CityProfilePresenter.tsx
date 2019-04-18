@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "../../Styles/typed-components";
-import "react-calendar-heatmap/dist/styles.css";
 
 import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";

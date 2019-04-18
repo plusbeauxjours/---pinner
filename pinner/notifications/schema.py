@@ -61,26 +61,6 @@ class Query(object):
             'endDate': graphene.Date(required=True)
         }
     )
-    get_duration_days = graphene.Field(
-        types.DurationDaysResponse,
-        resolver=queries.resolve_get_duration_days,
-        required=True,
-        args={
-            'page': graphene.Int(),
-            'cityName': graphene.String(required=True),
-            'startDate': graphene.Date(required=True),
-            'endDate': graphene.Date(required=True)
-        }
-    )
-    get_heatmap_data = graphene.Field(
-        types.GetHeatmapDataReaponse,
-        resolver=queries.resolve_get_heatmap_data,
-        required=True,
-        args={
-            'page': graphene.Int(),
-            'cityName': graphene.String(required=True),
-        }
-    )
 
 
 class Mutation(object):

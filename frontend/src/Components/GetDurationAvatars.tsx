@@ -39,25 +39,17 @@ const GetDurationAvatars: React.SFC<IProps> = ({
     variables={{ page, cityName, startDate, endDate }}
   >
     {({
-      data: {
-        getDurationAvatars: { usersBefore = null, days = null } = {}
-      } = {},
+      data: { getDurationAvatars: { usersBefore = null } = {} } = {},
       loading
     }) => {
       if (loading) {
         return <LoaderData />;
       } else if (!loading && usersBefore) {
         return (
-          days &&
           usersBefore &&
           usersBefore.map(user => (
             <AvatarContainer key={user.actor.profile.id}>
-              <SAvatar
-                size={"sm"}
-                key={user.actor.profile.id}
-                url={user.actor.profile.avatar}
-              />
-              <p>{days}</p>
+              <SAvatar size={"sm"} url={user.actor.profile.avatar} />
             </AvatarContainer>
           ))
         );

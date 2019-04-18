@@ -12,7 +12,6 @@
     "prop-types": "^15.6.2",
     "react": "16.7.0-alpha.0",
     "react-apollo": "^2.4.1",
-    "react-calendar-heatmap": "^1.8.0",
     "react-dates": "^20.1.0",
     "react-dom": "16.7.0-alpha.0",
     "react-easy-chart": "^1.0.0",

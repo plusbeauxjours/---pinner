@@ -130,45 +130,12 @@ def resolve_get_duration_avatars(self, info, **kwargs):
 
     try:
         city = location_models.City.objects.get(city_name=cityName)
-        usersBefore = city.movenotification.filter(
-            city__city_name=cityName, end_date__range=(startDate, endDate))
-        usersBefore = usersBefore.order_by('actor_id', '-end_date').distinct('actor_id')
+        usersBefore = city.movenotification.filter(end_date__range=(
+            startDate, endDate)).order_by('actor_id').distinct('actor_id')
         return types.DurationAvatarsResponse(usersBefore=usersBefore)
 
     except models.MoveNotification.DoesNotExist:
         raise Exception("You've never been there at the same time")
-
-
-@login_required
-def resolve_get_heatmap_data(self, info, **kwargs):
-
-    user = info.context.user
-    cityName = kwargs.get('cityName')
-    page = kwargs.get('page', 0)
-    startDate = datetime.now() - relativedelta(years=1)
-    endDate = datetime.now()
-
-    dateList = {}
-
-    try:
-        city = location_models.City.objects.get(city_name=cityName)
-        cards = city.cards.filter(created_at__gte=startDate, created_at__lt=endDate).annotate(
-            date=Trunc('created_at', 'day', output_field=DateField())).values('date').distinct().order_by(
-                '-date').annotate(count=Count('created_at'))
-        print(cards)
-
-        # for i in range((endDate - startDate).days + 1):
-        #     date = (startDate + timedelta(days=i)).date()
-        #     users = city.movenotification.filter(Q(start_date__lte=date) & Q(
-        #         end_date__gte=(date))).annotate(
-        #         count=Count('id')).values('count')
-        #     if users.exists():
-        #         print("date: ", date, "users: ", users)
-
-        return types.GetHeatmapDataReaponse(cards=cards, startDate=startDate, endDate=endDate)
-
-    except location_models.City.DoesNotExist:
-        raise Exception("Cannot find City")
 
 
 @login_required
@@ -186,61 +153,3 @@ def resolve_get_cross_paths_avatars(self, info, **kwargs):
 
     except models.MoveNotification.DoesNotExist:
         raise Exception("You've never been there at the same time")
-
-
-@login_required
-def resolve_get_duration_days(self, info, **kwargs):
-
-    user = info.context.user
-    cityName = kwargs.get('cityName')
-    startDate = kwargs.get('startDate')
-    endDate = kwargs.get('endDate')
-    page = kwargs.get('page', 0)
-
-    try:
-        my_trips = user.movenotification.filter(city__city_name=cityName, end_date__range=(startDate, endDate))
-
-        # city = location_models.City.objects.get(city_name=cityName)
-        # trips = city.movenotification.filter(start_date__range=(
-        #     startDate, endDate)) | city.movenotification.filter(end_date__range=(startDate, endDate))
-        # usersBefore = usersBefore.order_by('actor_id', '-end_date').distinct('actor_id')
-        return types.DurationDaysResponse(myTrips=my_trips)
-
-    except models.MoveNotification.DoesNotExist:
-        raise Exception("You've never been there at the same time")
-
-
-# @login_required
-# def resolve_get_previous_cities(self, info, **kwargs):
-
-#     user = info.context.user
-#     cityName = kwargs.get('cityName')
-#     startDate = kwargs.get('startDate')
-#     endDate = kwargs.get('endDate')
-
-#     try:
-#         my_footprints = user.movenotification.filter(city__city_name=cityName, start_date__range=(
-#             startDate, endDate)) | user.movenotification.filter(city__city_name=cityName, end_date__range=(startDate, endDate))
-
-#         return types.TripProfileResponse(moveNotifications=my_footprints, cards=cards, users=users)
-
-#     except models.MoveNotification.DoesNotExist:
-#         raise Exception("You've never been there at the same time")
-
-
-# @login_required
-# def resolve_get_next_cities(self, info, **kwargs):
-
-#     user = info.context.user
-#     cityName = kwargs.get('cityName')
-#     startDate = kwargs.get('startDate')
-#     endDate = kwargs.get('endDate')
-
-#     try:
-#         my_footprints = user.movenotification.filter(city__city_name=cityName, start_date__range=(
-#             startDate, endDate)) | user.movenotification.filter(city__city_name=cityName, end_date__range=(startDate, endDate))
-
-#         return types.TripProfileResponse(moveNotifications=my_footprints, cards=cards, users=users)
-
-#     except models.MoveNotification.DoesNotExist:
-#         raise Exception("You've never been there at the same time")

@@ -63,12 +63,6 @@ class GetNotificationsResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
 
-class GetHeatmapDataReaponse(graphene.ObjectType):
-    cards = graphene.List(DataType)
-    startDate = graphene.Date()
-    endDate = graphene.Date()
-
-
 class GetMoveNotificationsResponse(graphene.ObjectType):
     notifications = graphene.List(MoveNotificationType)
     ok = graphene.Boolean()

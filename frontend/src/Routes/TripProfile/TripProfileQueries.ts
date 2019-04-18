@@ -42,30 +42,9 @@ export const GET_DURATION_AVATARS = gql`
         actor {
           profile {
             id
-            username
             avatar
           }
         }
-      }
-    }
-  }
-`;
-
-export const GET_DURATION_DAYS = gql`
-  query GetDurationDays(
-    $page: Int
-    $cityName: String!
-    $startDate: Date!
-    $endDate: Date!
-  ) {
-    getDurationDays(
-      page: $page
-      cityName: $cityName
-      startDate: $startDate
-      endDate: $endDate
-    ) {
-      myTrips {
-        id
       }
     }
   }
