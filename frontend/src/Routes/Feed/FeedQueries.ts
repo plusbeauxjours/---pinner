@@ -1,9 +1,5 @@
 import { gql } from "apollo-boost";
-import {
-  DETAIL_CARD_FRAGMENT,
-  USER_FRAGMENT,
-  CITY_FRAGMENT
-} from "../../sharedQueries";
+import { DETAIL_CARD_FRAGMENT, USER_FRAGMENT } from "../../sharedQueries";
 
 export const GET_FEED = gql`
   query Feed($page: Int!, $cityName: String!) {
@@ -97,6 +93,8 @@ export const REQUEST_COFFEE = gql`
             isFollowing
           }
         }
+        expires
+        status
         target
         naturalTime
       }
@@ -110,10 +108,17 @@ export const GET_COFFEES = gql`
       coffees {
         id
         city {
-          ...CityParts
+          cityName
+          country {
+            countryName
+          }
         }
         host {
-          ...UserParts
+          username
+          profile {
+            avatar
+            isFollowing
+          }
         }
         expires
         status
@@ -122,6 +127,4 @@ export const GET_COFFEES = gql`
       }
     }
   }
-  ${USER_FRAGMENT}
-  ${CITY_FRAGMENT}
 `;

@@ -143,10 +143,30 @@ class FeedContainer extends React.Component<IProps, IState> {
           return (
             <RequestCoffeeMutation
               mutation={REQUEST_COFFEE}
-              onCompleted={this.addSelfCoffees}
               variables={{
                 currentCity,
                 currentCountry
+              }}
+              // onCompleted={this.addSelfCoffees}
+              update={(cache, { data }) => {
+                const {
+                  getCoffees: { coffees }
+                } = cache.readQuery({
+                  query: GET_COFFEES,
+                  variables: { coffeePage, cityName: currentCity }
+                });
+                console.log(coffees);
+                console.log(data.requestCoffee.coffee);
+
+                cache.writeQuery({
+                  query: GET_COFFEES,
+                  variables: { coffeePage, cityName: currentCity },
+                  data: {
+                    getCoffees: {
+                      coffees: [data.requestCoffee.coffee].concat(coffees)
+                    }
+                  }
+                });
               }}
             >
               {requestCoffeeFn => {
@@ -222,6 +242,7 @@ class FeedContainer extends React.Component<IProps, IState> {
                                     currentLat={currentLat}
                                     currentLng={currentLng}
                                     selfCoffees={selfCoffees}
+                                    page={page}
                                   />
                                 );
                               }}

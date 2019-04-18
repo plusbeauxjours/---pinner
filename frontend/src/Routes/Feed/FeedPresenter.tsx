@@ -252,6 +252,7 @@ interface IProps {
   currentLat: number;
   currentLng: number;
   selfCoffees: any;
+  page: number;
 }
 
 const FeedPresenter: React.SFC<IProps> = ({
@@ -285,7 +286,9 @@ const FeedPresenter: React.SFC<IProps> = ({
   submitCoffee,
   currentLat,
   currentLng,
-  selfCoffees
+  selfCoffees,
+  currentCity,
+  page
 }) => {
   if (feedLoading) {
     return <Loader />;
@@ -503,6 +506,8 @@ const FeedPresenter: React.SFC<IProps> = ({
                 comments={card.comments}
                 naturalTime={card.naturalTime}
                 isLiked={card.isLiked}
+                currentCity={currentCity}
+                page={page}
               />
             ))}
         </SWrapper>

@@ -67,6 +67,7 @@ class EditCardResponse(graphene.ObjectType):
 
 
 class DeleteCardResponse(graphene.ObjectType):
+    cardId = graphene.Int()
     ok = graphene.Boolean()
 
 
@@ -75,6 +76,8 @@ class AddCommentResponse(graphene.ObjectType):
 
 
 class DeleteCommentResponse(graphene.ObjectType):
+    cardId = graphene.Int()
+    commentId = graphene.Int()
     ok = graphene.Boolean()
 
 

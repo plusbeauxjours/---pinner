@@ -21,6 +21,8 @@ import {
 } from "../../types/api";
 import { FOLLOW_USER } from "../FollowBtn/FollowBtnQueries";
 import Me from "../Me";
+// import { GET_CARD } from "../../../../frontend/src/Routes/CardDetail/CardDetailQueries";
+import { GET_FEED } from "../../../../frontend/src/Routes/Feed/FeedQueries";
 
 class AddCommentMutation extends Mutation<AddComment, AddCommentVariables> {}
 class DeleteCommentMutation extends Mutation<
@@ -48,6 +50,8 @@ interface IProps {
   creatorId?: string;
   isFollowing?: boolean;
   isSelf?: boolean;
+  currentCity?: string;
+  page?: number;
 }
 
 interface IState {
@@ -63,6 +67,8 @@ interface IState {
   isSelf: boolean;
   isLiked: boolean;
   isFollowing: boolean;
+  currentCity: string;
+  page: number;
 }
 
 class PhotoContainer extends React.Component<IProps, IState> {
@@ -78,13 +84,15 @@ class PhotoContainer extends React.Component<IProps, IState> {
       commentId: null,
       modalOpen: false,
       modalMenuOpen: false,
-      newComment: null,
+      newComment: "",
       openedComment: false,
       selfComments: [],
       likeCount: props.likeCount,
       isSelf: props.isSelf,
       isLiked: props.isLiked,
-      isFollowing: props.isFollowing
+      isFollowing: props.isFollowing,
+      currentCity: props.currentCity,
+      page: props.page
     };
   }
   public render() {
@@ -113,6 +121,8 @@ class PhotoContainer extends React.Component<IProps, IState> {
       isSelf,
       isLiked,
       isFollowing
+      // page,
+      // currentCity
     } = this.state;
     return (
       <Me>
@@ -139,7 +149,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
                         cardId: parseInt(cardId, 10),
                         commentId: parseInt(commentId, 10)
                       }}
-                      onCompleted={() => this.setState({ commentId: "" })}
                     >
                       {deleteCommentFn => {
                         this.deleteCommentFn = deleteCommentFn;
@@ -277,7 +286,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
             message: newComment
           }
         ],
-        newComment: null
+        newComment: ""
       });
     }
   };
@@ -308,16 +317,59 @@ class PhotoContainer extends React.Component<IProps, IState> {
   public onSubmit = () => {
     const { id: cardId } = this.props;
     const { commentId, modalOpen } = this.state;
-    this.setState({
-      modalOpen: !modalOpen
-    });
     this.deleteCommentFn({
       variables: {
         cardId,
         commentId
       }
     });
-    console.log(this.state);
+    this.setState({
+      modalOpen: !modalOpen,
+      commentId: null
+    });
+  };
+
+  public deleteCardHandler = (cache, { data: payload }) => {
+    const { currentCity, page } = this.state;
+    const {
+      feed: { cards }
+    } = cache.readQuery({
+      query: GET_FEED,
+      variables: { page, cityName: currentCity }
+    });
+
+    console.log(cards);
+    const result = cards.filter(element => {
+      const elementId = element._id;
+      const {
+        deleteCard: { cardId }
+      } = payload;
+
+      return elementId !== cardId;
+    });
+    try {
+      cache.writeQuery({
+        query: GET_FEED,
+        data: result,
+        variables: { page, cityName: currentCity }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    // console.log(cards);
+    // console.log(cards[0]);
+
+    // const {
+    //   feed: { cards }
+    // } = cache.readQuery({
+    //   query: GET_FEED,
+    //   variables: { page, cityName: currentCity }
+    // });
+
+    // console.log(cache.data.data);
+    // Object.keys(cache.data.data).forEach(
+    //   key => key.match(cardId) && cache.data.delete(key)
+    // );
   };
 }
 

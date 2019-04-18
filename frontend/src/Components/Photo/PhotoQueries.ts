@@ -12,6 +12,7 @@ export const DELETE_CARD = gql`
   mutation DeleteCard($cardId: Int!) {
     deleteCard(cardId: $cardId) {
       ok
+      cardId
     }
   }
 `;
@@ -33,6 +34,8 @@ export const DELETE_COMMENT = gql`
   mutation DeleteComment($cardId: Int!, $commentId: Int!) {
     deleteComment(cardId: $cardId, commentId: $commentId) {
       ok
+      cardId
+      commentId
     }
   }
 `;

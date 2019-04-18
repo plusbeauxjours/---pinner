@@ -116,6 +116,7 @@ export interface LikeCardVariables {
 export interface DeleteCard_deleteCard {
   __typename: "DeleteCardResponse";
   ok: boolean | null;
+  cardId: number | null;
 }
 
 export interface DeleteCard {
@@ -173,6 +174,8 @@ export interface AddCommentVariables {
 export interface DeleteComment_deleteComment {
   __typename: "DeleteCommentResponse";
   ok: boolean | null;
+  cardId: number | null;
+  commentId: number | null;
 }
 
 export interface DeleteComment {
@@ -1130,6 +1133,8 @@ export interface RequestCoffee_requestCoffee_coffee {
   id: string;
   city: RequestCoffee_requestCoffee_coffee_city;
   host: RequestCoffee_requestCoffee_coffee_host;
+  expires: any | null;
+  status: CoffeeStatus;
   target: CoffeeTarget;
   naturalTime: string | null;
 }
@@ -1165,35 +1170,18 @@ export interface GetCoffees_getCoffees_coffees_city_country {
 
 export interface GetCoffees_getCoffees_coffees_city {
   __typename: "CityType";
-  id: string;
-  lat: number | null;
-  lng: number | null;
   cityName: string | null;
-  cityPhoto: string | null;
   country: GetCoffees_getCoffees_coffees_city_country;
-}
-
-export interface GetCoffees_getCoffees_coffees_host_profile_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface GetCoffees_getCoffees_coffees_host_profile_currentCity {
-  __typename: "CityType";
-  country: GetCoffees_getCoffees_coffees_host_profile_currentCity_country;
-  cityName: string | null;
 }
 
 export interface GetCoffees_getCoffees_coffees_host_profile {
   __typename: "ProfileType";
-  isFollowing: boolean | null;
   avatar: string;
-  currentCity: GetCoffees_getCoffees_coffees_host_profile_currentCity | null;
+  isFollowing: boolean | null;
 }
 
 export interface GetCoffees_getCoffees_coffees_host {
   __typename: "UserType";
-  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
@@ -1845,7 +1833,6 @@ export interface TripProfileVariables {
 export interface GetDurationAvatars_getDurationAvatars_usersBefore_actor_profile {
   __typename: "ProfileType";
   id: string;
-  username: string | null;
   avatar: string;
 }
 
@@ -1862,7 +1849,6 @@ export interface GetDurationAvatars_getDurationAvatars_usersBefore {
 export interface GetDurationAvatars_getDurationAvatars {
   __typename: "DurationAvatarsResponse";
   usersBefore: (GetDurationAvatars_getDurationAvatars_usersBefore | null)[] | null;
-  days: number | null;
 }
 
 export interface GetDurationAvatars {
@@ -1870,35 +1856,6 @@ export interface GetDurationAvatars {
 }
 
 export interface GetDurationAvatarsVariables {
-  page?: number | null;
-  cityName: string;
-  startDate: any;
-  endDate: any;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetDurationDays
-// ====================================================
-
-export interface GetDurationDays_getDurationDays_myTrips {
-  __typename: "MoveNotificationType";
-  id: string;
-}
-
-export interface GetDurationDays_getDurationDays {
-  __typename: "DurationDaysResponse";
-  myTrips: (GetDurationDays_getDurationDays_myTrips | null)[] | null;
-}
-
-export interface GetDurationDays {
-  getDurationDays: GetDurationDays_getDurationDays;
-}
-
-export interface GetDurationDaysVariables {
   page?: number | null;
   cityName: string;
   startDate: any;
@@ -2215,6 +2172,7 @@ export interface GetTripsVariables {
 export interface AddTrip_addTrip_moveNotification_city_country {
   __typename: "CountryType";
   countryName: string | null;
+  countryCode: string | null;
 }
 
 export interface AddTrip_addTrip_moveNotification_city {
@@ -2233,8 +2191,8 @@ export interface AddTrip_addTrip_moveNotification {
 
 export interface AddTrip_addTrip {
   __typename: "AddTripResponse";
-  moveNotification: AddTrip_addTrip_moveNotification | null;
   ok: boolean | null;
+  moveNotification: AddTrip_addTrip_moveNotification | null;
 }
 
 export interface AddTrip {

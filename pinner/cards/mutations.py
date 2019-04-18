@@ -116,16 +116,16 @@ class DeleteComment(graphene.Mutation):
 
                 if comment.creator.id == user.id or card.creator.id == user.id:
                     comment.delete()
-                    return types.DeleteCommentResponse(ok=True)
+                    return types.DeleteCommentResponse(ok=True, cardId=None, commentId=None)
 
                 else:
-                    return types.DeleteCommentResponse(ok=False)
+                    return types.DeleteCommentResponse(ok=False, cardId=cardId, commentId=commentId)
 
             except models.Comment.DoesNotExist:
-                return types.DeleteCommentResponse(ok=False)
+                return types.DeleteCommentResponse(ok=False, cardId=None, commentId=None)
 
         except models.Card.DoesNotExist:
-            return types.DeleteCommentResponse(ok=False)
+            return types.DeleteCommentResponse(ok=False, cardId=None, commentId=None)
 
 
 class EditCard(graphene.Mutation):
@@ -198,18 +198,18 @@ class DeleteCard(graphene.Mutation):
             try:
                 card = models.Card.objects.get(id=cardId)
             except models.Card.DoesNotExist:
-                return types.DeleteCardResponse(ok=False)
+                return types.DeleteCardResponse(ok=False, cardId=None)
 
             if card.creator.id == user.id:
 
                 card.delete()
-                return types.DeleteCardResponse(ok=True)
+                return types.DeleteCardResponse(ok=True, cardId=cardId)
 
             else:
-                return types.DeleteCardResponse(ok=False)
+                return types.DeleteCardResponse(ok=False, cardId=None)
 
         else:
-            return types.DeleteCardResponse(ok=False)
+            return types.DeleteCardResponse(ok=False, cardId=None)
 
 
 class UploadCard(graphene.Mutation):

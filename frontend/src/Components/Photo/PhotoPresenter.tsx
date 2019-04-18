@@ -329,15 +329,39 @@ const PhotoPresenter: React.SFC<IProps> = ({
             </Modal>
           </ModalContainer>
         )}
+                {modalMenuOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleMenuModal} />
+            <Modal>
+              <ModalLink onClick={() => console.log("ho?")}>
+                Report Card
+              </ModalLink>
+              <ModalLink onClick={() => followUserFn()}>
+                {isFollowing ? "Unfollow" : "Follow"}
+              </ModalLink>
+              {isSelf && (
+                <ModalLink onClick={() => deleteCardFn()}>
+                  Delete Card
+                </ModalLink>
+              )}
+              <ModalLink onClick={toggleMenuModal}>Cancel</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
         <DetailContainer>
           <Image src={photoUrl} />
           <Meta>
-            <UserHeader
-              username={creatorUsername}
-              avatar={creatorAvatar}
-              currentCity={city}
-              currentCountry={country}
-            />
+            <PhotoHeader>
+              <UserHeader
+                username={creatorUsername}
+                avatar={creatorAvatar}
+                currentCity={city}
+                currentCountry={country}
+              />
+              <Icon onClick={toggleMenuModal}>
+                <List />
+              </Icon>
+            </PhotoHeader>
             <Comments>
               <Comment username={creatorUsername} comment={caption} />
               {comments &&

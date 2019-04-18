@@ -66,8 +66,11 @@ const CardDetailPresenter: React.SFC<IProps> = ({
             <Photo
               id={card.id}
               inline={false}
+              creatorId={card.creator.id}
               creatorAvatar={card.creator.profile.avatar}
               creatorUsername={card.creator.username}
+              isFollowing={card.creator.profile.isFollowing}
+              isSelf={card.creator.profile.isSelf}
               country={card.country.countryName}
               city={card.city.cityName}
               photoUrl={card.file}
