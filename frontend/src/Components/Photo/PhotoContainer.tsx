@@ -24,6 +24,7 @@ import Me from "../Me";
 // import { GET_CARD } from "../../../../frontend/src/Routes/CardDetail/CardDetailQueries";
 import { GET_FEED } from "../../../../frontend/src/Routes/Feed/FeedQueries";
 import { toast } from "react-toastify";
+import { withRouter, RouteComponentProps } from "react-router";
 
 class AddCommentMutation extends Mutation<AddComment, AddCommentVariables> {}
 class DeleteCommentMutation extends Mutation<
@@ -34,7 +35,7 @@ class ToggleLikeMutation extends Mutation<LikeCard, LikeCardVariables> {}
 class FollowMutation extends Mutation<FollowUser, FollowUserVariables> {}
 class DeleteCardMutation extends Mutation<DeleteCard, DeleteCardVariables> {}
 
-interface IProps {
+interface IProps extends RouteComponentProps {
   inline: boolean;
   creatorAvatar: string;
   creatorUsername: string;
@@ -355,12 +356,16 @@ class PhotoContainer extends React.Component<IProps, IState> {
     this.setState({
       deleteCardModalOpen: !deleteCardModalOpen
     });
+    this.props.history.goBack();
   };
   public updateDeleteCard = (cache, { data: { deleteCard } }) => {
     const { page, currentCity } = this.props;
     const data = cache.readQuery({
       query: GET_FEED,
-      variables: { cityName: currentCity, page }
+      variables: {
+        cityName: currentCity || localStorage.getItem("cityName"),
+        page: page || 0
+      }
     });
     const newCard = data.feed.cards.filter(
       i => parseInt(i.id, 10) !== deleteCard.cardId
@@ -383,4 +388,4 @@ class PhotoContainer extends React.Component<IProps, IState> {
   };
 }
 
-export default PhotoContainer;
+export default withRouter(PhotoContainer);
