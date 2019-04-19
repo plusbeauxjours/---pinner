@@ -147,27 +147,8 @@ class FeedContainer extends React.Component<IProps, IState> {
                 currentCity,
                 currentCountry
               }}
-              // onCompleted={this.addSelfCoffees}
-              update={(cache, { data }) => {
-                const {
-                  getCoffees: { coffees }
-                } = cache.readQuery({
-                  query: GET_COFFEES,
-                  variables: { coffeePage, cityName: currentCity }
-                });
-                console.log(coffees);
-                console.log(data.requestCoffee.coffee);
-
-                cache.writeQuery({
-                  query: GET_COFFEES,
-                  variables: { coffeePage, cityName: currentCity },
-                  data: {
-                    getCoffees: {
-                      coffees: [data.requestCoffee.coffee].concat(coffees)
-                    }
-                  }
-                });
-              }}
+              onCompleted={this.onCompletedRequestCoffee}
+              update={this.updateRequestCoffee}
             >
               {requestCoffeeFn => {
                 this.requestCoffeeFn = requestCoffeeFn;
@@ -393,47 +374,35 @@ class FeedContainer extends React.Component<IProps, IState> {
   };
   public submitCoffee = target => {
     const { requestModalOpen } = this.state;
-    console.log(target);
     this.requestCoffeeFn({ variables: { target } });
     this.setState({
       requestModalOpen: !requestModalOpen
     } as any);
   };
-  public addSelfCoffees = data => {
-    const { selfCoffees } = this.state;
-    console.log(data);
-    const {
-      requestCoffee: { coffee }
-    } = data;
-    console.log(coffee);
-    if (coffee) {
-      this.setState({
-        selfCoffees: [
-          {
-            id: coffee.id,
-            city: {
-              cityName: coffee.city.cityName,
-              country: { countryName: coffee.city.country.countryName }
-            },
-            host: {
-              username: coffee.host.username,
-              profile: {
-                avatar: coffee.host.profile.avatar,
-                isFollowing: coffee.host.profile.isFollowing
-              }
-            },
-            target: coffee.target,
-            naturalTime: coffee.naturalTime
-          },
-          ...selfCoffees
-        ]
-      });
-    }
+  public onCompletedRequestCoffee = data => {
     if (data.requestCoffee.ok) {
       toast.success("Coffee requested, finding a guest");
     } else {
       toast.error("error");
     }
+  };
+  public updateRequestCoffee = (cache, { data }) => {
+    const { coffeePage, currentCity } = this.state;
+    const {
+      getCoffees: { coffees }
+    } = cache.readQuery({
+      query: GET_COFFEES,
+      variables: { coffeePage, cityName: currentCity }
+    });
+    cache.writeQuery({
+      query: GET_COFFEES,
+      variables: { coffeePage, cityName: currentCity },
+      data: {
+        getCoffees: {
+          coffees: [data.requestCoffee.coffee].concat(coffees)
+        }
+      }
+    });
   };
 }
 
