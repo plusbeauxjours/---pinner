@@ -101,7 +101,6 @@ interface IState {
   tripPage: number;
   topCountryPage: number;
   frequentVisitPage: number;
-  tripList: any;
   topCountriesList: any;
   frequentVisitsList: any;
   newCardCaption: string;
@@ -158,7 +157,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripPage: 0,
       topCountryPage: 0,
       frequentVisitPage: 0,
-      tripList: null,
       topCountriesList: null,
       frequentVisitsList: null,
       newCardCaption: "",
@@ -208,7 +206,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripPage,
       topCountryPage,
       frequentVisitPage,
-      tripList,
       topCountriesList,
       frequentVisitsList,
       newCardCaption,
@@ -339,9 +336,19 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                               startDate,
                                                               endDate
                                                             }}
-                                                            // onCompleted={
-                                                            //   this.addSelfTrip
-                                                            // }
+                                                            refetchQueries={[
+                                                              {
+                                                                query: GET_TRIPS,
+                                                                variables: {
+                                                                  username,
+                                                                  tripPage
+                                                                }
+                                                              }
+                                                            ]}
+                                                            onCompleted={
+                                                              this
+                                                                .onCompletedAddTrip
+                                                            }
                                                           >
                                                             {addTripFn => {
                                                               this.addTripFn = addTripFn;
@@ -359,13 +366,18 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                     startDate,
                                                                     endDate
                                                                   }}
+                                                                  refetchQueries={[
+                                                                    {
+                                                                      query: GET_TRIPS,
+                                                                      variables: {
+                                                                        username,
+                                                                        tripPage
+                                                                      }
+                                                                    }
+                                                                  ]}
                                                                   onCompleted={
                                                                     this
                                                                       .onCompletedEditTrip
-                                                                  }
-                                                                  update={
-                                                                    this
-                                                                      .updateEditTrip
                                                                   }
                                                                 >
                                                                   {editTripFn => {
@@ -544,9 +556,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                               }
                                                                               knowingFollowersLoading={
                                                                                 knowingFollowersLoading
-                                                                              }
-                                                                              tripList={
-                                                                                tripList
                                                                               }
                                                                               topCountriesList={
                                                                                 topCountriesList
@@ -766,10 +775,18 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       updateQuery: (previousResult, { fetchMoreResult }) => {
         if (!fetchMoreResult) {
           return previousResult;
+        } else {
+          console.log(previousResult);
+          return {
+            getTrips: {
+              ...previousResult.getTrips,
+              footprints: [
+                ...previousResult.getTrips.footprints,
+                ...fetchMoreResult.getTrips.footprints
+              ]
+            }
+          };
         }
-        this.setState({
-          tripList: [...fetchMoreResult.getTrips.footprints]
-        });
       }
     });
   };
@@ -1094,6 +1111,13 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     const endDateMoment = moment(endDate);
     return endDateMoment.diff(startDateMoment, "days");
   };
+  public onCompletedAddTrip = data => {
+    if (data.addTrip.moveNotification) {
+      toast.success("Trip added");
+    } else {
+      toast.error("error");
+    }
+  };
   public onCompletedEditTrip = data => {
     if (data.editTrip.moveNotification) {
       toast.success("Trip updated");
@@ -1120,48 +1144,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       data
     });
   };
-
-  // public addSelfTrip = data => {
-  //   const { tripList } = this.state;
-  //   console.log(data);
-  //   const {
-  //     addTrip: { moveNotification }
-  //   } = data;
-  //   console.log(moveNotification);
-  //   if (moveNotification) {
-  //     this.setState({
-  //       tripList: [
-  //         {
-  //           id: moveNotification.id,
-  //           city: {
-  //             cityName: moveNotification.city.cityName,
-  //             cityPhoto: moveNotification.city.cityPhoto,
-  //             country: {
-  //               countryName: moveNotification.city.country.countryName,
-  //               countryCode: moveNotification.city.country.countryCode
-  //             }
-  //           },
-  //           startDate: moveNotification.startDate,
-  //           endDate: moveNotification.endDate
-  //         },
-  //         ...tripList
-  //       ].sort(this.dateDescending)
-  //     });
-  //   }
-  //   if (data.addTrip.ok) {
-  //     toast.success("Card uploaded");
-  //   } else {
-  //     toast.error("error");
-  //   }
-  // };
-  // public dateDescending = (a, b) => {
-  //   const {
-  //     selfTrips: { startDate }
-  //   } = this.state;
-  //   const dateA = new Date(a[startDate]).getTime();
-  //   const dateB = new Date(b[startDate]).getTime();
-  //   return dateA < dateB ? -1 : 1;
-  // };
 }
 
 export default withRouter(UserProfileContainer);

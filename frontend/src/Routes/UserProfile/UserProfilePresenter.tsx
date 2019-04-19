@@ -401,7 +401,6 @@ interface IProps {
   knowingFollowersData: any;
   knowingFollowersLoading: boolean;
 
-  tripList: any;
   topCountriesList: any;
   frequentVisitsList: any;
 
@@ -518,7 +517,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   } = {},
   knowingFollowersLoading,
 
-  tripList,
   topCountriesList,
   frequentVisitsList,
   modalOpen,
@@ -1053,59 +1051,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                       cityName={trip.city.cityName}
                       startDate={trip.startDate}
                       endDate={trip.endDate}
-                    />
-                  </TripText>
-                </TripRow>
-              ))
-            ) : (
-              <Loader />
-            )}
-            {!getTipsLoading && tripList ? (
-              tripList.map(list => (
-                <TripRow
-                  key={list.id}
-                  onClick={() => {
-                    user.profile.isSelf
-                      ? toggleTripModal(
-                          list.id,
-                          list.city.cityName,
-                          list.city.cityPhoto,
-                          list.city.country.countryName,
-                          list.startDate,
-                          list.endDate
-                        )
-                      : gotoTrip(
-                          list.city.cityName,
-                          list.city.cityPhoto,
-                          list.city.country.countryName,
-                          list.startDate,
-                          list.endDate
-                        );
-                  }}
-                >
-                  <CityPhoto src={list.city.cityPhoto} size={"sm"} />
-                  <TripText>{list.city.cityName}</TripText>
-                  <TripText>
-                    <SFlag
-                      countryCode={list.city.country.countryCode}
-                      size={"sm"}
-                    />
-                    <CountryNameText>
-                      {list.city.country.countryName}
-                    </CountryNameText>
-                  </TripText>
-                  <TripText>{list.startDate}</TripText>
-                  <TripText>{list.endDate}</TripText>
-                  <TripText>
-                    {duration(list.startDate, list.endDate)}
-                    <p> Days</p>
-                  </TripText>
-                  <TripText>
-                    <GetDurationAvatars
-                      page={1}
-                      cityName={list.city.cityName}
-                      startDate={list.startDate}
-                      endDate={list.endDate}
                     />
                   </TripText>
                 </TripRow>
