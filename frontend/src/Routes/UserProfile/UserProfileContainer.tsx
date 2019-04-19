@@ -339,9 +339,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                               startDate,
                                                               endDate
                                                             }}
-                                                            onCompleted={
-                                                              this.addSelfTrip
-                                                            }
+                                                            // onCompleted={
+                                                            //   this.addSelfTrip
+                                                            // }
                                                           >
                                                             {addTripFn => {
                                                               this.addTripFn = addTripFn;
@@ -359,6 +359,14 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                     startDate,
                                                                     endDate
                                                                   }}
+                                                                  onCompleted={
+                                                                    this
+                                                                      .onCompletedEditTrip
+                                                                  }
+                                                                  update={
+                                                                    this
+                                                                      .updateEditTrip
+                                                                  }
                                                                 >
                                                                   {editTripFn => {
                                                                     this.editTripFn = editTripFn;
@@ -1081,52 +1089,79 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       feedData
     });
   };
-  public addSelfTrip = data => {
-    const { tripList } = this.state;
-    console.log(data);
-    const {
-      addTrip: { moveNotification }
-    } = data;
-    console.log(moveNotification);
-    if (moveNotification) {
-      this.setState({
-        tripList: [
-          {
-            id: moveNotification.id,
-            city: {
-              cityName: moveNotification.city.cityName,
-              cityPhoto: moveNotification.city.cityPhoto,
-              country: {
-                countryName: moveNotification.city.country.countryName,
-                countryCode: moveNotification.city.country.countryCode
-              }
-            },
-            startDate: moveNotification.startDate,
-            endDate: moveNotification.endDate
-          },
-          ...tripList
-        ].sort(this.dateDescending)
-      });
-    }
-    if (data.addTrip.ok) {
-      toast.success("Card uploaded");
-    } else {
-      toast.error("error");
-    }
-  };
-  public dateDescending = (a, b) => {
-    const {
-      selfTrips: { startDate }
-    } = this.state;
-    const dateA = new Date(a[startDate]).getTime();
-    const dateB = new Date(b[startDate]).getTime();
-    return dateA < dateB ? -1 : 1;
-  };
   public duration = (startDate, endDate) => {
     const startDateMoment = moment(startDate);
     const endDateMoment = moment(endDate);
     return endDateMoment.diff(startDateMoment, "days");
   };
+  public onCompletedEditTrip = data => {
+    if (data.editTrip.moveNotification) {
+      toast.success("Trip updated");
+    } else {
+      toast.error("error");
+    }
+  };
+  public updateEditTrip = async (cache, { data: { editTrip } }) => {
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    const { tripPage } = this.state;
+    const data = cache.readQuery({
+      query: GET_TRIPS,
+      variables: { username, tripPage }
+    });
+    console.log(data.getTrips.footprints);
+    console.log(editTrip);
+    await cache.writeQuery({
+      query: GET_USER,
+      variables: { username },
+      data
+    });
+  };
+
+  // public addSelfTrip = data => {
+  //   const { tripList } = this.state;
+  //   console.log(data);
+  //   const {
+  //     addTrip: { moveNotification }
+  //   } = data;
+  //   console.log(moveNotification);
+  //   if (moveNotification) {
+  //     this.setState({
+  //       tripList: [
+  //         {
+  //           id: moveNotification.id,
+  //           city: {
+  //             cityName: moveNotification.city.cityName,
+  //             cityPhoto: moveNotification.city.cityPhoto,
+  //             country: {
+  //               countryName: moveNotification.city.country.countryName,
+  //               countryCode: moveNotification.city.country.countryCode
+  //             }
+  //           },
+  //           startDate: moveNotification.startDate,
+  //           endDate: moveNotification.endDate
+  //         },
+  //         ...tripList
+  //       ].sort(this.dateDescending)
+  //     });
+  //   }
+  //   if (data.addTrip.ok) {
+  //     toast.success("Card uploaded");
+  //   } else {
+  //     toast.error("error");
+  //   }
+  // };
+  // public dateDescending = (a, b) => {
+  //   const {
+  //     selfTrips: { startDate }
+  //   } = this.state;
+  //   const dateA = new Date(a[startDate]).getTime();
+  //   const dateB = new Date(b[startDate]).getTime();
+  //   return dateA < dateB ? -1 : 1;
+  // };
 }
 
 export default withRouter(UserProfileContainer);

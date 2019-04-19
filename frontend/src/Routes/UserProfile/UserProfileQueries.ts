@@ -159,15 +159,18 @@ export const EDIT_TRIP = gql`
       endDate: $endDate
     ) {
       moveNotification {
-        startDate
-        endDate
+        id
         city {
           cityName
           cityPhoto
           country {
             countryName
+            countryCode
           }
         }
+        startDate
+        endDate
+        naturalTime
       }
       ok
     }
