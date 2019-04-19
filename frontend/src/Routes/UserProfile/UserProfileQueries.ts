@@ -181,6 +181,7 @@ export const DELETE_TRIP = gql`
   mutation DeleteTrip($moveNotificationId: Int!) {
     deleteTrip(moveNotificationId: $moveNotificationId) {
       ok
+      tripId
     }
   }
 `;

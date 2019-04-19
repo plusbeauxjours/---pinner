@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { DETAIL_CARD_FRAGMENT } from "src/sharedQueries";
+import { CARD_FRAGMENT } from "src/sharedQueries";
 
 export const CONTINENT_PROFILE = gql`
   query ContinentProfile($page: Int, $continentName: String!) {
@@ -21,9 +21,9 @@ export const CONTINENT_PROFILE = gql`
         cardCount
       }
       cards {
-        ...DetailParts
+        ...CardParts
       }
     }
   }
-  ${DETAIL_CARD_FRAGMENT}
+  ${CARD_FRAGMENT}
 `;

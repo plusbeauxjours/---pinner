@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 import {
-  DETAIL_CARD_FRAGMENT,
+  CARD_FRAGMENT,
   CITY_FRAGMENT,
   COUNTRY_FRAGMENT
 } from "src/sharedQueries";
@@ -9,7 +9,7 @@ export const CITY_PROFILE = gql`
   query CityProfile($page: Int!, $cityName: String!) {
     cityProfile(page: $page, cityName: $cityName) {
       cards {
-        ...DetailParts
+        ...CardParts
       }
       usersNow {
         id
@@ -43,7 +43,7 @@ export const CITY_PROFILE = gql`
       }
     }
   }
-  ${DETAIL_CARD_FRAGMENT}
+  ${CARD_FRAGMENT}
 `;
 
 export const NEAR_CITIES = gql`

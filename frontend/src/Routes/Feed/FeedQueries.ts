@@ -90,7 +90,6 @@ export const REQUEST_COFFEE = gql`
           username
           profile {
             avatar
-            isFollowing
           }
         }
         expires
@@ -117,7 +116,6 @@ export const GET_COFFEES = gql`
           username
           profile {
             avatar
-            isFollowing
           }
         }
         expires

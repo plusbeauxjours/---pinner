@@ -20,7 +20,7 @@ const CoffeeBtnPresenter: React.SFC<IProps> = ({
 }) => (
   <>
     {isMatching ? (
-      <SButton size={"xs"} text={"JOIN"} onClick={unMatchFn} />
+      <SButton size={"xs"} text={"UNMATCH"} onClick={unMatchFn} />
     ) : (
       <SButton size={"xs"} text={"JOIN"} onClick={matchFn} />
     )}

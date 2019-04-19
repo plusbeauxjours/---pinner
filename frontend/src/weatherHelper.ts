@@ -5,13 +5,10 @@ import { toast } from "react-toastify";
 export const getAqi = async (lat, lng) => {
   const URL = `https://api.waqi.info/feed/geo:${lat};${lng}/?token=${AQICN_KEY}`;
   const { data } = await axios(URL);
-  console.log(data);
-
   if (data.status === "ok") {
     const {
       data: { aqi }
     } = data;
-    console.log(aqi);
     return aqi;
   } else {
     toast.error(data.error);
@@ -22,14 +19,12 @@ export const getAqi = async (lat, lng) => {
 export const getWeather = async (lat, lng) => {
   const URL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${OPEN_WEATHER_MAP_KEY}`;
   const { data } = await axios(URL);
-  console.log(data);
   if (data) {
     const {
       weather,
       wind: { speed: wind },
       main
     } = data;
-    console.log(wind);
     const icon = weather[0].icon;
     const humidity = main.humidity;
     const temp = main.temp - 273.15;

@@ -136,7 +136,7 @@ class DeleteTrip(graphene.Mutation):
             if moveNotification.actor.id == user.id:
 
                 moveNotification.delete()
-                return types.DeleteTripResponse(ok=True)
+                return types.DeleteTripResponse(ok=True, tripId=moveNotificationId)
 
             else:
                 raise Exception('You need to log in')

@@ -93,4 +93,5 @@ class EditTripResponse(graphene.ObjectType):
 
 
 class DeleteTripResponse(graphene.ObjectType):
+    tripId = graphene.Int()
     ok = graphene.Boolean()

@@ -393,13 +393,13 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                             10
                                                                           )
                                                                         }}
-                                                                        onCompleted={() =>
-                                                                          this.setState(
-                                                                            {
-                                                                              moveNotificationId:
-                                                                                ""
-                                                                            }
-                                                                          )
+                                                                        onCompleted={
+                                                                          this
+                                                                            .onCompletedDeleteTrip
+                                                                        }
+                                                                        update={
+                                                                          this
+                                                                            .updateDeleteTrip
                                                                         }
                                                                       >
                                                                         {deleteTripFn => {
@@ -776,7 +776,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         if (!fetchMoreResult) {
           return previousResult;
         } else {
-          console.log(previousResult);
           return {
             getTrips: {
               ...previousResult.getTrips,
@@ -1045,29 +1044,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       newCardCaption: value
     } as any);
   };
-  public addSelfCard = data => {
-    const { selfCards, newCardCaption } = this.state;
-    console.log(data);
-    const {
-      uploadCard: { card }
-    } = data;
-    console.log(card);
-    if (card) {
-      this.setState({
-        selfCards: [
-          {
-            id: card.id,
-            file: card.file,
-            caption: newCardCaption,
-            likeCount: card.likeCount,
-            commentCount: card.commentCount
-          },
-          ...selfCards
-        ],
-        newCardCaption: ""
-      });
-    }
-  };
   public onCompletedUpload = data => {
     if (data.uploadCard.card) {
       toast.success("Card uploaded");
@@ -1125,7 +1101,14 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       toast.error("error");
     }
   };
-  public updateEditTrip = async (cache, { data: { editTrip } }) => {
+  public onCompletedDeleteTrip = data => {
+    if (data.deleteTrip.ok) {
+      toast.success("Trip deleted");
+    } else {
+      toast.error("error");
+    }
+  };
+  public updateDeleteTrip = (cache, { data: { deleteTrip } }) => {
     const {
       match: {
         params: { username }
@@ -1136,12 +1119,16 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       query: GET_TRIPS,
       variables: { username, tripPage }
     });
+    const newTrip = data.getTrips.footprints.filter(
+      i => parseInt(i.id, 10) !== deleteTrip.tripId
+    );
+    console.log(newTrip);
     console.log(data.getTrips.footprints);
-    console.log(editTrip);
-    await cache.writeQuery({
-      query: GET_USER,
-      variables: { username },
-      data
+    console.log(deleteTrip);
+    cache.writeQuery({
+      query: GET_TRIPS,
+      variables: { username, tripPage },
+      data: { getTrips: { footprints: newTrip } }
     });
   };
 }

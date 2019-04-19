@@ -35,6 +35,7 @@ export const USER_FRAGMENT = gql`
 export const CARD_FRAGMENT = gql`
   fragment CardParts on CardType {
     id
+    file
     caption
     likeCount
     commentCount
