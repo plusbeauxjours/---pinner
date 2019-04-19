@@ -46,7 +46,9 @@ const MatchPresenter: React.SFC<IProps> = ({
   matchData: { getMatches: { matches = null } = {} } = {},
   matchLoading
 }) => {
-  if (matches) {
+  if (matchLoading) {
+    return <Loader />;
+  } else if (!matchLoading && matches) {
     return (
       <>
         <TallWrapper>
@@ -54,11 +56,7 @@ const MatchPresenter: React.SFC<IProps> = ({
             <SBold text={"MATCHES"} />
           </Title>
           <Container>
-            {!matchLoading && matches ? (
-              <MatchGrid matches={matches} />
-            ) : (
-              <Loader />
-            )}
+            <MatchGrid matches={matches} />
           </Container>
           <GreyLine />
         </TallWrapper>

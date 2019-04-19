@@ -336,7 +336,6 @@ export const GET_KNOWING_FOLLOWERS = gql`
 export const UPLOAD_CARD = gql`
   mutation UploadCard($caption: String!) {
     uploadCard(caption: $caption) {
-      ok
       card {
         ...DetailParts
       }

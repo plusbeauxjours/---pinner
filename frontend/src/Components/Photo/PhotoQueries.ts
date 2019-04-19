@@ -22,6 +22,7 @@ export const ADD_COMMENT = gql`
     addComment(cardId: $cardId, message: $message) {
       comment {
         id
+        message
         creator {
           username
         }

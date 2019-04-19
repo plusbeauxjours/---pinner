@@ -220,7 +220,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         variables={{
           caption: newCardCaption
         }}
-        onCompleted={this.addSelfCard}
+        onCompleted={this.onCompletedUpload}
+        update={this.updateUpload}
       >
         {uploadCardFn => {
           this.uploadCardFn = uploadCardFn;
@@ -1040,7 +1041,28 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         newCardCaption: ""
       });
     }
-    if (data.uploadCard.ok) {
+  };
+  public updateUpload = (cache, { data: { uploadCard } }) => {
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    const data = cache.readQuery({
+      query: GET_USER,
+      variables: { username }
+    });
+    console.log(uploadCard.card);
+    console.log(data);
+    data.userProfile.user.cards.unshift(uploadCard.card);
+    cache.writeQuery({
+      query: GET_USER,
+      variables: { username },
+      data
+    });
+  };
+  public onCompletedUpload = data => {
+    if (data.uploadCard.card) {
       toast.success("Card uploaded");
     } else {
       toast.error("error");

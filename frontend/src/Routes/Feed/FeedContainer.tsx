@@ -65,7 +65,6 @@ interface IState {
   coffeeModalOpen: boolean;
   coffeeList: any;
   coffeePage: number;
-  selfCoffees: any;
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
@@ -94,8 +93,7 @@ class FeedContainer extends React.Component<IProps, IState> {
       requestModalOpen: false,
       coffeeModalOpen: false,
       coffeeList: null,
-      coffeePage: 0,
-      selfCoffees: []
+      coffeePage: 0
     };
   }
   public componentDidMount() {
@@ -126,8 +124,7 @@ class FeedContainer extends React.Component<IProps, IState> {
       requestModalOpen,
       coffeeModalOpen,
       coffeeList,
-      coffeePage,
-      selfCoffees
+      coffeePage
     } = this.state;
     return (
       <GetCoffeesQuery
@@ -222,7 +219,6 @@ class FeedContainer extends React.Component<IProps, IState> {
                                     submitCoffee={this.submitCoffee}
                                     currentLat={currentLat}
                                     currentLng={currentLng}
-                                    selfCoffees={selfCoffees}
                                     page={page}
                                   />
                                 );
@@ -386,22 +382,17 @@ class FeedContainer extends React.Component<IProps, IState> {
       toast.error("error");
     }
   };
-  public updateRequestCoffee = (cache, { data }) => {
+  public updateRequestCoffee = (cache, { data: { requestCoffee } }) => {
     const { coffeePage, currentCity } = this.state;
-    const {
-      getCoffees: { coffees }
-    } = cache.readQuery({
+    const data = cache.readQuery({
       query: GET_COFFEES,
       variables: { coffeePage, cityName: currentCity }
     });
+    data.getCoffees.coffees.unshift(requestCoffee.coffee);
     cache.writeQuery({
       query: GET_COFFEES,
       variables: { coffeePage, cityName: currentCity },
-      data: {
-        getCoffees: {
-          coffees: [data.requestCoffee.coffee].concat(coffees)
-        }
-      }
+      data
     });
   };
 }

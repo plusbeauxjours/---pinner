@@ -95,6 +95,7 @@ export const DETAIL_CARD_FRAGMENT = gql`
       creator {
         username
       }
+      __typename
     }
     creator {
       id

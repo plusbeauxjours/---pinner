@@ -251,7 +251,6 @@ interface IProps {
   submitCoffee: any;
   currentLat: number;
   currentLng: number;
-  selfCoffees: any;
   page: number;
 }
 
@@ -286,7 +285,6 @@ const FeedPresenter: React.SFC<IProps> = ({
   submitCoffee,
   currentLat,
   currentLng,
-  selfCoffees,
   currentCity,
   page
 }) => {
@@ -477,7 +475,6 @@ const FeedPresenter: React.SFC<IProps> = ({
               <Icon onClick={toggleRequestModal}>
                 <Upload />
               </Icon>
-              {selfCoffees && <CoffeeGrid coffees={selfCoffees} />}
               {!coffeeLoading && coffees ? (
                 <CoffeeGrid coffees={coffees} />
               ) : (
