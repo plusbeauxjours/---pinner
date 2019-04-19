@@ -23,6 +23,7 @@ import { FOLLOW_USER } from "../FollowBtn/FollowBtnQueries";
 import Me from "../Me";
 // import { GET_CARD } from "../../../../frontend/src/Routes/CardDetail/CardDetailQueries";
 import { GET_FEED } from "../../../../frontend/src/Routes/Feed/FeedQueries";
+import { toast } from "react-toastify";
 
 class AddCommentMutation extends Mutation<AddComment, AddCommentVariables> {}
 class DeleteCommentMutation extends Mutation<
@@ -58,8 +59,9 @@ interface IState {
   userId: string;
   cardId: string;
   commentId: string;
-  modalOpen: boolean;
-  modalMenuOpen: boolean;
+  deleteCommentModalOpen: boolean;
+  cardMenuModalOpen: boolean;
+  deleteCardModalOpen: boolean;
   newComment: string;
   selfComments: any;
   openedComment: boolean;
@@ -67,8 +69,6 @@ interface IState {
   isSelf: boolean;
   isLiked: boolean;
   isFollowing: boolean;
-  currentCity: string;
-  page: number;
 }
 
 class PhotoContainer extends React.Component<IProps, IState> {
@@ -82,17 +82,16 @@ class PhotoContainer extends React.Component<IProps, IState> {
       userId: props.creatorId,
       cardId: props.id,
       commentId: null,
-      modalOpen: false,
-      modalMenuOpen: false,
+      deleteCommentModalOpen: false,
+      cardMenuModalOpen: false,
+      deleteCardModalOpen: false,
       newComment: "",
       openedComment: false,
       selfComments: [],
       likeCount: props.likeCount,
       isSelf: props.isSelf,
       isLiked: props.isLiked,
-      isFollowing: props.isFollowing,
-      currentCity: props.currentCity,
-      page: props.page
+      isFollowing: props.isFollowing
     };
   }
   public render() {
@@ -112,8 +111,9 @@ class PhotoContainer extends React.Component<IProps, IState> {
       userId,
       cardId,
       commentId,
-      modalOpen,
-      modalMenuOpen,
+      deleteCommentModalOpen,
+      cardMenuModalOpen,
+      deleteCardModalOpen,
       newComment,
       openedComment,
       selfComments,
@@ -139,7 +139,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
                   mutation={FOLLOW_USER}
                   variables={{ userId: parseInt(userId, 10) }}
                   onCompleted={() =>
-                    this.setState({ modalMenuOpen: !modalMenuOpen })
+                    this.setState({ cardMenuModalOpen: !cardMenuModalOpen })
                   }
                 >
                   {followUserFn => (
@@ -165,9 +165,10 @@ class PhotoContainer extends React.Component<IProps, IState> {
                                   variables={{ cardId: parseInt(cardId, 10) }}
                                   onCompleted={() =>
                                     this.setState({
-                                      modalMenuOpen: !modalMenuOpen
+                                      cardMenuModalOpen: !cardMenuModalOpen
                                     })
                                   }
+                                  update={this.updateDeleteCard}
                                 >
                                   {deleteCardFn => {
                                     this.deleteCardFn = deleteCardFn;
@@ -195,10 +196,22 @@ class PhotoContainer extends React.Component<IProps, IState> {
                                         openedComment={openedComment}
                                         onKeyUp={this.onKeyUp}
                                         onSubmit={this.onSubmit}
-                                        modalOpen={modalOpen}
-                                        modalMenuOpen={modalMenuOpen}
-                                        toggleModal={this.toggleModal}
-                                        toggleMenuModal={this.toggleMenuModal}
+                                        deleteCommentModalOpen={
+                                          deleteCommentModalOpen
+                                        }
+                                        cardMenuModalOpen={cardMenuModalOpen}
+                                        deleteCardModalOpen={
+                                          deleteCardModalOpen
+                                        }
+                                        toggleDeleteCommentModal={
+                                          this.toggleDeleteCommentModal
+                                        }
+                                        toggleCardMenuModal={
+                                          this.toggleCardMenuModal
+                                        }
+                                        toggleDeleteCardModal={
+                                          this.toggleDeleteCardModal
+                                        }
                                         getCommentId={this.getCommentId}
                                         isFollowing={isFollowing}
                                         isSelf={isSelf}
@@ -290,33 +303,37 @@ class PhotoContainer extends React.Component<IProps, IState> {
       });
     }
   };
-  public toggleModal = () => {
-    this.setState(state => {
-      return {
-        modalOpen: !state.modalOpen
-      };
+  public toggleDeleteCommentModal = () => {
+    const { deleteCommentModalOpen } = this.state;
+    this.setState({
+      deleteCommentModalOpen: !deleteCommentModalOpen
     });
   };
-  public toggleMenuModal = () => {
-    this.setState(state => {
-      return {
-        modalMenuOpen: !state.modalMenuOpen
-      };
+  public toggleCardMenuModal = () => {
+    const { cardMenuModalOpen } = this.state;
+    this.setState({
+      cardMenuModalOpen: !cardMenuModalOpen
+    });
+  };
+  public toggleDeleteCardModal = () => {
+    const { deleteCardModalOpen } = this.state;
+    this.setState({
+      deleteCardModalOpen: !deleteCardModalOpen
     });
     {
       console.log(this.state);
     }
   };
   public getCommentId = commentId => {
-    const { modalOpen } = this.state;
+    const { deleteCommentModalOpen } = this.state;
     this.setState({
-      modalOpen: !modalOpen,
+      deleteCommentModalOpen: !deleteCommentModalOpen,
       commentId
     } as any);
   };
   public onSubmit = () => {
     const { id: cardId } = this.props;
-    const { commentId, modalOpen } = this.state;
+    const { commentId, deleteCommentModalOpen } = this.state;
     this.deleteCommentFn({
       variables: {
         cardId,
@@ -324,52 +341,45 @@ class PhotoContainer extends React.Component<IProps, IState> {
       }
     });
     this.setState({
-      modalOpen: !modalOpen,
+      deleteCommentModalOpen: !deleteCommentModalOpen,
       commentId: null
     });
   };
-
-  public deleteCardHandler = (cache, { data: payload }) => {
-    const { currentCity, page } = this.state;
-    const {
-      feed: { cards }
-    } = cache.readQuery({
-      query: GET_FEED,
-      variables: { page, cityName: currentCity }
-    });
-
-    console.log(cards);
-    const result = cards.filter(element => {
-      const elementId = element._id;
-      const {
-        deleteCard: { cardId }
-      } = payload;
-
-      return elementId !== cardId;
-    });
-    try {
-      cache.writeQuery({
-        query: GET_FEED,
-        data: result,
-        variables: { page, cityName: currentCity }
-      });
-    } catch (err) {
-      console.log(err);
+  public onCompletedDeleteCard = data => {
+    const { deleteCardModalOpen } = this.state;
+    if (data.requestCoffee.coffee) {
+      toast.success("Card deleted");
+    } else {
+      toast.error("error");
     }
-    // console.log(cards);
-    // console.log(cards[0]);
-
-    // const {
-    //   feed: { cards }
-    // } = cache.readQuery({
-    //   query: GET_FEED,
-    //   variables: { page, cityName: currentCity }
-    // });
-
-    // console.log(cache.data.data);
-    // Object.keys(cache.data.data).forEach(
-    //   key => key.match(cardId) && cache.data.delete(key)
-    // );
+    this.setState({
+      deleteCardModalOpen: !deleteCardModalOpen
+    });
+  };
+  public updateDeleteCard = (cache, { data: { deleteCard } }) => {
+    const { page, currentCity } = this.props;
+    const data = cache.readQuery({
+      query: GET_FEED,
+      variables: { cityName: currentCity, page }
+    });
+    const newCard = data.feed.cards.filter(
+      i => parseInt(i.id, 10) !== deleteCard.cardId
+    );
+    console.log(newCard);
+    console.log(deleteCard);
+    cache.writeQuery({
+      query: GET_FEED,
+      variables: { cityName: currentCity, page },
+      data: {
+        feed: {
+          usersNow: data.feed.usersNow,
+          usersBefore: data.feed.usersBefore,
+          city: data.feed.city,
+          cards: newCard,
+          __typename: "FeedResponse"
+        }
+      }
+    });
   };
 }
 

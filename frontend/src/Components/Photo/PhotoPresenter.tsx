@@ -181,15 +181,18 @@ interface IProps {
   toggleCommentClick: () => void;
   onKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onSubmit: any;
-  modalMenuOpen: boolean;
-  modalOpen: boolean;
-  toggleModal: () => void;
-  toggleMenuModal: () => void;
+  deleteCommentModalOpen: boolean;
+  cardMenuModalOpen: boolean;
+  deleteCardModalOpen: boolean;
+
   getCommentId: any;
   isFollowing: boolean;
   isSelf: boolean;
   followUserFn: MutationFn;
   deleteCardFn: MutationFn;
+  toggleDeleteCommentModal: () => void;
+  toggleCardMenuModal: () => void;
+  toggleDeleteCardModal: () => void;
 }
 
 const PhotoPresenter: React.SFC<IProps> = ({
@@ -212,10 +215,12 @@ const PhotoPresenter: React.SFC<IProps> = ({
   toggleCommentClick,
   onKeyUp,
   onSubmit,
-  modalOpen,
-  modalMenuOpen,
-  toggleModal,
-  toggleMenuModal,
+  deleteCommentModalOpen,
+  cardMenuModalOpen,
+  deleteCardModalOpen,
+  toggleDeleteCommentModal,
+  toggleCardMenuModal,
+  toggleDeleteCardModal,
   getCommentId,
   isFollowing,
   isSelf,
@@ -225,18 +230,18 @@ const PhotoPresenter: React.SFC<IProps> = ({
   if (inline) {
     return (
       <>
-        {modalOpen && (
+        {deleteCommentModalOpen && (
           <ModalContainer>
-            <ModalOverlay onClick={toggleModal} />
+            <ModalOverlay onClick={toggleDeleteCommentModal} />
             <Modal>
               <ModalLink onClick={onSubmit}>Delete Comment</ModalLink>
-              <ModalLink onClick={toggleModal}>Cancel</ModalLink>
+              <ModalLink onClick={toggleDeleteCommentModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>
         )}
-        {modalMenuOpen && (
+        {cardMenuModalOpen && (
           <ModalContainer>
-            <ModalOverlay onClick={toggleMenuModal} />
+            <ModalOverlay onClick={toggleCardMenuModal} />
             <Modal>
               <ModalLink onClick={() => console.log("ho?")}>
                 Report Card
@@ -245,11 +250,20 @@ const PhotoPresenter: React.SFC<IProps> = ({
                 {isFollowing ? "Unfollow" : "Follow"}
               </ModalLink>
               {isSelf && (
-                <ModalLink onClick={() => deleteCardFn()}>
+                <ModalLink onClick={toggleDeleteCardModal}>
                   Delete Card
                 </ModalLink>
               )}
-              <ModalLink onClick={toggleMenuModal}>Cancel</ModalLink>
+              <ModalLink onClick={toggleCardMenuModal}>Cancel</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
+        {deleteCardModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleDeleteCardModal} />
+            <Modal>
+              <ModalLink onClick={() => deleteCardFn()}>Delete Card</ModalLink>
+              <ModalLink onClick={toggleDeleteCardModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -262,7 +276,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
               currentCountry={country}
               size={"sm"}
             />
-            <Icon onClick={toggleMenuModal}>
+            <Icon onClick={toggleCardMenuModal}>
               <List />
             </Icon>
           </PhotoHeader>
@@ -320,18 +334,18 @@ const PhotoPresenter: React.SFC<IProps> = ({
   } else {
     return (
       <>
-        {modalOpen && (
+        {deleteCommentModalOpen && (
           <ModalContainer>
-            <ModalOverlay onClick={toggleModal} />
+            <ModalOverlay onClick={toggleDeleteCommentModal} />
             <Modal>
               <ModalLink onClick={onSubmit}>Delete Comment</ModalLink>
-              <ModalLink onClick={toggleModal}>Cancel</ModalLink>
+              <ModalLink onClick={toggleDeleteCommentModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>
         )}
-                {modalMenuOpen && (
+        {cardMenuModalOpen && (
           <ModalContainer>
-            <ModalOverlay onClick={toggleMenuModal} />
+            <ModalOverlay onClick={toggleCardMenuModal} />
             <Modal>
               <ModalLink onClick={() => console.log("ho?")}>
                 Report Card
@@ -344,7 +358,16 @@ const PhotoPresenter: React.SFC<IProps> = ({
                   Delete Card
                 </ModalLink>
               )}
-              <ModalLink onClick={toggleMenuModal}>Cancel</ModalLink>
+              <ModalLink onClick={toggleCardMenuModal}>Cancel</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
+        {deleteCardModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleDeleteCardModal} />
+            <Modal>
+              <ModalLink onClick={onSubmit}>Delete Comment</ModalLink>
+              <ModalLink onClick={toggleDeleteCardModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -358,7 +381,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                 currentCity={city}
                 currentCountry={country}
               />
-              <Icon onClick={toggleMenuModal}>
+              <Icon onClick={toggleCardMenuModal}>
                 <List />
               </Icon>
             </PhotoHeader>
