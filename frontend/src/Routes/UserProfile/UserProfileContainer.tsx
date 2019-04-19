@@ -1075,7 +1075,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       toast.error("error");
     }
   };
-  public updateUpload = async (cache, { data: { uploadCard } }) => {
+  public updateUpload = (cache, { data: { uploadCard } }) => {
     const cityName = localStorage.getItem("cityName");
     const {
       match: {
@@ -1095,12 +1095,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     console.log(feedData);
     userData.userProfile.user.cards.unshift(uploadCard.card);
     feedData.feed.cards.unshift(uploadCard.card);
-    await cache.writeQuery({
+    cache.writeQuery({
       query: GET_USER,
       variables: { username },
       userData
     });
-    await cache.writeQuery({
+    cache.writeQuery({
       query: GET_FEED,
       variables: { page: 0, cityName },
       feedData
