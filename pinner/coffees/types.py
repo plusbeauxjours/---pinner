@@ -15,6 +15,7 @@ class MatchType(DjangoObjectType):
     natural_time = graphene.String(source='natural_time')
     is_host = graphene.Boolean()
     is_guest = graphene.Boolean()
+    is_matching = graphene.Boolean()
 
     def resolve_is_host(self, info):
         user = info.context.user
@@ -26,6 +27,13 @@ class MatchType(DjangoObjectType):
     def resolve_is_guest(self, info):
         user = info.context.user
         if self in user.guest.all():
+            return True
+        else:
+            return False
+
+    def resolve_is_matching(self, info):
+        user = info.context.user
+        if self in user.host.all() or user.guest.all():
             return True
         else:
             return False

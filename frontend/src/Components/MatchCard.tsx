@@ -2,6 +2,7 @@ import React from "react";
 import styled from "src/Styles/typed-components";
 import Avatar from "./Avatar";
 import Bold from "./Bold";
+import CoffeeBtn from "src/Components/CoffeeBtn";
 
 const Container = styled.div`
   display: flex;
@@ -42,6 +43,9 @@ interface IProps {
   currentCity: string;
   currentCountry: string;
   expires: string;
+  isMatching: boolean;
+  isGuest: boolean;
+  isHost: boolean;
 }
 
 const MatchCard: React.SFC<IProps> = ({
@@ -50,17 +54,27 @@ const MatchCard: React.SFC<IProps> = ({
   username,
   currentCity,
   currentCountry,
-  expires
+  expires,
+  isMatching,
+  isGuest,
+  isHost
 }) => {
   return (
     <>
       <Container>
-        <SAvatar url={avatar} size="md" />
+        <SAvatar url={avatar} size="sm" />
         <SBold text={username} />
         <Location>
           {currentCity}, {currentCountry}
         </Location>
         <Location>{expires}</Location>
+        <Location>{isMatching}</Location>
+        {isGuest ? (
+          <Location>YOU ARE GUEST</Location>
+        ) : (
+          <Location>YOU ARE HOST</Location>
+        )}
+        {isMatching ? <CoffeeBtn isMatching={isMatching} matchId={id} /> : null}
       </Container>
     </>
   );

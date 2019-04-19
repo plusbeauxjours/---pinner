@@ -1,15 +1,24 @@
 import React from "react";
 import { Mutation } from "react-apollo";
-import { Match, MatchVariables } from "../../types/api";
-import { MATCH } from "./CoffeeBtnQueries";
+import {
+  Match,
+  MatchVariables,
+  UnMatch,
+  UnMatchVariables
+} from "../../types/api";
+import { MATCH, UNMATCH } from "./CoffeeBtnQueries";
 import CoffeeBtnPresenter from "./CoffeeBtnPresenter";
 import { toast } from "react-toastify";
 import { GET_MATCHES } from "../../Routes/Match/MatchQueries";
 
 class MatchMutation extends Mutation<Match, MatchVariables> {}
 
+class UnMatchMutation extends Mutation<UnMatch, UnMatchVariables> {}
+
 interface IProps {
-  coffeeId: number;
+  coffeeId?: string;
+  matchId?: string;
+  isMatching: boolean;
 }
 
 interface IState {
@@ -18,6 +27,7 @@ interface IState {
 
 class CoffeeBtnContainer extends React.Component<IProps, IState> {
   public matchFn;
+  public unMatchFn;
   constructor(props) {
     super(props);
     this.state = {
@@ -25,21 +35,37 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
     };
   }
   public render() {
-    const { coffeeId } = this.props;
-
+    const { coffeeId, matchId } = this.props;
+    const { isMatching } = this.state;
     return (
-      <MatchMutation
-        mutation={MATCH}
-        variables={{ coffeeId }}
-        onCompleted={this.handleCoffeeRequest}
-        update={this.updateMatch}
+      <UnMatchMutation
+        mutation={UNMATCH}
+        variables={{ matchId: parseInt(matchId, 10) }}
+        onCompleted={this.onCompletedUnMatch}
       >
-        {matchFn => {
-          this.matchFn = matchFn;
-
-          return <CoffeeBtnPresenter matchFn={matchFn} />;
+        {unMatchFn => {
+          this.unMatchFn = unMatchFn;
+          return (
+            <MatchMutation
+              mutation={MATCH}
+              variables={{ coffeeId: parseInt(coffeeId, 10) }}
+              onCompleted={this.onCompletedMatch}
+              update={this.updateMatch}
+            >
+              {matchFn => {
+                this.matchFn = matchFn;
+                return (
+                  <CoffeeBtnPresenter
+                    isMatching={isMatching}
+                    unMatchFn={unMatchFn}
+                    matchFn={matchFn}
+                  />
+                );
+              }}
+            </MatchMutation>
+          );
         }}
-      </MatchMutation>
+      </UnMatchMutation>
     );
   }
   public updateMatch = async (cache, { data: { match } }) => {
@@ -54,10 +80,18 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
       data
     });
   };
-  public handleCoffeeRequest = data => {
+  public onCompletedMatch = data => {
     const { match } = data;
     if (match.ok) {
       toast.success("Match accepted, say hello");
+    } else {
+      toast.error("error");
+    }
+  };
+  public onCompletedUnMatch = data => {
+    const { unMatch } = data;
+    if (unMatch.ok) {
+      toast.success("UnMatch accepted, say bye");
     } else {
       toast.error("error");
     }

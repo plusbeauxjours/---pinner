@@ -17,6 +17,9 @@ export const GET_MATCHES = gql`
           ...UserParts
         }
         status
+        isHost
+        isGuest
+        isMatching
       }
     }
   }

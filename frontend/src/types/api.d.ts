@@ -7,9 +7,94 @@
 // GraphQL mutation operation: Match
 // ====================================================
 
+export interface Match_match_match_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface Match_match_match_city {
+  __typename: "CityType";
+  id: string;
+  lat: number | null;
+  lng: number | null;
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: Match_match_match_city_country;
+}
+
+export interface Match_match_match_host_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface Match_match_match_host_profile_currentCity {
+  __typename: "CityType";
+  country: Match_match_match_host_profile_currentCity_country;
+  cityName: string | null;
+}
+
+export interface Match_match_match_host_profile {
+  __typename: "ProfileType";
+  isFollowing: boolean | null;
+  avatar: string;
+  currentCity: Match_match_match_host_profile_currentCity | null;
+}
+
+export interface Match_match_match_host {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: Match_match_match_host_profile | null;
+}
+
+export interface Match_match_match_guest_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface Match_match_match_guest_profile_currentCity {
+  __typename: "CityType";
+  country: Match_match_match_guest_profile_currentCity_country;
+  cityName: string | null;
+}
+
+export interface Match_match_match_guest_profile {
+  __typename: "ProfileType";
+  isFollowing: boolean | null;
+  avatar: string;
+  currentCity: Match_match_match_guest_profile_currentCity | null;
+}
+
+export interface Match_match_match_guest {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: Match_match_match_guest_profile | null;
+}
+
+export interface Match_match_match {
+  __typename: "MatchType";
+  id: string;
+  naturalTime: string | null;
+  city: Match_match_match_city | null;
+  host: Match_match_match_host | null;
+  guest: Match_match_match_guest | null;
+  status: MatchStatus;
+  isHost: boolean | null;
+  isGuest: boolean | null;
+  isMatching: boolean | null;
+}
+
 export interface Match_match {
   __typename: "MatchResponse";
   ok: boolean | null;
+  match: Match_match_match | null;
 }
 
 export interface Match {
@@ -146,6 +231,7 @@ export interface AddComment_addComment_comment_creator {
 export interface AddComment_addComment_comment {
   __typename: "CommentType";
   id: string;
+  message: string;
   creator: AddComment_addComment_comment_creator | null;
 }
 
@@ -1330,6 +1416,9 @@ export interface GetMatches_getMatches_matches {
   host: GetMatches_getMatches_matches_host | null;
   guest: GetMatches_getMatches_matches_guest | null;
   status: MatchStatus;
+  isHost: boolean | null;
+  isGuest: boolean | null;
+  isMatching: boolean | null;
 }
 
 export interface GetMatches_getMatches {
@@ -2216,6 +2305,7 @@ export interface AddTripVariables {
 export interface EditTrip_editTrip_moveNotification_city_country {
   __typename: "CountryType";
   countryName: string | null;
+  countryCode: string | null;
 }
 
 export interface EditTrip_editTrip_moveNotification_city {
@@ -2227,9 +2317,11 @@ export interface EditTrip_editTrip_moveNotification_city {
 
 export interface EditTrip_editTrip_moveNotification {
   __typename: "MoveNotificationType";
+  id: string;
+  city: EditTrip_editTrip_moveNotification_city | null;
   startDate: any | null;
   endDate: any | null;
-  city: EditTrip_editTrip_moveNotification_city | null;
+  naturalTime: string | null;
 }
 
 export interface EditTrip_editTrip {
@@ -2675,7 +2767,6 @@ export interface UploadCard_uploadCard_card {
 
 export interface UploadCard_uploadCard {
   __typename: "UploadCardResponse";
-  ok: boolean | null;
   card: UploadCard_uploadCard_card | null;
 }
 
@@ -2933,6 +3024,14 @@ export interface DetailParts {
 /**
  * An enumeration.
  */
+export enum MatchStatus {
+  CANCELED = "CANCELED",
+  ONGOING = "ONGOING",
+}
+
+/**
+ * An enumeration.
+ */
 export enum CoffeeStatus {
   CANCELED = "CANCELED",
   EXPIRED = "EXPIRED",
@@ -2947,14 +3046,6 @@ export enum CoffeeTarget {
   FOLLOWERS = "FOLLOWERS",
   GENDER = "GENDER",
   NATIONALITY = "NATIONALITY",
-}
-
-/**
- * An enumeration.
- */
-export enum MatchStatus {
-  CANCELED = "CANCELED",
-  ONGOING = "ONGOING",
 }
 
 /**
