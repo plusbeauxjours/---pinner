@@ -41,6 +41,7 @@ import { withRouter, RouteComponentProps } from "react-router";
 import { LOG_USER_OUT } from "src/sharedQueries.local";
 import { toast } from "react-toastify";
 import { UPLOAD_CARD } from "./UserProfileQueries";
+import { GET_FEED } from "../Feed/FeedQueries";
 
 class UserProfileQuery extends Query<UserProfile, UserProfileVariables> {}
 class TopCountriesQuery extends Query<TopCountries, TopCountriesVariables> {}
@@ -1042,31 +1043,43 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       });
     }
   };
-  public updateUpload = (cache, { data: { uploadCard } }) => {
-    const {
-      match: {
-        params: { username }
-      }
-    } = this.props;
-    const data = cache.readQuery({
-      query: GET_USER,
-      variables: { username }
-    });
-    console.log(uploadCard.card);
-    console.log(data);
-    data.userProfile.user.cards.unshift(uploadCard.card);
-    cache.writeQuery({
-      query: GET_USER,
-      variables: { username },
-      data
-    });
-  };
   public onCompletedUpload = data => {
     if (data.uploadCard.card) {
       toast.success("Card uploaded");
     } else {
       toast.error("error");
     }
+  };
+  public updateUpload = async (cache, { data: { uploadCard } }) => {
+    const cityName = localStorage.getItem("cityName");
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    console.log(cityName);
+    const userData = cache.readQuery({
+      query: GET_USER,
+      variables: { username }
+    });
+    const feedData = cache.readQuery({
+      query: GET_FEED,
+      variables: { page: 0, cityName }
+    });
+    console.log(uploadCard.card);
+    console.log(feedData);
+    userData.userProfile.user.cards.unshift(uploadCard.card);
+    feedData.feed.cards.unshift(uploadCard.card);
+    await cache.writeQuery({
+      query: GET_USER,
+      variables: { username },
+      userData
+    });
+    await cache.writeQuery({
+      query: GET_FEED,
+      variables: { page: 0, cityName },
+      feedData
+    });
   };
   public addSelfTrip = data => {
     const { tripList } = this.state;

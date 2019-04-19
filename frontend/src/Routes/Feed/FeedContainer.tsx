@@ -282,6 +282,7 @@ class FeedContainer extends React.Component<IProps, IState> {
       currentContinent,
       continentPhotoURL
     });
+    localStorage.setItem("cityName", currentCity);
     this.ReportLocationFn({
       variables: {
         currentLat: lat,
@@ -376,20 +377,20 @@ class FeedContainer extends React.Component<IProps, IState> {
     } as any);
   };
   public onCompletedRequestCoffee = data => {
-    if (data.requestCoffee.ok) {
+    if (data.requestCoffee.coffee) {
       toast.success("Coffee requested, finding a guest");
     } else {
       toast.error("error");
     }
   };
-  public updateRequestCoffee = (cache, { data: { requestCoffee } }) => {
+  public updateRequestCoffee = async (cache, { data: { requestCoffee } }) => {
     const { coffeePage, currentCity } = this.state;
     const data = cache.readQuery({
       query: GET_COFFEES,
       variables: { coffeePage, cityName: currentCity }
     });
     data.getCoffees.coffees.unshift(requestCoffee.coffee);
-    cache.writeQuery({
+    await cache.writeQuery({
       query: GET_COFFEES,
       variables: { coffeePage, cityName: currentCity },
       data
