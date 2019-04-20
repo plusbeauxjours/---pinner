@@ -32,6 +32,7 @@ export const UNMATCH = gql`
   mutation UnMatch($matchId: Int!) {
     unMatch(matchId: $matchId) {
       ok
+      matchId
     }
   }
 `;

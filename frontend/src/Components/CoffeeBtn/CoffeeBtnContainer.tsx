@@ -42,6 +42,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
         mutation={UNMATCH}
         variables={{ matchId: parseInt(matchId, 10) }}
         onCompleted={this.onCompletedUnMatch}
+        update={this.updateUnMatch}
       >
         {unMatchFn => {
           this.unMatchFn = unMatchFn;
@@ -68,6 +69,14 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
       </UnMatchMutation>
     );
   }
+  public onCompletedMatch = data => {
+    const { match } = data;
+    if (match.ok) {
+      toast.success("Match accepted, say hello");
+    } else {
+      toast.error("error");
+    }
+  };
   public updateMatch = async (cache, { data: { match } }) => {
     const data = cache.readQuery({
       query: GET_MATCHES,
@@ -80,14 +89,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
       data
     });
   };
-  public onCompletedMatch = data => {
-    const { match } = data;
-    if (match.ok) {
-      toast.success("Match accepted, say hello");
-    } else {
-      toast.error("error");
-    }
-  };
+
   public onCompletedUnMatch = data => {
     const { unMatch } = data;
     if (unMatch.ok) {
@@ -95,6 +97,26 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
     } else {
       toast.error("error");
     }
+  };
+  public updateUnMatch = async (cache, { data: { unMatch } }) => {
+    const data = cache.readQuery({
+      query: GET_MATCHES,
+      variables: { matchPage: 0 }
+    });
+    const newCard = data.getMatches.matches.filter(
+      i => parseInt(i.id, 10) !== unMatch.matchId
+    );
+    console.log(newCard);
+    cache.writeQuery({
+      query: GET_MATCHES,
+      variables: { matchPage: 0 },
+      data: {
+        getMatches: {
+          matches: newCard,
+          __typename: "GetMatchesResponse"
+        }
+      }
+    });
   };
 }
 

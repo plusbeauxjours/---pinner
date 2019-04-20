@@ -97,15 +97,15 @@ class UnMatch(graphene.Mutation):
             try:
                 match = models.Match.objects.get(id=matchId)
             except models.Match.DoesNotExist:
-                return types.UnMatchResponse(ok=False)
+                return types.UnMatchResponse(ok=False, matchId=None)
 
             if match.host.id == user.id or match.guest.id == user.id:
                 match.delete()
-                return types.UnMatchResponse(ok=True)
+                return types.UnMatchResponse(ok=True, matchId=matchId)
 
             else:
 
-                return types.UnMatchResponse(ok=False)
+                return types.UnMatchResponse(ok=False, matchId=None)
 
         else:
-            return types.UnMatchResponse(ok=False)
+            return types.UnMatchResponse(ok=False, matchId=None)

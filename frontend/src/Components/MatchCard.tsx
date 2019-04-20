@@ -38,8 +38,8 @@ const Location = styled.span`
 
 interface IProps {
   id: string;
-  avatar?: string;
-  username: string;
+  host: any;
+  guest: any;
   currentCity: string;
   currentCountry: string;
   expires: string;
@@ -50,8 +50,8 @@ interface IProps {
 
 const MatchCard: React.SFC<IProps> = ({
   id,
-  avatar,
-  username,
+  host,
+  guest,
   currentCity,
   currentCountry,
   expires,
@@ -62,17 +62,28 @@ const MatchCard: React.SFC<IProps> = ({
   return (
     <>
       <Container>
-        <SAvatar url={avatar} size="sm" />
-        <SBold text={username} />
-        <Location>
-          {currentCity}, {currentCountry}
-        </Location>
-        <Location>{expires}</Location>
-        <Location>{isMatching}</Location>
         {isGuest ? (
-          <Location>YOU ARE GUEST</Location>
+          <>
+            <SAvatar url={host.profile.avatar} size="sm" />
+            <SBold text={host.username} />
+            <Location>
+              {currentCity}, {currentCountry}
+            </Location>
+            <Location>{expires}</Location>
+            <Location>{isMatching}</Location>
+            <Location>YOU ARE GUEST</Location>
+          </>
         ) : (
-          <Location>YOU ARE HOST</Location>
+          <>
+            <SAvatar url={guest.profile.avatar} size="sm" />
+            <SBold text={guest.username} />
+            <Location>
+              {currentCity}, {currentCountry}
+            </Location>
+            <Location>{expires}</Location>
+            <Location>{isMatching}</Location>
+            <Location>YOU ARE HOST</Location>
+          </>
         )}
         {isMatching ? <CoffeeBtn isMatching={isMatching} matchId={id} /> : null}
       </Container>

@@ -14,8 +14,8 @@ const MatchGrid: React.SFC<IProps> = ({ matches }) => {
         <MatchCard
           key={match.id}
           id={match.id}
-          avatar={match.host.profile.avatar}
-          username={match.host.username}
+          host={match.host}
+          guest={match.guest}
           currentCity={match.city.cityName}
           currentCountry={match.city.country.countryName}
           expires={match.naturalTime}
