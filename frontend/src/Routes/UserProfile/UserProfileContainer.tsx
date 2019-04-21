@@ -1291,27 +1291,41 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       toast.error("error");
     }
   };
-  public updateRequestCoffee = async (cache, { data: { requestCoffee } }) => {
-    // const {
-    //   match: {
-    //     params: { username }
-    //   }
-    // } = this.props;
-    const data = cache.readQuery({
+  public updateRequestCoffee = (cache, { data: { requestCoffee } }) => {
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    const feedData = cache.readQuery({
       query: GET_COFFEES,
       variables: {
         coffeePage: 0,
         cityName: localStorage.getItem("cityName")
       }
     });
-    data.getCoffees.coffees.unshift(requestCoffee.coffee);
-    await cache.writeQuery({
+    feedData.getCoffees.coffees.unshift(requestCoffee.coffee);
+    cache.writeQuery({
       query: GET_COFFEES,
       variables: {
         coffeePage: 0,
         cityName: localStorage.getItem("cityName")
       },
-      data
+      data: feedData
+    });
+    const profileData = cache.readQuery({
+      query: GET_MY_COFFEE,
+      variables: {
+        username
+      }
+    });
+    profileData.getMyCoffee.coffees.unshift(requestCoffee.coffee);
+    cache.writeQuery({
+      query: GET_MY_COFFEE,
+      variables: {
+        username
+      },
+      data: profileData
     });
   };
 }
