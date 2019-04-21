@@ -26,6 +26,7 @@ import GetDurationAvatars from "src/Components/GetDurationAvatars";
 import Flag from "src/Components/Flag";
 import GetKnowingFollowers from "src/Components/GetKnowingFollowers";
 import Weather from "src/Components/Weather";
+import CoffeeGrid from "src/Components/CoffeeGrid";
 
 const PHeader = styled.header`
   display: flex;
@@ -381,6 +382,28 @@ const STextArea = styled(Textarea)`
   padding: 15px 0px;
 `;
 
+const Box = styled.div`
+  width: 905px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  ::-webkit-scrollbar {
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: ${props => props.theme.bgColor};
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    background-color: ${props => props.theme.greyColor};
+  }
+`;
+
 interface ITheme {
   size?: string;
 }
@@ -400,6 +423,9 @@ interface IProps {
 
   knowingFollowersData: any;
   knowingFollowersLoading: boolean;
+
+  myCoffeeData?: any;
+  myCoffeeLoading: boolean;
 
   topCountriesList: any;
   frequentVisitsList: any;
@@ -516,6 +542,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
     } = {}
   } = {},
   knowingFollowersLoading,
+
+  myCoffeeData: { getMyCoffee: { coffees = null } = {} } = {},
+  myCoffeeLoading,
 
   topCountriesList,
   frequentVisitsList,
@@ -1000,6 +1029,22 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           {/* 
           ////////////// TRIPS //////////////
           */}
+          <Title>
+            <SBold text={"NEED SOME COFFEE"} />
+            {/* <SeeAll onClick={toggleCoffeeSeeAll}>SEE ALL</SeeAll> */}
+          </Title>
+          <Container>
+            <Box>
+              {/* <Icon onClick={toggleRequestModal}>
+                <Upload />
+              </Icon> */}
+              {!myCoffeeLoading && coffees ? (
+                <CoffeeGrid coffees={coffees} />
+              ) : (
+                <Loader />
+              )}
+            </Box>
+          </Container>
           <Title>
             <SBold text={"TRIP LOG"} />
             <SeeAll onClick={toggleTripSeeAll}>SEE ALL</SeeAll>

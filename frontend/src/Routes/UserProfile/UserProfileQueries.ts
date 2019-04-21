@@ -348,6 +348,32 @@ export const UPLOAD_CARD = gql`
   ${DETAIL_CARD_FRAGMENT}
 `;
 
+export const GET_MY_COFFEE = gql`
+  query GetMyCoffee($username: String!) {
+    getMyCoffee(username: $username) {
+      coffees {
+        id
+        city {
+          cityName
+          country {
+            countryName
+          }
+        }
+        host {
+          username
+          profile {
+            avatar
+          }
+        }
+        expires
+        status
+        target
+        naturalTime
+      }
+    }
+  }
+`;
+
 export const DELETE_COFFEE = gql`
   mutation DeleteCoffee($coffeeId: Int!) {
     deleteCoffee(coffeeId: $coffeeId) {

@@ -2646,6 +2646,63 @@ export interface UploadCardVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetMyCoffee
+// ====================================================
+
+export interface GetMyCoffee_getMyCoffee_coffees_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetMyCoffee_getMyCoffee_coffees_city {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetMyCoffee_getMyCoffee_coffees_city_country;
+}
+
+export interface GetMyCoffee_getMyCoffee_coffees_host_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface GetMyCoffee_getMyCoffee_coffees_host {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: GetMyCoffee_getMyCoffee_coffees_host_profile | null;
+}
+
+export interface GetMyCoffee_getMyCoffee_coffees {
+  __typename: "CoffeeType";
+  id: string;
+  city: GetMyCoffee_getMyCoffee_coffees_city;
+  host: GetMyCoffee_getMyCoffee_coffees_host;
+  expires: any | null;
+  status: CoffeeStatus;
+  target: CoffeeTarget;
+  naturalTime: string | null;
+}
+
+export interface GetMyCoffee_getMyCoffee {
+  __typename: "GetMyCoffeeResponse";
+  coffees: (GetMyCoffee_getMyCoffee_coffees | null)[] | null;
+}
+
+export interface GetMyCoffee {
+  getMyCoffee: GetMyCoffee_getMyCoffee;
+}
+
+export interface GetMyCoffeeVariables {
+  username: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: DeleteCoffee
 // ====================================================
 
