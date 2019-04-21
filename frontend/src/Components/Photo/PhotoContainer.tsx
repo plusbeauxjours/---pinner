@@ -370,7 +370,10 @@ class PhotoContainer extends React.Component<IProps, IState> {
     );
     cache.writeQuery({
       query: GET_FEED,
-      variables: { cityName: currentCity, page },
+      variables: {
+        cityName: currentCity || localStorage.getItem("cityName"),
+        page: page || 0
+      },
       data: feedData
     });
 
@@ -384,7 +387,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
     userData.userProfile.user.cards = userData.userProfile.user.cards.filter(
       i => parseInt(i.id, 10) !== deleteCard.cardId
     );
-    console.log(userData.userData.user.cards);
     cache.writeQuery({
       query: GET_USER,
       username: creatorUsername,

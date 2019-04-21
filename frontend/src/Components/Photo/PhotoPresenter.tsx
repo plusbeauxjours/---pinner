@@ -354,7 +354,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                 {isFollowing ? "Unfollow" : "Follow"}
               </ModalLink>
               {isSelf && (
-                <ModalLink onClick={() => deleteCardFn()}>
+                <ModalLink onClick={toggleDeleteCardModal}>
                   Delete Card
                 </ModalLink>
               )}
@@ -366,7 +366,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleDeleteCardModal} />
             <Modal>
-              <ModalLink onClick={onSubmit}>Delete Comment</ModalLink>
+              <ModalLink onClick={() => deleteCardFn()}>Delete Card</ModalLink>
               <ModalLink onClick={toggleDeleteCardModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>
