@@ -14,6 +14,7 @@ def resolve_get_coffees(self, info, **kwargs):
     city = location_models.City.objects.get(city_name=cityName)
     profile = user.profile
     followings = profile.followed_by.all()
+    matches = user.host.all()
 
     everyone = city.coffee.filter(status='requesting', target='everyone')
     nationality = city.coffee.filter(status='requesting', target='nationality',

@@ -69,6 +69,7 @@ const MatchCard: React.SFC<IProps> = ({
             <Location>
               {currentCity}, {currentCountry}
             </Location>
+            <Location>{id}</Location>
             <Location>{expires}</Location>
             <Location>{isMatching}</Location>
             <Location>YOU ARE GUEST</Location>
@@ -80,6 +81,7 @@ const MatchCard: React.SFC<IProps> = ({
             <Location>
               {currentCity}, {currentCountry}
             </Location>
+            <Location>{id}</Location>
             <Location>{expires}</Location>
             <Location>{isMatching}</Location>
             <Location>YOU ARE HOST</Location>

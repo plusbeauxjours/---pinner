@@ -45,6 +45,38 @@ class RequestCoffee(graphene.Mutation):
             raise Exception("Can't create a coffee")
 
 
+class DeleteCoffee(graphene.Mutation):
+
+    class Arguments:
+        coffeeId = graphene.Int(required=True)
+
+    Output = types.DeleteCoffeeResponse
+
+    @login_required
+    def mutate(self, info, **kwargs):
+
+        user = info.context.user
+        coffeeId = kwargs.get('coffeeId')
+
+        if user.is_authenticated:
+
+            try:
+                coffee = models.Coffee.objects.get(id=coffeeId)
+            except models.Coffee.DoesNotExist:
+                return types.DeleteCoffeeResponse(ok=False, coffeeId=None)
+
+            if coffee.host.id == user.id:
+
+                coffee.delete()
+                return types.DeleteCoffeeResponse(ok=True, coffeeId=coffeeId)
+
+            else:
+                return types.DeleteCoffeeResponse(ok=False, coffeeId=None)
+
+        else:
+            return types.DeleteCoffeeResponse(ok=False, coffeeId=None)
+
+
 class Match(graphene.Mutation):
 
     class Arguments:
