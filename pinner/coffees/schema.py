@@ -13,6 +13,14 @@ class Query(object):
             'coffeePage': graphene.Int()
         }
     )
+    get_my_coffee = graphene.Field(
+        types.GetMyCoffeeResponse,
+        resolver=queries.resolve_get_my_coffee,
+        required=True,
+        args={
+            'username': graphene.String(required=True)
+        }
+    )
     coffee_detail = graphene.Field(
         types.CoffeeDetailResponse,
         resolver=queries.resolve_coffee_detail,

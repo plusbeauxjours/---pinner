@@ -1,5 +1,6 @@
 from django.db import IntegrityError
 from . import types, models
+from django.contrib.auth.models import User
 from graphql_jwt.decorators import login_required
 from locations import models as location_models
 
@@ -30,6 +31,29 @@ def resolve_get_coffees(self, info, **kwargs):
             '-created_at')[6:]
 
     return types.GetCoffeesResponse(coffees=combined)
+
+
+@login_required
+def resolve_get_my_coffee(self, info, **kwargs):
+
+    username = kwargs.get('username')
+    user = info.context.user
+
+    if user.is_authenticated:
+
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return types.GetMyCoffeeResponse(coffees=None)
+
+        try:
+            coffees = models.Coffee.objects.filter(host=user)
+            return types.GetMyCoffeeResponse(coffees=coffees)
+        except models.Coffee.DoesNotExist:
+            return types.GetMyCoffeeResponse(coffees=None)
+
+    else:
+        return types.GetMyCoffeeResponse(coffees=None)
 
 
 @login_required
