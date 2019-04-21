@@ -10,12 +10,13 @@ import { MATCH, UNMATCH } from "./CoffeeBtnQueries";
 import CoffeeBtnPresenter from "./CoffeeBtnPresenter";
 import { toast } from "react-toastify";
 import { GET_MATCHES } from "../../Routes/Match/MatchQueries";
+import { RouteComponentProps, withRouter } from "react-router";
 
 class MatchMutation extends Mutation<Match, MatchVariables> {}
 
 class UnMatchMutation extends Mutation<UnMatch, UnMatchVariables> {}
 
-interface IProps {
+interface IProps extends RouteComponentProps {
   coffeeId?: string;
   matchId?: string;
   isMatching: boolean;
@@ -76,6 +77,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
     } else {
       toast.error("error");
     }
+    this.props.history.goBack();
   };
   public updateMatch = async (cache, { data: { match } }) => {
     const data = cache.readQuery({
@@ -120,4 +122,4 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
   };
 }
 
-export default CoffeeBtnContainer;
+export default withRouter(CoffeeBtnContainer);

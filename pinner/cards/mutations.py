@@ -116,10 +116,10 @@ class DeleteComment(graphene.Mutation):
 
                 if comment.creator.id == user.id or card.creator.id == user.id:
                     comment.delete()
-                    return types.DeleteCommentResponse(ok=True, cardId=None, commentId=None)
+                    return types.DeleteCommentResponse(ok=True, cardId=cardId, commentId=commentId)
 
                 else:
-                    return types.DeleteCommentResponse(ok=False, cardId=cardId, commentId=commentId)
+                    return types.DeleteCommentResponse(ok=False, cardId=None, commentId=None)
 
             except models.Comment.DoesNotExist:
                 return types.DeleteCommentResponse(ok=False, cardId=None, commentId=None)

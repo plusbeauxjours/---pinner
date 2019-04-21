@@ -150,6 +150,8 @@ class PhotoContainer extends React.Component<IProps, IState> {
                         cardId: parseInt(cardId, 10),
                         commentId: parseInt(commentId, 10)
                       }}
+                      onCompleted={this.onCompletedDeleteComment}
+                      update={this.updateDeleteComment}
                     >
                       {deleteCommentFn => {
                         this.deleteCommentFn = deleteCommentFn;
@@ -164,11 +166,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
                                 <DeleteCardMutation
                                   mutation={DELETE_CARD}
                                   variables={{ cardId: parseInt(cardId, 10) }}
-                                  onCompleted={() =>
-                                    this.setState({
-                                      cardMenuModalOpen: !cardMenuModalOpen
-                                    })
-                                  }
+                                  onCompleted={this.onCompletedDeleteCard}
                                   update={this.updateDeleteCard}
                                 >
                                   {deleteCardFn => {
@@ -334,7 +332,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
   };
   public onSubmit = () => {
     const { id: cardId } = this.props;
-    const { commentId, deleteCommentModalOpen } = this.state;
+    const { commentId } = this.state;
     this.deleteCommentFn({
       variables: {
         cardId,
@@ -342,13 +340,12 @@ class PhotoContainer extends React.Component<IProps, IState> {
       }
     });
     this.setState({
-      deleteCommentModalOpen: !deleteCommentModalOpen,
       commentId: null
     });
   };
   public onCompletedDeleteCard = data => {
     const { deleteCardModalOpen } = this.state;
-    if (data.requestCoffee.coffee) {
+    if (data.deleteCard.ok) {
       toast.success("Card deleted");
     } else {
       toast.error("error");
@@ -356,7 +353,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
     this.setState({
       deleteCardModalOpen: !deleteCardModalOpen
     });
-    this.props.history.goBack();
   };
   public updateDeleteCard = (cache, { data: { deleteCard } }) => {
     const { page, currentCity } = this.props;
@@ -367,23 +363,49 @@ class PhotoContainer extends React.Component<IProps, IState> {
         page: page || 0
       }
     });
-    const newCard = data.feed.cards.filter(
+    data.feed.cards = data.feed.cards.filter(
       i => parseInt(i.id, 10) !== deleteCard.cardId
     );
-    console.log(newCard);
-    console.log(deleteCard);
     cache.writeQuery({
       query: GET_FEED,
       variables: { cityName: currentCity, page },
-      data: {
-        feed: {
-          usersNow: data.feed.usersNow,
-          usersBefore: data.feed.usersBefore,
-          city: data.feed.city,
-          cards: newCard,
-          __typename: "FeedResponse"
-        }
+      data
+    });
+  };
+  public onCompletedDeleteComment = data => {
+    const { deleteCommentModalOpen } = this.state;
+    if (data.deleteComment.ok) {
+      toast.success("Comment deleted");
+    } else {
+      toast.error("error");
+    }
+    this.setState({
+      deleteCommentModalOpen: !deleteCommentModalOpen
+    });
+  };
+  public updateDeleteComment = (cache, { data: { deleteComment } }) => {
+    const { page, currentCity } = this.props;
+    const data = cache.readQuery({
+      query: GET_FEED,
+      variables: {
+        cityName: currentCity || localStorage.getItem("cityName"),
+        page: page || 0
       }
+    });
+    const { cardId, commentId } = deleteComment;
+    const card = data.feed.cards.find(
+      i => parseInt(i.id, 10) === parseInt(cardId, 10)
+    );
+    card.comments = card.comments.filter(
+      i => parseInt(i.id, 10) !== parseInt(commentId, 10)
+    );
+    cache.writeQuery({
+      query: GET_FEED,
+      variables: {
+        cityName: currentCity || localStorage.getItem("cityName"),
+        page: page || 0
+      },
+      data
     });
   };
 }
