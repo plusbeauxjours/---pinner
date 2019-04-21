@@ -141,8 +141,7 @@ class FeedContainer extends React.Component<IProps, IState> {
             <RequestCoffeeMutation
               mutation={REQUEST_COFFEE}
               variables={{
-                currentCity,
-                currentCountry
+                currentCity
               }}
               onCompleted={this.onCompletedRequestCoffee}
               update={this.updateRequestCoffee}

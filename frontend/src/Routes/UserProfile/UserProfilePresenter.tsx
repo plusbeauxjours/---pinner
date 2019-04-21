@@ -446,6 +446,7 @@ interface IProps {
   followingsModalOpen: boolean;
   knowingFollowersModalOpen: boolean;
   uploadModalOpen: boolean;
+  requestModalOpen: boolean;
 
   editMode: boolean;
   openEditMode: () => void;
@@ -489,6 +490,7 @@ interface IProps {
   toggleFollowingsModal: () => void;
   toggleKnowingFollowersModal: () => void;
   toggleUploadModal: () => void;
+  toggleRequestModal: () => void;
 
   logUserOutFn: () => void;
 
@@ -504,6 +506,7 @@ interface IProps {
     tripEndDate: moment.Moment | null
   ) => void;
 
+  submitCoffee: any;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onKeyUpCard: (event: React.KeyboardEvent<HTMLDivElement>) => void;
@@ -563,6 +566,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   followingsModalOpen,
   knowingFollowersModalOpen,
   uploadModalOpen,
+  requestModalOpen,
   editMode,
   toggleTripSeeAll,
   toggleTopCountriesSeeAll,
@@ -582,6 +586,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleFollowingsModal,
   toggleKnowingFollowersModal,
   toggleUploadModal,
+  toggleRequestModal,
   openEditMode,
   logUserOutFn,
   confirmDeleteProfile,
@@ -611,13 +616,34 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   selfCards,
   selfTrips,
   uploadNewCard,
-  duration
+  duration,
+  submitCoffee
 }) => {
   if (userProfileLoading) {
     return <Loader />;
   } else if (user && topCountries && frequentCities) {
     return (
       <>
+        {requestModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleRequestModal} />
+            <Modal>
+              <ModalLink onClick={() => submitCoffee("everyone")}>
+                EVERYONE
+              </ModalLink>
+              <ModalLink onClick={() => submitCoffee("nationality")}>
+                NATIONALITY
+              </ModalLink>
+              <ModalLink onClick={() => submitCoffee("gender")}>
+                GENDER
+              </ModalLink>
+              <ModalLink onClick={() => submitCoffee("followers")}>
+                FOLLOWERS
+              </ModalLink>
+              <ModalLink onClick={toggleRequestModal}>Cancel</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
         {uploadModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleUploadModal} />
@@ -1035,9 +1061,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           </Title>
           <Container>
             <Box>
-              {/* <Icon onClick={toggleRequestModal}>
+              <Icon onClick={toggleRequestModal}>
                 <Upload />
-              </Icon> */}
+              </Icon>
               {!myCoffeeLoading && coffees ? (
                 <CoffeeGrid coffees={coffees} />
               ) : (

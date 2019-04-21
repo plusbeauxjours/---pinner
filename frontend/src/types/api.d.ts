@@ -1096,7 +1096,6 @@ export interface RequestCoffee {
 
 export interface RequestCoffeeVariables {
   currentCity: string;
-  currentCountry: string;
   target?: string | null;
 }
 

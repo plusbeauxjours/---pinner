@@ -67,16 +67,8 @@ export const RECOMMAND_USERS = gql`
 `;
 
 export const REQUEST_COFFEE = gql`
-  mutation RequestCoffee(
-    $currentCity: String!
-    $currentCountry: String!
-    $target: String
-  ) {
-    requestCoffee(
-      currentCity: $currentCity
-      currentCountry: $currentCountry
-      target: $target
-    ) {
+  mutation RequestCoffee($currentCity: String!, $target: String) {
+    requestCoffee(currentCity: $currentCity, target: $target) {
       ok
       coffee {
         id
