@@ -1050,6 +1050,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } else {
       toast.error("error");
     }
+    this.setState({
+      newCardCaption: ""
+    });
   };
   public updateUpload = (cache, { data: { uploadCard } }) => {
     const cityName = localStorage.getItem("cityName");

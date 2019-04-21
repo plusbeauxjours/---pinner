@@ -26,6 +26,7 @@ export const ADD_COMMENT = gql`
         creator {
           username
         }
+        naturalTime
       }
     }
   }

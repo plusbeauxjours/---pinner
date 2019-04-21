@@ -64,7 +64,7 @@ const CardDetailPresenter: React.SFC<IProps> = ({
         <Modal>
           <Wrapper>
             <Photo
-              id={card.id}
+              cardId={card.id}
               inline={false}
               creatorId={card.creator.id}
               creatorAvatar={card.creator.profile.avatar}

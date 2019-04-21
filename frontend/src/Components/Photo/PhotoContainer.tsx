@@ -49,7 +49,7 @@ interface IProps extends RouteComponentProps {
   naturalTime: string;
   comments: any;
   isLiked: boolean;
-  id: string;
+  cardId: string;
   creatorId?: string;
   isFollowing?: boolean;
   isSelf?: boolean;
@@ -82,7 +82,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       userId: props.creatorId,
-      cardId: props.id,
+      cardId: props.cardId,
       commentId: null,
       deleteCommentModalOpen: false,
       cardMenuModalOpen: false,
@@ -132,7 +132,8 @@ class PhotoContainer extends React.Component<IProps, IState> {
           <AddCommentMutation
             mutation={ADD_COMMENT}
             variables={{ cardId: parseInt(cardId, 10), message: newComment }}
-            onCompleted={this.addSelfComment}
+            onCompleted={this.onCompletedAddComment}
+            update={this.updateAddComment}
           >
             {addCommentFn => {
               this.addCommentFn = addCommentFn;
@@ -283,25 +284,39 @@ class PhotoContainer extends React.Component<IProps, IState> {
       };
     });
   };
-  public addSelfComment = data => {
-    const { selfComments, newComment } = this.state;
-    const {
-      addComment: { comment }
-    } = data;
-    console.log(comment);
-    if (comment) {
-      this.setState({
-        selfComments: [
-          ...selfComments,
-          {
-            id: comment.id,
-            username: comment.creator.username,
-            message: newComment
-          }
-        ],
-        newComment: ""
-      });
+  public onCompletedAddComment = data => {
+    if (data.addComment.comment) {
+      toast.success("Comment added");
+    } else {
+      toast.error("error");
     }
+    this.setState({
+      newComment: ""
+    });
+  };
+  public updateAddComment = (cache, { data: { addComment } }) => {
+    const { cardId } = this.state;
+    const { page, currentCity } = this.props;
+    const data = cache.readQuery({
+      query: GET_FEED,
+      variables: {
+        cityName: currentCity || localStorage.getItem("cityName"),
+        page: page || 0
+      }
+    });
+    console.log(cardId);
+    const card = data.feed.cards.find(
+      i => parseInt(i.id, 10) === parseInt(cardId, 10)
+    );
+    card.comments.unshift(addComment.comment);
+    cache.writeQuery({
+      query: GET_FEED,
+      variables: {
+        cityName: currentCity || localStorage.getItem("cityName"),
+        page: page || 0
+      },
+      data
+    });
   };
   public toggleDeleteCommentModal = () => {
     const { deleteCommentModalOpen } = this.state;
@@ -320,9 +335,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
     this.setState({
       deleteCardModalOpen: !deleteCardModalOpen
     });
-    {
-      console.log(this.state);
-    }
   };
   public getCommentId = commentId => {
     const { deleteCommentModalOpen } = this.state;
@@ -332,7 +344,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
     } as any);
   };
   public onSubmit = () => {
-    const { id: cardId } = this.props;
+    const { cardId } = this.props;
     const { commentId } = this.state;
     this.deleteCommentFn({
       variables: {

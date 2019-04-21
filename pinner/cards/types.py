@@ -33,6 +33,7 @@ class LikeType(DjangoObjectType):
 
 
 class CommentType(DjangoObjectType):
+    natural_time = graphene.String(source="natural_time")
 
     class Meta:
         model = models.Comment

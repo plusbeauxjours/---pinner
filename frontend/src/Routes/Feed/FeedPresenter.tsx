@@ -487,7 +487,7 @@ const FeedPresenter: React.SFC<IProps> = ({
             cards.map(card => (
               <Photo
                 key={card.id}
-                id={card.id}
+                cardId={card.id}
                 inline={true}
                 creatorId={card.creator.id}
                 creatorAvatar={card.creator.profile.avatar}

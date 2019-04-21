@@ -96,6 +96,7 @@ export const DETAIL_CARD_FRAGMENT = gql`
       creator {
         username
       }
+      naturalTime
     }
     creator {
       id
