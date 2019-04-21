@@ -25,6 +25,7 @@ import Me from "../Me";
 import { GET_FEED } from "../../../../frontend/src/Routes/Feed/FeedQueries";
 import { toast } from "react-toastify";
 import { withRouter, RouteComponentProps } from "react-router";
+import { GET_USER } from "../../Routes/UserProfile/UserProfileQueries";
 
 class AddCommentMutation extends Mutation<AddComment, AddCommentVariables> {}
 class DeleteCommentMutation extends Mutation<
@@ -355,23 +356,42 @@ class PhotoContainer extends React.Component<IProps, IState> {
     });
   };
   public updateDeleteCard = (cache, { data: { deleteCard } }) => {
-    const { page, currentCity } = this.props;
-    const data = cache.readQuery({
+    const { page, currentCity, creatorUsername } = this.props;
+    const feedData = cache.readQuery({
       query: GET_FEED,
       variables: {
         cityName: currentCity || localStorage.getItem("cityName"),
         page: page || 0
       }
     });
-    data.feed.cards = data.feed.cards.filter(
+
+    feedData.feed.cards = feedData.feed.cards.filter(
       i => parseInt(i.id, 10) !== deleteCard.cardId
     );
     cache.writeQuery({
       query: GET_FEED,
       variables: { cityName: currentCity, page },
-      data
+      data: feedData
+    });
+
+    const userData = cache.readQuery({
+      query: GET_USER,
+      variables: {
+        username: creatorUsername
+      }
+    });
+
+    userData.userProfile.user.cards = userData.userProfile.user.cards.filter(
+      i => parseInt(i.id, 10) !== deleteCard.cardId
+    );
+    console.log(userData.userData.user.cards);
+    cache.writeQuery({
+      query: GET_USER,
+      username: creatorUsername,
+      data: userData
     });
   };
+
   public onCompletedDeleteComment = data => {
     const { deleteCommentModalOpen } = this.state;
     if (data.deleteComment.ok) {

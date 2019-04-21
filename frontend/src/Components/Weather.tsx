@@ -52,7 +52,6 @@ class Weather extends React.Component<IProps, IState> {
   public componentDidMount() {
     const { lat, lng } = this.state;
     this.getWeather(lat, lng);
-    console.log(this.state);
   }
   public render() {
     const { aqi, icon, humidity, temp, chill } = this.state;
@@ -76,7 +75,6 @@ class Weather extends React.Component<IProps, IState> {
     const aqi = await getAqi(lat, lng);
     const { icon, humidity, temp, chill } = await getWeather(lat, lng);
     this.setState({ aqi, icon, humidity, temp, chill });
-    console.log(this.state);
   };
 }
 

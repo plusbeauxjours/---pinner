@@ -275,7 +275,6 @@ class FeedContainer extends React.Component<IProps, IState> {
     const countryPhotoURL = await countryThumbnail(currentCountry);
     const currentContinent = await continents[currentCountryCode];
     const continentPhotoURL = await continentThumbnail(currentContinent);
-    console.log(currentContinent);
     this.setState({
       cityPhotoURL,
       countryPhotoURL,
@@ -296,7 +295,6 @@ class FeedContainer extends React.Component<IProps, IState> {
         continentPhotoURL
       }
     });
-    console.log(this.state);
   };
   public handleGeoError = () => {
     console.log("No location");
