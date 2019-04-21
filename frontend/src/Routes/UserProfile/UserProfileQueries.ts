@@ -347,3 +347,12 @@ export const UPLOAD_CARD = gql`
   }
   ${DETAIL_CARD_FRAGMENT}
 `;
+
+export const DELETE_COFFEE = gql`
+  mutation DeleteCoffee($coffeeId: Int!) {
+    deleteCoffee(coffeeId: $coffeeId) {
+      ok
+      coffeeId
+    }
+  }
+`;

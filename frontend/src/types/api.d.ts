@@ -116,6 +116,7 @@ export interface MatchVariables {
 export interface UnMatch_unMatch {
   __typename: "UnMatchResponse";
   ok: boolean | null;
+  matchId: number | null;
 }
 
 export interface UnMatch {
@@ -233,6 +234,7 @@ export interface AddComment_addComment_comment {
   id: string;
   message: string;
   creator: AddComment_addComment_comment_creator | null;
+  naturalTime: string | null;
 }
 
 export interface AddComment_addComment {
@@ -356,6 +358,7 @@ export interface CardDetail_cardDetail_card_comments {
   id: string;
   message: string;
   creator: CardDetail_cardDetail_card_comments_creator | null;
+  naturalTime: string | null;
 }
 
 export interface CardDetail_cardDetail_card_creator_profile {
@@ -411,61 +414,13 @@ export interface CardDetailVariables {
 // GraphQL query operation: CityProfile
 // ====================================================
 
-export interface CityProfile_cityProfile_cards_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface CityProfile_cityProfile_cards_city {
-  __typename: "CityType";
-  cityName: string | null;
-}
-
-export interface CityProfile_cityProfile_cards_comments_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-}
-
-export interface CityProfile_cityProfile_cards_comments {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-  creator: CityProfile_cityProfile_cards_comments_creator | null;
-}
-
-export interface CityProfile_cityProfile_cards_creator_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  isFollowing: boolean | null;
-  isSelf: boolean | null;
-}
-
-export interface CityProfile_cityProfile_cards_creator {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: CityProfile_cityProfile_cards_creator_profile | null;
-}
-
 export interface CityProfile_cityProfile_cards {
   __typename: "CardType";
   id: string;
   file: string | null;
   caption: string;
-  country: CityProfile_cityProfile_cards_country | null;
-  city: CityProfile_cityProfile_cards_city | null;
   likeCount: number | null;
   commentCount: number | null;
-  isLiked: boolean | null;
-  naturalTime: string | null;
-  comments: (CityProfile_cityProfile_cards_comments | null)[] | null;
-  creator: CityProfile_cityProfile_cards_creator;
 }
 
 export interface CityProfile_cityProfile_usersNow_profile {
@@ -712,61 +667,13 @@ export interface ContinentProfile_continentProfile_countries {
   cardCount: number | null;
 }
 
-export interface ContinentProfile_continentProfile_cards_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface ContinentProfile_continentProfile_cards_city {
-  __typename: "CityType";
-  cityName: string | null;
-}
-
-export interface ContinentProfile_continentProfile_cards_comments_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-}
-
-export interface ContinentProfile_continentProfile_cards_comments {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-  creator: ContinentProfile_continentProfile_cards_comments_creator | null;
-}
-
-export interface ContinentProfile_continentProfile_cards_creator_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  isFollowing: boolean | null;
-  isSelf: boolean | null;
-}
-
-export interface ContinentProfile_continentProfile_cards_creator {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: ContinentProfile_continentProfile_cards_creator_profile | null;
-}
-
 export interface ContinentProfile_continentProfile_cards {
   __typename: "CardType";
   id: string;
   file: string | null;
   caption: string;
-  country: ContinentProfile_continentProfile_cards_country | null;
-  city: ContinentProfile_continentProfile_cards_city | null;
   likeCount: number | null;
   commentCount: number | null;
-  isLiked: boolean | null;
-  naturalTime: string | null;
-  comments: (ContinentProfile_continentProfile_cards_comments | null)[] | null;
-  creator: ContinentProfile_continentProfile_cards_creator;
 }
 
 export interface ContinentProfile_continentProfile {
@@ -859,61 +766,13 @@ export interface CountryProfile_countryProfile_cities {
   country: CountryProfile_countryProfile_cities_country;
 }
 
-export interface CountryProfile_countryProfile_cards_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface CountryProfile_countryProfile_cards_city {
-  __typename: "CityType";
-  cityName: string | null;
-}
-
-export interface CountryProfile_countryProfile_cards_comments_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-}
-
-export interface CountryProfile_countryProfile_cards_comments {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-  creator: CountryProfile_countryProfile_cards_comments_creator | null;
-}
-
-export interface CountryProfile_countryProfile_cards_creator_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  isFollowing: boolean | null;
-  isSelf: boolean | null;
-}
-
-export interface CountryProfile_countryProfile_cards_creator {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: CountryProfile_countryProfile_cards_creator_profile | null;
-}
-
 export interface CountryProfile_countryProfile_cards {
   __typename: "CardType";
   id: string;
   file: string | null;
   caption: string;
-  country: CountryProfile_countryProfile_cards_country | null;
-  city: CountryProfile_countryProfile_cards_city | null;
   likeCount: number | null;
   commentCount: number | null;
-  isLiked: boolean | null;
-  naturalTime: string | null;
-  comments: (CountryProfile_countryProfile_cards_comments | null)[] | null;
-  creator: CountryProfile_countryProfile_cards_creator;
 }
 
 export interface CountryProfile_countryProfile {
@@ -1001,6 +860,7 @@ export interface Feed_feed_cards_comments {
   id: string;
   message: string;
   creator: Feed_feed_cards_comments_creator | null;
+  naturalTime: string | null;
 }
 
 export interface Feed_feed_cards_creator_profile {
@@ -1202,7 +1062,6 @@ export interface RequestCoffee_requestCoffee_coffee_city {
 export interface RequestCoffee_requestCoffee_coffee_host_profile {
   __typename: "ProfileType";
   avatar: string;
-  isFollowing: boolean | null;
 }
 
 export interface RequestCoffee_requestCoffee_coffee_host {
@@ -1263,7 +1122,6 @@ export interface GetCoffees_getCoffees_coffees_city {
 export interface GetCoffees_getCoffees_coffees_host_profile {
   __typename: "ProfileType";
   avatar: string;
-  isFollowing: boolean | null;
 }
 
 export interface GetCoffees_getCoffees_coffees_host {
@@ -1792,6 +1650,7 @@ export interface SearchTerms_searchUsers {
 export interface SearchTerms_searchCards_cards {
   __typename: "CardType";
   id: string;
+  file: string | null;
   caption: string;
   likeCount: number | null;
   commentCount: number | null;
@@ -1962,6 +1821,7 @@ export interface GetDurationAvatarsVariables {
 export interface GetDurationCards_getDurationCards_cards {
   __typename: "CardType";
   id: string;
+  file: string | null;
   caption: string;
   likeCount: number | null;
   commentCount: number | null;
@@ -2112,6 +1972,7 @@ export interface UserProfile_userProfile_user_profile {
 export interface UserProfile_userProfile_user_cards {
   __typename: "CardType";
   id: string;
+  file: string | null;
   caption: string;
   likeCount: number | null;
   commentCount: number | null;
@@ -2352,6 +2213,7 @@ export interface EditTripVariables {
 export interface DeleteTrip_deleteTrip {
   __typename: "DeleteTripResponse";
   ok: boolean | null;
+  tripId: number | null;
 }
 
 export interface DeleteTrip {
@@ -2731,6 +2593,7 @@ export interface UploadCard_uploadCard_card_comments {
   id: string;
   message: string;
   creator: UploadCard_uploadCard_card_comments_creator | null;
+  naturalTime: string | null;
 }
 
 export interface UploadCard_uploadCard_card_creator_profile {
@@ -2776,6 +2639,28 @@ export interface UploadCard {
 
 export interface UploadCardVariables {
   caption: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: DeleteCoffee
+// ====================================================
+
+export interface DeleteCoffee_deleteCoffee {
+  __typename: "DeleteCoffeeResponse";
+  ok: boolean | null;
+  coffeeId: number | null;
+}
+
+export interface DeleteCoffee {
+  deleteCoffee: DeleteCoffee_deleteCoffee;
+}
+
+export interface DeleteCoffeeVariables {
+  coffeeId: number;
 }
 
 
@@ -2884,6 +2769,7 @@ export interface UserParts {
 export interface CardParts {
   __typename: "CardType";
   id: string;
+  file: string | null;
   caption: string;
   likeCount: number | null;
   commentCount: number | null;
@@ -2980,6 +2866,7 @@ export interface DetailParts_comments {
   id: string;
   message: string;
   creator: DetailParts_comments_creator | null;
+  naturalTime: string | null;
 }
 
 export interface DetailParts_creator_profile {
