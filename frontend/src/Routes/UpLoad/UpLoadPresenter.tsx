@@ -73,7 +73,7 @@ const UpLoadPresenter: React.SFC<IProps> = ({
           <Modal>
             <Wrapper>
               <STextArea
-                placeholder="Add a comment..."
+                placeholder="Add a caption..."
                 onChange={uploadNewCard}
                 value={caption}
                 onKeyUp={onKeyUp}

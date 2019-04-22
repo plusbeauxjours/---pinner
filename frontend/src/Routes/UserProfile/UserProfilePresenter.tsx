@@ -404,6 +404,26 @@ const Box = styled.div`
   }
 `;
 
+const UploadIcon = styled.div`
+  width: 200px;
+  height: 200px;
+  display: flex;
+  position: relative;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0 15px 15px 0;
+  svg {
+    fill: white;
+    transition: fill 0.2s ease-in-out;
+  }
+  &:hover {
+    svg {
+      fill: grey;
+    }
+  }
+`;
+
 interface ITheme {
   size?: string;
 }
@@ -512,8 +532,6 @@ interface IProps {
   onKeyUpCard: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 
   uploadNewCard: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  selfCards: any;
-  selfTrips: any;
   newCardCaption: string;
   duration: (
     startDate: moment.Moment | null,
@@ -613,8 +631,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   onFocusChange,
   newCardCaption,
   onKeyUpCard,
-  selfCards,
-  selfTrips,
+
   uploadNewCard,
   duration,
   submitCoffee
@@ -1208,11 +1225,11 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <SBold text={"POSTS"} />
             <SeeAll onClick={toggleModal}>SEE ALL</SeeAll>
           </Title>
-          <Icon onClick={toggleUploadModal}>
+          <UploadIcon onClick={toggleUploadModal}>
             <Upload />
-          </Icon>
+          </UploadIcon>
           {user.cards && user.cards.length !== 0 && (
-            <CardGrid cards={user.cards} selfCards={selfCards} />
+            <CardGrid cards={user.cards} />
           )}
         </SWrapper>
       </>

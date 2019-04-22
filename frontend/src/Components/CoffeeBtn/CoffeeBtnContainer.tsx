@@ -128,7 +128,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
       toast.error("error");
     }
   };
-  public updateUnMatch = async (cache, { data: { unMatch } }) => {
+  public updateUnMatch = (cache, { data: { unMatch } }) => {
     const data = cache.readQuery({
       query: GET_MATCHES,
       variables: { matchPage: 0 }

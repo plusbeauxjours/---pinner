@@ -411,7 +411,7 @@ class FeedContainer extends React.Component<IProps, IState> {
       });
       console.log(username);
       if (profileData) {
-        profileData.getMyCoffees.coffees.unshift(requestCoffee.coffee);
+        profileData.getMyCoffee.coffees.unshift(requestCoffee.coffee);
         cache.writeQuery({
           query: GET_MY_COFFEE,
           variables: { username },

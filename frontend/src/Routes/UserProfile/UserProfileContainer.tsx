@@ -27,7 +27,9 @@ import {
   DeleteCoffee,
   DeleteCoffeeVariables,
   RequestCoffee,
-  RequestCoffeeVariables
+  RequestCoffeeVariables,
+  GetMyCoffee,
+  GetMyCoffeeVariables
 } from "src/types/api";
 import {
   GET_USER,
@@ -39,25 +41,19 @@ import {
   ADD_TRIP,
   EDIT_TRIP,
   DELETE_TRIP,
-  GET_KNOWING_FOLLOWERS
+  GET_KNOWING_FOLLOWERS,
+  DELETE_COFFEE,
+  GET_MY_COFFEE,
+  UPLOAD_CARD
 } from "./UserProfileQueries";
+import {
+  REQUEST_COFFEE,
+  GET_COFFEES,
+  GET_FEED
+} from "../../../../frontend/src/Routes/Feed/FeedQueries";
 import { withRouter, RouteComponentProps } from "react-router";
 import { LOG_USER_OUT } from "src/sharedQueries.local";
 import { toast } from "react-toastify";
-import { UPLOAD_CARD } from "./UserProfileQueries";
-import { GET_FEED } from "../Feed/FeedQueries";
-import {
-  REQUEST_COFFEE,
-  GET_COFFEES
-} from "../../../../frontend/src/Routes/Feed/FeedQueries";
-import {
-  DELETE_COFFEE,
-  GET_MY_COFFEE
-} from "../../../../frontend/src/Routes/UserProfile/UserProfileQueries";
-import {
-  GetMyCoffee,
-  GetMyCoffeeVariables
-} from "../../../../frontend/src/types/api";
 
 class UserProfileQuery extends Query<UserProfile, UserProfileVariables> {}
 class TopCountriesQuery extends Query<TopCountries, TopCountriesVariables> {}
@@ -132,8 +128,6 @@ interface IState {
   topCountriesList: any;
   frequentVisitsList: any;
   newCardCaption: string;
-  selfCards: any;
-  selfTrips: any;
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
@@ -192,9 +186,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       frequentVisitPage: 0,
       topCountriesList: null,
       frequentVisitsList: null,
-      newCardCaption: "",
-      selfCards: [],
-      selfTrips: []
+      newCardCaption: ""
     };
   }
   public render() {
@@ -243,9 +235,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       frequentVisitPage,
       topCountriesList,
       frequentVisitsList,
-      newCardCaption,
-      selfCards,
-      selfTrips
+      newCardCaption
     } = this.state;
     return (
       <RequestCoffeeMutation
@@ -741,12 +731,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                 newCardCaption={
                                                                                                   newCardCaption
                                                                                                 }
-                                                                                                selfCards={
-                                                                                                  selfCards
-                                                                                                }
-                                                                                                selfTrips={
-                                                                                                  selfTrips
-                                                                                                }
                                                                                                 duration={
                                                                                                   this
                                                                                                     .duration
@@ -1173,28 +1157,40 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         params: { username }
       }
     } = this.props;
-    const userData = cache.readQuery({
-      query: GET_USER,
-      variables: { username }
-    });
-    const feedData = cache.readQuery({
-      query: GET_FEED,
-      variables: { page: 0, cityName }
-    });
-    console.log(uploadCard.card);
-    console.log(feedData);
-    userData.userProfile.user.cards.unshift(uploadCard.card);
-    feedData.feed.cards.unshift(uploadCard.card);
-    cache.writeQuery({
-      query: GET_USER,
-      variables: { username },
-      userData
-    });
-    cache.writeQuery({
-      query: GET_FEED,
-      variables: { page: 0, cityName },
-      feedData
-    });
+
+    try {
+      const profileData = cache.readQuery({
+        query: GET_USER,
+        variables: { username }
+      });
+      if (profileData) {
+        profileData.userProfile.user.cards.unshift(uploadCard.card);
+        cache.writeQuery({
+          query: GET_USER,
+          variables: { username },
+          data: profileData
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+
+    try {
+      const feedData = cache.readQuery({
+        query: GET_FEED,
+        variables: { page: 0, cityName }
+      });
+      if (feedData) {
+        feedData.feed.cards.unshift(uploadCard.card);
+        cache.writeQuery({
+          query: GET_FEED,
+          variables: { page: 0, cityName },
+          data: feedData
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
   public duration = (startDate, endDate) => {
     const startDateMoment = moment(startDate);
@@ -1229,20 +1225,26 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       }
     } = this.props;
     const { tripPage } = this.state;
-    const data = cache.readQuery({
-      query: GET_TRIPS,
-      variables: { username, tripPage }
-    });
-    data.getTrips.footprints = data.getTrips.footprints.filter(
-      i => parseInt(i.id, 10) !== deleteTrip.tripId
-    );
-    console.log(data.getTrips.footprints);
-    console.log(deleteTrip);
-    cache.writeQuery({
-      query: GET_TRIPS,
-      variables: { username, tripPage },
-      data
-    });
+    try {
+      const data = cache.readQuery({
+        query: GET_TRIPS,
+        variables: { username, tripPage }
+      });
+      if (data) {
+        data.getTrips.footprints = data.getTrips.footprints.filter(
+          i => parseInt(i.id, 10) !== deleteTrip.tripId
+        );
+        console.log(data.getTrips.footprints);
+        console.log(deleteTrip);
+        cache.writeQuery({
+          query: GET_TRIPS,
+          variables: { username, tripPage },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
   public onCompletedDeleteCoffee = data => {
     if (data.deleteTrip.ok) {
@@ -1257,18 +1259,24 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         params: { username }
       }
     } = this.props;
-    const data = cache.readQuery({
-      query: GET_MY_COFFEE,
-      variables: { username }
-    });
-    data.getMyCoffee.coffees = data.getMyCoffee.coffees.filter(
-      i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
-    );
-    cache.writeQuery({
-      query: GET_MY_COFFEE,
-      variables: { username },
-      data
-    });
+    try {
+      const data = cache.readQuery({
+        query: GET_MY_COFFEE,
+        variables: { username }
+      });
+      if (data) {
+        data.getMyCoffee.coffees = data.getMyCoffee.coffees.filter(
+          i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
+        );
+        cache.writeQuery({
+          query: GET_MY_COFFEE,
+          variables: { username },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
   public toggleRequestModal = () => {
     const { requestModalOpen } = this.state;
@@ -1296,36 +1304,49 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         host: { username }
       }
     } = requestCoffee;
-    const feedData = cache.readQuery({
-      query: GET_COFFEES,
-      variables: {
-        coffeePage: 0,
-        cityName: localStorage.getItem("cityName")
+    try {
+      const feedData = cache.readQuery({
+        query: GET_COFFEES,
+        variables: {
+          coffeePage: 0,
+          cityName: localStorage.getItem("cityName")
+        }
+      });
+      if (feedData) {
+        feedData.getCoffees.coffees.unshift(requestCoffee.coffee);
+        cache.writeQuery({
+          query: GET_COFFEES,
+          variables: {
+            coffeePage: 0,
+            cityName: localStorage.getItem("cityName")
+          },
+          data: feedData
+        });
       }
-    });
-    feedData.getCoffees.coffees.unshift(requestCoffee.coffee);
-    cache.writeQuery({
-      query: GET_COFFEES,
-      variables: {
-        coffeePage: 0,
-        cityName: localStorage.getItem("cityName")
-      },
-      data: feedData
-    });
-    const profileData = cache.readQuery({
-      query: GET_MY_COFFEE,
-      variables: {
-        username
+    } catch (e) {
+      console.log(e);
+    }
+
+    try {
+      const profileData = cache.readQuery({
+        query: GET_MY_COFFEE,
+        variables: {
+          username
+        }
+      });
+      if (profileData) {
+        profileData.getMyCoffee.coffees.unshift(requestCoffee.coffee);
+        cache.writeQuery({
+          query: GET_MY_COFFEE,
+          variables: {
+            username
+          },
+          data: profileData
+        });
       }
-    });
-    profileData.getMyCoffee.coffees.unshift(requestCoffee.coffee);
-    cache.writeQuery({
-      query: GET_MY_COFFEE,
-      variables: {
-        username
-      },
-      data: profileData
-    });
+    } catch (e) {
+      console.log(e);
+    }
   };
 }
 
