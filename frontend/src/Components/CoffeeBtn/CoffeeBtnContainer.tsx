@@ -7,11 +7,11 @@ import {
   UnMatchVariables
 } from "../../types/api";
 import { MATCH, UNMATCH } from "./CoffeeBtnQueries";
+import { GET_MATCHES } from "../../Routes/Match/MatchQueries";
+import { GET_COFFEES } from "../../Routes/Feed/FeedQueries";
 import CoffeeBtnPresenter from "./CoffeeBtnPresenter";
 import { toast } from "react-toastify";
-import { GET_MATCHES } from "../../Routes/Match/MatchQueries";
 import { RouteComponentProps, withRouter } from "react-router";
-import { GET_COFFEES } from "../../Routes/Feed/FeedQueries";
 
 class MatchMutation extends Mutation<Match, MatchVariables> {}
 
@@ -82,12 +82,12 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
   };
   public updateMatch = (cache, { data: { match } }) => {
     try {
-      const coffeeData = cache.readQuery({
+      const feedData = cache.readQuery({
         query: GET_COFFEES,
         variables: { coffeePage: 0, cityName: localStorage.getItem("cityName") }
       });
-      if (coffeeData) {
-        coffeeData.getCoffees.coffees = coffeeData.getCoffees.coffees.filter(
+      if (feedData) {
+        feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
           i => parseInt(i.id, 10) !== parseInt(match.match.coffee.id, 10)
         );
         cache.writeQuery({
@@ -96,7 +96,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
             coffeePage: 0,
             cityName: localStorage.getItem("cityName")
           },
-          data: coffeeData
+          data: feedData
         });
       }
     } catch (e) {

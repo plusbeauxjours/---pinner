@@ -101,10 +101,10 @@ def resolve_recommand_users(self, info, **kwargs):
 
     if (recommandUserPage is 0):
         users = models.User.objects.all().exclude(id=user.id).exclude(profile__in=following_profiles).order_by(
-            '-date_joined')[:9]
+            '-id')[:9]
     else:
         users = models.User.objects.all().exclude(id=user.id).exclude(profile__in=following_profiles).order_by(
-            '-date_joined')[9:18]
+            '-id')[9:18]
 
     return types.RecommandUsersResponse(users=users)
 

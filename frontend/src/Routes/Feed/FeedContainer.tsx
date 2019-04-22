@@ -128,63 +128,63 @@ class FeedContainer extends React.Component<IProps, IState> {
       coffeePage
     } = this.state;
     return (
-      <GetCoffeesQuery
-        query={GET_COFFEES}
-        variables={{ cityName: currentCity, coffeePage }}
+      <RecommandUsersQuery
+        query={RECOMMAND_USERS}
+        variables={{ recommandUserPage }}
       >
         {({
-          data: coffeeData,
-          loading: coffeeLoading,
-          fetchMore: coffeeFetchMore
+          data: recommandUsersData,
+          loading: recommandUsersLoading,
+          fetchMore: recommandUsersFetchMore
         }) => {
-          this.coffeeFetchMore = coffeeFetchMore;
+          this.recommandUsersFetchMore = recommandUsersFetchMore;
           return (
-            <RequestCoffeeMutation
-              mutation={REQUEST_COFFEE}
-              variables={{
-                currentCity
-              }}
-              onCompleted={this.onCompletedRequestCoffee}
-              update={this.updateRequestCoffee}
+            <GetCoffeesQuery
+              query={GET_COFFEES}
+              variables={{ cityName: currentCity, coffeePage }}
             >
-              {requestCoffeeFn => {
-                this.requestCoffeeFn = requestCoffeeFn;
+              {({
+                data: coffeeData,
+                loading: coffeeLoading,
+                fetchMore: coffeeFetchMore
+              }) => {
+                this.coffeeFetchMore = coffeeFetchMore;
                 return (
-                  <FeedQuery
-                    query={GET_FEED}
+                  <RequestCoffeeMutation
+                    mutation={REQUEST_COFFEE}
                     variables={{
-                      page,
-                      cityName: currentCity
+                      currentCity
                     }}
+                    onCompleted={this.onCompletedRequestCoffee}
+                    update={this.updateRequestCoffee}
                   >
-                    {({ data: feedData, loading: feedLoading }) => (
-                      <ReportLocationMutation
-                        mutation={REPORT_LOCATION}
-                        variables={{
-                          currentLat,
-                          currentLng,
-                          currentCity,
-                          currentCountry,
-                          currentCountryCode,
-                          currentContinent,
-                          cityPhotoURL,
-                          countryPhotoURL,
-                          continentPhotoURL
-                        }}
-                      >
-                        {ReportLocationFn => {
-                          this.ReportLocationFn = ReportLocationFn;
-                          return (
-                            <RecommandUsersQuery
-                              query={RECOMMAND_USERS}
-                              variables={{ recommandUserPage }}
+                    {requestCoffeeFn => {
+                      this.requestCoffeeFn = requestCoffeeFn;
+                      return (
+                        <FeedQuery
+                          query={GET_FEED}
+                          variables={{
+                            page,
+                            cityName: currentCity
+                          }}
+                        >
+                          {({ data: feedData, loading: feedLoading }) => (
+                            <ReportLocationMutation
+                              mutation={REPORT_LOCATION}
+                              variables={{
+                                currentLat,
+                                currentLng,
+                                currentCity,
+                                currentCountry,
+                                currentCountryCode,
+                                currentContinent,
+                                cityPhotoURL,
+                                countryPhotoURL,
+                                continentPhotoURL
+                              }}
                             >
-                              {({
-                                data: recommandUsersData,
-                                loading: recommandUsersLoading,
-                                fetchMore: recommandUsersFetchMore
-                              }) => {
-                                this.recommandUsersFetchMore = recommandUsersFetchMore;
+                              {ReportLocationFn => {
+                                this.ReportLocationFn = ReportLocationFn;
                                 return (
                                   <FeedPresenter
                                     feedData={feedData}
@@ -223,18 +223,18 @@ class FeedContainer extends React.Component<IProps, IState> {
                                   />
                                 );
                               }}
-                            </RecommandUsersQuery>
-                          );
-                        }}
-                      </ReportLocationMutation>
-                    )}
-                  </FeedQuery>
+                            </ReportLocationMutation>
+                          )}
+                        </FeedQuery>
+                      );
+                    }}
+                  </RequestCoffeeMutation>
                 );
               }}
-            </RequestCoffeeMutation>
+            </GetCoffeesQuery>
           );
         }}
-      </GetCoffeesQuery>
+      </RecommandUsersQuery>
     );
   }
   public handleGeoSuccess = (position: Position) => {

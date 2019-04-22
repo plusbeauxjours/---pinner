@@ -4,7 +4,6 @@ import { Mutation, MutationFn } from "react-apollo";
 import { FollowUser, FollowUserVariables } from "../../types/api";
 import { FOLLOW_USER } from "./FollowBtnQueries";
 import { GET_FEED } from "../../Routes/Feed/FeedQueries";
-import Me from "src/Components/Me";
 
 class FollowMutation extends Mutation<FollowUser, FollowUserVariables> {}
 
@@ -24,31 +23,27 @@ class FollowBtnContainer extends React.Component<any, IState> {
     const { isFollowing } = this.state;
     const { userId } = this.props;
     return (
-      <Me>
-        {user => (
-          <FollowMutation
-            mutation={FOLLOW_USER}
-            variables={{ userId: parseInt(userId, 10) }}
-            onCompleted={this.toggleBtn}
-            refetchQueries={[
-              {
-                query: GET_FEED,
-                variables: {
-                  page: 0,
-                  cityName: user.profile.currentCity.cityName
-                }
-              }
-            ]}
-          >
-            {followUserFn => (
-              <FollowBtnPresenter
-                isFollowing={isFollowing}
-                toggleBtn={followUserFn}
-              />
-            )}
-          </FollowMutation>
+      <FollowMutation
+        mutation={FOLLOW_USER}
+        variables={{ userId: parseInt(userId, 10) }}
+        onCompleted={this.toggleBtn}
+        refetchQueries={[
+          {
+            query: GET_FEED,
+            variables: {
+              page: 0,
+              cityName: localStorage.getItem("cityName")
+            }
+          }
+        ]}
+      >
+        {followUserFn => (
+          <FollowBtnPresenter
+            isFollowing={isFollowing}
+            toggleBtn={followUserFn}
+          />
         )}
-      </Me>
+      </FollowMutation>
     );
   }
   public toggleBtn = () => {

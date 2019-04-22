@@ -404,26 +404,6 @@ const Box = styled.div`
   }
 `;
 
-const UploadIcon = styled.div`
-  width: 200px;
-  height: 200px;
-  display: flex;
-  position: relative;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-  margin: 0 15px 15px 0;
-  svg {
-    fill: white;
-    transition: fill 0.2s ease-in-out;
-  }
-  &:hover {
-    svg {
-      fill: grey;
-    }
-  }
-`;
-
 interface ITheme {
   size?: string;
 }
@@ -1088,6 +1068,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
+          <GreyLine />
           <Title>
             <SBold text={"TRIP LOG"} />
             <SeeAll onClick={toggleTripSeeAll}>SEE ALL</SeeAll>
@@ -1225,11 +1206,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <SBold text={"POSTS"} />
             <SeeAll onClick={toggleModal}>SEE ALL</SeeAll>
           </Title>
-          <UploadIcon onClick={toggleUploadModal}>
-            <Upload />
-          </UploadIcon>
           {user.cards && user.cards.length !== 0 && (
-            <CardGrid cards={user.cards} />
+            <CardGrid
+              cards={user.cards}
+              upload={true}
+              toggleUploadModal={toggleUploadModal}
+            />
           )}
         </SWrapper>
       </>
