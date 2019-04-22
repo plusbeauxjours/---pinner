@@ -1233,16 +1233,15 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       query: GET_TRIPS,
       variables: { username, tripPage }
     });
-    const newTrip = data.getTrips.footprints.filter(
+    data.getTrips.footprints = data.getTrips.footprints.filter(
       i => parseInt(i.id, 10) !== deleteTrip.tripId
     );
-    console.log(newTrip);
     console.log(data.getTrips.footprints);
     console.log(deleteTrip);
     cache.writeQuery({
       query: GET_TRIPS,
       variables: { username, tripPage },
-      data: { getTrips: { footprints: newTrip } }
+      data
     });
   };
   public onCompletedDeleteCoffee = data => {
@@ -1262,7 +1261,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       query: GET_MY_COFFEE,
       variables: { username }
     });
-    data.getMyCoffee.coffees.filter(
+    data.getMyCoffee.coffees = data.getMyCoffee.coffees.filter(
       i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
     );
     cache.writeQuery({
@@ -1293,10 +1292,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   };
   public updateRequestCoffee = (cache, { data: { requestCoffee } }) => {
     const {
-      match: {
-        params: { username }
+      coffee: {
+        host: { username }
       }
-    } = this.props;
+    } = requestCoffee;
     const feedData = cache.readQuery({
       query: GET_COFFEES,
       variables: {

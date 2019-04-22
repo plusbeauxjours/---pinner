@@ -17,6 +17,9 @@ export const MATCH = gql`
         guest {
           ...UserParts
         }
+        coffee {
+          id
+        }
         status
         isHost
         isGuest

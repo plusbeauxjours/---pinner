@@ -78,6 +78,11 @@ export interface Match_match_match_guest {
   profile: Match_match_match_guest_profile | null;
 }
 
+export interface Match_match_match_coffee {
+  __typename: "CoffeeType";
+  id: string;
+}
+
 export interface Match_match_match {
   __typename: "MatchType";
   id: string;
@@ -85,6 +90,7 @@ export interface Match_match_match {
   city: Match_match_match_city | null;
   host: Match_match_match_host | null;
   guest: Match_match_match_guest | null;
+  coffee: Match_match_match_coffee | null;
   status: MatchStatus;
   isHost: boolean | null;
   isGuest: boolean | null;
@@ -1265,6 +1271,11 @@ export interface GetMatches_getMatches_matches_guest {
   profile: GetMatches_getMatches_matches_guest_profile | null;
 }
 
+export interface GetMatches_getMatches_matches_coffee {
+  __typename: "CoffeeType";
+  id: string;
+}
+
 export interface GetMatches_getMatches_matches {
   __typename: "MatchType";
   id: string;
@@ -1272,6 +1283,7 @@ export interface GetMatches_getMatches_matches {
   city: GetMatches_getMatches_matches_city | null;
   host: GetMatches_getMatches_matches_host | null;
   guest: GetMatches_getMatches_matches_guest | null;
+  coffee: GetMatches_getMatches_matches_coffee | null;
   status: MatchStatus;
   isHost: boolean | null;
   isGuest: boolean | null;

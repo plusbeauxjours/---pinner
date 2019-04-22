@@ -18,6 +18,7 @@ const MatchGrid: React.SFC<IProps> = ({ matches }) => {
           guest={match.guest}
           currentCity={match.city.cityName}
           currentCountry={match.city.country.countryName}
+          coffeeId={match.coffee.id}
           expires={match.naturalTime}
           isMatching={match.isMatching}
           isGuest={match.isGuest}

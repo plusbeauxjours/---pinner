@@ -46,6 +46,7 @@ interface IProps {
   isMatching: boolean;
   isGuest: boolean;
   isHost: boolean;
+  coffeeId: string;
 }
 
 const MatchCard: React.SFC<IProps> = ({
@@ -57,7 +58,8 @@ const MatchCard: React.SFC<IProps> = ({
   expires,
   isMatching,
   isGuest,
-  isHost
+  isHost,
+  coffeeId
 }) => {
   return (
     <>
@@ -69,7 +71,10 @@ const MatchCard: React.SFC<IProps> = ({
             <Location>
               {currentCity}, {currentCountry}
             </Location>
+            <Location>matchId</Location>
             <Location>{id}</Location>
+            <Location>coffeeId</Location>
+            <Location>{coffeeId && coffeeId}</Location>
             <Location>{expires}</Location>
             <Location>{isMatching}</Location>
             <Location>YOU ARE GUEST</Location>
@@ -81,7 +86,10 @@ const MatchCard: React.SFC<IProps> = ({
             <Location>
               {currentCity}, {currentCountry}
             </Location>
+            <Location>matchId</Location>
             <Location>{id}</Location>
+            <Location>coffeeId</Location>
+            <Location>{coffeeId && coffeeId}</Location>
             <Location>{expires}</Location>
             <Location>{isMatching}</Location>
             <Location>YOU ARE HOST</Location>

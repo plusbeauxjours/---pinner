@@ -21,6 +21,7 @@ class CoffeeAdmin(admin.ModelAdmin):
 @admin.register(models.Match)
 class MatchAdmin(admin.ModelAdmin):
     list_display = (
+        'id',
         'city',
         'host',
         'guest',

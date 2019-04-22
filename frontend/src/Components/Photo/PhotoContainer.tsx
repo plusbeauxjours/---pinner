@@ -376,7 +376,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
         page: page || 0
       }
     });
-
     feedData.feed.cards = feedData.feed.cards.filter(
       i => parseInt(i.id, 10) !== deleteCard.cardId
     );
@@ -395,7 +394,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
         username: creatorUsername
       }
     });
-
     userData.userProfile.user.cards = userData.userProfile.user.cards.filter(
       i => parseInt(i.id, 10) !== deleteCard.cardId
     );

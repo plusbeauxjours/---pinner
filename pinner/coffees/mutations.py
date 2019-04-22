@@ -11,7 +11,6 @@ class RequestCoffee(graphene.Mutation):
 
     class Arguments:
         currentCity = graphene.String(required=True)
-        currentCountry = graphene.String(required=True)
         target = graphene.String()
 
     Output = types.RequestCoffeeResponse
@@ -21,12 +20,10 @@ class RequestCoffee(graphene.Mutation):
 
         user = info.context.user
         currentCity = kwargs.get('currentCity')
-        currentCountry = kwargs.get('currentCountry')
         target = kwargs.get('target', 'everyone')
 
         try:
             currentCity = location_models.City.objects.get(city_name=currentCity)
-            print(currentCity, currentCountry, target)
             coffee = models.Coffee.objects.create(
                 city=currentCity,
                 host=user,
@@ -96,7 +93,8 @@ class Match(graphene.Mutation):
             match = models.Match.objects.create(
                 host=coffee.host,
                 city=coffee.city,
-                guest=user
+                guest=user,
+                coffee=coffee
             )
             notification_models.MatchNotification.objects.create(
                 verb="match",

@@ -24,7 +24,7 @@ def resolve_get_coffees(self, info, **kwargs):
     followers = city.coffee.filter(status='requesting', target='followers', host__profile__in=followings)
 
     if (coffeePage is 0):
-        combined = everyone.union(nationality).union(gender).union(followers).order_by(
+        combined = everyone.union(nationality).union(gender).union(followers).exclude(status="expired").exclude(status="canceled").order_by(
             '-created_at')[:6]
     else:
         combined = everyone.union(nationality).union(gender).union(followers).order_by(
@@ -47,7 +47,8 @@ def resolve_get_my_coffee(self, info, **kwargs):
             return types.GetMyCoffeeResponse(coffees=None)
 
         try:
-            coffees = models.Coffee.objects.filter(host=user)
+            coffees = models.Coffee.objects.filter(host=user).order_by(
+                '-created_at')
             return types.GetMyCoffeeResponse(coffees=coffees)
         except models.Coffee.DoesNotExist:
             return types.GetMyCoffeeResponse(coffees=None)

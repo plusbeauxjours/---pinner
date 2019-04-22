@@ -28,6 +28,7 @@ import {
 } from "../../locationThumbnail";
 import continents from "../../continents";
 import { toast } from "react-toastify";
+import { GET_MY_COFFEE } from "../UserProfile/UserProfileQueries";
 
 class RequestCoffeeMutation extends Mutation<
   RequestCoffee,
@@ -380,18 +381,46 @@ class FeedContainer extends React.Component<IProps, IState> {
       toast.error("error");
     }
   };
-  public updateRequestCoffee = async (cache, { data: { requestCoffee } }) => {
+  public updateRequestCoffee = (cache, { data: { requestCoffee } }) => {
     const { coffeePage, currentCity } = this.state;
-    const data = cache.readQuery({
-      query: GET_COFFEES,
-      variables: { coffeePage, cityName: currentCity }
-    });
-    data.getCoffees.coffees.unshift(requestCoffee.coffee);
-    await cache.writeQuery({
-      query: GET_COFFEES,
-      variables: { coffeePage, cityName: currentCity },
-      data
-    });
+    try {
+      const feedData = cache.readQuery({
+        query: GET_COFFEES,
+        variables: { coffeePage, cityName: currentCity }
+      });
+      if (feedData) {
+        feedData.getCoffees.coffees.unshift(requestCoffee.coffee);
+        cache.writeQuery({
+          query: GET_COFFEES,
+          variables: { coffeePage, cityName: currentCity },
+          data: feedData
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    const {
+      coffee: {
+        host: { username }
+      }
+    } = requestCoffee;
+    try {
+      const profileData = cache.readQuery({
+        query: GET_MY_COFFEE,
+        variables: { username }
+      });
+      console.log(username);
+      if (profileData) {
+        profileData.getMyCoffees.coffees.unshift(requestCoffee.coffee);
+        cache.writeQuery({
+          query: GET_MY_COFFEE,
+          variables: { username },
+          data: profileData
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 }
 
