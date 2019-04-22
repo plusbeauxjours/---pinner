@@ -154,6 +154,9 @@ const Icon = styled.span`
   }
   svg {
     fill: white;
+    transition: opacity 0.2s ease-in-out;
+  &:hover {
+    opacity: 1;
   }
 `;
 

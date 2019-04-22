@@ -10,7 +10,7 @@ const Container = styled.div`
   align-items: center;
   border: 1px solid ${props => props.theme.headerColor};
   width: 170px;
-  height: 200px;
+  height: 250px;
   padding: 10px;
   margin-right: 5px;
   margin-bottom: 25px;

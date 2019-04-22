@@ -3,6 +3,7 @@ from . import types, models
 from django.contrib.auth.models import User
 from graphql_jwt.decorators import login_required
 from locations import models as location_models
+from django.db.models import Q
 
 
 @login_required
@@ -15,22 +16,22 @@ def resolve_get_coffees(self, info, **kwargs):
     city = location_models.City.objects.get(city_name=cityName)
     profile = user.profile
     followings = profile.followed_by.all()
-    matches = user.host.all()
-
-    everyone = city.coffee.filter(status='requesting', target='everyone')
-    nationality = city.coffee.filter(status='requesting', target='nationality',
-                                     host__profile__nationality=profile.nationality)
-    gender = city.coffee.filter(status='requesting', target='gender', host__profile__gender=profile.gender)
-    followers = city.coffee.filter(status='requesting', target='followers', host__profile__in=followings)
+    matches = user.guest.all()
 
     if (coffeePage is 0):
-        combined = everyone.union(nationality).union(gender).union(followers).exclude(status="expired").exclude(status="canceled").order_by(
-            '-created_at')[:6]
+        coffees = city.coffee.filter(Q(target='everyone') |
+                                     Q(target='nationality', host__profile__nationality=profile.nationality) |
+                                     Q(target='gender', host__profile__gender=profile.gender) |
+                                     Q(target='followers', host__profile__in=followings) |
+                                     Q(host__pk=user.pk)).exclude(match__in=matches).order_by('-created_at')[:6]
     else:
-        combined = everyone.union(nationality).union(gender).union(followers).order_by(
-            '-created_at')[6:]
+        coffees = city.coffee.filter(Q(target='everyone') |
+                                     Q(target='nationality', host__profile__nationality=profile.nationality) |
+                                     Q(target='gender', host__profile__gender=profile.gender) |
+                                     Q(target='followers', host__profile__in=followings) |
+                                     Q(host__pk=user.pk)).exclude(match__in=matches).order_by('-created_at')[6:]
 
-    return types.GetCoffeesResponse(coffees=combined)
+    return types.GetCoffeesResponse(coffees=coffees)
 
 
 @login_required
