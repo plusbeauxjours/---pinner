@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { Gear } from "../../Icons";
+import { Gear, List } from "../../Icons";
 import styled, { keyframes } from "../../Styles/typed-components";
 import "react-dates/lib/css/_datepicker.css";
 import "react-dates/initialize";
@@ -148,6 +148,8 @@ const Icon = styled.span`
   align-items: center;
   justify-items: center;
   margin: 0 60px 0 60px;
+  cursor: pointer;
+
   &:last-child {
     margin-right: 0;
   }
@@ -158,6 +160,12 @@ const Icon = styled.span`
       fill: grey;
     }
   }
+`;
+
+const TripIcon = styled(Icon)`
+  align-self: center;
+  justify-self: center;
+  margin-bottom: 40px;
 `;
 
 const Bio = styled.p`
@@ -292,19 +300,31 @@ const SFlag = styled(Flag)`
   opacity: 0.4;
 `;
 
+const TripOverlay = styled.div`
+  z-index: 1;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  svg {
+    fill: white;
+  }
+  transition: opacity 0.3s ease-in-out;
+`;
+
 const TripRow = styled.div<ITheme>`
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: 1fr 3fr 3fr 2fr 2fr 1.5fr 3fr 0.2fr;
   justify-content: space-between;
   align-items: center;
   background-color: #2d3a41;
   border-radius: 3px;
   border: 1px solid grey;
   padding: 10px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
   &:hover {
-    background-color: grey;
+    ${TripOverlay} {
+      opacity: 1;
+    }
   }
 `;
 
@@ -327,7 +347,7 @@ const TripBox = styled.div`
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0 0, 0, 0.3);
     border-radius: 10px;
     background-color: ${props => props.theme.bgColor};
   }
@@ -374,6 +394,10 @@ const Overlay = styled.div`
   &:hover {
     opacity: 1;
   }
+`;
+
+const STripText = styled(TripText)`
+  margin-left: 15px;
 `;
 
 const STextArea = styled(Textarea)`
@@ -1021,31 +1045,14 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <SeeAll onClick={toggleTripSeeAll}>SEE ALL</SeeAll>
           </Title>
           <TripContainer>
+            <TripIcon onClick={addTrip}>
+              <Upload />
+            </TripIcon>
             {!getTipsLoading && getTrips ? (
               getTrips.map(trip => (
-                <TripRow
-                  key={trip.id}
-                  onClick={() => {
-                    user.profile.isSelf
-                      ? toggleTripModal(
-                          trip.id,
-                          trip.city.cityName,
-                          trip.city.cityPhoto,
-                          trip.city.country.countryName,
-                          trip.startDate,
-                          trip.endDate
-                        )
-                      : gotoTrip(
-                          trip.city.cityName,
-                          trip.city.cityPhoto,
-                          trip.city.country.countryName,
-                          trip.startDate,
-                          trip.endDate
-                        );
-                  }}
-                >
+                <TripRow key={trip.id}>
                   <CityPhoto src={trip.city.cityPhoto} size={"sm"} />
-                  <TripText>{trip.city.cityName}</TripText>
+                  <STripText>{trip.city.cityName}</STripText>
                   <TripText>
                     <SFlag
                       countryCode={trip.city.country.countryCode}
@@ -1069,6 +1076,28 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                       endDate={trip.endDate}
                     />
                   </TripText>
+                  <TripOverlay
+                    onClick={() => {
+                      user.profile.isSelf
+                        ? toggleTripModal(
+                            trip.id,
+                            trip.city.cityName,
+                            trip.city.cityPhoto,
+                            trip.city.country.countryName,
+                            trip.startDate,
+                            trip.endDate
+                          )
+                        : gotoTrip(
+                            trip.city.cityName,
+                            trip.city.cityPhoto,
+                            trip.city.country.countryName,
+                            trip.startDate,
+                            trip.endDate
+                          );
+                    }}
+                  >
+                    <List />
+                  </TripOverlay>
                 </TripRow>
               ))
             ) : (
@@ -1150,13 +1179,11 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           <Title>
             <SBold text={"POSTS"} />
           </Title>
-          {user.cards && user.cards.length !== 0 && (
             <CardGrid
               cards={user.cards}
               upload={true}
               toggleUploadModal={toggleUploadModal}
             />
-          )}
         </SWrapper>
       </>
     );

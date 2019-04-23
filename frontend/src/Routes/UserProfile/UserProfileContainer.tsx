@@ -831,6 +831,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         }
       }
     });
+    console.log(this.state);
   };
   public toggleTripModal = (
     moveNotificationId,

@@ -49,16 +49,17 @@ const CardGrid: React.SFC<IProps> = ({
         <Upload />
       </UploadIcon>
     )}
-    {cards.map(card => (
-      <SquareCard
-        key={card.id}
-        id={card.id}
-        file={card.file}
-        caption={card.caption}
-        likeCount={card.likeCount}
-        commentCount={card.commentCount}
-      />
-    ))}
+    {cards &&
+      cards.map(card => (
+        <SquareCard
+          key={card.id}
+          id={card.id}
+          file={card.file}
+          caption={card.caption}
+          likeCount={card.likeCount}
+          commentCount={card.commentCount}
+        />
+      ))}
   </Container>
 );
 
