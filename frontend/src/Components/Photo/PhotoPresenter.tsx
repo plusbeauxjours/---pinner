@@ -42,6 +42,9 @@ const Message = styled.div`
 `;
 
 const Meta = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between
   padding: 10px 15px;
   padding-bottom: 0;
 `;
@@ -162,6 +165,8 @@ const Icon = styled.span`
   margin-right: 15px;
   cursor: pointer;
 `;
+const Front = styled.div``;
+const Back = styled.div``;
 
 interface IProps {
   inline: boolean;
@@ -299,7 +304,9 @@ const PhotoPresenter: React.SFC<IProps> = ({
                 {caption}
               </Caption>
             </CaptionContainer>
-            <TimeStamp>See {commentCount}Comments</TimeStamp>
+            {!openedComment && (
+              <TimeStamp>See {commentCount}Comments</TimeStamp>
+            )}
             <Comments
               openedComment={openedComment}
               getCommentId={getCommentId}
@@ -363,39 +370,51 @@ const PhotoPresenter: React.SFC<IProps> = ({
         <DetailContainer>
           <Image src={photoUrl} />
           <Meta>
-            <PhotoHeader>
-              <UserHeader
-                username={creatorUsername}
-                avatar={creatorAvatar}
-                currentCity={city}
-                currentCountry={country}
+            <Front>
+              <PhotoHeader>
+                <UserHeader
+                  username={creatorUsername}
+                  avatar={creatorAvatar}
+                  currentCity={city}
+                  currentCountry={country}
+                />
+                <Icon onClick={toggleCardMenuModal}>
+                  <List />
+                </Icon>
+              </PhotoHeader>
+              <CaptionContainer>
+                <Caption>
+                  <SBold text={creatorUsername} />
+                  {caption}
+                </Caption>
+              </CaptionContainer>
+              {!openedComment && (
+                <TimeStamp>See {commentCount}Comments</TimeStamp>
+              )}
+              <Comments
+                openedComment={openedComment}
+                getCommentId={getCommentId}
+                cardId={cardId}
               />
-              <Icon onClick={toggleCardMenuModal}>
-                <List />
-              </Icon>
-            </PhotoHeader>
-            <CaptionContainer>
-              <Caption>
-                <SBold text={creatorUsername} />
-                {caption}
-              </Caption>
-            </CaptionContainer>
-            <Comments
-              openedComment={openedComment}
-              getCommentId={getCommentId}
-              cardId={cardId}
-            />
-            <CardButtons isLiked={isLiked} onClick={onLikeClick} />
-            <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
-            <TimeStamp>{naturalTime}</TimeStamp>
-            <AddComment>
-              <STextArea
-                placeholder="Add a comment..."
-                onChange={updateNewComment}
-                value={newComment}
-                onKeyUp={onKeyUp}
+            </Front>
+            <Back>
+              <CardButtons
+                isLiked={isLiked}
+                openedComment={openedComment}
+                toggleCommentClick={toggleCommentClick}
+                onClick={onLikeClick}
               />
-            </AddComment>
+              <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
+              <TimeStamp>{naturalTime}</TimeStamp>
+              <AddComment>
+                <STextArea
+                  placeholder="Add a comment..."
+                  onChange={updateNewComment}
+                  value={newComment}
+                  onKeyUp={onKeyUp}
+                />
+              </AddComment>
+            </Back>
           </Meta>
         </DetailContainer>
       </>
