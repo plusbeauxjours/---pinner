@@ -24,6 +24,7 @@ import { GET_FEED } from "../../../../frontend/src/Routes/Feed/FeedQueries";
 import { toast } from "react-toastify";
 import { withRouter, RouteComponentProps } from "react-router";
 import { GET_USER } from "../../Routes/UserProfile/UserProfileQueries";
+import { GET_COMMENTS } from "../Comments/CommentsQueries";
 
 class AddCommentMutation extends Mutation<AddComment, AddCommentVariables> {}
 class DeleteCommentMutation extends Mutation<
@@ -45,7 +46,6 @@ interface IProps extends RouteComponentProps {
   commentCount: number;
   caption: string;
   naturalTime: string;
-  comments: any;
   isLiked: boolean;
   cardId: string;
   creatorId?: string;
@@ -102,8 +102,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
       photoUrl,
       commentCount,
       caption,
-      naturalTime,
-      comments
+      naturalTime
     } = this.props;
     const {
       userId,
@@ -178,7 +177,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
                                     commentCount={commentCount}
                                     caption={caption}
                                     naturalTime={naturalTime}
-                                    comments={comments}
                                     updateNewComment={this.updateNewComment}
                                     newComment={newComment}
                                     isLiked={isLiked}
@@ -206,6 +204,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
                                     isSelf={isSelf}
                                     followUserFn={followUserFn}
                                     deleteCardFn={deleteCardFn}
+                                    cardId={cardId}
                                   />
                                 );
                               }}
@@ -282,25 +281,20 @@ class PhotoContainer extends React.Component<IProps, IState> {
   };
   public updateAddComment = (cache, { data: { addComment } }) => {
     const { cardId } = this.state;
-    const { page, currentCity } = this.props;
     try {
       const data = cache.readQuery({
-        query: GET_FEED,
+        query: GET_COMMENTS,
         variables: {
-          cityName: currentCity || localStorage.getItem("cityName"),
-          page: page || 0
+          cardId: parseInt(cardId, 10)
         }
       });
+      console.log(data);
       if (data) {
-        const card = data.feed.cards.find(
-          i => parseInt(i.id, 10) === parseInt(cardId, 10)
-        );
-        card.comments.push(addComment.comment);
+        data.getComments.comments.push(addComment.comment);
         cache.writeQuery({
-          query: GET_FEED,
+          query: GET_COMMENTS,
           variables: {
-            cityName: currentCity || localStorage.getItem("cityName"),
-            page: page || 0
+            cardId: parseInt(cardId, 10)
           },
           data
         });
@@ -420,28 +414,23 @@ class PhotoContainer extends React.Component<IProps, IState> {
     });
   };
   public updateDeleteComment = (cache, { data: { deleteComment } }) => {
-    const { page, currentCity } = this.props;
+    const { cardId, commentId } = deleteComment;
+    console.log(deleteComment);
     try {
       const data = cache.readQuery({
-        query: GET_FEED,
+        query: GET_COMMENTS,
         variables: {
-          cityName: currentCity || localStorage.getItem("cityName"),
-          page: page || 0
+          cardId
         }
       });
       if (data) {
-        const { cardId, commentId } = deleteComment;
-        const card = data.feed.cards.find(
-          i => parseInt(i.id, 10) === parseInt(cardId, 10)
-        );
-        card.comments = card.comments.filter(
+        data.getComments.comments = data.getComments.comments.filter(
           i => parseInt(i.id, 10) !== parseInt(commentId, 10)
         );
         cache.writeQuery({
-          query: GET_FEED,
+          query: GET_COMMENTS,
           variables: {
-            cityName: currentCity || localStorage.getItem("cityName"),
-            page: page || 0
+            cardId
           },
           data
         });

@@ -321,7 +321,6 @@ const ScrollContainer = styled.div`
 const TripBox = styled.div`
   width: 905px;
   display: flex;
-  flex-wrap: nowrap;
   overflow-x: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   ::-webkit-scrollbar {
@@ -388,7 +387,6 @@ const STextArea = styled(Textarea)`
 const Box = styled.div`
   width: 905px;
   display: flex;
-  flex-wrap: nowrap;
   overflow-x: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   ::-webkit-scrollbar {

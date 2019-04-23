@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import Bold from "../Bold";
 import Textarea from "react-expanding-textarea";
-import Comment from "../Comment";
 import CardButtons from "../CardButtons";
 import { keyframes } from "styled-components";
 import UserHeader from "../UserHeader";
 import { List } from "src/Icons";
 import { MutationFn } from "react-apollo";
+import Comments from "../../Components/Comments";
 
 const Container = styled.div`
   border: ${props => props.theme.greyColor};
@@ -34,7 +34,7 @@ const Image = styled.img`
   min-width: 100%;
 `;
 
-const Caption = styled.div`
+const Message = styled.div`
   text-align: center;
   font-size: 50px;
   font-family: "Qwigley";
@@ -44,11 +44,6 @@ const Caption = styled.div`
 const Meta = styled.div`
   padding: 10px 15px;
   padding-bottom: 0;
-`;
-
-const Comments = styled.div`
-  word-break: break-all;
-  margin-top: 10px;
 `;
 
 const AddComment = styled.div`
@@ -93,15 +88,6 @@ const DetailContainer = styled.div`
   ${Image} {
     min-width: 0%;
     width: 550px;
-  }
-  ${Comments} {
-    height: 350px;
-    width: 250px;
-    word-break: break-all;
-    flex-wrap: nowrap;
-    overflow-x: visible;
-    overflow-y: auto;
-    margin-bottom: 30px;
   }
 `;
 
@@ -155,6 +141,23 @@ const ModalLink = styled.div`
   }
 `;
 
+const CaptionContainer = styled.div`
+  display: flex;
+  margin-bottom: 7px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+const SBold = styled(Bold)`
+  margin-right: 5px;
+`;
+
+const Caption = styled.div`
+  word-break: break-all;
+  margin-top: 10px;
+`;
+
 const Icon = styled.span`
   margin-right: 15px;
   cursor: pointer;
@@ -171,7 +174,6 @@ interface IProps {
   commentCount: number;
   caption: string;
   naturalTime: string;
-  comments: any;
   updateNewComment: (event: React.ChangeEvent<HTMLInputElement>) => void;
   newComment: string;
   isLiked: boolean;
@@ -192,6 +194,7 @@ interface IProps {
   toggleDeleteCommentModal: () => void;
   toggleCardMenuModal: () => void;
   toggleDeleteCardModal: () => void;
+  cardId: string;
 }
 
 const PhotoPresenter: React.SFC<IProps> = ({
@@ -204,7 +207,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
   likeCount,
   caption,
   naturalTime,
-  comments,
+  commentCount,
   updateNewComment,
   newComment,
   isLiked,
@@ -223,7 +226,8 @@ const PhotoPresenter: React.SFC<IProps> = ({
   isFollowing,
   isSelf,
   followUserFn,
-  deleteCardFn
+  deleteCardFn,
+  cardId
 }) => {
   if (inline) {
     return (
@@ -280,7 +284,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
           </PhotoHeader>
           <Image src={photoUrl} />
 
-          <Caption>{caption}</Caption>
+          <Message>{caption}</Message>
           <Meta>
             <CardButtons
               isLiked={isLiked}
@@ -289,22 +293,18 @@ const PhotoPresenter: React.SFC<IProps> = ({
               onClick={onLikeClick}
             />
             <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
-            <Comment username={creatorUsername} comment={caption} />
-            {openedComment && (
-              <Comments>
-                {comments &&
-                  comments.map(comment => (
-                    <Comment
-                      id={comment.id}
-                      key={comment.id}
-                      username={comment.creator.username}
-                      comment={comment.message}
-                      getCommentId={getCommentId}
-                      naturalTime={comment.naturalTime}
-                    />
-                  ))}
-              </Comments>
-            )}
+            <CaptionContainer>
+              <Caption>
+                <SBold text={creatorUsername} />
+                {caption}
+              </Caption>
+            </CaptionContainer>
+            <TimeStamp>See {commentCount}Comments</TimeStamp>
+            <Comments
+              openedComment={openedComment}
+              getCommentId={getCommentId}
+              cardId={cardId}
+            />
             <TimeStamp>{naturalTime}</TimeStamp>
             {openedComment && (
               <AddComment>
@@ -374,20 +374,17 @@ const PhotoPresenter: React.SFC<IProps> = ({
                 <List />
               </Icon>
             </PhotoHeader>
-            <Comments>
-              <Comment username={creatorUsername} comment={caption} />
-              {comments &&
-                comments.map(comment => (
-                  <Comment
-                    id={comment.id}
-                    key={comment.id}
-                    username={comment.creator.username}
-                    comment={comment.message}
-                    getCommentId={getCommentId}
-                    naturalTime={comment.naturalTime}
-                  />
-                ))}
-            </Comments>
+            <CaptionContainer>
+              <Caption>
+                <SBold text={creatorUsername} />
+                {caption}
+              </Caption>
+            </CaptionContainer>
+            <Comments
+              openedComment={openedComment}
+              getCommentId={getCommentId}
+              cardId={cardId}
+            />
             <CardButtons isLiked={isLiked} onClick={onLikeClick} />
             <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
             <TimeStamp>{naturalTime}</TimeStamp>

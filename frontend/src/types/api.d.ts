@@ -138,6 +138,42 @@ export interface UnMatchVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetComments
+// ====================================================
+
+export interface GetComments_getComments_comments_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface GetComments_getComments_comments {
+  __typename: "CommentType";
+  id: string;
+  message: string;
+  creator: GetComments_getComments_comments_creator | null;
+}
+
+export interface GetComments_getComments {
+  __typename: "GetCommentsResponse";
+  comments: (GetComments_getComments_comments | null)[] | null;
+}
+
+export interface GetComments {
+  getComments: GetComments_getComments;
+}
+
+export interface GetCommentsVariables {
+  cardId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: FollowUser
 // ====================================================
 
@@ -240,7 +276,6 @@ export interface AddComment_addComment_comment {
   id: string;
   message: string;
   creator: AddComment_addComment_comment_creator | null;
-  naturalTime: string | null;
 }
 
 export interface AddComment_addComment {
@@ -351,22 +386,6 @@ export interface CardDetail_cardDetail_card_city {
   cityName: string | null;
 }
 
-export interface CardDetail_cardDetail_card_comments_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-}
-
-export interface CardDetail_cardDetail_card_comments {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-  creator: CardDetail_cardDetail_card_comments_creator | null;
-  naturalTime: string | null;
-}
-
 export interface CardDetail_cardDetail_card_creator_profile {
   __typename: "ProfileType";
   avatar: string;
@@ -395,7 +414,6 @@ export interface CardDetail_cardDetail_card {
   commentCount: number | null;
   isLiked: boolean | null;
   naturalTime: string | null;
-  comments: (CardDetail_cardDetail_card_comments | null)[] | null;
   creator: CardDetail_cardDetail_card_creator;
 }
 
@@ -853,22 +871,6 @@ export interface Feed_feed_cards_city {
   cityName: string | null;
 }
 
-export interface Feed_feed_cards_comments_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-}
-
-export interface Feed_feed_cards_comments {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-  creator: Feed_feed_cards_comments_creator | null;
-  naturalTime: string | null;
-}
-
 export interface Feed_feed_cards_creator_profile {
   __typename: "ProfileType";
   avatar: string;
@@ -897,7 +899,6 @@ export interface Feed_feed_cards {
   commentCount: number | null;
   isLiked: boolean | null;
   naturalTime: string | null;
-  comments: (Feed_feed_cards_comments | null)[] | null;
   creator: Feed_feed_cards_creator;
 }
 
@@ -2591,22 +2592,6 @@ export interface UploadCard_uploadCard_card_city {
   cityName: string | null;
 }
 
-export interface UploadCard_uploadCard_card_comments_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-}
-
-export interface UploadCard_uploadCard_card_comments {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-  creator: UploadCard_uploadCard_card_comments_creator | null;
-  naturalTime: string | null;
-}
-
 export interface UploadCard_uploadCard_card_creator_profile {
   __typename: "ProfileType";
   avatar: string;
@@ -2635,7 +2620,6 @@ export interface UploadCard_uploadCard_card {
   commentCount: number | null;
   isLiked: boolean | null;
   naturalTime: string | null;
-  comments: (UploadCard_uploadCard_card_comments | null)[] | null;
   creator: UploadCard_uploadCard_card_creator;
 }
 
@@ -2922,22 +2906,6 @@ export interface DetailParts_city {
   cityName: string | null;
 }
 
-export interface DetailParts_comments_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-}
-
-export interface DetailParts_comments {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-  creator: DetailParts_comments_creator | null;
-  naturalTime: string | null;
-}
-
 export interface DetailParts_creator_profile {
   __typename: "ProfileType";
   avatar: string;
@@ -2966,7 +2934,6 @@ export interface DetailParts {
   commentCount: number | null;
   isLiked: boolean | null;
   naturalTime: string | null;
-  comments: (DetailParts_comments | null)[] | null;
   creator: DetailParts_creator;
 }
 

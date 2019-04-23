@@ -90,14 +90,6 @@ export const DETAIL_CARD_FRAGMENT = gql`
     commentCount
     isLiked
     naturalTime
-    comments {
-      id
-      message
-      creator {
-        username
-      }
-      naturalTime
-    }
     creator {
       id
       username

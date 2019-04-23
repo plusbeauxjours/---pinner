@@ -183,7 +183,6 @@ const Title = styled.div`
 const Box = styled.div`
   width: 905px;
   display: flex;
-  flex-wrap: nowrap;
   overflow-x: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   ::-webkit-scrollbar {
@@ -270,6 +269,7 @@ const FeedPresenter: React.SFC<IProps> = ({
   feedLoading,
   coffeeData: { getCoffees: { coffees = null } = {} } = {},
   coffeeLoading,
+
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},
   recommandUsersLoading,
   nowModalOpen,
@@ -504,7 +504,6 @@ const FeedPresenter: React.SFC<IProps> = ({
                 likeCount={card.likeCount}
                 commentCount={card.commentCount}
                 caption={card.caption}
-                comments={card.comments}
                 naturalTime={card.naturalTime}
                 isLiked={card.isLiked}
                 currentCity={currentCity}

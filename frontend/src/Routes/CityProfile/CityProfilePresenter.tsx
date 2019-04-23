@@ -164,7 +164,6 @@ const Title = styled.div`
 const Box = styled.div`
   width: 905px;
   display: flex;
-  flex-wrap: nowrap;
   overflow-x: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   ::-webkit-scrollbar {

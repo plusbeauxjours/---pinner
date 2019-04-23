@@ -167,7 +167,6 @@ const Container = styled.div`
 const Box = styled.div`
   width: 905px;
   display: flex;
-  flex-wrap: nowrap;
   overflow-x: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   ::-webkit-scrollbar {
@@ -336,10 +335,7 @@ const TripProfilePresenter: React.SFC<IProps> = ({
           <PAvatar size="lg" url={cityPhoto} />
           <Username>{cityName}</Username>
           <Username>
-            From{" "}
-            {startDate}{" "}
-            To{" "}
-            {endDate}
+            From {startDate} To {endDate}
           </Username>
         </PHeader>
         <SWrapper>

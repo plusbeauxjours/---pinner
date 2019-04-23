@@ -40,6 +40,21 @@ def resolve_feed(self, info, **kwargs):
 
 
 @login_required
+def resolve_get_comments(self, info, **kwargs):
+
+    cardId = kwargs.get('cardId')
+    user = info.context.user
+
+    try:
+        card = models.Card.objects.get(id=cardId)
+    except models.Card.DoesNotExist:
+        raise Exception('Card not found')
+
+    comments = card.comments.all()
+    return types.GetCommentsResponse(comments=comments)
+
+
+@login_required
 def resolve_card_likes(self, info, **kwargs):
 
     cardId = kwargs.get('cardId')

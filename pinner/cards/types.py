@@ -119,3 +119,7 @@ class ThirdAnnotateRespose(graphene.ObjectType):
     continent = graphene.Field(location_types.ContinentType)
     countries = graphene.List(location_types.CountryType)
     cards = graphene.List(CardType)
+
+
+class GetCommentsResponse(graphene.ObjectType):
+    comments = graphene.List(CommentType)

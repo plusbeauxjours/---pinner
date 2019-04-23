@@ -47,6 +47,12 @@ class Query(object):
             'endDate': graphene.Date(required=True)
         }
     )
+    get_comments = graphene.Field(
+        types.GetCommentsResponse,
+        resolver=queries.resolve_get_comments,
+        required=True,
+        args={'cardId': graphene.Int(required=True)}
+    )
 
 
 class Mutation(object):
