@@ -1807,6 +1807,7 @@ export interface GetDurationAvatars_getDurationAvatars_usersBefore {
 
 export interface GetDurationAvatars_getDurationAvatars {
   __typename: "DurationAvatarsResponse";
+  userCount: number | null;
   usersBefore: (GetDurationAvatars_getDurationAvatars_usersBefore | null)[] | null;
 }
 

@@ -38,6 +38,7 @@ export const GET_DURATION_AVATARS = gql`
       startDate: $startDate
       endDate: $endDate
     ) {
+      userCount
       usersBefore {
         actor {
           profile {

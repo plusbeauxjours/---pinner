@@ -19,17 +19,17 @@ def resolve_get_coffees(self, info, **kwargs):
     matches = user.guest.all()
 
     if (coffeePage is 0):
-        coffees = city.coffee.filter(Q(target='everyone') |
-                                     Q(target='nationality', host__profile__nationality=profile.nationality) |
-                                     Q(target='gender', host__profile__gender=profile.gender) |
-                                     Q(target='followers', host__profile__in=followings) |
-                                     Q(host__pk=user.pk)).exclude(match__in=matches).order_by('-created_at')[:6]
+        coffees = city.coffee.filter((Q(target='everyone') |
+                                      Q(target='nationality', host__profile__nationality=profile.nationality) |
+                                      Q(target='gender', host__profile__gender=profile.gender) |
+                                      Q(target='followers', host__profile__in=followings)) &
+                                     Q(host__pk=user.pk, status='requesting')).exclude(match__in=matches).order_by('-created_at')[:6]
     else:
-        coffees = city.coffee.filter(Q(target='everyone') |
-                                     Q(target='nationality', host__profile__nationality=profile.nationality) |
-                                     Q(target='gender', host__profile__gender=profile.gender) |
-                                     Q(target='followers', host__profile__in=followings) |
-                                     Q(host__pk=user.pk)).exclude(match__in=matches).order_by('-created_at')[6:]
+        coffees = city.coffee.filter((Q(target='everyone') |
+                                      Q(target='nationality', host__profile__nationality=profile.nationality) |
+                                      Q(target='gender', host__profile__gender=profile.gender) |
+                                      Q(target='followers', host__profile__in=followings)) &
+                                     Q(host__pk=user.pk, status='requesting')).exclude(match__in=matches).order_by('-created_at')[6:]
 
     return types.GetCoffeesResponse(coffees=coffees)
 

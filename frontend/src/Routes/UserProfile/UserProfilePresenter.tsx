@@ -154,9 +154,10 @@ const Icon = styled.span`
   }
   svg {
     fill: white;
-    transition: opacity 0.2s ease-in-out;
-  &:hover {
-    opacity: 1;
+    transition: fill 0.2s ease-in-out;
+    &:hover {
+      fill: grey;
+    }
   }
 `;
 

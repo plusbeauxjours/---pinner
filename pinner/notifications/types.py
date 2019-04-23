@@ -51,6 +51,7 @@ class DurationTripsResponse(graphene.ObjectType):
 
 
 class DurationAvatarsResponse(graphene.ObjectType):
+    userCount = graphene.Int()
     usersBefore = graphene.List(MoveNotificationType)
 
 
