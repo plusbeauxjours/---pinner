@@ -25,14 +25,9 @@ def resolve_top_countries(self, info, **kwargs):
     user = info.context.user
     username = kwargs.get('username')
     profile = User.objects.get(username=username)
-    topCountryPage = kwargs.get('topCountryPage', 0)
 
-    if (topCountryPage is 0):
-        footprints = profile.movenotification.all().order_by(
-            '-city__country').distinct('city__country')[:6]
-    else:
-        footprints = profile.movenotification.all().order_by(
-            '-city__country').distinct('city__country')[6:12]
+    footprints = profile.movenotification.all().order_by(
+        '-city__country').distinct('city__country')[:6]
 
     return location_types.FootprintsResponse(footprints=footprints)
 
@@ -43,12 +38,8 @@ def resolve_frequent_visits(self, info, **kwargs):
     user = info.context.user
     username = kwargs.get('username')
     profile = User.objects.get(username=username)
-    frequentVisitPage = kwargs.get('frequentVisitPage', 0)
 
-    if (frequentVisitPage is 0):
-        footprints = profile.movenotification.all().order_by('-city').distinct('city')[:6]
-    else:
-        footprints = profile.movenotification.all().order_by('-city').distinct('city')[6:12]
+    footprints = profile.movenotification.all().order_by('-city').distinct('city')[:6]
 
     return location_types.FootprintsResponse(footprints=footprints)
 

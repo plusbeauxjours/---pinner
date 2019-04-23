@@ -49,7 +49,6 @@ class Query(object):
         required=True,
         args={
             'username': graphene.String(required=True),
-            'topCountryPage': graphene.Int(),
         }
     )
     frequent_visits = graphene.Field(
@@ -58,7 +57,6 @@ class Query(object):
         required=True,
         args={
             'username': graphene.String(required=True),
-            'frequentVisitPage': graphene.Int(),
         }
     )
     get_followers = graphene.Field(

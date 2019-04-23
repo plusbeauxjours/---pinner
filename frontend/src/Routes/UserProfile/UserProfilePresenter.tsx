@@ -16,7 +16,6 @@ import Bold from "../../Components/Bold";
 import CardGrid from "../../Components/CardGrid";
 import FollowBtn from "../../Components/FollowBtn";
 import Input from "../../Components/Input";
-import LocationRow from "../../Components/LocationRow";
 import GetCities from "../../Components/GetCities";
 import GetCountries from "../../Components/GetCountries";
 import GetContinents from "../../Components/GetContinents";
@@ -431,9 +430,6 @@ interface IProps {
   myCoffeeData?: any;
   myCoffeeLoading: boolean;
 
-  topCountriesList: any;
-  frequentVisitsList: any;
-
   modalOpen: boolean;
   confirmModalOpen: boolean;
 
@@ -441,8 +437,6 @@ interface IProps {
   tripConfirmModalOpen: boolean;
   tripAddModalOpen: boolean;
   tripEditModalOpen: boolean;
-  topCountriesModalOpen: boolean;
-  frequentVisitsModalOpen: boolean;
   cityModalOpen: boolean;
   countryModalOpen: boolean;
   continentModalOpen: boolean;
@@ -476,8 +470,6 @@ interface IProps {
   onFocusChange: (arg: "startDate" | "endDate" | null) => void;
 
   toggleTripSeeAll: () => void;
-  toggleTopCountriesSeeAll: () => void;
-  toggleFrequentVisitsSeeAll: () => void;
   toggleModal: () => void;
   toggleConfirmModal: () => void;
 
@@ -485,8 +477,6 @@ interface IProps {
   toggleTripConfirmModal: () => void;
   toggleAddTripModal: () => void;
   toggleEditTripModal: () => void;
-  toggleTopCountriesModal: () => void;
-  toggleFrequentVisitsModal: () => void;
   toggleCityModal: () => void;
   toggleCountryModal: () => void;
   toggleContinentModal: () => void;
@@ -551,16 +541,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   myCoffeeData: { getMyCoffee: { coffees = null } = {} } = {},
   myCoffeeLoading,
 
-  topCountriesList,
-  frequentVisitsList,
   modalOpen,
   tripModalOpen,
   confirmModalOpen,
   tripConfirmModalOpen,
   tripAddModalOpen,
   tripEditModalOpen,
-  topCountriesModalOpen,
-  frequentVisitsModalOpen,
   cityModalOpen,
   countryModalOpen,
   continentModalOpen,
@@ -571,16 +557,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   requestModalOpen,
   editMode,
   toggleTripSeeAll,
-  toggleTopCountriesSeeAll,
-  toggleFrequentVisitsSeeAll,
   toggleModal,
   toggleConfirmModal,
   toggleTripModal,
   toggleTripConfirmModal,
   toggleAddTripModal,
   toggleEditTripModal,
-  toggleTopCountriesModal,
-  toggleFrequentVisitsModal,
   toggleCityModal,
   toggleCountryModal,
   toggleContinentModal,
@@ -823,43 +805,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               {console.log(cityName)}
             </FormModal>
           </FromModalContainer>
-        )}
-        {topCountriesModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleTopCountriesModal} />
-            <RowModal>
-              <Wrapper>
-                {topCountriesList.map(country => (
-                  <LocationRow
-                    key={country.id}
-                    id={country.id}
-                    avatar={country.city.country.countryPhoto}
-                    countryName={country.city.country.countryName}
-                    type={"topCountries"}
-                  />
-                ))}
-              </Wrapper>
-            </RowModal>
-          </ModalContainer>
-        )}
-        {frequentVisitsModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleFrequentVisitsModal} />
-            <RowModal>
-              <Wrapper>
-                {frequentVisitsList.map(city => (
-                  <LocationRow
-                    key={city.id}
-                    id={city.id}
-                    cityName={city.city.cityName}
-                    avatar={city.city.cityPhoto}
-                    countryName={city.city.country.countryName}
-                    type={"frequentVisits"}
-                  />
-                ))}
-              </Wrapper>
-            </RowModal>
-          </ModalContainer>
         )}
         {/* 
         ////////////// HEADER //////////////
@@ -1138,7 +1083,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           */}
           <Title>
             <SBold text={"TOP COUNTRIES"} />
-            <SeeAll onClick={toggleTopCountriesSeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <TripBox>
@@ -1171,7 +1115,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           <GreyLine />
           <Title>
             <SBold text={"FREQUENT VISITS"} />
-            <SeeAll onClick={toggleFrequentVisitsSeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <TripBox>
@@ -1208,7 +1151,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           <GreyLine />
           <Title>
             <SBold text={"POSTS"} />
-            <SeeAll onClick={toggleModal}>SEE ALL</SeeAll>
           </Title>
           {user.cards && user.cards.length !== 0 && (
             <CardGrid

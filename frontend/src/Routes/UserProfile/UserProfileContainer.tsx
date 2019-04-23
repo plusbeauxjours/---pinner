@@ -94,8 +94,6 @@ interface IState {
   tripConfirmModalOpen: boolean;
   tripAddModalOpen: boolean;
   tripEditModalOpen: boolean;
-  topCountriesModalOpen: boolean;
-  frequentVisitsModalOpen: boolean;
   cityModalOpen: boolean;
   countryModalOpen: boolean;
   continentModalOpen: boolean;
@@ -123,10 +121,6 @@ interface IState {
   moveNotificationId: string;
   coffeeId: string;
   tripPage: number;
-  topCountryPage: number;
-  frequentVisitPage: number;
-  topCountriesList: any;
-  frequentVisitsList: any;
   newCardCaption: string;
 }
 
@@ -142,8 +136,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   public requestCoffeeFn: MutationFn;
 
   public fetchMore;
-  public topCountryFetchMore;
-  public frequentVisitFetchMore;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -153,8 +146,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripConfirmModalOpen: false,
       tripAddModalOpen: false,
       tripEditModalOpen: false,
-      topCountriesModalOpen: false,
-      frequentVisitsModalOpen: false,
       cityModalOpen: false,
       countryModalOpen: false,
       continentModalOpen: false,
@@ -182,10 +173,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       moveNotificationId: null,
       coffeeId: null,
       tripPage: 0,
-      topCountryPage: 0,
-      frequentVisitPage: 0,
-      topCountriesList: null,
-      frequentVisitsList: null,
       newCardCaption: ""
     };
   }
@@ -203,8 +190,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripConfirmModalOpen,
       tripAddModalOpen,
       tripEditModalOpen,
-      topCountriesModalOpen,
-      frequentVisitsModalOpen,
       cityModalOpen,
       countryModalOpen,
       continentModalOpen,
@@ -231,10 +216,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       moveNotificationId,
       coffeeId,
       tripPage,
-      topCountryPage,
-      frequentVisitPage,
-      topCountriesList,
-      frequentVisitsList,
       newCardCaption
     } = this.state;
     return (
@@ -360,32 +341,26 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                               TOP_COUNTRIES
                                                             }
                                                             variables={{
-                                                              username,
-                                                              topCountryPage
+                                                              username
                                                             }}
                                                           >
                                                             {({
                                                               data: topCountriesData,
-                                                              loading: topCountriesLoading,
-                                                              fetchMore: topCountryFetchMore
+                                                              loading: topCountriesLoading
                                                             }) => {
-                                                              this.topCountryFetchMore = topCountryFetchMore;
                                                               return (
                                                                 <FrequentVisitsQuery
                                                                   query={
                                                                     FREQUENT_VISITS
                                                                   }
                                                                   variables={{
-                                                                    username,
-                                                                    frequentVisitPage
+                                                                    username
                                                                   }}
                                                                 >
                                                                   {({
                                                                     data: frequentVisitsData,
-                                                                    loading: frequentVisitsLoading,
-                                                                    fetchMore: frequentVisitFetchMore
+                                                                    loading: frequentVisitsLoading
                                                                   }) => {
-                                                                    this.frequentVisitFetchMore = frequentVisitFetchMore;
                                                                     return (
                                                                       <GetTiprsQuery
                                                                         query={
@@ -500,12 +475,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                 tripEditModalOpen={
                                                                                                   tripEditModalOpen
                                                                                                 }
-                                                                                                topCountriesModalOpen={
-                                                                                                  topCountriesModalOpen
-                                                                                                }
-                                                                                                frequentVisitsModalOpen={
-                                                                                                  frequentVisitsModalOpen
-                                                                                                }
                                                                                                 cityModalOpen={
                                                                                                   cityModalOpen
                                                                                                 }
@@ -538,14 +507,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                   this
                                                                                                     .toggleTripSeeAll
                                                                                                 }
-                                                                                                toggleTopCountriesSeeAll={
-                                                                                                  this
-                                                                                                    .toggleTopCountriesSeeAll
-                                                                                                }
-                                                                                                toggleFrequentVisitsSeeAll={
-                                                                                                  this
-                                                                                                    .toggleFrequentVisitsSeeAll
-                                                                                                }
                                                                                                 toggleModal={
                                                                                                   this
                                                                                                     .toggleModal
@@ -569,14 +530,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                 toggleEditTripModal={
                                                                                                   this
                                                                                                     .toggleEditTripModal
-                                                                                                }
-                                                                                                toggleTopCountriesModal={
-                                                                                                  this
-                                                                                                    .toggleTopCountriesModal
-                                                                                                }
-                                                                                                toggleFrequentVisitsModal={
-                                                                                                  this
-                                                                                                    .toggleFrequentVisitsModal
                                                                                                 }
                                                                                                 toggleCityModal={
                                                                                                   this
@@ -632,12 +585,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                 }
                                                                                                 knowingFollowersLoading={
                                                                                                   knowingFollowersLoading
-                                                                                                }
-                                                                                                topCountriesList={
-                                                                                                  topCountriesList
-                                                                                                }
-                                                                                                frequentVisitsList={
-                                                                                                  frequentVisitsList
                                                                                                 }
                                                                                                 getTipsLoading={
                                                                                                   getTipsLoading
@@ -885,60 +832,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       }
     });
   };
-  public toggleTopCountriesSeeAll = () => {
-    const {
-      match: {
-        params: { username }
-      }
-    } = this.props;
-    const { topCountriesModalOpen } = this.state;
-    this.topCountryFetchMore({
-      query: TOP_COUNTRIES,
-      variables: {
-        topCountryPage: 1,
-        username
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult) {
-          return previousResult;
-        }
-        this.setState({
-          topCountriesList: [
-            ...previousResult.topCountries.footprints,
-            ...fetchMoreResult.topCountries.footprints
-          ],
-          topCountriesModalOpen: !topCountriesModalOpen
-        });
-      }
-    });
-  };
-  public toggleFrequentVisitsSeeAll = () => {
-    const {
-      match: {
-        params: { username }
-      }
-    } = this.props;
-    const { frequentVisitsModalOpen } = this.state;
-    this.frequentVisitFetchMore({
-      query: FREQUENT_VISITS,
-      variables: {
-        frequentVisitPage: 1,
-        username
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult) {
-          return previousResult;
-        }
-        this.setState({
-          frequentVisitsList: [
-            ...previousResult.frequentVisits.footprints,
-            ...fetchMoreResult.frequentVisits.footprints
-          ],
-          frequentVisitsModalOpen: !frequentVisitsModalOpen
-        });
-      }
-    });
-  };
   public toggleTripModal = (
     moveNotificationId,
     cityName,
@@ -997,18 +890,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     this.setState({
       tripEditModalOpen: !tripEditModalOpen,
       tripModalOpen: !tripModalOpen
-    });
-  };
-  public toggleTopCountriesModal = () => {
-    const { topCountriesModalOpen } = this.state;
-    this.setState({
-      topCountriesModalOpen: !topCountriesModalOpen
-    });
-  };
-  public toggleFrequentVisitsModal = () => {
-    const { frequentVisitsModalOpen } = this.state;
-    this.setState({
-      frequentVisitsModalOpen: !frequentVisitsModalOpen
     });
   };
   public toggleCityModal = () => {

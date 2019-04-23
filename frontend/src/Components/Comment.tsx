@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Bold from "./Bold";
-import { Gear } from "../Icons";
+import { Delete } from "../Icons";
 
 const Container = styled.div`
   display: flex;
@@ -19,9 +19,12 @@ const Back = styled.span`
   align-items: center;
 `;
 
-const GearContainer = styled.span`
+const Icon = styled.span`
   margin-left: 15px;
   cursor: pointer;
+  svg {
+    fill: white;
+  }
 `;
 
 const SBold = styled(Bold)`
@@ -32,7 +35,6 @@ const TimeStamp = styled.span`
   text-transform: uppercase;
   font-size: 10px;
   line-height: 18px;
-  margin-top: 10px;
   display: block;
   color: white;
 `;
@@ -59,10 +61,10 @@ const Comment: React.SFC<IProps> = ({
       {comment}
     </Front>
     <Back>
-      <GearContainer onClick={() => getCommentId(id)}>
-        <Gear />
-      </GearContainer>
       {naturalTime && <TimeStamp>{naturalTime}</TimeStamp>}
+      <Icon onClick={() => getCommentId(id)}>
+        <Delete />
+      </Icon>
     </Back>
   </Container>
 );

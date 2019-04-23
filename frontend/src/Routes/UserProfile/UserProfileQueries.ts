@@ -187,8 +187,8 @@ export const DELETE_TRIP = gql`
 `;
 
 export const TOP_COUNTRIES = gql`
-  query TopCountries($username: String!, $topCountryPage: Int) {
-    topCountries(username: $username, topCountryPage: $topCountryPage) {
+  query TopCountries($username: String!) {
+    topCountries(username: $username) {
       footprints {
         id
         city {
@@ -207,8 +207,8 @@ export const TOP_COUNTRIES = gql`
 `;
 
 export const FREQUENT_VISITS = gql`
-  query FrequentVisits($username: String!, $frequentVisitPage: Int) {
-    frequentVisits(username: $username, frequentVisitPage: $frequentVisitPage) {
+  query FrequentVisits($username: String!) {
+    frequentVisits(username: $username) {
       footprints {
         id
         city {

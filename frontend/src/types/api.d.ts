@@ -1127,6 +1127,7 @@ export interface GetCoffees_getCoffees_coffees_city {
 export interface GetCoffees_getCoffees_coffees_host_profile {
   __typename: "ProfileType";
   avatar: string;
+  isSelf: boolean | null;
 }
 
 export interface GetCoffees_getCoffees_coffees_host {
@@ -2279,7 +2280,6 @@ export interface TopCountries {
 
 export interface TopCountriesVariables {
   username: string;
-  topCountryPage?: number | null;
 }
 
 
@@ -2321,7 +2321,6 @@ export interface FrequentVisits {
 
 export interface FrequentVisitsVariables {
   username: string;
-  frequentVisitPage?: number | null;
 }
 
 
@@ -2675,6 +2674,7 @@ export interface GetMyCoffee_getMyCoffee_coffees_city {
 export interface GetMyCoffee_getMyCoffee_coffees_host_profile {
   __typename: "ProfileType";
   avatar: string;
+  isSelf: boolean | null;
 }
 
 export interface GetMyCoffee_getMyCoffee_coffees_host {
