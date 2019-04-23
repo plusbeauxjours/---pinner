@@ -19,6 +19,14 @@ const Container = styled.div`
   text-overflow: ellipsis;
 `;
 
+// const AvatarContainer = styled.div`
+//   display: flex;
+// `;
+
+// const LAvatar = styled(Avatar)`
+//   margin-right: -12px;
+// `;
+
 const SAvatar = styled(Avatar)`
   margin-bottom: 15px;
 `;
@@ -45,6 +53,7 @@ interface IProps {
   currentCountry: string;
   target: string;
   expires: string;
+  isSelf: boolean;
 }
 
 const CoffeeCard: React.SFC<IProps> = ({
@@ -52,20 +61,33 @@ const CoffeeCard: React.SFC<IProps> = ({
   avatar,
   username,
   target,
-  expires
+  expires,
+  isSelf
 }) => {
   return (
     <>
-      <Link to={`/c/${id}`}>
-        <Container>
-          <SAvatar url={avatar} size="md" />
-          <Location>{id}</Location>
-          <SBold text={username} />
-          <Location>{target}</Location>
-          <Location>{expires}</Location>
-        </Container>
-      </Link>
+      {isSelf ? (
+        <Link to={`/c/${id}`}>
+          <Container>
+            <SAvatar url={avatar} size="md" />
+            <Location>{id}</Location>
+            <SBold text={username} />
+            <Location>{target}</Location>
+            <Location>{expires}</Location>
+          </Container>
+        </Link>
+      ) : (
+        <Link to={`/c/${id}`}>
+          <Container>
+            <Location>{id}</Location>
+            <SBold text={username} />
+            <Location>{target}</Location>
+            <Location>{expires}</Location>
+          </Container>
+        </Link>
+      )}
     </>
   );
 };
+
 export default CoffeeCard;

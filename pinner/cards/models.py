@@ -56,9 +56,6 @@ class Comment(config_models.TimeStampedModel):
     def __str__(self):
         return '{} / User: {} - Comment: {} - Card: {} {}'.format(self.id, self.creator.username, self.message, self.card_id, self.card.city)
 
-    class Meta:
-        ordering = ['-created_at']
-
 
 class Like(config_models.TimeStampedModel):
 

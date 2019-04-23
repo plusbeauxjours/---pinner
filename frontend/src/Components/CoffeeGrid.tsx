@@ -20,6 +20,7 @@ const CoffeeGrid: React.SFC<IProps> = ({ coffees }) => {
           isFollowing={coffee.host.profile.isFollowing}
           target={coffee.target}
           expires={coffee.naturalTime}
+          isSelf={coffee.host.isSelf}
         />
       ))}
     </>

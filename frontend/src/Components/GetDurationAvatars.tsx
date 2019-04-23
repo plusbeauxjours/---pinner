@@ -70,9 +70,11 @@ const GetDurationAvatars: React.SFC<IProps> = ({
                   <SAvatar size={"sm"} url={user.actor.profile.avatar} />
                 </AvatarContainer>
               ))}
-            <CountCircle>
-              <Count>{userCount}</Count>
-            </CountCircle>
+            {userCount > 4 ? (
+              <CountCircle>
+                <Count>{userCount}</Count>
+              </CountCircle>
+            ) : null}
           </>
         );
       } else {

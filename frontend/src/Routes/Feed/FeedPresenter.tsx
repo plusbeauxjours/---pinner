@@ -218,6 +218,10 @@ const Icon = styled.span`
   }
   svg {
     fill: white;
+    transition: fill 0.2s ease-in-out;
+    &:hover {
+      fill: grey;
+    }
   }
 `;
 

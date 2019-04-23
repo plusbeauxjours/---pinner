@@ -63,7 +63,6 @@ interface IState {
   cardMenuModalOpen: boolean;
   deleteCardModalOpen: boolean;
   newComment: string;
-  selfComments: any;
   openedComment: boolean;
   likeCount: number;
   isSelf: boolean;
@@ -87,7 +86,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
       deleteCardModalOpen: false,
       newComment: "",
       openedComment: false,
-      selfComments: [],
       likeCount: props.likeCount,
       isSelf: props.isSelf,
       isLiked: props.isLiked,
@@ -116,7 +114,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
       deleteCardModalOpen,
       newComment,
       openedComment,
-      selfComments,
       likeCount,
       isSelf,
       isLiked,
@@ -186,7 +183,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
                                     newComment={newComment}
                                     isLiked={isLiked}
                                     onLikeClick={this.onLikeClick}
-                                    selfComments={selfComments}
                                     toggleCommentClick={this.toggleCommentClick}
                                     openedComment={openedComment}
                                     onKeyUp={this.onKeyUp}
@@ -299,7 +295,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
         const card = data.feed.cards.find(
           i => parseInt(i.id, 10) === parseInt(cardId, 10)
         );
-        card.comments.unshift(addComment.comment);
+        card.comments.push(addComment.comment);
         cache.writeQuery({
           query: GET_FEED,
           variables: {

@@ -176,7 +176,6 @@ interface IProps {
   newComment: string;
   isLiked: boolean;
   onLikeClick: () => void;
-  selfComments: any;
   openedComment: boolean;
   toggleCommentClick: () => void;
   onKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
@@ -210,7 +209,6 @@ const PhotoPresenter: React.SFC<IProps> = ({
   newComment,
   isLiked,
   onLikeClick,
-  selfComments,
   openedComment,
   toggleCommentClick,
   onKeyUp,
@@ -302,16 +300,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                       username={comment.creator.username}
                       comment={comment.message}
                       getCommentId={getCommentId}
-                    />
-                  ))}
-                {selfComments &&
-                  selfComments.map(comment => (
-                    <Comment
-                      id={comment.id}
-                      key={comment.id}
-                      username={comment.username}
-                      comment={comment.message}
-                      getCommentId={getCommentId}
+                      naturalTime={comment.naturalTime}
                     />
                   ))}
               </Comments>
@@ -395,16 +384,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                     username={comment.creator.username}
                     comment={comment.message}
                     getCommentId={getCommentId}
-                  />
-                ))}
-              {selfComments &&
-                selfComments.map(comment => (
-                  <Comment
-                    id={comment.id}
-                    key={comment.id}
-                    username={comment.username}
-                    comment={comment.message}
-                    getCommentId={getCommentId}
+                    naturalTime={comment.naturalTime}
                   />
                 ))}
             </Comments>

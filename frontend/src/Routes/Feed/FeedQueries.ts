@@ -108,6 +108,7 @@ export const GET_COFFEES = gql`
           username
           profile {
             avatar
+            isSelf
           }
         }
         expires
