@@ -1024,14 +1024,16 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           ////////////// TRIPS //////////////
           */}
           <Title>
-            <SBold text={"NEED SOME COFFEE"} />
+            <SBold text={"COFFEES"} />
             {/* <SeeAll onClick={toggleCoffeeSeeAll}>SEE ALL</SeeAll> */}
           </Title>
           <Container>
             <Box>
-              <Icon onClick={toggleRequestModal}>
-                <Upload />
-              </Icon>
+              {user.profile.isSelf && (
+                <Icon onClick={toggleRequestModal}>
+                  <Upload />
+                </Icon>
+              )}
               {!myCoffeeLoading && coffees ? (
                 <CoffeeGrid coffees={coffees} />
               ) : (
@@ -1041,13 +1043,15 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           </Container>
           <GreyLine />
           <Title>
-            <SBold text={"TRIP LOG"} />
+            <SBold text={"TRIPS"} />
             <SeeAll onClick={toggleTripSeeAll}>SEE ALL</SeeAll>
           </Title>
           <TripContainer>
-            <TripIcon onClick={addTrip}>
-              <Upload />
-            </TripIcon>
+            {user.profile.isSelf && (
+              <TripIcon onClick={addTrip}>
+                <Upload />
+              </TripIcon>
+            )}
             {!getTipsLoading && getTrips ? (
               getTrips.map(trip => (
                 <TripRow key={trip.id}>
@@ -1179,11 +1183,11 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           <Title>
             <SBold text={"POSTS"} />
           </Title>
-            <CardGrid
-              cards={user.cards}
-              upload={true}
-              toggleUploadModal={toggleUploadModal}
-            />
+          <CardGrid
+            upload={user.profile.isSelf ? true : false}
+            cards={user.cards}
+            toggleUploadModal={toggleUploadModal}
+          />
         </SWrapper>
       </>
     );
