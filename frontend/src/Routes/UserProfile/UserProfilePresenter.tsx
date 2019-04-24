@@ -304,6 +304,10 @@ const TripOverlay = styled.div`
   cursor: pointer;
   svg {
     fill: white;
+    transition: fill 0.3s ease-in-out;
+    &:hover {
+      fill: red;
+    }
   }
   transition: opacity 0.3s ease-in-out;
 `;
@@ -1030,7 +1034,11 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             {user.profile.isSelf &&
             requestingCoffees &&
             requestingCoffees.length !== 0 ? (
-              <CoffeeGrid requestingCoffees={requestingCoffees} />
+              <CoffeeGrid
+                requestingCoffees={requestingCoffees}
+                followersModalOpen={followersModalOpen}
+                toggleFollowersModal={toggleFollowersModal}
+              />
             ) : (
               <Icon onClick={toggleRequestModal}>
                 <Upload />

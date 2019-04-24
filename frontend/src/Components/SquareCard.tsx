@@ -2,12 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { HeartFilled, BubbleFilled } from "../Icons";
 import { Link } from "react-router-dom";
+import { List } from "../Icons";
 import Bold from "./Bold";
 
 const Square = styled.div<{ bg: string }>`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-self: center;
   height: 100%;
   width: 100%;
   background-color: ${props => props.theme.whiteColor};
@@ -15,16 +16,36 @@ const Square = styled.div<{ bg: string }>`
   background-size: 100%;
 `;
 
+const ListOverlay = styled.div`
+  padding: 10px;
+  z-index: 5;
+  opacity: 0;
+  display: flex;
+
+  position: absolute;
+  align-self: flex-start;
+  justify-self: flex-end;
+  cursor: pointer;
+  svg {
+    fill: white;
+    transition: fill 0.3s ease-in-out;
+    &:hover {
+      fill: red;
+    }
+  }
+  transition: opacity 0.3s ease-in-out;
+`;
+
 const Overlay = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: white;
-  z-index: 1;
+  z-index: 5;
   opacity: 0;
   svg {
     fill: white;
   }
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
@@ -32,12 +53,16 @@ const Overlay = styled.div`
   transition: opacity 0.2s ease-in-out;
   &:hover {
     opacity: 1;
+    ${ListOverlay} {
+      opacity: 1;
+    }
   }
 `;
 
 const Count = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   text-align: center;
   &:first-child {
     margin-right: 40px;
@@ -53,7 +78,9 @@ const CountNumber = styled.div`
 const Caption = styled(Bold)`
   position: absolute;
   display: flex;
-  z-index: 5;
+  align-self: center;
+  justify-self: center;
+  z-index: 1;
   font-size: 40px;
   font-family: "Qwigley";
   font-weight: 200;
@@ -79,11 +106,12 @@ const SquareCard: React.SFC<IProps> = ({
     <Square bg={file}>
       <Caption text={caption} />
       <Overlay>
+        <ListOverlay>
+          <List />
+        </ListOverlay>
         <Count>
           <HeartFilled />
           <CountNumber>{likeCount}</CountNumber>
-        </Count>
-        <Count>
           <BubbleFilled />
           <CountNumber>{commentCount}</CountNumber>
         </Count>

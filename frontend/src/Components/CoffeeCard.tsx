@@ -2,8 +2,25 @@ import React from "react";
 import styled from "src/Styles/typed-components";
 import Avatar from "./Avatar";
 import Bold from "./Bold";
+import { List } from "../Icons";
 import { Link } from "react-router-dom";
 import LoaderData from "./LoaderData";
+
+const ListOverlay = styled.div`
+  z-index: 1;
+  opacity: 0;
+  display: flex;
+  align-self: flex-end;
+  cursor: pointer;
+  svg {
+    fill: white;
+    transition: fill 0.3s ease-in-out;
+    &:hover {
+      fill: red;
+    }
+  }
+  transition: opacity 0.3s ease-in-out;
+`;
 
 const Container = styled.div`
   display: flex;
@@ -18,6 +35,11 @@ const Container = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  &:hover {
+    ${ListOverlay} {
+      opacity: 1;
+    }
+  }
 `;
 
 const SAvatar = styled(Avatar)`
@@ -61,6 +83,8 @@ interface IProps {
   isSelf: boolean;
   status: string;
   requestingCoffees: boolean;
+  followersModalOpen?: boolean;
+  toggleFollowersModal?: () => void;
 }
 
 const CoffeeCard: React.SFC<IProps> = ({
@@ -71,7 +95,9 @@ const CoffeeCard: React.SFC<IProps> = ({
   expires,
   isSelf,
   status,
-  requestingCoffees
+  requestingCoffees,
+  followersModalOpen,
+  toggleFollowersModal
 }) => {
   return (
     <>
@@ -81,6 +107,7 @@ const CoffeeCard: React.SFC<IProps> = ({
             <Icon>
               <LoaderData />
             </Icon>
+
             <Location>{id}</Location>
             <SBold text={username} />
             <Location>{target}</Location>
@@ -98,6 +125,9 @@ const CoffeeCard: React.SFC<IProps> = ({
         // </Link>
         <Link to={`/c/${id}`}>
           <Container>
+            <ListOverlay>
+              <List />
+            </ListOverlay>
             <SAvatar url={avatar} size="md" />
             <Id>{id}</Id>
             <SBold text={username} />

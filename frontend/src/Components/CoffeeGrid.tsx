@@ -4,9 +4,16 @@ import CoffeeCard from "./CoffeeCard";
 interface IProps {
   requestingCoffees?: any;
   coffees?: any;
+  followersModalOpen?: boolean;
+  toggleFollowersModal?: () => void;
 }
 
-const CoffeeGrid: React.SFC<IProps> = ({ requestingCoffees, coffees }) => (
+const CoffeeGrid: React.SFC<IProps> = ({
+  requestingCoffees,
+  coffees,
+  followersModalOpen,
+  toggleFollowersModal
+}) => (
   <>
     {requestingCoffees &&
       requestingCoffees.map(coffee => (
@@ -23,6 +30,8 @@ const CoffeeGrid: React.SFC<IProps> = ({ requestingCoffees, coffees }) => (
           isSelf={coffee.host.isSelf}
           status={coffee.status}
           requestingCoffees={true}
+          followersModalOpen={followersModalOpen}
+          toggleFollowersModal={toggleFollowersModal}
         />
       ))}
     {coffees &&
@@ -40,6 +49,8 @@ const CoffeeGrid: React.SFC<IProps> = ({ requestingCoffees, coffees }) => (
           isSelf={coffee.host.isSelf}
           status={coffee.status}
           requestingCoffees={false}
+          followersModalOpen={followersModalOpen}
+          toggleFollowersModal={toggleFollowersModal}
         />
       ))}
   </>
