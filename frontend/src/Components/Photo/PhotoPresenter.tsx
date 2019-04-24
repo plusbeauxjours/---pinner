@@ -253,9 +253,11 @@ const PhotoPresenter: React.SFC<IProps> = ({
               <ModalLink onClick={() => console.log("ho?")}>
                 Report Card
               </ModalLink>
-              <ModalLink onClick={() => followUserFn()}>
-                {isFollowing ? "Unfollow" : "Follow"}
-              </ModalLink>
+              {!isSelf && (
+                <ModalLink onClick={() => followUserFn()}>
+                  {isFollowing ? "Unfollow" : "Follow"}
+                </ModalLink>
+              )}
               {isSelf && (
                 <ModalLink onClick={toggleDeleteCardModal}>
                   Delete Card

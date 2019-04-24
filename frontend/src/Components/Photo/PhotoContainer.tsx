@@ -134,7 +134,10 @@ class PhotoContainer extends React.Component<IProps, IState> {
               mutation={FOLLOW_USER}
               variables={{ userId: parseInt(userId, 10) }}
               onCompleted={() =>
-                this.setState({ cardMenuModalOpen: !cardMenuModalOpen })
+                this.setState({
+                  cardMenuModalOpen: !cardMenuModalOpen,
+                  isFollowing: !isFollowing
+                })
               }
             >
               {followUserFn => (

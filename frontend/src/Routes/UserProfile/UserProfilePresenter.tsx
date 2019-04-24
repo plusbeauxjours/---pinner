@@ -410,6 +410,7 @@ const STextArea = styled(Textarea)`
 
 const Box = styled.div`
   width: 905px;
+  height: 225px;
   display: flex;
   overflow-x: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
@@ -1028,12 +1029,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             {/* <SeeAll onClick={toggleCoffeeSeeAll}>SEE ALL</SeeAll> */}
           </Title>
           <Container>
+            {user.profile.isSelf && (
+              <Icon onClick={toggleRequestModal}>
+                <Upload />
+              </Icon>
+            )}
             <Box>
-              {user.profile.isSelf && (
-                <Icon onClick={toggleRequestModal}>
-                  <Upload />
-                </Icon>
-              )}
               {!myCoffeeLoading && coffees ? (
                 <CoffeeGrid coffees={coffees} />
               ) : (
