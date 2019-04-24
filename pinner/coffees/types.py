@@ -44,7 +44,7 @@ class MatchType(DjangoObjectType):
 
 
 class GetMyCoffeeResponse(graphene.ObjectType):
-    expired_coffees = graphene.List(CoffeeType)
+    coffees = graphene.List(CoffeeType)
     requesting_coffees = graphene.List(CoffeeType)
 
 

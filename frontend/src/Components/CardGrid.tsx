@@ -22,9 +22,7 @@ const UploadIcon = styled.div`
   svg {
     fill: white;
     transition: fill 0.2s ease-in-out;
-  }
-  &:hover {
-    svg {
+    &:hover {
       fill: grey;
     }
   }

@@ -101,3 +101,26 @@ export const DETAIL_CARD_FRAGMENT = gql`
     }
   }
 `;
+
+export const COFFEE_FRAGMENT = gql`
+  fragment CoffeeParts on CoffeeType {
+    id
+    city {
+      cityName
+      country {
+        countryName
+      }
+    }
+    host {
+      username
+      profile {
+        avatar
+        isSelf
+      }
+    }
+    expires
+    status
+    target
+    naturalTime
+  }
+`;

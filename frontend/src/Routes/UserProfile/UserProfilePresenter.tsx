@@ -149,10 +149,6 @@ const Icon = styled.span`
   justify-items: center;
   margin: 0 60px 0 60px;
   cursor: pointer;
-
-  &:last-child {
-    margin-right: 0;
-  }
   svg {
     fill: white;
     transition: fill 0.2s ease-in-out;
@@ -562,7 +558,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   knowingFollowersLoading,
 
   myCoffeeData: {
-    getMyCoffee: { requestingCoffees = null, expiredCoffees = null } = {}
+    getMyCoffee: { requestingCoffees = null, coffees = null } = {}
   } = {},
   myCoffeeLoading,
 
@@ -1030,7 +1026,11 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             {/* <SeeAll onClick={toggleCoffeeSeeAll}>SEE ALL</SeeAll> */}
           </Title>
           <Container>
-            {!myCoffeeLoading && user.profile.isSelf && requestingCoffees ? (
+            {console.log(requestingCoffees)}
+            {!myCoffeeLoading && <Loader />}
+            {user.profile.isSelf &&
+            requestingCoffees &&
+            requestingCoffees.length !== 0 ? (
               <CoffeeGrid requestingCoffees={requestingCoffees} />
             ) : (
               <Icon onClick={toggleRequestModal}>
@@ -1038,8 +1038,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               </Icon>
             )}
             <Box>
-              {!myCoffeeLoading && expiredCoffees ? (
-                <CoffeeGrid coffees={expiredCoffees} />
+              {!myCoffeeLoading && coffees ? (
+                <CoffeeGrid coffees={coffees} />
               ) : (
                 <Loader />
               )}

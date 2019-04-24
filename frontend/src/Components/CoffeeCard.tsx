@@ -36,6 +36,11 @@ const SBold = styled(Bold)`
   display: block;
 `;
 
+const Id = styled.div`
+  color: red
+  position: absolute;
+  font-size: 20px;
+`;
 const Location = styled.span`
   margin-bottom: 10px;
   display: flex;
@@ -55,6 +60,7 @@ interface IProps {
   expires: string;
   isSelf: boolean;
   status: string;
+  requestingCoffees: boolean;
 }
 
 const CoffeeCard: React.SFC<IProps> = ({
@@ -64,11 +70,12 @@ const CoffeeCard: React.SFC<IProps> = ({
   target,
   expires,
   isSelf,
-  status
+  status,
+  requestingCoffees
 }) => {
-  switch (status) {
-    case "requesting":
-      return (
+  return (
+    <>
+      {requestingCoffees ? (
         <Link to={`/c/${id}`}>
           <Container>
             <Icon>
@@ -80,33 +87,27 @@ const CoffeeCard: React.SFC<IProps> = ({
             <Location>{expires}</Location>
           </Container>
         </Link>
-      );
-    default:
-      return (
-        <>
-          {isSelf ? (
-            <Link to={`/c/${id}`}>
-              <Container>
-                <SAvatar url={avatar} size="md" />
-                <Location>{id}</Location>
-                <SBold text={username} />
-                <Location>{target}</Location>
-                <Location>{expires}</Location>
-              </Container>
-            </Link>
-          ) : (
-            <Link to={`/c/${id}`}>
-              <Container>
-                <Location>{id}</Location>
-                <SBold text={username} />
-                <Location>{target}</Location>
-                <Location>{expires}</Location>
-              </Container>
-            </Link>
-          )}
-        </>
-      );
-  }
+      ) : (
+        // <Link to={`/c/${id}`}>
+        //   <Container>
+        //     <Location>{id}</Location>
+        //     <SBold text={username} />
+        //     <Location>{target}</Location>
+        //     <Location>{expires}</Location>
+        //   </Container>
+        // </Link>
+        <Link to={`/c/${id}`}>
+          <Container>
+            <SAvatar url={avatar} size="md" />
+            <Id>{id}</Id>
+            <SBold text={username} />
+            <Location>{target}</Location>
+            <Location>{expires}</Location>
+          </Container>
+        </Link>
+      )}
+    </>
+  );
 };
 
 export default CoffeeCard;

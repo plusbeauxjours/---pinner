@@ -1217,7 +1217,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         }
       });
       if (profileData) {
-        profileData.getMyCoffee.coffees.unshift(requestCoffee.coffee);
+        profileData.getMyCoffee.requestingCoffees.push(requestCoffee.coffee);
         cache.writeQuery({
           query: GET_MY_COFFEE,
           variables: {

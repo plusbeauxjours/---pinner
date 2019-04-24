@@ -476,10 +476,10 @@ const FeedPresenter: React.SFC<IProps> = ({
             <SeeAll onClick={toggleCoffeeSeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
+            <Icon onClick={toggleRequestModal}>
+              <Upload />
+            </Icon>
             <Box>
-              <Icon onClick={toggleRequestModal}>
-                <Upload />
-              </Icon>
               {!coffeeLoading && coffees ? (
                 <CoffeeGrid coffees={coffees} />
               ) : (

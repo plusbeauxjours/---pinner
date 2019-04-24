@@ -22,6 +22,7 @@ const CoffeeGrid: React.SFC<IProps> = ({ requestingCoffees, coffees }) => (
           expires={coffee.naturalTime}
           isSelf={coffee.host.isSelf}
           status={coffee.status}
+          requestingCoffees={true}
         />
       ))}
     {coffees &&
@@ -38,6 +39,7 @@ const CoffeeGrid: React.SFC<IProps> = ({ requestingCoffees, coffees }) => (
           expires={coffee.naturalTime}
           isSelf={coffee.host.isSelf}
           status={coffee.status}
+          requestingCoffees={false}
         />
       ))}
   </>

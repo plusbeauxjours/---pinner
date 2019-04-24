@@ -24,13 +24,15 @@ def resolve_get_coffees(self, info, **kwargs):
                                       Q(target='nationality', host__profile__nationality=profile.nationality) |
                                       Q(target='gender', host__profile__gender=profile.gender) |
                                       Q(target='followers', host__profile__in=followings)) &
-                                     Q(host__pk=user.pk, expires__gt=timezone.now())).exclude(match__in=matches).order_by('-created_at')[:6]
+                                     Q(expires__gt=timezone.now())).exclude(match__in=matches).order_by('-created_at')[:6]
+
+        print(coffees)
     else:
         coffees = city.coffee.filter((Q(target='everyone') |
                                       Q(target='nationality', host__profile__nationality=profile.nationality) |
                                       Q(target='gender', host__profile__gender=profile.gender) |
                                       Q(target='followers', host__profile__in=followings)) &
-                                     Q(host__pk=user.pk, expires__gt=timezone.now())).exclude(match__in=matches).order_by('-created_at')[6:]
+                                     Q(expires__gt=timezone.now())).exclude(match__in=matches).order_by('-created_at')[6:]
 
     return types.GetCoffeesResponse(coffees=coffees)
 
@@ -49,11 +51,11 @@ def resolve_get_my_coffee(self, info, **kwargs):
             return types.GetMyCoffeeResponse(coffees=None)
 
         try:
-            expired_coffees = models.Coffee.objects.filter(host=user, expires__lt=timezone.now()).order_by(
+            coffees = models.Coffee.objects.filter(host=user, expires__lt=timezone.now()).order_by(
                 '-created_at')
             requesting_coffees = models.Coffee.objects.filter(host=user, expires__gt=timezone.now()).order_by(
                 '-created_at')
-            return types.GetMyCoffeeResponse(expired_coffees=expired_coffees, requesting_coffees=requesting_coffees)
+            return types.GetMyCoffeeResponse(coffees=coffees, requesting_coffees=requesting_coffees)
         except models.Coffee.DoesNotExist:
             return types.GetMyCoffeeResponse(expired_coffees=None, requesting_coffees=None)
 
