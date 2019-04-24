@@ -3,6 +3,7 @@ import styled from "src/Styles/typed-components";
 import Avatar from "./Avatar";
 import Bold from "./Bold";
 import { Link } from "react-router-dom";
+import LoaderData from "./LoaderData";
 
 const Container = styled.div`
   display: flex;
@@ -19,16 +20,15 @@ const Container = styled.div`
   text-overflow: ellipsis;
 `;
 
-// const AvatarContainer = styled.div`
-//   display: flex;
-// `;
-
-// const LAvatar = styled(Avatar)`
-//   margin-right: -12px;
-// `;
-
 const SAvatar = styled(Avatar)`
   margin-bottom: 15px;
+`;
+
+const Icon = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  height: 120px;
 `;
 
 const SBold = styled(Bold)`
@@ -54,6 +54,7 @@ interface IProps {
   target: string;
   expires: string;
   isSelf: boolean;
+  status: string;
 }
 
 const CoffeeCard: React.SFC<IProps> = ({
@@ -62,32 +63,50 @@ const CoffeeCard: React.SFC<IProps> = ({
   username,
   target,
   expires,
-  isSelf
+  isSelf,
+  status
 }) => {
-  return (
-    <>
-      {isSelf ? (
+  switch (status) {
+    case "requesting":
+      return (
         <Link to={`/c/${id}`}>
           <Container>
-            <SAvatar url={avatar} size="md" />
+            <Icon>
+              <LoaderData />
+            </Icon>
             <Location>{id}</Location>
             <SBold text={username} />
             <Location>{target}</Location>
             <Location>{expires}</Location>
           </Container>
         </Link>
-      ) : (
-        <Link to={`/c/${id}`}>
-          <Container>
-            <Location>{id}</Location>
-            <SBold text={username} />
-            <Location>{target}</Location>
-            <Location>{expires}</Location>
-          </Container>
-        </Link>
-      )}
-    </>
-  );
+      );
+    default:
+      return (
+        <>
+          {isSelf ? (
+            <Link to={`/c/${id}`}>
+              <Container>
+                <SAvatar url={avatar} size="md" />
+                <Location>{id}</Location>
+                <SBold text={username} />
+                <Location>{target}</Location>
+                <Location>{expires}</Location>
+              </Container>
+            </Link>
+          ) : (
+            <Link to={`/c/${id}`}>
+              <Container>
+                <Location>{id}</Location>
+                <SBold text={username} />
+                <Location>{target}</Location>
+                <Location>{expires}</Location>
+              </Container>
+            </Link>
+          )}
+        </>
+      );
+  }
 };
 
 export default CoffeeCard;

@@ -351,7 +351,27 @@ export const UPLOAD_CARD = gql`
 export const GET_MY_COFFEE = gql`
   query GetMyCoffee($username: String!) {
     getMyCoffee(username: $username) {
-      coffees {
+      requestingCoffees {
+        id
+        city {
+          cityName
+          country {
+            countryName
+          }
+        }
+        host {
+          username
+          profile {
+            avatar
+            isSelf
+          }
+        }
+        expires
+        status
+        target
+        naturalTime
+      }
+      expiredCoffees {
         id
         city {
           cityName

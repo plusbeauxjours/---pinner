@@ -14,12 +14,6 @@ import datetime
 
 class Coffee (config_models.TimeStampedModel):
 
-    STATUS = (
-        ('requesting', 'REQUESTING'),
-        ('canceled', 'CANCELED'),
-        ('expired', 'EXPIRED'),
-    )
-
     TARGET = (
         ('everyone', 'EVERYONE'),
         ('gender', 'GENDER'),
@@ -31,17 +25,15 @@ class Coffee (config_models.TimeStampedModel):
     host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='coffee')
     duration = models.DurationField(default=datetime.timedelta(days=1))
     expires = models.DateTimeField(blank=True, null=True)
-    status = models.CharField(max_length=10, choices=STATUS, default='requesting')
     target = models.CharField(max_length=11, choices=TARGET, default='everyone')
     # caption = models.TextField(blank=True, null=True)
 
-    def active(self):
+    @property
+    def status(self):
         if self.created_at + self.duration <= timezone.now():
-            self.status = 'expired'
-            return self.status
+            return 'expired'
         else:
-            self.status = 'requesting'
-            return self.status
+            return 'requesting'
 
     @property
     def natural_time(self):

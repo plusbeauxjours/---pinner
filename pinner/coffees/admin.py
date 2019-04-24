@@ -9,11 +9,9 @@ class CoffeeAdmin(admin.ModelAdmin):
         'id',
         'city',
         'host',
-        'status',
         'created_at',
-        'duration',
-        'active',
-        'target'
+        'status',
+        'target',
         # 'rest_time'
     )
 

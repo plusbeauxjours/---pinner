@@ -172,11 +172,9 @@ class EditCard(graphene.Mutation):
                     return types.EditCardResponse(ok=True, card=card)
                 except IntegrityError as e:
                     print(e)
-                    error = "Can't Save Card"
                     return types.EditCardResponse(ok=False)
 
         else:
-            error = "You need to log in"
             return types.EditCardResponse(ok=False)
 
 

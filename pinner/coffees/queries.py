@@ -3,6 +3,7 @@ from . import types, models
 from django.contrib.auth.models import User
 from graphql_jwt.decorators import login_required
 from locations import models as location_models
+from django.utils import timezone
 from django.db.models import Q
 
 
@@ -23,13 +24,13 @@ def resolve_get_coffees(self, info, **kwargs):
                                       Q(target='nationality', host__profile__nationality=profile.nationality) |
                                       Q(target='gender', host__profile__gender=profile.gender) |
                                       Q(target='followers', host__profile__in=followings)) &
-                                     Q(host__pk=user.pk, status='requesting')).exclude(match__in=matches).order_by('-created_at')[:6]
+                                     Q(host__pk=user.pk, expires__gt=timezone.now())).exclude(match__in=matches).order_by('-created_at')[:6]
     else:
         coffees = city.coffee.filter((Q(target='everyone') |
                                       Q(target='nationality', host__profile__nationality=profile.nationality) |
                                       Q(target='gender', host__profile__gender=profile.gender) |
                                       Q(target='followers', host__profile__in=followings)) &
-                                     Q(host__pk=user.pk, status='requesting')).exclude(match__in=matches).order_by('-created_at')[6:]
+                                     Q(host__pk=user.pk, expires__gt=timezone.now())).exclude(match__in=matches).order_by('-created_at')[6:]
 
     return types.GetCoffeesResponse(coffees=coffees)
 
@@ -48,14 +49,16 @@ def resolve_get_my_coffee(self, info, **kwargs):
             return types.GetMyCoffeeResponse(coffees=None)
 
         try:
-            coffees = models.Coffee.objects.filter(host=user).order_by(
+            expired_coffees = models.Coffee.objects.filter(host=user, expires__lt=timezone.now()).order_by(
                 '-created_at')
-            return types.GetMyCoffeeResponse(coffees=coffees)
+            requesting_coffees = models.Coffee.objects.filter(host=user, expires__gt=timezone.now()).order_by(
+                '-created_at')
+            return types.GetMyCoffeeResponse(expired_coffees=expired_coffees, requesting_coffees=requesting_coffees)
         except models.Coffee.DoesNotExist:
-            return types.GetMyCoffeeResponse(coffees=None)
+            return types.GetMyCoffeeResponse(expired_coffees=None, requesting_coffees=None)
 
     else:
-        return types.GetMyCoffeeResponse(coffees=None)
+        raise Exception('You need to log in')
 
 
 @login_required

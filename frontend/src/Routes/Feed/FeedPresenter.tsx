@@ -15,6 +15,7 @@ import UserGrid from "../../Components/UserGrid";
 import CoffeeGrid from "../../Components/CoffeeGrid";
 import CoffeeRow from "../../Components/CoffeeRow";
 import Weather from "src/Components/Weather";
+import LoaderCoffee from "src/Components/LoaderCoffee";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -486,6 +487,7 @@ const FeedPresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
+          <LoaderCoffee />
           <GreyLine />
           {cards &&
             cards.map(card => (

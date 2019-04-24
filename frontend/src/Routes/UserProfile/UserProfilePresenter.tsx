@@ -561,7 +561,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   } = {},
   knowingFollowersLoading,
 
-  myCoffeeData: { getMyCoffee: { coffees = null } = {} } = {},
+  myCoffeeData: {
+    getMyCoffee: { requestingCoffees = null, expiredCoffees = null } = {}
+  } = {},
   myCoffeeLoading,
 
   modalOpen,
@@ -620,7 +622,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   onFocusChange,
   newCardCaption,
   onKeyUpCard,
-
   uploadNewCard,
   duration,
   submitCoffee
@@ -1029,14 +1030,16 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             {/* <SeeAll onClick={toggleCoffeeSeeAll}>SEE ALL</SeeAll> */}
           </Title>
           <Container>
-            {user.profile.isSelf && (
+            {!myCoffeeLoading && user.profile.isSelf && requestingCoffees ? (
+              <CoffeeGrid requestingCoffees={requestingCoffees} />
+            ) : (
               <Icon onClick={toggleRequestModal}>
                 <Upload />
               </Icon>
             )}
             <Box>
-              {!myCoffeeLoading && coffees ? (
-                <CoffeeGrid coffees={coffees} />
+              {!myCoffeeLoading && expiredCoffees ? (
+                <CoffeeGrid coffees={expiredCoffees} />
               ) : (
                 <Loader />
               )}

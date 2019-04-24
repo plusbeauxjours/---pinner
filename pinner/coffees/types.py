@@ -6,6 +6,7 @@ from config import types as config_types
 
 class CoffeeType(DjangoObjectType):
     natural_time = graphene.String(source='natural_time')
+    status = graphene.String(source='status')
 
     class Meta:
         model = models.Coffee
@@ -43,7 +44,8 @@ class MatchType(DjangoObjectType):
 
 
 class GetMyCoffeeResponse(graphene.ObjectType):
-    coffees = graphene.List(CoffeeType)
+    expired_coffees = graphene.List(CoffeeType)
+    requesting_coffees = graphene.List(CoffeeType)
 
 
 class RequestCoffeeResponse(graphene.ObjectType):

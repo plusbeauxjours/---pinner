@@ -5,6 +5,7 @@ from . import models, types
 from graphql_jwt.decorators import login_required
 from locations import models as location_models
 from notifications import models as notification_models
+from django.utils import timezone
 
 
 class RequestCoffee(graphene.Mutation):
@@ -22,24 +23,27 @@ class RequestCoffee(graphene.Mutation):
         currentCity = kwargs.get('currentCity')
         target = kwargs.get('target', 'everyone')
 
-        try:
-            currentCity = location_models.City.objects.get(city_name=currentCity)
-            coffee = models.Coffee.objects.create(
-                city=currentCity,
-                host=user,
-                target=target,
-            )
-            notification_models.CoffeeNotification.objects.create(
-                verb="coffee",
-                city=currentCity,
-                host=user,
-                target=target,
-                payload=coffee
-            )
-            return types.RequestCoffeeResponse(ok=True, coffee=coffee)
-        except IntegrityError as e:
-            print(e)
-            raise Exception("Can't create a coffee")
+        if not user.coffee.filter(expires__gt=timezone.now()):
+            try:
+                currentCity = location_models.City.objects.get(city_name=currentCity)
+                coffee = models.Coffee.objects.create(
+                    city=currentCity,
+                    host=user,
+                    target=target,
+                )
+                notification_models.CoffeeNotification.objects.create(
+                    verb="coffee",
+                    city=currentCity,
+                    host=user,
+                    target=target,
+                    payload=coffee
+                )
+                return types.RequestCoffeeResponse(ok=True, coffee=coffee)
+            except IntegrityError as e:
+                print(e)
+                raise Exception("Can't create a coffee")
+        else:
+            raise Exception("You can't request more than one coffee")
 
 
 class DeleteCoffee(graphene.Mutation):
