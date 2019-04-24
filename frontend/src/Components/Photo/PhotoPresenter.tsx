@@ -309,21 +309,23 @@ const PhotoPresenter: React.SFC<IProps> = ({
             {!openedComment && (
               <TimeStamp>See {commentCount}Comments</TimeStamp>
             )}
-            <Comments
-              openedComment={openedComment}
-              getCommentId={getCommentId}
-              cardId={cardId}
-            />
             <TimeStamp>{naturalTime}</TimeStamp>
             {openedComment && (
-              <AddComment>
-                <STextArea
-                  placeholder="Add a comment..."
-                  onChange={updateNewComment}
-                  value={newComment}
-                  onKeyUp={onKeyUp}
+              <>
+                <Comments
+                  openedComment={openedComment}
+                  getCommentId={getCommentId}
+                  cardId={cardId}
                 />
-              </AddComment>
+                <AddComment>
+                  <STextArea
+                    placeholder="Add a comment..."
+                    onChange={updateNewComment}
+                    value={newComment}
+                    onKeyUp={onKeyUp}
+                  />
+                </AddComment>
+              </>
             )}
           </Meta>
         </Container>

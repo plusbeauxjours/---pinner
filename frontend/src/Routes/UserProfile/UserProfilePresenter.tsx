@@ -1026,8 +1026,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             {/* <SeeAll onClick={toggleCoffeeSeeAll}>SEE ALL</SeeAll> */}
           </Title>
           <Container>
-            {console.log(requestingCoffees)}
-            {!myCoffeeLoading && <Loader />}
+            {myCoffeeLoading && <Loader />}
             {user.profile.isSelf &&
             requestingCoffees &&
             requestingCoffees.length !== 0 ? (
