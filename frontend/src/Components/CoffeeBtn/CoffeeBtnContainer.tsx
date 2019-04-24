@@ -80,17 +80,20 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
     }
     this.props.history.goBack();
   };
-  public updateMatch = (cache, { data: { match } }) => {
+  public updateMatch = async (cache, { data: { match } }) => {
     try {
       const feedData = cache.readQuery({
         query: GET_COFFEES,
         variables: { coffeePage: 0, cityName: localStorage.getItem("cityName") }
       });
+      console.log(feedData);
       if (feedData) {
         feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
-          i => parseInt(i.id, 10) !== parseInt(match.match.coffee.id, 10)
+          i => parseInt(i.id, 10) !== match.coffeeId
         );
-        cache.writeQuery({
+        console.log(feedData.getCoffees);
+        console.log(match);
+        await cache.writeQuery({
           query: GET_COFFEES,
           variables: {
             coffeePage: 0,
@@ -128,25 +131,49 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
       toast.error("error");
     }
   };
-  public updateUnMatch = (cache, { data: { unMatch } }) => {
-    const data = cache.readQuery({
-      query: GET_MATCHES,
-      variables: { matchPage: 0 }
-    });
-    const newCard = data.getMatches.matches.filter(
-      i => parseInt(i.id, 10) !== unMatch.matchId
-    );
-    console.log(newCard);
-    cache.writeQuery({
-      query: GET_MATCHES,
-      variables: { matchPage: 0 },
-      data: {
-        getMatches: {
-          matches: newCard,
-          __typename: "GetMatchesResponse"
-        }
+  public updateUnMatch = async (cache, { data: { unMatch } }) => {
+    try {
+      const matchData = cache.readQuery({
+        query: GET_MATCHES,
+        variables: { matchPage: 0 }
+      });
+      console.log(unMatch.coffee);
+      console.log(matchData);
+      if (matchData) {
+        matchData.getMatches.matches = matchData.getMatches.matches.filter(
+          i => parseInt(i.id, 10) !== unMatch.matchId
+        );
+        cache.writeQuery({
+          query: GET_MATCHES,
+          variables: { matchPage: 0 },
+          data: matchData
+        });
       }
-    });
+    } catch (e) {
+      console.log(e);
+    }
+
+    try {
+      const feedData = cache.readQuery({
+        query: GET_COFFEES,
+        variables: { coffeePage: 0, cityName: localStorage.getItem("cityName") }
+      });
+      console.log(unMatch.coffee);
+      console.log(feedData);
+      if (feedData) {
+        feedData.getCoffees.coffees.unshift(unMatch.coffee);
+        await cache.writeQuery({
+          query: GET_COFFEES,
+          variables: {
+            coffeePage: 0,
+            cityName: localStorage.getItem("cityName")
+          },
+          data: feedData
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 }
 

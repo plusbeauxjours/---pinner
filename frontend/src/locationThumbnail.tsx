@@ -8,7 +8,6 @@ export const cityThumbnail = async cityName => {
   if (!data.error_message) {
     const { results } = data;
     const cityPhotoURL = results[0].urls.regular;
-    console.log(results);
     return cityPhotoURL;
   } else {
     toast.error(data.error_message);
@@ -22,7 +21,6 @@ export const countryThumbnail = async countryName => {
   if (!data.error_message) {
     const { results } = data;
     const countryPhotoURL = results[0].urls.regular;
-    console.log(results);
     return countryPhotoURL;
   } else {
     toast.error(data.error_message);
@@ -36,7 +34,6 @@ export const continentThumbnail = async continentName => {
   if (!data.error_message) {
     const { results } = data;
     const continentPhotoURL = results[0].urls.regular;
-    console.log(results);
     return continentPhotoURL;
   } else {
     toast.error(data.error_message);

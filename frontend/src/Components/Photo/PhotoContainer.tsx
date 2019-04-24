@@ -426,10 +426,13 @@ class PhotoContainer extends React.Component<IProps, IState> {
           cardId
         }
       });
+      console.log(data);
       if (data) {
         data.getComments.comments = data.getComments.comments.filter(
           i => parseInt(i.id, 10) !== parseInt(commentId, 10)
         );
+        console.log(data);
+
         cache.writeQuery({
           query: GET_COMMENTS,
           variables: {

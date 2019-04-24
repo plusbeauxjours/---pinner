@@ -1,10 +1,15 @@
 import { gql } from "apollo-boost";
-import { CITY_FRAGMENT, USER_FRAGMENT } from "src/sharedQueries";
+import {
+  CITY_FRAGMENT,
+  USER_FRAGMENT,
+  COFFEE_FRAGMENT
+} from "src/sharedQueries";
 
 export const MATCH = gql`
   mutation Match($coffeeId: Int!) {
     match(coffeeId: $coffeeId) {
       ok
+      coffeeId
       match {
         id
         naturalTime
@@ -36,6 +41,10 @@ export const UNMATCH = gql`
     unMatch(matchId: $matchId) {
       ok
       matchId
+      coffee {
+        ...CoffeeParts
+      }
     }
   }
+  ${COFFEE_FRAGMENT}
 `;

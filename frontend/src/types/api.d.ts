@@ -78,11 +78,6 @@ export interface Match_match_match_guest {
   profile: Match_match_match_guest_profile | null;
 }
 
-export interface Match_match_match_coffee {
-  __typename: "CoffeeType";
-  id: string;
-}
-
 export interface Match_match_match {
   __typename: "MatchType";
   id: string;
@@ -90,7 +85,6 @@ export interface Match_match_match {
   city: Match_match_match_city | null;
   host: Match_match_match_host | null;
   guest: Match_match_match_guest | null;
-  coffee: Match_match_match_coffee | null;
   status: MatchStatus;
   isHost: boolean | null;
   isGuest: boolean | null;
@@ -100,6 +94,7 @@ export interface Match_match_match {
 export interface Match_match {
   __typename: "MatchResponse";
   ok: boolean | null;
+  coffeeId: number | null;
   match: Match_match_match | null;
 }
 
@@ -119,10 +114,48 @@ export interface MatchVariables {
 // GraphQL mutation operation: UnMatch
 // ====================================================
 
+export interface UnMatch_unMatch_coffee_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface UnMatch_unMatch_coffee_city {
+  __typename: "CityType";
+  cityName: string | null;
+  country: UnMatch_unMatch_coffee_city_country;
+}
+
+export interface UnMatch_unMatch_coffee_host_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  isSelf: boolean | null;
+}
+
+export interface UnMatch_unMatch_coffee_host {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: UnMatch_unMatch_coffee_host_profile | null;
+}
+
+export interface UnMatch_unMatch_coffee {
+  __typename: "CoffeeType";
+  id: string;
+  city: UnMatch_unMatch_coffee_city;
+  host: UnMatch_unMatch_coffee_host;
+  expires: any | null;
+  status: string | null;
+  target: CoffeeTarget;
+  naturalTime: string | null;
+}
+
 export interface UnMatch_unMatch {
   __typename: "UnMatchResponse";
   ok: boolean | null;
   matchId: number | null;
+  coffee: UnMatch_unMatch_coffee | null;
 }
 
 export interface UnMatch {
@@ -1115,43 +1148,6 @@ export interface RequestCoffeeVariables {
 // GraphQL query operation: GetCoffees
 // ====================================================
 
-export interface GetCoffees_getCoffees_requestingCoffees_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface GetCoffees_getCoffees_requestingCoffees_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetCoffees_getCoffees_requestingCoffees_city_country;
-}
-
-export interface GetCoffees_getCoffees_requestingCoffees_host_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  isSelf: boolean | null;
-}
-
-export interface GetCoffees_getCoffees_requestingCoffees_host {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: GetCoffees_getCoffees_requestingCoffees_host_profile | null;
-}
-
-export interface GetCoffees_getCoffees_requestingCoffees {
-  __typename: "CoffeeType";
-  id: string;
-  city: GetCoffees_getCoffees_requestingCoffees_city;
-  host: GetCoffees_getCoffees_requestingCoffees_host;
-  expires: any | null;
-  status: string | null;
-  target: CoffeeTarget;
-  naturalTime: string | null;
-}
-
 export interface GetCoffees_getCoffees_coffees_city_country {
   __typename: "CountryType";
   countryName: string | null;
@@ -1191,7 +1187,6 @@ export interface GetCoffees_getCoffees_coffees {
 
 export interface GetCoffees_getCoffees {
   __typename: "GetCoffeesResponse";
-  requestingCoffees: (GetCoffees_getCoffees_requestingCoffees | null)[] | null;
   coffees: (GetCoffees_getCoffees_coffees | null)[] | null;
 }
 
@@ -1312,11 +1307,6 @@ export interface GetMatches_getMatches_matches_guest {
   profile: GetMatches_getMatches_matches_guest_profile | null;
 }
 
-export interface GetMatches_getMatches_matches_coffee {
-  __typename: "CoffeeType";
-  id: string;
-}
-
 export interface GetMatches_getMatches_matches {
   __typename: "MatchType";
   id: string;
@@ -1324,7 +1314,6 @@ export interface GetMatches_getMatches_matches {
   city: GetMatches_getMatches_matches_city | null;
   host: GetMatches_getMatches_matches_host | null;
   guest: GetMatches_getMatches_matches_guest | null;
-  coffee: GetMatches_getMatches_matches_coffee | null;
   status: MatchStatus;
   isHost: boolean | null;
   isGuest: boolean | null;

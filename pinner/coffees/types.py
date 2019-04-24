@@ -66,11 +66,13 @@ class CoffeeDetailResponse(graphene.ObjectType):
 
 
 class MatchResponse(graphene.ObjectType):
+    coffeeId = graphene.Int()
     match = graphene.Field(MatchType)
     ok = graphene.Boolean()
 
 
 class UnMatchResponse(graphene.ObjectType):
+    coffee = graphene.Field(CoffeeType)
     matchId = graphene.Int()
     ok = graphene.Boolean()
 
