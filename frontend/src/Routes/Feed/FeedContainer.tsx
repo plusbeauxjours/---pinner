@@ -1,5 +1,5 @@
 import React from "react";
-import { Mutation, Query } from "react-apollo";
+import { Mutation, Query, MutationFn } from "react-apollo";
 import FeedPresenter from "./FeedPresenter";
 import {
   ReportLocation,
@@ -10,7 +10,9 @@ import {
   RequestCoffee,
   RequestCoffeeVariables,
   GetCoffeesVariables,
-  GetCoffees
+  GetCoffees,
+  DeleteCoffee,
+  DeleteCoffeeVariables
 } from "../../types/api";
 import { RouteComponentProps } from "react-router";
 import { REPORT_LOCATION } from "../Home/HomeQueries";
@@ -29,10 +31,15 @@ import {
 import continents from "../../continents";
 import { toast } from "react-toastify";
 import { GET_MY_COFFEE } from "../UserProfile/UserProfileQueries";
+import { DELETE_COFFEE } from "../../../../frontend/src/Routes/UserProfile/UserProfileQueries";
 
 class RequestCoffeeMutation extends Mutation<
   RequestCoffee,
   RequestCoffeeVariables
+> {}
+class DeleteCoffeeMutation extends Mutation<
+  DeleteCoffee,
+  DeleteCoffeeVariables
 > {}
 
 class RecommandUsersQuery extends Query<RecommandUsers> {}
@@ -66,13 +73,15 @@ interface IState {
   coffeeModalOpen: boolean;
   coffeeReportModalOpen: boolean;
   coffeePage: number;
+  coffeeId: string;
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
   public coffeeFetchMore;
   public recommandUsersFetchMore;
-  public requestCoffeeFn;
-  public ReportLocationFn;
+  public requestCoffeeFn: MutationFn;
+  public ReportLocationFn: MutationFn;
+  public deleteCoffeeFn: MutationFn;
   constructor(props) {
     super(props);
     this.state = {
@@ -94,7 +103,8 @@ class FeedContainer extends React.Component<IProps, IState> {
       requestModalOpen: false,
       coffeeModalOpen: false,
       coffeeReportModalOpen: false,
-      coffeePage: 0
+      coffeePage: 0,
+      coffeeId: null
     };
   }
   public componentDidMount() {
@@ -125,120 +135,145 @@ class FeedContainer extends React.Component<IProps, IState> {
       requestModalOpen,
       coffeeModalOpen,
       coffeeReportModalOpen,
-      coffeePage
+      coffeePage,
+      coffeeId
     } = this.state;
     return (
-      <RecommandUsersQuery
-        query={RECOMMAND_USERS}
-        variables={{ recommandUserPage }}
+      <DeleteCoffeeMutation
+        mutation={DELETE_COFFEE}
+        variables={{
+          coffeeId: parseInt(coffeeId, 10)
+        }}
+        onCompleted={this.onCompletedDeleteCoffee}
+        update={this.updateDeleteCoffee}
       >
-        {({
-          data: recommandUsersData,
-          loading: recommandUsersLoading,
-          fetchMore: recommandUsersFetchMore
-        }) => {
-          this.recommandUsersFetchMore = recommandUsersFetchMore;
+        {deleteCoffeeFn => {
+          this.deleteCoffeeFn = deleteCoffeeFn;
           return (
-            <GetCoffeesQuery
-              query={GET_COFFEES}
-              variables={{ cityName: currentCity, coffeePage }}
+            <RecommandUsersQuery
+              query={RECOMMAND_USERS}
+              variables={{ recommandUserPage }}
             >
               {({
-                data: coffeeData,
-                loading: coffeeLoading,
-                fetchMore: coffeeFetchMore
+                data: recommandUsersData,
+                loading: recommandUsersLoading,
+                fetchMore: recommandUsersFetchMore
               }) => {
-                this.coffeeFetchMore = coffeeFetchMore;
+                this.recommandUsersFetchMore = recommandUsersFetchMore;
                 return (
-                  <RequestCoffeeMutation
-                    mutation={REQUEST_COFFEE}
-                    variables={{
-                      currentCity
-                    }}
-                    onCompleted={this.onCompletedRequestCoffee}
-                    update={this.updateRequestCoffee}
+                  <GetCoffeesQuery
+                    query={GET_COFFEES}
+                    variables={{ cityName: currentCity, coffeePage }}
                   >
-                    {requestCoffeeFn => {
-                      this.requestCoffeeFn = requestCoffeeFn;
+                    {({
+                      data: coffeeData,
+                      loading: coffeeLoading,
+                      fetchMore: coffeeFetchMore
+                    }) => {
+                      this.coffeeFetchMore = coffeeFetchMore;
                       return (
-                        <FeedQuery
-                          query={GET_FEED}
+                        <RequestCoffeeMutation
+                          mutation={REQUEST_COFFEE}
                           variables={{
-                            page,
-                            cityName: currentCity
+                            currentCity
                           }}
+                          onCompleted={this.onCompletedRequestCoffee}
+                          update={this.updateRequestCoffee}
                         >
-                          {({ data: feedData, loading: feedLoading }) => (
-                            <ReportLocationMutation
-                              mutation={REPORT_LOCATION}
-                              variables={{
-                                currentLat,
-                                currentLng,
-                                currentCity,
-                                currentCountry,
-                                currentCountryCode,
-                                currentContinent,
-                                cityPhotoURL,
-                                countryPhotoURL,
-                                continentPhotoURL
-                              }}
-                            >
-                              {ReportLocationFn => {
-                                this.ReportLocationFn = ReportLocationFn;
-                                return (
-                                  <FeedPresenter
-                                    feedData={feedData}
-                                    feedLoading={feedLoading}
-                                    coffeeData={coffeeData}
-                                    coffeeLoading={coffeeLoading}
-                                    currentCity={currentCity}
-                                    nowModalOpen={nowModalOpen}
-                                    beforeModalOpen={beforeModalOpen}
-                                    toggleNowModal={this.toggleNowModal}
-                                    toggleBeforeModal={this.toggleBeforeModal}
-                                    toggleCoffeeModal={this.toggleCoffeeModal}
-                                    toggleCoffeeReportModal={
-                                      this.toggleCoffeeReportModal
-                                    }
-                                    recommandUsersData={recommandUsersData}
-                                    recommandUsersLoading={
-                                      recommandUsersLoading
-                                    }
-                                    recommandUserList={recommandUserList}
-                                    recommandUserModalOpen={
-                                      recommandUserModalOpen
-                                    }
-                                    toggleRecommandUserModal={
-                                      this.toggleRecommandUserModal
-                                    }
-                                    toggleRecommandUserSeeAll={
-                                      this.toggleRecommandUserSeeAll
-                                    }
-                                    requestModalOpen={requestModalOpen}
-                                    coffeeModalOpen={coffeeModalOpen}
-                                    coffeeReportModalOpen={
-                                      coffeeReportModalOpen
-                                    }
-                                    toggleRequestModal={this.toggleRequestModal}
-                                    submitCoffee={this.submitCoffee}
-                                    currentLat={currentLat}
-                                    currentLng={currentLng}
-                                    page={page}
-                                  />
-                                );
-                              }}
-                            </ReportLocationMutation>
-                          )}
-                        </FeedQuery>
+                          {requestCoffeeFn => {
+                            this.requestCoffeeFn = requestCoffeeFn;
+                            return (
+                              <FeedQuery
+                                query={GET_FEED}
+                                variables={{
+                                  page,
+                                  cityName: currentCity
+                                }}
+                              >
+                                {({ data: feedData, loading: feedLoading }) => (
+                                  <ReportLocationMutation
+                                    mutation={REPORT_LOCATION}
+                                    variables={{
+                                      currentLat,
+                                      currentLng,
+                                      currentCity,
+                                      currentCountry,
+                                      currentCountryCode,
+                                      currentContinent,
+                                      cityPhotoURL,
+                                      countryPhotoURL,
+                                      continentPhotoURL
+                                    }}
+                                  >
+                                    {ReportLocationFn => {
+                                      this.ReportLocationFn = ReportLocationFn;
+                                      return (
+                                        <FeedPresenter
+                                          feedData={feedData}
+                                          feedLoading={feedLoading}
+                                          coffeeData={coffeeData}
+                                          coffeeLoading={coffeeLoading}
+                                          currentCity={currentCity}
+                                          nowModalOpen={nowModalOpen}
+                                          beforeModalOpen={beforeModalOpen}
+                                          toggleNowModal={this.toggleNowModal}
+                                          toggleBeforeModal={
+                                            this.toggleBeforeModal
+                                          }
+                                          toggleCoffeeModal={
+                                            this.toggleCoffeeModal
+                                          }
+                                          toggleCoffeeReportModal={
+                                            this.toggleCoffeeReportModal
+                                          }
+                                          recommandUsersData={
+                                            recommandUsersData
+                                          }
+                                          recommandUsersLoading={
+                                            recommandUsersLoading
+                                          }
+                                          recommandUserList={recommandUserList}
+                                          recommandUserModalOpen={
+                                            recommandUserModalOpen
+                                          }
+                                          toggleRecommandUserModal={
+                                            this.toggleRecommandUserModal
+                                          }
+                                          toggleRecommandUserSeeAll={
+                                            this.toggleRecommandUserSeeAll
+                                          }
+                                          requestModalOpen={requestModalOpen}
+                                          coffeeModalOpen={coffeeModalOpen}
+                                          coffeeReportModalOpen={
+                                            coffeeReportModalOpen
+                                          }
+                                          toggleRequestModal={
+                                            this.toggleRequestModal
+                                          }
+                                          submitCoffee={this.submitCoffee}
+                                          currentLat={currentLat}
+                                          currentLng={currentLng}
+                                          page={page}
+                                          getCoffeeId={this.getCoffeeId}
+                                          deleteCoffee={this.deleteCoffee}
+                                        />
+                                      );
+                                    }}
+                                  </ReportLocationMutation>
+                                )}
+                              </FeedQuery>
+                            );
+                          }}
+                        </RequestCoffeeMutation>
                       );
                     }}
-                  </RequestCoffeeMutation>
+                  </GetCoffeesQuery>
                 );
               }}
-            </GetCoffeesQuery>
+            </RecommandUsersQuery>
           );
         }}
-      </RecommandUsersQuery>
+      </DeleteCoffeeMutation>
     );
   }
   public handleGeoSuccess = (position: Position) => {
@@ -412,6 +447,78 @@ class FeedContainer extends React.Component<IProps, IState> {
     } catch (e) {
       console.log(e);
     }
+  };
+  public onCompletedDeleteCoffee = data => {
+    const { coffeeModalOpen } = this.state;
+    if (data.deleteCoffee.ok) {
+      toast.success("Coffee deleted");
+    } else {
+      toast.error("error");
+    }
+    this.setState({
+      coffeeModalOpen: !coffeeModalOpen
+    } as any);
+  };
+  public updateDeleteCoffee = (cache, { data: { deleteCoffee } }) => {
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    const { currentCity, coffeePage } = this.state;
+    try {
+      const data = cache.readQuery({
+        query: GET_MY_COFFEE,
+        variables: { username }
+      });
+      if (data) {
+        data.getMyCoffee.coffees = data.getMyCoffee.coffees.filter(
+          i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
+        );
+        data.getMyCoffee.requestingCoffees = data.getMyCoffee.requestingCoffees.filter(
+          i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
+        );
+        data.getMyCoffee.cache.writeQuery({
+          query: GET_MY_COFFEE,
+          variables: { username },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const feedData = cache.readQuery({
+        query: GET_COFFEES,
+        variables: { coffeePage, cityName: currentCity }
+      });
+      if (feedData) {
+        feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
+          i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
+        );
+        cache.writeQuery({
+          query: GET_COFFEES,
+          variables: {
+            coffeePage,
+            cityName: currentCity
+          },
+          data: feedData
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  public getCoffeeId = coffeeId => {
+    const { coffeeModalOpen } = this.state;
+    this.setState({
+      coffeeModalOpen: !coffeeModalOpen,
+      coffeeId
+    } as any);
+  };
+  public deleteCoffee = () => {
+    const { coffeeId } = this.state;
+    this.deleteCoffeeFn({ variables: { coffeeId: parseInt(coffeeId, 10) } });
   };
 }
 

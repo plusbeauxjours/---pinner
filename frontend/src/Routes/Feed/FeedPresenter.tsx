@@ -256,6 +256,8 @@ interface IProps {
   currentLat: number;
   currentLng: number;
   page: number;
+  getCoffeeId: (coffeeId: string) => void;
+  deleteCoffee: () => void;
 }
 
 const FeedPresenter: React.SFC<IProps> = ({
@@ -290,7 +292,9 @@ const FeedPresenter: React.SFC<IProps> = ({
   currentLat,
   currentLng,
   currentCity,
-  page
+  page,
+  getCoffeeId,
+  deleteCoffee
 }) => {
   if (feedLoading) {
     return <Loader />;
@@ -307,7 +311,7 @@ const FeedPresenter: React.SFC<IProps> = ({
               <ModalLink onClick={() => console.log("EDIT COFFEE")}>
                 EDIT COFFEE
               </ModalLink>
-              <ModalLink onClick={() => console.log("DELETE COFFEE")}>
+              <ModalLink onClick={() => deleteCoffee()}>
                 DELETE COFFEE
               </ModalLink>
               <ModalLink onClick={toggleCoffeeModal}>Cancel</ModalLink>
@@ -488,6 +492,7 @@ const FeedPresenter: React.SFC<IProps> = ({
                   coffees={coffees}
                   toggleCoffeeModal={toggleCoffeeModal}
                   toggleCoffeeReportModal={toggleCoffeeReportModal}
+                  getCoffeeId={getCoffeeId}
                 />
               ) : (
                 <Loader />

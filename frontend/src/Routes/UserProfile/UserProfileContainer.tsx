@@ -1184,6 +1184,27 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } catch (e) {
       console.log(e);
     }
+    try {
+      const feedData = cache.readQuery({
+        query: GET_COFFEES,
+        variables: { coffeePage: 0, cityName: localStorage.getItem("cityName") }
+      });
+      if (feedData) {
+        feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
+          i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
+        );
+        cache.writeQuery({
+          query: GET_COFFEES,
+          variables: {
+            coffeePage: 0,
+            cityName: localStorage.getItem("cityName")
+          },
+          data: feedData
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
   public getCoffeeId = coffeeId => {
     const { coffeeModalOpen } = this.state;
@@ -1250,7 +1271,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } catch (e) {
       console.log(e);
     }
-
     try {
       const profileData = cache.readQuery({
         query: GET_MY_COFFEE,
