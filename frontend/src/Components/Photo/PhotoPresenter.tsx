@@ -262,7 +262,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                     REPORT CARD
                   </ModalLink>
                   <ModalLink onClick={() => followUserFn()}>
-                    {isFollowing ? "UNFOLLOW" : "DFOLLOW"}
+                    {isFollowing ? "UNFOLLOW" : "FOLLOW"}
                   </ModalLink>
                 </>
               )}
@@ -357,7 +357,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                     REPORT CARD
                   </ModalLink>
                   <ModalLink onClick={() => followUserFn()}>
-                    {isFollowing ? "UNFOLLOW" : "DFOLLOW"}
+                    {isFollowing ? "UNFOLLOW" : "FOLLOW"}
                   </ModalLink>
                 </>
               )}

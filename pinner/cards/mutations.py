@@ -159,16 +159,16 @@ class EditComment(graphene.Mutation):
                     comment.edited = True
                     comment.save()
 
-                    return types.EditCommentResponse(ok=True, comment=comment)
+                    return types.EditCommentResponse(ok=True)
 
                 else:
-                    return types.EditCommentResponse(ok=False, comment=None)
+                    return types.EditCommentResponse(ok=False)
 
             except models.Comment.DoesNotExist:
-                return types.EditCommentResponse(ok=False, comment=None)
+                return types.EditCommentResponse(ok=False)
 
         except models.Card.DoesNotExist:
-            return types.EditCommentResponse(ok=False, comment=None)
+            return types.EditCommentResponse(ok=False)
 
 
 class EditCard(graphene.Mutation):
@@ -176,7 +176,7 @@ class EditCard(graphene.Mutation):
     class Arguments:
         cardId = graphene.Int(required=True)
         caption = graphene.String()
-        city = graphene.String()
+        cityName = graphene.String()
 
     Output = types.EditCardResponse
 
@@ -203,19 +203,20 @@ class EditCard(graphene.Mutation):
                 try:
 
                     caption = kwargs.get('caption', card.caption)
-                    city = kwargs.get('city', card.city)
+                    cityName = kwargs.get('city', card.city)
+                    city = location_models.City.objects.get(city_name=cityName)
 
                     card.caption = caption
                     card.city = city
 
                     card.save()
-                    return types.EditCardResponse(ok=True, card=card)
+                    return types.EditCardResponse(ok=True)
                 except IntegrityError as e:
                     print(e)
-                    return types.EditCardResponse(ok=False, card=None)
+                    return types.EditCardResponse(ok=False)
 
         else:
-            return types.EditCardResponse(ok=False, card=None)
+            return types.EditCardResponse(ok=False)
 
 
 class DeleteCard(graphene.Mutation):

@@ -181,18 +181,25 @@ export interface UnMatchVariables {
 // GraphQL query operation: GetComments
 // ====================================================
 
+export interface GetComments_getComments_comments_creator_profile {
+  __typename: "ProfileType";
+  isSelf: boolean | null;
+}
+
 export interface GetComments_getComments_comments_creator {
   __typename: "UserType";
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
+  profile: GetComments_getComments_comments_creator_profile | null;
 }
 
 export interface GetComments_getComments_comments {
   __typename: "CommentType";
   id: string;
   message: string;
+  edited: boolean;
   creator: GetComments_getComments_comments_creator | null;
 }
 
@@ -217,32 +224,9 @@ export interface GetCommentsVariables {
 // GraphQL mutation operation: EditComment
 // ====================================================
 
-export interface EditComment_editComment_comment_creator_profile {
-  __typename: "ProfileType";
-  isSelf: boolean | null;
-}
-
-export interface EditComment_editComment_comment_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: EditComment_editComment_comment_creator_profile | null;
-}
-
-export interface EditComment_editComment_comment {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-  edited: boolean;
-  creator: EditComment_editComment_comment_creator | null;
-}
-
 export interface EditComment_editComment {
   __typename: "EditCommentResponse";
   ok: boolean | null;
-  comment: EditComment_editComment_comment | null;
 }
 
 export interface EditComment {
@@ -513,7 +497,7 @@ export interface CardDetail {
 }
 
 export interface CardDetailVariables {
-  id: number;
+  cardId: number;
 }
 
 

@@ -46,13 +46,15 @@ interface IProps {
   loading: boolean;
   modalOpen: boolean;
   back: any;
+  cardEditMode: boolean;
 }
 
 const CardDetailPresenter: React.SFC<IProps> = ({
   data: { cardDetail: { card = null } = {} } = {},
   loading,
   modalOpen,
-  back
+  back,
+  cardEditMode
 }) => {
   if (loading) {
     return <Loader />;
@@ -80,6 +82,7 @@ const CardDetailPresenter: React.SFC<IProps> = ({
               comments={card.comments}
               naturalTime={card.naturalTime}
               isLiked={card.isLiked}
+              cardEditMode={cardEditMode}
             />
           </Wrapper>
         </Modal>

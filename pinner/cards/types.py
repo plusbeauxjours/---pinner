@@ -127,4 +127,3 @@ class GetCommentsResponse(graphene.ObjectType):
 
 class EditCommentResponse(graphene.ObjectType):
     ok = graphene.Boolean()
-    comment = graphene.Field(CommentType)
