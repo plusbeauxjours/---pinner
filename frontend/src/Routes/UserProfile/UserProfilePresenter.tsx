@@ -652,7 +652,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <ModalLink onClick={() => deleteCoffee()}>
                 DELETE COFFEE
               </ModalLink>
-              <ModalLink onClick={toggleCoffeeModal}>Cancel</ModalLink>
+              <ModalLink onClick={toggleCoffeeModal}>CANCEL</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -672,7 +672,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <ModalLink onClick={() => submitCoffee("followers")}>
                 FOLLOWERS
               </ModalLink>
-              <ModalLink onClick={toggleRequestModal}>Cancel</ModalLink>
+              <ModalLink onClick={toggleRequestModal}>CANCEL</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -699,7 +699,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <ModalLink onClick={openEditMode}>Edit Profile</ModalLink>
               <ModalLink onClick={toggleConfirmModal}>Delete Profile</ModalLink>
               <ModalLink onClick={logUserOutFn}>Log Out</ModalLink>
-              <ModalLink onClick={toggleModal}>Cancel</ModalLink>
+              <ModalLink onClick={toggleModal}>CANCEL</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -794,7 +794,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <ModalLink onClick={toggleTripConfirmModal}>
                 Delete Trip
               </ModalLink>
-              <ModalLink onClick={toggleTripModal}>Cancel</ModalLink>
+              <ModalLink onClick={toggleTripModal}>CANCEL</ModalLink>
             </Modal>
           </ModalContainer>
         )}

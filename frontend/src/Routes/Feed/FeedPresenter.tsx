@@ -314,7 +314,7 @@ const FeedPresenter: React.SFC<IProps> = ({
               <ModalLink onClick={() => deleteCoffee()}>
                 DELETE COFFEE
               </ModalLink>
-              <ModalLink onClick={toggleCoffeeModal}>Cancel</ModalLink>
+              <ModalLink onClick={toggleCoffeeModal}>CANCEL</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -325,7 +325,7 @@ const FeedPresenter: React.SFC<IProps> = ({
               <ModalLink onClick={() => console.log("REPORT COFFEE")}>
                 REPORT COFFEE
               </ModalLink>
-              <ModalLink onClick={toggleCoffeeReportModal}>Cancel</ModalLink>
+              <ModalLink onClick={toggleCoffeeReportModal}>CANCEL</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -345,7 +345,7 @@ const FeedPresenter: React.SFC<IProps> = ({
               <ModalLink onClick={() => submitCoffee("followers")}>
                 FOLLOWERS
               </ModalLink>
-              <ModalLink onClick={toggleRequestModal}>Cancel</ModalLink>
+              <ModalLink onClick={toggleRequestModal}>CANCEL</ModalLink>
             </Modal>
           </ModalContainer>
         )}

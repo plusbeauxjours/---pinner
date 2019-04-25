@@ -128,6 +128,48 @@ class DeleteComment(graphene.Mutation):
             return types.DeleteCommentResponse(ok=False, cardId=None, commentId=None)
 
 
+class EditComment(graphene.Mutation):
+
+    class Arguments:
+        cardId = graphene.Int(required=True)
+        commentId = graphene.Int(required=True)
+        message = graphene.String()
+
+    Output = types.EditCommentResponse
+
+    @login_required
+    def mutate(self, info, **kwargs):
+
+        cardId = kwargs.get('cardId')
+        commentId = kwargs.get('commentId')
+        message = kwargs.get('message')
+
+        user = info.context.user
+
+        try:
+            card = models.Card.objects.get(id=cardId)
+
+            try:
+                comment = models.Comment.objects.get(id=commentId)
+
+                if comment.creator.id == user.id or card.creator.id == user.id:
+
+                    message = kwargs.get('message', comment.message)
+                    comment.message = message
+                    comment.save()
+
+                    return types.EditCommentResponse(ok=True, comment=comment)
+
+                else:
+                    return types.EditCommentResponse(ok=False, comment=None)
+
+            except models.Comment.DoesNotExist:
+                return types.EditCommentResponse(ok=False, comment=None)
+
+        except models.Card.DoesNotExist:
+            return types.EditCommentResponse(ok=False, comment=None)
+
+
 class EditCard(graphene.Mutation):
 
     class Arguments:
@@ -148,12 +190,12 @@ class EditCard(graphene.Mutation):
                 card = models.Card.objects.get(id=cardId)
             except models.Card.DoesNotExist:
                 error = "Card Not Found"
-                return types.EditCardResponse(ok=False)
+                return types.EditCardResponse(ok=False, card=None)
 
             if card.creator.id != user.id:
 
                 error = "Unauthorized"
-                return types.EditCardResponse(ok=False)
+                return types.EditCardResponse(ok=False, card=None)
 
             else:
 
@@ -169,10 +211,10 @@ class EditCard(graphene.Mutation):
                     return types.EditCardResponse(ok=True, card=card)
                 except IntegrityError as e:
                     print(e)
-                    return types.EditCardResponse(ok=False)
+                    return types.EditCardResponse(ok=False, card=None)
 
         else:
-            return types.EditCardResponse(ok=False)
+            return types.EditCardResponse(ok=False, card=None)
 
 
 class DeleteCard(graphene.Mutation):

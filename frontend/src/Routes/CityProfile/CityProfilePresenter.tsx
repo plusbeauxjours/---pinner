@@ -9,8 +9,6 @@ import Bold from "../../Components/Bold";
 import CardGrid from "../../Components/CardGrid";
 import { keyframes } from "styled-components";
 import LocationGrid from "src/Components/LocationGrid";
-import LocationRow from "src/Components/LocationRow";
-// import CoffeeRow from "src/Components/CoffeeRow";
 import CoffeeGrid from "src/Components/CoffeeGrid";
 import Weather from "src/Components/Weather";
 
@@ -241,11 +239,6 @@ const Modal = styled.div`
   justify-content: center;
 `;
 
-const SeeAll = styled.p`
-  font-size: 12px;
-  font-weight: 100;
-  cursor: pointer;
-`;
 
 const WeatherIcon = styled.div`
   display: flex;
@@ -261,14 +254,6 @@ interface IProps {
   nearCountriesLoading: boolean;
   coffeeData: any;
   coffeeLoading: boolean;
-  toggleNearCitySeeAll: () => void;
-  toggleNearCountrySeeAll: () => void;
-  nearCityList: any;
-  nearCountryList: any;
-  nearCityModalOpen: boolean;
-  nearCountryModalOpen: boolean;
-  toggleNearCityModal: () => void;
-  toggleNearCountryModal: () => void;
   coffeeModalOpen: boolean;
   toggleCoffeeModal: () => void;
   coffeeReportModalOpen: boolean;
@@ -291,14 +276,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   nearCountriesLoading,
   coffeeData: { getCoffees: { coffees = null } = {} } = {},
   coffeeLoading,
-  toggleNearCitySeeAll,
-  toggleNearCountrySeeAll,
-  nearCityList,
-  nearCountryList,
-  toggleNearCityModal,
-  toggleNearCountryModal,
-  nearCityModalOpen,
-  nearCountryModalOpen,
   coffeeModalOpen,
   toggleCoffeeModal,
   coffeeReportModalOpen,
@@ -316,7 +293,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               <ModalLink onClick={() => console.log("REPORT COFFEE")}>
                 REPORT COFFEE
               </ModalLink>
-              <ModalLink onClick={toggleCoffeeModal}>Cancel</ModalLink>
+              <ModalLink onClick={toggleCoffeeModal}>CANCEL</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -334,45 +311,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                 DELETE COFFEE
               </ModalLink>
 
-              <ModalLink onClick={toggleCoffeeReportModal}>Cancel</ModalLink>
-            </Modal>
-          </ModalContainer>
-        )}
-        {nearCityModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleNearCityModal} />
-            <Modal>
-              <Wrapper>
-                {nearCityList.map(nearCity => (
-                  <LocationRow
-                    key={nearCity.id}
-                    id={nearCity.id}
-                    cityName={nearCity.cityName}
-                    avatar={nearCity.cityPhoto}
-                    countryName={nearCity.country.countryName}
-                    type={"nearCity"}
-                  />
-                ))}
-              </Wrapper>
-            </Modal>
-          </ModalContainer>
-        )}
-        {nearCountryModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleNearCountryModal} />
-            <Modal>
-              <Wrapper>
-                {nearCountryList.map(nearCountry => (
-                  <LocationRow
-                    key={nearCountry.id}
-                    id={nearCountry.id}
-                    avatar={nearCountry.countryPhoto}
-                    countryName={nearCountry.countryName}
-                    continentName={nearCountry.continent.continentName}
-                    type={"nearCountry"}
-                  />
-                ))}
-              </Wrapper>
+              <ModalLink onClick={toggleCoffeeReportModal}>CANCEL</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -476,7 +415,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
           <GreyLine />
           <Title>
             <SBold text={"NEAR CITIES"} />
-            <SeeAll onClick={toggleNearCitySeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <Box>
@@ -491,7 +429,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
 
           <Title>
             <SBold text={"NEAR COUNTRIES"} />
-            <SeeAll onClick={toggleNearCountrySeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <Box>
@@ -505,7 +442,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
           <GreyLine />
           <Title>
             <SBold text={"POSTS"} />
-            <SeeAll>SEE ALL</SeeAll>
           </Title>
           {cards && cards.length !== 0 && <CardGrid cards={cards} />}
         </SWrapper>

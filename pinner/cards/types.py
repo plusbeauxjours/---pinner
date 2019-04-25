@@ -123,3 +123,8 @@ class ThirdAnnotateRespose(graphene.ObjectType):
 
 class GetCommentsResponse(graphene.ObjectType):
     comments = graphene.List(CommentType)
+
+
+class EditCommentResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
+    comment = graphene.Field(CommentType)

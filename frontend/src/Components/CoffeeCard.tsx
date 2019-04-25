@@ -12,6 +12,7 @@ const ListOverlay = styled.div`
   opacity: 0;
   display: flex;
   align-self: flex-end;
+  position: absolute
   cursor: pointer;
   svg {
     fill: white;
@@ -27,6 +28,7 @@ const Container = styled.div`
   border: 1px solid ${props => props.theme.headerColor};
   margin-right: 5px;
   margin-bottom: 25px;
+  position: relative;
 `;
 
 const Tips = styled.div`
@@ -47,6 +49,7 @@ const Tips = styled.div`
 `;
 
 const SAvatar = styled(Avatar)`
+  margin-top: 10px;
   margin-bottom: 15px;
 `;
 
@@ -61,13 +64,10 @@ const Icon = styled.div`
 
 const SBold = styled(Bold)`
   margin-bottom: 3px;
-  display: block;
+  display: flex;
+  justify-content: center;
 `;
 
-const Id = styled.div`
-  color: red;
-  font-size: 20px;
-`;
 const Location = styled.span`
   margin-bottom: 10px;
   display: flex;
@@ -162,9 +162,11 @@ const CoffeeCard: React.SFC<IProps> = ({
                   )}
                   <Link to={`/c/${id}`}>
                     <SAvatar url={avatar} size="md" />
-                    <Id>{id}</Id>
                     <SBold text={username} />
-                    <Location>{target}</Location>
+                    <Location>
+                      {target}
+                      {id}
+                    </Location>
                     <Location>{expires}</Location>
                   </Link>
                 </Tips>

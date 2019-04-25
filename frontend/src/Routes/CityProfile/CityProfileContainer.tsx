@@ -31,12 +31,6 @@ interface IState {
   page: number;
   lat: number;
   lng: number;
-  nearCityList: any;
-  nearCountryList: any;
-  nearCityPage: number;
-  nearCountryPage: number;
-  nearCityModalOpen: boolean;
-  nearCountryModalOpen: boolean;
   coffeeModalOpen: boolean;
   coffeeReportModalOpen: boolean;
   coffeePage: number;
@@ -52,12 +46,6 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       page: 0,
       lat: 0,
       lng: 0,
-      nearCityList: null,
-      nearCountryList: null,
-      nearCityPage: 0,
-      nearCountryPage: 0,
-      nearCityModalOpen: false,
-      nearCountryModalOpen: false,
       coffeeModalOpen: false,
       coffeeReportModalOpen: false,
       coffeePage: 0
@@ -74,12 +62,6 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     } = this.props;
     const {
       page,
-      nearCityList,
-      nearCountryList,
-      nearCityPage,
-      nearCountryPage,
-      nearCityModalOpen,
-      nearCountryModalOpen,
       coffeeModalOpen,
       coffeeReportModalOpen,
       coffeePage
@@ -93,10 +75,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
         }) => {
           this.coffeeFetchMore = coffeeFetchMore;
           return (
-            <NearCitiesQuery
-              query={NEAR_CITIES}
-              variables={{ nearCityPage, cityName }}
-            >
+            <NearCitiesQuery query={NEAR_CITIES} variables={{ cityName }}>
               {({
                 data: nearCitiesData,
                 loading: nearCitiesLoading,
@@ -106,7 +85,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                 return (
                   <NearCountriesQuery
                     query={NEAR_COUNTRIES}
-                    variables={{ nearCountryPage, cityName }}
+                    variables={{ cityName }}
                   >
                     {({
                       data: nearCountriesData,
@@ -130,18 +109,6 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                                 nearCountriesLoading={nearCountriesLoading}
                                 coffeeData={coffeeData}
                                 coffeeLoading={coffeeLoading}
-                                nearCityList={nearCityList}
-                                nearCountryList={nearCountryList}
-                                nearCityModalOpen={nearCityModalOpen}
-                                nearCountryModalOpen={nearCountryModalOpen}
-                                toggleNearCityModal={this.toggleNearCityModal}
-                                toggleNearCountryModal={
-                                  this.toggleNearCountryModal
-                                }
-                                toggleNearCitySeeAll={this.toggleNearCitySeeAll}
-                                toggleNearCountrySeeAll={
-                                  this.toggleNearCountrySeeAll
-                                }
                                 coffeeModalOpen={coffeeModalOpen}
                                 toggleCoffeeModal={this.toggleCoffeeModal}
                                 coffeeReportModalOpen={coffeeReportModalOpen}
@@ -163,66 +130,6 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       </GetCoffeesQuery>
     );
   }
-  public toggleNearCityModal = () => {
-    const { nearCityModalOpen } = this.state;
-    this.setState({
-      nearCityModalOpen: !nearCityModalOpen
-    } as any);
-  };
-  public toggleNearCountryModal = () => {
-    const { nearCountryModalOpen } = this.state;
-    this.setState({
-      nearCountryModalOpen: !nearCountryModalOpen
-    } as any);
-  };
-  public toggleNearCitySeeAll = () => {
-    const {
-      match: {
-        params: { cityName }
-      }
-    } = this.props;
-    const { nearCityModalOpen } = this.state;
-    this.nearCitiesFetchMore({
-      query: NEAR_CITIES,
-      variables: { nearCityPage: 1, cityName },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult) {
-          return previousResult;
-        }
-        this.setState({
-          nearCityList: [
-            ...previousResult.nearCities.cities,
-            ...fetchMoreResult.nearCities.cities
-          ],
-          nearCityModalOpen: !nearCityModalOpen
-        });
-      }
-    });
-  };
-  public toggleNearCountrySeeAll = () => {
-    const {
-      match: {
-        params: { cityName }
-      }
-    } = this.props;
-    const { nearCountryModalOpen } = this.state;
-    this.nearCountriesFetchMore({
-      query: NEAR_COUNTRIES,
-      variables: { nearCountryPage: 1, cityName },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult) {
-          return previousResult;
-        }
-        this.setState({
-          nearCountryList: [
-            ...previousResult.nearCountries.countries,
-            ...fetchMoreResult.nearCountries.countries
-          ],
-          nearCountryModalOpen: !nearCountryModalOpen
-        });
-      }
-    });
-  };
   public toggleCoffeeModal = () => {
     const { coffeeModalOpen } = this.state;
     this.setState({
