@@ -9,22 +9,30 @@ const SButton = styled(Button)`
 
 interface IProps {
   matchFn?: any;
+  isSelf: boolean;
   unMatchFn?: any;
   isMatching: boolean;
 }
 
 const CoffeeBtnPresenter: React.SFC<IProps> = ({
   matchFn,
+  isSelf,
   unMatchFn,
   isMatching
-}) => (
-  <>
-    {isMatching ? (
-      <SButton size={"xs"} text={"UNMATCH"} onClick={unMatchFn} />
-    ) : (
-      <SButton size={"xs"} text={"JOIN"} onClick={matchFn} />
-    )}
-  </>
-);
+}) => {
+  if (isSelf) {
+    return null;
+  } else {
+    return (
+      <>
+        {!isSelf && isMatching ? (
+          <SButton size={"xs"} text={"UNMATCH"} onClick={unMatchFn} />
+        ) : (
+          <SButton size={"xs"} text={"JOIN"} onClick={matchFn} />
+        )}
+      </>
+    );
+  }
+};
 
 export default CoffeeBtnPresenter;

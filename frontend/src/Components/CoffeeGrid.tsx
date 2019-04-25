@@ -6,13 +6,15 @@ interface IProps {
   coffees?: any;
   followersModalOpen?: boolean;
   toggleFollowersModal?: () => void;
+  type?: string;
 }
 
 const CoffeeGrid: React.SFC<IProps> = ({
   requestingCoffees,
   coffees,
   followersModalOpen,
-  toggleFollowersModal
+  toggleFollowersModal,
+  type
 }) => (
   <>
     {requestingCoffees &&
@@ -27,11 +29,11 @@ const CoffeeGrid: React.SFC<IProps> = ({
           isFollowing={coffee.host.profile.isFollowing}
           target={coffee.target}
           expires={coffee.naturalTime}
-          isSelf={coffee.host.isSelf}
           status={coffee.status}
           requestingCoffees={true}
           followersModalOpen={followersModalOpen}
           toggleFollowersModal={toggleFollowersModal}
+          type={type}
         />
       ))}
     {coffees &&
@@ -51,6 +53,7 @@ const CoffeeGrid: React.SFC<IProps> = ({
           requestingCoffees={false}
           followersModalOpen={followersModalOpen}
           toggleFollowersModal={toggleFollowersModal}
+          type={type}
         />
       ))}
   </>

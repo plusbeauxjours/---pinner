@@ -1038,6 +1038,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 requestingCoffees={requestingCoffees}
                 followersModalOpen={followersModalOpen}
                 toggleFollowersModal={toggleFollowersModal}
+                type={"requestingCoffee"}
               />
             ) : (
               <Icon onClick={toggleRequestModal}>
@@ -1046,7 +1047,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             )}
             <Box>
               {!myCoffeeLoading && coffees ? (
-                <CoffeeGrid coffees={coffees} />
+                <CoffeeGrid coffees={coffees} type={"myCoffees"} />
               ) : (
                 <Loader />
               )}

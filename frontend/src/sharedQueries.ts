@@ -112,6 +112,7 @@ export const COFFEE_FRAGMENT = gql`
       }
     }
     host {
+      id
       username
       profile {
         avatar

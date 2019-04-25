@@ -80,11 +80,12 @@ interface IProps {
   currentCountry: string;
   target: string;
   expires: string;
-  isSelf: boolean;
+  isSelf?: boolean;
   status: string;
   requestingCoffees: boolean;
   followersModalOpen?: boolean;
   toggleFollowersModal?: () => void;
+  type?: string;
 }
 
 const CoffeeCard: React.SFC<IProps> = ({
@@ -97,45 +98,61 @@ const CoffeeCard: React.SFC<IProps> = ({
   status,
   requestingCoffees,
   followersModalOpen,
-  toggleFollowersModal
+  toggleFollowersModal,
+  type
 }) => {
   return (
     <>
-      {requestingCoffees ? (
-        <Link to={`/c/${id}`}>
-          <Container>
-            <Icon>
-              <LoaderData />
-            </Icon>
-
-            <Location>{id}</Location>
-            <SBold text={username} />
-            <Location>{target}</Location>
-            <Location>{expires}</Location>
-          </Container>
-        </Link>
-      ) : (
-        // <Link to={`/c/${id}`}>
-        //   <Container>
-        //     <Location>{id}</Location>
-        //     <SBold text={username} />
-        //     <Location>{target}</Location>
-        //     <Location>{expires}</Location>
-        //   </Container>
-        // </Link>
-        <Link to={`/c/${id}`}>
-          <Container>
-            <ListOverlay>
-              <List />
-            </ListOverlay>
-            <SAvatar url={avatar} size="md" />
-            <Id>{id}</Id>
-            <SBold text={username} />
-            <Location>{target}</Location>
-            <Location>{expires}</Location>
-          </Container>
-        </Link>
-      )}
+      {(() => {
+        switch (type) {
+          case "requestingCoffee":
+            return (
+              <Link to={`/c/${id}`}>
+                <Container>
+                  <ListOverlay>
+                    <List />
+                  </ListOverlay>
+                  <Icon>
+                    <LoaderData />
+                  </Icon>
+                  <Location>{id}</Location>
+                  <SBold text={username} />
+                  <Location>{target}</Location>
+                  <Location>{expires}</Location>
+                </Container>
+              </Link>
+            );
+          case "myCoffees":
+            return (
+              <Link to={`/c/${id}`}>
+                <Container>
+                  <ListOverlay>
+                    <List />
+                  </ListOverlay>
+                  <Location>{id}</Location>
+                  <SBold text={username} />
+                  <Location>{target}</Location>
+                  <Location>{expires}</Location>
+                </Container>
+              </Link>
+            );
+          default:
+            return (
+              <Link to={`/c/${id}`}>
+                <Container>
+                  <ListOverlay>
+                    <List />
+                  </ListOverlay>
+                  <SAvatar url={avatar} size="md" />
+                  <Id>{id}</Id>
+                  <SBold text={username} />
+                  <Location>{target}</Location>
+                  <Location>{expires}</Location>
+                </Container>
+              </Link>
+            );
+        }
+      })()}
     </>
   );
 };

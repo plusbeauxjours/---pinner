@@ -134,7 +134,11 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
             <Location>
               <SBold text={coffee.status} />
             </Location>
-            <CoffeeBtn coffeeId={coffee.id} isMatching={coffee.isMatching} />
+            <CoffeeBtn
+              coffeeId={coffee.id}
+              isMatching={coffee.isMatching}
+              isSelf={coffee.host.profile.isSelf}
+            />
 
             {/* {coffee.host.profile.nationality.countryName} */}
           </SWrapper>

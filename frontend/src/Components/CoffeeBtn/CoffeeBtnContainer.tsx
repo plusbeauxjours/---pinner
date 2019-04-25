@@ -20,6 +20,7 @@ class UnMatchMutation extends Mutation<UnMatch, UnMatchVariables> {}
 interface IProps extends RouteComponentProps {
   coffeeId?: string;
   matchId?: string;
+  isSelf: boolean;
   isMatching: boolean;
 }
 
@@ -37,7 +38,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
     };
   }
   public render() {
-    const { coffeeId, matchId } = this.props;
+    const { coffeeId, matchId, isSelf } = this.props;
     const { isMatching } = this.state;
     return (
       <UnMatchMutation
@@ -62,6 +63,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
                     isMatching={isMatching}
                     unMatchFn={unMatchFn}
                     matchFn={matchFn}
+                    isSelf={isSelf}
                   />
                 );
               }}
