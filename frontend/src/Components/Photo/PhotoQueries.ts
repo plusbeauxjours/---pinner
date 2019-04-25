@@ -31,22 +31,6 @@ export const ADD_COMMENT = gql`
   }
 `;
 
-export const EDIT_COMMENT = gql`
-  mutation EditComment($cardId: Int!, $commentId: Int!, $message: String!) {
-    editComment(cardId: $cardId, commentId: $commentId, message: $message) {
-      ok
-      comment {
-        id
-        message
-        edited
-        creator {
-          username
-        }
-      }
-    }
-  }
-`;
-
 export const DELETE_COMMENT = gql`
   mutation DeleteComment($cardId: Int!, $commentId: Int!) {
     deleteComment(cardId: $cardId, commentId: $commentId) {

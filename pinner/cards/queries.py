@@ -50,7 +50,7 @@ def resolve_get_comments(self, info, **kwargs):
     except models.Card.DoesNotExist:
         raise Exception('Card not found')
 
-    comments = card.comments.all()
+    comments = card.comments.all().order_by('created_at')
     return types.GetCommentsResponse(comments=comments)
 
 

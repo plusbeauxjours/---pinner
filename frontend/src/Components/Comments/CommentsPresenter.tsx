@@ -3,6 +3,7 @@ import styled from "src/Styles/typed-components";
 import Bold from "../Bold";
 import { Delete, Edit } from "../../Icons";
 import Loader from "../Loader";
+import Input from "../../Components/Input";
 
 const Container = styled.div`
   display: flex;
@@ -20,12 +21,28 @@ const Back = styled.span`
   align-items: center;
 `;
 
+const TimeStamp = styled.span`
+  margin-left: 10px;
+  text-transform: uppercase;
+  font-size: 10px;
+  line-height: 18px;
+  margin-top: 10px;
+  display: block;
+  color: ${props => props.theme.greyColor};
+  display: inline;
+`;
+
 const Icon = styled.span`
   margin-left: 15px;
   cursor: pointer;
   svg {
     fill: white;
   }
+`;
+
+const ExtendedInput = styled(Input)`
+  width: 287px;
+  height: 48px;
 `;
 
 const SBold = styled(Bold)`
@@ -37,28 +54,30 @@ const Comments = styled.div`
   margin-top: 10px;
 `;
 
-// ${Comments} {
-//   height: 350px;
-//   width: 250px;
-//   word-break: break-all;
-//   flex-wrap: nowrap;
-//   overflow-x: visible;
-//   overflow-y: auto;
-//   margin-bottom: 30px;
-// }
-
 interface IProps {
   commentsData: any;
   commentsLoading: boolean;
   openedComment: boolean;
-  getDeleteCommentId?: any;
+  commentEditMode: boolean;
+  deleteCommentGetId?: any;
+  editCommentGetId: (commentId: string) => void;
+  editCommentMessage: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  editCommentOnKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  message: string;
+  commentId: string;
 }
 
 const CommentsPresenter: React.SFC<IProps> = ({
   commentsData: { getComments: { comments = null } = {} } = {},
   commentsLoading,
   openedComment,
-  getDeleteCommentId
+  commentEditMode,
+  deleteCommentGetId,
+  editCommentGetId,
+  editCommentMessage,
+  editCommentOnKeyUp,
+  message,
+  commentId
 }) => {
   if (commentsLoading) {
     return <Loader />;
@@ -71,15 +90,33 @@ const CommentsPresenter: React.SFC<IProps> = ({
               <Container>
                 <Front>
                   <SBold text={comment.creator.username} />
-                  {comment.message}
+                  {commentEditMode && commentId === comment.id ? (
+                    <ExtendedInput
+                      onChange={editCommentMessage}
+                      type={"text"}
+                      value={message}
+                      placeholder={comment.message}
+                      name={"userName"}
+                      onKeyUp={editCommentOnKeyUp}
+                    />
+                  ) : (
+                    <>
+                      {comment.message}
+                      {comment.edited && <TimeStamp>Edited</TimeStamp>}
+                    </>
+                  )}
                 </Front>
                 <Back>
-                  <Icon onClick={() => getDeleteCommentId(comment.id)}>
-                    <Delete />
-                  </Icon>
-                  <Icon onClick={() => getDeleteCommentId(comment.id)}>
-                    <Edit />
-                  </Icon>
+                  {comment.creator.profile.isSelf && (
+                    <>
+                      <Icon onClick={() => editCommentGetId(comment.id)}>
+                        <Edit />
+                      </Icon>
+                      <Icon onClick={() => deleteCommentGetId(comment.id)}>
+                        <Delete />
+                      </Icon>
+                    </>
+                  )}
                 </Back>
               </Container>
             </Comments>

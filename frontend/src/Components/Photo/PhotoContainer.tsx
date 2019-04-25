@@ -17,9 +17,7 @@ import {
   LikeCard,
   LikeCardVariables,
   AddComment,
-  AddCommentVariables,
-  EditComment,
-  EditCommentVariables
+  AddCommentVariables
 } from "../../types/api";
 import { FOLLOW_USER } from "../FollowBtn/FollowBtnQueries";
 import { GET_FEED } from "../../../../frontend/src/Routes/Feed/FeedQueries";
@@ -27,10 +25,8 @@ import { toast } from "react-toastify";
 import { withRouter, RouteComponentProps } from "react-router";
 import { GET_USER } from "../../Routes/UserProfile/UserProfileQueries";
 import { GET_COMMENTS } from "../Comments/CommentsQueries";
-import { EDIT_COMMENT } from "./PhotoQueries";
 
 class AddCommentMutation extends Mutation<AddComment, AddCommentVariables> {}
-class EditCommentMutation extends Mutation<EditComment, EditCommentVariables> {}
 class DeleteCommentMutation extends Mutation<
   DeleteComment,
   DeleteCommentVariables
@@ -71,13 +67,10 @@ interface IState {
   isSelf: boolean;
   isLiked: boolean;
   isFollowing: boolean;
-  message: string;
-  commentEditMode: boolean;
 }
 
 class PhotoContainer extends React.Component<IProps, IState> {
   public addCommentFn: MutationFn;
-  public editCommentFn: MutationFn;
   public deleteCommentFn: MutationFn;
   public toggleLikeFn: MutationFn;
   public deleteCardFn: MutationFn;
@@ -94,9 +87,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
       likeCount: props.likeCount,
       isSelf: props.isSelf,
       isLiked: props.isLiked,
-      isFollowing: props.isFollowing,
-      message: props.message,
-      commentEditMode: false
+      isFollowing: props.isFollowing
     };
   }
   public render() {
@@ -122,8 +113,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
       likeCount,
       isSelf,
       isLiked,
-      isFollowing,
-      message
+      isFollowing
     } = this.state;
     return (
       <AddCommentMutation
@@ -135,124 +125,92 @@ class PhotoContainer extends React.Component<IProps, IState> {
         {addCommentFn => {
           this.addCommentFn = addCommentFn;
           return (
-            <EditCommentMutation
-              mutation={EDIT_COMMENT}
-              variables={{
-                cardId: parseInt(cardId, 10),
-                commentId: parseInt(commentId, 10),
-                message
-              }}
-              onCompleted={this.onCompletedEditComment}
-              update={this.updateEditComment}
+            <FollowMutation
+              mutation={FOLLOW_USER}
+              variables={{ userId: parseInt(userId, 10) }}
+              onCompleted={() =>
+                this.setState({
+                  cardMenuModalOpen: !cardMenuModalOpen,
+                  isFollowing: !isFollowing
+                })
+              }
             >
-              {editCommentFn => {
-                this.editCommentFn = editCommentFn;
-                return (
-                  <FollowMutation
-                    mutation={FOLLOW_USER}
-                    variables={{ userId: parseInt(userId, 10) }}
-                    onCompleted={() =>
-                      this.setState({
-                        cardMenuModalOpen: !cardMenuModalOpen,
-                        isFollowing: !isFollowing
-                      })
-                    }
-                  >
-                    {followUserFn => (
-                      <DeleteCommentMutation
-                        mutation={DELETE_COMMENT}
-                        variables={{
-                          cardId: parseInt(cardId, 10),
-                          commentId: parseInt(commentId, 10)
-                        }}
-                        onCompleted={this.onCompletedDeleteComment}
-                        update={this.updateDeleteComment}
+              {followUserFn => (
+                <DeleteCommentMutation
+                  mutation={DELETE_COMMENT}
+                  variables={{
+                    cardId: parseInt(cardId, 10),
+                    commentId: parseInt(commentId, 10)
+                  }}
+                  onCompleted={this.onCompletedDeleteComment}
+                  update={this.updateDeleteComment}
+                >
+                  {deleteCommentFn => {
+                    this.deleteCommentFn = deleteCommentFn;
+                    return (
+                      <ToggleLikeMutation
+                        mutation={TOGGLE_LIKE_CARD}
+                        variables={{ cardId: parseInt(cardId, 10) }}
                       >
-                        {deleteCommentFn => {
-                          this.deleteCommentFn = deleteCommentFn;
+                        {toggleLikeFn => {
+                          this.toggleLikeFn = toggleLikeFn;
                           return (
-                            <ToggleLikeMutation
-                              mutation={TOGGLE_LIKE_CARD}
+                            <DeleteCardMutation
+                              mutation={DELETE_CARD}
                               variables={{ cardId: parseInt(cardId, 10) }}
+                              onCompleted={this.onCompletedDeleteCard}
+                              update={this.updateDeleteCard}
                             >
-                              {toggleLikeFn => {
-                                this.toggleLikeFn = toggleLikeFn;
+                              {deleteCardFn => {
+                                this.deleteCardFn = deleteCardFn;
                                 return (
-                                  <DeleteCardMutation
-                                    mutation={DELETE_CARD}
-                                    variables={{ cardId: parseInt(cardId, 10) }}
-                                    onCompleted={this.onCompletedDeleteCard}
-                                    update={this.updateDeleteCard}
-                                  >
-                                    {deleteCardFn => {
-                                      this.deleteCardFn = deleteCardFn;
-                                      return (
-                                        <PhotoPresenter
-                                          inline={inline}
-                                          creatorAvatar={creatorAvatar}
-                                          creatorUsername={creatorUsername}
-                                          country={country}
-                                          city={city}
-                                          photoUrl={photoUrl}
-                                          likeCount={likeCount}
-                                          commentCount={commentCount}
-                                          caption={caption}
-                                          naturalTime={naturalTime}
-                                          updateNewComment={
-                                            this.updateNewComment
-                                          }
-                                          newComment={newComment}
-                                          isLiked={isLiked}
-                                          onLikeClick={this.onLikeClick}
-                                          toggleCommentClick={
-                                            this.toggleCommentClick
-                                          }
-                                          openedComment={openedComment}
-                                          addCommentOnKeyUp={
-                                            this.addCommentOnKeyUp
-                                          }
-                                          onSubmit={this.onSubmit}
-                                          deleteCommentModalOpen={
-                                            deleteCommentModalOpen
-                                          }
-                                          cardMenuModalOpen={cardMenuModalOpen}
-                                          toggleDeleteCommentModal={
-                                            this.toggleDeleteCommentModal
-                                          }
-                                          toggleCardMenuModal={
-                                            this.toggleCardMenuModal
-                                          }
-                                          getDeleteCommentId={
-                                            this.getDeleteCommentId
-                                          }
-                                          isFollowing={isFollowing}
-                                          isSelf={isSelf}
-                                          followUserFn={followUserFn}
-                                          deleteCardFn={deleteCardFn}
-                                          cardId={cardId}
-                                          commentEditMode={commentEditMode}
-                                          editCommentMessage={
-                                            editCommentMessage
-                                          }
-                                          editCommentGetId={editCommentGetId}
-                                          editCommentOnKeyUp={
-                                            editCommentOnKeyUp
-                                          }
-                                        />
-                                      );
-                                    }}
-                                  </DeleteCardMutation>
+                                  <PhotoPresenter
+                                    inline={inline}
+                                    creatorAvatar={creatorAvatar}
+                                    creatorUsername={creatorUsername}
+                                    country={country}
+                                    city={city}
+                                    photoUrl={photoUrl}
+                                    likeCount={likeCount}
+                                    commentCount={commentCount}
+                                    caption={caption}
+                                    naturalTime={naturalTime}
+                                    updateNewComment={this.updateNewComment}
+                                    newComment={newComment}
+                                    isLiked={isLiked}
+                                    onLikeClick={this.onLikeClick}
+                                    toggleCommentClick={this.toggleCommentClick}
+                                    openedComment={openedComment}
+                                    addCommentOnKeyUp={this.addCommentOnKeyUp}
+                                    onSubmit={this.onSubmit}
+                                    deleteCommentModalOpen={
+                                      deleteCommentModalOpen
+                                    }
+                                    cardMenuModalOpen={cardMenuModalOpen}
+                                    toggleDeleteCommentModal={
+                                      this.toggleDeleteCommentModal
+                                    }
+                                    toggleCardMenuModal={
+                                      this.toggleCardMenuModal
+                                    }
+                                    deleteCommentGetId={this.deleteCommentGetId}
+                                    isFollowing={isFollowing}
+                                    isSelf={isSelf}
+                                    followUserFn={followUserFn}
+                                    deleteCardFn={deleteCardFn}
+                                    cardId={cardId}
+                                  />
                                 );
                               }}
-                            </ToggleLikeMutation>
+                            </DeleteCardMutation>
                           );
                         }}
-                      </DeleteCommentMutation>
-                    )}
-                  </FollowMutation>
-                );
-              }}
-            </EditCommentMutation>
+                      </ToggleLikeMutation>
+                    );
+                  }}
+                </DeleteCommentMutation>
+              )}
+            </FollowMutation>
           );
         }}
       </AddCommentMutation>
@@ -352,35 +310,12 @@ class PhotoContainer extends React.Component<IProps, IState> {
     });
   };
 
-  public getDeleteCommentId = commentId => {
+  public deleteCommentGetId = commentId => {
     const { deleteCommentModalOpen } = this.state;
     this.setState({
       deleteCommentModalOpen: !deleteCommentModalOpen,
       commentId
     } as any);
-  };
-  public editCommentMessage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      target: { value }
-    } = event;
-    this.setState({
-      message: value
-    } as any);
-  };
-  public editCommentGetId = commentId => {
-    const { commentEditMode } = this.state;
-    this.setState({
-      commentEditMode: !commentEditMode,
-      commentId
-    } as any);
-  };
-  public editCommentOnKeyUp = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const { keyCode } = event;
-    if (keyCode === 13) {
-      this.editCommentFn();
-    } else {
-      return;
-    }
   };
   public onSubmit = () => {
     const { cardId } = this.props;
@@ -450,47 +385,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
           query: GET_USER,
           username: creatorUsername,
           data: userData
-        });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  public onCompletedEditComment = data => {
-    const { commentEditMode } = this.state;
-    if (data.deleteComment.ok) {
-      toast.success("Comment edited");
-    } else {
-      toast.error("error");
-    }
-    this.setState({
-      commentEditMode: !commentEditMode,
-      commentId: null
-    });
-  };
-  public updateEditComment = (cache, { data: { editComment } }) => {
-    const { cardId } = editComment;
-    console.log(editComment);
-    try {
-      const data = cache.readQuery({
-        query: GET_COMMENTS,
-        variables: {
-          cardId
-        }
-      });
-      console.log(data);
-      if (data) {
-        data.getComments.comments.splice(
-          i => parseInt(i.id, 10) === parseInt(editComment.comment.id, 10),
-          editComment.comment
-        );
-        console.log(data);
-        cache.writeQuery({
-          query: GET_COMMENTS,
-          variables: {
-            cardId
-          },
-          data
         });
       }
     } catch (e) {

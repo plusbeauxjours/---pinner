@@ -190,7 +190,7 @@ interface IProps {
   deleteCommentModalOpen: boolean;
   cardMenuModalOpen: boolean;
 
-  getDeleteCommentId: any;
+  deleteCommentGetId: any;
   isFollowing: boolean;
   isSelf: boolean;
   followUserFn: MutationFn;
@@ -224,7 +224,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
   toggleDeleteCommentModal,
 
   toggleCardMenuModal,
-  getDeleteCommentId,
+  deleteCommentGetId,
   isFollowing,
   isSelf,
   followUserFn,
@@ -309,7 +309,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
               <>
                 <Comments
                   openedComment={openedComment}
-                  getDeleteCommentId={getDeleteCommentId}
+                  deleteCommentGetId={deleteCommentGetId}
                   cardId={cardId}
                 />
                 <AddComment>
@@ -392,7 +392,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
               )}
               <Comments
                 openedComment={openedComment}
-                getDeleteCommentId={getDeleteCommentId}
+                deleteCommentGetId={deleteCommentGetId}
                 cardId={cardId}
               />
             </Front>
