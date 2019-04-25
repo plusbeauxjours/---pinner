@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Bold from "./Bold";
 import Avatar from "./Avatar";
+import Input from "./Input";
 
 const Header = styled.header`
   padding: 12px;
@@ -30,12 +31,22 @@ const SBold = styled(Bold)`
   display: flex;
 `;
 
+const ExtendedInput = styled(Input)`
+  width: 287px;
+  height: 48px;
+`;
+
 interface IProps {
   username: string;
   avatar: string;
   currentCity?: string;
   currentCountry?: string;
   size?: string;
+  editMode?: boolean;
+  cardEditMode?: boolean;
+  editCardOnKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  cityName?: string;
 }
 
 const UserHeader: React.SFC<IProps> = ({
@@ -43,7 +54,12 @@ const UserHeader: React.SFC<IProps> = ({
   avatar,
   currentCity,
   currentCountry,
-  size
+  size,
+  editMode,
+  cardEditMode,
+  onInputChange,
+  editCardOnKeyUp,
+  cityName
 }) => {
   return (
     <Header>
@@ -51,7 +67,23 @@ const UserHeader: React.SFC<IProps> = ({
       <HeaderColumn>
         <SBold text={username} />
         <Location>
-          {currentCity}, {currentCountry}
+          {editMode || cardEditMode ? (
+            <>
+              <ExtendedInput
+                onChange={onInputChange}
+                type={"text"}
+                value={cityName}
+                placeholder={cityName}
+                name={"cityName"}
+                onKeyUp={editCardOnKeyUp}
+              />
+              , {currentCountry}
+            </>
+          ) : (
+            <>
+              {currentCity}, {currentCountry}
+            </>
+          )}
         </Location>
       </HeaderColumn>
     </Header>

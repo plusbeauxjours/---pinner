@@ -13,7 +13,6 @@ import Bold from "../../Components/Bold";
 import UserRow from "../../Components/UserRow";
 import UserGrid from "../../Components/UserGrid";
 import CoffeeGrid from "../../Components/CoffeeGrid";
-// import CoffeeRow from "../../Components/CoffeeRow";
 import Weather from "src/Components/Weather";
 import LoaderCoffee from "src/Components/LoaderCoffee";
 

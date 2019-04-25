@@ -236,14 +236,13 @@ class PhotoContainer extends React.Component<IProps, IState> {
                                           editCardLink={this.editCardLink}
                                           editCardCaption={this.editCardCaption}
                                           editCardOnKeyUp={this.editCardOnKeyUp}
-                                          onCompletedEditCard={
-                                            this.onCompletedEditCard
-                                          }
                                           toggleEditCardMode={
                                             this.toggleEditCardMode
                                           }
                                           editMode={editMode}
                                           cardEditMode={cardEditMode}
+                                          onInputChange={this.onInputChange}
+                                          cityName={cityName}
                                         />
                                       );
                                     }}
@@ -366,14 +365,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
     } as any);
   };
   public onSubmit = () => {
-    const { cardId } = this.props;
-    const { commentId } = this.state;
-    this.deleteCommentFn({
-      variables: {
-        cardId,
-        commentId
-      }
-    });
+    this.deleteCommentFn();
     this.setState({
       commentId: null
     });
@@ -485,7 +477,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
     history.push({
       pathname: `/p/${cardId}`,
       state: {
-        cardEditMode: true
+        editMode: true
       }
     });
   };
@@ -495,6 +487,15 @@ class PhotoContainer extends React.Component<IProps, IState> {
     } = event;
     this.setState({
       caption: value
+    } as any);
+  };
+
+  public onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { name, value }
+    } = event;
+    this.setState({
+      [name]: value
     } as any);
   };
   public editCardOnKeyUp = (event: React.KeyboardEvent<HTMLDivElement>) => {

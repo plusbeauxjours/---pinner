@@ -184,38 +184,43 @@ class EditCard(graphene.Mutation):
 
         user = info.context.user
         cardId = kwargs.get('cardId')
-        cityName = kwargs.get('city', card.city)
-        caption = kwargs.get('caption', card.caption)
 
         if user.is_authenticated:
 
             try:
                 card = models.Card.objects.get(id=cardId)
+                print(card)
             except models.Card.DoesNotExist:
                 raise Exception("Cannot find Card")
 
-            try:
-                city = location_models.City.objects.get(city_name=cityName)
-            except models.Card.DoesNotExist:
-                raise Exception("Cannot find City")
-
-            if card.creator.id != user.id:
-
-                error = "Unauthorized"
-                return types.EditCardResponse(ok=False, card=None)
-
-            else:
+            if (card):
+                cityName = kwargs.get('city', card.city.city_name)
+                print(cityName)
+                caption = kwargs.get('caption', card.caption)
+                print(caption)
 
                 try:
+                    city = location_models.City.objects.get(city_name=cityName)
+                except models.Card.DoesNotExist:
+                    raise Exception("Cannot find City")
 
-                    card.caption = caption
-                    card.city = city
+                if card.creator.id != user.id:
 
-                    card.save()
-                    return types.EditCardResponse(ok=True)
-                except IntegrityError as e:
-                    print(e)
+                    error = "Unauthorized"
                     return types.EditCardResponse(ok=False)
+
+                else:
+
+                    try:
+
+                        card.caption = caption
+                        card.city = city
+
+                        card.save()
+                        return types.EditCardResponse(ok=True)
+                    except IntegrityError as e:
+                        print(e)
+                        return types.EditCardResponse(ok=False)
 
         else:
             return types.EditCardResponse(ok=False)

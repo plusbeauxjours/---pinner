@@ -31,8 +31,12 @@ export const ADD_COMMENT = gql`
       comment {
         id
         message
+        edited
         creator {
           username
+          profile {
+            isSelf
+          }
         }
       }
     }

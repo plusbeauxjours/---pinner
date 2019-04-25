@@ -958,19 +958,11 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     });
   };
   public editTrip = () => {
-    const {
-      moveNotificationId,
-      cityName,
-      startDate,
-      endDate,
-      tripEditModalOpen
-    } = this.state;
+    const { tripEditModalOpen } = this.state;
     this.setState({
       tripModalOpen: false
     });
-    this.editTripFn({
-      variables: { moveNotificationId, cityName, startDate, endDate }
-    });
+    this.editTripFn();
     this.setState({
       tripEditModalOpen: !tripEditModalOpen,
       moveNotificationId: null,

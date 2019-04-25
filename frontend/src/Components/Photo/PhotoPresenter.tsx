@@ -209,10 +209,11 @@ interface IProps {
   editCardLink: () => void;
   editCardCaption: (event: React.ChangeEvent<HTMLInputElement>) => void;
   editCardOnKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  onCompletedEditCard: (data: any) => void;
   toggleEditCardMode: () => void;
   editMode: boolean;
   cardEditMode: boolean;
+  onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  cityName: string;
 }
 
 const PhotoPresenter: React.SFC<IProps> = ({
@@ -247,10 +248,11 @@ const PhotoPresenter: React.SFC<IProps> = ({
   editCardLink,
   editCardCaption,
   editCardOnKeyUp,
-  onCompletedEditCard,
   toggleEditCardMode,
   editMode,
-  cardEditMode
+  cardEditMode,
+  onInputChange,
+  cityName
 }) => {
   if (inline) {
     return (
@@ -392,6 +394,11 @@ const PhotoPresenter: React.SFC<IProps> = ({
                   avatar={creatorAvatar}
                   currentCity={city}
                   currentCountry={country}
+                  editMode={editMode}
+                  cardEditMode={cardEditMode}
+                  editCardOnKeyUp={editCardOnKeyUp}
+                  onInputChange={onInputChange}
+                  cityName={cityName}
                 />
                 <Icon onClick={toggleCardMenuModal}>
                   <List />
@@ -402,7 +409,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                   <SBold text={creatorUsername} />
                   {editMode || cardEditMode ? (
                     <ExtendedInput
-                      onChange={editCardCaption}
+                      onChange={onInputChange}
                       type={"text"}
                       value={caption}
                       placeholder={caption}

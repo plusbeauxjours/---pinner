@@ -356,18 +356,25 @@ export interface DeleteCardVariables {
 // GraphQL mutation operation: AddComment
 // ====================================================
 
+export interface AddComment_addComment_comment_creator_profile {
+  __typename: "ProfileType";
+  isSelf: boolean | null;
+}
+
 export interface AddComment_addComment_comment_creator {
   __typename: "UserType";
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
+  profile: AddComment_addComment_comment_creator_profile | null;
 }
 
 export interface AddComment_addComment_comment {
   __typename: "CommentType";
   id: string;
   message: string;
+  edited: boolean;
   creator: AddComment_addComment_comment_creator | null;
 }
 
