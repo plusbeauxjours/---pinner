@@ -536,7 +536,7 @@ interface IProps {
     startDate: moment.Moment | null,
     endDate: moment.Moment | null
   ) => number;
-  deleteCoffee: ()=>void;
+  deleteCoffee: () => void;
   getCoffeeId?: any;
 }
 
@@ -649,9 +649,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <ModalLink onClick={() => console.log("EDIT COFFEE")}>
                 EDIT COFFEE
               </ModalLink>
-              <ModalLink
-                onClick={() => deleteCoffee()}
-              >
+              <ModalLink onClick={() => deleteCoffee()}>
                 DELETE COFFEE
               </ModalLink>
               <ModalLink onClick={toggleCoffeeModal}>Cancel</ModalLink>

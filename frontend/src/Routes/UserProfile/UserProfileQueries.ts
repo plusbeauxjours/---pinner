@@ -371,6 +371,7 @@ export const DELETE_COFFEE = gql`
     deleteCoffee(coffeeId: $coffeeId) {
       ok
       coffeeId
+      username
     }
   }
 `;

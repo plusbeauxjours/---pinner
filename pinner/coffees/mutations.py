@@ -64,18 +64,18 @@ class DeleteCoffee(graphene.Mutation):
             try:
                 coffee = models.Coffee.objects.get(id=coffeeId)
             except models.Coffee.DoesNotExist:
-                return types.DeleteCoffeeResponse(ok=False, coffeeId=None)
+                return types.DeleteCoffeeResponse(ok=False, coffeeId=None, username=user.username)
 
             if coffee.host.id == user.id:
 
                 coffee.delete()
-                return types.DeleteCoffeeResponse(ok=True, coffeeId=coffeeId)
+                return types.DeleteCoffeeResponse(ok=True, coffeeId=coffeeId, username=user.username)
 
             else:
-                return types.DeleteCoffeeResponse(ok=False, coffeeId=None)
+                return types.DeleteCoffeeResponse(ok=False, coffeeId=None, username=user.username)
 
         else:
-            return types.DeleteCoffeeResponse(ok=False, coffeeId=None)
+            return types.DeleteCoffeeResponse(ok=False, coffeeId=None, username=user.username)
 
 
 class Match(graphene.Mutation):

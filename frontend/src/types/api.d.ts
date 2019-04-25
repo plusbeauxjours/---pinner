@@ -2790,6 +2790,7 @@ export interface DeleteCoffee_deleteCoffee {
   __typename: "DeleteCoffeeResponse";
   ok: boolean | null;
   coffeeId: number | null;
+  username: string | null;
 }
 
 export interface DeleteCoffee {

@@ -30,8 +30,10 @@ import {
 } from "../../locationThumbnail";
 import continents from "../../continents";
 import { toast } from "react-toastify";
-import { GET_MY_COFFEE } from "../UserProfile/UserProfileQueries";
-import { DELETE_COFFEE } from "../../../../frontend/src/Routes/UserProfile/UserProfileQueries";
+import {
+  GET_MY_COFFEE,
+  DELETE_COFFEE
+} from "../../Routes/UserProfile/UserProfileQueries";
 
 class RequestCoffeeMutation extends Mutation<
   RequestCoffee,
@@ -460,17 +462,16 @@ class FeedContainer extends React.Component<IProps, IState> {
     } as any);
   };
   public updateDeleteCoffee = (cache, { data: { deleteCoffee } }) => {
-    const {
-      match: {
-        params: { username }
-      }
-    } = this.props;
+    const { username } = deleteCoffee;
     const { currentCity, coffeePage } = this.state;
+    console.log(deleteCoffee);
+
     try {
       const data = cache.readQuery({
         query: GET_MY_COFFEE,
         variables: { username }
       });
+      console.log(data);
       if (data) {
         data.getMyCoffee.coffees = data.getMyCoffee.coffees.filter(
           i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
@@ -478,6 +479,7 @@ class FeedContainer extends React.Component<IProps, IState> {
         data.getMyCoffee.requestingCoffees = data.getMyCoffee.requestingCoffees.filter(
           i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
         );
+        console.log(data.getMyCoffee);
         data.getMyCoffee.cache.writeQuery({
           query: GET_MY_COFFEE,
           variables: { username },

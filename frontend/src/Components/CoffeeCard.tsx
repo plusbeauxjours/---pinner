@@ -24,14 +24,21 @@ const ListOverlay = styled.div`
 `;
 
 const Container = styled.div`
+  border: 1px solid ${props => props.theme.headerColor};
+  margin-right: 5px;
+  margin-bottom: 25px;
+`;
+
+const Tips = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid ${props => props.theme.headerColor};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   width: 170px;
   height: 200px;
-  margin-right: 5px;
-  margin-bottom: 25px;
+
   &:hover {
     ${ListOverlay} {
       opacity: 1;
@@ -59,7 +66,6 @@ const SBold = styled(Bold)`
 
 const Id = styled.div`
   color: red;
-  position: absolute;
   font-size: 20px;
 `;
 const Location = styled.span`
@@ -109,53 +115,59 @@ const CoffeeCard: React.SFC<IProps> = ({
           case "requestingCoffee":
             return (
               <Container>
-                <ListOverlay onClick={() => getCoffeeId(id)}>
-                  <List />
-                </ListOverlay>
-                <Link to={`/c/${id}`}>
-                  <Icon>
-                    <LoaderData />
-                  </Icon>
-                  <Location>{id}</Location>
-                  <SBold text={username} />
-                  <Location>{target}</Location>
-                  <Location>{expires}</Location>
-                </Link>
+                <Tips>
+                  <ListOverlay onClick={() => getCoffeeId(id)}>
+                    <List />
+                  </ListOverlay>
+                  <Link to={`/c/${id}`}>
+                    <Icon>
+                      <LoaderData />
+                    </Icon>
+                    <Location>{id}</Location>
+                    <SBold text={username} />
+                    <Location>{target}</Location>
+                    <Location>{expires}</Location>
+                  </Link>
+                </Tips>
               </Container>
             );
           case "myCoffees":
             return (
               <Container>
-                <ListOverlay onClick={() => getCoffeeId(id)}>
-                  <List />
-                </ListOverlay>
-                <Link to={`/c/${id}`}>
-                  <Location>{id}</Location>
-                  <SBold text={username} />
-                  <Location>{target}</Location>
-                  <Location>{expires}</Location>
-                </Link>
+                <Tips>
+                  <ListOverlay onClick={() => getCoffeeId(id)}>
+                    <List />
+                  </ListOverlay>
+                  <Link to={`/c/${id}`}>
+                    <Location>{id}</Location>
+                    <SBold text={username} />
+                    <Location>{target}</Location>
+                    <Location>{expires}</Location>
+                  </Link>
+                </Tips>
               </Container>
             );
           default:
             return (
               <Container>
-                {isSelf ? (
-                  <ListOverlay onClick={() => getCoffeeId(id)}>
-                    <List />
-                  </ListOverlay>
-                ) : (
-                  <ListOverlay onClick={toggleCoffeeReportModal}>
-                    <List />
-                  </ListOverlay>
-                )}
-                <Link to={`/c/${id}`}>
-                  <SAvatar url={avatar} size="md" />
-                  <Id>{id}</Id>
-                  <SBold text={username} />
-                  <Location>{target}</Location>
-                  <Location>{expires}</Location>
-                </Link>
+                <Tips>
+                  {isSelf ? (
+                    <ListOverlay onClick={() => getCoffeeId(id)}>
+                      <List />
+                    </ListOverlay>
+                  ) : (
+                    <ListOverlay onClick={toggleCoffeeReportModal}>
+                      <List />
+                    </ListOverlay>
+                  )}
+                  <Link to={`/c/${id}`}>
+                    <SAvatar url={avatar} size="md" />
+                    <Id>{id}</Id>
+                    <SBold text={username} />
+                    <Location>{target}</Location>
+                    <Location>{expires}</Location>
+                  </Link>
+                </Tips>
               </Container>
             );
         }
