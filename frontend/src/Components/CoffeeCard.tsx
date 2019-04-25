@@ -12,7 +12,7 @@ const ListOverlay = styled.div`
   opacity: 0;
   display: flex;
   align-self: flex-end;
-  position: absolute
+  position: absolute;
   cursor: pointer;
   svg {
     fill: white;

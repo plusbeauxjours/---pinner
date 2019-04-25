@@ -185,12 +185,12 @@ interface IProps {
   onLikeClick: () => void;
   openedComment: boolean;
   toggleCommentClick: () => void;
-  onKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  addCommentOnKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onSubmit: any;
   deleteCommentModalOpen: boolean;
   cardMenuModalOpen: boolean;
 
-  getCommentId: any;
+  getDeleteCommentId: any;
   isFollowing: boolean;
   isSelf: boolean;
   followUserFn: MutationFn;
@@ -217,14 +217,14 @@ const PhotoPresenter: React.SFC<IProps> = ({
   onLikeClick,
   openedComment,
   toggleCommentClick,
-  onKeyUp,
+  addCommentOnKeyUp,
   onSubmit,
   deleteCommentModalOpen,
   cardMenuModalOpen,
   toggleDeleteCommentModal,
 
   toggleCardMenuModal,
-  getCommentId,
+  getDeleteCommentId,
   isFollowing,
   isSelf,
   followUserFn,
@@ -309,7 +309,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
               <>
                 <Comments
                   openedComment={openedComment}
-                  getCommentId={getCommentId}
+                  getDeleteCommentId={getDeleteCommentId}
                   cardId={cardId}
                 />
                 <AddComment>
@@ -317,7 +317,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                     placeholder="Add a comment..."
                     onChange={updateNewComment}
                     value={newComment}
-                    onKeyUp={onKeyUp}
+                    onKeyUp={addCommentOnKeyUp}
                   />
                 </AddComment>
               </>
@@ -392,7 +392,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
               )}
               <Comments
                 openedComment={openedComment}
-                getCommentId={getCommentId}
+                getDeleteCommentId={getDeleteCommentId}
                 cardId={cardId}
               />
             </Front>
@@ -410,7 +410,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                   placeholder="Add a comment..."
                   onChange={updateNewComment}
                   value={newComment}
-                  onKeyUp={onKeyUp}
+                  onKeyUp={addCommentOnKeyUp}
                 />
               </AddComment>
             </Back>

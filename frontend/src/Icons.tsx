@@ -149,13 +149,26 @@ export const List: React.SFC = () => (
 
 export const Delete: React.SFC = () => (
   <svg
-    width="20"
-    height="20"
+    width="15"
+    height="15"
     xmlns="http://www.w3.org/2000/svg"
     fillRule="evenodd"
     clipRule="evenodd"
     viewBox="0 0 24 24"
   >
     <path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 10.293l5.293-5.293.707.707-5.293 5.293 5.293 5.293-.707.707-5.293-5.293-5.293 5.293-.707-.707 5.293-5.293-5.293-5.293.707-.707 5.293 5.293z" />
+  </svg>
+);
+
+export const Edit: React.SFC = () => (
+  <svg
+    width="15"
+    height="15"
+    xmlns="http://www.w3.org/2000/svg"
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    viewBox="0 0 24 24"
+  >
+    <path d="M8.071 21.586l-7.071 1.414 1.414-7.071 14.929-14.929 5.657 5.657-14.929 14.929zm-.493-.921l-4.243-4.243-1.06 5.303 5.303-1.06zm9.765-18.251l-13.3 13.301 4.242 4.242 13.301-13.3-4.243-4.243z" />
   </svg>
 );

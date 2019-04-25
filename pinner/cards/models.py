@@ -48,6 +48,7 @@ class Comment(config_models.TimeStampedModel):
         User, on_delete=models.CASCADE, null=True)
     card = models.ForeignKey(
         Card, on_delete=models.CASCADE, null=True, related_name='comments')
+    edited = models.BooleanField(default=False)
 
     @property
     def natural_time(self):

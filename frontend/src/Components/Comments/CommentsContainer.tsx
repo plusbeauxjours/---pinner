@@ -9,7 +9,7 @@ class GetCommentsQuery extends Query<GetComments, GetCommentsVariables> {}
 interface IProps {
   openedComment: boolean;
   cardId: string;
-  getCommentId?: any;
+  getDeleteCommentId?: any;
 }
 
 interface IState {
@@ -18,7 +18,7 @@ interface IState {
 
 class CommentsContainer extends React.Component<IProps, IState> {
   public render() {
-    const { getCommentId, openedComment, cardId } = this.props;
+    const { getDeleteCommentId, openedComment, cardId } = this.props;
     return (
       <GetCommentsQuery
         query={GET_COMMENTS}
@@ -29,7 +29,7 @@ class CommentsContainer extends React.Component<IProps, IState> {
             openedComment={openedComment}
             commentsData={commentsData}
             commentsLoading={commentsLoading}
-            getCommentId={getCommentId}
+            getDeleteCommentId={getDeleteCommentId}
           />
         )}
       </GetCommentsQuery>

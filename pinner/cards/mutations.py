@@ -156,6 +156,7 @@ class EditComment(graphene.Mutation):
 
                     message = kwargs.get('message', comment.message)
                     comment.message = message
+                    comment.edited = True
                     comment.save()
 
                     return types.EditCommentResponse(ok=True, comment=comment)

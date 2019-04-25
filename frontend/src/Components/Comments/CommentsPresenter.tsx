@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
 import Bold from "../Bold";
-import { Delete } from "../../Icons";
+import { Delete, Edit } from "../../Icons";
 import Loader from "../Loader";
 
 const Container = styled.div`
@@ -51,14 +51,14 @@ interface IProps {
   commentsData: any;
   commentsLoading: boolean;
   openedComment: boolean;
-  getCommentId?: any;
+  getDeleteCommentId?: any;
 }
 
 const CommentsPresenter: React.SFC<IProps> = ({
   commentsData: { getComments: { comments = null } = {} } = {},
   commentsLoading,
   openedComment,
-  getCommentId
+  getDeleteCommentId
 }) => {
   if (commentsLoading) {
     return <Loader />;
@@ -74,8 +74,11 @@ const CommentsPresenter: React.SFC<IProps> = ({
                   {comment.message}
                 </Front>
                 <Back>
-                  <Icon onClick={() => getCommentId(comment.id)}>
+                  <Icon onClick={() => getDeleteCommentId(comment.id)}>
                     <Delete />
+                  </Icon>
+                  <Icon onClick={() => getDeleteCommentId(comment.id)}>
+                    <Edit />
                   </Icon>
                 </Back>
               </Container>

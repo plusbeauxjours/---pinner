@@ -337,6 +337,45 @@ export interface AddCommentVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: EditComment
+// ====================================================
+
+export interface EditComment_editComment_comment_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface EditComment_editComment_comment {
+  __typename: "CommentType";
+  id: string;
+  message: string;
+  creator: EditComment_editComment_comment_creator | null;
+}
+
+export interface EditComment_editComment {
+  __typename: "EditCommentResponse";
+  ok: boolean | null;
+  comment: EditComment_editComment_comment | null;
+}
+
+export interface EditComment {
+  editComment: EditComment_editComment;
+}
+
+export interface EditCommentVariables {
+  cardId: number;
+  commentId: number;
+  message: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: DeleteComment
 // ====================================================
 
