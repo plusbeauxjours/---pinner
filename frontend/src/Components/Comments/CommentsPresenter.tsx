@@ -96,7 +96,7 @@ const CommentsPresenter: React.SFC<IProps> = ({
                       type={"text"}
                       value={message}
                       placeholder={comment.message}
-                      name={"userName"}
+                      name={"message"}
                       onKeyUp={editCommentOnKeyUp}
                     />
                   ) : (

@@ -184,14 +184,20 @@ class EditCard(graphene.Mutation):
 
         user = info.context.user
         cardId = kwargs.get('cardId')
+        cityName = kwargs.get('city', card.city)
+        caption = kwargs.get('caption', card.caption)
 
         if user.is_authenticated:
 
             try:
                 card = models.Card.objects.get(id=cardId)
             except models.Card.DoesNotExist:
-                error = "Card Not Found"
-                return types.EditCardResponse(ok=False, card=None)
+                raise Exception("Cannot find Card")
+
+            try:
+                city = location_models.City.objects.get(city_name=cityName)
+            except models.Card.DoesNotExist:
+                raise Exception("Cannot find City")
 
             if card.creator.id != user.id:
 
@@ -201,10 +207,6 @@ class EditCard(graphene.Mutation):
             else:
 
                 try:
-
-                    caption = kwargs.get('caption', card.caption)
-                    cityName = kwargs.get('city', card.city)
-                    city = location_models.City.objects.get(city_name=cityName)
 
                     card.caption = caption
                     card.city = city

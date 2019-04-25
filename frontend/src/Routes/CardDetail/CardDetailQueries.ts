@@ -11,11 +11,3 @@ export const GET_CARD = gql`
   }
   ${DETAIL_CARD_FRAGMENT}
 `;
-
-export const EDIT_CARD = gql`
-  mutation EditCard($cardId: Int!, $cityName: String, $caption: String) {
-    editCard(cardId: $cardId, cityName: $cityName, caption: $caption) {
-      ok
-    }
-  }
-`;

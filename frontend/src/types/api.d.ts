@@ -308,6 +308,29 @@ export interface LikeCardVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: EditCard
+// ====================================================
+
+export interface EditCard_editCard {
+  __typename: "EditCardResponse";
+  ok: boolean | null;
+}
+
+export interface EditCard {
+  editCard: EditCard_editCard;
+}
+
+export interface EditCardVariables {
+  cardId: number;
+  cityName?: string | null;
+  caption?: string | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: DeleteCard
 // ====================================================
 

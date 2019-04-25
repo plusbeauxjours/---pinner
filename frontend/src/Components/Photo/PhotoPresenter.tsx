@@ -8,6 +8,7 @@ import UserHeader from "../UserHeader";
 import { List } from "src/Icons";
 import { MutationFn } from "react-apollo";
 import Comments from "../../Components/Comments";
+import Input from "../Input";
 
 const Container = styled.div`
   border: ${props => props.theme.greyColor};
@@ -44,7 +45,7 @@ const Message = styled.div`
 const Meta = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between
+  justify-content: space-between;
   padding: 10px 15px;
   padding-bottom: 0;
 `;
@@ -165,7 +166,14 @@ const Icon = styled.span`
   margin-right: 15px;
   cursor: pointer;
 `;
+
+const ExtendedInput = styled(Input)`
+  width: 287px;
+  height: 48px;
+`;
+
 const Front = styled.div``;
+
 const Back = styled.div``;
 
 interface IProps {
@@ -198,6 +206,13 @@ interface IProps {
   toggleDeleteCommentModal: () => void;
   toggleCardMenuModal: () => void;
   cardId: string;
+  editCardLink: () => void;
+  editCardCaption: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  editCardOnKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onCompletedEditCard: (data: any) => void;
+  toggleEditCardMode: () => void;
+  editMode: boolean;
+  cardEditMode: boolean;
 }
 
 const PhotoPresenter: React.SFC<IProps> = ({
@@ -222,14 +237,20 @@ const PhotoPresenter: React.SFC<IProps> = ({
   deleteCommentModalOpen,
   cardMenuModalOpen,
   toggleDeleteCommentModal,
-
   toggleCardMenuModal,
   deleteCommentGetId,
   isFollowing,
   isSelf,
   followUserFn,
   deleteCardFn,
-  cardId
+  cardId,
+  editCardLink,
+  editCardCaption,
+  editCardOnKeyUp,
+  onCompletedEditCard,
+  toggleEditCardMode,
+  editMode,
+  cardEditMode
 }) => {
   if (inline) {
     return (
@@ -249,9 +270,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
             <Modal>
               {isSelf ? (
                 <>
-                  <ModalLink onClick={() => console.log("EDIT CARD")}>
-                    EDIT CARD
-                  </ModalLink>
+                  <ModalLink onClick={editCardLink}>EDIT CARD</ModalLink>
                   <ModalLink onClick={() => deleteCardFn()}>
                     DELETE CARD
                   </ModalLink>
@@ -285,7 +304,6 @@ const PhotoPresenter: React.SFC<IProps> = ({
             </Icon>
           </PhotoHeader>
           <Image src={photoUrl} />
-
           <Message>{caption}</Message>
           <Meta>
             <CardButtons
@@ -344,9 +362,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
             <Modal>
               {isSelf ? (
                 <>
-                  <ModalLink onClick={() => console.log("EDIT CARD")}>
-                    EDIT CARD
-                  </ModalLink>
+                  <ModalLink onClick={toggleEditCardMode}>EDIT CARD</ModalLink>
                   <ModalLink onClick={() => deleteCardFn()}>
                     DELETE CARD
                   </ModalLink>
@@ -384,7 +400,18 @@ const PhotoPresenter: React.SFC<IProps> = ({
               <CaptionContainer>
                 <Caption>
                   <SBold text={creatorUsername} />
-                  {caption}
+                  {editMode || cardEditMode ? (
+                    <ExtendedInput
+                      onChange={editCardCaption}
+                      type={"text"}
+                      value={caption}
+                      placeholder={caption}
+                      name={"caption"}
+                      onKeyUp={editCardOnKeyUp}
+                    />
+                  ) : (
+                    <>{caption}</>
+                  )}
                 </Caption>
               </CaptionContainer>
               {!openedComment && (
