@@ -102,6 +102,7 @@ interface IState {
   knowingFollowersModalOpen: boolean;
   requestModalOpen: boolean;
   uploadModalOpen: boolean;
+  coffeeModalOpen: boolean;
   editMode: boolean;
   id: string;
   userName: string;
@@ -154,6 +155,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       knowingFollowersModalOpen: false,
       requestModalOpen: false,
       uploadModalOpen: false,
+      coffeeModalOpen: false,
       editMode: false,
       id: props.id,
       userName: props.username,
@@ -198,6 +200,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       knowingFollowersModalOpen,
       requestModalOpen,
       uploadModalOpen,
+      coffeeModalOpen,
       editMode,
       userName,
       bio,
@@ -493,6 +496,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                 uploadModalOpen={
                                                                                                   uploadModalOpen
                                                                                                 }
+                                                                                                coffeeModalOpen={
+                                                                                                  coffeeModalOpen
+                                                                                                }
                                                                                                 editMode={
                                                                                                   editMode
                                                                                                 }
@@ -554,6 +560,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                 toggleUploadModal={
                                                                                                   this
                                                                                                     .toggleUploadModal
+                                                                                                }
+                                                                                                toggleCoffeeModal={
+                                                                                                  this
+                                                                                                    .toggleCoffeeModal
                                                                                                 }
                                                                                                 openEditMode={
                                                                                                   this
@@ -1164,6 +1174,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     const { requestModalOpen } = this.state;
     this.setState({
       requestModalOpen: !requestModalOpen
+    } as any);
+  };
+  public toggleCoffeeModal = () => {
+    const { coffeeModalOpen } = this.state;
+    this.setState({
+      coffeeModalOpen: !coffeeModalOpen
     } as any);
   };
   public submitCoffee = target => {

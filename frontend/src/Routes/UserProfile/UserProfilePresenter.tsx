@@ -468,6 +468,7 @@ interface IProps {
   knowingFollowersModalOpen: boolean;
   uploadModalOpen: boolean;
   requestModalOpen: boolean;
+  coffeeModalOpen: boolean;
 
   editMode: boolean;
   openEditMode: () => void;
@@ -508,6 +509,7 @@ interface IProps {
   toggleKnowingFollowersModal: () => void;
   toggleUploadModal: () => void;
   toggleRequestModal: () => void;
+  toggleCoffeeModal: () => void;
 
   logUserOutFn: () => void;
 
@@ -580,6 +582,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   knowingFollowersModalOpen,
   uploadModalOpen,
   requestModalOpen,
+  coffeeModalOpen,
   editMode,
   toggleTripSeeAll,
   toggleModal,
@@ -596,6 +599,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleKnowingFollowersModal,
   toggleUploadModal,
   toggleRequestModal,
+  toggleCoffeeModal,
   openEditMode,
   logUserOutFn,
   confirmDeleteProfile,
@@ -631,6 +635,24 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   } else if (user && topCountries && frequentCities) {
     return (
       <>
+        {coffeeModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleCoffeeModal} />
+            <Modal>
+              <ModalLink onClick={() => submitCoffee("everyone")}>
+                COFFEE DETAIL
+              </ModalLink>
+              <ModalLink onClick={() => submitCoffee("nationality")}>
+                EDIT COFFEE
+              </ModalLink>
+              <ModalLink onClick={() => submitCoffee("gender")}>
+                DELETE COFFEE
+              </ModalLink>
+              <ModalLink onClick={toggleCoffeeModal}>Cancel</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
+
         {requestModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleRequestModal} />
@@ -1027,7 +1049,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           */}
           <Title>
             <SBold text={"COFFEES"} />
-            {/* <SeeAll onClick={toggleCoffeeSeeAll}>SEE ALL</SeeAll> */}
           </Title>
           <Container>
             {myCoffeeLoading && <Loader />}
@@ -1036,8 +1057,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             requestingCoffees.length !== 0 ? (
               <CoffeeGrid
                 requestingCoffees={requestingCoffees}
-                followersModalOpen={followersModalOpen}
-                toggleFollowersModal={toggleFollowersModal}
+                toggleCoffeeModal={toggleCoffeeModal}
                 type={"requestingCoffee"}
               />
             ) : (
@@ -1047,7 +1067,11 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             )}
             <Box>
               {!myCoffeeLoading && coffees ? (
-                <CoffeeGrid coffees={coffees} type={"myCoffees"} />
+                <CoffeeGrid
+                  coffees={coffees}
+                  type={"myCoffees"}
+                  toggleCoffeeModal={toggleCoffeeModal}
+                />
               ) : (
                 <Loader />
               )}

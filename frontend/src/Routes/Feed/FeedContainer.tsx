@@ -64,7 +64,7 @@ interface IState {
   continentPhotoURL: string;
   requestModalOpen: boolean;
   coffeeModalOpen: boolean;
-  coffeeList: any;
+  coffeeReportModalOpen: boolean;
   coffeePage: number;
 }
 
@@ -93,7 +93,7 @@ class FeedContainer extends React.Component<IProps, IState> {
       continentPhotoURL: null,
       requestModalOpen: false,
       coffeeModalOpen: false,
-      coffeeList: null,
+      coffeeReportModalOpen: false,
       coffeePage: 0
     };
   }
@@ -124,7 +124,7 @@ class FeedContainer extends React.Component<IProps, IState> {
       continentPhotoURL,
       requestModalOpen,
       coffeeModalOpen,
-      coffeeList,
+      coffeeReportModalOpen,
       coffeePage
     } = this.state;
     return (
@@ -196,6 +196,10 @@ class FeedContainer extends React.Component<IProps, IState> {
                                     beforeModalOpen={beforeModalOpen}
                                     toggleNowModal={this.toggleNowModal}
                                     toggleBeforeModal={this.toggleBeforeModal}
+                                    toggleCoffeeModal={this.toggleCoffeeModal}
+                                    toggleCoffeeReportModal={
+                                      this.toggleCoffeeReportModal
+                                    }
                                     recommandUsersData={recommandUsersData}
                                     recommandUsersLoading={
                                       recommandUsersLoading
@@ -212,9 +216,9 @@ class FeedContainer extends React.Component<IProps, IState> {
                                     }
                                     requestModalOpen={requestModalOpen}
                                     coffeeModalOpen={coffeeModalOpen}
-                                    coffeeList={coffeeList}
-                                    toggleCoffeeModal={this.toggleCoffeeModal}
-                                    toggleCoffeeSeeAll={this.toggleCoffeeSeeAll}
+                                    coffeeReportModalOpen={
+                                      coffeeReportModalOpen
+                                    }
                                     toggleRequestModal={this.toggleRequestModal}
                                     submitCoffee={this.submitCoffee}
                                     currentLat={currentLat}
@@ -342,30 +346,17 @@ class FeedContainer extends React.Component<IProps, IState> {
       coffeeModalOpen: !coffeeModalOpen
     } as any);
   };
+  public toggleCoffeeReportModal = () => {
+    const { coffeeReportModalOpen } = this.state;
+    this.setState({
+      coffeeReportModalOpen: !coffeeReportModalOpen
+    } as any);
+  };
   public toggleRequestModal = () => {
     const { requestModalOpen } = this.state;
     this.setState({
       requestModalOpen: !requestModalOpen
     } as any);
-  };
-  public toggleCoffeeSeeAll = () => {
-    const { coffeeModalOpen, currentCity } = this.state;
-    this.coffeeFetchMore({
-      query: GET_COFFEES,
-      variables: { coffeePage: 1, cityName: currentCity },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult) {
-          return previousResult;
-        }
-        this.setState({
-          coffeeList: [
-            ...previousResult.getCoffees.coffees,
-            ...fetchMoreResult.getCoffees.coffees
-          ],
-          coffeeModalOpen: !coffeeModalOpen
-        } as any);
-      }
-    });
   };
   public submitCoffee = target => {
     const { requestModalOpen } = this.state;

@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 import LoaderData from "./LoaderData";
 
 const ListOverlay = styled.div`
-  z-index: 1;
+  margin: 10px 10px 0 0;
+  z-index: 10;
   opacity: 0;
   display: flex;
   align-self: flex-end;
@@ -29,12 +30,8 @@ const Container = styled.div`
   border: 1px solid ${props => props.theme.headerColor};
   width: 170px;
   height: 200px;
-  padding: 10px;
   margin-right: 5px;
   margin-bottom: 25px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   &:hover {
     ${ListOverlay} {
       opacity: 1;
@@ -48,9 +45,11 @@ const SAvatar = styled(Avatar)`
 
 const Icon = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
   margin-bottom: 15px;
-  height: 120px;
+  width: 170px;
+  height: 100px;
 `;
 
 const SBold = styled(Bold)`
@@ -83,8 +82,8 @@ interface IProps {
   isSelf?: boolean;
   status: string;
   requestingCoffees: boolean;
-  followersModalOpen?: boolean;
-  toggleFollowersModal?: () => void;
+  toggleCoffeeModal: () => void;
+  toggleCoffeeReportModal?: () => void;
   type?: string;
 }
 
@@ -97,8 +96,8 @@ const CoffeeCard: React.SFC<IProps> = ({
   isSelf,
   status,
   requestingCoffees,
-  followersModalOpen,
-  toggleFollowersModal,
+  toggleCoffeeModal,
+  toggleCoffeeReportModal,
   type
 }) => {
   return (
@@ -107,11 +106,11 @@ const CoffeeCard: React.SFC<IProps> = ({
         switch (type) {
           case "requestingCoffee":
             return (
-              <Link to={`/c/${id}`}>
-                <Container>
-                  <ListOverlay>
-                    <List />
-                  </ListOverlay>
+              <Container>
+                <ListOverlay onClick={toggleCoffeeModal}>
+                  <List />
+                </ListOverlay>
+                <Link to={`/c/${id}`}>
                   <Icon>
                     <LoaderData />
                   </Icon>
@@ -119,37 +118,43 @@ const CoffeeCard: React.SFC<IProps> = ({
                   <SBold text={username} />
                   <Location>{target}</Location>
                   <Location>{expires}</Location>
-                </Container>
-              </Link>
+                </Link>
+              </Container>
             );
           case "myCoffees":
             return (
-              <Link to={`/c/${id}`}>
-                <Container>
-                  <ListOverlay>
-                    <List />
-                  </ListOverlay>
+              <Container>
+                <ListOverlay onClick={toggleCoffeeModal}>
+                  <List />
+                </ListOverlay>
+                <Link to={`/c/${id}`}>
                   <Location>{id}</Location>
                   <SBold text={username} />
                   <Location>{target}</Location>
                   <Location>{expires}</Location>
-                </Container>
-              </Link>
+                </Link>
+              </Container>
             );
           default:
             return (
-              <Link to={`/c/${id}`}>
-                <Container>
-                  <ListOverlay>
+              <Container>
+                {isSelf ? (
+                  <ListOverlay onClick={toggleCoffeeModal}>
                     <List />
                   </ListOverlay>
+                ) : (
+                  <ListOverlay onClick={toggleCoffeeReportModal}>
+                    <List />
+                  </ListOverlay>
+                )}
+                <Link to={`/c/${id}`}>
                   <SAvatar url={avatar} size="md" />
                   <Id>{id}</Id>
                   <SBold text={username} />
                   <Location>{target}</Location>
                   <Location>{expires}</Location>
-                </Container>
-              </Link>
+                </Link>
+              </Container>
             );
         }
       })()}

@@ -250,19 +250,21 @@ const PhotoPresenter: React.SFC<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleCardMenuModal} />
             <Modal>
-              <ModalLink onClick={() => console.log("ho?")}>
-                Report Card
-              </ModalLink>
-              {!isSelf && (
-                <ModalLink onClick={() => followUserFn()}>
-                  {isFollowing ? "Unfollow" : "Follow"}
-                </ModalLink>
-              )}
-              {isSelf && (
+              {isSelf ? (
                 <ModalLink onClick={toggleDeleteCardModal}>
                   Delete Card
                 </ModalLink>
+              ) : (
+                <>
+                  <ModalLink onClick={() => console.log("ho?")}>
+                    Report Card
+                  </ModalLink>
+                  <ModalLink onClick={() => followUserFn()}>
+                    {isFollowing ? "Unfollow" : "Follow"}
+                  </ModalLink>
+                </>
               )}
+
               <ModalLink onClick={toggleCardMenuModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>

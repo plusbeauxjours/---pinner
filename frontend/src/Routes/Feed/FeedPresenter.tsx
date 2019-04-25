@@ -13,7 +13,7 @@ import Bold from "../../Components/Bold";
 import UserRow from "../../Components/UserRow";
 import UserGrid from "../../Components/UserGrid";
 import CoffeeGrid from "../../Components/CoffeeGrid";
-import CoffeeRow from "../../Components/CoffeeRow";
+// import CoffeeRow from "../../Components/CoffeeRow";
 import Weather from "src/Components/Weather";
 import LoaderCoffee from "src/Components/LoaderCoffee";
 
@@ -248,10 +248,10 @@ interface IProps {
   toggleRecommandUserModal: () => void;
   requestModalOpen: boolean;
   coffeeModalOpen: boolean;
-  coffeeList: any;
+  coffeeReportModalOpen: boolean;
   toggleRequestModal: () => void;
   toggleCoffeeModal: () => void;
-  toggleCoffeeSeeAll: () => void;
+  toggleCoffeeReportModal: () => void;
   submitCoffee: any;
   currentLat: number;
   currentLng: number;
@@ -270,7 +270,6 @@ const FeedPresenter: React.SFC<IProps> = ({
   feedLoading,
   coffeeData: { getCoffees: { coffees = null } = {} } = {},
   coffeeLoading,
-
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},
   recommandUsersLoading,
   nowModalOpen,
@@ -283,10 +282,10 @@ const FeedPresenter: React.SFC<IProps> = ({
   recommandUserModalOpen,
   requestModalOpen,
   coffeeModalOpen,
-  coffeeList,
+  coffeeReportModalOpen,
   toggleRequestModal,
   toggleCoffeeModal,
-  toggleCoffeeSeeAll,
+  toggleCoffeeReportModal,
   submitCoffee,
   currentLat,
   currentLng,
@@ -302,22 +301,27 @@ const FeedPresenter: React.SFC<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleCoffeeModal} />
             <Modal>
-              {console.log(coffeeList)}
-              <Wrapper>
-                {coffeeList.map(list => (
-                  <CoffeeRow
-                    key={list.id}
-                    id={list.id}
-                    username={list.host.username}
-                    avatar={list.host.profile.avatar}
-                    currentCity={list.city.cityName}
-                    currentCountry={list.city.country.countryName}
-                    isFollowing={list.host.profile.isFollowing}
-                    size={"sm"}
-                    target={list.target}
-                  />
-                ))}
-              </Wrapper>
+              <ModalLink onClick={() => submitCoffee("everyone")}>
+                COFFEE DETAIL
+              </ModalLink>
+              <ModalLink onClick={() => submitCoffee("nationality")}>
+                EDIT COFFEE
+              </ModalLink>
+              <ModalLink onClick={() => submitCoffee("gender")}>
+                DELETE COFFEE
+              </ModalLink>
+              <ModalLink onClick={toggleCoffeeModal}>Cancel</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
+        {coffeeReportModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleCoffeeReportModal} />
+            <Modal>
+              <ModalLink onClick={() => submitCoffee("everyone")}>
+                REPORT COFFEE
+              </ModalLink>
+              <ModalLink onClick={toggleCoffeeReportModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -473,7 +477,6 @@ const FeedPresenter: React.SFC<IProps> = ({
           <GreyLine />
           <Title>
             <SBold text={"NEED SOME COFFEE"} />
-            <SeeAll onClick={toggleCoffeeSeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <Icon onClick={toggleRequestModal}>
@@ -481,7 +484,11 @@ const FeedPresenter: React.SFC<IProps> = ({
             </Icon>
             <Box>
               {!coffeeLoading && coffees ? (
-                <CoffeeGrid coffees={coffees} />
+                <CoffeeGrid
+                  coffees={coffees}
+                  toggleCoffeeModal={toggleCoffeeModal}
+                  toggleCoffeeReportModal={toggleCoffeeReportModal}
+                />
               ) : (
                 <Loader />
               )}
