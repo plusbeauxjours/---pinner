@@ -78,6 +78,11 @@ export interface Match_match_match_guest {
   profile: Match_match_match_guest_profile | null;
 }
 
+export interface Match_match_match_coffee {
+  __typename: "CoffeeType";
+  id: string;
+}
+
 export interface Match_match_match {
   __typename: "MatchType";
   id: string;
@@ -85,6 +90,7 @@ export interface Match_match_match {
   city: Match_match_match_city | null;
   host: Match_match_match_host | null;
   guest: Match_match_match_guest | null;
+  coffee: Match_match_match_coffee | null;
   status: MatchStatus;
   isHost: boolean | null;
   isGuest: boolean | null;
@@ -133,6 +139,7 @@ export interface UnMatch_unMatch_coffee_host_profile {
 
 export interface UnMatch_unMatch_coffee_host {
   __typename: "UserType";
+  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
@@ -409,7 +416,7 @@ export interface FacebookConnectVariables {
 // GraphQL query operation: CardDetail
 // ====================================================
 
-export interface CardDetail_cardDetail_card_country {
+export interface CardDetail_cardDetail_card_city_country {
   __typename: "CountryType";
   countryName: string | null;
 }
@@ -417,6 +424,7 @@ export interface CardDetail_cardDetail_card_country {
 export interface CardDetail_cardDetail_card_city {
   __typename: "CityType";
   cityName: string | null;
+  country: CardDetail_cardDetail_card_city_country;
 }
 
 export interface CardDetail_cardDetail_card_creator_profile {
@@ -441,7 +449,6 @@ export interface CardDetail_cardDetail_card {
   id: string;
   file: string | null;
   caption: string;
-  country: CardDetail_cardDetail_card_country | null;
   city: CardDetail_cardDetail_card_city | null;
   likeCount: number | null;
   commentCount: number | null;
@@ -650,6 +657,7 @@ export interface CoffeeDetail_coffeeDetail_coffee_host_profile_nationality {
 
 export interface CoffeeDetail_coffeeDetail_coffee_host_profile {
   __typename: "ProfileType";
+  isSelf: boolean | null;
   avatar: string;
   gender: string | null;
   currentCity: CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity | null;
@@ -894,7 +902,7 @@ export interface LatestCitiesVariables {
 // GraphQL query operation: Feed
 // ====================================================
 
-export interface Feed_feed_cards_country {
+export interface Feed_feed_cards_city_country {
   __typename: "CountryType";
   countryName: string | null;
 }
@@ -902,6 +910,7 @@ export interface Feed_feed_cards_country {
 export interface Feed_feed_cards_city {
   __typename: "CityType";
   cityName: string | null;
+  country: Feed_feed_cards_city_country;
 }
 
 export interface Feed_feed_cards_creator_profile {
@@ -926,7 +935,6 @@ export interface Feed_feed_cards {
   id: string;
   file: string | null;
   caption: string;
-  country: Feed_feed_cards_country | null;
   city: Feed_feed_cards_city | null;
   likeCount: number | null;
   commentCount: number | null;
@@ -1107,6 +1115,7 @@ export interface RequestCoffee_requestCoffee_coffee_host_profile {
 
 export interface RequestCoffee_requestCoffee_coffee_host {
   __typename: "UserType";
+  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
@@ -1167,6 +1176,7 @@ export interface GetCoffees_getCoffees_coffees_host_profile {
 
 export interface GetCoffees_getCoffees_coffees_host {
   __typename: "UserType";
+  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
@@ -1307,6 +1317,11 @@ export interface GetMatches_getMatches_matches_guest {
   profile: GetMatches_getMatches_matches_guest_profile | null;
 }
 
+export interface GetMatches_getMatches_matches_coffee {
+  __typename: "CoffeeType";
+  id: string;
+}
+
 export interface GetMatches_getMatches_matches {
   __typename: "MatchType";
   id: string;
@@ -1314,6 +1329,7 @@ export interface GetMatches_getMatches_matches {
   city: GetMatches_getMatches_matches_city | null;
   host: GetMatches_getMatches_matches_host | null;
   guest: GetMatches_getMatches_matches_guest | null;
+  coffee: GetMatches_getMatches_matches_coffee | null;
   status: MatchStatus;
   isHost: boolean | null;
   isGuest: boolean | null;
@@ -2610,7 +2626,7 @@ export interface GetKnowingFollowersVariables {
 // GraphQL mutation operation: UploadCard
 // ====================================================
 
-export interface UploadCard_uploadCard_card_country {
+export interface UploadCard_uploadCard_card_city_country {
   __typename: "CountryType";
   countryName: string | null;
 }
@@ -2618,6 +2634,7 @@ export interface UploadCard_uploadCard_card_country {
 export interface UploadCard_uploadCard_card_city {
   __typename: "CityType";
   cityName: string | null;
+  country: UploadCard_uploadCard_card_city_country;
 }
 
 export interface UploadCard_uploadCard_card_creator_profile {
@@ -2642,7 +2659,6 @@ export interface UploadCard_uploadCard_card {
   id: string;
   file: string | null;
   caption: string;
-  country: UploadCard_uploadCard_card_country | null;
   city: UploadCard_uploadCard_card_city | null;
   likeCount: number | null;
   commentCount: number | null;
@@ -2691,6 +2707,7 @@ export interface GetMyCoffee_getMyCoffee_requestingCoffees_host_profile {
 
 export interface GetMyCoffee_getMyCoffee_requestingCoffees_host {
   __typename: "UserType";
+  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
@@ -2728,6 +2745,7 @@ export interface GetMyCoffee_getMyCoffee_coffees_host_profile {
 
 export interface GetMyCoffee_getMyCoffee_coffees_host {
   __typename: "UserType";
+  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
@@ -2962,7 +2980,7 @@ export interface ContinentParts {
 // GraphQL fragment: DetailParts
 // ====================================================
 
-export interface DetailParts_country {
+export interface DetailParts_city_country {
   __typename: "CountryType";
   countryName: string | null;
 }
@@ -2970,6 +2988,7 @@ export interface DetailParts_country {
 export interface DetailParts_city {
   __typename: "CityType";
   cityName: string | null;
+  country: DetailParts_city_country;
 }
 
 export interface DetailParts_creator_profile {
@@ -2994,7 +3013,6 @@ export interface DetailParts {
   id: string;
   file: string | null;
   caption: string;
-  country: DetailParts_country | null;
   city: DetailParts_city | null;
   likeCount: number | null;
   commentCount: number | null;
@@ -3030,6 +3048,7 @@ export interface CoffeeParts_host_profile {
 
 export interface CoffeeParts_host {
   __typename: "UserType";
+  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */

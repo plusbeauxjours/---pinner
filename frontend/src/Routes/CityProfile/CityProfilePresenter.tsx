@@ -313,7 +313,9 @@ const CityProfilePresenter: React.SFC<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleCoffeeModal} />
             <Modal>
-              <ModalLink onClick={null}>REPORT COFFEE</ModalLink>
+              <ModalLink onClick={() => console.log("REPORT COFFEE")}>
+                REPORT COFFEE
+              </ModalLink>
               <ModalLink onClick={toggleCoffeeModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>
@@ -322,9 +324,15 @@ const CityProfilePresenter: React.SFC<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleCoffeeReportModal} />
             <Modal>
-              <ModalLink onClick={null}>COFFEE DETAIL</ModalLink>
-              <ModalLink onClick={null}>EDIT COFFEE</ModalLink>
-              <ModalLink onClick={null}>DELETE COFFEE</ModalLink>
+              <ModalLink onClick={() => console.log("COFFEE DETAIL")}>
+                COFFEE DETAIL
+              </ModalLink>
+              <ModalLink onClick={() => console.log("EDIT COFFEE")}>
+                EDIT COFFEE
+              </ModalLink>
+              <ModalLink onClick={() => console.log("DELETE COFFEE")}>
+                DELETE COFFEE
+              </ModalLink>
 
               <ModalLink onClick={toggleCoffeeReportModal}>Cancel</ModalLink>
             </Modal>

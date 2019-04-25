@@ -301,13 +301,13 @@ const FeedPresenter: React.SFC<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleCoffeeModal} />
             <Modal>
-              <ModalLink onClick={() => submitCoffee("everyone")}>
+              <ModalLink onClick={() => console.log("COFFEE DETAIL")}>
                 COFFEE DETAIL
               </ModalLink>
-              <ModalLink onClick={() => submitCoffee("nationality")}>
+              <ModalLink onClick={() => console.log("EDIT COFFEE")}>
                 EDIT COFFEE
               </ModalLink>
-              <ModalLink onClick={() => submitCoffee("gender")}>
+              <ModalLink onClick={() => console.log("DELETE COFFEE")}>
                 DELETE COFFEE
               </ModalLink>
               <ModalLink onClick={toggleCoffeeModal}>Cancel</ModalLink>
@@ -318,7 +318,7 @@ const FeedPresenter: React.SFC<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleCoffeeReportModal} />
             <Modal>
-              <ModalLink onClick={() => submitCoffee("everyone")}>
+              <ModalLink onClick={() => console.log("REPORT COFFEE")}>
                 REPORT COFFEE
               </ModalLink>
               <ModalLink onClick={toggleCoffeeReportModal}>Cancel</ModalLink>
@@ -507,7 +507,7 @@ const FeedPresenter: React.SFC<IProps> = ({
                 creatorUsername={card.creator.username}
                 isFollowing={card.creator.profile.isFollowing}
                 isSelf={card.creator.profile.isSelf}
-                country={card.country.countryName}
+                country={card.city.country.countryName}
                 city={card.city.cityName}
                 photoUrl={card.file}
                 likeCount={card.likeCount}

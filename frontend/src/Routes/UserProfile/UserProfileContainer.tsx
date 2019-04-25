@@ -709,6 +709,14 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                   this
                                                                                                     .submitCoffee
                                                                                                 }
+                                                                                                deleteCoffee={
+                                                                                                  this
+                                                                                                    .deleteCoffee
+                                                                                                }
+                                                                                                getCoffeeId={
+                                                                                                  this
+                                                                                                    .getCoffeeId
+                                                                                                }
                                                                                               />
                                                                                             );
                                                                                           }}
@@ -1139,11 +1147,15 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     }
   };
   public onCompletedDeleteCoffee = data => {
-    if (data.deleteTrip.ok) {
+    const { coffeeModalOpen } = this.state;
+    if (data.deleteCoffee.ok) {
       toast.success("Coffee deleted");
     } else {
       toast.error("error");
     }
+    this.setState({
+      coffeeModalOpen: !coffeeModalOpen
+    } as any);
   };
   public updateDeleteCoffee = (cache, { data: { deleteCoffee } }) => {
     const {
@@ -1160,7 +1172,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         data.getMyCoffee.coffees = data.getMyCoffee.coffees.filter(
           i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
         );
-        cache.writeQuery({
+        data.getMyCoffee.requestingCoffees = data.getMyCoffee.requestingCoffees.filter(
+          i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
+        );
+        data.getMyCoffee.cache.writeQuery({
           query: GET_MY_COFFEE,
           variables: { username },
           data
@@ -1170,16 +1185,27 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       console.log(e);
     }
   };
-  public toggleRequestModal = () => {
-    const { requestModalOpen } = this.state;
+  public getCoffeeId = coffeeId => {
+    const { coffeeModalOpen } = this.state;
     this.setState({
-      requestModalOpen: !requestModalOpen
+      coffeeModalOpen: !coffeeModalOpen,
+      coffeeId
     } as any);
+  };
+  public deleteCoffee = () => {
+    const { coffeeId } = this.state;
+    this.deleteCoffeeFn({ variables: { coffeeId: parseInt(coffeeId, 10) } });
   };
   public toggleCoffeeModal = () => {
     const { coffeeModalOpen } = this.state;
     this.setState({
       coffeeModalOpen: !coffeeModalOpen
+    } as any);
+  };
+  public toggleRequestModal = () => {
+    const { requestModalOpen } = this.state;
+    this.setState({
+      requestModalOpen: !requestModalOpen
     } as any);
   };
   public submitCoffee = target => {

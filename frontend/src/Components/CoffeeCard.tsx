@@ -58,7 +58,7 @@ const SBold = styled(Bold)`
 `;
 
 const Id = styled.div`
-  color: red
+  color: red;
   position: absolute;
   font-size: 20px;
 `;
@@ -85,6 +85,7 @@ interface IProps {
   toggleCoffeeModal: () => void;
   toggleCoffeeReportModal?: () => void;
   type?: string;
+  getCoffeeId?: any;
 }
 
 const CoffeeCard: React.SFC<IProps> = ({
@@ -98,7 +99,8 @@ const CoffeeCard: React.SFC<IProps> = ({
   requestingCoffees,
   toggleCoffeeModal,
   toggleCoffeeReportModal,
-  type
+  type,
+  getCoffeeId
 }) => {
   return (
     <>
@@ -107,7 +109,7 @@ const CoffeeCard: React.SFC<IProps> = ({
           case "requestingCoffee":
             return (
               <Container>
-                <ListOverlay onClick={toggleCoffeeModal}>
+                <ListOverlay onClick={() => getCoffeeId(id)}>
                   <List />
                 </ListOverlay>
                 <Link to={`/c/${id}`}>
@@ -124,7 +126,7 @@ const CoffeeCard: React.SFC<IProps> = ({
           case "myCoffees":
             return (
               <Container>
-                <ListOverlay onClick={toggleCoffeeModal}>
+                <ListOverlay onClick={() => getCoffeeId(id)}>
                   <List />
                 </ListOverlay>
                 <Link to={`/c/${id}`}>
@@ -139,7 +141,7 @@ const CoffeeCard: React.SFC<IProps> = ({
             return (
               <Container>
                 {isSelf ? (
-                  <ListOverlay onClick={toggleCoffeeModal}>
+                  <ListOverlay onClick={() => getCoffeeId(id)}>
                     <List />
                   </ListOverlay>
                 ) : (

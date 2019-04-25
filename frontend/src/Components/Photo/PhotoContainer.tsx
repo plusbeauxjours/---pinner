@@ -61,7 +61,6 @@ interface IState {
   commentId: string;
   deleteCommentModalOpen: boolean;
   cardMenuModalOpen: boolean;
-  deleteCardModalOpen: boolean;
   newComment: string;
   openedComment: boolean;
   likeCount: number;
@@ -83,7 +82,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
       commentId: null,
       deleteCommentModalOpen: false,
       cardMenuModalOpen: false,
-      deleteCardModalOpen: false,
       newComment: "",
       openedComment: false,
       likeCount: props.likeCount,
@@ -110,7 +108,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
       commentId,
       deleteCommentModalOpen,
       cardMenuModalOpen,
-      deleteCardModalOpen,
       newComment,
       openedComment,
       likeCount,
@@ -192,15 +189,11 @@ class PhotoContainer extends React.Component<IProps, IState> {
                                       deleteCommentModalOpen
                                     }
                                     cardMenuModalOpen={cardMenuModalOpen}
-                                    deleteCardModalOpen={deleteCardModalOpen}
                                     toggleDeleteCommentModal={
                                       this.toggleDeleteCommentModal
                                     }
                                     toggleCardMenuModal={
                                       this.toggleCardMenuModal
-                                    }
-                                    toggleDeleteCardModal={
-                                      this.toggleDeleteCardModal
                                     }
                                     getCommentId={this.getCommentId}
                                     isFollowing={isFollowing}
@@ -318,12 +311,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
       cardMenuModalOpen: !cardMenuModalOpen
     });
   };
-  public toggleDeleteCardModal = () => {
-    const { deleteCardModalOpen } = this.state;
-    this.setState({
-      deleteCardModalOpen: !deleteCardModalOpen
-    });
-  };
+
   public getCommentId = commentId => {
     const { deleteCommentModalOpen } = this.state;
     this.setState({
@@ -345,15 +333,16 @@ class PhotoContainer extends React.Component<IProps, IState> {
     });
   };
   public onCompletedDeleteCard = data => {
-    const { deleteCardModalOpen } = this.state;
+    const { cardMenuModalOpen } = this.state;
     if (data.deleteCard.ok) {
       toast.success("Card deleted");
     } else {
       toast.error("error");
     }
     this.setState({
-      deleteCardModalOpen: !deleteCardModalOpen
+      cardMenuModalOpen: !cardMenuModalOpen
     });
+    this.props.history.goBack();
   };
   public updateDeleteCard = (cache, { data: { deleteCard } }) => {
     const { page, currentCity, creatorUsername } = this.props;

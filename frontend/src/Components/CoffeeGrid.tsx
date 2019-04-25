@@ -7,6 +7,7 @@ interface IProps {
   toggleCoffeeModal: () => void;
   toggleCoffeeReportModal?: () => void;
   type?: string;
+  getCoffeeId?: any;
 }
 
 const CoffeeGrid: React.SFC<IProps> = ({
@@ -14,7 +15,8 @@ const CoffeeGrid: React.SFC<IProps> = ({
   coffees,
   toggleCoffeeModal,
   toggleCoffeeReportModal,
-  type
+  type,
+  getCoffeeId
 }) => (
   <>
     {requestingCoffees &&
@@ -33,6 +35,7 @@ const CoffeeGrid: React.SFC<IProps> = ({
           requestingCoffees={true}
           toggleCoffeeModal={toggleCoffeeModal}
           type={type}
+          getCoffeeId={getCoffeeId}
         />
       ))}
     {coffees &&
@@ -53,6 +56,7 @@ const CoffeeGrid: React.SFC<IProps> = ({
           toggleCoffeeModal={toggleCoffeeModal}
           toggleCoffeeReportModal={toggleCoffeeReportModal}
           type={type}
+          getCoffeeId={getCoffeeId}
         />
       ))}
   </>

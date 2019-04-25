@@ -147,7 +147,7 @@ const Icon = styled.span`
   display: flex;
   align-items: center;
   justify-items: center;
-  margin: 0 60px 0 60px;
+  margin: 0 70px 0 70px;
   cursor: pointer;
   svg {
     fill: white;
@@ -536,6 +536,8 @@ interface IProps {
     startDate: moment.Moment | null,
     endDate: moment.Moment | null
   ) => number;
+  deleteCoffee: ()=>void;
+  getCoffeeId?: any;
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
@@ -628,7 +630,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   onKeyUpCard,
   uploadNewCard,
   duration,
-  submitCoffee
+  submitCoffee,
+  deleteCoffee,
+  getCoffeeId
 }) => {
   if (userProfileLoading) {
     return <Loader />;
@@ -639,20 +643,21 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleCoffeeModal} />
             <Modal>
-              <ModalLink onClick={() => submitCoffee("everyone")}>
+              <ModalLink onClick={() => console.log("COFFEE DETAIL")}>
                 COFFEE DETAIL
               </ModalLink>
-              <ModalLink onClick={() => submitCoffee("nationality")}>
+              <ModalLink onClick={() => console.log("EDIT COFFEE")}>
                 EDIT COFFEE
               </ModalLink>
-              <ModalLink onClick={() => submitCoffee("gender")}>
+              <ModalLink
+                onClick={() => deleteCoffee()}
+              >
                 DELETE COFFEE
               </ModalLink>
               <ModalLink onClick={toggleCoffeeModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>
         )}
-
         {requestModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleRequestModal} />
@@ -1059,6 +1064,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 requestingCoffees={requestingCoffees}
                 toggleCoffeeModal={toggleCoffeeModal}
                 type={"requestingCoffee"}
+                getCoffeeId={getCoffeeId}
               />
             ) : (
               <Icon onClick={toggleRequestModal}>
@@ -1071,6 +1077,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   coffees={coffees}
                   type={"myCoffees"}
                   toggleCoffeeModal={toggleCoffeeModal}
+                  getCoffeeId={getCoffeeId}
                 />
               ) : (
                 <Loader />

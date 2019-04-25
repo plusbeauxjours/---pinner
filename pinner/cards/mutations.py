@@ -133,7 +133,6 @@ class EditCard(graphene.Mutation):
     class Arguments:
         cardId = graphene.Int(required=True)
         caption = graphene.String()
-        country = graphene.String()
         city = graphene.String()
 
     Output = types.EditCardResponse
@@ -161,11 +160,9 @@ class EditCard(graphene.Mutation):
                 try:
 
                     caption = kwargs.get('caption', card.caption)
-                    country = kwargs.get('country', card.country)
                     city = kwargs.get('city', card.city)
 
                     card.caption = caption
-                    card.country = country
                     card.city = city
 
                     card.save()
