@@ -72,8 +72,7 @@ const UserHeader: React.SFC<IProps> = ({
               <ExtendedInput
                 onChange={onInputChange}
                 type={"text"}
-                value={cityName}
-                placeholder={cityName}
+                placeholder={currentCity}
                 name={"cityName"}
                 onKeyUp={editCardOnKeyUp}
               />
