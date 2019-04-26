@@ -1091,20 +1091,29 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <SBold text={"COFFEES"} />
           </Title>
           <Container>
+            {console.log(user.profile.isSelf)}
+            {console.log(requestingCoffees)}
+
             {myCoffeeLoading && <Loader />}
-            {!myCoffeeLoading && user.profile.isSelf && requestingCoffees && (
-              <CoffeeGrid
-                requestingCoffees={requestingCoffees}
-                type={"myRequestingCoffee"}
-                getCoffeeId={getCoffeeId}
-                getRequestingCoffeeId={getRequestingCoffeeId}
-              />
-            )}
-            {!myCoffeeLoading && user.profile.isSelf && !requestingCoffees && (
-              <Icon onClick={toggleRequestModal}>
-                <Upload />
-              </Icon>
-            )}
+            {!myCoffeeLoading &&
+              user.profile.isSelf &&
+              requestingCoffees &&
+              requestingCoffees.length !== 0 && (
+                <CoffeeGrid
+                  requestingCoffees={requestingCoffees}
+                  type={"myRequestingCoffee"}
+                  getCoffeeId={getCoffeeId}
+                  getRequestingCoffeeId={getRequestingCoffeeId}
+                />
+              )}
+            {!myCoffeeLoading &&
+              user.profile.isSelf &&
+              requestingCoffees &&
+              requestingCoffees.length === 0 && (
+                <Icon onClick={toggleRequestModal}>
+                  <Upload />
+                </Icon>
+              )}
             {!myCoffeeLoading && !user.profile.isSelf && null}
             <Box>
               {!myCoffeeLoading && user.profile.isSelf && coffees && (
