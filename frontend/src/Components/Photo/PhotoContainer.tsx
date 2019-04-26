@@ -61,6 +61,7 @@ interface IProps extends RouteComponentProps {
   onCompletedEditCard: (data: any) => void;
   toggleEditCardMode: () => void;
   editMode: boolean;
+  closeEditMode: () => void;
 }
 
 interface IState {
@@ -104,6 +105,9 @@ class PhotoContainer extends React.Component<IProps, IState> {
       cityName: props.cityName,
       cardEditMode: false
     };
+  }
+  public componentDidMount() {
+    console.log(this.state.cardId);
   }
   public render() {
     const {
@@ -508,11 +512,13 @@ class PhotoContainer extends React.Component<IProps, IState> {
     }
   };
   public onCompletedEditCard = data => {
+    const { closeEditMode } = this.props;
     if (data.editCard.ok) {
       toast.success("Card edited");
     } else {
       toast.error("error");
     }
+    closeEditMode();
     this.setState({
       cardEditMode: false,
       caption: "",

@@ -16,16 +16,25 @@ interface IState {
 class CardDetailContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
-    const { location: { state = {} } = {} } = ({} = props);
+    console.log(props);
     this.state = {
-      editMode: state.editMode
+      editMode: false
     };
+  }
+
+  public componentDidMount() {
+    const { location: { state = {} } = {} } = ({} = this.props);
+    if (this.props.history.action === "POP") {
+      this.setState({ editMode: false });
+    } else if (this.props.history.action === "PUSH") {
+      this.setState({ editMode: state.editMode });
+    }
   }
 
   public render() {
     const {
       match: {
-        params: { id }
+        params: { id: cardId }
       }
     } = this.props;
     const { editMode } = this.state;
@@ -33,7 +42,7 @@ class CardDetailContainer extends React.Component<IProps, IState> {
       <CardDetailQuery
         query={GET_CARD}
         variables={{
-          cardId: id
+          cardId
         }}
       >
         {({ data, loading }) => (
@@ -42,6 +51,7 @@ class CardDetailContainer extends React.Component<IProps, IState> {
             data={data}
             back={this.back}
             editMode={editMode}
+            closeEditMode={this.closeEditMode}
           />
         )}
       </CardDetailQuery>
@@ -50,6 +60,11 @@ class CardDetailContainer extends React.Component<IProps, IState> {
   public back = event => {
     event.stopPropagation();
     this.props.history.goBack();
+  };
+  public closeEditMode = () => {
+    this.setState({
+      editMode: false
+    });
   };
 }
 

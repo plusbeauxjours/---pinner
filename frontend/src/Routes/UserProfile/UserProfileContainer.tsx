@@ -1039,7 +1039,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       toast.error("error");
     }
     this.setState({
-      newCardCaption: ""
+      newCardCaption: "",
+      uploadModalOpen: false
     });
   };
   public updateUpload = (cache, { data: { uploadCard } }) => {
