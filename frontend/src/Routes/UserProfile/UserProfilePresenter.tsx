@@ -470,6 +470,7 @@ interface IProps {
   requestModalOpen: boolean;
   coffeeModalOpen: boolean;
   requestingCoffeeModalOpen: boolean;
+  coffeeReportModalOpen: boolean;
 
   editMode: boolean;
   openEditMode: () => void;
@@ -512,6 +513,7 @@ interface IProps {
   toggleRequestModal: () => void;
   toggleCoffeeModal: () => void;
   toggleRequestingCoffeeModal: () => void;
+  toggleCoffeeReportModal: () => void;
 
   logUserOutFn: () => void;
 
@@ -589,6 +591,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   requestModalOpen,
   coffeeModalOpen,
   requestingCoffeeModalOpen,
+  coffeeReportModalOpen,
   editMode,
   toggleTripSeeAll,
   toggleModal,
@@ -607,6 +610,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleRequestModal,
   toggleCoffeeModal,
   toggleRequestingCoffeeModal,
+  toggleCoffeeReportModal,
   openEditMode,
   logUserOutFn,
   confirmDeleteProfile,
@@ -675,6 +679,17 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 DELETE COFFEE
               </ModalLink>
               <ModalLink onClick={toggleCoffeeModal}>CANCEL</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
+        {coffeeReportModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleCoffeeReportModal} />
+            <Modal>
+              <ModalLink onClick={() => console.log("REPORT COFFEE")}>
+                REPORT COFFEE
+              </ModalLink>
+              <ModalLink onClick={toggleCoffeeReportModal}>CANCEL</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -1077,29 +1092,36 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           </Title>
           <Container>
             {myCoffeeLoading && <Loader />}
-            {user.profile.isSelf &&
-            requestingCoffees &&
-            requestingCoffees.length !== 0 ? (
+            {!myCoffeeLoading && user.profile.isSelf && requestingCoffees && (
               <CoffeeGrid
                 requestingCoffees={requestingCoffees}
                 type={"myRequestingCoffee"}
                 getCoffeeId={getCoffeeId}
                 getRequestingCoffeeId={getRequestingCoffeeId}
               />
-            ) : (
+            )}
+            {!myCoffeeLoading && user.profile.isSelf && !requestingCoffees && (
               <Icon onClick={toggleRequestModal}>
                 <Upload />
               </Icon>
             )}
+            {!myCoffeeLoading && !user.profile.isSelf && null}
             <Box>
-              {!myCoffeeLoading && coffees ? (
+              {!myCoffeeLoading && user.profile.isSelf && coffees && (
                 <CoffeeGrid
                   coffees={coffees}
                   type={"myCoffees"}
                   getCoffeeId={getCoffeeId}
+                  toggleCoffeeReportModal={toggleCoffeeReportModal}
                 />
-              ) : (
-                <Loader />
+              )}
+              {!myCoffeeLoading && !user.profile.isSelf && coffees && (
+                <CoffeeGrid
+                  coffees={coffees}
+                  type={"reportCoffees"}
+                  getCoffeeId={getCoffeeId}
+                  toggleCoffeeReportModal={toggleCoffeeReportModal}
+                />
               )}
             </Box>
           </Container>

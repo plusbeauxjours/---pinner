@@ -378,7 +378,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                 <CoffeeGrid
                   toggleCoffeeReportModal={toggleCoffeeReportModal}
                   coffees={coffees}
-                  type={"cityProfile"}
+                  type={"reportCoffees"}
                 />
               )}
             </Box>

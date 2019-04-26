@@ -147,7 +147,7 @@ const CoffeeCard: React.SFC<IProps> = ({
                 </Tips>
               </Container>
             );
-          case "cityProfile":
+          case "reportCoffees":
             return (
               <Container>
                 <Tips>

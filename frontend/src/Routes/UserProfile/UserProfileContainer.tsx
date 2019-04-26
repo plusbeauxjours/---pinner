@@ -104,6 +104,7 @@ interface IState {
   uploadModalOpen: boolean;
   coffeeModalOpen: boolean;
   requestingCoffeeModalOpen: boolean;
+  coffeeReportModalOpen: boolean;
   editMode: boolean;
   id: string;
   userName: string;
@@ -158,6 +159,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       uploadModalOpen: false,
       coffeeModalOpen: false,
       requestingCoffeeModalOpen: false,
+      coffeeReportModalOpen: false,
       editMode: false,
       id: props.id,
       userName: props.username,
@@ -204,6 +206,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       uploadModalOpen,
       coffeeModalOpen,
       requestingCoffeeModalOpen,
+      coffeeReportModalOpen,
       editMode,
       userName,
       bio,
@@ -505,6 +508,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                 requestingCoffeeModalOpen={
                                                                                                   requestingCoffeeModalOpen
                                                                                                 }
+                                                                                                coffeeReportModalOpen={
+                                                                                                  coffeeReportModalOpen
+                                                                                                }
                                                                                                 editMode={
                                                                                                   editMode
                                                                                                 }
@@ -574,6 +580,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                 toggleRequestingCoffeeModal={
                                                                                                   this
                                                                                                     .toggleRequestingCoffeeModal
+                                                                                                }
+                                                                                                toggleCoffeeReportModal={
+                                                                                                  this
+                                                                                                    .toggleCoffeeReportModal
                                                                                                 }
                                                                                                 openEditMode={
                                                                                                   this
@@ -954,6 +964,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   public toggleKnowingFollowersModal = () => {
     const { knowingFollowersModalOpen } = this.state;
     this.setState({ knowingFollowersModalOpen: !knowingFollowersModalOpen });
+  };
+  public toggleCoffeeReportModal = () => {
+    const { coffeeReportModalOpen } = this.state;
+    this.setState({
+      coffeeReportModalOpen: !coffeeReportModalOpen
+    } as any);
   };
   public addTrip = () => {
     const { cityName, startDate, endDate, tripAddModalOpen } = this.state;

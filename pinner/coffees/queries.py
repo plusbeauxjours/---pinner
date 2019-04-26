@@ -51,7 +51,7 @@ def resolve_get_my_coffee(self, info, **kwargs):
             return types.GetMyCoffeeResponse(coffees=None)
 
         try:
-            coffees = models.Coffee.objects.filter(host=user, expires__lt=timezone.now()).order_by(
+            coffees = user.coffee.filter(expires__lt=timezone.now()).order_by(
                 '-created_at')
             requesting_coffees = models.Coffee.objects.filter(host=user, expires__gt=timezone.now()).order_by(
                 '-created_at')
