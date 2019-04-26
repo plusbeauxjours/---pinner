@@ -231,14 +231,12 @@ const ModalLink = styled.div`
 `;
 
 const Modal = styled.div`
+  background-color: #2d3a41;
+  width: 30%;
+  border-radius: 12px;
   z-index: 10;
   animation: ${ModalAnimation} 0.1s linear;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
-
 
 const WeatherIcon = styled.div`
   display: flex;
@@ -252,10 +250,6 @@ interface IProps {
   nearCitiesLoading: boolean;
   nearCountriesData?: any;
   nearCountriesLoading: boolean;
-  coffeeData: any;
-  coffeeLoading: boolean;
-  coffeeModalOpen: boolean;
-  toggleCoffeeModal: () => void;
   coffeeReportModalOpen: boolean;
   toggleCoffeeReportModal: () => void;
 }
@@ -266,7 +260,8 @@ const CityProfilePresenter: React.SFC<IProps> = ({
       cards = null,
       usersNow = null,
       usersBefore = null,
-      city = null
+      city = null,
+      coffees = null
     } = {}
   } = {},
   cityLoading,
@@ -274,10 +269,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   nearCitiesLoading,
   nearCountriesData: { nearCountries: { countries = null } = {} } = {},
   nearCountriesLoading,
-  coffeeData: { getCoffees: { coffees = null } = {} } = {},
-  coffeeLoading,
-  coffeeModalOpen,
-  toggleCoffeeModal,
   coffeeReportModalOpen,
   toggleCoffeeReportModal
 }) => {
@@ -286,31 +277,13 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   } else if (!cityLoading && cards && usersNow && usersBefore && city) {
     return (
       <>
-        {coffeeModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleCoffeeModal} />
-            <Modal>
-              <ModalLink onClick={() => console.log("REPORT COFFEE")}>
-                REPORT COFFEE
-              </ModalLink>
-              <ModalLink onClick={toggleCoffeeModal}>CANCEL</ModalLink>
-            </Modal>
-          </ModalContainer>
-        )}
         {coffeeReportModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleCoffeeReportModal} />
             <Modal>
-              <ModalLink onClick={() => console.log("COFFEE DETAIL")}>
-                COFFEE DETAIL
+              <ModalLink onClick={() => console.log("REPORT COFFEE")}>
+                REPORT COFFEE
               </ModalLink>
-              <ModalLink onClick={() => console.log("EDIT COFFEE")}>
-                EDIT COFFEE
-              </ModalLink>
-              <ModalLink onClick={() => console.log("DELETE COFFEE")}>
-                DELETE COFFEE
-              </ModalLink>
-
               <ModalLink onClick={toggleCoffeeReportModal}>CANCEL</ModalLink>
             </Modal>
           </ModalContainer>
@@ -401,14 +374,12 @@ const CityProfilePresenter: React.SFC<IProps> = ({
           </Title>
           <Container>
             <Box>
-              {!coffeeLoading && coffees ? (
+              {coffees && (
                 <CoffeeGrid
-                  coffees={coffees}
-                  toggleCoffeeModal={toggleCoffeeModal}
                   toggleCoffeeReportModal={toggleCoffeeReportModal}
+                  coffees={coffees}
+                  type={"cityProfile"}
                 />
-              ) : (
-                <Loader />
               )}
             </Box>
           </Container>

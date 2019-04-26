@@ -469,6 +469,7 @@ interface IProps {
   uploadModalOpen: boolean;
   requestModalOpen: boolean;
   coffeeModalOpen: boolean;
+  requestingCoffeeModalOpen: boolean;
 
   editMode: boolean;
   openEditMode: () => void;
@@ -510,6 +511,7 @@ interface IProps {
   toggleUploadModal: () => void;
   toggleRequestModal: () => void;
   toggleCoffeeModal: () => void;
+  toggleRequestingCoffeeModal: () => void;
 
   logUserOutFn: () => void;
 
@@ -537,7 +539,8 @@ interface IProps {
     endDate: moment.Moment | null
   ) => number;
   deleteCoffee: () => void;
-  getCoffeeId?: any;
+  getCoffeeId: any;
+  getRequestingCoffeeId: any;
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
@@ -585,6 +588,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   uploadModalOpen,
   requestModalOpen,
   coffeeModalOpen,
+  requestingCoffeeModalOpen,
   editMode,
   toggleTripSeeAll,
   toggleModal,
@@ -602,6 +606,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleUploadModal,
   toggleRequestModal,
   toggleCoffeeModal,
+  toggleRequestingCoffeeModal,
   openEditMode,
   logUserOutFn,
   confirmDeleteProfile,
@@ -632,22 +637,39 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   duration,
   submitCoffee,
   deleteCoffee,
-  getCoffeeId
+  getCoffeeId,
+  getRequestingCoffeeId
 }) => {
   if (userProfileLoading) {
     return <Loader />;
   } else if (user && topCountries && frequentCities) {
     return (
       <>
-        {coffeeModalOpen && (
+        {requestingCoffeeModalOpen && (
           <ModalContainer>
-            <ModalOverlay onClick={toggleCoffeeModal} />
+            <ModalOverlay onClick={toggleRequestingCoffeeModal} />
             <Modal>
               <ModalLink onClick={() => console.log("COFFEE DETAIL")}>
                 COFFEE DETAIL
               </ModalLink>
               <ModalLink onClick={() => console.log("EDIT COFFEE")}>
                 EDIT COFFEE
+              </ModalLink>
+              <ModalLink onClick={() => deleteCoffee()}>
+                CANCEL COFFEE
+              </ModalLink>
+              <ModalLink onClick={toggleRequestingCoffeeModal}>
+                CANCEL
+              </ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
+        {coffeeModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleCoffeeModal} />
+            <Modal>
+              <ModalLink onClick={() => console.log("COFFEE DETAIL")}>
+                COFFEE DETAIL
               </ModalLink>
               <ModalLink onClick={() => deleteCoffee()}>
                 DELETE COFFEE
@@ -1060,9 +1082,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             requestingCoffees.length !== 0 ? (
               <CoffeeGrid
                 requestingCoffees={requestingCoffees}
-                toggleCoffeeModal={toggleCoffeeModal}
-                type={"requestingCoffee"}
+                type={"myRequestingCoffee"}
                 getCoffeeId={getCoffeeId}
+                getRequestingCoffeeId={getRequestingCoffeeId}
               />
             ) : (
               <Icon onClick={toggleRequestModal}>
@@ -1074,7 +1096,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 <CoffeeGrid
                   coffees={coffees}
                   type={"myCoffees"}
-                  toggleCoffeeModal={toggleCoffeeModal}
                   getCoffeeId={getCoffeeId}
                 />
               ) : (

@@ -103,6 +103,7 @@ interface IState {
   requestModalOpen: boolean;
   uploadModalOpen: boolean;
   coffeeModalOpen: boolean;
+  requestingCoffeeModalOpen: boolean;
   editMode: boolean;
   id: string;
   userName: string;
@@ -156,6 +157,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       requestModalOpen: false,
       uploadModalOpen: false,
       coffeeModalOpen: false,
+      requestingCoffeeModalOpen: false,
       editMode: false,
       id: props.id,
       userName: props.username,
@@ -201,6 +203,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       requestModalOpen,
       uploadModalOpen,
       coffeeModalOpen,
+      requestingCoffeeModalOpen,
       editMode,
       userName,
       bio,
@@ -499,6 +502,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                 coffeeModalOpen={
                                                                                                   coffeeModalOpen
                                                                                                 }
+                                                                                                requestingCoffeeModalOpen={
+                                                                                                  requestingCoffeeModalOpen
+                                                                                                }
                                                                                                 editMode={
                                                                                                   editMode
                                                                                                 }
@@ -564,6 +570,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                 toggleCoffeeModal={
                                                                                                   this
                                                                                                     .toggleCoffeeModal
+                                                                                                }
+                                                                                                toggleRequestingCoffeeModal={
+                                                                                                  this
+                                                                                                    .toggleRequestingCoffeeModal
                                                                                                 }
                                                                                                 openEditMode={
                                                                                                   this
@@ -716,6 +726,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                 getCoffeeId={
                                                                                                   this
                                                                                                     .getCoffeeId
+                                                                                                }
+                                                                                                getRequestingCoffeeId={
+                                                                                                  this
+                                                                                                    .getRequestingCoffeeId
                                                                                                 }
                                                                                               />
                                                                                             );
@@ -1140,14 +1154,14 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     }
   };
   public onCompletedDeleteCoffee = data => {
-    const { coffeeModalOpen } = this.state;
     if (data.deleteCoffee.ok) {
       toast.success("Coffee deleted");
     } else {
       toast.error("error");
     }
     this.setState({
-      coffeeModalOpen: !coffeeModalOpen
+      coffeeModalOpen: false,
+      requestingCoffeeModalOpen: false
     } as any);
   };
   public updateDeleteCoffee = (cache, { data: { deleteCoffee } }) => {
@@ -1199,6 +1213,13 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       console.log(e);
     }
   };
+  public getRequestingCoffeeId = coffeeId => {
+    const { requestingCoffeeModalOpen } = this.state;
+    this.setState({
+      requestingCoffeeModalOpen: !requestingCoffeeModalOpen,
+      coffeeId
+    } as any);
+  };
   public getCoffeeId = coffeeId => {
     const { coffeeModalOpen } = this.state;
     this.setState({
@@ -1214,6 +1235,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     const { coffeeModalOpen } = this.state;
     this.setState({
       coffeeModalOpen: !coffeeModalOpen
+    } as any);
+  };
+  public toggleRequestingCoffeeModal = () => {
+    const { requestingCoffeeModalOpen } = this.state;
+    this.setState({
+      requestingCoffeeModalOpen: !requestingCoffeeModalOpen
     } as any);
   };
   public toggleRequestModal = () => {

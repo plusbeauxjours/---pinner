@@ -7,9 +7,7 @@ import {
   NearCities,
   NearCountries,
   NearCitiesVariables,
-  NearCountriesVariables,
-  GetCoffees,
-  GetCoffeesVariables
+  NearCountriesVariables
 } from "../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
 import {
@@ -17,13 +15,11 @@ import {
   NEAR_CITIES,
   NEAR_COUNTRIES
 } from "./CityProfileQueries";
-import { GET_COFFEES } from "../Feed/FeedQueries";
 
 class CityProfileQuery extends Query<CityProfile, CityProfileVariables> {}
 
 class NearCitiesQuery extends Query<NearCities, NearCitiesVariables> {}
 class NearCountriesQuery extends Query<NearCountries, NearCountriesVariables> {}
-class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
 
@@ -31,9 +27,7 @@ interface IState {
   page: number;
   lat: number;
   lng: number;
-  coffeeModalOpen: boolean;
   coffeeReportModalOpen: boolean;
-  coffeePage: number;
 }
 
 class CityProfileContainer extends React.Component<IProps, IState> {
@@ -46,9 +40,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       page: 0,
       lat: 0,
       lng: 0,
-      coffeeModalOpen: false,
-      coffeeReportModalOpen: false,
-      coffeePage: 0
+      coffeeReportModalOpen: false
     };
   }
   public componentDidMount() {
@@ -60,82 +52,51 @@ class CityProfileContainer extends React.Component<IProps, IState> {
         params: { cityName }
       }
     } = this.props;
-    const {
-      page,
-      coffeeModalOpen,
-      coffeeReportModalOpen,
-      coffeePage
-    } = this.state;
+    const { page, coffeeReportModalOpen } = this.state;
     return (
-      <GetCoffeesQuery query={GET_COFFEES} variables={{ cityName, coffeePage }}>
+      <NearCitiesQuery query={NEAR_CITIES} variables={{ cityName }}>
         {({
-          data: coffeeData,
-          loading: coffeeLoading,
-          fetchMore: coffeeFetchMore
+          data: nearCitiesData,
+          loading: nearCitiesLoading,
+          fetchMore: nearCitiesFetchMore
         }) => {
-          this.coffeeFetchMore = coffeeFetchMore;
+          this.nearCitiesFetchMore = nearCitiesFetchMore;
           return (
-            <NearCitiesQuery query={NEAR_CITIES} variables={{ cityName }}>
+            <NearCountriesQuery query={NEAR_COUNTRIES} variables={{ cityName }}>
               {({
-                data: nearCitiesData,
-                loading: nearCitiesLoading,
-                fetchMore: nearCitiesFetchMore
+                data: nearCountriesData,
+                loading: nearCountriesLoading,
+                fetchMore: nearCountriesFetchMore
               }) => {
-                this.nearCitiesFetchMore = nearCitiesFetchMore;
+                this.nearCountriesFetchMore = nearCountriesFetchMore;
                 return (
-                  <NearCountriesQuery
-                    query={NEAR_COUNTRIES}
-                    variables={{ cityName }}
+                  <CityProfileQuery
+                    query={CITY_PROFILE}
+                    variables={{ page, cityName }}
                   >
-                    {({
-                      data: nearCountriesData,
-                      loading: nearCountriesLoading,
-                      fetchMore: nearCountriesFetchMore
-                    }) => {
-                      this.nearCountriesFetchMore = nearCountriesFetchMore;
+                    {({ data: cityData, loading: cityLoading }) => {
                       return (
-                        <CityProfileQuery
-                          query={CITY_PROFILE}
-                          variables={{ page, cityName }}
-                        >
-                          {({ data: cityData, loading: cityLoading }) => {
-                            return (
-                              <CityProfilePresenter
-                                cityData={cityData}
-                                cityLoading={cityLoading}
-                                nearCitiesData={nearCitiesData}
-                                nearCitiesLoading={nearCitiesLoading}
-                                nearCountriesData={nearCountriesData}
-                                nearCountriesLoading={nearCountriesLoading}
-                                coffeeData={coffeeData}
-                                coffeeLoading={coffeeLoading}
-                                coffeeModalOpen={coffeeModalOpen}
-                                toggleCoffeeModal={this.toggleCoffeeModal}
-                                coffeeReportModalOpen={coffeeReportModalOpen}
-                                toggleCoffeeReportModal={
-                                  this.toggleCoffeeReportModal
-                                }
-                              />
-                            );
-                          }}
-                        </CityProfileQuery>
+                        <CityProfilePresenter
+                          cityData={cityData}
+                          cityLoading={cityLoading}
+                          nearCitiesData={nearCitiesData}
+                          nearCitiesLoading={nearCitiesLoading}
+                          nearCountriesData={nearCountriesData}
+                          nearCountriesLoading={nearCountriesLoading}
+                          coffeeReportModalOpen={coffeeReportModalOpen}
+                          toggleCoffeeReportModal={this.toggleCoffeeReportModal}
+                        />
                       );
                     }}
-                  </NearCountriesQuery>
+                  </CityProfileQuery>
                 );
               }}
-            </NearCitiesQuery>
+            </NearCountriesQuery>
           );
         }}
-      </GetCoffeesQuery>
+      </NearCitiesQuery>
     );
   }
-  public toggleCoffeeModal = () => {
-    const { coffeeModalOpen } = this.state;
-    this.setState({
-      coffeeModalOpen: !coffeeModalOpen
-    } as any);
-  };
   public toggleCoffeeReportModal = () => {
     const { coffeeReportModalOpen } = this.state;
     this.setState({

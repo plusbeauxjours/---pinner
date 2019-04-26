@@ -624,6 +624,44 @@ export interface CityProfile_cityProfile_usersBefore {
   actor: CityProfile_cityProfile_usersBefore_actor;
 }
 
+export interface CityProfile_cityProfile_coffees_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface CityProfile_cityProfile_coffees_city {
+  __typename: "CityType";
+  cityName: string | null;
+  country: CityProfile_cityProfile_coffees_city_country;
+}
+
+export interface CityProfile_cityProfile_coffees_host_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  isSelf: boolean | null;
+}
+
+export interface CityProfile_cityProfile_coffees_host {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: CityProfile_cityProfile_coffees_host_profile | null;
+}
+
+export interface CityProfile_cityProfile_coffees {
+  __typename: "CoffeeType";
+  id: string;
+  city: CityProfile_cityProfile_coffees_city;
+  host: CityProfile_cityProfile_coffees_host;
+  expires: any | null;
+  status: string | null;
+  target: CoffeeTarget;
+  naturalTime: string | null;
+}
+
 export interface CityProfile_cityProfile_city_country {
   __typename: "CountryType";
   countryName: string | null;
@@ -648,6 +686,7 @@ export interface CityProfile_cityProfile {
   cards: (CityProfile_cityProfile_cards | null)[] | null;
   usersNow: (CityProfile_cityProfile_usersNow | null)[] | null;
   usersBefore: (CityProfile_cityProfile_usersBefore | null)[] | null;
+  coffees: (CityProfile_cityProfile_coffees | null)[] | null;
   city: CityProfile_cityProfile_city | null;
 }
 

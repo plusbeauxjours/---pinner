@@ -2,7 +2,8 @@ import gql from "graphql-tag";
 import {
   CARD_FRAGMENT,
   CITY_FRAGMENT,
-  COUNTRY_FRAGMENT
+  COUNTRY_FRAGMENT,
+  COFFEE_FRAGMENT
 } from "src/sharedQueries";
 
 export const CITY_PROFILE = gql`
@@ -27,6 +28,9 @@ export const CITY_PROFILE = gql`
           }
         }
       }
+      coffees {
+        ...CoffeeParts
+      }
       city {
         lat
         lng
@@ -44,6 +48,7 @@ export const CITY_PROFILE = gql`
     }
   }
   ${CARD_FRAGMENT}
+  ${COFFEE_FRAGMENT}
 `;
 
 export const NEAR_CITIES = gql`

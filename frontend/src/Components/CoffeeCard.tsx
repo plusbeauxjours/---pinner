@@ -85,13 +85,13 @@ interface IProps {
   currentCountry: string;
   target: string;
   expires: string;
+  naturalTime: string;
   isSelf?: boolean;
   status: string;
-  requestingCoffees: boolean;
-  toggleCoffeeModal: () => void;
   toggleCoffeeReportModal?: () => void;
   type?: string;
   getCoffeeId?: any;
+  getRequestingCoffeeId?: any;
 }
 
 const CoffeeCard: React.SFC<IProps> = ({
@@ -100,23 +100,23 @@ const CoffeeCard: React.SFC<IProps> = ({
   username,
   target,
   expires,
+  naturalTime,
   isSelf,
   status,
-  requestingCoffees,
-  toggleCoffeeModal,
   toggleCoffeeReportModal,
   type,
-  getCoffeeId
+  getCoffeeId,
+  getRequestingCoffeeId
 }) => {
   return (
     <>
       {(() => {
         switch (type) {
-          case "requestingCoffee":
+          case "myRequestingCoffee":
             return (
               <Container>
                 <Tips>
-                  <ListOverlay onClick={() => getCoffeeId(id)}>
+                  <ListOverlay onClick={() => getRequestingCoffeeId(id)}>
                     <List />
                   </ListOverlay>
                   <Link to={`/c/${id}`}>
@@ -126,7 +126,7 @@ const CoffeeCard: React.SFC<IProps> = ({
                     <Location>{id}</Location>
                     <SBold text={username} />
                     <Location>{target}</Location>
-                    <Location>{expires}</Location>
+                    <Location>{naturalTime}</Location>
                   </Link>
                 </Tips>
               </Container>
@@ -147,12 +147,33 @@ const CoffeeCard: React.SFC<IProps> = ({
                 </Tips>
               </Container>
             );
+          case "cityProfile":
+            return (
+              <Container>
+                <Tips>
+                  {!isSelf && (
+                    <ListOverlay onClick={toggleCoffeeReportModal}>
+                      <List />
+                    </ListOverlay>
+                  )}
+                  <Link to={`/c/${id}`}>
+                    <SAvatar url={avatar} size="md" />
+                    <SBold text={username} />
+                    <Location>
+                      {target}
+                      {id}
+                    </Location>
+                    <Location>{naturalTime}</Location>
+                  </Link>
+                </Tips>
+              </Container>
+            );
           default:
             return (
               <Container>
                 <Tips>
                   {isSelf ? (
-                    <ListOverlay onClick={() => getCoffeeId(id)}>
+                    <ListOverlay onClick={() => getRequestingCoffeeId(id)}>
                       <List />
                     </ListOverlay>
                   ) : (
@@ -167,7 +188,7 @@ const CoffeeCard: React.SFC<IProps> = ({
                       {target}
                       {id}
                     </Location>
-                    <Location>{expires}</Location>
+                    <Location>{naturalTime}</Location>
                   </Link>
                 </Tips>
               </Container>

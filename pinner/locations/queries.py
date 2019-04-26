@@ -1,6 +1,7 @@
 from django.db import IntegrityError
 from . import types, models
 from graphql_jwt.decorators import login_required
+from django.utils import timezone
 
 from django.contrib.auth.models import User
 from cards import models as card_models
@@ -123,7 +124,9 @@ def resolve_city_profile(self, info, **kwargs):
 
     city = models.City.objects.get(city_name=cityName)
 
-    return card_types.FirstAnnotateRespose(cards=cards, usersNow=usersNow, usersBefore=usersBefore, city=city)
+    coffees = city.coffee.filter(expires__gt=timezone.now())
+
+    return card_types.FirstAnnotateRespose(cards=cards, usersNow=usersNow, usersBefore=usersBefore, city=city, coffees=coffees)
 
 
 @login_required

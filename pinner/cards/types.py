@@ -5,6 +5,7 @@ from . import models
 from users import types as user_types
 from locations import types as location_types
 from notifications import types as notification_types
+from coffees import types as coffee_types
 
 
 class CardType(DjangoObjectType):
@@ -105,6 +106,7 @@ class FirstAnnotateRespose(graphene.ObjectType):
     usersNow = graphene.List(user_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
     cards = graphene.List(CardType)
+    coffees = graphene.List(coffee_types.CoffeeType)
 
 
 class SecondAnnotateRespose(graphene.ObjectType):

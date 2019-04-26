@@ -72,7 +72,7 @@ interface IState {
   countryPhotoURL: string;
   continentPhotoURL: string;
   requestModalOpen: boolean;
-  coffeeModalOpen: boolean;
+  requestingCoffeeModalOpen: boolean;
   coffeeReportModalOpen: boolean;
   coffeePage: number;
   coffeeId: string;
@@ -103,7 +103,7 @@ class FeedContainer extends React.Component<IProps, IState> {
       countryPhotoURL: null,
       continentPhotoURL: null,
       requestModalOpen: false,
-      coffeeModalOpen: false,
+      requestingCoffeeModalOpen: false,
       coffeeReportModalOpen: false,
       coffeePage: 0,
       coffeeId: null
@@ -135,7 +135,7 @@ class FeedContainer extends React.Component<IProps, IState> {
       countryPhotoURL,
       continentPhotoURL,
       requestModalOpen,
-      coffeeModalOpen,
+      requestingCoffeeModalOpen,
       coffeeReportModalOpen,
       coffeePage,
       coffeeId
@@ -222,8 +222,8 @@ class FeedContainer extends React.Component<IProps, IState> {
                                           toggleBeforeModal={
                                             this.toggleBeforeModal
                                           }
-                                          toggleCoffeeModal={
-                                            this.toggleCoffeeModal
+                                          toggleRequestingCoffeeModal={
+                                            this.toggleRequestingCoffeeModal
                                           }
                                           toggleCoffeeReportModal={
                                             this.toggleCoffeeReportModal
@@ -245,7 +245,9 @@ class FeedContainer extends React.Component<IProps, IState> {
                                             this.toggleRecommandUserSeeAll
                                           }
                                           requestModalOpen={requestModalOpen}
-                                          coffeeModalOpen={coffeeModalOpen}
+                                          requestingCoffeeModalOpen={
+                                            requestingCoffeeModalOpen
+                                          }
                                           coffeeReportModalOpen={
                                             coffeeReportModalOpen
                                           }
@@ -256,7 +258,9 @@ class FeedContainer extends React.Component<IProps, IState> {
                                           currentLat={currentLat}
                                           currentLng={currentLng}
                                           page={page}
-                                          getCoffeeId={this.getCoffeeId}
+                                          getRequestingCoffeeId={
+                                            this.getRequestingCoffeeId
+                                          }
                                           deleteCoffee={this.deleteCoffee}
                                         />
                                       );
@@ -377,10 +381,10 @@ class FeedContainer extends React.Component<IProps, IState> {
       }
     });
   };
-  public toggleCoffeeModal = () => {
-    const { coffeeModalOpen } = this.state;
+  public toggleRequestingCoffeeModal = () => {
+    const { requestingCoffeeModalOpen } = this.state;
     this.setState({
-      coffeeModalOpen: !coffeeModalOpen
+      requestingCoffeeModalOpen: !requestingCoffeeModalOpen
     } as any);
   };
   public toggleCoffeeReportModal = () => {
@@ -451,14 +455,14 @@ class FeedContainer extends React.Component<IProps, IState> {
     }
   };
   public onCompletedDeleteCoffee = data => {
-    const { coffeeModalOpen } = this.state;
+    const { requestingCoffeeModalOpen } = this.state;
     if (data.deleteCoffee.ok) {
       toast.success("Coffee deleted");
     } else {
       toast.error("error");
     }
     this.setState({
-      coffeeModalOpen: !coffeeModalOpen
+      requestingCoffeeModalOpen: !requestingCoffeeModalOpen
     } as any);
   };
   public updateDeleteCoffee = (cache, { data: { deleteCoffee } }) => {
@@ -511,10 +515,10 @@ class FeedContainer extends React.Component<IProps, IState> {
       console.log(e);
     }
   };
-  public getCoffeeId = coffeeId => {
-    const { coffeeModalOpen } = this.state;
+  public getRequestingCoffeeId = coffeeId => {
+    const { requestingCoffeeModalOpen } = this.state;
     this.setState({
-      coffeeModalOpen: !coffeeModalOpen,
+      requestingCoffeeModalOpen: !requestingCoffeeModalOpen,
       coffeeId
     } as any);
   };

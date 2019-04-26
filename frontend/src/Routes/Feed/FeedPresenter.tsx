@@ -246,16 +246,16 @@ interface IProps {
   toggleRecommandUserSeeAll: () => void;
   toggleRecommandUserModal: () => void;
   requestModalOpen: boolean;
-  coffeeModalOpen: boolean;
+  requestingCoffeeModalOpen: boolean;
   coffeeReportModalOpen: boolean;
   toggleRequestModal: () => void;
-  toggleCoffeeModal: () => void;
+  toggleRequestingCoffeeModal: () => void;
   toggleCoffeeReportModal: () => void;
   submitCoffee: any;
   currentLat: number;
   currentLng: number;
   page: number;
-  getCoffeeId: (coffeeId: string) => void;
+  getRequestingCoffeeId: (coffeeId: string) => void;
   deleteCoffee: () => void;
 }
 
@@ -282,17 +282,17 @@ const FeedPresenter: React.SFC<IProps> = ({
   toggleRecommandUserModal,
   recommandUserModalOpen,
   requestModalOpen,
-  coffeeModalOpen,
+  requestingCoffeeModalOpen,
   coffeeReportModalOpen,
   toggleRequestModal,
-  toggleCoffeeModal,
+  toggleRequestingCoffeeModal,
   toggleCoffeeReportModal,
   submitCoffee,
   currentLat,
   currentLng,
   currentCity,
   page,
-  getCoffeeId,
+  getRequestingCoffeeId,
   deleteCoffee
 }) => {
   if (feedLoading) {
@@ -300,9 +300,9 @@ const FeedPresenter: React.SFC<IProps> = ({
   } else if (!feedLoading && usersNow && usersBefore && city) {
     return (
       <>
-        {coffeeModalOpen && (
+        {requestingCoffeeModalOpen && (
           <ModalContainer>
-            <ModalOverlay onClick={toggleCoffeeModal} />
+            <ModalOverlay onClick={toggleRequestingCoffeeModal} />
             <Modal>
               <ModalLink onClick={() => console.log("COFFEE DETAIL")}>
                 COFFEE DETAIL
@@ -311,9 +311,11 @@ const FeedPresenter: React.SFC<IProps> = ({
                 EDIT COFFEE
               </ModalLink>
               <ModalLink onClick={() => deleteCoffee()}>
-                DELETE COFFEE
+                CANCEL COFFEE
               </ModalLink>
-              <ModalLink onClick={toggleCoffeeModal}>CANCEL</ModalLink>
+              <ModalLink onClick={toggleRequestingCoffeeModal}>
+                CANCEL
+              </ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -489,9 +491,8 @@ const FeedPresenter: React.SFC<IProps> = ({
               {!coffeeLoading && coffees ? (
                 <CoffeeGrid
                   coffees={coffees}
-                  toggleCoffeeModal={toggleCoffeeModal}
                   toggleCoffeeReportModal={toggleCoffeeReportModal}
-                  getCoffeeId={getCoffeeId}
+                  getRequestingCoffeeId={getRequestingCoffeeId}
                 />
               ) : (
                 <Loader />

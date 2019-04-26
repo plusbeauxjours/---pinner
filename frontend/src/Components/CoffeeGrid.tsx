@@ -4,19 +4,19 @@ import CoffeeCard from "./CoffeeCard";
 interface IProps {
   requestingCoffees?: any;
   coffees?: any;
-  toggleCoffeeModal: () => void;
   toggleCoffeeReportModal?: () => void;
   type?: string;
   getCoffeeId?: any;
+  getRequestingCoffeeId?: any;
 }
 
 const CoffeeGrid: React.SFC<IProps> = ({
   requestingCoffees,
   coffees,
-  toggleCoffeeModal,
   toggleCoffeeReportModal,
   type,
-  getCoffeeId
+  getCoffeeId,
+  getRequestingCoffeeId
 }) => (
   <>
     {requestingCoffees &&
@@ -30,12 +30,12 @@ const CoffeeGrid: React.SFC<IProps> = ({
           currentCountry={coffee.city.country.countryName}
           isFollowing={coffee.host.profile.isFollowing}
           target={coffee.target}
-          expires={coffee.naturalTime}
+          naturalTime={coffee.naturalTime}
+          expires={coffee.expires}
           status={coffee.status}
-          requestingCoffees={true}
-          toggleCoffeeModal={toggleCoffeeModal}
           type={type}
           getCoffeeId={getCoffeeId}
+          getRequestingCoffeeId={getRequestingCoffeeId}
         />
       ))}
     {coffees &&
@@ -49,14 +49,14 @@ const CoffeeGrid: React.SFC<IProps> = ({
           currentCountry={coffee.city.country.countryName}
           isFollowing={coffee.host.profile.isFollowing}
           target={coffee.target}
-          expires={coffee.naturalTime}
+          naturalTime={coffee.naturalTime}
+          expires={coffee.expires}
           isSelf={coffee.host.profile.isSelf}
           status={coffee.status}
-          requestingCoffees={false}
-          toggleCoffeeModal={toggleCoffeeModal}
           toggleCoffeeReportModal={toggleCoffeeReportModal}
           type={type}
           getCoffeeId={getCoffeeId}
+          getRequestingCoffeeId={getRequestingCoffeeId}
         />
       ))}
   </>
