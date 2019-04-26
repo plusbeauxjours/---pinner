@@ -1,4 +1,5 @@
 import { gql } from "apollo-boost";
+import { DETAIL_CARD_FRAGMENT } from "../../sharedQueries";
 
 export const TOGGLE_LIKE_CARD = gql`
   mutation LikeCard($cardId: Int!) {
@@ -12,8 +13,12 @@ export const EDIT_CARD = gql`
   mutation EditCard($cardId: Int!, $cityName: String, $caption: String) {
     editCard(cardId: $cardId, cityName: $cityName, caption: $caption) {
       ok
+      card {
+        ...DetailParts
+      }
     }
   }
+  ${DETAIL_CARD_FRAGMENT}
 `;
 
 export const DELETE_CARD = gql`

@@ -59,7 +59,6 @@ const CardDetailPresenter: React.SFC<IProps> = ({
   if (loading) {
     return <Loader />;
   } else if (!loading && card) {
-    console.log(typeof card.id);
     return (
       <ModalContainer>
         <ModalOverlay onClick={back} />

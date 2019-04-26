@@ -189,12 +189,11 @@ class EditCard(graphene.Mutation):
 
             try:
                 card = models.Card.objects.get(id=cardId)
-                print(card)
             except models.Card.DoesNotExist:
                 raise Exception("Cannot find Card")
 
             if (card):
-                cityName = kwargs.get('city', card.city.city_name)
+                cityName = kwargs.get('cityName', card.city.city_name)
                 print(cityName)
                 caption = kwargs.get('caption', card.caption)
                 print(caption)
@@ -207,7 +206,7 @@ class EditCard(graphene.Mutation):
                 if card.creator.id != user.id:
 
                     error = "Unauthorized"
-                    return types.EditCardResponse(ok=False)
+                    return types.EditCardResponse(ok=False, card=None)
 
                 else:
 
@@ -215,15 +214,15 @@ class EditCard(graphene.Mutation):
 
                         card.caption = caption
                         card.city = city
-
+                        print(card.city)
                         card.save()
-                        return types.EditCardResponse(ok=True)
+                        return types.EditCardResponse(ok=True, card=card)
                     except IntegrityError as e:
                         print(e)
-                        return types.EditCardResponse(ok=False)
+                        return types.EditCardResponse(ok=False, card=None)
 
         else:
-            return types.EditCardResponse(ok=False)
+            return types.EditCardResponse(ok=False, card=None)
 
 
 class DeleteCard(graphene.Mutation):

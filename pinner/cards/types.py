@@ -65,11 +65,12 @@ class UploadCardResponse(graphene.ObjectType):
 
 class EditCardResponse(graphene.ObjectType):
     ok = graphene.Boolean()
+    card = graphene.Field(CardType)
 
 
 class DeleteCardResponse(graphene.ObjectType):
-    cardId = graphene.Int()
     ok = graphene.Boolean()
+    cardId = graphene.Int()
 
 
 class AddCommentResponse(graphene.ObjectType):

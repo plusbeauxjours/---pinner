@@ -498,6 +498,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
     const {
       target: { name, value }
     } = event;
+    console.log(this.state);
     this.setState({
       [name]: value
     } as any);
@@ -506,7 +507,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
     const { keyCode } = event;
     if (keyCode === 13) {
       this.editCardFn();
-      console.log(this.state);
     } else {
       return;
     }
@@ -520,9 +520,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
     }
     closeEditMode();
     this.setState({
-      cardEditMode: false,
-      caption: "",
-      cityName: ""
+      cardEditMode: false
     });
   };
   public toggleEditCardMode = () => {

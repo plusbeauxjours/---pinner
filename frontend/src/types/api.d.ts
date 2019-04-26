@@ -311,9 +311,51 @@ export interface LikeCardVariables {
 // GraphQL mutation operation: EditCard
 // ====================================================
 
+export interface EditCard_editCard_card_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface EditCard_editCard_card_city {
+  __typename: "CityType";
+  cityName: string | null;
+  country: EditCard_editCard_card_city_country;
+}
+
+export interface EditCard_editCard_card_creator_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
+}
+
+export interface EditCard_editCard_card_creator {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: EditCard_editCard_card_creator_profile | null;
+}
+
+export interface EditCard_editCard_card {
+  __typename: "CardType";
+  id: string;
+  file: string | null;
+  caption: string;
+  city: EditCard_editCard_card_city | null;
+  likeCount: number | null;
+  commentCount: number | null;
+  isLiked: boolean | null;
+  naturalTime: string | null;
+  creator: EditCard_editCard_card_creator;
+}
+
 export interface EditCard_editCard {
   __typename: "EditCardResponse";
   ok: boolean | null;
+  card: EditCard_editCard_card | null;
 }
 
 export interface EditCard {
