@@ -108,7 +108,6 @@ def resolve_trip_profile(self, info, **kwargs):
     usersBefore = city.movenotification.filter(Q(start_date__range=(
         startDate, endDate)) | Q(end_date__range=(
             startDate, endDate))).order_by('actor_id').distinct('actor_id')
-    print(usersBefore)
     userCount = usersBefore.count()
     coffees = city.coffee.filter(created_at__range=(startDate, endDate))
 
@@ -121,25 +120,21 @@ def resolve_city_profile(self, info, **kwargs):
     user = info.context.user
     cityName = kwargs.get('cityName')
     page = kwargs.get('page', 0)
-    offset = 50 * page
-
-    cards = card_models.Card.objects.filter(city__city_name=cityName).order_by(
-        '-created_at')[offset:50 + offset]
-
-    usersNow = User.objects.filter(
-        profile__current_city__city_name=cityName).order_by('-username').distinct('username')[:3]
-
-    if usersNow.count() < 5:
-        usersBefore = notification_models.MoveNotification.objects.filter(
-            city__city_name=cityName).order_by('-actor_id').distinct('actor_id')[:3]
-    else:
-        usersBefore = None
 
     city = models.City.objects.get(city_name=cityName)
 
+    usersNow = User.objects.filter(
+        profile__current_city__city_name=cityName).order_by('-id').distinct('id')
+
+    if usersNow.count() < 5:
+        usersBefore = notification_models.MoveNotification.objects.filter(
+            city__city_name=cityName).order_by('-actor_id').distinct('actor_id')
+    else:
+        usersBefore = None
+
     coffees = city.coffee.filter(expires__gt=timezone.now())
 
-    return card_types.FirstAnnotateRespose(cards=cards, usersNow=usersNow, usersBefore=usersBefore, city=city, coffees=coffees)
+    return card_types.FirstAnnotateRespose(usersNow=usersNow, usersBefore=usersBefore, city=city, coffees=coffees)
 
 
 @login_required
@@ -154,21 +149,22 @@ def resolve_country_profile(self, info, **kwargs):
     allCities = models.City.objects.filter(country__country_name=countryName)
 
     usersNow = User.objects.filter(
-        profile__current_city__country__country_name=countryName).order_by('-username').distinct('username')
+        profile__current_city__country__country_name=countryName).order_by('-id').distinct('id')
 
-    usersBefore = notification_models.MoveNotification.objects.filter(
-        city__country__country_name=countryName).order_by('-actor_id').distinct('actor_id')
-
+    if usersNow.count() < 5:
+        usersBefore = notification_models.MoveNotification.objects.filter(
+            city__country__country_name=countryName).order_by('-actor_id').distinct('actor_id')
+    else:
+        usersBefore = notification_models.values('id').MoveNotification.objects.get(
+            id=0)
     if (page is 0):
         cities = models.City.objects.filter(country__country_name=countryName)[:6]
     else:
         cities = models.City.objects.filter(country__country_name=countryName)[6:20]
 
-    cards = card_models.Card.objects.filter(city__country__country_name=countryName)
+    coffees = coffee_models.Coffee.objects.filter(Q(city__in=allCities) & Q(expires__gt=timezone.now()))[:1]
 
-    coffees = coffee_models.Coffee.objects.filter(Q(city__in=allCities) & Q(expires__gt=timezone.now()))
-
-    return card_types.SecondAnnotateRespose(cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country, cards=cards, coffees=coffees)
+    return card_types.SecondAnnotateRespose(cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country, coffees=coffees)
 
 
 @login_required
@@ -180,16 +176,25 @@ def resolve_continent_profile(self, info, **kwargs):
 
     continent = models.Continent.objects.get(continent_name=continentName)
 
+    allCities = models.City.objects.filter(country__continent__continent_name=continentName)
+
+    usersNow = User.objects.filter(
+        profile__current_city__country__continent__continent_name=continentName).order_by('-id').distinct('id')
+
+    if usersNow.count() < 5:
+        usersBefore = notification_models.MoveNotification.objects.filter(
+            city__country__continent__continent_name=continentName).order_by('-actor_id').distinct('actor_id')
+    else:
+        usersBefore = None
+
     if (page is 0):
         countries = models.Country.objects.filter(continent__continent_name=continentName)[:6]
     else:
         countries = models.Country.objects.filter(continent__continent_name=continentName)[6:20]
 
-    print(countries)
+    coffees = coffee_models.Coffee.objects.filter(Q(city__in=allCities) & Q(expires__gt=timezone.now()))
 
-    cards = card_models.Card.objects.filter(city__country__continent__continent_name=continentName)
-
-    return card_types.ThirdAnnotateRespose(countries=countries, continent=continent, cards=cards)
+    return card_types.ThirdAnnotateRespose(countries=countries,  usersNow=usersNow, usersBefore=usersBefore, continent=continent, coffees=coffees)
 
 
 @login_required

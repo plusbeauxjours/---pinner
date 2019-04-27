@@ -20,7 +20,6 @@ class CityProfileQuery extends Query<CityProfile, CityProfileVariables> {}
 
 class NearCitiesQuery extends Query<NearCities, NearCitiesVariables> {}
 class NearCountriesQuery extends Query<NearCountries, NearCountriesVariables> {}
-
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
@@ -75,6 +74,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                     variables={{ page, cityName }}
                   >
                     {({ data: cityData, loading: cityLoading }) => {
+                      console.log("ho");
                       return (
                         <CityProfilePresenter
                           cityData={cityData}
@@ -85,6 +85,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                           nearCountriesLoading={nearCountriesLoading}
                           coffeeReportModalOpen={coffeeReportModalOpen}
                           toggleCoffeeReportModal={this.toggleCoffeeReportModal}
+                          cityName={cityName}
                         />
                       );
                     }}

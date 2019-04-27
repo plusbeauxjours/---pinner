@@ -51,6 +51,7 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
               countryModalOpen={countryModalOpen}
               toggleCountryModal={this.toggleCountryModal}
               toggleCountrySeeAll={this.toggleCountrySeeAll}
+              continentName={continentName}
             />
           );
         }}

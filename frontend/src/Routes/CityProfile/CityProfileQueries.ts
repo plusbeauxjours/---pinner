@@ -1,6 +1,5 @@
 import gql from "graphql-tag";
 import {
-  CARD_FRAGMENT,
   CITY_FRAGMENT,
   COUNTRY_FRAGMENT,
   COFFEE_FRAGMENT
@@ -9,21 +8,18 @@ import {
 export const CITY_PROFILE = gql`
   query CityProfile($page: Int!, $cityName: String!) {
     cityProfile(page: $page, cityName: $cityName) {
-      cards {
-        ...CardParts
-      }
       usersNow {
         id
-        username
         profile {
+          username
           avatar
         }
       }
       usersBefore {
         id
         actor {
-          username
           profile {
+            username
             avatar
           }
         }
@@ -47,7 +43,6 @@ export const CITY_PROFILE = gql`
       }
     }
   }
-  ${CARD_FRAGMENT}
   ${COFFEE_FRAGMENT}
 `;
 

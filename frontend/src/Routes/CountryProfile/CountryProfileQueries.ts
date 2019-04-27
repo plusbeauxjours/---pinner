@@ -1,9 +1,5 @@
 import gql from "graphql-tag";
-import {
-  CARD_FRAGMENT,
-  CITY_FRAGMENT,
-  COFFEE_FRAGMENT
-} from "src/sharedQueries";
+import { CITY_FRAGMENT, COFFEE_FRAGMENT } from "src/sharedQueries";
 
 export const COUNTRY_PROFILE = gql`
   query CountryProfile($page: Int, $countryName: String!) {
@@ -41,12 +37,8 @@ export const COUNTRY_PROFILE = gql`
       cities {
         ...CityParts
       }
-      cards {
-        ...CardParts
-      }
     }
   }
-  ${CARD_FRAGMENT}
   ${COFFEE_FRAGMENT}
   ${CITY_FRAGMENT}
 `;

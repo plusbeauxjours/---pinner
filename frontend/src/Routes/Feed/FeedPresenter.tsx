@@ -449,20 +449,22 @@ const FeedPresenter: React.SFC<IProps> = ({
                 <UBold text={String(city.userCount)} />
                 <UBold text={"USERS IS HERE, NOW"} />
               </User>
-              <User onClick={toggleBeforeModal}>
-                {usersBefore &&
-                  usersBefore.map(user => (
-                    <AvatarContainer key={user.id}>
-                      <SAvatar
-                        size={"sm"}
-                        key={user.id}
-                        url={user.actor.profile.avatar}
-                      />
-                    </AvatarContainer>
-                  ))}
-                <UBold text={String(city.userLogCount)} />
-                <UBold text={"USERS HAS BEEN HERE"} />
-              </User>
+              {usersBefore && usersBefore.length !== 0 ? (
+                <User onClick={toggleBeforeModal}>
+                  {usersBefore &&
+                    usersBefore.map(user => (
+                      <AvatarContainer key={user.id}>
+                        <SAvatar
+                          size={"sm"}
+                          key={user.id}
+                          url={user.actor.profile.avatar}
+                        />
+                      </AvatarContainer>
+                    ))}
+                  <UBold text={String(city.userLogCount)} />
+                  <UBold text={"USERS HAS BEEN HERE"} />
+                </User>
+              ) : null}
             </UserContainer>
           </PHeader>
           <GreyLine />

@@ -7,11 +7,11 @@ import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import LocationGrid from "../../Components/LocationGrid";
-import CardGrid from "src/Components/CardGrid";
 import { keyframes } from "styled-components";
 import LocationRow from "src/Components/LocationRow";
 import CoffeesGrid from "../../Components/CoffeesGrid";
 import AvatarGrid from "../../Components/AvatarGrid";
+import GetCards from "../../Components/GetCards";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -211,6 +211,7 @@ interface IProps {
   cityList: any;
   cityModalOpen: boolean;
   toggleCityModal: () => void;
+  countryName: string;
 }
 
 const CountryProfilePresenter: React.SFC<IProps> = ({
@@ -220,7 +221,6 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
       usersNow = null,
       usersBefore = null,
       country = null,
-      cards = null,
       coffees = null
     } = {}
   } = {},
@@ -228,7 +228,8 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
   toggleCitySeeAll,
   cityList,
   cityModalOpen,
-  toggleCityModal
+  toggleCityModal,
+  countryName
 }) => {
   if (loading) {
     return <Loader />;
@@ -358,17 +359,7 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
-          {!cardsLoading && cards && cards.length !== 0 ? (
-            <>
-              <GreyLine />
-              <Title>
-                <SBold text={"POSTS"} />
-              </Title>
-              <CardGrid cards={cards} />
-            </>
-          ) : (
-            <Loader />
-          )}
+          <GetCards location={"country"} countryName={countryName} />
         </SWrapper>
       </>
     );

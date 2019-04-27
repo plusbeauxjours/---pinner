@@ -30,8 +30,11 @@ def resolve_feed(self, info, **kwargs):
     usersNow = User.objects.filter(
         profile__current_city__city_name=cityName).order_by('-username').distinct('username')
 
-    usersBefore = notification_models.MoveNotification.objects.filter(
-        city__city_name=cityName).order_by('-actor_id').distinct('actor_id')
+    if usersNow.count() < 5:
+        usersBefore = notification_models.MoveNotification.objects.filter(
+            city__city_name=cityName).order_by('-actor_id').distinct('actor_id')
+    else:
+        usersBefore = None
 
     combined = following_cards.union(city_cards).union(my_cards).order_by(
         '-created_at')[offset:5 + offset]
@@ -52,14 +55,14 @@ def resolve_get_cards(self, info, **kwargs):
     if location == "city":
         try:
             cards = models.Card.objects.filter(city__city_name=cityName).order_by(
-                '-created_at')
+                '-created_at')[:12]
             return types.GetCardsResponse(cards=cards)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')
 
     elif location == "country":
         try:
-            cards = models.Card.objects.filter(city__country__country_name=countryName).order_by('-created_at')
+            cards = models.Card.objects.filter(city__country__country_name=countryName).order_by('-created_at')[:12]
             return types.GetCardsResponse(cards=cards)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')
@@ -67,7 +70,7 @@ def resolve_get_cards(self, info, **kwargs):
     elif location == "continent":
         try:
             cards = models.Card.objects.filter(
-                city__country__continent__continent_name=continentName).order_by('-created_at')
+                city__country__continent__continent_name=continentName).order_by('-created_at')[:12]
             return types.GetCardsResponse(cards=cards)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')

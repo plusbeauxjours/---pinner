@@ -6,12 +6,12 @@ import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
-import CardGrid from "../../Components/CardGrid";
 import { keyframes } from "styled-components";
 import LocationGrid from "src/Components/LocationGrid";
 import Weather from "src/Components/Weather";
 import CoffeesGrid from "../../Components/CoffeesGrid";
 import AvatarGrid from "../../Components/AvatarGrid";
+import GetCards from "../../Components/GetCards";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -224,12 +224,12 @@ interface IProps {
   nearCountriesLoading: boolean;
   coffeeReportModalOpen: boolean;
   toggleCoffeeReportModal: () => void;
+  cityName: string;
 }
 
 const CityProfilePresenter: React.SFC<IProps> = ({
   cityData: {
     cityProfile: {
-      cards = null,
       usersNow = null,
       usersBefore = null,
       city = null,
@@ -242,11 +242,12 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   nearCountriesData: { nearCountries: { countries = null } = {} } = {},
   nearCountriesLoading,
   coffeeReportModalOpen,
-  toggleCoffeeReportModal
+  toggleCoffeeReportModal,
+  cityName
 }) => {
   if (cityLoading) {
     return <Loader />;
-  } else if (!cityLoading && cards && usersNow && usersBefore && city) {
+  } else if (!cityLoading && usersNow && city) {
     return (
       <>
         {coffeeReportModalOpen && (
@@ -260,6 +261,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
             </Modal>
           </ModalContainer>
         )}
+        {console.log("joi")}
         <PHeader>
           <PAvatar size="lg" url={city.cityPhoto} />
           <Username>{city.cityName}</Username>
@@ -355,17 +357,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
-          {!cardsLoading && cards && cards.length !== 0 ? (
-            <>
-              <GreyLine />
-              <Title>
-                <SBold text={"POSTS"} />
-              </Title>
-              <CardGrid cards={cards} />
-            </>
-          ) : (
-            <Loader />
-          )}
+          <GetCards location={"city"} cityName={cityName} />
         </SWrapper>
       </>
     );

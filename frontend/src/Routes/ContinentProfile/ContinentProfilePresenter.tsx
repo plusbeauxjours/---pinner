@@ -7,9 +7,11 @@ import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import Flag from "../../Components/Flag";
 import LocationGrid from "../../Components/LocationGrid";
-import CardGrid from "src/Components/CardGrid";
 import LocationRow from "src/Components/LocationRow";
 import { keyframes } from "styled-components";
+import CoffeesGrid from "../../Components/CoffeesGrid";
+import AvatarGrid from "../../Components/AvatarGrid";
+import GetCards from "../../Components/GetCards";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -205,17 +207,25 @@ interface IProps {
   countryList: any;
   countryModalOpen: boolean;
   toggleCountryModal: () => void;
+  continentName: string;
 }
 
 const ContinentProfilePresenter: React.SFC<IProps> = ({
   data: {
-    continentProfile: { continent = null, countries = null, cards = null } = {}
+    continentProfile: {
+      continent = null,
+      countries = null,
+      usersNow = null,
+      usersBefore = null,
+      coffees = null
+    } = {}
   } = {},
   loading,
   toggleCountrySeeAll,
   countryList,
   countryModalOpen,
-  toggleCountryModal
+  toggleCountryModal,
+  continentName
 }) => {
   if (loading) {
     return <Loader />;
@@ -306,6 +316,33 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
             </FollowContainer>
           </PBody>
           <GreyLine />
+          {usersBefore && usersBefore.length !== 0 ? (
+            <>
+              <Title>
+                <SBold text={"USERS WHO HAVE BEEN HERE"} />
+              </Title>
+              <AvatarGrid usersBefore={usersBefore} />
+              <GreyLine />
+            </>
+          ) : null}
+          {usersNow && usersNow.length !== 0 ? (
+            <>
+              <Title>
+                <SBold text={"USERS NOW"} />
+              </Title>
+              <AvatarGrid usersNow={usersNow} />
+              <GreyLine />
+            </>
+          ) : null}
+          {coffees && coffees.length !== 0 ? (
+            <>
+              <Title>
+                <SBold text={"COFFEES NOW"} />
+              </Title>
+              <CoffeesGrid coffees={coffees} />
+              <GreyLine />
+            </>
+          ) : null}
           <Title>
             <SBold text={"COUNTRIES"} />
             <SeeAll onClick={toggleCountrySeeAll}>SEE ALL</SeeAll>
@@ -319,9 +356,7 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
-          <GreyLine />
-          <SBold text={"POSTS"} />
-          {cards && cards.length !== 0 && <CardGrid cards={cards} />}
+          <GetCards location={"continent"} continentName={continentName} />
         </SWrapper>
       </>
     );

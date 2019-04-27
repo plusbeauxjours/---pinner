@@ -1,9 +1,28 @@
 import gql from "graphql-tag";
-import { CARD_FRAGMENT } from "src/sharedQueries";
+import { COFFEE_FRAGMENT } from "src/sharedQueries";
 
 export const CONTINENT_PROFILE = gql`
   query ContinentProfile($page: Int, $continentName: String!) {
     continentProfile(page: $page, continentName: $continentName) {
+      usersNow {
+        id
+        profile {
+          username
+          avatar
+        }
+      }
+      usersBefore {
+        id
+        actor {
+          profile {
+            username
+            avatar
+          }
+        }
+      }
+      coffees {
+        ...CoffeeParts
+      }
       continent {
         continentName
         continentPhoto
@@ -20,10 +39,7 @@ export const CONTINENT_PROFILE = gql`
         cityCount
         cardCount
       }
-      cards {
-        ...CardParts
-      }
     }
   }
-  ${CARD_FRAGMENT}
+  ${COFFEE_FRAGMENT}
 `;

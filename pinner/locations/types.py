@@ -31,7 +31,6 @@ class CityProfileResponse(graphene.ObjectType):
     city = graphene.Field(CityType)
     usersNow = graphene.List(user_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
-    # cards = graphene.List(card_types.CardType)
 
 
 class ContinentType(DjangoObjectType):
@@ -53,13 +52,11 @@ class CountryProfileResponse(graphene.ObjectType):
     cities = graphene.List(CityType)
     usersNow = graphene.List(user_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
-    # cards = graphene.List(koko_types.CardType)
 
 
 class ContinentProfileResponse(graphene.ObjectType):
     continent = graphene.Field(ContinentType)
     countries = graphene.List(CountryType)
-    # cards = graphene.List(card_types.CardType)
 
 
 class CitiesResponse(graphene.ObjectType):

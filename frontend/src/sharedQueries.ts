@@ -124,3 +124,4 @@ export const COFFEE_FRAGMENT = gql`
     target
     naturalTime
   }
+`;

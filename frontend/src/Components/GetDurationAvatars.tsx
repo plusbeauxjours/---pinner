@@ -48,7 +48,7 @@ const GetDurationAvatars: React.SFC<IProps> = ({
 }) => (
   <GetDurationAvatarsQuery
     query={GET_DURATION_AVATARS}
-    variables={{  cityName, startDate, endDate }}
+    variables={{ cityName, startDate, endDate }}
   >
     {({
       data: {

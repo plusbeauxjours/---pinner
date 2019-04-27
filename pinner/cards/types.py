@@ -105,7 +105,6 @@ class FirstAnnotateRespose(graphene.ObjectType):
     city = graphene.Field(location_types.CityType)
     usersNow = graphene.List(user_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
-    cards = graphene.List(CardType)
     coffees = graphene.List(coffee_types.CoffeeType)
 
 
@@ -114,15 +113,15 @@ class SecondAnnotateRespose(graphene.ObjectType):
     cities = graphene.List(location_types.CityType)
     usersNow = graphene.List(user_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
-    cards = graphene.List(CardType)
     coffees = graphene.List(coffee_types.CoffeeType)
 
 
 class ThirdAnnotateRespose(graphene.ObjectType):
-
     continent = graphene.Field(location_types.ContinentType)
     countries = graphene.List(location_types.CountryType)
-    cards = graphene.List(CardType)
+    usersNow = graphene.List(user_types.UserType)
+    usersBefore = graphene.List(notification_types.MoveNotificationType)
+    coffees = graphene.List(coffee_types.CoffeeType)
 
 
 class GetCommentsResponse(graphene.ObjectType):

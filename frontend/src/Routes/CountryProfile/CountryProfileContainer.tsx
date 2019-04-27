@@ -50,6 +50,7 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
               cityModalOpen={cityModalOpen}
               toggleCityModal={this.toggleCityModal}
               toggleCitySeeAll={this.toggleCitySeeAll}
+              countryName={countryName}
             />
           );
         }}
