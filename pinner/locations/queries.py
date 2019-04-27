@@ -130,7 +130,8 @@ def resolve_city_profile(self, info, **kwargs):
         usersBefore = notification_models.MoveNotification.objects.filter(
             city__city_name=cityName).order_by('-actor_id').distinct('actor_id')
     else:
-        usersBefore = None
+        usersBefore = notification_models.MoveNotification.objects.filter(
+            id=0)
 
     coffees = city.coffee.filter(expires__gt=timezone.now())
 
@@ -155,8 +156,9 @@ def resolve_country_profile(self, info, **kwargs):
         usersBefore = notification_models.MoveNotification.objects.filter(
             city__country__country_name=countryName).order_by('-actor_id').distinct('actor_id')
     else:
-        usersBefore = notification_models.values('id').MoveNotification.objects.get(
+        usersBefore = notification_models.MoveNotification.objects.filter(
             id=0)
+
     if (page is 0):
         cities = models.City.objects.filter(country__country_name=countryName)[:6]
     else:
@@ -185,7 +187,8 @@ def resolve_continent_profile(self, info, **kwargs):
         usersBefore = notification_models.MoveNotification.objects.filter(
             city__country__continent__continent_name=continentName).order_by('-actor_id').distinct('actor_id')
     else:
-        usersBefore = None
+        usersBefore = notification_models.MoveNotification.objects.filter(
+            id=0)
 
     if (page is 0):
         countries = models.Country.objects.filter(continent__continent_name=continentName)[:6]

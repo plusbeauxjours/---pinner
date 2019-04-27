@@ -34,7 +34,8 @@ def resolve_feed(self, info, **kwargs):
         usersBefore = notification_models.MoveNotification.objects.filter(
             city__city_name=cityName).order_by('-actor_id').distinct('actor_id')
     else:
-        usersBefore = None
+        usersBefore = notification_models.MoveNotification.objects.filter(
+            id=0)
 
     combined = following_cards.union(city_cards).union(my_cards).order_by(
         '-created_at')[offset:5 + offset]
