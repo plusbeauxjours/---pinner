@@ -10,6 +10,8 @@ import LocationGrid from "../../Components/LocationGrid";
 import CardGrid from "src/Components/CardGrid";
 import { keyframes } from "styled-components";
 import LocationRow from "src/Components/LocationRow";
+import CoffeesGrid from "../../Components/CoffeesGrid";
+import AvatarGrid from "../../Components/AvatarGrid";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -26,15 +28,6 @@ const PHeader = styled.header`
 const PAvatar = styled(Avatar)`
   margin: 40px;
 `;
-
-const AvatarGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 40px;
-  padding: 20px;
-`;
-
-const AvatarContainer = styled.div``;
 
 const Username = styled.span`
   text-align: center;
@@ -115,26 +108,6 @@ const HalfInfo = styled(Info)`
 `;
 
 const InfoRow = styled.span``;
-
-const FollowContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-width: 400px;
-  margin-bottom: 10px;
-`;
-
-const Follow = styled.div`
-  flex: 1;
-  margin-bottom: 10px;
-  height: 150px;
-  border-radius: 3px;
-  border: 1px solid grey;
-  padding: 5px;
-`;
-
-const SAvatar = styled(Avatar)`
-  margin: 3px;
-`;
 
 const Container = styled.div`
   border-bottom: 4px;
@@ -247,7 +220,8 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
       usersNow = null,
       usersBefore = null,
       country = null,
-      cards = null
+      cards = null,
+      coffees = null
     } = {}
   } = {},
   loading,
@@ -342,41 +316,35 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
                 </HalfInfo>
               </InfoInlineContainer>
             </InfoContainer>
-            <FollowContainer>
-              <Follow>
-                USERS WHO IS HERE
-                <SBold text={String(country.cardCount)} />
-                <AvatarGrid>
-                  {usersNow &&
-                    usersNow.map(user => (
-                      <AvatarContainer key={user.id}>
-                        <Link to={`/${user.username}`}>
-                          <SAvatar size={"sm"} url={user.profile.avatar} />
-                        </Link>
-                      </AvatarContainer>
-                    ))}
-                </AvatarGrid>
-              </Follow>
-              <Follow>
-                USERS WHO HAS BEEN HERE
-                <SBold text={String(country.cardCount)} />
-                <AvatarGrid>
-                  {usersBefore &&
-                    usersBefore.map(user => (
-                      <AvatarContainer key={user.id}>
-                        <Link to={`/${user.actor.username}`}>
-                          <SAvatar
-                            size={"sm"}
-                            url={user.actor.profile.avatar}
-                          />
-                        </Link>
-                      </AvatarContainer>
-                    ))}
-                </AvatarGrid>
-              </Follow>
-            </FollowContainer>
           </PBody>
           <GreyLine />
+          {usersBefore && usersBefore.length !== 0 ? (
+            <>
+              <Title>
+                <SBold text={"USERS WHO HAVE BEEN HERE"} />
+              </Title>
+              <AvatarGrid usersBefore={usersBefore} />
+              <GreyLine />
+            </>
+          ) : null}
+          {usersNow && usersNow.length !== 0 ? (
+            <>
+              <Title>
+                <SBold text={"USERS NOW"} />
+              </Title>
+              <AvatarGrid usersNow={usersNow} />
+              <GreyLine />
+            </>
+          ) : null}
+          {coffees && coffees.length !== 0 ? (
+            <>
+              <Title>
+                <SBold text={"COFFEES NOW"} />
+              </Title>
+              <CoffeesGrid coffees={coffees} />
+              <GreyLine />
+            </>
+          ) : null}
           <Title>
             <SBold text={"CITIES"} />
             <SeeAll onClick={toggleCitySeeAll}>SEE ALL</SeeAll>
@@ -390,9 +358,17 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
-          <GreyLine />
-          <SBold text={"POSTS"} />
-          {cards && cards.length !== 0 && <CardGrid cards={cards} />}
+          {!cardsLoading && cards && cards.length !== 0 ? (
+            <>
+              <GreyLine />
+              <Title>
+                <SBold text={"POSTS"} />
+              </Title>
+              <CardGrid cards={cards} />
+            </>
+          ) : (
+            <Loader />
+          )}
         </SWrapper>
       </>
     );

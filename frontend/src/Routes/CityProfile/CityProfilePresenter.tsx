@@ -9,8 +9,9 @@ import Bold from "../../Components/Bold";
 import CardGrid from "../../Components/CardGrid";
 import { keyframes } from "styled-components";
 import LocationGrid from "src/Components/LocationGrid";
-import CoffeeGrid from "src/Components/CoffeeGrid";
 import Weather from "src/Components/Weather";
+import CoffeesGrid from "../../Components/CoffeesGrid";
+import AvatarGrid from "../../Components/AvatarGrid";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -38,15 +39,6 @@ const PHeader = styled.header`
 const PAvatar = styled(Avatar)`
   margin: 40px;
 `;
-
-const AvatarGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 40px;
-  padding: 20px;
-`;
-
-const AvatarContainer = styled.div``;
 
 const Username = styled.span`
   text-align: center;
@@ -128,29 +120,9 @@ const HalfInfo = styled(Info)`
 
 const InfoRow = styled.span``;
 
-const FollowContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-width: 400px;
-  margin-bottom: 10px;
-`;
-
-const Follow = styled.div`
-  flex: 1;
-  margin-bottom: 10px;
-  height: 100px;
-  border-radius: 3px;
-  border: 1px solid grey;
-  padding: 5px;
-`;
-
 const SBold = styled(Bold)`
   font-size: 20px;
   font-weight: 100;
-`;
-
-const SAvatar = styled(Avatar)`
-  margin: 3px;
 `;
 
 const Title = styled.div`
@@ -328,62 +300,35 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                 </HalfInfo>
               </InfoInlineContainer>
             </InfoContainer>
-            <FollowContainer>
-              <Follow>
-                USERS WHO IS HERE
-                <SBold text={String(city.userCount)} />
-                <AvatarGrid>
-                  {usersNow &&
-                    usersNow.map(user => (
-                      <AvatarContainer key={user.id}>
-                        <Link to={`/${user.username}`}>
-                          <SAvatar
-                            size={"sm"}
-                            key={user.id}
-                            url={user.profile.avatar}
-                          />
-                        </Link>
-                      </AvatarContainer>
-                    ))}
-                </AvatarGrid>
-              </Follow>
-              <Follow>
-                USERS WHO HAS BEEN HERE
-                <SBold text={String(city.userLogCount)} />
-                <AvatarGrid>
-                  {usersBefore &&
-                    usersBefore.map(user => (
-                      <AvatarContainer key={user.id}>
-                        <Link to={`/${user.actor.username}`}>
-                          <SAvatar
-                            size={"sm"}
-                            key={user.id}
-                            url={user.actor.profile.avatar}
-                          />
-                        </Link>
-                      </AvatarContainer>
-                    ))}
-                </AvatarGrid>
-              </Follow>
-            </FollowContainer>
           </PBody>
           <GreyLine />
-
-          <Title>
-            <SBold text={"NEED SOME COFFEE"} />
-          </Title>
-          <Container>
-            <Box>
-              {coffees && (
-                <CoffeeGrid
-                  toggleCoffeeReportModal={toggleCoffeeReportModal}
-                  coffees={coffees}
-                  type={"reportCoffees"}
-                />
-              )}
-            </Box>
-          </Container>
-          <GreyLine />
+          {usersBefore && usersBefore.length !== 0 ? (
+            <>
+              <Title>
+                <SBold text={"USERS WHO HAVE BEEN HERE"} />
+              </Title>
+              <AvatarGrid usersBefore={usersBefore} />
+              <GreyLine />
+            </>
+          ) : null}
+          {usersNow && usersNow.length !== 0 ? (
+            <>
+              <Title>
+                <SBold text={"USERS NOW"} />
+              </Title>
+              <AvatarGrid usersNow={usersNow} />
+              <GreyLine />
+            </>
+          ) : null}
+          {coffees && coffees.length !== 0 ? (
+            <>
+              <Title>
+                <SBold text={"COFFEES NOW"} />
+              </Title>
+              <CoffeesGrid coffees={coffees} />
+              <GreyLine />
+            </>
+          ) : null}
           <Title>
             <SBold text={"NEAR CITIES"} />
           </Title>
@@ -410,11 +355,17 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
-          <GreyLine />
-          <Title>
-            <SBold text={"POSTS"} />
-          </Title>
-          {cards && cards.length !== 0 && <CardGrid cards={cards} />}
+          {!cardsLoading && cards && cards.length !== 0 ? (
+            <>
+              <GreyLine />
+              <Title>
+                <SBold text={"POSTS"} />
+              </Title>
+              <CardGrid cards={cards} />
+            </>
+          ) : (
+            <Loader />
+          )}
         </SWrapper>
       </>
     );

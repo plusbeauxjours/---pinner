@@ -4,7 +4,7 @@ import styled from "src/Styles/typed-components";
 const Container = styled.img<IProps>`
   height: ${props => {
     if (props.size === "md") {
-      return "120px";
+      return "60px";
     } else if (props.size === "sm") {
       return "30px";
     } else if (props.size === "lg") {
@@ -15,7 +15,7 @@ const Container = styled.img<IProps>`
   }};
   width: ${props => {
     if (props.size === "md") {
-      return "120px";
+      return "60px";
     } else if (props.size === "sm") {
       return "30px";
     } else if (props.size === "lg") {

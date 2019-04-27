@@ -115,6 +115,7 @@ class SecondAnnotateRespose(graphene.ObjectType):
     usersNow = graphene.List(user_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
     cards = graphene.List(CardType)
+    coffees = graphene.List(coffee_types.CoffeeType)
 
 
 class ThirdAnnotateRespose(graphene.ObjectType):
@@ -130,3 +131,7 @@ class GetCommentsResponse(graphene.ObjectType):
 
 class EditCommentResponse(graphene.ObjectType):
     ok = graphene.Boolean()
+
+
+class GetCardsResponse(graphene.ObjectType):
+    cards = graphene.List(CardType)

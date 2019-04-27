@@ -9,6 +9,8 @@ import Bold from "../../Components/Bold";
 import moment = require("moment");
 import CardGrid from "src/Components/CardGrid";
 import LocationGrid from "src/Components/LocationGrid";
+import CoffeesGrid from "../../Components/CoffeesGrid";
+import AvatarGrid from "../../Components/AvatarGrid";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -26,8 +28,6 @@ const PAvatar = styled(Avatar)`
   margin: 40px;
 `;
 
-const AvatarContainer = styled.div``;
-
 const Username = styled.span`
   text-align: center;
   font-size: 22px;
@@ -40,9 +40,6 @@ const PBody = styled.div`
   margin: 20px 0 20px 0;
   justify-content: center;
   background: ${props => props.theme.bgColor};
-  &:not(:last-child) {
-    border-bottom: 1px solid grey;
-  }
 `;
 
 const CountryPhoto = styled.img`
@@ -111,20 +108,9 @@ const HalfInfo = styled(Info)`
 
 const InfoRow = styled.span``;
 
-const AvatarGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-gap: 20px;
-  padding: 20px;
-`;
-
 const SBold = styled(Bold)`
   font-size: 20px;
   font-weight: 200;
-`;
-
-const SAvatar = styled(Avatar)`
-  margin: 3px;
 `;
 
 const Title = styled.div`
@@ -279,36 +265,24 @@ const TripProfilePresenter: React.SFC<IProps> = ({
             </InfoContainer>
           </PBody>
           <GreyLine />
-          <Title>
-            <SBold text={"USERS AT THAT TIME"} />
-          </Title>
-          <AvatarGrid>
-            {console.log(usersBefore)}
-            {usersBefore &&
-              usersBefore.map(user => (
-                <AvatarContainer key={user.id}>
-                  <Link to={`/${user.actor.profile.username}`}>
-                    <SAvatar size={"sm"} url={user.actor.profile.avatar} />
-                  </Link>
-                </AvatarContainer>
-              ))}
-          </AvatarGrid>
-          <GreyLine />
-          <Title>
-            <SBold text={"COFFEES AT THAT TIME"} />
-          </Title>
-          <AvatarGrid>
-            {console.log(coffees)}
-            {coffees &&
-              coffees.map(coffee => (
-                <AvatarContainer key={coffee.id}>
-                  <Link to={`/c/${coffee.id}`}>
-                    <SAvatar size={"sm"} url={coffee.host.profile.avatar} />
-                  </Link>
-                </AvatarContainer>
-              ))}
-          </AvatarGrid>
-          <GreyLine />
+          {usersBefore && usersBefore.length !== 0 ? (
+            <>
+              <Title>
+                <SBold text={"USERS AT THAT TIME"} />
+              </Title>
+              <AvatarGrid usersBefore={usersBefore} />
+              <GreyLine />
+            </>
+          ) : null}
+          {coffees && coffees.length !== 0 ? (
+            <>
+              <Title>
+                <SBold text={"COFFEES AT THAT TIME"} />
+              </Title>
+              <CoffeesGrid coffees={coffees} />
+              <GreyLine />
+            </>
+          ) : null}
           <Title>
             <SBold text={"NEAR CITIES"} />
           </Title>
@@ -334,13 +308,14 @@ const TripProfilePresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
-          <GreyLine />
-          <Title>
-            <SBold text={"POSTS"} />
-          </Title>
-          {console.log(cards)}
           {!cardsLoading && cards && cards.length !== 0 ? (
-            <CardGrid cards={cards} />
+            <>
+              <GreyLine />
+              <Title>
+                <SBold text={"POSTS"} />
+              </Title>
+              <CardGrid cards={cards} />
+            </>
           ) : (
             <Loader />
           )}

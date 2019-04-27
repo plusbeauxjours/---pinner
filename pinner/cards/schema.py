@@ -53,6 +53,16 @@ class Query(object):
         required=True,
         args={'cardId': graphene.Int(required=True)}
     )
+    get_cards = graphene.Field(
+        types.GetCardsResponse,
+        resolver=queries.resolve_get_cards,
+        required=True,
+        args={'page': graphene.Int(),
+              'location': graphene.String(required=True),
+              'cityName': graphene.String(),
+              'countryName': graphene.String(),
+              'continentName': graphene.String()}
+    )
 
 
 class Mutation(object):

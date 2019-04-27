@@ -40,6 +40,43 @@ def resolve_feed(self, info, **kwargs):
 
 
 @login_required
+def resolve_get_cards(self, info, **kwargs):
+
+    user = info.context.user
+    page = kwargs.get('page', 0)
+    location = kwargs.get('location')
+    cityName = kwargs.get('cityName')
+    countryName = kwargs.get('countryName')
+    continentName = kwargs.get('continentName')
+
+    if location == "city":
+        try:
+            cards = models.Card.objects.filter(city__city_name=cityName).order_by(
+                '-created_at')
+            return types.GetCardsResponse(cards=cards)
+        except models.Card.DoesNotExist:
+            raise Exception('Card not found')
+
+    elif location == "country":
+        try:
+            cards = models.Card.objects.filter(city__country__country_name=countryName).order_by('-created_at')
+            return types.GetCardsResponse(cards=cards)
+        except models.Card.DoesNotExist:
+            raise Exception('Card not found')
+
+    elif location == "continent":
+        try:
+            cards = models.Card.objects.filter(
+                city__country__continent__continent_name=continentName).order_by('-created_at')
+            return types.GetCardsResponse(cards=cards)
+        except models.Card.DoesNotExist:
+            raise Exception('Card not found')
+
+    else:
+        return types.GetCardsResponse(cards=None)
+
+
+@login_required
 def resolve_get_comments(self, info, **kwargs):
 
     cardId = kwargs.get('cardId')

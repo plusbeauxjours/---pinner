@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from cards import models as card_models
 from cards import types as card_types
 from notifications import models as notification_models
+from coffees import models as coffee_models
 
 
 @login_required
@@ -128,8 +129,11 @@ def resolve_city_profile(self, info, **kwargs):
     usersNow = User.objects.filter(
         profile__current_city__city_name=cityName).order_by('-username').distinct('username')[:3]
 
-    usersBefore = notification_models.MoveNotification.objects.filter(
-        city__city_name=cityName).order_by('-actor_id').distinct('actor_id')[:3]
+    if usersNow.count() < 5:
+        usersBefore = notification_models.MoveNotification.objects.filter(
+            city__city_name=cityName).order_by('-actor_id').distinct('actor_id')[:3]
+    else:
+        usersBefore = None
 
     city = models.City.objects.get(city_name=cityName)
 
@@ -147,6 +151,8 @@ def resolve_country_profile(self, info, **kwargs):
 
     country = models.Country.objects.get(country_name=countryName)
 
+    allCities = models.City.objects.filter(country__country_name=countryName)
+
     usersNow = User.objects.filter(
         profile__current_city__country__country_name=countryName).order_by('-username').distinct('username')
 
@@ -160,7 +166,9 @@ def resolve_country_profile(self, info, **kwargs):
 
     cards = card_models.Card.objects.filter(city__country__country_name=countryName)
 
-    return card_types.SecondAnnotateRespose(cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country, cards=cards)
+    coffees = coffee_models.Coffee.objects.filter(Q(city__in=allCities) & Q(expires__gt=timezone.now()))
+
+    return card_types.SecondAnnotateRespose(cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country, cards=cards, coffees=coffees)
 
 
 @login_required
