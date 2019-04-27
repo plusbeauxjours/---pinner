@@ -2,12 +2,25 @@ import gql from "graphql-tag";
 import { CARD_FRAGMENT } from "src/sharedQueries";
 
 export const TRIP_PROFILE = gql`
-  query TripProfile($cityName: String!) {
-    tripProfile(cityName: $cityName) {
-      usersNow {
+  query TripProfile($cityName: String!, $startDate: Date!, $endDate: Date!) {
+    tripProfile(cityName: $cityName, startDate: $startDate, endDate: $endDate) {
+      usersBefore {
+        actor {
+          profile {
+            id
+            username
+            avatar
+          }
+        }
+      }
+      userCount
+      coffees {
         id
-        username
-        avatar
+        host {
+          profile {
+            avatar
+          }
+        }
       }
       city {
         cityName
@@ -27,13 +40,11 @@ export const TRIP_PROFILE = gql`
 
 export const GET_DURATION_AVATARS = gql`
   query GetDurationAvatars(
-    $page: Int
     $cityName: String!
     $startDate: Date!
     $endDate: Date!
   ) {
     getDurationAvatars(
-      page: $page
       cityName: $cityName
       startDate: $startDate
       endDate: $endDate

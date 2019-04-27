@@ -732,7 +732,6 @@ export interface NearCities {
 }
 
 export interface NearCitiesVariables {
-  nearCityPage?: number | null;
   cityName: string;
 }
 
@@ -768,7 +767,6 @@ export interface NearCountries {
 }
 
 export interface NearCountriesVariables {
-  nearCountryPage?: number | null;
   cityName: string;
 }
 
@@ -1930,11 +1928,59 @@ export interface SearchTermsVariables {
 // GraphQL query operation: TripProfile
 // ====================================================
 
-export interface TripProfile_tripProfile_usersNow {
+export interface TripProfile_tripProfile_usersBefore_actor_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
   avatar: string;
+}
+
+export interface TripProfile_tripProfile_usersBefore_actor {
+  __typename: "UserType";
+  profile: TripProfile_tripProfile_usersBefore_actor_profile | null;
+}
+
+export interface TripProfile_tripProfile_usersBefore {
+  __typename: "MoveNotificationType";
+  actor: TripProfile_tripProfile_usersBefore_actor;
+}
+
+export interface TripProfile_tripProfile_coffees_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface TripProfile_tripProfile_coffees_city {
+  __typename: "CityType";
+  cityName: string | null;
+  country: TripProfile_tripProfile_coffees_city_country;
+}
+
+export interface TripProfile_tripProfile_coffees_host_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  isSelf: boolean | null;
+}
+
+export interface TripProfile_tripProfile_coffees_host {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: TripProfile_tripProfile_coffees_host_profile | null;
+}
+
+export interface TripProfile_tripProfile_coffees {
+  __typename: "CoffeeType";
+  id: string;
+  city: TripProfile_tripProfile_coffees_city;
+  host: TripProfile_tripProfile_coffees_host;
+  expires: any | null;
+  status: string | null;
+  target: CoffeeTarget;
+  naturalTime: string | null;
 }
 
 export interface TripProfile_tripProfile_city_country {
@@ -1956,7 +2002,9 @@ export interface TripProfile_tripProfile_city {
 
 export interface TripProfile_tripProfile {
   __typename: "TripProfileResponse";
-  usersNow: (TripProfile_tripProfile_usersNow | null)[] | null;
+  usersBefore: (TripProfile_tripProfile_usersBefore | null)[] | null;
+  userCount: number | null;
+  coffees: (TripProfile_tripProfile_coffees | null)[] | null;
   city: TripProfile_tripProfile_city | null;
 }
 
@@ -1966,6 +2014,8 @@ export interface TripProfile {
 
 export interface TripProfileVariables {
   cityName: string;
+  startDate: any;
+  endDate: any;
 }
 
 
@@ -2003,7 +2053,6 @@ export interface GetDurationAvatars {
 }
 
 export interface GetDurationAvatarsVariables {
-  page?: number | null;
   cityName: string;
   startDate: any;
   endDate: any;

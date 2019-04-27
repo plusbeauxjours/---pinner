@@ -6,11 +6,8 @@ import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
-// import LocationGrid from "../../Components/LocationGrid";
 import moment = require("moment");
 import CardGrid from "src/Components/CardGrid";
-import LocationRow from "src/Components/LocationRow";
-import { keyframes } from "styled-components";
 import LocationGrid from "src/Components/LocationGrid";
 
 const SWrapper = styled(Wrapper)`
@@ -29,13 +26,6 @@ const PAvatar = styled(Avatar)`
   margin: 40px;
 `;
 
-const AvatarGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 40px;
-  padding: 20px;
-`;
-
 const AvatarContainer = styled.div``;
 
 const Username = styled.span`
@@ -50,7 +40,6 @@ const PBody = styled.div`
   margin: 20px 0 20px 0;
   justify-content: center;
   background: ${props => props.theme.bgColor};
-  border-bottom: 1px solid grey;
   &:not(:last-child) {
     border-bottom: 1px solid grey;
   }
@@ -122,20 +111,11 @@ const HalfInfo = styled(Info)`
 
 const InfoRow = styled.span``;
 
-const FollowContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-width: 400px;
-  margin-bottom: 10px;
-`;
-
-const Follow = styled.div`
-  flex: 1;
-  margin-bottom: 10px;
-  height: 150px;
-  border-radius: 3px;
-  border: 1px solid grey;
-  padding: 5px;
+const AvatarGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-gap: 20px;
+  padding: 20px;
 `;
 
 const SBold = styled(Bold)`
@@ -185,56 +165,10 @@ const Box = styled.div`
   }
 `;
 
-const ModalAnimation = keyframes`
-	  from{
-	    opacity:0;
-	    transform:scale(1.1);
-	  }
-	  to{
-	    opacity:1;
-	    transform:none;
-	  }
-	`;
-
-const ModalContainer = styled.div`
-  z-index: 8;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 0;
-`;
-
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid grey;
-`;
-
-const ModalOverlay = styled.div`
-  z-index: 5;
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-`;
-
-const Modal = styled.div`
-  z-index: 10;
-  animation: ${ModalAnimation} 0.1s linear;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const SeeAll = styled.p`
-  font-size: 12px;
-  font-weight: 100;
-  cursor: pointer;
 `;
 
 interface IProps {
@@ -245,22 +179,12 @@ interface IProps {
   endDate: moment.Moment | null;
   cardsData: any;
   cardsLoading: boolean;
-  usersData: any;
-  usersLoading: boolean;
   profileDate: any;
   profileLoading: boolean;
   nearCitiesData?: any;
   nearCitiesLoading: boolean;
   nearCountriesData?: any;
   nearCountriesLoading: boolean;
-  toggleNearCitySeeAll: () => void;
-  toggleNearCountrySeeAll: () => void;
-  nearCityList: any;
-  nearCountryList: any;
-  nearCityModalOpen: boolean;
-  nearCountryModalOpen: boolean;
-  toggleNearCityModal: () => void;
-  toggleNearCountryModal: () => void;
 }
 
 const TripProfilePresenter: React.SFC<IProps> = ({
@@ -271,66 +195,20 @@ const TripProfilePresenter: React.SFC<IProps> = ({
   endDate,
   cardsData: { getDurationCards: { cards = null } = {} } = {},
   cardsLoading,
-  usersData: { getDurationAvatars: { usersBefore = null } = {} } = {},
-  usersLoading,
-  profileDate: { tripProfile: { usersNow = null, city = null } = {} } = {},
+  profileDate: {
+    tripProfile: { coffees = null, city = null, usersBefore = null } = {}
+  } = {},
   profileLoading,
   nearCitiesData: { nearCities: { cities: nearCities = null } = {} } = {},
   nearCitiesLoading,
   nearCountriesData: { nearCountries: { countries = null } = {} } = {},
-  nearCountriesLoading,
-  toggleNearCitySeeAll,
-  toggleNearCountrySeeAll,
-  nearCityList,
-  nearCountryList,
-  toggleNearCityModal,
-  toggleNearCountryModal,
-  nearCityModalOpen,
-  nearCountryModalOpen
+  nearCountriesLoading
 }) => {
   if (profileLoading) {
     return <Loader />;
-  } else if (!profileLoading && !usersLoading && city) {
+  } else if (!profileLoading && city) {
     return (
       <>
-        {nearCityModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleNearCityModal} />
-            <Modal>
-              <Wrapper>
-                {nearCityList.map(nearCity => (
-                  <LocationRow
-                    key={nearCity.id}
-                    id={nearCity.id}
-                    cityName={nearCity.cityName}
-                    avatar={nearCity.cityPhoto}
-                    countryName={nearCity.country.countryName}
-                    type={"nearCity"}
-                  />
-                ))}
-              </Wrapper>
-            </Modal>
-          </ModalContainer>
-        )}
-        {nearCountryModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleNearCountryModal} />
-            <Modal>
-              <Wrapper>
-                {nearCountryList.map(nearCountry => (
-                  <LocationRow
-                    key={nearCountry.id}
-                    id={nearCountry.id}
-                    avatar={nearCountry.countryPhoto}
-                    countryName={nearCountry.countryName}
-                    continentName={nearCountry.continent.continentName}
-                    type={"nearCountry"}
-                  />
-                ))}
-              </Wrapper>
-            </Modal>
-          </ModalContainer>
-        )}
         <PHeader>
           <PAvatar size="lg" url={cityPhoto} />
           <Username>{cityName}</Username>
@@ -399,44 +277,40 @@ const TripProfilePresenter: React.SFC<IProps> = ({
                 </HalfInfo>
               </InfoInlineContainer>
             </InfoContainer>
-            <FollowContainer>
-              <Follow>
-                USERS WHO IS HERE
-                {/* <SBold text={String(country.cardCount)} /> */}
-                <AvatarGrid>
-                  {usersNow &&
-                    usersNow.map(user => (
-                      <AvatarContainer key={user.id}>
-                        <Link to={`/${user.username}`}>
-                          <SAvatar size={"sm"} url={user.avatar} />
-                        </Link>
-                      </AvatarContainer>
-                    ))}
-                  {console.log(usersNow, usersBefore)}
-                </AvatarGrid>
-              </Follow>
-              <Follow>
-                USERS WHO HAS BEEN HERE
-                {/* <SBold text={String(country.cardCount)} /> */}
-                <AvatarGrid>
-                  {usersBefore &&
-                    usersBefore.map(user => (
-                      <AvatarContainer key={user.id}>
-                        <Link to={`/${user.actor.profile.username}`}>
-                          <SAvatar
-                            size={"sm"}
-                            url={user.actor.profile.avatar}
-                          />
-                        </Link>
-                      </AvatarContainer>
-                    ))}
-                </AvatarGrid>
-              </Follow>
-            </FollowContainer>
           </PBody>
+          <GreyLine />
+          <Title>
+            <SBold text={"USERS AT THAT TIME"} />
+          </Title>
+          <AvatarGrid>
+            {console.log(usersBefore)}
+            {usersBefore &&
+              usersBefore.map(user => (
+                <AvatarContainer key={user.id}>
+                  <Link to={`/${user.actor.profile.username}`}>
+                    <SAvatar size={"sm"} url={user.actor.profile.avatar} />
+                  </Link>
+                </AvatarContainer>
+              ))}
+          </AvatarGrid>
+          <GreyLine />
+          <Title>
+            <SBold text={"COFFEES AT THAT TIME"} />
+          </Title>
+          <AvatarGrid>
+            {console.log(coffees)}
+            {coffees &&
+              coffees.map(coffee => (
+                <AvatarContainer key={coffee.id}>
+                  <Link to={`/c/${coffee.id}`}>
+                    <SAvatar size={"sm"} url={coffee.host.profile.avatar} />
+                  </Link>
+                </AvatarContainer>
+              ))}
+          </AvatarGrid>
+          <GreyLine />
           <Title>
             <SBold text={"NEAR CITIES"} />
-            <SeeAll onClick={toggleNearCitySeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <Box>
@@ -448,10 +322,8 @@ const TripProfilePresenter: React.SFC<IProps> = ({
             </Box>
           </Container>
           <GreyLine />
-
           <Title>
             <SBold text={"NEAR COUNTRIES"} />
-            <SeeAll onClick={toggleNearCountrySeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
             <Box>
@@ -465,8 +337,8 @@ const TripProfilePresenter: React.SFC<IProps> = ({
           <GreyLine />
           <Title>
             <SBold text={"POSTS"} />
-            <SeeAll>SEE ALL</SeeAll>
           </Title>
+          {console.log(cards)}
           {!cardsLoading && cards && cards.length !== 0 ? (
             <CardGrid cards={cards} />
           ) : (

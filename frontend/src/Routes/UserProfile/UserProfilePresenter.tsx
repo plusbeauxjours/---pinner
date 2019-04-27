@@ -1167,7 +1167,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   </TripText>
                   <TripText>
                     <GetDurationAvatars
-                      page={0}
                       cityName={trip.city.cityName}
                       startDate={trip.startDate}
                       endDate={trip.endDate}

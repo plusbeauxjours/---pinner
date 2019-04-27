@@ -2,6 +2,8 @@ from django.db import IntegrityError
 from . import types, models
 from graphql_jwt.decorators import login_required
 from django.utils import timezone
+from django.db.models import Q
+
 
 from django.contrib.auth.models import User
 from cards import models as card_models
@@ -98,11 +100,18 @@ def resolve_trip_profile(self, info, **kwargs):
 
     user = info.context.user
     cityName = kwargs.get('cityName')
+    startDate = kwargs.get('startDate')
+    endDate = kwargs.get('endDate')
 
     city = models.City.objects.get(city_name=cityName)
-    usersNow = city.currentCity.all()
+    usersBefore = city.movenotification.filter(Q(start_date__range=(
+        startDate, endDate)) | Q(end_date__range=(
+            startDate, endDate))).order_by('actor_id').distinct('actor_id')
+    print(usersBefore)
+    userCount = usersBefore.count()
+    coffees = city.coffee.filter(created_at__range=(startDate, endDate))
 
-    return types.TripProfileResponse(usersNow=usersNow, city=city)
+    return types.TripProfileResponse(city=city, usersBefore=usersBefore, userCount=userCount, coffees=coffees)
 
 
 @login_required
@@ -191,14 +200,10 @@ def resolve_get_footprints(self, info, **kwargs):
 def resolve_near_cities(self, info, **kwargs):
 
     user = info.context.user
-    nearCityPage = kwargs.get('nearCityPage', 0)
     cityName = kwargs.get('cityName')
 
     city = models.City.objects.get(city_name=cityName)
-    if (nearCityPage is 0):
-        cities = city.near_city.all()[:6]
-    else:
-        cities = city.near_city.all()[6:12]
+    cities = city.near_city.all()[:6]
 
     return types.CitiesResponse(cities=cities)
 
@@ -207,14 +212,10 @@ def resolve_near_cities(self, info, **kwargs):
 def resolve_near_countries(self, info, **kwargs):
 
     user = info.context.user
-    nearCountryPage = kwargs.get('nearCountryPage', 0)
     cityName = kwargs.get('cityName')
 
     city = models.City.objects.get(city_name=cityName)
-    if (nearCountryPage is 0):
-        countries = city.near_country.all()[:6]
-    else:
-        countries = city.near_country.all()[6:12]
+    countries = city.near_country.all()[:6]
 
     return types.CountriesResponse(countries=countries)
 

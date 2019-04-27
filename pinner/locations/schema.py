@@ -11,6 +11,8 @@ class Query(object):
         required=True,
         args={
             'cityName': graphene.String(required=True),
+            'startDate': graphene.Date(required=True),
+            'endDate': graphene.Date(required=True)
         }
     )
     city_profile = graphene.Field(
@@ -51,7 +53,6 @@ class Query(object):
         required=True,
         args={
             'cityName': graphene.String(required=True),
-            'nearCityPage': graphene.Int()
         }
     )
     near_countries = graphene.Field(
@@ -60,7 +61,6 @@ class Query(object):
         required=True,
         args={
             'cityName': graphene.String(required=True),
-            'nearCountryPage': graphene.Int()
         }
     )
     latest_cities = graphene.Field(

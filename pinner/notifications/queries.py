@@ -126,13 +126,15 @@ def resolve_get_duration_avatars(self, info, **kwargs):
     cityName = kwargs.get('cityName')
     startDate = kwargs.get('startDate')
     endDate = kwargs.get('endDate')
-    page = kwargs.get('page', 0)
 
     try:
         city = location_models.City.objects.get(city_name=cityName)
-        usersBefore = city.movenotification.filter(end_date__range=(
-            startDate, endDate)).order_by('actor_id').distinct('actor_id')
+        usersBefore = city.movenotification.filter(Q(start_date__range=(
+            startDate, endDate)) | Q(end_date__range=(
+                startDate, endDate))).order_by('actor_id').distinct('actor_id')
+
         userCount = usersBefore.count()
+
         usersBefore = usersBefore[:5]
         return types.DurationAvatarsResponse(usersBefore=usersBefore, userCount=userCount)
 
