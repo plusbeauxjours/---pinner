@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Container = styled.span`
-  font-weight: 600;
+  font-weight: 100;
 `;
 
 interface IProps {
@@ -10,8 +10,8 @@ interface IProps {
   className?: string;
 }
 
-const Bold: React.SFC<IProps> = ({ text, className }) => (
+const Thin: React.SFC<IProps> = ({ text, className }) => (
   <Container className={className}>{text}</Container>
 );
 
-export default Bold;
+export default Thin;

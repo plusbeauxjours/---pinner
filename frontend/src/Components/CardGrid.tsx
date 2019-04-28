@@ -10,6 +10,7 @@ const Container = styled.div`
   grid-auto-rows: 200px;
   grid-gap: 15px;
   margin-bottom: 85px;
+  padding: 15px;
 `;
 
 const UploadIcon = styled.div`

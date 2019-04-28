@@ -9,7 +9,6 @@ import Bold from "../../Components/Bold";
 import LocationGrid from "../../Components/LocationGrid";
 import { keyframes } from "styled-components";
 import LocationRow from "src/Components/LocationRow";
-import CoffeesGrid from "../../Components/CoffeesGrid";
 import AvatarGrid from "../../Components/AvatarGrid";
 import GetCards from "../../Components/GetCards";
 
@@ -109,6 +108,34 @@ const HalfInfo = styled(Info)`
 
 const InfoRow = styled.span``;
 
+const SText = styled(Bold)`
+  font-size: 18px;
+  font-weight: 100;
+`;
+
+const SSText = styled(Bold)`
+  font-size: 12px;
+  font-weight: 100;
+`;
+
+const Title = styled.div`
+  display: flex;
+  margin-top: 10px;
+`;
+
+const SmallTitle = styled(Title)`
+  flex-direction: column;
+  align-items: center;
+`;
+const GreyLine = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid grey;
+`;
+const SmallGreyLine = styled(GreyLine)`
+  width: 40%;
+`;
+
 const Container = styled.div`
   border-bottom: 4px;
   display: flex;
@@ -118,17 +145,6 @@ const Container = styled.div`
   flex: 0 0 auto;
   height: 280px;
   padding: 15px;
-`;
-
-const SBold = styled(Bold)`
-  font-size: 20px;
-  font-weight: 100;
-`;
-
-const Title = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
 `;
 
 const Box = styled.div`
@@ -174,12 +190,6 @@ const ModalContainer = styled.div`
   top: 0;
 `;
 
-const GreyLine = styled.div`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid grey;
-`;
-
 const ModalOverlay = styled.div`
   z-index: 5;
   height: 100%;
@@ -196,12 +206,6 @@ const Modal = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const SeeAll = styled.p`
-  font-size: 12px;
-  font-weight: 100;
-  cursor: pointer;
 `;
 
 interface IProps {
@@ -281,74 +285,73 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
               <InfoInlineContainer>
                 <HalfInfo>
                   <InfoRow>
-                    <SBold text={String(country.cityCount)} />
+                    <SText text={String(country.cityCount)} />
                     VISA for you
                   </InfoRow>
                   <InfoRow>
-                    <SBold text={String(country.cityCount)} />
+                    <SText text={String(country.cityCount)} />
                     English Skill
                   </InfoRow>
                   <InfoRow>
-                    <SBold text={String(country.cityCount)} />
+                    <SText text={String(country.cityCount)} />
                     GDP
                   </InfoRow>
                   <InfoRow>
-                    <SBold text={String(country.cityCount)} />
+                    <SText text={String(country.cityCount)} />
                     Flag
                   </InfoRow>
                 </HalfInfo>
                 <HalfInfo>
                   <InfoRow>
                     AirLine
-                    <SBold text={String(country.cityCount)} />
+                    <SText text={String(country.cityCount)} />
                   </InfoRow>
                   <InfoRow>
                     SNS
-                    <SBold text={String(country.cityCount)} />
+                    <SText text={String(country.cityCount)} />
                   </InfoRow>
                   <InfoRow>
                     Capital
-                    <SBold text={String(country.cityCount)} />
+                    <SText text={String(country.cityCount)} />
                   </InfoRow>
                   <InfoRow>
                     Potal
-                    <SBold text={String(country.cityCount)} />
+                    <SText text={String(country.cityCount)} />
                   </InfoRow>
                 </HalfInfo>
               </InfoInlineContainer>
             </InfoContainer>
           </PBody>
-          <GreyLine />
           {usersBefore && usersBefore.length !== 0 ? (
             <>
-              <Title>
-                <SBold text={"USERS WHO HAVE BEEN HERE"} />
-              </Title>
+              <SmallTitle>
+                <SmallGreyLine />
+                <SSText text={"USERS WHO HAVE BEEN HERE"} />
+              </SmallTitle>
               <AvatarGrid usersBefore={usersBefore} />
-              <GreyLine />
             </>
           ) : null}
           {usersNow && usersNow.length !== 0 ? (
             <>
-              <Title>
-                <SBold text={"USERS NOW"} />
-              </Title>
+              <SmallTitle>
+                <SmallGreyLine />
+                <SSText text={"USERS NOW"} />
+              </SmallTitle>
               <AvatarGrid usersNow={usersNow} />
-              <GreyLine />
             </>
           ) : null}
           {coffees && coffees.length !== 0 ? (
             <>
-              <Title>
-                <SBold text={"COFFEES NOW"} />
-              </Title>
-              <CoffeesGrid coffees={coffees} />
-              <GreyLine />
+              <SmallTitle>
+                <SmallGreyLine />
+                <SSText text={"COFFEES NOW"} />
+              </SmallTitle>
+              <AvatarGrid coffees={coffees} />
             </>
           ) : null}
+          <GreyLine />
           <Title>
-            <SBold text={"CITIES"} />
-            <SeeAll onClick={toggleCitySeeAll}>SEE ALL</SeeAll>
+            <SText text={"CITIES"} />
           </Title>
           <Container>
             <Box>

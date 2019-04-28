@@ -9,7 +9,6 @@ import Bold from "../../Components/Bold";
 import moment = require("moment");
 import CardGrid from "src/Components/CardGrid";
 import LocationGrid from "src/Components/LocationGrid";
-import CoffeesGrid from "../../Components/CoffeesGrid";
 import AvatarGrid from "../../Components/AvatarGrid";
 
 const SWrapper = styled(Wrapper)`
@@ -108,15 +107,32 @@ const HalfInfo = styled(Info)`
 
 const InfoRow = styled.span``;
 
-const SBold = styled(Bold)`
-  font-size: 20px;
-  font-weight: 200;
+const SText = styled(Bold)`
+  font-size: 18px;
+  font-weight: 100;
+`;
+
+const SSText = styled(Bold)`
+  font-size: 12px;
+  font-weight: 100;
 `;
 
 const Title = styled.div`
   display: flex;
-  justify-content: space-between;
   margin-top: 10px;
+`;
+
+const SmallTitle = styled(Title)`
+  flex-direction: column;
+  align-items: center;
+`;
+const GreyLine = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid grey;
+`;
+const SmallGreyLine = styled(GreyLine)`
+  width: 40%;
 `;
 
 const Container = styled.div`
@@ -149,12 +165,6 @@ const Box = styled.div`
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
     background-color: ${props => props.theme.greyColor};
   }
-`;
-
-const GreyLine = styled.div`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid grey;
 `;
 
 interface IProps {
@@ -227,64 +237,64 @@ const TripProfilePresenter: React.SFC<IProps> = ({
               <InfoInlineContainer>
                 <HalfInfo>
                   <InfoRow>
-                    {/* <SBold text={String(country.cityCount)} /> */}
+                    {/* <SText text={String(country.cityCount)} /> */}
                     VISA for you
                   </InfoRow>
                   <InfoRow>
-                    {/* <SBold text={String(country.cityCount)} /> */}
+                    {/* <SText text={String(country.cityCount)} /> */}
                     English Skill
                   </InfoRow>
                   <InfoRow>
-                    {/* <SBold text={String(country.cityCount)} /> */}
+                    {/* <SText text={String(country.cityCount)} /> */}
                     GDP
                   </InfoRow>
                   <InfoRow>
-                    {/* <SBold text={String(country.cityCount)} /> */}
+                    {/* <SText text={String(country.cityCount)} /> */}
                     Flag
                   </InfoRow>
                 </HalfInfo>
                 <HalfInfo>
                   <InfoRow>
                     AirLine
-                    {/* <SBold text={String(country.cityCount)} /> */}
+                    {/* <SText text={String(country.cityCount)} /> */}
                   </InfoRow>
                   <InfoRow>
                     SNS
-                    {/* <SBold text={String(country.cityCount)} /> */}
+                    {/* <SText text={String(country.cityCount)} /> */}
                   </InfoRow>
                   <InfoRow>
                     Capital
-                    {/* <SBold text={String(country.cityCount)} /> */}
+                    {/* <SText text={String(country.cityCount)} /> */}
                   </InfoRow>
                   <InfoRow>
                     Potal
-                    {/* <SBold text={String(country.cityCount)} /> */}
+                    {/* <SText text={String(country.cityCount)} /> */}
                   </InfoRow>
                 </HalfInfo>
               </InfoInlineContainer>
             </InfoContainer>
           </PBody>
-          <GreyLine />
           {usersBefore && usersBefore.length !== 0 ? (
             <>
-              <Title>
-                <SBold text={"USERS AT THAT TIME"} />
-              </Title>
+              <SmallTitle>
+                <SmallGreyLine />
+                <SSText text={"USERS AT THAT TIME"} />
+              </SmallTitle>
               <AvatarGrid usersBefore={usersBefore} />
-              <GreyLine />
             </>
           ) : null}
           {coffees && coffees.length !== 0 ? (
             <>
-              <Title>
-                <SBold text={"COFFEES AT THAT TIME"} />
-              </Title>
-              <CoffeesGrid coffees={coffees} />
-              <GreyLine />
+              <SmallTitle>
+                <SmallGreyLine />
+                <SSText text={"COFFEES AT THAT TIME"} />
+              </SmallTitle>
+              <AvatarGrid coffees={coffees} />
             </>
           ) : null}
+          <GreyLine />
           <Title>
-            <SBold text={"NEAR CITIES"} />
+            <SText text={"NEAR CITIES"} />
           </Title>
           <Container>
             <Box>
@@ -297,7 +307,7 @@ const TripProfilePresenter: React.SFC<IProps> = ({
           </Container>
           <GreyLine />
           <Title>
-            <SBold text={"NEAR COUNTRIES"} />
+            <SText text={"NEAR COUNTRIES"} />
           </Title>
           <Container>
             <Box>
@@ -312,7 +322,7 @@ const TripProfilePresenter: React.SFC<IProps> = ({
             <>
               <GreyLine />
               <Title>
-                <SBold text={"POSTS"} />
+                <SText text={"POSTS"} />
               </Title>
               <CardGrid cards={cards} />
             </>

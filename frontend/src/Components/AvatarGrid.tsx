@@ -6,31 +6,27 @@ import Avatar from "./Avatar";
 const Grid = styled.div`
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(10, 1fr);
-  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 50px));
+  grid-gap: 15px;
   padding: 20px;
 `;
 
-const AvatarContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
+const AvatarContainer = styled.div``;
 
-const SAvatar = styled(Avatar)`
-  margin: 3px;
-`;
+const SAvatar = styled(Avatar)``;
 interface IProps {
   usersBefore?: any;
   usersNow?: any;
+  coffees?: any;
 }
 
-const AvatarGrid: React.SFC<IProps> = ({ usersBefore, usersNow }) => (
+const AvatarGrid: React.SFC<IProps> = ({ usersBefore, usersNow, coffees }) => (
   <Grid>
     {usersBefore &&
       usersBefore.map(user => (
         <AvatarContainer key={user.id}>
           <Link to={`/${user.actor.profile.username}`}>
-            <SAvatar size={"sm"} url={user.actor.profile.avatar} />
+            <SAvatar size={"md"} url={user.actor.profile.avatar} />
           </Link>
         </AvatarContainer>
       ))}
@@ -38,7 +34,15 @@ const AvatarGrid: React.SFC<IProps> = ({ usersBefore, usersNow }) => (
       usersNow.map(user => (
         <AvatarContainer key={user.id}>
           <Link to={`/${user.profile.username}`}>
-            <SAvatar size={"sm"} url={user.profile.avatar} />
+            <SAvatar size={"md"} url={user.profile.avatar} />
+          </Link>
+        </AvatarContainer>
+      ))}
+    {coffees &&
+      coffees.map(coffee => (
+        <AvatarContainer key={coffee.id}>
+          <Link to={`/c/${coffee.id}`}>
+            <SAvatar size={"md"} url={coffee.host.profile.avatar} />
           </Link>
         </AvatarContainer>
       ))}

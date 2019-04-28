@@ -376,6 +376,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
   };
   public onCompletedDeleteCard = data => {
     const { cardMenuModalOpen } = this.state;
+    const { inline } = this.props;
     if (data.deleteCard.ok) {
       toast.success("Card deleted");
     } else {
@@ -384,7 +385,9 @@ class PhotoContainer extends React.Component<IProps, IState> {
     this.setState({
       cardMenuModalOpen: !cardMenuModalOpen
     });
-    this.props.history.goBack();
+    if (inline !== true) {
+      this.props.history.goBack();
+    }
   };
   public updateDeleteCard = (cache, { data: { deleteCard } }) => {
     const { page, currentCity, creatorUsername } = this.props;

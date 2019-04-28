@@ -6,7 +6,10 @@ import Weather from "src/Components/Weather";
 
 const ScrollContainer = styled.div`
   position: relative;
+  width: 200px;
+  height: 200px;
   display: flex;
+  margin: 0 15px 25px 0;
 `;
 
 const Square = styled.div`
@@ -67,11 +70,9 @@ const CountryName = styled(LocationName)`
 `;
 
 const LocationContainer = styled.div`
-  margin-right: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 25px;
 `;
 
 interface IProps {

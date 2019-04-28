@@ -9,7 +9,6 @@ import Bold from "../../Components/Bold";
 import { keyframes } from "styled-components";
 import LocationGrid from "src/Components/LocationGrid";
 import Weather from "src/Components/Weather";
-import CoffeesGrid from "../../Components/CoffeesGrid";
 import AvatarGrid from "../../Components/AvatarGrid";
 import GetCards from "../../Components/GetCards";
 
@@ -120,15 +119,24 @@ const HalfInfo = styled(Info)`
 
 const InfoRow = styled.span``;
 
-const SBold = styled(Bold)`
-  font-size: 20px;
+const SText = styled(Bold)`
+  font-size: 18px;
+  font-weight: 100;
+`;
+
+const SSText = styled(Bold)`
+  font-size: 12px;
   font-weight: 100;
 `;
 
 const Title = styled.div`
   display: flex;
-  justify-content: space-between;
   margin-top: 10px;
+`;
+
+const SmallTitle = styled(Title)`
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Box = styled.div`
@@ -178,6 +186,10 @@ const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid grey;
+`;
+
+const SmallGreyLine = styled(GreyLine)`
+  width: 40%;
 `;
 
 const ModalOverlay = styled.div`
@@ -282,13 +294,13 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               <InfoInlineContainer>
                 <HalfInfo>
                   <InfoRow>
-                    <SBold text={String(city.userLogCount)} />
+                    <SText text={String(city.userLogCount)} />
                     DISTANCE
                   </InfoRow>
                 </HalfInfo>
                 <HalfInfo>
                   <InfoRow>
-                    <SBold text={String(city.cardCount)} />
+                    <SText text={String(city.cardCount)} />
                     card - done
                   </InfoRow>
                   <WeatherIcon>
@@ -297,42 +309,42 @@ const CityProfilePresenter: React.SFC<IProps> = ({
 
                   <InfoRow>
                     TIME DIFFERENCE
-                    <SBold text={String(city.userCount)} />
+                    <SText text={String(city.userCount)} />
                   </InfoRow>
                 </HalfInfo>
               </InfoInlineContainer>
             </InfoContainer>
           </PBody>
-          <GreyLine />
           {usersBefore && usersBefore.length !== 0 ? (
             <>
-              <Title>
-                <SBold text={"USERS WHO HAVE BEEN HERE"} />
-              </Title>
+              <SmallTitle>
+                <SmallGreyLine />
+                <SSText text={"USERS WHO HAVE BEEN HERE"} />
+              </SmallTitle>
               <AvatarGrid usersBefore={usersBefore} />
-              <GreyLine />
             </>
           ) : null}
           {usersNow && usersNow.length !== 0 ? (
             <>
-              <Title>
-                <SBold text={"USERS NOW"} />
-              </Title>
+              <SmallTitle>
+                <SmallGreyLine />
+                <SSText text={"USERS NOW"} />
+              </SmallTitle>
               <AvatarGrid usersNow={usersNow} />
-              <GreyLine />
             </>
           ) : null}
           {coffees && coffees.length !== 0 ? (
             <>
-              <Title>
-                <SBold text={"COFFEES NOW"} />
-              </Title>
-              <CoffeesGrid coffees={coffees} />
-              <GreyLine />
+              <SmallTitle>
+                <SmallGreyLine />
+                <SSText text={"COFFEES NOW"} />
+              </SmallTitle>
+              <AvatarGrid coffees={coffees} />
             </>
           ) : null}
+          <GreyLine />
           <Title>
-            <SBold text={"NEAR CITIES"} />
+            <SText text={"NEAR CITIES"} />
           </Title>
           <Container>
             <Box>
@@ -344,9 +356,8 @@ const CityProfilePresenter: React.SFC<IProps> = ({
             </Box>
           </Container>
           <GreyLine />
-
           <Title>
-            <SBold text={"NEAR COUNTRIES"} />
+            <SText text={"NEAR COUNTRIES"} />
           </Title>
           <Container>
             <Box>

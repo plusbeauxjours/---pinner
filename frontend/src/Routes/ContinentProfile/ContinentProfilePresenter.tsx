@@ -9,7 +9,6 @@ import Flag from "../../Components/Flag";
 import LocationGrid from "../../Components/LocationGrid";
 import LocationRow from "src/Components/LocationRow";
 import { keyframes } from "styled-components";
-import CoffeesGrid from "../../Components/CoffeesGrid";
 import AvatarGrid from "../../Components/AvatarGrid";
 import GetCards from "../../Components/GetCards";
 
@@ -107,15 +106,34 @@ const Container = styled.div`
   padding: 15px;
 `;
 
-const SBold = styled(Bold)`
-  font-size: 20px;
+const SText = styled(Bold)`
+  font-size: 18px;
+  font-weight: 100;
+`;
+
+const SSText = styled(Bold)`
+  font-size: 12px;
   font-weight: 100;
 `;
 
 const Title = styled.div`
   display: flex;
-  justify-content: space-between;
   margin-top: 10px;
+`;
+
+const SmallTitle = styled(Title)`
+  flex-direction: column;
+  align-items: center;
+`;
+
+const GreyLine = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid grey;
+`;
+
+const SmallGreyLine = styled(GreyLine)`
+  width: 40%;
 `;
 
 const Box = styled.div`
@@ -161,12 +179,6 @@ const ModalContainer = styled.div`
   top: 0;
 `;
 
-const GreyLine = styled.div`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid grey;
-`;
-
 const ModalOverlay = styled.div`
   z-index: 5;
   height: 100%;
@@ -183,12 +195,6 @@ const Modal = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const SeeAll = styled.p`
-  font-size: 12px;
-  font-weight: 100;
-  cursor: pointer;
 `;
 
 const FlagGrid = styled.div`
@@ -270,39 +276,39 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
               <InfoInlineContainer>
                 <HalfInfo>
                   <InfoRow>
-                    <SBold text={String(continent.countryCount)} />
+                    <SText text={String(continent.countryCount)} />
                     AQI
                   </InfoRow>
                   <InfoRow>
-                    <SBold text={String(continent.countryCount)} />
+                    <SText text={String(continent.countryCount)} />
                     TEMPERATURE
                   </InfoRow>
                   <InfoRow>
-                    <SBold text={String(continent.countryCount)} />
+                    <SText text={String(continent.countryCount)} />
                     DISTANCE
                   </InfoRow>
                 </HalfInfo>
                 <HalfInfo>
                   <InfoRow>
                     cardCount
-                    <SBold text={String(continent.countryCount)} />
+                    <SText text={String(continent.countryCount)} />
                   </InfoRow>
 
                   <InfoRow>
                     userCount
-                    <SBold text={String(continent.countryCount)} />
+                    <SText text={String(continent.countryCount)} />
                   </InfoRow>
 
                   <InfoRow>
                     userLogCount
-                    <SBold text={String(continent.countryCount)} />
+                    <SText text={String(continent.countryCount)} />
                   </InfoRow>
                 </HalfInfo>
               </InfoInlineContainer>
             </InfoContainer>
             <FollowContainer>
               COUNTRIES
-              <SBold text={String(continent.countryCount)} />
+              <SText text={String(continent.countryCount)} />
               <Follow>
                 <FlagGrid>
                   {countries &&
@@ -315,37 +321,37 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
               </Follow>
             </FollowContainer>
           </PBody>
-          <GreyLine />
           {usersBefore && usersBefore.length !== 0 ? (
             <>
-              <Title>
-                <SBold text={"USERS WHO HAVE BEEN HERE"} />
-              </Title>
+              <SmallTitle>
+                <SmallGreyLine />
+                <SSText text={"USERS WHO HAVE BEEN HERE"} />
+              </SmallTitle>
               <AvatarGrid usersBefore={usersBefore} />
-              <GreyLine />
             </>
           ) : null}
           {usersNow && usersNow.length !== 0 ? (
             <>
-              <Title>
-                <SBold text={"USERS NOW"} />
-              </Title>
+              <SmallTitle>
+                <SmallGreyLine />
+                <SSText text={"USERS NOW"} />
+              </SmallTitle>
               <AvatarGrid usersNow={usersNow} />
-              <GreyLine />
             </>
           ) : null}
           {coffees && coffees.length !== 0 ? (
             <>
-              <Title>
-                <SBold text={"COFFEES NOW"} />
-              </Title>
-              <CoffeesGrid coffees={coffees} />
-              <GreyLine />
+              <SmallTitle>
+                <SmallGreyLine />
+                <SSText text={"COFFEES NOW"} />
+              </SmallTitle>
+              <AvatarGrid coffees={coffees} />
             </>
           ) : null}
+          <GreyLine />
+
           <Title>
-            <SBold text={"COUNTRIES"} />
-            <SeeAll onClick={toggleCountrySeeAll}>SEE ALL</SeeAll>
+            <SText text={"COUNTRIES"} />
           </Title>
           <Container>
             <Box>

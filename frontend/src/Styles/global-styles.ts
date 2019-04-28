@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
         background-color: ${props => props.theme.bgColor};
         color: ${props => props.theme.whiteColor};
         font-size: 12px;
-        font-weight: 100
+        font-weight: 0
     }
     a{ 
         color:inherit;
