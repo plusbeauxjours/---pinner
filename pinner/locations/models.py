@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from config import models as config_models
+# from django.contrib.gis.db import models
 
 
 class Continent (config_models.TimeStampedModel):

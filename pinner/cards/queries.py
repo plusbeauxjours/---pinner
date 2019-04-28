@@ -14,7 +14,7 @@ def resolve_feed(self, info, **kwargs):
     page = kwargs.get('page', 0)
     cityName = kwargs.get('cityName')
     offset = 5 * page
-
+    
     city = location_models.City.objects.get(city_name=cityName)
 
     following_profiles = user.profile.followings.all()

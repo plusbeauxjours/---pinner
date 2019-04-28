@@ -25,6 +25,8 @@ class CountryAdmin(admin.ModelAdmin):
 class CityAdmin(admin.ModelAdmin):
     list_display = (
         'city_name',
+        'lat',
+        'lng',
         'country',
         'like_count',
         'user_count',

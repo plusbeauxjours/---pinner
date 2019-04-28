@@ -3,11 +3,7 @@ from django.db import IntegrityError
 from django.contrib.auth.models import User
 from graphql_jwt.decorators import login_required
 
-from django.db import models
-from django.db.models.expressions import RawSQL
-
-# from django.contrib.gis.measure import D
-# from django.contrib.gis.geos import *
+import googlemaps 
 
 from . import models, types
 from notifications import models as notification_models
@@ -41,58 +37,63 @@ class ReportLocation(graphene.Mutation):
         continentPhotoURL = kwargs.get('continentPhotoURL')
         currentContinent = kwargs.get('currentContinent')
 
-        """
-        Return objects sorted by distance to specified coordinates
-        which distance is less than max_distance given in kilometers
-        """
-        # Great circle distance formula
-        gcd_formula = "6371 * acos(cos(radians(%s)) * cos(radians(currentLat)) * cos(radians(currentLng) - radians(%s)) + sin(radians(%s)) * sin(radians(latitude)))"
-        distance_raw_sql = RawSQL(gcd_formula, (currentLat, currentLng, currentLat))
-        qs = models.City.objects.all().annotate(distance=distance_raw_sql)).order_by('distance')
-        if max_distance is not None:
-            qs=qs.filter(distance__lt = max_distance)
-        return qs
+        boo = currentLat
+        coo = currentLng
+        xoo = [boo, coo]
+        yoo = [30.044281, 31.340002]
+        print(xoo)
+        print(yoo)
+        
 
-        profile=user.profile
+        gmaps = googlemaps.Client(key='AIzaSyDpOezMBjAdXKzLdT4E54XsRRYVXacckUE') 
+        my_dist = gmaps.distance_matrix("{},{}".format(boo,coo),
+                                     "{},{}".format(yoo[0],yoo[1]),
+                                     mode="driving",
+                                     avoid="ferries",
+                                    )
+        print(str(currentLat))
+        # print(directions_result[0]['legs'][0]['distance']['text'])
+        # print(directions_result[0]['legs'][0]['duration']['text'])
+        print(my_dist) 
+
+        profile = user.profile
         print('reportlocation')
-        cities=models.City.objects.all()
-
-
+        cities = models.City.objects.all()
 
         for i in cities:
             print(i)
 
         try:
-            continent=models.Continent.objects.get(continent_name = currentContinent)
+            continent = models.Continent.objects.get(continent_name=currentContinent)
         except models.Continent.DoesNotExist:
-            continent=models.Continent.objects.create(
-                continent_name = currentContinent, continent_photo = continentPhotoURL)
+            continent = models.Continent.objects.create(
+                continent_name=currentContinent, continent_photo=continentPhotoURL)
 
         try:
-            country=models.Country.objects.get(country_name = currentCountry)
+            country = models.Country.objects.get(country_name=currentCountry)
         except models.Country.DoesNotExist:
-            country=models.Country.objects.create(
-                country_code = currentCountryCode, country_name = currentCountry, country_photo = countryPhotoURL, continent = continent)
+            country = models.Country.objects.create(
+                country_code=currentCountryCode, country_name=currentCountry, country_photo=countryPhotoURL, continent=continent)
         try:
-            city=models.City.objects.get(city_name = currentCity)
-            profile.current_city=city
+            city = models.City.objects.get(city_name=currentCity)
+            profile.current_city = city
             profile.save()
 
         except models.City.DoesNotExist:
-            nearCities=models.City.objects.filter(city_name = currentCity)
-            city=models.City.objects.create(
-                city_name = currentCity, country = country, city_photo = cityPhotoURL, lat = currentLat, lng = currentLng)
-            profile.current_city=city
+            nearCities = models.City.objects.filter(city_name=currentCity)
+            city = models.City.objects.create(
+                city_name=currentCity, country=country, city_photo=cityPhotoURL, lat=currentLat, lng=currentLng)
+            profile.current_city = city
             profile.save()
 
         # try:
         #     nearCities = models.City.objects.filter(city_name=currentCity)
 
         try:
-            latest=user.movenotification.latest('created_at')
+            latest = user.movenotification.latest('created_at')
             if not latest.city == city:
-                notification_models.MoveNotification.objects.create(actor = user, city = city)
+                notification_models.MoveNotification.objects.create(actor=user, city=city)
         except notification_models.MoveNotification.DoesNotExist:
-            notification_models.MoveNotification.objects.create(actor = user, city = city)
+            notification_models.MoveNotification.objects.create(actor=user, city=city)
 
-        return types.ReportLocationResponse(ok = True)
+        return types.ReportLocationResponse(ok=True)
