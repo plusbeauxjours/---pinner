@@ -92,8 +92,6 @@ const CityContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 15px;
-  margin-bottom: 25px;
 `;
 
 const CityPhoto = styled.img<ITheme>`
@@ -335,7 +333,10 @@ const TripText = styled.div`
 
 const ScrollContainer = styled.div`
   position: relative;
+  width: 200px;
+  height: 200px;
   display: flex;
+  margin: 0 15px 25px 0;
 `;
 
 const TripBox = styled.div`
