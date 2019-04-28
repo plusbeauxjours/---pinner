@@ -48,6 +48,7 @@ django-cors-headers = "*"
 twilio = "*"
 channels = "*"
 asgi-redis = "*"
+geopy = "*"
 
 
 [dev-packages]

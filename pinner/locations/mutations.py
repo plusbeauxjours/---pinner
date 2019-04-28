@@ -56,7 +56,7 @@ class ReportLocation(graphene.Mutation):
 
         except models.City.DoesNotExist:
             city = models.City.objects.create(
-                city_name=currentCity, country=country, city_photo=cityPhotoURL, lat='currentLat', lng='currentLng')
+                city_name=currentCity, country=country, city_photo=cityPhotoURL, lat=currentLat, lng=currentLng)
             profile.current_city = city
             profile.save()
 

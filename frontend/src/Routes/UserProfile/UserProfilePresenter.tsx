@@ -1107,6 +1107,17 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 />
               )}
             {!myCoffeeLoading &&
+              !user.profile.isSelf &&
+              requestingCoffees &&
+              requestingCoffees.length !== 0 && (
+                <CoffeeGrid
+                  requestingCoffees={requestingCoffees}
+                  type={"reportCoffees"}
+                  getCoffeeId={getCoffeeId}
+                  getRequestingCoffeeId={getRequestingCoffeeId}
+                />
+              )}
+            {!myCoffeeLoading &&
               user.profile.isSelf &&
               requestingCoffees &&
               requestingCoffees.length === 0 && (

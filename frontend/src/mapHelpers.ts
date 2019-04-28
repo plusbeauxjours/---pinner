@@ -18,11 +18,17 @@ export const reverseGeoCode = async (lat: number, lng: number) => {
       countryCode: ""
     };
     console.log(results);
+    console.log(lat, lng);
     for (const components of results) {
       for (const component of components.address_components) {
         if (
           component.types[0] === "locality" ||
           component.types[0] === "sublocality"
+        ) {
+          storableLocation.city = component.long_name;
+        } else if (
+          !storableLocation.city &&
+          component.types[0] === "administrative_area_level_1"
         ) {
           storableLocation.city = component.long_name;
         } else if (component.types.includes("country")) {

@@ -25,8 +25,6 @@ def resolve_get_coffees(self, info, **kwargs):
                                       Q(target='gender', host__profile__gender=profile.gender) |
                                       Q(target='followers', host__profile__in=followings)) &
                                      Q(expires__gt=timezone.now())).exclude(match__in=matches).order_by('-created_at')[:6]
-
-        print(coffees)
     else:
         coffees = city.coffee.filter((Q(target='everyone') |
                                       Q(target='nationality', host__profile__nationality=profile.nationality) |

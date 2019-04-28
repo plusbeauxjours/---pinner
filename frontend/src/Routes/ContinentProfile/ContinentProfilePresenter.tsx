@@ -349,7 +349,6 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
             </>
           ) : null}
           <GreyLine />
-
           <Title>
             <SText text={"COUNTRIES"} />
           </Title>
