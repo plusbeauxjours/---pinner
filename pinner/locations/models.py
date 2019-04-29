@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from config import models as config_models
-# from django.contrib.gis.db import models
 
 
 class Continent (config_models.TimeStampedModel):
@@ -39,8 +38,8 @@ class Country (config_models.TimeStampedModel):
 
 class City (config_models.TimeStampedModel):
 
-    lat = models.FloatField(blank=True, null=True)
-    lng = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
     country = models.ForeignKey(
         Country, on_delete=models.CASCADE, related_name='cities')
     city_name = models.CharField(max_length=50, null=True, blank=True)

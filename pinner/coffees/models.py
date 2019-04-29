@@ -26,6 +26,7 @@ class Coffee (config_models.TimeStampedModel):
     duration = models.DurationField(default=datetime.timedelta(days=1))
     expires = models.DateTimeField(blank=True, null=True)
     target = models.CharField(max_length=11, choices=TARGET, default='everyone')
+
     # caption = models.TextField(blank=True, null=True)
 
     @property
