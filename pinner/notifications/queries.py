@@ -7,9 +7,6 @@ from graphql_jwt.decorators import login_required
 from locations import models as location_models
 from django.contrib.auth.models import User
 from locations import types as location_types
-from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
-
 
 @login_required
 def resolve_get_notifications(self, info, **kwargs):

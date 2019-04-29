@@ -12,6 +12,7 @@ class NotificationAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'actor',
+        'target',
         'verb',
         'read'
     )

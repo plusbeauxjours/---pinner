@@ -27,6 +27,8 @@ class ReportLocation(graphene.Mutation):
     @login_required
     def mutate(self, info, **kwargs):
         user = info.context.user
+        profile = user.profile
+
         currentLat = kwargs.get('currentLat')
         currentLng = kwargs.get('currentLng')
         currentCity = kwargs.get('currentCity')
@@ -37,31 +39,27 @@ class ReportLocation(graphene.Mutation):
         continentPhotoURL = kwargs.get('continentPhotoURL')
         currentContinent = kwargs.get('currentContinent')
 
-        boo = currentLat
-        coo = currentLng
-        xoo = [boo, coo]
-        yoo = [30.044281, 31.340002]
-        print(xoo)
-        print(yoo)
-        
-
         gmaps = googlemaps.Client(key='AIzaSyDpOezMBjAdXKzLdT4E54XsRRYVXacckUE') 
-        my_dist = gmaps.distance_matrix("{},{}".format(boo,coo),
-                                     "{},{}".format(yoo[0],yoo[1]),
-                                     mode="driving",
-                                     avoid="ferries",
-                                    )
-        print(str(currentLat))
-        # print(directions_result[0]['legs'][0]['distance']['text'])
-        # print(directions_result[0]['legs'][0]['duration']['text'])
-        print(my_dist) 
 
-        profile = user.profile
         print('reportlocation')
-        cities = models.City.objects.all()
 
+        print('currentCity:',currentCity)
+        cities = models.City.objects.all()
+        currentLocation = [currentLat, currentLng]
+        
         for i in cities:
-            print(i)
+            
+            targetLocation = [i.lat, i.lng]
+            print('targetCity:',targetLocation)
+            distance = gmaps.distance_matrix(["{} {}".format(currentLocation[0],currentLocation[1])], ["{} {}".format(targetLocation[0],targetLocation[1])]language="en",)['rows'][0]['elements'][0]
+     
+            print(distance['distance']['text'])
+
+            # print(my_dist['rows'][0]['elements'][0]['distance']['text'])
+            # print(my_dist['origin_addresses'][0],my_dist['destination_addresses'][0])
+
+
+
 
         try:
             continent = models.Continent.objects.get(continent_name=currentContinent)
