@@ -432,7 +432,7 @@ const FeedPresenter: React.SFC<IProps> = ({
                   </HeaderColumn>
                 </Header>
               </Link>
-              <Weather lat={currentLat} lng={currentLng} />
+              <Weather latitude={currentLat} longitude={currentLng} />
             </UserContainer>
             <UserContainer>
               <User onClick={toggleNowModal}>

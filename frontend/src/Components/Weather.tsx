@@ -22,13 +22,13 @@ const WeatherImage = styled.img`
 `;
 
 interface IProps {
-  lat: number;
-  lng: number;
+  latitude: number;
+  longitude: number;
 }
 
 interface IState {
-  lat: number;
-  lng: number;
+  latitude: number;
+  longitude: number;
   aqi: number;
   icon: string;
   humidity: number;
@@ -40,8 +40,8 @@ class Weather extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      lat: props.lat,
-      lng: props.lng,
+      latitude: props.latitude,
+      longitude: props.longitude,
       aqi: 0,
       icon: null,
       humidity: 0,
@@ -50,8 +50,8 @@ class Weather extends React.Component<IProps, IState> {
     };
   }
   public componentDidMount() {
-    const { lat, lng } = this.state;
-    this.getWeather(lat, lng);
+    const { latitude, longitude } = this.state;
+    this.getWeather(latitude, longitude);
   }
   public render() {
     const { aqi, icon, humidity, temp, chill } = this.state;
@@ -71,9 +71,12 @@ class Weather extends React.Component<IProps, IState> {
       </Container>
     );
   }
-  public getWeather = async (lat: number, lng: number) => {
-    const aqi = await getAqi(lat, lng);
-    const { icon, humidity, temp, chill } = await getWeather(lat, lng);
+  public getWeather = async (latitude: number, longitude: number) => {
+    const aqi = await getAqi(latitude, longitude);
+    const { icon, humidity, temp, chill } = await getWeather(
+      latitude,
+      longitude
+    );
     this.setState({ aqi, icon, humidity, temp, chill });
   };
 }

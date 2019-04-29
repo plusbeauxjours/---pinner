@@ -1,4 +1,6 @@
 from django.db import IntegrityError
+from django.db.models.expressions import RawSQL
+
 from . import types, models
 from graphql_jwt.decorators import login_required
 from django.utils import timezone
@@ -219,9 +221,12 @@ def resolve_near_cities(self, info, **kwargs):
     cityName = kwargs.get('cityName')
 
     city = models.City.objects.get(city_name=cityName)
-    cities = city.near_city.all()[:6]
+    near_cities_from_here = city.near_city.all()[:6]
+    near_cities_from_there = city.near_cities.all()[:6]
 
-    return types.CitiesResponse(cities=cities)
+    combined = near_cities_from_here.union(near_cities_from_there).order_by('-created_at')[:6]
+
+    return types.CitiesResponse(cities=combined)
 
 
 @login_required

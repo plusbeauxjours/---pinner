@@ -15,8 +15,8 @@ export interface Match_match_match_city_country {
 export interface Match_match_match_city {
   __typename: "CityType";
   id: string;
-  lat: number | null;
-  lng: number | null;
+  latitude: number | null;
+  longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: Match_match_match_city_country;
@@ -690,8 +690,8 @@ export interface CityProfile_cityProfile_city_country {
 
 export interface CityProfile_cityProfile_city {
   __typename: "CityType";
-  lat: number | null;
-  lng: number | null;
+  latitude: number | null;
+  longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: CityProfile_cityProfile_city_country;
@@ -733,8 +733,8 @@ export interface NearCities_nearCities_cities_country {
 export interface NearCities_nearCities_cities {
   __typename: "CityType";
   id: string;
-  lat: number | null;
-  lng: number | null;
+  latitude: number | null;
+  longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: NearCities_nearCities_cities_country;
@@ -868,30 +868,24 @@ export interface CoffeeDetailVariables {
 
 export interface ContinentProfile_continentProfile_usersNow_profile {
   __typename: "ProfileType";
+  username: string | null;
   avatar: string;
 }
 
 export interface ContinentProfile_continentProfile_usersNow {
   __typename: "UserType";
   id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
   profile: ContinentProfile_continentProfile_usersNow_profile | null;
 }
 
 export interface ContinentProfile_continentProfile_usersBefore_actor_profile {
   __typename: "ProfileType";
+  username: string | null;
   avatar: string;
 }
 
 export interface ContinentProfile_continentProfile_usersBefore_actor {
   __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
   profile: ContinentProfile_continentProfile_usersBefore_actor_profile | null;
 }
 
@@ -1079,8 +1073,8 @@ export interface CountryProfile_countryProfile_cities_country {
 export interface CountryProfile_countryProfile_cities {
   __typename: "CityType";
   id: string;
-  lat: number | null;
-  lng: number | null;
+  latitude: number | null;
+  longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: CountryProfile_countryProfile_cities_country;
@@ -1120,8 +1114,8 @@ export interface LatestCities_latestCities_cities_country {
 export interface LatestCities_latestCities_cities {
   __typename: "CityType";
   id: string;
-  lat: number | null;
-  lng: number | null;
+  latitude: number | null;
+  longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: LatestCities_latestCities_cities_country;
@@ -1500,8 +1494,8 @@ export interface GetMatches_getMatches_matches_city_country {
 export interface GetMatches_getMatches_matches_city {
   __typename: "CityType";
   id: string;
-  lat: number | null;
-  lng: number | null;
+  latitude: number | null;
+  longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: GetMatches_getMatches_matches_city_country;
@@ -1972,8 +1966,8 @@ export interface SearchTerms_searchCities_cities_country {
 export interface SearchTerms_searchCities_cities {
   __typename: "CityType";
   id: string;
-  lat: number | null;
-  lng: number | null;
+  latitude: number | null;
+  longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: SearchTerms_searchCities_cities_country;
@@ -2617,8 +2611,8 @@ export interface FrequentVisits_frequentVisits_footprints_city_country {
 
 export interface FrequentVisits_frequentVisits_footprints_city {
   __typename: "CityType";
-  lat: number | null;
-  lng: number | null;
+  latitude: number | null;
+  longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: FrequentVisits_frequentVisits_footprints_city_country;
@@ -3204,8 +3198,8 @@ export interface CityParts_country {
 export interface CityParts {
   __typename: "CityType";
   id: string;
-  lat: number | null;
-  lng: number | null;
+  latitude: number | null;
+  longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: CityParts_country;

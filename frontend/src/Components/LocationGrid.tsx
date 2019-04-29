@@ -105,7 +105,7 @@ const LocationGrid: React.SFC<IProps> = ({
                         <LocationName text={city.cityName} />
                         <CountryName text={city.country.countryName} />
                         <Overlay>
-                          <Weather lat={city.lat} lng={city.lng} />
+                          <Weather latitude={city.latitude} longitude={city.longitude} />
                         </Overlay>
                       </Square>
                     </LocationContainer>

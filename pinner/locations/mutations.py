@@ -38,28 +38,10 @@ class ReportLocation(graphene.Mutation):
         continentPhotoURL = kwargs.get('continentPhotoURL')
         currentContinent = kwargs.get('currentContinent')
 
-        # gmaps = googlemaps.Client(key='AIzaSyDpOezMBjAdXKzLdT4E54XsRRYVXacckUE') 
-
         print('reportlocation')
-
-        cities = models.City.objects.all()
-        currentLocation = [currentLat, currentLng]
-        
-        # for i in cities:
-            
-        #     targetLocation = [i.lat, i.lng]
-        #     print('currentCity:',currentCity)
-        #     print('targetCity:',targetLocation)
-        #     distance = gmaps.distance_matrix(["{} {}".format(currentLocation[0],currentLocation[1])], ["{} {}".format(targetLocation[0],targetLocation[1])], language="en",)['rows'][0]['elements'][0]
-     
-        #     print(distance)
-
-            # print(my_dist['rows'][0]['elements'][0]['distance']['text'])
-            # print(my_dist['origin_addresses'][0],my_dist['destination_addresses'][0])
 
         def get_locations_nearby_coords(latitude, longitude, max_distance=None):
  
-            # Great circle distance formula
             gcd_formula = "6371 * acos(cos(radians(%s)) * \
             cos(radians(latitude)) \
             * cos(radians(longitude) - radians(%s)) + \
@@ -71,9 +53,7 @@ class ReportLocation(graphene.Mutation):
             qs = models.City.objects.all().annotate(distance=distance_raw_sql).order_by('distance')
             if max_distance is not None:
                 qs = qs.filter(distance__lt=max_distance)
-            print(qs)
-
-        get_locations_nearby_coords(currentLat, currentLng, 1000)
+            return qs
 
         try:
             continent = models.Continent.objects.get(continent_name=currentContinent)
@@ -86,20 +66,26 @@ class ReportLocation(graphene.Mutation):
         except models.Country.DoesNotExist:
             country = models.Country.objects.create(
                 country_code=currentCountryCode, country_name=currentCountry, country_photo=countryPhotoURL, continent=continent)
+
         try:
             city = models.City.objects.get(city_name=currentCity)
             profile.current_city = city
+            print(city.near_city.count())
             profile.save()
+            if city.near_city.count() < 7 :
+                nearCities = get_locations_nearby_coords(currentLat, currentLng, 3000)[:6]
+                print(nearCities)
+                for i in nearCities:
+                    city.near_city.add(i)
+                    city.save()
 
         except models.City.DoesNotExist:
-            nearCities = models.City.objects.filter(city_name=currentCity)
+            nearCities = get_locations_nearby_coords(currentLat, currentLng, 3000)[:6]
             city = models.City.objects.create(
-                city_name=currentCity, country=country, city_photo=cityPhotoURL, lat=currentLat, lng=currentLng)
-            profile.current_city = city
+                city_name=currentCity, country=country, city_photo=cityPhotoURL, latitude=currentLat, longitude=currentLng)
+            for i in nearCities:
+                city.near_city.add(i)
             profile.save()
-
-        # try:
-        #     nearCities = models.City.objects.filter(city_name=currentCity)
 
         try:
             latest = user.movenotification.latest('created_at')

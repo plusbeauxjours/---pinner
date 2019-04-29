@@ -293,8 +293,8 @@ class FeedContainer extends React.Component<IProps, IState> {
     });
     this.getAddress(latitude, longitude);
   };
-  public getAddress = async (lat: number, lng: number) => {
-    const address = await reverseGeoCode(lat, lng);
+  public getAddress = async (latitude: number, longitude: number) => {
+    const address = await reverseGeoCode(latitude, longitude);
     if (address) {
       this.setState({
         currentCity: address.storableLocation.city,
@@ -302,8 +302,8 @@ class FeedContainer extends React.Component<IProps, IState> {
         currentCountryCode: address.storableLocation.countryCode
       });
       this.reportLocation(
-        lat,
-        lng,
+        latitude,
+        longitude,
         address.storableLocation.city,
         address.storableLocation.country,
         address.storableLocation.countryCode
@@ -311,8 +311,8 @@ class FeedContainer extends React.Component<IProps, IState> {
     }
   };
   public reportLocation = async (
-    lat: number,
-    lng: number,
+    latitude: number,
+    longitude: number,
     currentCity: string,
     currentCountry: string,
     currentCountryCode: string
@@ -328,11 +328,11 @@ class FeedContainer extends React.Component<IProps, IState> {
       continentPhotoURL
     });
     localStorage.setItem("cityName", currentCity);
-    console.log(typeof lat);
+    console.log(typeof latitude);
     this.ReportLocationFn({
       variables: {
-        currentLat: lat,
-        currentLng: lng,
+        currentLat: latitude,
+        currentLng: longitude,
         currentCity,
         currentCountry,
         currentCountryCode,

@@ -28,8 +28,8 @@ export const CITY_PROFILE = gql`
         ...CoffeeParts
       }
       city {
-        lat
-        lng
+        latitude
+        longitude
         cityName
         cityPhoto
         country {

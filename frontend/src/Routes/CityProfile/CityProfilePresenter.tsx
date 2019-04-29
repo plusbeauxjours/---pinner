@@ -289,7 +289,8 @@ const CityProfilePresenter: React.SFC<IProps> = ({
             </CountryContainer>
             <InfoContainer>
               <Info>
-                <Weather lat={city.lat} lng={city.lng} />
+                {console.log(city.latitude)}
+                <Weather latitude={city.latitude} longitude={city.longitude} />
               </Info>
               <InfoInlineContainer>
                 <HalfInfo>

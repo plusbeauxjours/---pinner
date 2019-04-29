@@ -1269,8 +1269,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                           />
                           <Overlay>
                             <Weather
-                              lat={frequentCity.city.lat}
-                              lng={frequentCity.city.lng}
+                              latitude={frequentCity.city.latitude}
+                              longitude={frequentCity.city.longitude}
                             />
                           </Overlay>
                         </Square>
