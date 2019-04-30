@@ -7,11 +7,21 @@ import {
 } from "../../types/api";
 import { Query, MutationFn, Mutation } from "react-apollo";
 import CommentsPresenter from "./CommentsPresenter";
-import { GET_COMMENTS, EDIT_COMMENT } from "./CommentsQueries";
+import {
+  GET_COMMENTS,
+  EDIT_COMMENT,
+  TOGGLE_LIKE_COMMENT
+} from "./CommentsQueries";
 import { toast } from "react-toastify";
+import { LikeComment, LikeCommentVariables } from "../../types/api";
 
 class GetCommentsQuery extends Query<GetComments, GetCommentsVariables> {}
 class EditCommentMutation extends Mutation<EditComment, EditCommentVariables> {}
+class ToggleLikeCommentMutation extends Mutation<
+  LikeComment,
+  LikeCommentVariables
+> {}
+
 interface IProps {
   openedComment: boolean;
   cardId: string;
@@ -20,16 +30,19 @@ interface IProps {
 }
 
 interface IState {
+  isLiked: boolean;
   message: string;
   commentId: string;
   commentEditMode: boolean;
 }
 
 class CommentsContainer extends React.Component<IProps, IState> {
+  public toggleLikeCommentFn: MutationFn;
   public editCommentFn: MutationFn;
   constructor(props) {
     super(props);
     this.state = {
+      isLiked: props.isLiked,
       message: props.message,
       commentId: null,
       commentEditMode: false
@@ -52,25 +65,39 @@ class CommentsContainer extends React.Component<IProps, IState> {
         {editCommentFn => {
           this.editCommentFn = editCommentFn;
           return (
-            <GetCommentsQuery
-              query={GET_COMMENTS}
-              variables={{ cardId: parseInt(cardId, 10) }}
+            <ToggleLikeCommentMutation
+              mutation={TOGGLE_LIKE_COMMENT}
+              variables={{
+                cardId: parseInt(cardId, 10),
+                commentId: parseInt(commentId, 10)
+              }}
             >
-              {({ data: commentsData, loading: commentsLoading }) => (
-                <CommentsPresenter
-                  openedComment={openedComment}
-                  commentsData={commentsData}
-                  commentsLoading={commentsLoading}
-                  commentEditMode={commentEditMode}
-                  deleteCommentGetId={deleteCommentGetId}
-                  editCommentGetId={this.editCommentGetId}
-                  editCommentMessage={this.editCommentMessage}
-                  editCommentOnKeyUp={this.editCommentOnKeyUp}
-                  message={message}
-                  commentId={commentId}
-                />
-              )}
-            </GetCommentsQuery>
+              {toggleLikeCommentFn => {
+                this.toggleLikeCommentFn = toggleLikeCommentFn;
+                return (
+                  <GetCommentsQuery
+                    query={GET_COMMENTS}
+                    variables={{ cardId: parseInt(cardId, 10) }}
+                  >
+                    {({ data: commentsData, loading: commentsLoading }) => (
+                      <CommentsPresenter
+                        openedComment={openedComment}
+                        commentsData={commentsData}
+                        commentsLoading={commentsLoading}
+                        commentEditMode={commentEditMode}
+                        deleteCommentGetId={deleteCommentGetId}
+                        editCommentGetId={this.editCommentGetId}
+                        editCommentMessage={this.editCommentMessage}
+                        editCommentOnKeyUp={this.editCommentOnKeyUp}
+                        message={message}
+                        commentId={commentId}
+                        toggleLikeComment={this.toggleLikeComment}
+                      />
+                    )}
+                  </GetCommentsQuery>
+                );
+              }}
+            </ToggleLikeCommentMutation>
           );
         }}
       </EditCommentMutation>
@@ -98,6 +125,19 @@ class CommentsContainer extends React.Component<IProps, IState> {
     } else {
       return;
     }
+  };
+  public toggleLikeComment = (commentId, isLiked) => {
+    const { cardId } = this.props;
+    this.toggleLikeCommentFn({
+      variables: {
+        cardId: parseInt(cardId, 10),
+        commentId: parseInt(commentId, 10)
+      }
+    });
+    this.setState({
+      isLiked
+    } as any);
+    console.log(this.state);
   };
   public onCompletedEditComment = data => {
     const { commentEditMode } = this.state;

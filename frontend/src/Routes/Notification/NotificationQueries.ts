@@ -18,10 +18,15 @@ export const GET_NOTIFICATION = gql`
           }
         }
         verb
-        payloadId
+        card {
+          id
+        }
         comment {
           id
           message
+        }
+        match {
+          id
         }
         read
         naturalTime

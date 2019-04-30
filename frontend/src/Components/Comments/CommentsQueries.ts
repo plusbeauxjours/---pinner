@@ -13,6 +13,7 @@ export const GET_COMMENTS = gql`
             isSelf
           }
         }
+        isLiked
       }
     }
   }
@@ -26,9 +27,9 @@ export const EDIT_COMMENT = gql`
   }
 `;
 
-export const LIKE_COMMENT = gql`
-  mutation LikeComment($commentId: Int!,) {
-    likeComment(commentId: $commentId,) {
+export const TOGGLE_LIKE_COMMENT = gql`
+  mutation LikeComment($cardId: Int!, $commentId: Int!) {
+    likeComment(cardId: $cardId, commentId: $commentId) {
       ok
     }
   }

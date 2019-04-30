@@ -35,7 +35,16 @@ class LikeType(DjangoObjectType):
 
 class CommentType(DjangoObjectType):
     natural_time = graphene.String(source="natural_time")
+    is_liked = graphene.Boolean()
 
+    def resolve_is_liked(self, info):
+        user = info.context.user
+        try:
+            like = models.LikeComment.objects.get(comment=self, creator=user)
+            return True
+        except models.LikeComment.DoesNotExist:
+            return False
+            
     class Meta:
         model = models.Comment
 

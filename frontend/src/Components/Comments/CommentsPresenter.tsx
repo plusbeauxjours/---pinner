@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
 import Bold from "../Bold";
-import { Delete, Edit } from "../../Icons";
 import Loader from "../Loader";
 import Input from "../../Components/Input";
+import CommentButtons from "../CommentButtons";
 
 const Container = styled.div`
   display: flex;
@@ -32,14 +32,6 @@ const TimeStamp = styled.span`
   display: inline;
 `;
 
-const Icon = styled.span`
-  margin-left: 15px;
-  cursor: pointer;
-  svg {
-    fill: white;
-  }
-`;
-
 const ExtendedInput = styled(Input)`
   width: 287px;
   height: 48px;
@@ -59,12 +51,13 @@ interface IProps {
   commentsLoading: boolean;
   openedComment: boolean;
   commentEditMode: boolean;
-  deleteCommentGetId?: any;
+  deleteCommentGetId?: (commentId: string) => void;
   editCommentGetId: (commentId: string) => void;
   editCommentMessage: (event: React.ChangeEvent<HTMLInputElement>) => void;
   editCommentOnKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   message: string;
   commentId: string;
+  toggleLikeComment: (commentId: string, isLiked: boolean) => void;
 }
 
 const CommentsPresenter: React.SFC<IProps> = ({
@@ -77,7 +70,8 @@ const CommentsPresenter: React.SFC<IProps> = ({
   editCommentMessage,
   editCommentOnKeyUp,
   message,
-  commentId
+  commentId,
+  toggleLikeComment
 }) => {
   if (commentsLoading) {
     return <Loader />;
@@ -108,14 +102,13 @@ const CommentsPresenter: React.SFC<IProps> = ({
                 </Front>
                 <Back>
                   {comment.creator.profile.isSelf && (
-                    <>
-                      <Icon onClick={() => editCommentGetId(comment.id)}>
-                        <Edit />
-                      </Icon>
-                      <Icon onClick={() => deleteCommentGetId(comment.id)}>
-                        <Delete />
-                      </Icon>
-                    </>
+                    <CommentButtons
+                      toggleLikeComment={toggleLikeComment}
+                      editCommentGetId={editCommentGetId}
+                      deleteCommentGetId={deleteCommentGetId}
+                      isLiked={comment.isLiked}
+                      commentId={comment.id}
+                    />
                   )}
                 </Back>
               </Container>

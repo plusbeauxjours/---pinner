@@ -98,7 +98,7 @@ class Match(graphene.Mutation):
                 verb="match",
                 actor=user,
                 target=coffee.host,
-                payload_id=match.id
+                match=match
             )
             return types.MatchResponse(ok=True, match=match, coffeeId=coffeeId)
         except IntegrityError as e:

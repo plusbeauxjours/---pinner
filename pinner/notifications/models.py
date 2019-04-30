@@ -30,11 +30,14 @@ class Notification(config_models.TimeStampedModel):
     target = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, blank=True, related_name='notification_to')
     verb = models.CharField(max_length=15, choices=VERBS)
-    payload_id = models.IntegerField(null=True, blank=True)
     read = models.BooleanField(default=False)
+    card = models.ForeignKey(
+        card_models.Card, on_delete=models.CASCADE, null=True, blank=True, related_name='notification')
     comment = models.ForeignKey(
         card_models.Comment, on_delete=models.CASCADE, null=True, blank=True, related_name='notification')
-
+    match = models.ForeignKey(
+        coffee_models.Match, on_delete=models.CASCADE, null=True, blank=True, related_name='notification')
+    
     @property
     def natural_time(self):
         return naturaltime(self.created_at)

@@ -32,7 +32,7 @@ class UploadCard(graphene.Mutation):
                 country=country,
             )
             notification_models.Notification.objects.create(
-                actor=user, verb="upload", payload_id=card.id
+                actor=user, verb="upload", card=card
             )
             return types.UploadCardResponse(ok=True, card=card)
         except IntegrityError as e:
@@ -153,7 +153,7 @@ class LikeCard(graphene.Mutation):
             like.delete()
             try:
                 notification = notification_models.Notification.objects.get(
-                    actor=user, target=card.creator, verb='like', payload_id=card.id
+                    actor=user, target=card.creator, verb='like', card=card
                 )
                 notification.delete()
                 return types.LikeCardResponse(ok=True)
@@ -169,7 +169,7 @@ class LikeCard(graphene.Mutation):
                 creator=user, card=card)
             if (like.creator.id is not card.creator.id):
                 notification_models.Notification.objects.create(
-                    actor=user, target=card.creator, verb="like", payload_id=card.id
+                    actor=user, target=card.creator, verb="like", card=card
                 )
             return types.LikeCardResponse(ok=True)
 
@@ -202,7 +202,7 @@ class AddComment(graphene.Mutation):
                 message=message, card=card, creator=user)
             if (comment.creator.id is not card.creator.id):
                 notification_models.Notification.objects.create(
-                    actor=user, target=card.creator, verb="comment", payload_id=comment.id, comment=comment
+                    actor=user, target=card.creator, verb="comment", card=card, comment=comment
                 )
             return types.AddCommentResponse(comment=comment)
 
@@ -305,37 +305,46 @@ class LikeComment(graphene.Mutation):
         cardId = kwargs.get('cardId')
         commentId = kwargs.get('commentId')
         user = info.context.user
-        
+
         try:
             card = models.Card.objects.get(id=cardId)
+        except models.Card.DoesNotExist:
+            raise Exception("Card Not Found")
+
+        try:
+            comment = models.Comment.objects.get(id=commentId)
+        except models.Comment.DoesNotExist:
+            raise Exception("Comment Not Found")
+
+        if comment.creator.id == user.id:
 
             try:
-                comment = models.Comment.objects.get(id=commentId)
-
+                like = models.LikeComment.objects.get(
+                    creator=user, comment=comment)
+                like.delete()
                 try:
-                    like = models.LikeComment.objects.get(
-                        creator=user, comment=comment)
-                    like.delete()
                     notification = notification_models.Notification.objects.get(
-                        actor=user, target=comment.creator, verb='like_comment', payload_id=comment.id
+                        actor=user, target=comment.creator, verb='like_comment', card=card, comment=comment
                     )
                     notification.delete()
                     return types.LikeCommentResponse(ok=True)
-                  
-                except: 
-                    like = models.LikeComment.objects.create(
-                        creator=user, comment=comment)
-                    if (like.creator.id is not comment.creator.id):
-                        notification_models.Notification.objects.create(
-                            actor=user, target=comment.creator, verb="like_comment", payload_id=comment.id
-                        )
-                    return types.LikeCommentResponse(ok=True)
+                except:
+                    pass
+                return types.LikeCommentResponse(ok=True)
 
-                else:
-                    return types.LikeCommentResponse(ok=False)
+            except models.LikeComment.DoesNotExist:
+                pass
 
-            except models.Comment.DoesNotExist:
-                return types.LikeCommentResponse(ok=False)
+            try:
+                like = models.LikeComment.objects.create(
+                    creator=user, comment=comment)
+                if (like.creator.id is not comment.creator.id):
+                    notification_models.Notification.objects.create(
+                        actor=user, target=comment.creator, verb="like_comment", card=card, comment=comment
+                    )
+                return types.LikeCommentResponse(ok=True)
 
-        except models.Card.DoesNotExist:
+            except IntegrityError as e:
+                raise Exception("Can't Like Card")
+        else:
             return types.LikeCommentResponse(ok=False)

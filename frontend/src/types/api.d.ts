@@ -201,6 +201,7 @@ export interface GetComments_getComments_comments {
   message: string;
   edited: boolean;
   creator: GetComments_getComments_comments_creator | null;
+  isLiked: boolean | null;
 }
 
 export interface GetComments_getComments {
@@ -237,6 +238,28 @@ export interface EditCommentVariables {
   cardId: number;
   commentId: number;
   message: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: LikeComment
+// ====================================================
+
+export interface LikeComment_likeComment {
+  __typename: "LikeCommentResponse";
+  ok: boolean | null;
+}
+
+export interface LikeComment {
+  likeComment: LikeComment_likeComment;
+}
+
+export interface LikeCommentVariables {
+  cardId: number;
+  commentId: number;
 }
 
 
@@ -1623,9 +1646,20 @@ export interface GetNotifications_getNotifications_notifications_actor {
   profile: GetNotifications_getNotifications_notifications_actor_profile | null;
 }
 
+export interface GetNotifications_getNotifications_notifications_card {
+  __typename: "CardType";
+  id: string;
+}
+
 export interface GetNotifications_getNotifications_notifications_comment {
   __typename: "CommentType";
+  id: string;
   message: string;
+}
+
+export interface GetNotifications_getNotifications_notifications_match {
+  __typename: "MatchType";
+  id: string;
 }
 
 export interface GetNotifications_getNotifications_notifications {
@@ -1633,8 +1667,9 @@ export interface GetNotifications_getNotifications_notifications {
   id: string;
   actor: GetNotifications_getNotifications_notifications_actor;
   verb: NotificationVerb;
-  payloadId: number;
+  card: GetNotifications_getNotifications_notifications_card | null;
   comment: GetNotifications_getNotifications_notifications_comment | null;
+  match: GetNotifications_getNotifications_notifications_match | null;
   read: boolean;
   naturalTime: string | null;
 }
@@ -3160,6 +3195,7 @@ export enum NotificationVerb {
   COMMENT = "COMMENT",
   FOLLOW = "FOLLOW",
   LIKE = "LIKE",
+  LIKE_COMMENT = "LIKE_COMMENT",
   MATCH = "MATCH",
   UPLOAD = "UPLOAD",
 }

@@ -74,7 +74,7 @@ class Like(config_models.TimeStampedModel):
         return naturaltime(self.created_at)
 
     def __str__(self):
-        return self.card
+        return self.card.caption
 
 
 class LikeComment(config_models.TimeStampedModel):
@@ -89,4 +89,4 @@ class LikeComment(config_models.TimeStampedModel):
         return naturaltime(self.created_at)
 
     def __str__(self):
-        return self.comment
+        return self.comment.message

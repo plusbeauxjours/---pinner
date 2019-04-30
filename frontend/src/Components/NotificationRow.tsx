@@ -81,37 +81,12 @@ const NotificationRow: React.SFC<IProps> = ({
       <>
         {(() => {
           switch (notification.verb) {
-            case "FOLLOW":
-              return (
-                <>
-                  <Link to={`/${notification.actor.username}`}>
-                    {!isRead ? (
-                      <ICon>
-                        <RedDot />
-                      </ICon>
-                    ) : null}
-                    <Container onClick={() => onMarkRead(notification.id)}>
-                      <UserHeader
-                        username={notification.actor.username}
-                        currentCity={actor.currentCity.cityName}
-                        currentCountry={actor.currentCity.country.countryName}
-                        avatar={actor.avatar}
-                        size={"sm"}
-                      />
-                      <Header>
-                        <SBold text={"Follow me"} />
-                        <TimeStamp>{notification.naturalTime}</TimeStamp>
-                      </Header>
-                    </Container>
-                  </Link>
-                </>
-              );
             case "COMMENT":
               return (
                 <>
                   <Link
                     to={{
-                      pathname: `/p/${notification.payloadId}`,
+                      pathname: `/p/${notification.card.id}`,
                       state: { modalOpen: true }
                     }}
                     onClick={() => onMarkRead(notification.id)}
@@ -142,12 +117,48 @@ const NotificationRow: React.SFC<IProps> = ({
                   </Link>
                 </>
               );
+            case "LIKE_COMMENT":
+              return (
+                <>
+                  <Link
+                    to={{
+                      pathname: `/p/${notification.card.id}`,
+                      state: { modalOpen: true }
+                    }}
+                    onClick={() => onMarkRead(notification.id)}
+                  >
+                    {!isRead ? (
+                      <ICon>
+                        <RedDot />
+                      </ICon>
+                    ) : null}
+                    <Container>
+                      <UserHeader
+                        username={notification.actor.username}
+                        currentCity={actor.currentCity.cityName}
+                        currentCountry={actor.currentCity.country.countryName}
+                        avatar={actor.avatar}
+                        size={"sm"}
+                      />
+                      <Header>
+                        <SBold text={"Liked your comment"} />
+                        <TimeStamp>{notification.naturalTime}</TimeStamp>
+                      </Header>
+                      <Header>
+                        <Location>
+                          <SBold text={notification.comment.message} />
+                        </Location>
+                      </Header>
+                    </Container>
+                  </Link>
+                </>
+              );
             case "LIKE":
               return (
                 <>
                   <Link
                     to={{
-                      pathname: `/p/${notification.payloadId}`,
+                      pathname: `/p/${notification.card.id}`,
                       state: { modalOpen: true }
                     }}
                   >
@@ -172,13 +183,37 @@ const NotificationRow: React.SFC<IProps> = ({
                   </Link>
                 </>
               );
-
+            case "FOLLOW":
+              return (
+                <>
+                  <Link to={`/${notification.actor.username}`}>
+                    {!isRead ? (
+                      <ICon>
+                        <RedDot />
+                      </ICon>
+                    ) : null}
+                    <Container onClick={() => onMarkRead(notification.id)}>
+                      <UserHeader
+                        username={notification.actor.username}
+                        currentCity={actor.currentCity.cityName}
+                        currentCountry={actor.currentCity.country.countryName}
+                        avatar={actor.avatar}
+                        size={"sm"}
+                      />
+                      <Header>
+                        <SBold text={"Follow me"} />
+                        <TimeStamp>{notification.naturalTime}</TimeStamp>
+                      </Header>
+                    </Container>
+                  </Link>
+                </>
+              );
             case "UPLOAD":
               return (
                 <>
                   <Link
                     to={{
-                      pathname: `/p/${notification.payloadId}`,
+                      pathname: `/p/${notification.card.id}`,
                       state: { modalOpen: true }
                     }}
                     onClick={() => onMarkRead(notification.id, isRead)}
@@ -228,39 +263,6 @@ const NotificationRow: React.SFC<IProps> = ({
                       />
                       <Header>
                         <SBold text={"You've got a Matched!"} />
-                        <TimeStamp>{notification.naturalTime}</TimeStamp>
-                      </Header>
-                    </Container>
-                  </Link>
-                </>
-              );
-            case "COFFEE":
-              return (
-                <>
-                  <Link
-                    to={{
-                      pathname: `/c/${notification.payload.id}`,
-                      state: { modalOpen: true }
-                    }}
-                    onClick={() => onMarkRead(notification.id, isRead)}
-                  >
-                    {!isRead ? (
-                      <ICon>
-                        <RedDot />
-                      </ICon>
-                    ) : null}
-                    <Container>
-                      <UserHeader
-                        username={actor.username}
-                        currentCity={actor.currentCity.cityName}
-                        currentCountry={actor.currentCity.country.countryName}
-                        avatar={actor.avatar}
-                        size={"sm"}
-                      />
-                      <Header>
-                        <SBold text={"Needs a Coffee with"} />
-                        <SBold text={target} />
-
                         <TimeStamp>{notification.naturalTime}</TimeStamp>
                       </Header>
                     </Container>
