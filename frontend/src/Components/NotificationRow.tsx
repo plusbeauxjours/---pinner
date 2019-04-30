@@ -3,7 +3,6 @@ import styled from "src/Styles/typed-components";
 import UserHeader from "./UserHeader";
 import Bold from "./Bold";
 import { Link } from "react-router-dom";
-import FlagHeader from "./FlagHeader";
 import { RedDot } from "src/Icons";
 
 const Container = styled.div`
@@ -27,13 +26,6 @@ const Header = styled.header`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  border-radius: 3px;
-`;
-
-const MHeader = styled(Header)`
-  max-width: 300px;
-  flex-direction: row;
-  justify-content: space-between;
   border-radius: 3px;
 `;
 
@@ -89,37 +81,6 @@ const NotificationRow: React.SFC<IProps> = ({
       <>
         {(() => {
           switch (notification.verb) {
-            case "MOVE":
-              return (
-                <>
-                  <Link to={`/${notification.actor.username}`}>
-                    {!isRead ? (
-                      <ICon>
-                        <RedDot />
-                      </ICon>
-                    ) : null}
-                    <Container onClick={() => onMarkRead(notification.id)}>
-                      <UserHeader
-                        username={notification.actor.username}
-                        currentCity={actor.currentCity.cityName}
-                        currentCountry={actor.currentCity.country.countryName}
-                        avatar={actor.avatar}
-                        size={"sm"}
-                      />
-                      <Header>
-                        <SBold text={"Moved to"} />
-                        <TimeStamp>{notification.naturalTime}</TimeStamp>
-                      </Header>
-                      <MHeader>
-                        <FlagHeader
-                          cityName={notification.city.cityName}
-                          countryCode={notification.city.country.countryCode}
-                        />
-                      </MHeader>
-                    </Container>
-                  </Link>
-                </>
-              );
             case "FOLLOW":
               return (
                 <>
@@ -150,7 +111,7 @@ const NotificationRow: React.SFC<IProps> = ({
                 <>
                   <Link
                     to={{
-                      pathname: `/p/${notification.payload.id}`,
+                      pathname: `/p/${notification.payloadId}`,
                       state: { modalOpen: true }
                     }}
                     onClick={() => onMarkRead(notification.id)}
@@ -186,7 +147,7 @@ const NotificationRow: React.SFC<IProps> = ({
                 <>
                   <Link
                     to={{
-                      pathname: `/p/${notification.payload.id}`,
+                      pathname: `/p/${notification.payloadId}`,
                       state: { modalOpen: true }
                     }}
                   >
@@ -217,7 +178,7 @@ const NotificationRow: React.SFC<IProps> = ({
                 <>
                   <Link
                     to={{
-                      pathname: `/p/${notification.payload.id}`,
+                      pathname: `/p/${notification.payloadId}`,
                       state: { modalOpen: true }
                     }}
                     onClick={() => onMarkRead(notification.id, isRead)}

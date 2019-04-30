@@ -1594,135 +1594,6 @@ export interface GetMatchesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetAllNotifications
-// ====================================================
-
-export interface GetAllNotifications_getAllNotifications_notifications_NotificationType_actor_profile_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface GetAllNotifications_getAllNotifications_notifications_NotificationType_actor_profile_currentCity {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetAllNotifications_getAllNotifications_notifications_NotificationType_actor_profile_currentCity_country;
-}
-
-export interface GetAllNotifications_getAllNotifications_notifications_NotificationType_actor_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  currentCity: GetAllNotifications_getAllNotifications_notifications_NotificationType_actor_profile_currentCity | null;
-}
-
-export interface GetAllNotifications_getAllNotifications_notifications_NotificationType_actor {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: GetAllNotifications_getAllNotifications_notifications_NotificationType_actor_profile | null;
-}
-
-export interface GetAllNotifications_getAllNotifications_notifications_NotificationType_payload {
-  __typename: "CardType";
-  id: string;
-  caption: string;
-}
-
-export interface GetAllNotifications_getAllNotifications_notifications_NotificationType_comment {
-  __typename: "CommentType";
-  message: string;
-}
-
-export interface GetAllNotifications_getAllNotifications_notifications_NotificationType {
-  __typename: "NotificationType";
-  id: string;
-  actor: GetAllNotifications_getAllNotifications_notifications_NotificationType_actor;
-  verb: NotificationVerb;
-  payload: GetAllNotifications_getAllNotifications_notifications_NotificationType_payload | null;
-  comment: GetAllNotifications_getAllNotifications_notifications_NotificationType_comment | null;
-  read: boolean;
-  naturalTime: string | null;
-}
-
-export interface GetAllNotifications_getAllNotifications_notifications_MoveNotificationType_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-  countryCode: string | null;
-}
-
-export interface GetAllNotifications_getAllNotifications_notifications_MoveNotificationType_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetAllNotifications_getAllNotifications_notifications_MoveNotificationType_city_country;
-}
-
-export interface GetAllNotifications_getAllNotifications_notifications_MoveNotificationType {
-  __typename: "MoveNotificationType";
-  city: GetAllNotifications_getAllNotifications_notifications_MoveNotificationType_city | null;
-}
-
-export interface GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_host_profile_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_host_profile_currentCity {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_host_profile_currentCity_country;
-}
-
-export interface GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_host_profile {
-  __typename: "ProfileType";
-  username: string | null;
-  avatar: string;
-  currentCity: GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_host_profile_currentCity | null;
-}
-
-export interface GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_host {
-  __typename: "UserType";
-  profile: GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_host_profile | null;
-}
-
-export interface GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_payload {
-  __typename: "CoffeeType";
-  expires: any | null;
-}
-
-export interface GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType {
-  __typename: "CoffeeNotificationType";
-  id: string;
-  host: GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_host;
-  target: string;
-  payload: GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_payload | null;
-}
-
-export interface GetAllNotifications_getAllNotifications_notifications_MatchNotificationType {
-  __typename: "MatchNotificationType";
-  id: string;
-}
-
-export type GetAllNotifications_getAllNotifications_notifications = GetAllNotifications_getAllNotifications_notifications_NotificationType | GetAllNotifications_getAllNotifications_notifications_MoveNotificationType | GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType | GetAllNotifications_getAllNotifications_notifications_MatchNotificationType;
-
-export interface GetAllNotifications_getAllNotifications {
-  __typename: "AllNotificationsResponse";
-  notifications: (GetAllNotifications_getAllNotifications_notifications | null)[] | null;
-}
-
-export interface GetAllNotifications {
-  getAllNotifications: GetAllNotifications_getAllNotifications;
-}
-
-export interface GetAllNotificationsVariables {
-  page: number;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: GetNotifications
 // ====================================================
 
@@ -1752,12 +1623,6 @@ export interface GetNotifications_getNotifications_notifications_actor {
   profile: GetNotifications_getNotifications_notifications_actor_profile | null;
 }
 
-export interface GetNotifications_getNotifications_notifications_payload {
-  __typename: "CardType";
-  id: string;
-  caption: string;
-}
-
 export interface GetNotifications_getNotifications_notifications_comment {
   __typename: "CommentType";
   message: string;
@@ -1768,7 +1633,7 @@ export interface GetNotifications_getNotifications_notifications {
   id: string;
   actor: GetNotifications_getNotifications_notifications_actor;
   verb: NotificationVerb;
-  payload: GetNotifications_getNotifications_notifications_payload | null;
+  payloadId: number;
   comment: GetNotifications_getNotifications_notifications_comment | null;
   read: boolean;
   naturalTime: string | null;
@@ -1776,7 +1641,6 @@ export interface GetNotifications_getNotifications_notifications {
 
 export interface GetNotifications_getNotifications {
   __typename: "GetNotificationsResponse";
-  ok: boolean | null;
   notifications: (GetNotifications_getNotifications_notifications | null)[] | null;
 }
 
@@ -1785,209 +1649,7 @@ export interface GetNotifications {
 }
 
 export interface GetNotificationsVariables {
-  page: number;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetMatchNotifications
-// ====================================================
-
-export interface GetMatchNotifications_getMatchNotifications_matchNotifications_host_profile_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface GetMatchNotifications_getMatchNotifications_matchNotifications_host_profile_currentCity {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetMatchNotifications_getMatchNotifications_matchNotifications_host_profile_currentCity_country;
-}
-
-export interface GetMatchNotifications_getMatchNotifications_matchNotifications_host_profile {
-  __typename: "ProfileType";
-  username: string | null;
-  avatar: string;
-  currentCity: GetMatchNotifications_getMatchNotifications_matchNotifications_host_profile_currentCity | null;
-}
-
-export interface GetMatchNotifications_getMatchNotifications_matchNotifications_host {
-  __typename: "UserType";
-  profile: GetMatchNotifications_getMatchNotifications_matchNotifications_host_profile | null;
-}
-
-export interface GetMatchNotifications_getMatchNotifications_matchNotifications_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface GetMatchNotifications_getMatchNotifications_matchNotifications_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetMatchNotifications_getMatchNotifications_matchNotifications_city_country;
-}
-
-export interface GetMatchNotifications_getMatchNotifications_matchNotifications {
-  __typename: "MatchNotificationType";
-  id: string;
-  host: GetMatchNotifications_getMatchNotifications_matchNotifications_host;
-  verb: MatchNotificationVerb;
-  city: GetMatchNotifications_getMatchNotifications_matchNotifications_city;
-  read: boolean;
-  naturalTime: string | null;
-}
-
-export interface GetMatchNotifications_getMatchNotifications {
-  __typename: "GetMatchNotificationsResponse";
-  ok: boolean | null;
-  matchNotifications: (GetMatchNotifications_getMatchNotifications_matchNotifications | null)[] | null;
-}
-
-export interface GetMatchNotifications {
-  getMatchNotifications: GetMatchNotifications_getMatchNotifications;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetCoffeeNotifications
-// ====================================================
-
-export interface GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_host_profile_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_host_profile_currentCity {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_host_profile_currentCity_country;
-}
-
-export interface GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_host_profile {
-  __typename: "ProfileType";
-  username: string | null;
-  avatar: string;
-  currentCity: GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_host_profile_currentCity | null;
-}
-
-export interface GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_host {
-  __typename: "UserType";
-  profile: GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_host_profile | null;
-}
-
-export interface GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_payload {
-  __typename: "CoffeeType";
-  id: string;
-  expires: any | null;
-}
-
-export interface GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_city_country;
-}
-
-export interface GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications {
-  __typename: "CoffeeNotificationType";
-  id: string;
-  host: GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_host;
-  target: string;
-  verb: CoffeeNotificationVerb;
-  payload: GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_payload | null;
-  city: GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications_city;
-  read: boolean;
-  naturalTime: string | null;
-}
-
-export interface GetCoffeeNotifications_getCoffeeNotifications {
-  __typename: "GetCoffeeNotificationsResponse";
-  ok: boolean | null;
-  coffeeNotifications: (GetCoffeeNotifications_getCoffeeNotifications_coffeeNotifications | null)[] | null;
-}
-
-export interface GetCoffeeNotifications {
-  getCoffeeNotifications: GetCoffeeNotifications_getCoffeeNotifications;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetMoveNotifications
-// ====================================================
-
-export interface GetMoveNotifications_getMoveNotifications_notifications_actor_profile_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface GetMoveNotifications_getMoveNotifications_notifications_actor_profile_currentCity {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetMoveNotifications_getMoveNotifications_notifications_actor_profile_currentCity_country;
-}
-
-export interface GetMoveNotifications_getMoveNotifications_notifications_actor_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  currentCity: GetMoveNotifications_getMoveNotifications_notifications_actor_profile_currentCity | null;
-}
-
-export interface GetMoveNotifications_getMoveNotifications_notifications_actor {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: GetMoveNotifications_getMoveNotifications_notifications_actor_profile | null;
-}
-
-export interface GetMoveNotifications_getMoveNotifications_notifications_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-  countryCode: string | null;
-}
-
-export interface GetMoveNotifications_getMoveNotifications_notifications_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetMoveNotifications_getMoveNotifications_notifications_city_country;
-}
-
-export interface GetMoveNotifications_getMoveNotifications_notifications {
-  __typename: "MoveNotificationType";
-  id: string;
-  actor: GetMoveNotifications_getMoveNotifications_notifications_actor;
-  verb: MoveNotificationVerb;
-  city: GetMoveNotifications_getMoveNotifications_notifications_city | null;
-  read: boolean;
-  naturalTime: string | null;
-}
-
-export interface GetMoveNotifications_getMoveNotifications {
-  __typename: "GetMoveNotificationsResponse";
-  ok: boolean | null;
-  notifications: (GetMoveNotifications_getMoveNotifications_notifications | null)[] | null;
-}
-
-export interface GetMoveNotifications {
-  getMoveNotifications: GetMoveNotifications_getMoveNotifications;
-}
-
-export interface GetMoveNotificationsVariables {
-  page: number;
+  page?: number | null;
 }
 
 
@@ -3498,28 +3160,8 @@ export enum NotificationVerb {
   COMMENT = "COMMENT",
   FOLLOW = "FOLLOW",
   LIKE = "LIKE",
-  UPLOAD = "UPLOAD",
-}
-
-/**
- * An enumeration.
- */
-export enum MatchNotificationVerb {
   MATCH = "MATCH",
-}
-
-/**
- * An enumeration.
- */
-export enum CoffeeNotificationVerb {
-  COFFEE = "COFFEE",
-}
-
-/**
- * An enumeration.
- */
-export enum MoveNotificationVerb {
-  MOVE = "MOVE",
+  UPLOAD = "UPLOAD",
 }
 
 //==============================================================

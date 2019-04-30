@@ -19,21 +19,21 @@ class Notification(config_models.TimeStampedModel):
 
     VERBS = (
         ('like', 'LIKE'),
+        ('like_comment', 'LIKE_COMMENT'),
         ('comment', 'COMMENT'),
         ('follow', 'FOLLOW'),
         ('upload', 'UPLOAD'),
+        ('match', 'MATCH'),
     )
 
     actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notification_from')
     target = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, blank=True, related_name='notification_to')
-    verb = models.CharField(max_length=10, choices=VERBS)
-    payload = models.ForeignKey(
-        card_models.Card, on_delete=models.CASCADE, null=True, blank=True, related_name='notification')
+    verb = models.CharField(max_length=15, choices=VERBS)
+    payload_id = models.IntegerField(null=True, blank=True)
     read = models.BooleanField(default=False)
     comment = models.ForeignKey(
         card_models.Comment, on_delete=models.CASCADE, null=True, blank=True, related_name='notification')
-    coffee_target = models.CharField(max_length=20, null=True, blank=True)
 
     @property
     def natural_time(self):
@@ -49,68 +49,6 @@ class Notification(config_models.TimeStampedModel):
             self.verb,
             self.read
         )
-
-
-class CoffeeNotification(config_models.TimeStampedModel):
-
-    VERBS = (
-            ('coffee', 'COFFEE'),
-    )
-
-    city = models.ForeignKey(location_models.City, on_delete=models.CASCADE, related_name='coffee_notification')
-    host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='coffee_notification')
-    verb = models.CharField(max_length=10, choices=VERBS)
-    target = models.CharField(max_length=15)
-    payload = models.ForeignKey(coffee_models.Coffee, on_delete=models.CASCADE,
-                                null=True, blank=True, related_name='coffee_notification')
-    read = models.BooleanField(default=False)
-    
-    @property
-    def natural_time(self):
-        return naturaltime(self.created_at)
-
-    class Meta:
-        ordering = ['-created_at']
-
-    def __str__(self):
-        return '{} / From: {} {} 👉🏻 To:  Read:{}'.format(
-            self.id,
-            self.host.username,
-            self.verb,
-            self.read
-        )
-
-
-class MatchNotification(config_models.TimeStampedModel):
-
-    VERBS = (
-            ('match', 'MATCH'),
-    )
-
-    city = models.ForeignKey(location_models.City, on_delete=models.CASCADE, related_name='match_notification')
-    host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_notification_from')
-    guest = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_notification_to')
-    verb = models.CharField(max_length=10, choices=VERBS)
-    payload = models.ForeignKey(coffee_models.Match, on_delete=models.CASCADE,
-                                null=True, blank=True, related_name='match_notification')
-    read = models.BooleanField(default=False)
-
-    @property
-    def natural_time(self):
-        return naturaltime(self.created_at)
-
-    class Meta:
-        ordering = ['-created_at']
-
-    def __str__(self):
-        return '{} / From: {} {} 👉🏻 To:  Read:{}'.format(
-            self.id,
-            self.host.username,
-            self.guest.username,
-            self.verb,
-            self.read
-        )
-
 
 class MoveNotification(config_models.TimeStampedModel):
 

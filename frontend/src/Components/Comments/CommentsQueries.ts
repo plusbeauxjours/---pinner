@@ -25,3 +25,11 @@ export const EDIT_COMMENT = gql`
     }
   }
 `;
+
+export const LIKE_COMMENT = gql`
+  mutation LikeComment($commentId: Int!,) {
+    likeComment(commentId: $commentId,) {
+      ok
+    }
+  }
+`;

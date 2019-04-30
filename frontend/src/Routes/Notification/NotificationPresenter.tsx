@@ -20,7 +20,7 @@ interface IProps {
 }
 
 const NotificationPresenter: React.SFC<IProps> = ({
-  data: { getAllNotifications: { notifications = null } = {} } = {},
+  data: { getNotifications: { notifications = null } = {} } = {},
   loading,
   modalOpen,
   onMarkRead

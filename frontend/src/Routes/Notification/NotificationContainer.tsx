@@ -1,17 +1,14 @@
 import React from "react";
 import { Query, Mutation, MutationFn } from "react-apollo";
-import {
-  GetAllNotifications,
-  GetAllNotificationsVariables
-} from "../../types/api";
+import { GetNotifications, GetNotificationsVariables } from "../../types/api";
 
 import NotificationPresenter from "./NotificationPresenter";
-import { GET_ALL_NOTIFICATION, MARK_AS_READ } from "./NotificationQueries";
+import { GET_NOTIFICATION, MARK_AS_READ } from "./NotificationQueries";
 import { MarkAsRead, MarkAsReadVariables } from "../../types/api";
 
-class GetAllNotificationsQuery extends Query<
-  GetAllNotifications,
-  GetAllNotificationsVariables
+class GetNotificationsQuery extends Query<
+  GetNotifications,
+  GetNotificationsVariables
 > {}
 
 class MarkAsReadMutation extends Mutation<MarkAsRead, MarkAsReadVariables> {}
@@ -35,10 +32,7 @@ class NotificationContainer extends React.Component<any, IState> {
   public render() {
     const { page, modalOpen, notificationId } = this.state;
     return (
-      <GetAllNotificationsQuery
-        query={GET_ALL_NOTIFICATION}
-        variables={{ page }}
-      >
+      <GetNotificationsQuery query={GET_NOTIFICATION} variables={{ page }}>
         {({ data, loading }) => (
           <MarkAsReadMutation
             mutation={MARK_AS_READ}
@@ -60,7 +54,7 @@ class NotificationContainer extends React.Component<any, IState> {
             }}
           </MarkAsReadMutation>
         )}
-      </GetAllNotificationsQuery>
+      </GetNotificationsQuery>
     );
   }
   public toggleModal = () => {
@@ -72,8 +66,7 @@ class NotificationContainer extends React.Component<any, IState> {
   public onMarkRead = (notificationId: string, isRead: boolean) => {
     this.setState({
       notificationId,
-      isRead,
-      ko: "sexman"
+      isRead
     } as any);
     console.log(isRead, this.state);
     this.markAsReadFn({ variables: { notificationId } });

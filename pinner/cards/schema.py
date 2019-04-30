@@ -63,14 +63,18 @@ class Query(object):
               'countryName': graphene.String(),
               'continentName': graphene.String()}
     )
+    
 
 
 class Mutation(object):
 
+    upload_card = mutations.UploadCard.Field(required=True)
+    edit_card = mutations.EditCard.Field(required=True)
+    delete_card = mutations.DeleteCard.Field(required=True)
     like_card = mutations.LikeCard.Field(required=True)
+
     add_comment = mutations.AddComment.Field(required=True)
     edit_comment = mutations.EditComment.Field(required=True)
     delete_comment = mutations.DeleteComment.Field(required=True)
-    edit_card = mutations.EditCard.Field(required=True)
-    delete_card = mutations.DeleteCard.Field(required=True)
-    upload_card = mutations.UploadCard.Field(required=True)
+    like_comment = mutations.LikeComment.Field(required=True)
+

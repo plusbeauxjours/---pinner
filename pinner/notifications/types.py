@@ -23,31 +23,6 @@ class MoveNotificationType(DjangoObjectType):
         model = models.MoveNotification
 
 
-class CoffeeNotificationType(DjangoObjectType):
-    natural_time = graphene.String(source="natural_time")
-    created_at = graphene.Date(source="created_at")
-
-    class Meta:
-        model = models.CoffeeNotification
-
-
-class MatchNotificationType(DjangoObjectType):
-    natural_time = graphene.String(source="natural_time")
-    created_at = graphene.Date(source="created_at")
-
-    class Meta:
-        model = models.MatchNotification
-
-class AllNotificationsType(graphene.Union):
-
-    class Meta:
-        types = (
-            NotificationType,
-            MoveNotificationType,
-            CoffeeNotificationType,
-            MatchNotificationType
-        )
-
 class DurationTripsResponse(graphene.ObjectType):
     moveNotifications = graphene.List(MoveNotificationType)
 
@@ -63,21 +38,6 @@ class DurationDaysResponse(graphene.ObjectType):
 
 class GetNotificationsResponse(graphene.ObjectType):
     notifications = graphene.List(NotificationType)
-    ok = graphene.Boolean()
-
-
-class GetMoveNotificationsResponse(graphene.ObjectType):
-    notifications = graphene.List(MoveNotificationType)
-    ok = graphene.Boolean()
-
-
-class GetCoffeeNotificationsResponse(graphene.ObjectType):
-    coffee_notifications = graphene.List(CoffeeNotificationType)
-    ok = graphene.Boolean()
-
-
-class GetMatchNotificationsResponse(graphene.ObjectType):
-    match_notifications = graphene.List(MatchNotificationType)
     ok = graphene.Boolean()
 
 
@@ -99,5 +59,3 @@ class DeleteTripResponse(graphene.ObjectType):
     tripId = graphene.Int()
     ok = graphene.Boolean()
 
-class AllNotificationsResponse(graphene.ObjectType):
-    notifications = graphene.List(AllNotificationsType)

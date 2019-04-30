@@ -106,8 +106,8 @@ def resolve_card_likes(self, info, **kwargs):
     except models.Card.DoesNotExist:
         raise Exception('Card not found')
 
-    likes = card.likes.all()
-    return types.CardLikeResponse(likes=likes)
+    users = card.card_likes.all()
+    return types.CardLikeResponse(users=users)
 
 
 @login_required

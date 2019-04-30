@@ -55,8 +55,12 @@ class LikeCardResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
 
+class LikeCommentResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
+
+
 class CardLikeResponse(graphene.ObjectType):
-    likes = graphene.List(LikeType)
+    users = graphene.List(user_types.UserType)
 
 
 class UploadCardResponse(graphene.ObjectType):

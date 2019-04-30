@@ -74,7 +74,6 @@ class ReportLocation(graphene.Mutation):
             profile.save()
             if city.near_city.count() < 7 :
                 nearCities = get_locations_nearby_coords(currentLat, currentLng, 3000)[:6]
-                print(nearCities)
                 for i in nearCities:
                     city.near_city.add(i)
                     city.save()

@@ -6,26 +6,22 @@ from . import models
 class CardAdmin(admin.ModelAdmin):
 
     search_fields = (
-        'country__country_name',
         'city__city_name',
         'caption',
     )
 
     list_filter = (
-        'country',
         'city',
         'creator',
     )
 
     list_display = (
         'id',
-        'country',
         'city',
         'creator',
         'caption',
         'created_at',
-        'natural_time',
-        'updated_at',
+        'like_count'
     )
 
 
@@ -34,9 +30,8 @@ class LikeAdmin(admin.ModelAdmin):
 
     list_display = (
         'creator',
+        'id',
         'card',
-        'created_at',
-        'updated_at',
     )
 
 
@@ -44,6 +39,18 @@ class LikeAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = (
         'creator',
+        'id',
         'card',
         'message',
+        'like_count'
+    )
+
+
+
+@admin.register(models.LikeComment)
+class LikeCommentAdmin(admin.ModelAdmin):
+    list_display = (
+        'creator',
+        'id',
+        'comment',
     )

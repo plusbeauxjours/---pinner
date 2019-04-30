@@ -35,8 +35,8 @@ class Card(config_models.TimeStampedModel):
         return naturaltime(self.created_at)
 
     def __str__(self):
-        return 'Country: {} - City: {} - Caption: {} - Creator: {} '.format(self.country, self.city, self.caption, self.creator)
-
+        return self.caption
+        
     class Meta:
         ordering = ['-created_at']
 
@@ -51,11 +51,15 @@ class Comment(config_models.TimeStampedModel):
     edited = models.BooleanField(default=False)
 
     @property
+    def like_count(self):
+        return self.likes.all().count()
+
+    @property
     def natural_time(self):
         return naturaltime(self.created_at)
 
     def __str__(self):
-        return '{} / User: {} - Comment: {} - Card: {} {}'.format(self.id, self.creator.username, self.message, self.card_id, self.card.city)
+        return self.message
 
 
 class Like(config_models.TimeStampedModel):
@@ -70,4 +74,19 @@ class Like(config_models.TimeStampedModel):
         return naturaltime(self.created_at)
 
     def __str__(self):
-        return 'User: {} - Card Caption: {}'.format(self.creator.username, self.card.caption)
+        return self.card
+
+
+class LikeComment(config_models.TimeStampedModel):
+
+    creator = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, related_name='comment_likes')
+    comment = models.ForeignKey(
+        Comment, on_delete=models.CASCADE, null=True, related_name='likes')
+
+    @property
+    def natural_time(self):
+        return naturaltime(self.created_at)
+
+    def __str__(self):
+        return self.comment
