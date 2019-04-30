@@ -154,27 +154,31 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
     } catch (e) {
       console.log(e);
     }
-
-    try {
-      const feedData = cache.readQuery({
-        query: GET_COFFEES,
-        variables: { coffeePage: 0, cityName: localStorage.getItem("cityName") }
-      });
-      console.log(unMatch.coffee);
-      console.log(feedData);
-      if (feedData) {
-        feedData.getCoffees.coffees.unshift(unMatch.coffee);
-        await cache.writeQuery({
+    if (unMatch.coffee.status !== "expired") {
+      try {
+        const feedData = cache.readQuery({
           query: GET_COFFEES,
           variables: {
             coffeePage: 0,
             cityName: localStorage.getItem("cityName")
-          },
-          data: feedData
+          }
         });
+        console.log(unMatch.coffee);
+        console.log(feedData);
+        if (feedData) {
+          feedData.getCoffees.coffees.unshift(unMatch.coffee);
+          await cache.writeQuery({
+            query: GET_COFFEES,
+            variables: {
+              coffeePage: 0,
+              cityName: localStorage.getItem("cityName")
+            },
+            data: feedData
+          });
+        }
+      } catch (e) {
+        console.log(e);
       }
-    } catch (e) {
-      console.log(e);
     }
   };
 }
