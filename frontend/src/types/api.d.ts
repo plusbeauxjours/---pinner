@@ -1594,68 +1594,197 @@ export interface GetMatchesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetNotifictions
+// GraphQL query operation: GetAllNotifications
 // ====================================================
 
-export interface GetNotifictions_getNotifications_notifications_actor_profile_currentCity_country {
+export interface GetAllNotifications_getAllNotifications_notifications_NotificationType_actor_profile_currentCity_country {
   __typename: "CountryType";
   countryName: string | null;
 }
 
-export interface GetNotifictions_getNotifications_notifications_actor_profile_currentCity {
+export interface GetAllNotifications_getAllNotifications_notifications_NotificationType_actor_profile_currentCity {
   __typename: "CityType";
   cityName: string | null;
-  country: GetNotifictions_getNotifications_notifications_actor_profile_currentCity_country;
+  country: GetAllNotifications_getAllNotifications_notifications_NotificationType_actor_profile_currentCity_country;
 }
 
-export interface GetNotifictions_getNotifications_notifications_actor_profile {
+export interface GetAllNotifications_getAllNotifications_notifications_NotificationType_actor_profile {
   __typename: "ProfileType";
   avatar: string;
-  currentCity: GetNotifictions_getNotifications_notifications_actor_profile_currentCity | null;
+  currentCity: GetAllNotifications_getAllNotifications_notifications_NotificationType_actor_profile_currentCity | null;
 }
 
-export interface GetNotifictions_getNotifications_notifications_actor {
+export interface GetAllNotifications_getAllNotifications_notifications_NotificationType_actor {
   __typename: "UserType";
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
-  profile: GetNotifictions_getNotifications_notifications_actor_profile | null;
+  profile: GetAllNotifications_getAllNotifications_notifications_NotificationType_actor_profile | null;
 }
 
-export interface GetNotifictions_getNotifications_notifications_payload {
+export interface GetAllNotifications_getAllNotifications_notifications_NotificationType_payload {
   __typename: "CardType";
   id: string;
   caption: string;
 }
 
-export interface GetNotifictions_getNotifications_notifications_comment {
+export interface GetAllNotifications_getAllNotifications_notifications_NotificationType_comment {
   __typename: "CommentType";
   message: string;
 }
 
-export interface GetNotifictions_getNotifications_notifications {
+export interface GetAllNotifications_getAllNotifications_notifications_NotificationType {
   __typename: "NotificationType";
   id: string;
-  actor: GetNotifictions_getNotifications_notifications_actor;
+  actor: GetAllNotifications_getAllNotifications_notifications_NotificationType_actor;
   verb: NotificationVerb;
-  payload: GetNotifictions_getNotifications_notifications_payload | null;
-  comment: GetNotifictions_getNotifications_notifications_comment | null;
+  payload: GetAllNotifications_getAllNotifications_notifications_NotificationType_payload | null;
+  comment: GetAllNotifications_getAllNotifications_notifications_NotificationType_comment | null;
   read: boolean;
   naturalTime: string | null;
 }
 
-export interface GetNotifictions_getNotifications {
+export interface GetAllNotifications_getAllNotifications_notifications_MoveNotificationType_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryCode: string | null;
+}
+
+export interface GetAllNotifications_getAllNotifications_notifications_MoveNotificationType_city {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetAllNotifications_getAllNotifications_notifications_MoveNotificationType_city_country;
+}
+
+export interface GetAllNotifications_getAllNotifications_notifications_MoveNotificationType {
+  __typename: "MoveNotificationType";
+  city: GetAllNotifications_getAllNotifications_notifications_MoveNotificationType_city | null;
+}
+
+export interface GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_host_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_host_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_host_profile_currentCity_country;
+}
+
+export interface GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_host_profile {
+  __typename: "ProfileType";
+  username: string | null;
+  avatar: string;
+  currentCity: GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_host_profile_currentCity | null;
+}
+
+export interface GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_host {
+  __typename: "UserType";
+  profile: GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_host_profile | null;
+}
+
+export interface GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_payload {
+  __typename: "CoffeeType";
+  expires: any | null;
+}
+
+export interface GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType {
+  __typename: "CoffeeNotificationType";
+  id: string;
+  host: GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_host;
+  target: string;
+  payload: GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType_payload | null;
+}
+
+export interface GetAllNotifications_getAllNotifications_notifications_MatchNotificationType {
+  __typename: "MatchNotificationType";
+  id: string;
+}
+
+export type GetAllNotifications_getAllNotifications_notifications = GetAllNotifications_getAllNotifications_notifications_NotificationType | GetAllNotifications_getAllNotifications_notifications_MoveNotificationType | GetAllNotifications_getAllNotifications_notifications_CoffeeNotificationType | GetAllNotifications_getAllNotifications_notifications_MatchNotificationType;
+
+export interface GetAllNotifications_getAllNotifications {
+  __typename: "AllNotificationsResponse";
+  notifications: (GetAllNotifications_getAllNotifications_notifications | null)[] | null;
+}
+
+export interface GetAllNotifications {
+  getAllNotifications: GetAllNotifications_getAllNotifications;
+}
+
+export interface GetAllNotificationsVariables {
+  page: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetNotifications
+// ====================================================
+
+export interface GetNotifications_getNotifications_notifications_actor_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetNotifications_getNotifications_notifications_actor_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetNotifications_getNotifications_notifications_actor_profile_currentCity_country;
+}
+
+export interface GetNotifications_getNotifications_notifications_actor_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  currentCity: GetNotifications_getNotifications_notifications_actor_profile_currentCity | null;
+}
+
+export interface GetNotifications_getNotifications_notifications_actor {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: GetNotifications_getNotifications_notifications_actor_profile | null;
+}
+
+export interface GetNotifications_getNotifications_notifications_payload {
+  __typename: "CardType";
+  id: string;
+  caption: string;
+}
+
+export interface GetNotifications_getNotifications_notifications_comment {
+  __typename: "CommentType";
+  message: string;
+}
+
+export interface GetNotifications_getNotifications_notifications {
+  __typename: "NotificationType";
+  id: string;
+  actor: GetNotifications_getNotifications_notifications_actor;
+  verb: NotificationVerb;
+  payload: GetNotifications_getNotifications_notifications_payload | null;
+  comment: GetNotifications_getNotifications_notifications_comment | null;
+  read: boolean;
+  naturalTime: string | null;
+}
+
+export interface GetNotifications_getNotifications {
   __typename: "GetNotificationsResponse";
   ok: boolean | null;
-  notifications: (GetNotifictions_getNotifications_notifications | null)[] | null;
+  notifications: (GetNotifications_getNotifications_notifications | null)[] | null;
 }
 
-export interface GetNotifictions {
-  getNotifications: GetNotifictions_getNotifications;
+export interface GetNotifications {
+  getNotifications: GetNotifications_getNotifications;
 }
 
-export interface GetNotifictionsVariables {
+export interface GetNotificationsVariables {
   page: number;
 }
 

@@ -3,7 +3,8 @@ from graphene_django.types import DjangoObjectType
 from config import types as config_types
 from . import models
 from cards import types as card_types
-from graphene.types.resolver import dict_resolver
+
+from graphene.types.union import Union
 
 
 class NotificationType(DjangoObjectType):
@@ -37,14 +38,15 @@ class MatchNotificationType(DjangoObjectType):
     class Meta:
         model = models.MatchNotification
 
-
-class DataType(graphene.ObjectType):
-    date = graphene.String()
-    count = graphene.Int()
+class AllNotificationsType(graphene.Union):
 
     class Meta:
-        default_resolver = dict_resolver
-
+        types = (
+            NotificationType,
+            MoveNotificationType,
+            CoffeeNotificationType,
+            MatchNotificationType
+        )
 
 class DurationTripsResponse(graphene.ObjectType):
     moveNotifications = graphene.List(MoveNotificationType)
@@ -96,3 +98,6 @@ class EditTripResponse(graphene.ObjectType):
 class DeleteTripResponse(graphene.ObjectType):
     tripId = graphene.Int()
     ok = graphene.Boolean()
+
+class AllNotificationsResponse(graphene.ObjectType):
+    notifications = graphene.List(AllNotificationsType)

@@ -1,35 +1,19 @@
 import React from "react";
 import { Query, Mutation, MutationFn } from "react-apollo";
 import {
-  GetNotifictions,
-  GetNotifictionsVariables,
-  GetMoveNotifications,
-  GetMoveNotificationsVariables,
-  GetMatchNotifications,
-  GetCoffeeNotifications
+  GetAllNotifications,
+  GetAllNotificationsVariables
 } from "../../types/api";
 
 import NotificationPresenter from "./NotificationPresenter";
-import {
-  GET_NOTIFICATION,
-  GET_MOVE_NOTIFICATION,
-  MARK_AS_READ,
-  GET_MATCH_NOTIFICATION,
-  GET_COFFEE_NOTIFICATION
-} from "./NotificationQueries";
+import { GET_ALL_NOTIFICATION, MARK_AS_READ } from "./NotificationQueries";
 import { MarkAsRead, MarkAsReadVariables } from "../../types/api";
 
-class GetNotifictionsQuery extends Query<
-  GetNotifictions,
-  GetNotifictionsVariables
+class GetAllNotificationsQuery extends Query<
+  GetAllNotifications,
+  GetAllNotificationsVariables
 > {}
-class GetMoveNotifictionsQuery extends Query<
-  GetMoveNotifications,
-  GetMoveNotificationsVariables
-> {}
-class GetCoffeeNotificationsQuery extends Query<GetCoffeeNotifications> {}
 
-class GetMatchNotificationsQuery extends Query<GetMatchNotifications> {}
 class MarkAsReadMutation extends Mutation<MarkAsRead, MarkAsReadVariables> {}
 
 interface IState {
@@ -51,75 +35,32 @@ class NotificationContainer extends React.Component<any, IState> {
   public render() {
     const { page, modalOpen, notificationId } = this.state;
     return (
-      <GetCoffeeNotificationsQuery query={GET_COFFEE_NOTIFICATION}>
-        {({
-          data: getCoffeeNotificationsData,
-          loading: getCoffeeNotificationsLoading
-        }) => (
-          <GetMatchNotificationsQuery query={GET_MATCH_NOTIFICATION}>
-            {({
-              data: getMatchNotificationsData,
-              loading: getMatchNotificationsLoading
-            }) => (
-              <GetMoveNotifictionsQuery
-                query={GET_MOVE_NOTIFICATION}
-                variables={{ page }}
-              >
-                {({
-                  data: getMoveNotifications,
-                  loading: getMoveNotificationsLoading
-                }) => (
-                  <GetNotifictionsQuery
-                    query={GET_NOTIFICATION}
-                    variables={{ page }}
-                  >
-                    {({
-                      data: getNotifications,
-                      loading: getNotificationsLoading
-                    }) => (
-                      <MarkAsReadMutation
-                        mutation={MARK_AS_READ}
-                        variables={{
-                          notificationId: parseInt(notificationId, 10)
-                        }}
-                      >
-                        {markAsReadFn => {
-                          this.markAsReadFn = markAsReadFn;
-                          return (
-                            <NotificationPresenter
-                              getNotifications={getNotifications}
-                              getMoveNotifications={getMoveNotifications}
-                              getNotificationsLoading={getNotificationsLoading}
-                              getMoveNotificationsLoading={
-                                getMoveNotificationsLoading
-                              }
-                              getMatchNotificationsData={
-                                getMatchNotificationsData
-                              }
-                              getMatchNotificationsLoading={
-                                getMatchNotificationsLoading
-                              }
-                              getCoffeeNotificationsData={
-                                getCoffeeNotificationsData
-                              }
-                              getCoffeeNotificationsLoading={
-                                getCoffeeNotificationsLoading
-                              }
-                              modalOpen={modalOpen}
-                              toggleModal={this.toggleModal}
-                              onMarkRead={this.onMarkRead}
-                            />
-                          );
-                        }}
-                      </MarkAsReadMutation>
-                    )}
-                  </GetNotifictionsQuery>
-                )}
-              </GetMoveNotifictionsQuery>
-            )}
-          </GetMatchNotificationsQuery>
+      <GetAllNotificationsQuery
+        query={GET_ALL_NOTIFICATION}
+        variables={{ page }}
+      >
+        {({ data, loading }) => (
+          <MarkAsReadMutation
+            mutation={MARK_AS_READ}
+            variables={{
+              notificationId: parseInt(notificationId, 10)
+            }}
+          >
+            {markAsReadFn => {
+              this.markAsReadFn = markAsReadFn;
+              return (
+                <NotificationPresenter
+                  data={data}
+                  loading={loading}
+                  modalOpen={modalOpen}
+                  toggleModal={this.toggleModal}
+                  onMarkRead={this.onMarkRead}
+                />
+              );
+            }}
+          </MarkAsReadMutation>
         )}
-      </GetCoffeeNotificationsQuery>
+      </GetAllNotificationsQuery>
     );
   }
   public toggleModal = () => {

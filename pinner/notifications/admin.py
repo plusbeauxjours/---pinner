@@ -13,8 +13,8 @@ class NotificationAdmin(admin.ModelAdmin):
         'id',
         'actor',
         'target',
+        'read',
         'verb',
-        'read'
     )
 
 
@@ -31,6 +31,7 @@ class CoffeeNotificationAdmin(admin.ModelAdmin):
         'city',
         'target',
         'read',
+        'verb'
     )
 
 
@@ -47,6 +48,7 @@ class MatchNotificationAdmin(admin.ModelAdmin):
         'guest',
         'city',
         'read',
+        'verb'
     )
 
 
@@ -64,4 +66,5 @@ class MoveNotificationAdmin(admin.ModelAdmin):
         'read',
         'start_date',
         'end_date',
+        'verb'
     )

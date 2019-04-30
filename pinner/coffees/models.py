@@ -14,7 +14,7 @@ import datetime
 
 class Coffee (config_models.TimeStampedModel):
 
-    TARGET = (
+    TARGETS = (
         ('everyone', 'EVERYONE'),
         ('gender', 'GENDER'),
         ('nationality', 'NATIONALITY'),
@@ -25,7 +25,7 @@ class Coffee (config_models.TimeStampedModel):
     host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='coffee')
     duration = models.DurationField(default=datetime.timedelta(days=1))
     expires = models.DateTimeField(blank=True, null=True)
-    target = models.CharField(max_length=11, choices=TARGET, default='everyone')
+    target = models.CharField(max_length=11, choices=TARGETS, default='everyone')
 
     # caption = models.TextField(blank=True, null=True)
 

@@ -60,6 +60,15 @@ class Query(object):
             'endDate': graphene.Date(required=True)
         }
     )
+    get_all_notifications = graphene.Field(
+        types.AllNotificationsResponse,
+        resolver=queries.resolve_get_all_notifications,
+        required=True,
+        args={
+            'page': graphene.Int()
+        }
+    )
+    
 
 
 class Mutation(object):

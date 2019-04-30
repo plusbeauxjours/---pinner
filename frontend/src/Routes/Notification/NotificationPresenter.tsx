@@ -11,14 +11,8 @@ const SWrapper = styled(Wrapper)`
 `;
 
 interface IProps {
-  getNotifications?: any;
-  getNotificationsLoading: boolean;
-  getMoveNotifications?: any;
-  getMoveNotificationsLoading: boolean;
-  getMatchNotificationsData?: any;
-  getMatchNotificationsLoading: boolean;
-  getCoffeeNotificationsData: any;
-  getCoffeeNotificationsLoading: boolean;
+  data?: any;
+  loading: boolean;
   className?: string;
   modalOpen: boolean;
   toggleModal: () => void;
@@ -26,43 +20,20 @@ interface IProps {
 }
 
 const NotificationPresenter: React.SFC<IProps> = ({
-  getNotifications: {
-    getNotifications: { notifications: getNotifications = null } = {}
-  } = {},
-  getNotificationsLoading,
-  getMoveNotifications: {
-    getMoveNotifications: { notifications: getMoveNotifications = null } = {}
-  } = {},
-  getMoveNotificationsLoading,
-  getMatchNotificationsData: {
-    getMatchNotifications: {
-      matchNotifications: getMatchNotifications = null
-    } = {}
-  } = {},
-  getMatchNotificationsLoading,
-  getCoffeeNotificationsData: {
-    getCoffeeNotifications: {
-      coffeeNotifications: getCoffeeNotifications = null
-    } = {}
-  } = {},
-  getCoffeeNotificationsLoading,
+  data: { getAllNotifications: { notifications = null } = {} } = {},
+  loading,
   modalOpen,
   onMarkRead
 }) => {
-  if (
-    getNotificationsLoading ||
-    getMoveNotificationsLoading ||
-    getMatchNotificationsLoading ||
-    getCoffeeNotificationsLoading
-  ) {
+  if (loading) {
     return <Loader />;
-  } else if (getNotifications && getMoveNotifications) {
+  } else if (!loading && notifications) {
     return (
       <>
         {modalOpen && <Route path="/p/:id" component={CardDetail} />}
         <SWrapper>
-          {getNotifications &&
-            getNotifications.map(notification => {
+          {notifications &&
+            notifications.map(notification => {
               return (
                 <NotificationRow
                   id={notification.id}
@@ -71,54 +42,8 @@ const NotificationPresenter: React.SFC<IProps> = ({
                   actor={notification.actor.profile}
                   onMarkRead={onMarkRead}
                   isRead={notification.read}
-                />
-              );
-            })}
-        </SWrapper>
-        <SWrapper>
-          {getMoveNotifications &&
-            getMoveNotifications.map(notification => {
-              return (
-                <NotificationRow
-                  id={notification.id}
-                  key={notification.id}
-                  notification={notification}
-                  actor={notification.actor.profile}
-                  onMarkRead={onMarkRead}
-                  isRead={notification.read}
-                />
-              );
-            })}
-        </SWrapper>
-        <SWrapper>
-          {getMatchNotifications &&
-            getMatchNotifications.map(notification => {
-              return (
-                <NotificationRow
-                  id={notification.id}
-                  key={notification.id}
-                  notification={notification}
-                  actor={notification.host.profile}
-                  city={notification.city}
-                  onMarkRead={onMarkRead}
-                  isRead={notification.read}
-                />
-              );
-            })}
-        </SWrapper>
-        <SWrapper>
-          {getCoffeeNotifications &&
-            getCoffeeNotifications.map(notification => {
-              return (
-                <NotificationRow
-                  id={notification.id}
-                  key={notification.id}
-                  notification={notification}
-                  actor={notification.host.profile}
                   city={notification.city}
                   target={notification.target}
-                  onMarkRead={onMarkRead}
-                  isRead={notification.read}
                 />
               );
             })}

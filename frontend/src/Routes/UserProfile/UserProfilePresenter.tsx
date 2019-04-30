@@ -1092,9 +1092,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <SBold text={"COFFEES"} />
           </Title>
           <Container>
-            {console.log(user.profile.isSelf)}
-            {console.log(requestingCoffees)}
-
             {myCoffeeLoading && <Loader />}
             {!myCoffeeLoading &&
               user.profile.isSelf &&

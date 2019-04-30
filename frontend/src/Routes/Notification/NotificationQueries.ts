@@ -1,7 +1,73 @@
 import gql from "graphql-tag";
 
+export const GET_ALL_NOTIFICATION = gql`
+  query GetAllNotifications($page: Int!) {
+    getAllNotifications(page: $page) {
+      notifications {
+        __typename
+        ... on NotificationType {
+          id
+          actor {
+            username
+            profile {
+              avatar
+              currentCity {
+                cityName
+                country {
+                  countryName
+                }
+              }
+            }
+          }
+          verb
+          payload {
+            id
+            caption
+          }
+          comment {
+            message
+          }
+          read
+          naturalTime
+        }
+        ... on MoveNotificationType {
+          city {
+            cityName
+            country {
+              countryName
+              countryCode
+            }
+          }
+        }
+        ... on CoffeeNotificationType {
+          id
+          host {
+            profile {
+              username
+              avatar
+              currentCity {
+                cityName
+                country {
+                  countryName
+                }
+              }
+            }
+          }
+          target
+          payload {
+            expires
+          }
+        }
+        ... on MatchNotificationType {
+          id
+        }
+      }
+    }
+  }
+`;
+
 export const GET_NOTIFICATION = gql`
-  query GetNotifictions($page: Int!) {
+  query GetNotifications($page: Int!) {
     getNotifications(page: $page) {
       ok
       notifications {

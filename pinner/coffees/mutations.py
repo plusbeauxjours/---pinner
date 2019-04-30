@@ -26,6 +26,9 @@ class RequestCoffee(graphene.Mutation):
         if not user.coffee.filter(expires__gt=timezone.now()):
             try:
                 currentCity = location_models.City.objects.get(city_name=currentCity)
+                print(target)
+                print(currentCity)
+
                 coffee = models.Coffee.objects.create(
                     city=currentCity,
                     host=user,

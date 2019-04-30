@@ -9,6 +9,60 @@ from django.contrib.auth.models import User
 from locations import types as location_types
 
 @login_required
+def resolve_get_all_notifications(self, info, **kwargs):
+
+    user = info.context.user
+    profile = user.profile
+    followings = profile.followed_by.all()
+    following_profiles = user.profile.followings.all()
+
+    page = kwargs.get('page', 0)
+
+
+
+    upload_notifications = models.Notification.objects.filter(
+        actor__profile__in=following_profiles, verb='upload')
+
+    notifications = models.Notification.objects.filter(target=user)
+
+    combined = notifications.union(upload_notifications).order_by(
+        '-created_at')
+
+
+    coffee_notifications = models.CoffeeNotification.objects.filter(
+        verb='coffee', city=profile.current_city)
+
+    everyone_coffee_notifications = coffee_notifications.filter(target='everyone')
+
+    nationality_coffee_notifications = coffee_notifications.filter(
+        target='nationality', host__profile__nationality=profile.nationality)
+
+    gender_coffee_notifications = coffee_notifications.filter(
+        target='gender', host__profile__gender=profile.gender)
+
+    followers_notifications = models.CoffeeNotification.objects.filter(
+        verb='coffee',  target='followers',  host__profile__in=followings)
+
+    coffee_combined = everyone_coffee_notifications.union(nationality_coffee_notifications).union(gender_coffee_notifications).union(followers_notifications)
+
+
+
+    match_notifications = models.MatchNotification.objects.filter(verb='match', host=user)
+
+
+
+    notifications = models.MoveNotification.objects.filter(
+        actor__profile__in=following_profiles, verb='move')
+    
+    movenotifications_combined = everyone_coffee_notifications.union(nationality_coffee_notifications).union(gender_coffee_notifications).union(followers_notifications)
+
+
+    print(movenotifications_combined)
+    all_combined = (combined|coffee_combined|match_notifications|movenotifications_combined).order_by('-created_at')[:8]
+
+    return types.AllNotificationsResponse(notifications=all_combined)
+
+@login_required
 def resolve_get_notifications(self, info, **kwargs):
 
     user = info.context.user

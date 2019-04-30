@@ -17,7 +17,7 @@ export const getAqi = async (latitude, longitude) => {
 };
 
 export const getWeather = async (latitude, longitude) => {
-  const URL = `http://api.openweathermap.org/data/2.5/weather?latitude=${latitude}&lon=${longitude}&appid=${OPEN_WEATHER_MAP_KEY}`;
+  const URL = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${OPEN_WEATHER_MAP_KEY}`;
   const { data } = await axios(URL);
   console.log(data);
   if (data) {
