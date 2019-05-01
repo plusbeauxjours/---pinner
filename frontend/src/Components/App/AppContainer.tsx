@@ -6,7 +6,6 @@ import Router from "../Router";
 import GlobalStyles from "../../Styles/global-styles";
 import theme from "../../Styles/theme";
 import { APP_QUERIES } from "./AppQueries.local";
-// import Footer from "../Footer";
 import "react-toastify/dist/ReactToastify.css";
 
 export default () => (

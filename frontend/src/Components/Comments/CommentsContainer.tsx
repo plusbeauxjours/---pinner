@@ -90,6 +90,7 @@ class CommentsContainer extends React.Component<IProps, IState> {
                         editCommentMessage={this.editCommentMessage}
                         editCommentOnKeyUp={this.editCommentOnKeyUp}
                         message={message}
+                        cardId={cardId}
                         commentId={commentId}
                         toggleLikeComment={this.toggleLikeComment}
                       />
