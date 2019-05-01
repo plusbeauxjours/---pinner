@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "src/Styles/typed-components";
 import { SmallHeartEmpty, SmallHeartFilled, Edit, Delete } from "../Icons";
 
@@ -19,7 +19,7 @@ const Button = styled.span`
 `;
 
 interface IProps {
-  toggleLikeComment: (commentId: string, isLiked: boolean) => void;
+  toggleLikeComment: (commentId: string) => void;
   editCommentGetId: (commentId: string) => void;
   deleteCommentGetId: (commentId: string) => void;
   isLiked: boolean;
@@ -27,16 +27,17 @@ interface IProps {
 }
 
 const CommentButtons: React.SFC<IProps> = ({
-  toggleLikeComment,
   editCommentGetId,
   deleteCommentGetId,
   isLiked,
   commentId
 }) => {
+  const [like, setLike] = useState(isLiked);
+
   return (
     <Buttons>
-      <Button onClick={() => toggleLikeComment(commentId, isLiked)}>
-        {isLiked ? <SmallHeartFilled /> : <SmallHeartEmpty />}
+      <Button onClick={() => setLike(!like)}>
+        {like ? <SmallHeartFilled /> : <SmallHeartEmpty />}
       </Button>
       <Button onClick={() => editCommentGetId(commentId)}>
         <Edit />

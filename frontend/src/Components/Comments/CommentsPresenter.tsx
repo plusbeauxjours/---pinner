@@ -57,7 +57,7 @@ interface IProps {
   editCommentOnKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   message: string;
   commentId: string;
-  toggleLikeComment: (commentId: string, isLiked: boolean) => void;
+  toggleLikeComment: (commentId: string) => void;
 }
 
 const CommentsPresenter: React.SFC<IProps> = ({

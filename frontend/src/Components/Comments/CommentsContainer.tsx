@@ -30,10 +30,10 @@ interface IProps {
 }
 
 interface IState {
-  isLiked: boolean;
   message: string;
   commentId: string;
   commentEditMode: boolean;
+  openedComment: boolean;
 }
 
 class CommentsContainer extends React.Component<IProps, IState> {
@@ -42,10 +42,10 @@ class CommentsContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      isLiked: props.isLiked,
       message: props.message,
       commentId: null,
-      commentEditMode: false
+      commentEditMode: false,
+      openedComment: props.openedComment
     };
   }
 
@@ -126,7 +126,7 @@ class CommentsContainer extends React.Component<IProps, IState> {
       return;
     }
   };
-  public toggleLikeComment = (commentId, isLiked) => {
+  public toggleLikeComment = commentId => {
     const { cardId } = this.props;
     this.toggleLikeCommentFn({
       variables: {
@@ -134,10 +134,6 @@ class CommentsContainer extends React.Component<IProps, IState> {
         commentId: parseInt(commentId, 10)
       }
     });
-    this.setState({
-      isLiked
-    } as any);
-    console.log(this.state);
   };
   public onCompletedEditComment = data => {
     const { commentEditMode } = this.state;
