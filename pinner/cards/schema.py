@@ -76,5 +76,5 @@ class Mutation(object):
     add_comment = mutations.AddComment.Field(required=True)
     edit_comment = mutations.EditComment.Field(required=True)
     delete_comment = mutations.DeleteComment.Field(required=True)
-    like_comment = mutations.LikeComment.Field(required=True)
+    toggle_like_comment = mutations.ToggleLikeComment.Field(required=True)
 

@@ -28,8 +28,8 @@ export const EDIT_COMMENT = gql`
 `;
 
 export const TOGGLE_LIKE_COMMENT = gql`
-  mutation LikeComment($cardId: Int!, $commentId: Int!) {
-    likeComment(cardId: $cardId, commentId: $commentId) {
+  mutation ToggleLikeComment($cardId: Int!, $commentId: Int!) {
+    toggleLikeComment(cardId: $cardId, commentId: $commentId) {
       ok
     }
   }

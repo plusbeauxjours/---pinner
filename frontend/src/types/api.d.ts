@@ -245,19 +245,19 @@ export interface EditCommentVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: LikeComment
+// GraphQL mutation operation: ToggleLikeComment
 // ====================================================
 
-export interface LikeComment_likeComment {
-  __typename: "LikeCommentResponse";
+export interface ToggleLikeComment_toggleLikeComment {
+  __typename: "ToggleLikeCommentResponse";
   ok: boolean | null;
 }
 
-export interface LikeComment {
-  likeComment: LikeComment_likeComment;
+export interface ToggleLikeComment {
+  toggleLikeComment: ToggleLikeComment_toggleLikeComment;
 }
 
-export interface LikeCommentVariables {
+export interface ToggleLikeCommentVariables {
   cardId: number;
   commentId: number;
 }
@@ -475,6 +475,7 @@ export interface AddComment_addComment_comment {
   message: string;
   edited: boolean;
   creator: AddComment_addComment_comment_creator | null;
+  isLiked: boolean | null;
 }
 
 export interface AddComment_addComment {

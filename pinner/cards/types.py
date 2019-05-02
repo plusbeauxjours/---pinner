@@ -64,7 +64,7 @@ class LikeCardResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
 
-class LikeCommentResponse(graphene.ObjectType):
+class ToggleLikeCommentResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
 

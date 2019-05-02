@@ -289,7 +289,7 @@ class DeleteComment(graphene.Mutation):
 
 
 
-class LikeComment(graphene.Mutation):
+class ToggleLikeComment(graphene.Mutation):
 
     """ Like a Card """
 
@@ -297,7 +297,7 @@ class LikeComment(graphene.Mutation):
         cardId = graphene.Int(required=True)
         commentId = graphene.Int(required=True)
 
-    Output = types.LikeCommentResponse
+    Output = types.ToggleLikeCommentResponse
 
     @login_required
     def mutate(self, info, **kwargs):
@@ -327,10 +327,10 @@ class LikeComment(graphene.Mutation):
                         actor=user, target=comment.creator, verb='like_comment', card=card, comment=comment
                     )
                     notification.delete()
-                    return types.LikeCommentResponse(ok=True)
+                    return types.ToggleLikeCommentResponse(ok=True)
                 except:
                     pass
-                return types.LikeCommentResponse(ok=True)
+                return types.ToggleLikeCommentResponse(ok=True)
 
             except models.LikeComment.DoesNotExist:
                 pass
@@ -342,9 +342,9 @@ class LikeComment(graphene.Mutation):
                     notification_models.Notification.objects.create(
                         actor=user, target=comment.creator, verb="like_comment", card=card, comment=comment
                     )
-                return types.LikeCommentResponse(ok=True)
+                return types.ToggleLikeCommentResponse(ok=True)
 
             except IntegrityError as e:
                 raise Exception("Can't Like Card")
         else:
-            return types.LikeCommentResponse(ok=False)
+            return types.ToggleLikeCommentResponse(ok=False)
