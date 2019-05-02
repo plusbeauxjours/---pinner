@@ -21,7 +21,6 @@ const Button = styled.span`
 `;
 
 interface IProps {
-  toggleLikeComment: (commentId: string) => void;
   editCommentGetId: (commentId: string) => void;
   deleteCommentGetId: (commentId: string) => void;
   isLiked: boolean;

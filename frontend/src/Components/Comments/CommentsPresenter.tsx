@@ -58,7 +58,6 @@ interface IProps {
   message: string;
   cardId: string;
   commentId: string;
-  toggleLikeComment: (commentId: string) => void;
 }
 
 const CommentsPresenter: React.SFC<IProps> = ({
@@ -72,8 +71,7 @@ const CommentsPresenter: React.SFC<IProps> = ({
   editCommentOnKeyUp,
   message,
   cardId,
-  commentId,
-  toggleLikeComment
+  commentId
 }) => {
   if (commentsLoading) {
     return <Loader />;
@@ -105,7 +103,6 @@ const CommentsPresenter: React.SFC<IProps> = ({
                 <Back>
                   {comment.creator.profile.isSelf && (
                     <CommentButtons
-                      toggleLikeComment={toggleLikeComment}
                       editCommentGetId={editCommentGetId}
                       deleteCommentGetId={deleteCommentGetId}
                       isLiked={comment.isLiked}

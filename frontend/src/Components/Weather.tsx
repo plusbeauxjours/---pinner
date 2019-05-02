@@ -27,8 +27,6 @@ interface IProps {
 }
 
 interface IState {
-  latitude: number;
-  longitude: number;
   aqi: number;
   icon: string;
   humidity: number;
@@ -40,8 +38,6 @@ class Weather extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      latitude: props.latitude,
-      longitude: props.longitude,
       aqi: 0,
       icon: null,
       humidity: 0,
@@ -50,8 +46,9 @@ class Weather extends React.Component<IProps, IState> {
     };
   }
   public componentDidMount() {
-    const { latitude, longitude } = this.state;
+    const { latitude, longitude } = this.props;
     this.getWeather(latitude, longitude);
+    console.log(latitude, longitude);
   }
   public render() {
     const { aqi, icon, humidity, temp, chill } = this.state;

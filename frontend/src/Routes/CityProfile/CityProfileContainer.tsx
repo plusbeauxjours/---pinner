@@ -24,8 +24,6 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   page: number;
-  latitude: number;
-  longitude: number;
   coffeeReportModalOpen: boolean;
 }
 
@@ -37,8 +35,6 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       page: 0,
-      latitude: 0,
-      longitude: 0,
       coffeeReportModalOpen: false
     };
   }
