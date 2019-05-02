@@ -16,6 +16,7 @@ export const GET_CARDS = gql`
       countryName: $countryName
       continentName: $continentName
     ) {
+      hasNextPage
       cards {
         ...CardParts
       }

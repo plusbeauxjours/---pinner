@@ -48,36 +48,49 @@ def resolve_get_cards(self, info, **kwargs):
 
     user = info.context.user
     page = kwargs.get('page', 0)
+    offset = 12 * page
+
     location = kwargs.get('location')
     cityName = kwargs.get('cityName')
     countryName = kwargs.get('countryName')
     continentName = kwargs.get('continentName')
 
+    nextPage = page+1
+    print(page)
+
     if location == "city":
         try:
-            cards = models.Card.objects.filter(city__city_name=cityName).order_by(
-                '-created_at')[:12]
-            return types.GetCardsResponse(cards=cards)
+            city = location_models.City.objects.get(city_name=cityName)
+            print(city)
+            cards = city.cards.all().order_by('-created_at')[offset:12 + offset]
+            # cards = models.Card.objects.filter(city__city_name=cityName).order_by(
+            #     '-created_at')[offset:12 + offset]
+            hasNextPage = offset < city.card_count
+            print(offset)
+            print(city.card_count)
+            print(hasNextPage)
+
+            return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')
 
     elif location == "country":
         try:
-            cards = models.Card.objects.filter(city__country__country_name=countryName).order_by('-created_at')[:12]
-            return types.GetCardsResponse(cards=cards)
+            cards = models.Card.objects.filter(city__country__country_name=countryName).order_by('-created_at')[offset:12 + offset]
+            return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')
 
     elif location == "continent":
         try:
             cards = models.Card.objects.filter(
-                city__country__continent__continent_name=continentName).order_by('-created_at')[:12]
-            return types.GetCardsResponse(cards=cards)
+                city__country__continent__continent_name=continentName).order_by('-created_at')[offset:12 + offset]
+            return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')
 
     else:
-        return types.GetCardsResponse(cards=None)
+        return types.GetCardsResponse(cards=None, page=nextPage, hasNextPage=hasNextPage)
 
 
 @login_required

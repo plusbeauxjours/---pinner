@@ -146,4 +146,6 @@ class EditCommentResponse(graphene.ObjectType):
 
 
 class GetCardsResponse(graphene.ObjectType):
+    page = graphene.Int()
+    hasNextPage = graphene.Boolean()
     cards = graphene.List(CardType)

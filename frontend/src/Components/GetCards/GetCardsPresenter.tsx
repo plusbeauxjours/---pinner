@@ -4,6 +4,8 @@ import Bold from "../../Components/Bold";
 import Loader from "../../Components/Loader";
 import CardGrid from "../../Components/CardGrid";
 
+import InfiniteScroll from "react-infinite-scroller";
+
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
@@ -24,23 +26,28 @@ const SBold = styled(Bold)`
 interface IProps {
   data?: any;
   loading: boolean;
+  loadMore: any;
 }
 
 const GetCardsPresenter: React.SFC<IProps> = ({
-  data: { getCards: { cards = null } = {} } = {},
-  loading
+  data: { getCards: { cards = null, hasNextPage = false } = {} } = {},
+  loading,
+  loadMore
 }) => {
   if (loading) {
+    {
+      console.log(hasNextPage);
+    }
     return <Loader />;
   } else if (cards && cards.length !== 0) {
     return (
-      <>
+      <InfiniteScroll hasMore={true} loader={<Loader />} loadMore={loadMore}>
         <GreyLine />
         <Title>
           <SBold text={"POSTS"} />
         </Title>
         <CardGrid cards={cards} />
-      </>
+      </InfiniteScroll>
     );
   }
   return null;

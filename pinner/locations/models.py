@@ -28,10 +28,6 @@ class Country (config_models.TimeStampedModel):
     def city_count(self):
         return self.cities.all().count()
 
-    @property
-    def card_count(self):
-        return self.cards.all().count()
-
     def __str__(self):
         return self.country_name
 
