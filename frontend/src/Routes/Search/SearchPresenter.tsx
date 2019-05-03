@@ -43,7 +43,7 @@ const Box = styled.div`
   }
 `;
 
-const SBold = styled(Bold)`
+const SText = styled(Bold)`
   display: flex;
   font-size: 20px;
   font-weight: 100;
@@ -85,7 +85,7 @@ const SearchPresenter: React.SFC<IProps> = ({
       <SWrapper>
         {users && users.length > 0 && (
           <>
-            <SBold text={"USERS"} />
+            <SText text={"USERS"} />
             <Container>
               <Box>
                 <UserGrid users={users} />
@@ -97,7 +97,7 @@ const SearchPresenter: React.SFC<IProps> = ({
 
         {cities && cities.length > 0 && (
           <>
-            <SBold text={"CITIES"} />
+            <SText text={"CITIES"} />
             <Container>
               <Box>
                 <LocationGrid cities={cities} type={"city"} />
@@ -108,7 +108,7 @@ const SearchPresenter: React.SFC<IProps> = ({
         )}
         {countries && countries.length > 0 && (
           <>
-            <SBold text={"COUNTRIES"} />
+            <SText text={"COUNTRIES"} />
             <Container>
               <Box>
                 <LocationGrid countries={countries} type={"country"} />
@@ -119,7 +119,7 @@ const SearchPresenter: React.SFC<IProps> = ({
         )}
         {continents && continents.length > 0 && (
           <>
-            <SBold text={"CONTINENTS"} />
+            <SText text={"CONTINENTS"} />
             <Container>
               <Box>
                 <LocationGrid continents={continents} type={"continent"} />
@@ -130,7 +130,7 @@ const SearchPresenter: React.SFC<IProps> = ({
         )}
         {cards && cards.length > 0 && (
           <>
-            <SBold text={"POSTS"} />
+            <SText text={"POSTS"} />
             <CardGrid cards={cards} />
             <GreyLine />
           </>

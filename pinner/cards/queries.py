@@ -56,7 +56,6 @@ def resolve_get_cards(self, info, **kwargs):
     continentName = kwargs.get('continentName')
 
     nextPage = page+1
-    print(page)
 
     if location == "city":
         try:
@@ -165,16 +164,23 @@ def resolve_latest_cards(self, info):
 def resolve_get_duration_cards(self, info, **kwargs):
 
     user = info.context.user
+    page = kwargs.get('page', 0)
+    offset = 12 * page
+
     cityName = kwargs.get('cityName')
     startDate = kwargs.get('startDate')
     endDate = kwargs.get('endDate')
-    page = kwargs.get('page', 0)
+
+    nextPage = page+1
 
     try:
         city = location_models.City.objects.get(city_name=cityName)
         cards = city.cards.filter(created_at__range=(startDate, endDate))
-        print(cards)
-        return types.DurationCardsResponse(cards=cards)
+        cardCount = cards.count()
+        cards = cards[offset:12 + offset]
+        hasNextPage = offset < cardCount
+        print(hasNextPage)
+        return types.DurationCardsResponse(cards=cards,page=nextPage, hasNextPage=hasNextPage)
 
     except models.Card.DoesNotExist:
         raise Exception('Card not found')

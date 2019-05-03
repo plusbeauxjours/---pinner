@@ -37,7 +37,7 @@ const ExtendedInput = styled(Input)`
   height: 48px;
 `;
 
-const SBold = styled(Bold)`
+const SText = styled(Bold)`
   margin-right: 5px;
 `;
 
@@ -83,7 +83,7 @@ const CommentsPresenter: React.SFC<IProps> = ({
             <Comments key={comment.id}>
               <Container>
                 <Front>
-                  <SBold text={comment.creator.username} />
+                  <SText text={comment.creator.username} />
                   {commentEditMode && commentId === comment.id ? (
                     <ExtendedInput
                       onChange={editCommentMessage}

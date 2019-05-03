@@ -56,10 +56,6 @@ class FeedResponse(graphene.ObjectType):
     cards = graphene.List(CardType)
 
 
-class DurationCardsResponse(graphene.ObjectType):
-    cards = graphene.List(CardType)
-
-
 class LikeCardResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
@@ -146,6 +142,12 @@ class EditCommentResponse(graphene.ObjectType):
 
 
 class GetCardsResponse(graphene.ObjectType):
+    page = graphene.Int()
+    hasNextPage = graphene.Boolean()
+    cards = graphene.List(CardType)
+
+
+class DurationCardsResponse(graphene.ObjectType):
     page = graphene.Int()
     hasNextPage = graphene.Boolean()
     cards = graphene.List(CardType)

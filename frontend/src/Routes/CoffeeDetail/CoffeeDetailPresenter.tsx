@@ -67,7 +67,7 @@ const SAvatar = styled(Avatar)`
   margin-bottom: 15px;
 `;
 
-const SBold = styled(Bold)`
+const SText = styled(Bold)`
   margin-bottom: 3px;
   display: block;
 `;
@@ -102,7 +102,7 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
         <FormModal>
           <SWrapper>
             <SAvatar url={coffee.host.profile.avatar} size="md" />
-            <SBold text={coffee.host.username} />
+            <SText text={coffee.host.username} />
             <Location>
               {coffee.host.profile.currentCity.cityName},
               {coffee.host.profile.currentCity.country.countryName}
@@ -115,24 +115,24 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
             <Location />
 
             <Location>
-              <SBold text={"FOLLOWERS "} />
+              <SText text={"FOLLOWERS "} />
               {coffee.host.profile.followersCount}
             </Location>
             <Location>
-              <SBold text={"FOLLOWINGS "} />
+              <SText text={"FOLLOWINGS "} />
               {coffee.host.profile.followingCount}
             </Location>
             <Location>
-              <SBold text={"TRIPS "} />
+              <SText text={"TRIPS "} />
               {coffee.host.profile.tripCount}
             </Location>
 
-            <SBold text={coffee.naturalTime} />
+            <SText text={coffee.naturalTime} />
             <Location>
-              <SBold text={coffee.target} />
+              <SText text={coffee.target} />
             </Location>
             <Location>
-              <SBold text={coffee.status} />
+              <SText text={coffee.status} />
             </Location>
             {coffee.status !== "expired" && (
               <CoffeeBtn

@@ -153,7 +153,7 @@ const CaptionContainer = styled.div`
   }
 `;
 
-const SBold = styled(Bold)`
+const SText = styled(Bold)`
   margin-right: 5px;
 `;
 
@@ -317,7 +317,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
             <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
             <CaptionContainer>
               <Caption>
-                <SBold text={creatorUsername} />
+                <SText text={creatorUsername} />
                 {caption}
               </Caption>
             </CaptionContainer>
@@ -406,7 +406,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
               </PhotoHeader>
               <CaptionContainer>
                 <Caption>
-                  <SBold text={creatorUsername} />
+                  <SText text={creatorUsername} />
                   {editMode || cardEditMode ? (
                     <ExtendedInput
                       onChange={onInputChange}

@@ -18,7 +18,7 @@ const Title = styled.div`
   margin-top: 10px;
 `;
 
-const SBold = styled(Bold)`
+const SText = styled(Bold)`
   font-size: 20px;
   font-weight: 200;
 `;
@@ -35,16 +35,17 @@ const GetCardsPresenter: React.SFC<IProps> = ({
   loadMore
 }) => {
   if (loading) {
-    {
-      console.log(hasNextPage);
-    }
     return <Loader />;
   } else if (cards && cards.length !== 0) {
     return (
-      <InfiniteScroll hasMore={true} loader={<Loader />} loadMore={loadMore}>
+      <InfiniteScroll
+        hasMore={hasNextPage}
+        loader={<Loader />}
+        loadMore={loadMore}
+      >
         <GreyLine />
         <Title>
-          <SBold text={"POSTS"} />
+          <SText text={"POSTS"} />
         </Title>
         <CardGrid cards={cards} />
       </InfiniteScroll>

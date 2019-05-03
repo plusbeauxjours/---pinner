@@ -32,7 +32,7 @@ const Title = styled.div`
   margin-top: 10px;
 `;
 
-const SBold = styled(Bold)`
+const SText = styled(Bold)`
   font-size: 20px;
   font-weight: 100;
 `;
@@ -53,7 +53,7 @@ const MatchPresenter: React.SFC<IProps> = ({
       <>
         <TallWrapper>
           <Title>
-            <SBold text={"MATCHES"} />
+            <SText text={"MATCHES"} />
           </Title>
           <Container>
             <MatchGrid matches={matches} />

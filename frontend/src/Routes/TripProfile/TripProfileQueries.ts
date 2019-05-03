@@ -75,6 +75,7 @@ export const GET_DURATION_CARDS = gql`
       startDate: $startDate
       endDate: $endDate
     ) {
+      hasNextPage
       cards {
         ...CardParts
       }

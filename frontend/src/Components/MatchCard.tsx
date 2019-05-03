@@ -23,7 +23,7 @@ const SAvatar = styled(Avatar)`
   margin-bottom: 15px;
 `;
 
-const SBold = styled(Bold)`
+const SText = styled(Bold)`
   margin-bottom: 3px;
   display: block;
 `;
@@ -67,7 +67,7 @@ const MatchCard: React.SFC<IProps> = ({
         {isGuest ? (
           <>
             <SAvatar url={host.profile.avatar} size="sm" />
-            <SBold text={host.username} />
+            <SText text={host.username} />
             <Location>
               {currentCity}, {currentCountry}
             </Location>
@@ -82,7 +82,7 @@ const MatchCard: React.SFC<IProps> = ({
         ) : (
           <>
             <SAvatar url={guest.profile.avatar} size="sm" />
-            <SBold text={guest.username} />
+            <SText text={guest.username} />
             <Location>
               {currentCity}, {currentCountry}
             </Location>

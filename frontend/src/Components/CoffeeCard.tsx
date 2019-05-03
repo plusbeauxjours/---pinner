@@ -62,7 +62,7 @@ const Icon = styled.div`
   height: 100px;
 `;
 
-const SBold = styled(Bold)`
+const SText = styled(Bold)`
   margin-bottom: 3px;
   display: flex;
   justify-content: center;
@@ -124,7 +124,7 @@ const CoffeeCard: React.SFC<IProps> = ({
                       <LoaderData />
                     </Icon>
                     <Location>{id}</Location>
-                    <SBold text={username} />
+                    <SText text={username} />
                     <Location>{target}</Location>
                     <Location>{naturalTime}</Location>
                   </Link>
@@ -140,7 +140,7 @@ const CoffeeCard: React.SFC<IProps> = ({
                   </ListOverlay>
                   <Link to={`/c/${id}`}>
                     <Location>{id}</Location>
-                    <SBold text={username} />
+                    <SText text={username} />
                     <Location>{target}</Location>
                     <Location>{expires}</Location>
                   </Link>
@@ -158,7 +158,7 @@ const CoffeeCard: React.SFC<IProps> = ({
                   )}
                   <Link to={`/c/${id}`}>
                     <SAvatar url={avatar} size="md" />
-                    <SBold text={username} />
+                    <SText text={username} />
                     <Location>
                       {target}
                       {id}
@@ -183,7 +183,7 @@ const CoffeeCard: React.SFC<IProps> = ({
                   )}
                   <Link to={`/c/${id}`}>
                     <SAvatar url={avatar} size="md" />
-                    <SBold text={username} />
+                    <SText text={username} />
                     <Location>
                       {target}
                       {id}

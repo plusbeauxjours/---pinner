@@ -47,7 +47,7 @@ const SAvatar = styled(Avatar)`
   border-radius: 3px;
 `;
 
-const SBold = styled(Bold)`
+const SText = styled(Bold)`
   display: flex;
 `;
 
@@ -79,7 +79,7 @@ const LocationRow: React.SFC<IProps> = ({
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />
                     <HeaderColumn>
-                      <SBold text={cityName} />
+                      <SText text={cityName} />
                       <Location>{countryName}</Location>
                     </HeaderColumn>
                   </Header>
@@ -95,7 +95,7 @@ const LocationRow: React.SFC<IProps> = ({
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />
                     <HeaderColumn>
-                      <SBold text={countryName} />
+                      <SText text={countryName} />
                       <Location>{continentName}</Location>
                     </HeaderColumn>
                   </Header>
@@ -111,7 +111,7 @@ const LocationRow: React.SFC<IProps> = ({
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />
                     <HeaderColumn>
-                      <SBold text={cityName} />
+                      <SText text={cityName} />
                       <Location>{countryName}</Location>
                     </HeaderColumn>
                   </Header>
@@ -127,7 +127,7 @@ const LocationRow: React.SFC<IProps> = ({
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />
                     <HeaderColumn>
-                      <SBold text={countryName} />
+                      <SText text={countryName} />
                       <Location>{continentName}</Location>
                     </HeaderColumn>
                   </Header>
@@ -143,7 +143,7 @@ const LocationRow: React.SFC<IProps> = ({
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />
                     <HeaderColumn>
-                      <SBold text={cityName} />
+                      <SText text={cityName} />
                       <Location>{countryName}</Location>
                     </HeaderColumn>
                   </Header>
@@ -159,7 +159,7 @@ const LocationRow: React.SFC<IProps> = ({
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />
                     <HeaderColumn>
-                      <SBold text={cityName} />
+                      <SText text={cityName} />
                       <Location>{countryName}</Location>
                     </HeaderColumn>
                   </Header>
@@ -175,7 +175,7 @@ const LocationRow: React.SFC<IProps> = ({
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />
                     <HeaderColumn>
-                      <SBold text={countryName} />
+                      <SText text={countryName} />
                       <Location>{continentName}</Location>
                     </HeaderColumn>
                   </Header>
@@ -191,7 +191,7 @@ const LocationRow: React.SFC<IProps> = ({
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />
                     <HeaderColumn>
-                      <SBold text={continentName} />
+                      <SText text={continentName} />
                     </HeaderColumn>
                   </Header>
                 </Container>

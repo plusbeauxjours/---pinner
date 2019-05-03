@@ -41,7 +41,7 @@ const TimeStamp = styled.span`
   color: ${props => props.theme.greyColor};
 `;
 
-const SBold = styled(Bold)`
+const SText = styled(Bold)`
   display: flex;
   align-items: center;
 `;
@@ -56,7 +56,7 @@ interface IProps {
 const FootprintRow: React.SFC<IProps> = ({ footprint }) => (
   <Container>
     <Header>
-      <SBold text={"Moved"} />
+      <SText text={"Moved"} />
       <TimeStamp>{footprint.naturalTime}</TimeStamp>
     </Header>
     <MHeader>

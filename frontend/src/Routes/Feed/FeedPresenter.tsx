@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { keyframes } from "styled-components";
 
-import { Upload } from "../../Icons";
 import styled from "../../Styles/typed-components";
 
 import Loader from "../../Components/Loader";
@@ -12,9 +11,9 @@ import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import UserRow from "../../Components/UserRow";
 import UserGrid from "../../Components/UserGrid";
-import CoffeeGrid from "../../Components/CoffeeGrid";
 import Weather from "src/Components/Weather";
 import LoaderCoffee from "src/Components/LoaderCoffee";
+import AvatarGrid from "../../Components/AvatarGrid";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -62,12 +61,12 @@ const User = styled.div`
   padding: 5px;
 `;
 
-const SBold = styled(Bold)`
+const SText = styled(Bold)`
   display: flex;
   align-self: flex-end;
 `;
 
-const UBold = styled(SBold)`
+const UBold = styled(SText)`
   font-weight: 100;
   font-size: 7px;
 `;
@@ -207,21 +206,17 @@ const SeeAll = styled.p`
   cursor: pointer;
 `;
 
-const Icon = styled.span`
-  display: flex;
+const SSText = styled(Bold)`
+  font-size: 12px;
+  font-weight: 100;
+`;
+const SmallTitle = styled(Title)`
+  flex-direction: column;
   align-items: center;
-  justify-items: center;
-  margin: 0 60px 0 60px;
-  &:last-child {
-    margin-right: 0;
-  }
-  svg {
-    fill: white;
-    transition: fill 0.2s ease-in-out;
-    &:hover {
-      fill: grey;
-    }
-  }
+`;
+
+const SmallGreyLine = styled(GreyLine)`
+  width: 40%;
 `;
 
 interface ITheme {
@@ -425,9 +420,8 @@ const FeedPresenter: React.SFC<IProps> = ({
               <Link to={`/city/${city.cityName}`}>
                 <Header>
                   <CityPhoto src={city.cityPhoto} size={"sm"} />
-
                   <HeaderColumn>
-                    <SBold text={city.cityName} />
+                    <SText text={city.cityName} />
                     <Location>{city.country.countryName}</Location>
                   </HeaderColumn>
                 </Header>
@@ -469,7 +463,7 @@ const FeedPresenter: React.SFC<IProps> = ({
           </PHeader>
           <GreyLine />
           <Title>
-            <SBold text={"RECOMMAND USER"} />
+            <SText text={"RECOMMAND USER"} />
             <SeeAll onClick={toggleRecommandUserSeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>
@@ -482,25 +476,18 @@ const FeedPresenter: React.SFC<IProps> = ({
             </Box>
           </Container>
           <GreyLine />
-          <Title>
-            <SBold text={"NEED SOME COFFEE"} />
-          </Title>
-          <Container>
-            <Icon onClick={toggleRequestModal}>
-              <Upload />
-            </Icon>
-            <Box>
-              {!coffeeLoading && coffees ? (
-                <CoffeeGrid
-                  coffees={coffees}
-                  toggleCoffeeReportModal={toggleCoffeeReportModal}
-                  getRequestingCoffeeId={getRequestingCoffeeId}
-                />
-              ) : (
-                <Loader />
-              )}
-            </Box>
-          </Container>
+          {!coffeeLoading && coffees && coffees.length !== 0 ? (
+            <>
+              <SmallTitle>
+                <SmallGreyLine />
+                <SSText text={"NEED SOME COFFEE NOW"} />
+              </SmallTitle>
+              <AvatarGrid
+                coffees={coffees}
+                toggleRequestModal={toggleRequestModal}
+              />
+            </>
+          ) : null}
           <LoaderCoffee />
           <GreyLine />
           {cards &&

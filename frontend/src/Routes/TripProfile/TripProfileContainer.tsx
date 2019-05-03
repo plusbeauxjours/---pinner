@@ -30,7 +30,6 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   page: number;
-  payload: string;
   cityName: string;
   cityPhoto: string;
   countryName: string;
@@ -39,6 +38,7 @@ interface IState {
 }
 
 class TripProfileContainer extends React.Component<IProps, IState> {
+  public fetchMore;
   constructor(props) {
     super(props);
     const { location: { state = {} } = {} } = ({} = props);
@@ -47,7 +47,6 @@ class TripProfileContainer extends React.Component<IProps, IState> {
     }
     this.state = {
       page: 0,
-      payload: "profile",
       cityName: state.cityName,
       cityPhoto: state.cityPhoto,
       countryName: state.countryName,
@@ -83,23 +82,31 @@ class TripProfileContainer extends React.Component<IProps, IState> {
                         query={GET_DURATION_CARDS}
                         variables={{ page, cityName, startDate, endDate }}
                       >
-                        {({ data: cardsData, loading: cardsLoading }) => (
-                          <TripProfilePresenter
-                            cityName={cityName}
-                            cityPhoto={cityPhoto}
-                            countryName={countryName}
-                            startDate={startDate}
-                            endDate={endDate}
-                            cardsData={cardsData}
-                            cardsLoading={cardsLoading}
-                            profileDate={profileDate}
-                            profileLoading={profileLoading}
-                            nearCitiesData={nearCitiesData}
-                            nearCitiesLoading={nearCitiesLoading}
-                            nearCountriesData={nearCountriesData}
-                            nearCountriesLoading={nearCountriesLoading}
-                          />
-                        )}
+                        {({
+                          data: cardsData,
+                          loading: cardsLoading,
+                          fetchMore
+                        }) => {
+                          this.fetchMore = fetchMore;
+                          return (
+                            <TripProfilePresenter
+                              cityName={cityName}
+                              cityPhoto={cityPhoto}
+                              countryName={countryName}
+                              startDate={startDate}
+                              endDate={endDate}
+                              cardsData={cardsData}
+                              cardsLoading={cardsLoading}
+                              profileDate={profileDate}
+                              profileLoading={profileLoading}
+                              nearCitiesData={nearCitiesData}
+                              nearCitiesLoading={nearCitiesLoading}
+                              nearCountriesData={nearCountriesData}
+                              nearCountriesLoading={nearCountriesLoading}
+                              loadMore={this.loadMore}
+                            />
+                          );
+                        }}
                       </GetDurationCardsQuery>
                     )}
                   </TripProfileQuery>
@@ -111,6 +118,35 @@ class TripProfileContainer extends React.Component<IProps, IState> {
       </NearCitiesQuery>
     );
   }
+  public loadMore = page => {
+    const { cityName, startDate, endDate } = this.state;
+
+    this.fetchMore({
+      query: GET_DURATION_CARDS,
+      variables: {
+        page,
+        cityName,
+        startDate,
+        endDate
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return previousResult;
+        }
+        const newData = {
+          getDurationCards: {
+            ...previousResult.getDurationCards,
+            cards: [
+              ...previousResult.getDurationCards.cards,
+              ...fetchMoreResult.getDurationCards.cards
+            ]
+          }
+        };
+        return newData;
+      }
+    });
+    console.log(this.state);
+  };
 }
 
 export default withRouter(TripProfileContainer);

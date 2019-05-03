@@ -112,6 +112,7 @@ def resolve_trip_profile(self, info, **kwargs):
             startDate, endDate))).order_by('actor_id').distinct('actor_id')
     userCount = usersBefore.count()
     coffees = city.coffee.filter(created_at__range=(startDate, endDate))
+    print(coffees)
 
     return types.TripProfileResponse(city=city, usersBefore=usersBefore, userCount=userCount, coffees=coffees)
 

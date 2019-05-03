@@ -282,7 +282,7 @@ const GreyLine = styled.div`
   border-bottom: 1px solid grey;
 `;
 
-const SBold = styled(Bold)`
+const SText = styled(Bold)`
   font-size: 20px;
   font-weight: 100;
 `;
@@ -1065,9 +1065,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               </ColumnContainer>
             </InfoContainer>
           </PBody>
-          {/* 
-          ////////////// TRIPS //////////////
-          */}
           {!user.profile.isSelf &&
           knowingFollowers &&
           knowingFollowers.length !== 0 ? (
@@ -1100,45 +1097,47 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid coffees={requestingCoffees} />
             </>
           ) : null}
+          {user.profile.isSelf && (
+            <>
+              <GreyLine />
+              <Title>
+                <SText text={"COFFEES"} />
+              </Title>
+              <Container>
+                {myCoffeeLoading && <Loader />}
+                {!myCoffeeLoading &&
+                  requestingCoffees &&
+                  requestingCoffees.length !== 0 && (
+                    <CoffeeGrid
+                      requestingCoffees={requestingCoffees}
+                      type={"myRequestingCoffee"}
+                      getCoffeeId={getCoffeeId}
+                      getRequestingCoffeeId={getRequestingCoffeeId}
+                    />
+                  )}
+                {!myCoffeeLoading &&
+                  requestingCoffees &&
+                  requestingCoffees.length === 0 && (
+                    <Icon onClick={toggleRequestModal}>
+                      <Upload />
+                    </Icon>
+                  )}
+                <Box>
+                  {!myCoffeeLoading && coffees ? (
+                    <CoffeeGrid
+                      coffees={coffees}
+                      type={"myCoffees"}
+                      getCoffeeId={getCoffeeId}
+                      toggleCoffeeReportModal={toggleCoffeeReportModal}
+                    />
+                  ) : null}
+                </Box>
+              </Container>
+            </>
+          )}
           <GreyLine />
           <Title>
-            <SBold text={"COFFEES"} />
-          </Title>
-          <Container>
-            {myCoffeeLoading && <Loader />}
-            {!myCoffeeLoading &&
-              user.profile.isSelf &&
-              requestingCoffees &&
-              requestingCoffees.length !== 0 && (
-                <CoffeeGrid
-                  requestingCoffees={requestingCoffees}
-                  type={"myRequestingCoffee"}
-                  getCoffeeId={getCoffeeId}
-                  getRequestingCoffeeId={getRequestingCoffeeId}
-                />
-              )}
-            {!myCoffeeLoading &&
-              user.profile.isSelf &&
-              requestingCoffees &&
-              requestingCoffees.length === 0 && (
-                <Icon onClick={toggleRequestModal}>
-                  <Upload />
-                </Icon>
-              )}
-            <Box>
-              {!myCoffeeLoading && user.profile.isSelf && coffees ? (
-                <CoffeeGrid
-                  coffees={coffees}
-                  type={"myCoffees"}
-                  getCoffeeId={getCoffeeId}
-                  toggleCoffeeReportModal={toggleCoffeeReportModal}
-                />
-              ) : null}
-            </Box>
-          </Container>
-          <GreyLine />
-          <Title>
-            <SBold text={"TRIPS"} />
+            <SText text={"TRIPS"} />
             <SeeAll onClick={toggleTripSeeAll}>SEE ALL</SeeAll>
           </Title>
           <TripContainer>
@@ -1207,7 +1206,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           ////////////// LOCATIONS //////////////
           */}
           <Title>
-            <SBold text={"TOP COUNTRIES"} />
+            <SText text={"TOP COUNTRIES"} />
           </Title>
           <Container>
             <TripBox>
@@ -1239,7 +1238,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           </Container>
           <GreyLine />
           <Title>
-            <SBold text={"FREQUENT VISITS"} />
+            <SText text={"FREQUENT VISITS"} />
           </Title>
           <Container>
             <TripBox>
@@ -1275,7 +1274,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           </Container>
           <GreyLine />
           <Title>
-            <SBold text={"POSTS"} />
+            <SText text={"POSTS"} />
           </Title>
           <CardGrid
             upload={user.profile.isSelf ? true : false}

@@ -53,7 +53,7 @@ const TimeStamp = styled.span`
   color: ${props => props.theme.greyColor};
 `;
 
-const SBold = styled(Bold)`
+const SText = styled(Bold)`
   display: flex;
   align-items: center;
 `;
@@ -105,12 +105,12 @@ const NotificationRow: React.SFC<IProps> = ({
                         size={"sm"}
                       />
                       <Header>
-                        <SBold text={"Commented on card"} />
+                        <SText text={"Commented on card"} />
                         <TimeStamp>{notification.naturalTime}</TimeStamp>
                       </Header>
                       <Header>
                         <Location>
-                          <SBold text={notification.comment.message} />
+                          <SText text={notification.comment.message} />
                         </Location>
                       </Header>
                     </Container>
@@ -141,12 +141,12 @@ const NotificationRow: React.SFC<IProps> = ({
                         size={"sm"}
                       />
                       <Header>
-                        <SBold text={"Liked your comment"} />
+                        <SText text={"Liked your comment"} />
                         <TimeStamp>{notification.naturalTime}</TimeStamp>
                       </Header>
                       <Header>
                         <Location>
-                          <SBold text={notification.comment.message} />
+                          <SText text={notification.comment.message} />
                         </Location>
                       </Header>
                     </Container>
@@ -176,7 +176,7 @@ const NotificationRow: React.SFC<IProps> = ({
                         size={"sm"}
                       />
                       <Header>
-                        <SBold text={"Liked card"} />
+                        <SText text={"Liked card"} />
                         <TimeStamp>{notification.naturalTime}</TimeStamp>
                       </Header>
                     </Container>
@@ -201,7 +201,7 @@ const NotificationRow: React.SFC<IProps> = ({
                         size={"sm"}
                       />
                       <Header>
-                        <SBold text={"Follow me"} />
+                        <SText text={"Follow me"} />
                         <TimeStamp>{notification.naturalTime}</TimeStamp>
                       </Header>
                     </Container>
@@ -232,7 +232,7 @@ const NotificationRow: React.SFC<IProps> = ({
                         size={"sm"}
                       />
                       <Header>
-                        <SBold text={"Uploaded card"} />
+                        <SText text={"Uploaded card"} />
                         <TimeStamp>{notification.naturalTime}</TimeStamp>
                       </Header>
                     </Container>
@@ -262,7 +262,7 @@ const NotificationRow: React.SFC<IProps> = ({
                         size={"sm"}
                       />
                       <Header>
-                        <SBold text={"You've got a Matched!"} />
+                        <SText text={"You've got a Matched!"} />
                         <TimeStamp>{notification.naturalTime}</TimeStamp>
                       </Header>
                     </Container>

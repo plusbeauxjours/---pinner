@@ -80,7 +80,7 @@ const ModalContainer = styled.div`
   top: 0;
 `;
 
-const SBold = styled(Bold)`
+const SText = styled(Bold)`
   font-size: 20px;
   font-weight: 100;
 `;
@@ -159,7 +159,7 @@ const ExplorePresenter: React.SFC<IProps> = ({
         <TallWrapper>
           <GreyLine />
           <Title>
-            <SBold text={"LATEST CITIES"} />
+            <SText text={"LATEST CITIES"} />
             <SeeAll onClick={toggleLatestCitySeeAll}>SEE ALL</SeeAll>
           </Title>
           <Container>

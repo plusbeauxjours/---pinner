@@ -23,7 +23,7 @@ const SAvatar = styled(Avatar)`
   margin-bottom: 15px;
 `;
 
-const SBold = styled(Bold)`
+const SText = styled(Bold)`
   margin-bottom: 3px;
   display: block;
 `;
@@ -56,7 +56,7 @@ const UserCard: React.SFC<IProps> = ({
       <Link to={`/${username}`}>
         <Container>
           <SAvatar url={avatar} size="md" />
-          <SBold text={username} />
+          <SText text={username} />
           <Location>
             {currentCity}, {currentCountry}
           </Location>

@@ -10,6 +10,7 @@ import moment = require("moment");
 import CardGrid from "src/Components/CardGrid";
 import LocationGrid from "src/Components/LocationGrid";
 import AvatarGrid from "../../Components/AvatarGrid";
+import InfiniteScroll from "react-infinite-scroller";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -181,6 +182,7 @@ interface IProps {
   nearCitiesLoading: boolean;
   nearCountriesData?: any;
   nearCountriesLoading: boolean;
+  loadMore: any;
 }
 
 const TripProfilePresenter: React.SFC<IProps> = ({
@@ -189,7 +191,9 @@ const TripProfilePresenter: React.SFC<IProps> = ({
   countryName,
   startDate,
   endDate,
-  cardsData: { getDurationCards: { cards = null } = {} } = {},
+  cardsData: {
+    getDurationCards: { cards = null, hasNextPage = false } = {}
+  } = {},
   cardsLoading,
   profileDate: {
     tripProfile: { coffees = null, city = null, usersBefore = null } = {}
@@ -198,7 +202,8 @@ const TripProfilePresenter: React.SFC<IProps> = ({
   nearCitiesData: { nearCities: { cities: nearCities = null } = {} } = {},
   nearCitiesLoading,
   nearCountriesData: { nearCountries: { countries = null } = {} } = {},
-  nearCountriesLoading
+  nearCountriesLoading,
+  loadMore
 }) => {
   if (profileLoading) {
     return <Loader />;
@@ -319,16 +324,19 @@ const TripProfilePresenter: React.SFC<IProps> = ({
             </Box>
           </Container>
           {!cardsLoading && cards && cards.length !== 0 ? (
-            <>
+            <InfiniteScroll
+              hasMore={hasNextPage}
+              loader={<Loader />}
+              loadMore={loadMore}
+            >
+              {console.log(hasNextPage)}
               <GreyLine />
               <Title>
                 <SText text={"POSTS"} />
               </Title>
               <CardGrid cards={cards} />
-            </>
-          ) : (
-            <Loader />
-          )}
+            </InfiniteScroll>
+          ) : null}
         </SWrapper>
       </>
     );

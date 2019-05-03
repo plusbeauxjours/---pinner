@@ -27,7 +27,7 @@ const Location = styled.span`
 
 const SAvatar = styled(Avatar)``;
 
-const SBold = styled(Bold)`
+const SText = styled(Bold)`
   display: flex;
 `;
 
@@ -65,7 +65,7 @@ const UserHeader: React.SFC<IProps> = ({
     <Header>
       <SAvatar size={size} url={avatar} />
       <HeaderColumn>
-        <SBold text={username} />
+        <SText text={username} />
         <Location>
           {editMode || cardEditMode ? (
             <>
