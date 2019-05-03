@@ -26,6 +26,7 @@ import Flag from "src/Components/Flag";
 import GetKnowingFollowers from "src/Components/GetKnowingFollowers";
 import Weather from "src/Components/Weather";
 import CoffeeGrid from "src/Components/CoffeeGrid";
+import AvatarGrid from "../../Components/AvatarGrid";
 
 const PHeader = styled.header`
   display: flex;
@@ -429,6 +430,19 @@ const Box = styled.div`
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
     background-color: ${props => props.theme.greyColor};
   }
+`;
+
+const SSText = styled(Bold)`
+  font-size: 12px;
+  font-weight: 100;
+`;
+const SmallTitle = styled(Title)`
+  flex-direction: column;
+  align-items: center;
+`;
+
+const SmallGreyLine = styled(GreyLine)`
+  width: 40%;
 `;
 
 interface ITheme {
@@ -1020,39 +1034,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   ))}
               </ColumnContainer>
               <ColumnContainer>
-                <Row>
-                  {user.profile.followers &&
-                    user.profile.followers.map(follower => (
-                      <AvatarContainer key={follower.id}>
-                        <SAvatar
-                          size={"sm"}
-                          key={follower.id}
-                          url={follower.user.profile.avatar}
-                        />
-                      </AvatarContainer>
-                    ))}
-                  <UBold text={String(user.profile.followersCount)} />
-                  <UBold text={"PEOPLE THEY CROSS PATHS WITH MOST"} />
-                </Row>
-                {!user.profile.isSelf && knowingFollowers && (
-                  <Row onClick={toggleKnowingFollowersModal}>
-                    {knowingFollowers.map(follower => (
-                      <AvatarContainer key={follower.id}>
-                        <SAvatar
-                          size={"sm"}
-                          key={follower.id}
-                          url={follower.avatar}
-                        />
-                      </AvatarContainer>
-                    ))}
-                    <UBold text={String(count)} />
-                    <UBold
-                      text={
-                        "SOME OF YOUR FOLLOWERS ARE FOLLOWING TOGETHER - done"
-                      }
-                    />
-                  </Row>
-                )}
                 <Row onClick={toggleFollowersModal}>
                   {user.profile.followers &&
                     user.profile.followers.map(follower => (
@@ -1084,10 +1065,42 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               </ColumnContainer>
             </InfoContainer>
           </PBody>
-          <GreyLine />
           {/* 
           ////////////// TRIPS //////////////
           */}
+          {!user.profile.isSelf &&
+          knowingFollowers &&
+          knowingFollowers.length !== 0 ? (
+            <>
+              <SmallTitle>
+                <SmallGreyLine />
+                <SSText text={"FOLLOWINGS TOGETHER"} />
+              </SmallTitle>
+              <AvatarGrid knowingFollowers={knowingFollowers} />
+            </>
+          ) : null}
+          {knowingFollowers && knowingFollowers.length !== 0 ? (
+            <>
+              <SmallTitle>
+                <SmallGreyLine />
+                <SSText text={" CROSS PATHS WITH MOST"} />
+              </SmallTitle>
+              <AvatarGrid knowingFollowers={knowingFollowers} />
+            </>
+          ) : null}
+          {!myCoffeeLoading &&
+          !user.profile.isSelf &&
+          requestingCoffees &&
+          requestingCoffees.length !== 0 ? (
+            <>
+              <SmallTitle>
+                <SmallGreyLine />
+                <SSText text={"COFFEE NOW"} />
+              </SmallTitle>
+              <AvatarGrid coffees={requestingCoffees} />
+            </>
+          ) : null}
+          <GreyLine />
           <Title>
             <SBold text={"COFFEES"} />
           </Title>
@@ -1105,17 +1118,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 />
               )}
             {!myCoffeeLoading &&
-              !user.profile.isSelf &&
-              requestingCoffees &&
-              requestingCoffees.length !== 0 && (
-                <CoffeeGrid
-                  requestingCoffees={requestingCoffees}
-                  type={"reportCoffees"}
-                  getCoffeeId={getCoffeeId}
-                  getRequestingCoffeeId={getRequestingCoffeeId}
-                />
-              )}
-            {!myCoffeeLoading &&
               user.profile.isSelf &&
               requestingCoffees &&
               requestingCoffees.length === 0 && (
@@ -1123,24 +1125,15 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <Upload />
                 </Icon>
               )}
-            {!myCoffeeLoading && !user.profile.isSelf && null}
             <Box>
-              {!myCoffeeLoading && user.profile.isSelf && coffees && (
+              {!myCoffeeLoading && user.profile.isSelf && coffees ? (
                 <CoffeeGrid
                   coffees={coffees}
                   type={"myCoffees"}
                   getCoffeeId={getCoffeeId}
                   toggleCoffeeReportModal={toggleCoffeeReportModal}
                 />
-              )}
-              {!myCoffeeLoading && !user.profile.isSelf && coffees && (
-                <CoffeeGrid
-                  coffees={coffees}
-                  type={"reportCoffees"}
-                  getCoffeeId={getCoffeeId}
-                  toggleCoffeeReportModal={toggleCoffeeReportModal}
-                />
-              )}
+              ) : null}
             </Box>
           </Container>
           <GreyLine />

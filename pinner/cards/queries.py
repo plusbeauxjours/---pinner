@@ -61,22 +61,19 @@ def resolve_get_cards(self, info, **kwargs):
     if location == "city":
         try:
             city = location_models.City.objects.get(city_name=cityName)
-            print(city)
             cards = city.cards.all().order_by('-created_at')[offset:12 + offset]
-            # cards = models.Card.objects.filter(city__city_name=cityName).order_by(
-            #     '-created_at')[offset:12 + offset]
             hasNextPage = offset < city.card_count
-            print(offset)
             print(city.card_count)
-            print(hasNextPage)
-
             return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')
 
     elif location == "country":
         try:
-            cards = models.Card.objects.filter(city__country__country_name=countryName).order_by('-created_at')[offset:12 + offset]
+            country = location_models.Country.objects.get(country_name=countryName)
+            cards = country.cards.all().order_by('-created_at')[offset:12 + offset]
+            hasNextPage = offset < country.card_count
+            print(country.card_count)
             return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')

@@ -25,6 +25,10 @@ class Country (config_models.TimeStampedModel):
     continent = models.ForeignKey(Continent, null=True, blank=True, on_delete=models.CASCADE, related_name='countries')
 
     @property
+    def card_count(self):
+        return self.cards.all().count()
+
+    @property
     def city_count(self):
         return self.cities.all().count()
 

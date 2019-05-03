@@ -4,6 +4,9 @@ from django.contrib.humanize.templatetags.humanize import naturaltime
 from config import models as config_models
 from locations import models as location_models
 
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
+
 
 class Card(config_models.TimeStampedModel):
 
@@ -17,9 +20,10 @@ class Card(config_models.TimeStampedModel):
         User, on_delete=models.CASCADE, related_name='cards')
     caption = models.TextField()
     city = models.ForeignKey(
-        location_models.City, on_delete=models.CASCADE, related_name='cards', null=True)
+        location_models.City, on_delete=models.CASCADE, related_name='cards',  null=True)
     country = models.ForeignKey(
         location_models.Country, on_delete=models.CASCADE, related_name='cards', null=True)
+
     file = models.URLField(null=True, blank=True)
 
     @property
@@ -39,6 +43,11 @@ class Card(config_models.TimeStampedModel):
         
     class Meta:
         ordering = ['-created_at']
+
+@receiver(pre_save, sender=Card)
+def get_country(sender, **kwargs):
+    instance = kwargs.pop('instance')
+    instance.country = instance.city.country
 
 
 class Comment(config_models.TimeStampedModel):

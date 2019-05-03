@@ -10,9 +10,7 @@ const Buttons = styled.div`
 
 const Button = styled.span`
   cursor: pointer;
-  &:first-child {
-    margin-right: 20px;
-  }
+  margin-right: 10px;
   transition: all 0.3s ease-in-out;
   svg {
     transition: all 0.3s ease-in-out;
