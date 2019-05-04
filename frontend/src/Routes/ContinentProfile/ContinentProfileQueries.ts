@@ -1,5 +1,4 @@
 import gql from "graphql-tag";
-import { COFFEE_FRAGMENT } from "src/sharedQueries";
 
 export const CONTINENT_PROFILE = gql`
   query ContinentProfile($page: Int, $continentName: String!) {
@@ -21,7 +20,13 @@ export const CONTINENT_PROFILE = gql`
         }
       }
       coffees {
-        ...CoffeeParts
+        id
+        target
+        host {
+          profile {
+            avatar
+          }
+        }
       }
       continent {
         continentName
@@ -41,5 +46,4 @@ export const CONTINENT_PROFILE = gql`
       }
     }
   }
-  ${COFFEE_FRAGMENT}
 `;

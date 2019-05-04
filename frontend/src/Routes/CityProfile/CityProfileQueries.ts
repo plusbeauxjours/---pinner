@@ -1,9 +1,5 @@
 import gql from "graphql-tag";
-import {
-  CITY_FRAGMENT,
-  COUNTRY_FRAGMENT,
-  COFFEE_FRAGMENT
-} from "src/sharedQueries";
+import { CITY_FRAGMENT, COUNTRY_FRAGMENT } from "src/sharedQueries";
 
 export const CITY_PROFILE = gql`
   query CityProfile($page: Int!, $cityName: String!) {
@@ -25,7 +21,13 @@ export const CITY_PROFILE = gql`
         }
       }
       coffees {
-        ...CoffeeParts
+        id
+        target
+        host {
+          profile {
+            avatar
+          }
+        }
       }
       city {
         latitude
@@ -43,7 +45,6 @@ export const CITY_PROFILE = gql`
       }
     }
   }
-  ${COFFEE_FRAGMENT}
 `;
 
 export const NEAR_CITIES = gql`

@@ -16,6 +16,7 @@ export const TRIP_PROFILE = gql`
       userCount
       coffees {
         id
+        target
         host {
           profile {
             avatar

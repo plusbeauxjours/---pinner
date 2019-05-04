@@ -25,7 +25,18 @@ const Icon = styled.span`
   }
 `;
 
-const AvatarContainer = styled.div``;
+const Target = styled.div`
+  display: flex;
+  position: absolute;
+  bottom: 0
+  font-size: 30px;
+  font-weight: 200;
+`;
+
+const AvatarContainer = styled.div`
+  display: flex;
+  position: relative;
+`;
 
 const SAvatar = styled(Avatar)``;
 interface IProps {
@@ -78,7 +89,41 @@ const AvatarGrid: React.SFC<IProps> = ({
         coffees.map(coffee => (
           <AvatarContainer key={coffee.id}>
             <Link to={`/c/${coffee.id}`}>
-              <SAvatar size={"md"} url={coffee.host.profile.avatar} />
+              {console.log(coffee.target)}
+              {(() => {
+                switch (coffee.target) {
+                  case "EVERYONE":
+                    return (
+                      <>
+                        <Target>E</Target>
+                        <SAvatar size={"md"} url={coffee.host.profile.avatar} />
+                      </>
+                    );
+                  case "GENDER":
+                    return (
+                      <>
+                        <Target>G</Target>
+                        <SAvatar size={"md"} url={coffee.host.profile.avatar} />
+                      </>
+                    );
+                  case "NATIONALITY":
+                    return (
+                      <>
+                        <Target>N</Target>
+                        <SAvatar size={"md"} url={coffee.host.profile.avatar} />
+                      </>
+                    );
+                  case "FOLLOWERS":
+                    return (
+                      <>
+                        <Target>F</Target>
+                        <SAvatar size={"md"} url={coffee.host.profile.avatar} />
+                      </>
+                    );
+                  default:
+                    return null;
+                }
+              })()}
             </Link>
           </AvatarContainer>
         ))}
