@@ -33,6 +33,7 @@ const Container = styled.div`
 
 const Tips = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   white-space: nowrap;
@@ -57,8 +58,6 @@ const Icon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 15px;
-  width: 170px;
   height: 100px;
 `;
 
@@ -139,6 +138,36 @@ const CoffeeCard: React.SFC<IProps> = ({
                     <List />
                   </ListOverlay>
                   <Link to={`/c/${id}`}>
+                    {(() => {
+                      switch (target) {
+                        case "EVERYONE":
+                          return (
+                            <>
+                              <Icon>E</Icon>
+                            </>
+                          );
+                        case "GENDER":
+                          return (
+                            <>
+                              <Icon>G</Icon>
+                            </>
+                          );
+                        case "NATIONALITY":
+                          return (
+                            <>
+                              <Icon>N</Icon>
+                            </>
+                          );
+                        case "FOLLOWERS":
+                          return (
+                            <>
+                              <Icon>F</Icon>
+                            </>
+                          );
+                        default:
+                          return null;
+                      }
+                    })()}
                     <Location>{id}</Location>
                     <SText text={username} />
                     <Location>{target}</Location>
@@ -169,30 +198,7 @@ const CoffeeCard: React.SFC<IProps> = ({
               </Container>
             );
           default:
-            return (
-              <Container>
-                <Tips>
-                  {isSelf ? (
-                    <ListOverlay onClick={() => getRequestingCoffeeId(id)}>
-                      <List />
-                    </ListOverlay>
-                  ) : (
-                    <ListOverlay onClick={toggleCoffeeReportModal}>
-                      <List />
-                    </ListOverlay>
-                  )}
-                  <Link to={`/c/${id}`}>
-                    <SAvatar url={avatar} size="md" />
-                    <SText text={username} />
-                    <Location>
-                      {target}
-                      {id}
-                    </Location>
-                    <Location>{naturalTime}</Location>
-                  </Link>
-                </Tips>
-              </Container>
-            );
+            return null;
         }
       })()}
     </>

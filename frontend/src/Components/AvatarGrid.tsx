@@ -28,7 +28,7 @@ const Icon = styled.span`
 const Target = styled.div`
   display: flex;
   position: absolute;
-  bottom: 0
+  bottom: 0;
   font-size: 30px;
   font-weight: 200;
 `;
