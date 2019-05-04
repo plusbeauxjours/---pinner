@@ -108,6 +108,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
   }
   public componentDidMount() {
     console.log(this.state.cardId);
+    console.log(this.props.photoUrl);
   }
   public render() {
     const {

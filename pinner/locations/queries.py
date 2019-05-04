@@ -1,5 +1,4 @@
 from django.db import IntegrityError
-from django.db.models.expressions import RawSQL
 
 from . import types, models
 from graphql_jwt.decorators import login_required

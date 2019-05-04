@@ -305,6 +305,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
               <List />
             </Icon>
           </PhotoHeader>
+          {console.log(photoUrl)}
           <Image src={photoUrl} />
           <Message>{caption}</Message>
           <Meta>

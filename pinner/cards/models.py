@@ -3,9 +3,12 @@ from django.contrib.auth.models import User
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from config import models as config_models
 from locations import models as location_models
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 from django.dispatch import receiver
 from django.db.models.signals import pre_save
+from django.db.models.signals import post_delete 
 
 
 class Card(config_models.TimeStampedModel):
@@ -23,8 +26,13 @@ class Card(config_models.TimeStampedModel):
         location_models.City, on_delete=models.CASCADE, related_name='cards',  null=True)
     country = models.ForeignKey(
         location_models.Country, on_delete=models.CASCADE, related_name='cards', null=True)
-
-    file = models.URLField(null=True, blank=True)
+    file = ProcessedImageField(
+        null=True,
+        blank=True,
+        processors = [ResizeToFill(600, 400)],
+        format = 'JPEG',
+        options = {'quality':100}
+    )
 
     @property
     def like_count(self):
@@ -48,6 +56,12 @@ class Card(config_models.TimeStampedModel):
 def get_country(sender, **kwargs):
     instance = kwargs.pop('instance')
     instance.country = instance.city.country
+
+@receiver(post_delete, sender=Card)
+def delete_attached_image(sender, **kwargs): 
+    instance = kwargs.pop('instance')  
+    instance.file.delete(save=False)
+
 
 
 class Comment(config_models.TimeStampedModel):

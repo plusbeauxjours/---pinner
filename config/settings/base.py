@@ -22,6 +22,10 @@ READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(ROOT_DIR.path('.env')))
+    print('Loading : {}'.format(env_file))
+    env.read_env(env_file)
+    print('The .env file has been loaded. See base.py for more information')
+
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -178,9 +182,11 @@ STATICFILES_FINDERS = [
 # MEDIA
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = str(APPS_DIR('uploads'))
+MEDIA_ROOT = str(APPS_DIR('media'))
+print("MEDIA_ROOT = ",MEDIA_ROOT)
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
-MEDIA_URL = '/uploads/'
+MEDIA_URL = '/media/'
+print("MEDIA_URL = ",MEDIA_URL)
 
 # TEMPLATES
 # ------------------------------------------------------------------------------
