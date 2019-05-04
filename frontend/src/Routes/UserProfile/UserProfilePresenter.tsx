@@ -13,7 +13,6 @@ import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
-import CardGrid from "../../Components/CardGrid";
 import FollowBtn from "../../Components/FollowBtn";
 import Input from "../../Components/Input";
 import GetCities from "../../Components/GetCities";
@@ -27,6 +26,7 @@ import GetKnowingFollowers from "src/Components/GetKnowingFollowers";
 import Weather from "src/Components/Weather";
 import CoffeeGrid from "src/Components/CoffeeGrid";
 import AvatarGrid from "../../Components/AvatarGrid";
+import GetCards from "../../Components/GetCards";
 
 const PHeader = styled.header`
   display: flex;
@@ -557,6 +557,7 @@ interface IProps {
   deleteCoffee: () => void;
   getCoffeeId: any;
   getRequestingCoffeeId: any;
+  username: string;
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
@@ -656,7 +657,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   submitCoffee,
   deleteCoffee,
   getCoffeeId,
-  getRequestingCoffeeId
+  getRequestingCoffeeId,
+  username
 }) => {
   if (userProfileLoading) {
     return <Loader />;
@@ -1271,14 +1273,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               )}
             </TripBox>
           </Container>
-          <GreyLine />
-          <Title>
-            <SText text={"POSTS"} />
-          </Title>
-          <CardGrid
-            upload={user.profile.isSelf ? true : false}
-            cards={user.cards}
+          {console.log(username)}
+          <GetCards
             toggleUploadModal={toggleUploadModal}
+            upload={user.profile.isSelf ? true : false}
+            location={"user"}
+            userName={username}
           />
         </SWrapper>
       </>

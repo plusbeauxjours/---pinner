@@ -11,6 +11,9 @@ interface IProps {
   cityName?: string;
   countryName?: string;
   continentName?: string;
+  userName?: string;
+  toggleUploadModal?: () => void;
+  upload?: boolean;
 }
 
 interface IState {
@@ -27,12 +30,26 @@ class GetCardsContainer extends React.Component<IProps, IState> {
   }
   public render() {
     const { page } = this.state;
-    const { location, cityName, countryName, continentName } = this.props;
-
+    const {
+      location,
+      cityName,
+      countryName,
+      continentName,
+      userName,
+      toggleUploadModal,
+      upload
+    } = this.props;
     return (
       <GetCardsQuery
         query={GET_CARDS}
-        variables={{ page, location, cityName, countryName, continentName }}
+        variables={{
+          page,
+          location,
+          cityName,
+          countryName,
+          continentName,
+          userName
+        }}
       >
         {({ data, loading, fetchMore }) => {
           this.fetchMore = fetchMore;
@@ -41,6 +58,8 @@ class GetCardsContainer extends React.Component<IProps, IState> {
               data={data}
               loading={loading}
               loadMore={this.loadMore}
+              toggleUploadModal={toggleUploadModal}
+              upload={upload}
             />
           );
         }}
@@ -48,7 +67,13 @@ class GetCardsContainer extends React.Component<IProps, IState> {
     );
   }
   public loadMore = page => {
-    const { location, cityName, countryName, continentName } = this.props;
+    const {
+      location,
+      cityName,
+      countryName,
+      continentName,
+      userName
+    } = this.props;
 
     this.fetchMore({
       query: GET_CARDS,
@@ -57,7 +82,8 @@ class GetCardsContainer extends React.Component<IProps, IState> {
         location,
         cityName,
         countryName,
-        continentName
+        continentName,
+        userName
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
         if (!fetchMoreResult) {

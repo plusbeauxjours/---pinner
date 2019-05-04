@@ -1,9 +1,5 @@
 import { gql } from "apollo-boost";
-import {
-  CARD_FRAGMENT,
-  DETAIL_CARD_FRAGMENT,
-  COFFEE_FRAGMENT
-} from "src/sharedQueries";
+import { DETAIL_CARD_FRAGMENT, COFFEE_FRAGMENT } from "src/sharedQueries";
 
 export const GET_USER = gql`
   query UserProfile($username: String!) {
@@ -54,13 +50,9 @@ export const GET_USER = gql`
             }
           }
         }
-        cards {
-          ...CardParts
-        }
       }
     }
   }
-  ${CARD_FRAGMENT}
 `;
 
 export const EDIT_PROFILE = gql`

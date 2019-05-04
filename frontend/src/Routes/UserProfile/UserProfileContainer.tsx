@@ -741,6 +741,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                   this
                                                                                                     .getRequestingCoffeeId
                                                                                                 }
+                                                                                                username={
+                                                                                                  username
+                                                                                                }
                                                                                               />
                                                                                             );
                                                                                           }}

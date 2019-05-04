@@ -58,12 +58,13 @@ def resolve_get_cards(self, info, **kwargs):
     cityName = kwargs.get('cityName')
     countryName = kwargs.get('countryName')
     continentName = kwargs.get('continentName')
+    userName = kwargs.get('userName')
 
     nextPage = page+1
 
     if location == "city":
         try:
-            city = location_models.City.objects.get(city_name=cityName)
+            city = location_models.City.objects.prefetch_related('cards').get(city_name=cityName)
             cards = city.cards.all().order_by('-created_at')[offset:12 + offset]
             hasNextPage = offset < city.card_count
             print(city.card_count)
@@ -73,7 +74,7 @@ def resolve_get_cards(self, info, **kwargs):
 
     elif location == "country":
         try:
-            country = location_models.Country.objects.get(country_name=countryName)
+            country = location_models.Country.objects.prefetch_related('cards').get(country_name=countryName)
             cards = country.cards.all().order_by('-created_at')[offset:12 + offset]
             hasNextPage = offset < country.card_count
             print(country.card_count)
@@ -85,6 +86,16 @@ def resolve_get_cards(self, info, **kwargs):
         try:
             cards = models.Card.objects.filter(
                 city__country__continent__continent_name=continentName).order_by('-created_at')[offset:12 + offset]
+            return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
+        except models.Card.DoesNotExist:
+            raise Exception('Card not found')
+
+    elif location == "user":
+        try:
+            user = User.objects.prefetch_related('cards').get(username=userName)
+            cards = user.cards.order_by('-created_at')[offset:12 + offset]
+            hasNextPage = offset < user.profile.post_count
+            print(hasNextPage)
             return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')

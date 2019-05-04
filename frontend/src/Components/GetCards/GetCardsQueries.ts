@@ -8,6 +8,7 @@ export const GET_CARDS = gql`
     $cityName: String
     $countryName: String
     $continentName: String
+    $userName: String
   ) {
     getCards(
       page: $page
@@ -15,6 +16,7 @@ export const GET_CARDS = gql`
       cityName: $cityName
       countryName: $countryName
       continentName: $continentName
+      userName: $userName
     ) {
       hasNextPage
       cards {

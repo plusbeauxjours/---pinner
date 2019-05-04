@@ -2001,15 +2001,6 @@ export interface UserProfile_userProfile_user_profile {
   currentCity: UserProfile_userProfile_user_profile_currentCity | null;
 }
 
-export interface UserProfile_userProfile_user_cards {
-  __typename: "CardType";
-  id: string;
-  file: string | null;
-  caption: string;
-  likeCount: number | null;
-  commentCount: number | null;
-}
-
 export interface UserProfile_userProfile_user {
   __typename: "UserType";
   id: string;
@@ -2020,7 +2011,6 @@ export interface UserProfile_userProfile_user {
   firstName: string;
   lastName: string;
   profile: UserProfile_userProfile_user_profile | null;
-  cards: (UserProfile_userProfile_user_cards | null)[] | null;
 }
 
 export interface UserProfile_userProfile {
