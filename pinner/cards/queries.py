@@ -14,6 +14,8 @@ def resolve_feed(self, info, **kwargs):
     page = kwargs.get('page', 0)
     cityName = kwargs.get('cityName')
     offset = 5 * page
+
+    nextPage = page+1
     
     city = location_models.City.objects.get(city_name=cityName)
 
@@ -38,9 +40,11 @@ def resolve_feed(self, info, **kwargs):
             id=0)
 
     combined = following_cards.union(city_cards).union(my_cards).order_by(
-        '-created_at')[offset:5 + offset]
+        '-created_at')
+    hasNextPage = offset < combined.count()
+    combined = combined[offset:5 + offset]
 
-    return types.FeedResponse(cards=combined, usersNow=usersNow, usersBefore=usersBefore, city=city)
+    return types.FeedResponse(cards=combined, usersNow=usersNow, usersBefore=usersBefore, city=city,  page=nextPage, hasNextPage=hasNextPage)
 
 
 @login_required

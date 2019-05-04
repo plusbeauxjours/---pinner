@@ -81,6 +81,7 @@ interface IState {
 class FeedContainer extends React.Component<IProps, IState> {
   public coffeeFetchMore;
   public recommandUsersFetchMore;
+  public cardsFetchMore;
   public requestCoffeeFn: MutationFn;
   public ReportLocationFn: MutationFn;
   public deleteCoffeeFn: MutationFn;
@@ -192,81 +193,91 @@ class FeedContainer extends React.Component<IProps, IState> {
                                   cityName: currentCity
                                 }}
                               >
-                                {({ data: feedData, loading: feedLoading }) => (
-                                  <ReportLocationMutation
-                                    mutation={REPORT_LOCATION}
-                                    variables={{
-                                      currentLat,
-                                      currentLng,
-                                      currentCity,
-                                      currentCountry,
-                                      currentCountryCode,
-                                      currentContinent,
-                                      cityPhotoURL,
-                                      countryPhotoURL,
-                                      continentPhotoURL
-                                    }}
-                                  >
-                                    {ReportLocationFn => {
-                                      this.ReportLocationFn = ReportLocationFn;
-                                      return (
-                                        <FeedPresenter
-                                          feedData={feedData}
-                                          feedLoading={feedLoading}
-                                          coffeeData={coffeeData}
-                                          coffeeLoading={coffeeLoading}
-                                          currentCity={currentCity}
-                                          nowModalOpen={nowModalOpen}
-                                          beforeModalOpen={beforeModalOpen}
-                                          toggleNowModal={this.toggleNowModal}
-                                          toggleBeforeModal={
-                                            this.toggleBeforeModal
-                                          }
-                                          toggleRequestingCoffeeModal={
-                                            this.toggleRequestingCoffeeModal
-                                          }
-                                          toggleCoffeeReportModal={
-                                            this.toggleCoffeeReportModal
-                                          }
-                                          recommandUsersData={
-                                            recommandUsersData
-                                          }
-                                          recommandUsersLoading={
-                                            recommandUsersLoading
-                                          }
-                                          recommandUserList={recommandUserList}
-                                          recommandUserModalOpen={
-                                            recommandUserModalOpen
-                                          }
-                                          toggleRecommandUserModal={
-                                            this.toggleRecommandUserModal
-                                          }
-                                          toggleRecommandUserSeeAll={
-                                            this.toggleRecommandUserSeeAll
-                                          }
-                                          requestModalOpen={requestModalOpen}
-                                          requestingCoffeeModalOpen={
-                                            requestingCoffeeModalOpen
-                                          }
-                                          coffeeReportModalOpen={
-                                            coffeeReportModalOpen
-                                          }
-                                          toggleRequestModal={
-                                            this.toggleRequestModal
-                                          }
-                                          submitCoffee={this.submitCoffee}
-                                          currentLat={currentLat}
-                                          currentLng={currentLng}
-                                          page={page}
-                                          getRequestingCoffeeId={
-                                            this.getRequestingCoffeeId
-                                          }
-                                          deleteCoffee={this.deleteCoffee}
-                                        />
-                                      );
-                                    }}
-                                  </ReportLocationMutation>
-                                )}
+                                {({
+                                  data: feedData,
+                                  loading: feedLoading,
+                                  fetchMore: cardsFetchMore
+                                }) => {
+                                  this.cardsFetchMore = cardsFetchMore;
+                                  return (
+                                    <ReportLocationMutation
+                                      mutation={REPORT_LOCATION}
+                                      variables={{
+                                        currentLat,
+                                        currentLng,
+                                        currentCity,
+                                        currentCountry,
+                                        currentCountryCode,
+                                        currentContinent,
+                                        cityPhotoURL,
+                                        countryPhotoURL,
+                                        continentPhotoURL
+                                      }}
+                                    >
+                                      {ReportLocationFn => {
+                                        this.ReportLocationFn = ReportLocationFn;
+                                        return (
+                                          <FeedPresenter
+                                            feedData={feedData}
+                                            feedLoading={feedLoading}
+                                            coffeeData={coffeeData}
+                                            coffeeLoading={coffeeLoading}
+                                            currentCity={currentCity}
+                                            nowModalOpen={nowModalOpen}
+                                            beforeModalOpen={beforeModalOpen}
+                                            toggleNowModal={this.toggleNowModal}
+                                            toggleBeforeModal={
+                                              this.toggleBeforeModal
+                                            }
+                                            toggleRequestingCoffeeModal={
+                                              this.toggleRequestingCoffeeModal
+                                            }
+                                            toggleCoffeeReportModal={
+                                              this.toggleCoffeeReportModal
+                                            }
+                                            recommandUsersData={
+                                              recommandUsersData
+                                            }
+                                            recommandUsersLoading={
+                                              recommandUsersLoading
+                                            }
+                                            recommandUserList={
+                                              recommandUserList
+                                            }
+                                            recommandUserModalOpen={
+                                              recommandUserModalOpen
+                                            }
+                                            toggleRecommandUserModal={
+                                              this.toggleRecommandUserModal
+                                            }
+                                            toggleRecommandUserSeeAll={
+                                              this.toggleRecommandUserSeeAll
+                                            }
+                                            requestModalOpen={requestModalOpen}
+                                            requestingCoffeeModalOpen={
+                                              requestingCoffeeModalOpen
+                                            }
+                                            coffeeReportModalOpen={
+                                              coffeeReportModalOpen
+                                            }
+                                            toggleRequestModal={
+                                              this.toggleRequestModal
+                                            }
+                                            submitCoffee={this.submitCoffee}
+                                            currentLat={currentLat}
+                                            currentLng={currentLng}
+                                            page={page}
+                                            getRequestingCoffeeId={
+                                              this.getRequestingCoffeeId
+                                            }
+                                            deleteCoffee={this.deleteCoffee}
+                                            loadMore={this.loadMore}
+                                          />
+                                        );
+                                      }}
+                                    </ReportLocationMutation>
+                                  );
+                                }}
                               </FeedQuery>
                             );
                           }}
@@ -527,6 +538,30 @@ class FeedContainer extends React.Component<IProps, IState> {
   public deleteCoffee = () => {
     const { coffeeId } = this.state;
     this.deleteCoffeeFn({ variables: { coffeeId: parseInt(coffeeId, 10) } });
+  };
+  public loadMore = page => {
+    const { currentCity } = this.state;
+
+    this.cardsFetchMore({
+      query: GET_FEED,
+      variables: {
+        page,
+        cityName: currentCity
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return previousResult;
+        }
+        const newData = {
+          feed: {
+            ...previousResult.feed,
+            cards: [...previousResult.feed.cards, ...fetchMoreResult.feed.cards]
+          }
+        };
+        return newData;
+      }
+    });
+    console.log(this.state);
   };
 }
 

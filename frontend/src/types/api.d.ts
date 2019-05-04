@@ -302,6 +302,7 @@ export interface GetCards_getCards_cards {
 
 export interface GetCards_getCards {
   __typename: "GetCardsResponse";
+  hasNextPage: boolean | null;
   cards: (GetCards_getCards_cards | null)[] | null;
 }
 
@@ -1288,6 +1289,7 @@ export interface Feed_feed_city {
 
 export interface Feed_feed {
   __typename: "FeedResponse";
+  hasNextPage: boolean | null;
   cards: (Feed_feed_cards | null)[] | null;
   usersNow: (Feed_feed_usersNow | null)[] | null;
   usersBefore: (Feed_feed_usersBefore | null)[] | null;
@@ -1983,6 +1985,7 @@ export interface GetDurationCards_getDurationCards_cards {
 
 export interface GetDurationCards_getDurationCards {
   __typename: "DurationCardsResponse";
+  hasNextPage: boolean | null;
   cards: (GetDurationCards_getDurationCards_cards | null)[] | null;
 }
 

@@ -67,7 +67,6 @@ const PBody = styled.div`
   grid-auto-rows: 200px;
   grid-gap: 15px;
   flex-wrap: wrap;
-  height: 100%;
   justify-content: center;
   background: ${props => props.theme.bgColor};
   padding: 15px;
@@ -1116,7 +1115,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     />
                   )}
                 {!myCoffeeLoading &&
-                  requestingCoffees &&
+                  !requestingCoffees &&
                   requestingCoffees.length === 0 && (
                     <Icon onClick={toggleRequestModal}>
                       <Upload />

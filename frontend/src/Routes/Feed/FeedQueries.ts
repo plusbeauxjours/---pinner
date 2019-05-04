@@ -8,6 +8,7 @@ import {
 export const GET_FEED = gql`
   query Feed($page: Int!, $cityName: String!) {
     feed(page: $page, cityName: $cityName) {
+      hasNextPage
       cards {
         ...DetailParts
       }

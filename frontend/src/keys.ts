@@ -1,5 +1,6 @@
 export const GOOGLE_MAPS_KEY = "AIzaSyDZ62Vo34Z7HBTyoLqRe-HOlKJp_dhK4z4";
 export const GOOGLE_ROUTES_KEY = "AIzaSyDpOezMBjAdXKzLdT4E54XsRRYVXacckUE";
+export const GOOGLE_PLACE_KEY = "AIzaSyBJqt4n_Db48OxCRMjnjJJc6WQmPmD7SdA";
 export const UNSPLASH_ACCESS_KEY =
   "b9853ed4ad476cff11c80744c4f3b4172469f3f6cb2a6dced2114e24e7264c12";
 export const UNSPLASH_SECRET_KEY =

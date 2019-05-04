@@ -55,7 +55,7 @@ def resolve_get_my_coffee(self, info, **kwargs):
                 '-created_at')
             return types.GetMyCoffeeResponse(coffees=coffees, requesting_coffees=requesting_coffees)
         except models.Coffee.DoesNotExist:
-            return types.GetMyCoffeeResponse(expired_coffees=None, requesting_coffees=None)
+            return types.GetMyCoffeeResponse(coffees=None, requesting_coffees=None)
 
     else:
         raise Exception('You need to log in')

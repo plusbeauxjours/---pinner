@@ -14,6 +14,7 @@ import UserGrid from "../../Components/UserGrid";
 import Weather from "src/Components/Weather";
 import LoaderCoffee from "src/Components/LoaderCoffee";
 import AvatarGrid from "../../Components/AvatarGrid";
+import InfiniteScroll from "react-infinite-scroller";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -252,6 +253,7 @@ interface IProps {
   page: number;
   getRequestingCoffeeId: (coffeeId: string) => void;
   deleteCoffee: () => void;
+  loadMore: any;
 }
 
 const FeedPresenter: React.SFC<IProps> = ({
@@ -260,7 +262,8 @@ const FeedPresenter: React.SFC<IProps> = ({
       cards = null,
       usersNow = null,
       usersBefore = null,
-      city = null
+      city = null,
+      hasNextPage = false
     } = {}
   } = {},
   feedLoading,
@@ -288,7 +291,8 @@ const FeedPresenter: React.SFC<IProps> = ({
   currentCity,
   page,
   getRequestingCoffeeId,
-  deleteCoffee
+  deleteCoffee,
+  loadMore
 }) => {
   if (feedLoading) {
     return <Loader />;
@@ -475,7 +479,6 @@ const FeedPresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
-          <GreyLine />
           {!coffeeLoading && coffees && coffees.length !== 0 ? (
             <>
               <SmallTitle>
@@ -490,29 +493,39 @@ const FeedPresenter: React.SFC<IProps> = ({
           ) : null}
           <LoaderCoffee />
           <GreyLine />
-          {cards &&
-            cards.map(card => (
-              <Photo
-                key={card.id}
-                cardId={card.id}
-                inline={true}
-                creatorId={card.creator.id}
-                creatorAvatar={card.creator.profile.avatar}
-                creatorUsername={card.creator.username}
-                isFollowing={card.creator.profile.isFollowing}
-                isSelf={card.creator.profile.isSelf}
-                country={card.city.country.countryName}
-                city={card.city.cityName}
-                photoUrl={card.file}
-                likeCount={card.likeCount}
-                commentCount={card.commentCount}
-                caption={card.caption}
-                naturalTime={card.naturalTime}
-                isLiked={card.isLiked}
-                currentCity={currentCity}
-                page={page}
-              />
-            ))}
+
+          {cards && cards.length !== 0 ? (
+            <InfiniteScroll
+              hasMore={hasNextPage}
+              loader={<Loader />}
+              loadMore={loadMore}
+            >
+              {console.log(hasNextPage)}
+              {cards &&
+                cards.map(card => (
+                  <Photo
+                    key={card.id}
+                    cardId={card.id}
+                    inline={true}
+                    creatorId={card.creator.id}
+                    creatorAvatar={card.creator.profile.avatar}
+                    creatorUsername={card.creator.username}
+                    isFollowing={card.creator.profile.isFollowing}
+                    isSelf={card.creator.profile.isSelf}
+                    country={card.city.country.countryName}
+                    city={card.city.cityName}
+                    photoUrl={card.file}
+                    likeCount={card.likeCount}
+                    commentCount={card.commentCount}
+                    caption={card.caption}
+                    naturalTime={card.naturalTime}
+                    isLiked={card.isLiked}
+                    currentCity={currentCity}
+                    page={page}
+                  />
+                ))}
+            </InfiniteScroll>
+          ) : null}
         </SWrapper>
       </>
     );
