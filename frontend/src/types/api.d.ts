@@ -295,6 +295,7 @@ export interface GetCardsVariables {
   cityName?: string | null;
   countryName?: string | null;
   continentName?: string | null;
+  userName?: string | null;
 }
 
 
@@ -716,6 +717,7 @@ export interface NearCities_nearCities_cities_country {
 export interface NearCities_nearCities_cities {
   __typename: "CityType";
   id: string;
+  distance: number | null;
   latitude: number | null;
   longitude: number | null;
   cityName: string | null;

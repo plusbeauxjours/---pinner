@@ -1,5 +1,6 @@
 import graphene
 from django.db import IntegrityError
+from django.db.models import Q
 from django.db.models.expressions import RawSQL
 from django.contrib.auth.models import User
 from graphql_jwt.decorators import login_required
@@ -52,7 +53,7 @@ class ReportLocation(graphene.Mutation):
             )
             qs = models.City.objects.all().annotate(distance=distance_raw_sql).order_by('distance')
             if max_distance is not None:
-                qs = qs.filter(distance__lt=max_distance)
+                qs = qs.filter(Q(distance__lt=max_distance) | Q(distance__gt=0))
             return qs
 
         try:

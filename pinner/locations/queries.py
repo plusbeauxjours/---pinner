@@ -4,7 +4,7 @@ from . import types, models
 from graphql_jwt.decorators import login_required
 from django.utils import timezone
 from django.db.models import Q
-
+from django.db.models.expressions import RawSQL
 
 from django.contrib.auth.models import User
 from cards import models as card_models
@@ -221,10 +221,29 @@ def resolve_near_cities(self, info, **kwargs):
     cityName = kwargs.get('cityName')
 
     city = models.City.objects.get(city_name=cityName)
-    near_cities_from_here = city.near_city.all()[:6]
-    near_cities_from_there = city.near_cities.all()[:6]
 
-    combined = near_cities_from_here.union(near_cities_from_there).order_by('-created_at')[:6]
+
+    def get_locations_nearby_coords(latitude, longitude, max_distance=None):
+ 
+        gcd_formula = "6371 * acos(cos(radians(%s)) * \
+        cos(radians(latitude)) \
+        * cos(radians(longitude) - radians(%s)) + \
+        sin(radians(%s)) * sin(radians(latitude)))"
+        distance_raw_sql = RawSQL(
+            gcd_formula,
+            (latitude, longitude, latitude)
+        )
+        near_cities_from_here = city.near_city.all().annotate(distance=distance_raw_sql)[:6]
+        near_cities_from_there = city.near_cities.all().annotate(distance=distance_raw_sql)[:6]
+        print(near_cities_from_here, near_cities_from_there)
+
+        qs = near_cities_from_here.union(near_cities_from_there).order_by('distance')[:6]
+        return qs
+    
+    combined = get_locations_nearby_coords(city.latitude, city.longitude)
+    print(combined)
+    for i in combined: 
+        print(i.distance)
 
     return types.CitiesResponse(cities=combined)
 

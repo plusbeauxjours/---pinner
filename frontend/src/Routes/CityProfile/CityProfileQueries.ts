@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { CITY_FRAGMENT, COUNTRY_FRAGMENT } from "src/sharedQueries";
+import { COUNTRY_FRAGMENT } from "src/sharedQueries";
 
 export const CITY_PROFILE = gql`
   query CityProfile($page: Int!, $cityName: String!) {
@@ -51,11 +51,18 @@ export const NEAR_CITIES = gql`
   query NearCities($cityName: String!) {
     nearCities(cityName: $cityName) {
       cities {
-        ...CityParts
+        id
+        distance
+        latitude
+        longitude
+        cityName
+        cityPhoto
+        country {
+          countryName
+        }
       }
     }
   }
-  ${CITY_FRAGMENT}
 `;
 
 export const NEAR_COUNTRIES = gql`

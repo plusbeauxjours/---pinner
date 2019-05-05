@@ -307,7 +307,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                   <WeatherIcon>
                     {/* <Weather icon={icon} size={"md"} /> */}
                   </WeatherIcon>
-
+                  <SText text={String(city.distance)} />
                   <InfoRow>
                     TIME DIFFERENCE
                     <SText text={String(city.userCount)} />

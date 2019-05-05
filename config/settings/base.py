@@ -183,10 +183,8 @@ STATICFILES_FINDERS = [
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = str(APPS_DIR('media'))
-print("MEDIA_ROOT = ",MEDIA_ROOT)
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
-print("MEDIA_URL = ",MEDIA_URL)
 
 # TEMPLATES
 # ------------------------------------------------------------------------------
