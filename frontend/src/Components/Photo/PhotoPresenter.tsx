@@ -9,6 +9,7 @@ import { List } from "src/Icons";
 import { MutationFn } from "react-apollo";
 import Comments from "../../Components/Comments";
 import Input from "../Input";
+import { BACKEND_URL } from "../../constants";
 
 const Container = styled.div`
   border: ${props => props.theme.greyColor};
@@ -305,8 +306,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
               <List />
             </Icon>
           </PhotoHeader>
-          {console.log(photoUrl)}
-          <Image src={photoUrl} />
+          <Image src={`${BACKEND_URL}/media/${photoUrl}`} />
           <Message>{caption}</Message>
           <Meta>
             <CardButtons
@@ -386,7 +386,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
           </ModalContainer>
         )}
         <DetailContainer>
-          <Image src={photoUrl} />
+          <Image src={`${BACKEND_URL}/media/${photoUrl}`} />
           <Meta>
             <Front>
               <PhotoHeader>

@@ -53,10 +53,8 @@
     "@types/styled-components": "^4.1.6",
     "@types/unsplash-js": "^5.0.0",
     "typescript": "^3.2.4",
-    "webpack": "^4.30.0",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-bundle-tracker": "^0.4.2-beta",
-    "webpack-cli": "^3.3.1",
-    "webpack-dev-server": "^3.3.1"
+    "webpack-cli": "^3.3.1"
   }
 }

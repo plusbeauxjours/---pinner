@@ -4,6 +4,7 @@ import { HeartFilled, BubbleFilled } from "../Icons";
 import { Link } from "react-router-dom";
 import { List } from "../Icons";
 import Bold from "./Bold";
+import { BACKEND_URL } from "../constants";
 
 const Square = styled.div<{ bg: string }>`
   display: flex;
@@ -11,7 +12,7 @@ const Square = styled.div<{ bg: string }>`
   align-self: center;
   height: 100%;
   width: 100%;
-  background-color: ${props => props.theme.whiteColor};
+  background-image: url(${props => props.bg});
   background-position: cover;
   background-size: 100%;
 `;
@@ -103,7 +104,8 @@ const SquareCard: React.SFC<IProps> = ({
   likeCount
 }) => (
   <Link to={`/p/${id}`}>
-    <Square bg={file}>
+    <Square bg={`${BACKEND_URL}/media/${file}`}>
+      {console.log(`${BACKEND_URL}/media/${file}`)}
       <Caption text={caption} />
       <Overlay>
         <ListOverlay>
