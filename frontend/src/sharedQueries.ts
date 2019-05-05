@@ -121,8 +121,6 @@ export const COFFEE_FRAGMENT = gql`
       }
     }
     expires
-    status
     target
-    naturalTime
   }
 `;

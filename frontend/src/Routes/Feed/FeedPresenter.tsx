@@ -479,8 +479,6 @@ const FeedPresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
-          {!coffeeLoading && coffees && coffees.length !== 0 ? (
-            <>
               <SmallTitle>
                 <SmallGreyLine />
                 <SSText text={"NEED SOME COFFEE NOW"} />
@@ -489,8 +487,6 @@ const FeedPresenter: React.SFC<IProps> = ({
                 coffees={coffees}
                 toggleRequestModal={toggleRequestModal}
               />
-            </>
-          ) : null}
           <LoaderCoffee />
           <GreyLine />
 

@@ -61,7 +61,7 @@ const GetCardsPresenter: React.SFC<IProps> = ({
     return (
       <InfiniteScroll
         hasMore={hasNextPage}
-        loader={<Loader />}
+        loader={<Loader key={0} />}
         loadMore={loadMore}
       >
         <GreyLine />

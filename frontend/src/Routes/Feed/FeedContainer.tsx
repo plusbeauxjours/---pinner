@@ -79,7 +79,6 @@ interface IState {
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
-  public coffeeFetchMore;
   public recommandUsersFetchMore;
   public cardsFetchMore;
   public requestCoffeeFn: MutationFn;
@@ -171,9 +170,7 @@ class FeedContainer extends React.Component<IProps, IState> {
                     {({
                       data: coffeeData,
                       loading: coffeeLoading,
-                      fetchMore: coffeeFetchMore
                     }) => {
-                      this.coffeeFetchMore = coffeeFetchMore;
                       return (
                         <RequestCoffeeMutation
                           mutation={REQUEST_COFFEE}

@@ -1117,7 +1117,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     />
                   )}
                 {!myCoffeeLoading &&
-                  !requestingCoffees &&
+                  requestingCoffees &&
                   requestingCoffees.length === 0 && (
                     <Icon onClick={toggleRequestModal}>
                       <Upload />
@@ -1213,12 +1213,14 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <TripBox>
               {!topCountriesLoading && topCountries ? (
                 topCountries.map(topCountry => (
-                  <ScrollContainer>
+                  <ScrollContainer key={topCountry.id}>
                     <Link
                       to={`/country/${topCountry.city.country.countryName}`}
                     >
-                      <CityContainer key={topCountry.id}>
+                      <CityContainer>
                         <Square>
+                          {console.log(topCountry.countryCount)}
+                          <p>{topCountry.count}</p>
                           <CityPhoto
                             src={topCountry.city.country.countryPhoto}
                             size={"md"}
@@ -1245,9 +1247,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <TripBox>
               {!frequentVisitsLoading && frequentCities ? (
                 frequentCities.map(frequentCity => (
-                  <ScrollContainer>
+                  <ScrollContainer  key={frequentCity.id}>
                     <Link to={`/city/${frequentCity.city.cityName}`}>
-                      <CityContainer key={frequentCity.id}>
+                      <CityContainer>
                         <Square>
                           <CityPhoto
                             src={frequentCity.city.cityPhoto}
