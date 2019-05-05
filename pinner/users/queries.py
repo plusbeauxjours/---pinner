@@ -2,6 +2,7 @@ import graphene
 from graphql_jwt.decorators import login_required
 from django.contrib.auth.models import User
 from . import types, models
+from django.db.models import Count, F
 from locations import types as location_types
 from locations import models as location_models
 
@@ -25,6 +26,17 @@ def resolve_top_countries(self, info, **kwargs):
     user = info.context.user
     username = kwargs.get('username')
     profile = User.objects.get(username=username)
+
+    # count = profile.movenotification.values('city').annotate(count=Count('city')).order_by(
+    #     '-count')
+    # print(count)
+    # for i in count:
+    #     print(i['city'], i['count'])
+
+
+    # print(footprints)
+ 
+
 
     footprints = profile.movenotification.all().order_by(
         '-city__country').distinct('city__country')[:6]

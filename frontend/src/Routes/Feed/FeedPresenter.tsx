@@ -479,21 +479,21 @@ const FeedPresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
-              <SmallTitle>
-                <SmallGreyLine />
-                <SSText text={"NEED SOME COFFEE NOW"} />
-              </SmallTitle>
-              <AvatarGrid
-                coffees={coffees}
-                toggleRequestModal={toggleRequestModal}
-              />
+          <SmallTitle>
+            <SmallGreyLine />
+            <SSText text={"NEED SOME COFFEE NOW"} />
+          </SmallTitle>
+          <AvatarGrid
+            coffees={coffees}
+            toggleRequestModal={toggleRequestModal}
+          />
           <LoaderCoffee />
           <GreyLine />
 
           {cards && cards.length !== 0 ? (
             <InfiniteScroll
               hasMore={hasNextPage}
-              loader={<Loader />}
+              loader={<Loader key={0} />}
               loadMore={loadMore}
             >
               {console.log(hasNextPage)}

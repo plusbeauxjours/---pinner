@@ -18,21 +18,16 @@ def resolve_get_coffees(self, info, **kwargs):
     profile = user.profile
     followings = profile.followed_by.all()
     matches = user.guest.all()
-
+    print(cityName)
+    print(coffeePage)
     if (coffeePage is 0):
         coffees = city.coffee.filter((Q(target='everyone') |
                                       Q(target='nationality', host__profile__nationality=profile.nationality) |
                                       Q(target='gender', host__profile__gender=profile.gender) |
                                       Q(target='followers', host__profile__in=followings)) &
-                                     Q(expires__gt=timezone.now())).exclude(match__in=matches).order_by('-created_at')[:6]
-    else:
-        coffees = city.coffee.filter((Q(target='everyone') |
-                                      Q(target='nationality', host__profile__nationality=profile.nationality) |
-                                      Q(target='gender', host__profile__gender=profile.gender) |
-                                      Q(target='followers', host__profile__in=followings)) &
-                                     Q(expires__gt=timezone.now())).exclude(match__in=matches).order_by('-created_at')[6:]
-
-    return types.GetCoffeesResponse(coffees=coffees)
+                                     Q(expires__gt=timezone.now())).exclude(match__in=matches).order_by('-created_at')
+        print(coffees)
+        return types.GetCoffeesResponse(coffees=coffees)
 
 
 @login_required

@@ -1247,7 +1247,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <TripBox>
               {!frequentVisitsLoading && frequentCities ? (
                 frequentCities.map(frequentCity => (
-                  <ScrollContainer  key={frequentCity.id}>
+                  <ScrollContainer key={frequentCity.id}>
                     <Link to={`/city/${frequentCity.city.cityName}`}>
                       <CityContainer>
                         <Square>
