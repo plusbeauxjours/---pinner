@@ -75,6 +75,21 @@ const LocationContainer = styled.div`
   align-items: center;
 `;
 
+const Distance = styled.div`
+  font-size: 20px;
+  position: absolute;
+  display: flex;
+  margin: 10px 0 0 10px;
+`;
+
+const OverlayContents = styled.div`
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+`;
+
 interface IProps {
   cities?: any;
   countries?: any;
@@ -105,7 +120,13 @@ const LocationGrid: React.SFC<IProps> = ({
                         <LocationName text={city.cityName} />
                         <CountryName text={city.country.countryName} />
                         <Overlay>
-                          <Weather latitude={city.latitude} longitude={city.longitude} />
+                          <OverlayContents>
+                            <Distance>{city.distance}km</Distance>
+                            <Weather
+                              latitude={city.latitude}
+                              longitude={city.longitude}
+                            />
+                          </OverlayContents>
                         </Overlay>
                       </Square>
                     </LocationContainer>
@@ -124,7 +145,6 @@ const LocationGrid: React.SFC<IProps> = ({
                       <Square>
                         <LocationPhoto src={country.countryPhoto} />
                         <LocationName text={country.countryName} />
-                        <Overlay />
                       </Square>
                     </LocationContainer>
                   </Link>

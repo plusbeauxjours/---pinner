@@ -19,6 +19,7 @@ export interface Match_match_match_city {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
+  distance: number | null;
   country: Match_match_match_city_country;
 }
 
@@ -717,11 +718,11 @@ export interface NearCities_nearCities_cities_country {
 export interface NearCities_nearCities_cities {
   __typename: "CityType";
   id: string;
-  distance: number | null;
   latitude: number | null;
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
+  distance: number | null;
   country: NearCities_nearCities_cities_country;
 }
 
@@ -1020,6 +1021,7 @@ export interface CountryProfile_countryProfile_cities {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
+  distance: number | null;
   country: CountryProfile_countryProfile_cities_country;
 }
 
@@ -1061,6 +1063,7 @@ export interface LatestCities_latestCities_cities {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
+  distance: number | null;
   country: LatestCities_latestCities_cities_country;
 }
 
@@ -1400,6 +1403,7 @@ export interface GetMatches_getMatches_matches_city {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
+  distance: number | null;
   country: GetMatches_getMatches_matches_city_country;
 }
 
@@ -1675,6 +1679,7 @@ export interface SearchTerms_searchCities_cities {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
+  distance: number | null;
   country: SearchTerms_searchCities_cities_country;
 }
 
@@ -2899,6 +2904,7 @@ export interface CityParts {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
+  distance: number | null;
   country: CityParts_country;
 }
 
