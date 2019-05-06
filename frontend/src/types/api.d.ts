@@ -1210,11 +1210,11 @@ export interface Feed_feed_city {
 
 export interface Feed_feed {
   __typename: "FeedResponse";
-  hasNextPage: boolean | null;
   cards: (Feed_feed_cards | null)[] | null;
   usersNow: (Feed_feed_usersNow | null)[] | null;
   usersBefore: (Feed_feed_usersBefore | null)[] | null;
   city: Feed_feed_city | null;
+  hasNextPage: boolean | null;
 }
 
 export interface Feed {
@@ -2162,6 +2162,7 @@ export interface GetTrips_getTrips_footprints {
   startDate: any | null;
   endDate: any | null;
   naturalTime: string | null;
+  diffDays: number | null;
 }
 
 export interface GetTrips_getTrips {

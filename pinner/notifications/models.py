@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from datetime import timedelta
 from django.db.models import Q
+from datetime import date
 
 from cards import models as card_models
 from locations import models as location_models
@@ -71,9 +72,13 @@ class MoveNotification(config_models.TimeStampedModel):
     def natural_time(self):
         return naturaltime(self.created_at)
 
+    @property
+    def diff_days(self):
+        if self.end_date and self.start_date is not None:
+            return (self.end_date-self.start_date).days
+        
     class Meta:
         ordering = ['-created_at']
-
 
 @receiver(pre_save, sender=MoveNotification)
 def clean(sender, **kwargs):

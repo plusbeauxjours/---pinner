@@ -1180,7 +1180,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <TripText>{trip.endDate}</TripText>
                   <TripText>
                     {duration(trip.startDate, trip.endDate)}
-                    <p> Days</p>
+                    <p>{trip.diffDays} Days</p>
                   </TripText>
                   <TripText>
                     <GetDurationAvatars

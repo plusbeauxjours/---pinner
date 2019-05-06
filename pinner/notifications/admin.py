@@ -33,5 +33,6 @@ class MoveNotificationAdmin(admin.ModelAdmin):
         'read',
         'start_date',
         'end_date',
-        'verb'
+        'verb',
+        'diff_days',
     )
