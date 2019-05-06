@@ -26,6 +26,7 @@ class CountryType(DjangoObjectType):
     city_count = graphene.Int(source='city_count')
     card_count = graphene.Int(source='card_count')
     count = graphene.Int()
+    diff = graphene.Int()
 
     class Meta:
         model = models.Country

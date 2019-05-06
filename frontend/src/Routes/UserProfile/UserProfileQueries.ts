@@ -189,6 +189,7 @@ export const TOP_COUNTRIES = gql`
       countries {
         id
         count
+        diff
         countryName
         countryCode
         countryPhoto
@@ -206,6 +207,7 @@ export const FREQUENT_VISITS = gql`
       cities {
         id
         count
+        diff
         latitude
         longitude
         cityName

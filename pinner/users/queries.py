@@ -2,7 +2,7 @@ import graphene
 from graphql_jwt.decorators import login_required
 from django.contrib.auth.models import User
 from . import types, models
-from django.db.models import Count, F
+from django.db.models import Count, F, Sum
 from locations import types as location_types
 from locations import models as location_models
 from notifications import models as notification_models
@@ -29,10 +29,9 @@ def resolve_top_countries(self, info, **kwargs):
 
     countries = location_models.Country.objects.filter(
         cities__movenotification__actor__username=username).annotate(
-        count=Count('cities__movenotification', distinct=True)).order_by('-count')[:5]
-   
-    print(countries)
-
+        count=Count('cities__movenotification', distinct=True)).annotate(
+        diff=Sum('cities__movenotification__diff_days')).order_by('-count')[:6]
+    
     return location_types.CountriesResponse(countries=countries)
 
 
@@ -45,8 +44,8 @@ def resolve_frequent_visits(self, info, **kwargs):
 
     cities = location_models.City.objects.filter(
         movenotification__actor__username=username).annotate(
-        count=Count('movenotification', distinct=True)).order_by('-count')[:5]
-    print(cities)
+        count=Count('movenotification', distinct=True)).annotate(
+        diff=Sum('movenotification__diff_days')).order_by('-count')[:6]
 
     return location_types.CitiesResponse(cities=cities)
 

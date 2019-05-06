@@ -66,19 +66,21 @@ class MoveNotification(config_models.TimeStampedModel):
         location_models.City, on_delete=models.CASCADE, null=True, blank=True, related_name='movenotification')
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
+    diff_days = models.IntegerField(null=True, blank=True)
     read = models.BooleanField(default=False)
 
     @property
     def natural_time(self):
         return naturaltime(self.created_at)
 
-    @property
-    def diff_days(self):
-        if self.end_date and self.start_date is not None:
-            return (self.end_date-self.start_date).days
-        
     class Meta:
         ordering = ['-created_at']
+    
+
+@receiver(pre_save, sender=MoveNotification)
+def get_diff_days(sender, **kwargs):
+    instance = kwargs.pop('instance')
+    instance.diff_days = (instance.end_date-instance.start_date).days
 
 @receiver(pre_save, sender=MoveNotification)
 def clean(sender, **kwargs):
@@ -89,7 +91,6 @@ def clean(sender, **kwargs):
             | Q(end_date__gt=instance.start_date, end_date__lte=instance.end_date)
         ).exists():
             raise ValidationError("Overlapping dates")
-
 
 # @receiver(pre_save, sender=MoveNotification)
 # def clean_dates(sender, **kwargs):
