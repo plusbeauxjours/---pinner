@@ -565,10 +565,6 @@ interface IProps {
 
   uploadNewCard: (event: React.ChangeEvent<HTMLInputElement>) => void;
   newCardCaption: string;
-  duration: (
-    startDate: moment.Moment | null,
-    endDate: moment.Moment | null
-  ) => number;
   deleteCoffee: () => void;
   getCoffeeId: any;
   getRequestingCoffeeId: any;
@@ -668,7 +664,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   newCardCaption,
   onKeyUpCard,
   uploadNewCard,
-  duration,
   submitCoffee,
   deleteCoffee,
   getCoffeeId,
@@ -1179,7 +1174,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <TripText>{trip.startDate}</TripText>
                   <TripText>{trip.endDate}</TripText>
                   <TripText>
-                    {duration(trip.startDate, trip.endDate)}
                     <p>{trip.diffDays} Days</p>
                   </TripText>
                   <TripText>

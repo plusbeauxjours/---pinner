@@ -708,10 +708,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                 newCardCaption={
                                                                                                   newCardCaption
                                                                                                 }
-                                                                                                duration={
-                                                                                                  this
-                                                                                                    .duration
-                                                                                                }
                                                                                                 myCoffeeData={
                                                                                                   myCoffeeData
                                                                                                 }
@@ -1117,11 +1113,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } catch (e) {
       console.log(e);
     }
-  };
-  public duration = (startDate, endDate) => {
-    const startDateMoment = moment(startDate);
-    const endDateMoment = moment(endDate);
-    return endDateMoment.diff(startDateMoment, "days");
   };
   public onCompletedAddTrip = data => {
     if (data.addTrip.moveNotification) {
