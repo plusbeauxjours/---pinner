@@ -8,7 +8,6 @@ import {
 export const GET_FEED = gql`
   query Feed($page: Int!, $cityName: String!) {
     feed(page: $page, cityName: $cityName) {
-      hasNextPage
       cards {
         ...DetailParts
       }
@@ -55,6 +54,7 @@ export const GET_FEED = gql`
         userCount
         userLogCount
       }
+      hasNextPage
     }
   }
   ${DETAIL_CARD_FRAGMENT}

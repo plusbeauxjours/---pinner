@@ -44,7 +44,7 @@ class Query(object):
         required=True
     )
     top_countries = graphene.Field(
-        location_types.FootprintsResponse,
+        location_types.CountriesResponse,
         resolver=queries.resolve_top_countries,
         required=True,
         args={
@@ -52,7 +52,7 @@ class Query(object):
         }
     )
     frequent_visits = graphene.Field(
-        location_types.FootprintsResponse,
+        location_types.CitiesResponse,
         resolver=queries.resolve_frequent_visits,
         required=True,
         args={

@@ -27,19 +27,13 @@ def resolve_top_countries(self, info, **kwargs):
     username = kwargs.get('username')
     profile = User.objects.get(username=username)
 
-    city = location_models.City.objects.filter(movenotification__actor__username=username).annotate(count=Count('movenotification', distinct=True)).order_by('-count')[:5]
+    countries = location_models.Country.objects.filter(
+        cities__movenotification__actor__username=username).annotate(
+        count=Count('cities__movenotification', distinct=True)).order_by('-count')[:5]
+   
+    print(countries)
 
-    # footprints = notification_models.MoveNotification.objects.annotate(
-    #     count=Count('city', distinct=True)).filter(
-    #     actor__username=username).order_by('-count')[:5]
-    print(city)
-    print(city[0].count)
-
-    
-    # footprints = profile.movenotification.all().order_by(
-    #     '-city__country').distinct('city__country')[:6]
-
-    return location_types.FootprintsResponse(footprints=footprints)
+    return location_types.CountriesResponse(countries=countries)
 
 
 @login_required
@@ -49,9 +43,12 @@ def resolve_frequent_visits(self, info, **kwargs):
     username = kwargs.get('username')
     profile = User.objects.get(username=username)
 
-    footprints = profile.movenotification.all().order_by('-city').distinct('city')[:6]
+    cities = location_models.City.objects.filter(
+        movenotification__actor__username=username).annotate(
+        count=Count('movenotification', distinct=True)).order_by('-count')[:5]
+    print(cities)
 
-    return location_types.FootprintsResponse(footprints=footprints)
+    return location_types.CitiesResponse(cities=cities)
 
 
 @login_required

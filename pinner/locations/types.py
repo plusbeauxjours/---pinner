@@ -15,6 +15,9 @@ class CityType(DjangoObjectType):
     user_log_count = graphene.Int(source='user_log_count')
     card_count = graphene.Int(source='card_count')
     distance = graphene.Int()
+    count = graphene.Int()
+
+
     class Meta:
         model = models.City
 
@@ -22,15 +25,10 @@ class CityType(DjangoObjectType):
 class CountryType(DjangoObjectType):
     city_count = graphene.Int(source='city_count')
     card_count = graphene.Int(source='card_count')
+    count = graphene.Int()
 
     class Meta:
         model = models.Country
-
-
-class CityProfileResponse(graphene.ObjectType):
-    city = graphene.Field(CityType)
-    usersNow = graphene.List(user_types.UserType)
-    usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 
 class ContinentType(DjangoObjectType):
@@ -38,6 +36,12 @@ class ContinentType(DjangoObjectType):
 
     class Meta:
         model = models.Continent
+
+
+class CityProfileResponse(graphene.ObjectType):
+    city = graphene.Field(CityType)
+    usersNow = graphene.List(user_types.UserType)
+    usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 
 class TripProfileResponse(graphene.ObjectType):

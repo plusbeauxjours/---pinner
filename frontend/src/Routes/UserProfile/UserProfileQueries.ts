@@ -185,17 +185,14 @@ export const DELETE_TRIP = gql`
 export const TOP_COUNTRIES = gql`
   query TopCountries($username: String!) {
     topCountries(username: $username) {
-      footprints {
+      countries {
         id
-        city {
-          country {
-            countryName
-            countryCode
-            countryPhoto
-            continent {
-              continentName
-            }
-          }
+        count
+        countryName
+        countryCode
+        countryPhoto
+        continent {
+          continentName
         }
       }
     }
@@ -205,16 +202,15 @@ export const TOP_COUNTRIES = gql`
 export const FREQUENT_VISITS = gql`
   query FrequentVisits($username: String!) {
     frequentVisits(username: $username) {
-      footprints {
+      cities {
         id
-        city {
-          latitude
-          longitude
-          cityName
-          cityPhoto
-          country {
-            countryName
-          }
+        count
+        latitude
+        longitude
+        cityName
+        cityPhoto
+        country {
+          countryName
         }
       }
     }

@@ -444,6 +444,21 @@ const SmallGreyLine = styled(GreyLine)`
   width: 40%;
 `;
 
+const Distance = styled.div`
+  font-size: 20px;
+  position: absolute;
+  display: flex;
+  margin: 10px 0 0 10px;
+`;
+
+const OverlayContents = styled.div`
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+`;
+
 interface ITheme {
   size?: string;
 }
@@ -565,12 +580,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   userProfileLoading,
 
   topCountriesData: {
-    topCountries: { footprints: topCountries = null } = {}
+    topCountries: { countries: topCountries = null } = {}
   } = {},
   topCountriesLoading,
 
   frequentVisitsData: {
-    frequentVisits: { footprints: frequentCities = null } = {}
+    frequentVisits: { cities: frequentCities = null } = {}
   } = {},
   frequentVisitsLoading,
 
@@ -1214,21 +1229,20 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               {!topCountriesLoading && topCountries ? (
                 topCountries.map(topCountry => (
                   <ScrollContainer key={topCountry.id}>
-                    <Link
-                      to={`/country/${topCountry.city.country.countryName}`}
-                    >
+                    <Link to={`/country/${topCountry.countryName}`}>
                       <CityContainer>
                         <Square>
                           {console.log(topCountry.countryCount)}
-                          <p>{topCountry.count}</p>
                           <CityPhoto
-                            src={topCountry.city.country.countryPhoto}
+                            src={topCountry.countryPhoto}
                             size={"md"}
                           />
-                          <CityName
-                            text={topCountry.city.country.countryName}
-                          />
-                          <Overlay />
+                          <CityName text={topCountry.countryName} />
+                          <Overlay>
+                            <OverlayContents>
+                              <Distance>{topCountry.count}TIMES</Distance>
+                            </OverlayContents>
+                          </Overlay>
                         </Square>
                       </CityContainer>
                     </Link>
@@ -1248,22 +1262,22 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               {!frequentVisitsLoading && frequentCities ? (
                 frequentCities.map(frequentCity => (
                   <ScrollContainer key={frequentCity.id}>
-                    <Link to={`/city/${frequentCity.city.cityName}`}>
+                    <Link to={`/city/${frequentCity.cityName}`}>
                       <CityContainer>
                         <Square>
-                          <CityPhoto
-                            src={frequentCity.city.cityPhoto}
-                            size={"md"}
-                          />
-                          <CityName text={frequentCity.city.cityName} />
+                          <CityPhoto src={frequentCity.cityPhoto} size={"md"} />
+                          <CityName text={frequentCity.cityName} />
                           <CountryName
-                            text={frequentCity.city.country.countryName}
+                            text={frequentCity.country.countryName}
                           />
                           <Overlay>
-                            <Weather
-                              latitude={frequentCity.city.latitude}
-                              longitude={frequentCity.city.longitude}
-                            />
+                            <OverlayContents>
+                              <Weather
+                                latitude={frequentCity.latitude}
+                                longitude={frequentCity.longitude}
+                              />
+                              <Distance>{frequentCity.count}TIMES</Distance>
+                            </OverlayContents>
                           </Overlay>
                         </Square>
                       </CityContainer>
