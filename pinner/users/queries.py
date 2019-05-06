@@ -25,7 +25,6 @@ def resolve_top_countries(self, info, **kwargs):
 
     user = info.context.user
     username = kwargs.get('username')
-    profile = User.objects.get(username=username)
 
     countries = location_models.Country.objects.filter(
         cities__movenotification__actor__username=username).annotate(
@@ -40,7 +39,6 @@ def resolve_frequent_visits(self, info, **kwargs):
 
     user = info.context.user
     username = kwargs.get('username')
-    profile = User.objects.get(username=username)
 
     cities = location_models.City.objects.filter(
         movenotification__actor__username=username).annotate(
@@ -94,10 +92,10 @@ def resolve_recommand_users(self, info, **kwargs):
     user = info.context.user
     recommandUserPage = kwargs.get('recommandUserPage', 0)
 
-    following_profiles = user.profile.followings.all()
+    following_profiles = user.profile.followings.values('id')
 
     if (recommandUserPage is 0):
-        users = models.User.objects.all().exclude(id=user.id).order_by(
+        users = models.User.objects.all().exclude(id=user.id).exclude(id__in=following_profiles).order_by(
             '-id')[:9]
     else:
         users = models.User.objects.all().exclude(id=user.id).order_by(
@@ -123,7 +121,7 @@ def resolve_get_followers(self, info, **kwargs):
     username = kwargs.get('username')
 
     try:
-        user = User.objects.get(username=username)
+        user = User.objects.select_related('profile').get(username=username)
         followers_profile = user.profile.followers.all()
 
     except User.DoesNotExist:
@@ -138,7 +136,7 @@ def resolve_get_followings(self, info, **kwargs):
     username = kwargs.get('username')
 
     try:
-        user = User.objects.get(username=username)
+        user = User.objects.select_related('profile').get(username=username)
         following_profile = user.profile.followings.all()
 
     except User.DoesNotExist:
@@ -154,7 +152,7 @@ def resolve_get_knowing_followers(sel, info, **kwargs):
     username = kwargs.get('username')
 
     try:
-        user = User.objects.get(username=username)
+        user = User.objects.select_related('profile').get(username=username)
         my_followers = me.profile.followers.all()
         user_followers = user.profile.followers.all()
         knowing_followers = my_followers & user_followers

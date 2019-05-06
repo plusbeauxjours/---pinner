@@ -5,6 +5,7 @@ from config import models as config_models
 from locations import models as location_models
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
+from cached_property import cached_property
 
 from django.dispatch import receiver
 from django.db.models.signals import pre_save

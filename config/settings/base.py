@@ -84,6 +84,7 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'twilio',
     'channels',
+    'cached_property'
 ]
 LOCAL_APPS = [
     'users.apps.UsersConfig',

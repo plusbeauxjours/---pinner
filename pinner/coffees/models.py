@@ -5,6 +5,7 @@ from django.contrib.humanize.templatetags.humanize import naturaltime
 
 from locations import models as location_models
 
+from cached_property import cached_property
 from django.db.models.signals import pre_save, pre_init
 from django.dispatch import receiver
 from django.core.exceptions import ValidationError

@@ -1,6 +1,7 @@
 from django.db import IntegrityError
 from . import types, models
 from graphql_jwt.decorators import login_required
+from django.db.models import Count
 
 from django.contrib.auth.models import User
 from locations import models as location_models
@@ -19,10 +20,10 @@ def resolve_feed(self, info, **kwargs):
     
     city = location_models.City.objects.get(city_name=cityName)
 
-    following_profiles = user.profile.followings.all()
+    following_profiles = user.profile.followings.values('id').all()
 
     following_cards = models.Card.objects.filter(
-        creator__profile__in=following_profiles)
+        creator__profile__id__in=following_profiles)
 
     city_cards = models.Card.objects.filter(
         city__city_name=cityName)
@@ -108,7 +109,7 @@ def resolve_get_comments(self, info, **kwargs):
     user = info.context.user
 
     try:
-        card = models.Card.objects.get(id=cardId)
+        card = models.Card.objects.select_related('comments').get(id=cardId)
     except models.Card.DoesNotExist:
         raise Exception('Card not found')
 
@@ -123,7 +124,7 @@ def resolve_card_likes(self, info, **kwargs):
     user = info.context.user
 
     try:
-        card = models.Card.objects.get(id=cardId)
+        card = models.Card.objects.prefetch_related('card_likes').get(id=cardId)
     except models.Card.DoesNotExist:
         raise Exception('Card not found')
 
@@ -186,7 +187,7 @@ def resolve_get_duration_cards(self, info, **kwargs):
     nextPage = page+1
 
     try:
-        city = location_models.City.objects.get(city_name=cityName)
+        city = location_models.City.objects.prefetch_related('cards').get(city_name=cityName)
         cards = city.cards.filter(created_at__range=(startDate, endDate))
         cardCount = cards.count()
         cards = cards[offset:12 + offset]

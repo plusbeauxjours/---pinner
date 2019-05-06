@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from config import models as config_models
 
+from cached_property import cached_property
 
 class Continent (config_models.TimeStampedModel):
 

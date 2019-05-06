@@ -15,10 +15,10 @@ def resolve_get_notifications(self, info, **kwargs):
     page = kwargs.get('page', 0)
     offset = 10 * page
 
-    following_profiles = user.profile.followings.all()
+    following_profiles = user.profile.followings.values('id').all()
 
     upload_notifications = models.Notification.objects.filter(
-        actor__profile__in=following_profiles, verb='upload')
+        actor__profile__id__in=following_profiles, verb='upload')
 
     notifications = user.notification_to.all()
 
@@ -33,7 +33,7 @@ def resolve_get_trips(self, info, **kwargs):
 
     user = info.context.user
     username = kwargs.get('username')
-    profile = User.objects.get(username=username)
+    profile = User.objects.prefetch_related('movenotification').get(username=username)
     tripPage = kwargs.get('tripPage', 0)
 
     if (tripPage is 0):
@@ -72,7 +72,7 @@ def resolve_get_duration_avatars(self, info, **kwargs):
     endDate = kwargs.get('endDate')
 
     try:
-        city = location_models.City.objects.get(city_name=cityName)
+        city = location_models.City.objects.prefetch_related('movenotification').get(city_name=cityName)
         usersBefore = city.movenotification.filter(Q(start_date__range=(
             startDate, endDate)) | Q(end_date__range=(
                 startDate, endDate))).order_by('actor_id').distinct('actor_id')
@@ -94,7 +94,7 @@ def resolve_get_cross_paths_avatars(self, info, **kwargs):
     page = kwargs.get('page', 0)
 
     try:
-        profile = User.profile.objects.get(username=username)
+        profile = User.profile.objects.prefetch_related('movenotification').get(username=username)
         users = profile.movenotification.filter(end_date__range=(startDate, endDate))
         users = users.order_by('actor_id', '-end_date').distinct('actor_id')
         return types.DurationAvatarsResponse(users=users)

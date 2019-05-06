@@ -17,9 +17,9 @@ from coffees import models as coffee_models
 def resolve_get_cities(self, info, **kwargs):
 
     username = kwargs.get('username')
-    profile = User.objects.get(username=username)
+    profile = User.objects.prefetch_related('movenotification').get(username=username)
 
-    cities = profile.movenotification.all().order_by('city').distinct('city')
+    cities = profile.movenotification.all().distinct('city')
 
     return types.FootprintsResponse(footprints=cities)
 
@@ -28,9 +28,9 @@ def resolve_get_cities(self, info, **kwargs):
 def resolve_get_countries(self, info, **kwargs):
 
     username = kwargs.get('username')
-    profile = User.objects.get(username=username)
+    profile = User.objects.prefetch_related('movenotification').get(username=username)
 
-    countries = profile.movenotification.all().order_by('city__country').distinct('city__country')
+    countries = profile.movenotification.all().distinct('city__country')
 
     return types.FootprintsResponse(footprints=countries)
 
@@ -39,9 +39,9 @@ def resolve_get_countries(self, info, **kwargs):
 def resolve_get_continents(self, info, **kwargs):
 
     username = kwargs.get('username')
-    profile = User.objects.get(username=username)
+    profile = User.objects.prefetch_related('movenotification').get(username=username)
 
-    continents = profile.movenotification.all().order_by('city__country__continent').distinct('city__country__continent')
+    continents = profile.movenotification.all().distinct('city__country__continent')
 
     return types.FootprintsResponse(footprints=continents)
 
@@ -105,7 +105,7 @@ def resolve_trip_profile(self, info, **kwargs):
     startDate = kwargs.get('startDate')
     endDate = kwargs.get('endDate')
 
-    city = models.City.objects.get(city_name=cityName)
+    city = models.City.objects.prefetch_related('movenotification').prefetch_related('coffee').get(city_name=cityName)
     usersBefore = city.movenotification.filter(Q(start_date__range=(
         startDate, endDate)) | Q(end_date__range=(
             startDate, endDate))).order_by('actor_id').distinct('actor_id')
@@ -122,7 +122,7 @@ def resolve_city_profile(self, info, **kwargs):
     cityName = kwargs.get('cityName')
     page = kwargs.get('page', 0)
 
-    city = models.City.objects.get(city_name=cityName)
+    city = models.City.objects.prefetch_related('coffee').get(city_name=cityName)
 
     usersNow = User.objects.filter(
         profile__current_city__city_name=cityName).order_by('-id').distinct('id')
@@ -148,7 +148,7 @@ def resolve_country_profile(self, info, **kwargs):
 
     country = models.Country.objects.get(country_name=countryName)
 
-    allCities = models.City.objects.filter(country__country_name=countryName)
+    allCities = models.City.objects.values('id').filter(country__country_name=countryName)
 
     usersNow = User.objects.filter(
         profile__current_city__country__country_name=countryName).order_by('-id').distinct('id')
@@ -165,7 +165,7 @@ def resolve_country_profile(self, info, **kwargs):
     else:
         cities = models.City.objects.filter(country__country_name=countryName)[6:20]
 
-    coffees = coffee_models.Coffee.objects.filter(Q(city__in=allCities) & Q(expires__gt=timezone.now()))[:1]
+    coffees = coffee_models.Coffee.objects.filter(Q(city__id__in=allCities) & Q(expires__gt=timezone.now()))[:1]
 
     return card_types.SecondAnnotateRespose(cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country, coffees=coffees)
 
@@ -179,7 +179,7 @@ def resolve_continent_profile(self, info, **kwargs):
 
     continent = models.Continent.objects.get(continent_name=continentName)
 
-    allCities = models.City.objects.filter(country__continent__continent_name=continentName)
+    allCities = models.City.objects.values('id').filter(country__continent__continent_name=continentName)
 
     usersNow = User.objects.filter(
         profile__current_city__country__continent__continent_name=continentName).order_by('-id').distinct('id')
@@ -196,7 +196,7 @@ def resolve_continent_profile(self, info, **kwargs):
     else:
         countries = models.Country.objects.filter(continent__continent_name=continentName)[6:20]
 
-    coffees = coffee_models.Coffee.objects.filter(Q(city__in=allCities) & Q(expires__gt=timezone.now()))
+    coffees = coffee_models.Coffee.objects.filter(Q(city__id__in=allCities) & Q(expires__gt=timezone.now()))
 
     return card_types.ThirdAnnotateRespose(countries=countries,  usersNow=usersNow, usersBefore=usersBefore, continent=continent, coffees=coffees)
 
@@ -219,7 +219,7 @@ def resolve_near_cities(self, info, **kwargs):
     user = info.context.user
     cityName = kwargs.get('cityName')
 
-    city = models.City.objects.get(city_name=cityName)
+    city = models.City.objects.prefetch_related('near_city').prefetch_related('near_cities').get(city_name=cityName)
 
 
     def get_locations_nearby_coords(latitude, longitude, max_distance=None):
@@ -249,7 +249,7 @@ def resolve_near_countries(self, info, **kwargs):
     user = info.context.user
     cityName = kwargs.get('cityName')
 
-    city = models.City.objects.get(city_name=cityName)
+    city = models.City.objects.prefetch_related('near_country').get(city_name=cityName)
     countries = city.near_country.all()[:6]
 
     return types.CountriesResponse(countries=countries)

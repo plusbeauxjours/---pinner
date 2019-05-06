@@ -42,7 +42,6 @@ class CommentAdmin(admin.ModelAdmin):
         'id',
         'card',
         'message',
-        'like_count'
     )
 
 

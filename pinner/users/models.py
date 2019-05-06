@@ -6,6 +6,7 @@ from imagekit.processors import ResizeToFill
 from django.dispatch import receiver
 from django.db.models.signals import pre_init
 
+from cached_property import cached_property
 from locations import models as location_models
 
 
