@@ -80,7 +80,8 @@ class MoveNotification(config_models.TimeStampedModel):
 @receiver(pre_save, sender=MoveNotification)
 def get_diff_days(sender, **kwargs):
     instance = kwargs.pop('instance')
-    instance.diff_days = (instance.end_date-instance.start_date).days
+    if instance.start_date or instance.end_date:
+        instance.diff_days = (instance.end_date-instance.start_date).days
 
 @receiver(pre_save, sender=MoveNotification)
 def clean(sender, **kwargs):

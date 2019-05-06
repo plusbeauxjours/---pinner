@@ -120,6 +120,7 @@ export const COFFEE_FRAGMENT = gql`
         isSelf
       }
     }
+    status
     expires
     target
   }
