@@ -5,7 +5,7 @@ from . import types, models
 from django.db.models import Count, F
 from locations import types as location_types
 from locations import models as location_models
-
+from notifications import models as notification_models
 
 def resolve_profile(self, info, **kwargs):
 
@@ -27,19 +27,17 @@ def resolve_top_countries(self, info, **kwargs):
     username = kwargs.get('username')
     profile = User.objects.get(username=username)
 
-    # count = profile.movenotification.values('city').annotate(count=Count('city')).order_by(
-    #     '-count')
-    # print(count)
-    # for i in count:
-    #     print(i['city'], i['count'])
+    city = location_models.City.objects.filter(movenotification__actor__username=username).annotate(count=Count('movenotification', distinct=True)).order_by('-count')[:5]
 
+    # footprints = notification_models.MoveNotification.objects.annotate(
+    #     count=Count('city', distinct=True)).filter(
+    #     actor__username=username).order_by('-count')[:5]
+    print(city)
+    print(city[0].count)
 
-    # print(footprints)
- 
-
-
-    footprints = profile.movenotification.all().order_by(
-        '-city__country').distinct('city__country')[:6]
+    
+    # footprints = profile.movenotification.all().order_by(
+    #     '-city__country').distinct('city__country')[:6]
 
     return location_types.FootprintsResponse(footprints=footprints)
 
