@@ -34,11 +34,11 @@ class Card(config_models.TimeStampedModel):
         options = {'quality':100}
     )
 
-    @property
+    @cached_property
     def like_count(self):
         return self.likes.all().count()
 
-    @property
+    @cached_property
     def comment_count(self):
         return self.comments.all().count()
 
@@ -74,10 +74,6 @@ class Comment(config_models.TimeStampedModel):
     edited = models.BooleanField(default=False)
 
     @property
-    def like_count(self):
-        return self.likes.all().count()
-
-    @property
     def natural_time(self):
         return naturaltime(self.created_at)
 
@@ -92,10 +88,6 @@ class Like(config_models.TimeStampedModel):
     card = models.ForeignKey(
         Card, on_delete=models.CASCADE, null=True, related_name='likes')
 
-    @property
-    def natural_time(self):
-        return naturaltime(self.created_at)
-
     def __str__(self):
         return self.card.caption
 
@@ -106,10 +98,6 @@ class LikeComment(config_models.TimeStampedModel):
         User, on_delete=models.CASCADE, null=True, related_name='comment_likes')
     comment = models.ForeignKey(
         Comment, on_delete=models.CASCADE, null=True, related_name='likes')
-
-    @property
-    def natural_time(self):
-        return naturaltime(self.created_at)
 
     def __str__(self):
         return self.comment.message

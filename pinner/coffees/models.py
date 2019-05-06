@@ -64,7 +64,7 @@ class Match (config_models.TimeStampedModel):
     guest = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='guest')
     status = models.CharField(max_length=10, choices=STATUS, default='ongoing')
 
-    @property
+    @cached_property
     def country_count(self):
         return self.countries.all().count()
 

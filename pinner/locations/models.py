@@ -9,7 +9,7 @@ class Continent (config_models.TimeStampedModel):
     continent_name = models.CharField(max_length=20, null=True, blank=True)
     continent_photo = models.URLField(null=True, blank=True)
 
-    @property
+    @cached_property
     def country_count(self):
         return self.countries.all().count()
 
@@ -24,11 +24,11 @@ class Country (config_models.TimeStampedModel):
     country_photo = models.URLField(null=True, blank=True)
     continent = models.ForeignKey(Continent, null=True, blank=True, on_delete=models.CASCADE, related_name='countries')
 
-    @property
+    @cached_property
     def card_count(self):
         return self.cards.all().count()
 
-    @property
+    @cached_property
     def city_count(self):
         return self.cities.all().count()
 
@@ -52,19 +52,19 @@ class City (config_models.TimeStampedModel):
     near_country = models.ManyToManyField(
         Country,  blank=True, symmetrical=False, related_name='near_countries')
 
-    @property
+    @cached_property
     def like_count(self):
         return self.likes.all().count()
 
-    @property
+    @cached_property
     def card_count(self):
         return self.cards.all().count()
 
-    @property
+    @cached_property
     def user_count(self):
         return self.currentCity.all().order_by('-user_id').distinct('user_id').count()
 
-    @property
+    @cached_property
     def user_log_count(self):
         return self.movenotification.all().order_by('-actor_id').distinct('actor_id').count()
 

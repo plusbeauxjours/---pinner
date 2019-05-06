@@ -44,39 +44,35 @@ class Profile(config_models.TimeStampedModel):
     def __str__(self):
         return self.user.username
 
-    @property
+    @cached_property
     def username(self):
         return self.user.username
 
-    @property
+    @cached_property
     def city_count(self):
         return self.user.movenotification.all().order_by('city').distinct('city').count()
 
-    @property
+    @cached_property
     def country_count(self):
         return self.user.movenotification.all().order_by('city__country').distinct('city__country').count()
 
-    @property
+    @cached_property
     def continent_count(self):
         return self.user.movenotification.all().order_by('city__country__continent').distinct('city__country__continent').count()
 
-    @property
+    @cached_property
     def post_count(self):
         return self.user.cards.all().count()
 
-    @property
+    @cached_property
     def followers_count(self):
         return self.followed_by.all().count()
 
-    @property
+    @cached_property
     def following_count(self):
         return self.following_users.all().count()
 
-    @property
-    def active_stories(self):
-        return self.user.stories.filter(expired=False)
-
-    @property
+    @cached_property
     def trip_count(self):
         return self.user.movenotification.all().count()
 
