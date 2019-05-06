@@ -16,7 +16,7 @@ class CityType(DjangoObjectType):
     card_count = graphene.Int(source='card_count')
     distance = graphene.Int()
     count = graphene.Int()
-
+    diff = graphene.Int()
 
     class Meta:
         model = models.City

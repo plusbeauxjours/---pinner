@@ -444,9 +444,17 @@ const SmallGreyLine = styled(GreyLine)`
   width: 40%;
 `;
 
-const Distance = styled.div`
+const DistanceFront = styled.div`
   font-size: 20px;
   position: absolute;
+  display: flex;
+  margin: 10px 0 0 10px;
+`;
+
+const DistanceBack = styled.div`
+  font-size: 20px;
+  position: absolute;
+  top: 20px;
   display: flex;
   margin: 10px 0 0 10px;
 `;
@@ -1234,7 +1242,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                           <CityName text={topCountry.countryName} />
                           <Overlay>
                             <OverlayContents>
-                              <Distance>{topCountry.count}TIMES</Distance>
+                              <DistanceFront>
+                                {topCountry.count}TIMES
+                              </DistanceFront>
+                              <DistanceBack>{topCountry.diff}DAYS</DistanceBack>
                             </OverlayContents>
                           </Overlay>
                         </Square>
@@ -1270,7 +1281,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                                 latitude={frequentCity.latitude}
                                 longitude={frequentCity.longitude}
                               />
-                              <Distance>{frequentCity.count}TIMES</Distance>
+                              <DistanceFront>
+                                {frequentCity.count}TIMES
+                              </DistanceFront>
+                              <DistanceBack>
+                                {frequentCity.diff}DAYS
+                              </DistanceBack>
                             </OverlayContents>
                           </Overlay>
                         </Square>
