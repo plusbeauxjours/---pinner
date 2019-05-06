@@ -49,46 +49,42 @@ class EditCard(graphene.Mutation):
 
     Output = types.EditCardResponse
 
+    @login_required
     def mutate(self, info, **kwargs):
 
         user = info.context.user
         cardId = kwargs.get('cardId')
 
-        if user.is_authenticated:
+        try:
+            card = models.Card.objects.get(id=cardId)
+        except models.Card.DoesNotExist:
+            raise Exception("Cannot find Card")
+
+        if card.exists():
+            cityName = kwargs.get('cityName', card.city.city_name)
+            caption = kwargs.get('caption', card.caption)
 
             try:
-                card = models.Card.objects.get(id=cardId)
+                city = location_models.City.objects.get(city_name=cityName)
             except models.Card.DoesNotExist:
-                raise Exception("Cannot find Card")
+                raise Exception("Cannot find City")
 
-            if (card):
-                cityName = kwargs.get('cityName', card.city.city_name)
-                print(cityName)
-                caption = kwargs.get('caption', card.caption)
-                print(caption)
+            if card.creator.id != user.id:
+
+                error = "Unauthorized"
+                return types.EditCardResponse(ok=False, card=None)
+
+            else:
 
                 try:
-                    city = location_models.City.objects.get(city_name=cityName)
-                except models.Card.DoesNotExist:
-                    raise Exception("Cannot find City")
 
-                if card.creator.id != user.id:
-
-                    error = "Unauthorized"
+                    card.caption = caption
+                    card.city = city
+                    card.save()
+                    return types.EditCardResponse(ok=True, card=card)
+                except IntegrityError as e:
+                    print(e)
                     return types.EditCardResponse(ok=False, card=None)
-
-                else:
-
-                    try:
-
-                        card.caption = caption
-                        card.city = city
-                        print(card.city)
-                        card.save()
-                        return types.EditCardResponse(ok=True, card=card)
-                    except IntegrityError as e:
-                        print(e)
-                        return types.EditCardResponse(ok=False, card=None)
 
         else:
             return types.EditCardResponse(ok=False, card=None)
@@ -107,20 +103,16 @@ class DeleteCard(graphene.Mutation):
         user = info.context.user
         cardId = kwargs.get('cardId')
 
-        if user.is_authenticated:
 
-            try:
-                card = models.Card.objects.get(id=cardId)
-            except models.Card.DoesNotExist:
-                return types.DeleteCardResponse(ok=False, cardId=None)
+        try:
+            card = models.Card.objects.get(id=cardId)
+        except models.Card.DoesNotExist:
+            return types.DeleteCardResponse(ok=False, cardId=None)
 
-            if card.creator.id == user.id:
+        if card.creator.id == user.id:
 
-                card.delete()
-                return types.DeleteCardResponse(ok=True, cardId=cardId)
-
-            else:
-                return types.DeleteCardResponse(ok=False, cardId=None)
+            card.delete()
+            return types.DeleteCardResponse(ok=True, cardId=cardId)
 
         else:
             return types.DeleteCardResponse(ok=False, cardId=None)
@@ -208,6 +200,7 @@ class AddComment(graphene.Mutation):
 
         except models.Card.DoesNotExist:
             return types.EditCommentResponse(ok=False)
+
 
 class EditComment(graphene.Mutation):
 

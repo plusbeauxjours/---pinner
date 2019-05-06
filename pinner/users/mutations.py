@@ -122,10 +122,8 @@ class DeleteProfile(graphene.Mutation):
         user = info.context.user
 
         try:
-            print(user)
             user.delete()
             user.profile.delete()
-            print('user and profil deleted')
             return types.DeleteProfileResponse(ok=True)
 
         except IntegrityError as e:
@@ -142,6 +140,7 @@ class ChangePassword(graphene.Mutation):
 
     Output = types.ChangePasswordResponse
 
+    @login_required
     def mutate(self, info, **kwargs):
 
         user = info.context.user
@@ -151,23 +150,18 @@ class ChangePassword(graphene.Mutation):
         ok = True
         error = None
 
-        if user.is_authenticated:
 
-            if user.check_password(oldPassword):
+        if user.check_password(oldPassword):
 
-                user.set_password(newPassword)
+            user.set_password(newPassword)
 
-                user.save()
+            user.save()
 
-                return types.ChangePasswordResponse(ok=ok, error=error)
-
-            else:
-
-                error = 'Current password is wrong'
-                return types.ChangePasswordResponse(ok=not ok, error=error)
+            return types.ChangePasswordResponse(ok=ok, error=error)
 
         else:
-            error = 'You need to log in'
+
+            error = 'Current password is wrong'
             return types.ChangePasswordResponse(ok=not ok, error=error)
 
 

@@ -24,6 +24,7 @@ class RequestCoffee(graphene.Mutation):
         target = kwargs.get('target', 'everyone')
 
         if not user.coffee.filter(expires__gt=timezone.now()):
+
             try:
                 currentCity = location_models.City.objects.get(city_name=currentCity)
 
@@ -33,9 +34,11 @@ class RequestCoffee(graphene.Mutation):
                     target=target,
                 )
                 return types.RequestCoffeeResponse(ok=True, coffee=coffee)
+                
             except IntegrityError as e:
                 print(e)
                 raise Exception("Can't create a coffee")
+                
         else:
             raise Exception("You can't request more than one coffee")
 
@@ -53,24 +56,20 @@ class DeleteCoffee(graphene.Mutation):
         user = info.context.user
         coffeeId = kwargs.get('coffeeId')
 
-        if user.is_authenticated:
+        try:
+            coffee = models.Coffee.objects.get(id=coffeeId)
+        except models.Coffee.DoesNotExist:
+            return types.DeleteCoffeeResponse(ok=False, coffeeId=None, username=user.username)
 
-            try:
-                coffee = models.Coffee.objects.get(id=coffeeId)
-            except models.Coffee.DoesNotExist:
-                return types.DeleteCoffeeResponse(ok=False, coffeeId=None, username=user.username)
+        if coffee.host.id == user.id:
 
-            if coffee.host.id == user.id:
-
-                coffee.delete()
-                return types.DeleteCoffeeResponse(ok=True, coffeeId=coffeeId, username=user.username)
-
-            else:
-                return types.DeleteCoffeeResponse(ok=False, coffeeId=None, username=user.username)
+            coffee.delete()
+            return types.DeleteCoffeeResponse(ok=True, coffeeId=coffeeId, username=user.username)
 
         else:
             return types.DeleteCoffeeResponse(ok=False, coffeeId=None, username=user.username)
 
+    
 
 class Match(graphene.Mutation):
 
@@ -87,7 +86,6 @@ class Match(graphene.Mutation):
 
         try:
             coffee = models.Coffee.objects.get(id=coffeeId)
-            print(coffee)
             match = models.Match.objects.create(
                 host=coffee.host,
                 city=coffee.city,
@@ -119,26 +117,20 @@ class UnMatch(graphene.Mutation):
         user = info.context.user
         matchId = kwargs.get('matchId')
 
-        if user.is_authenticated:
+        try:
+            match = models.Match.objects.get(id=matchId)
+        except models.Match.DoesNotExist:
+            return types.UnMatchResponse(ok=False, matchId=None, coffee=None)
 
-            try:
-                match = models.Match.objects.get(id=matchId)
-            except models.Match.DoesNotExist:
-                return types.UnMatchResponse(ok=False, matchId=None, coffee=None)
+        try:
+            coffee = match.coffee
+        except models.Match.DoesNotExist:
+            return types.UnMatchResponse(ok=False, matchId=None, coffee=None)
 
-            try:
-                coffee = match.coffee
-                print(coffee)
-            except models.Match.DoesNotExist:
-                return types.UnMatchResponse(ok=False, matchId=None, coffee=None)
-
-            if match.host.id == user.id or match.guest.id == user.id:
-                match.delete()
-                return types.UnMatchResponse(ok=True, matchId=matchId, coffee=coffee)
-
-            else:
-
-                return types.UnMatchResponse(ok=False, matchId=None, coffee=None)
+        if match.host.id == user.id or match.guest.id == user.id:
+            match.delete()
+            return types.UnMatchResponse(ok=True, matchId=matchId, coffee=coffee)
 
         else:
+
             return types.UnMatchResponse(ok=False, matchId=None, coffee=None)

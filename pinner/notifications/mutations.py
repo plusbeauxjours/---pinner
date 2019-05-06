@@ -48,22 +48,17 @@ class AddTrip(graphene.Mutation):
         endDate = kwargs.get('endDate')
         user = info.context.user
 
-        if user.is_authenticated:
-
-            try:
-                moveNotification = models.MoveNotification.objects.create(
-                    actor=user,
-                    city=location_models.City.objects.get(city_name=cityName),
-                    start_date=startDate,
-                    end_date=endDate
-                )
-                return types.AddTripResponse(ok=True, moveNotification=moveNotification)
-            except IntegrityError as e:
-                print(e)
-                raise Exception("Can't create the trip")
-
-        else:
-            raise Exception('You need to log in')
+        try:
+            moveNotification = models.MoveNotification.objects.create(
+                actor=user,
+                city=location_models.City.objects.get(city_name=cityName),
+                start_date=startDate,
+                end_date=endDate
+            )
+            return types.AddTripResponse(ok=True, moveNotification=moveNotification)
+        except IntegrityError as e:
+            print(e)
+            raise Exception("Can't create the trip")
 
 
 class EditTrip(graphene.Mutation):
@@ -82,35 +77,30 @@ class EditTrip(graphene.Mutation):
         moveNotificationId = kwargs.get('moveNotificationId')
         user = info.context.user
 
-        if user.is_authenticated:
+        try:
+            moveNotification = user.movenotification.get(id=moveNotificationId)
+        except user.movenotification.DoesNotExist:
+            raise Exception('Trip Not Found')
 
-            try:
-                moveNotification = user.movenotification.get(id=moveNotificationId)
-            except user.movenotification.DoesNotExist:
-                raise Exception('Trip Not Found')
-
-            if moveNotification.actor.id != user.id:
-                raise Exception('Unauthorized')
-
-            else:
-
-                try:
-                    cityName = kwargs.get('cityName', moveNotification.city.city_name)
-                    startDate = kwargs.get('startDate', moveNotification.start_date)
-                    endDate = kwargs.get('endDate', moveNotification.end_date)
-
-                    moveNotification.city = location_models.City.objects.get(city_name=cityName)
-                    moveNotification.start_date = startDate
-                    moveNotification.end_date = endDate
-
-                    moveNotification.save()
-                    return types.EditTripResponse(ok=True, moveNotification=moveNotification)
-                except IntegrityError as e:
-                    print(e)
-                    raise Exception("Can't Save Trip")
+        if moveNotification.actor.id != user.id:
+            raise Exception('Unauthorized')
 
         else:
-            raise Exception('You need to log in')
+
+            try:
+                cityName = kwargs.get('cityName', moveNotification.city.city_name)
+                startDate = kwargs.get('startDate', moveNotification.start_date)
+                endDate = kwargs.get('endDate', moveNotification.end_date)
+
+                moveNotification.city = location_models.City.objects.get(city_name=cityName)
+                moveNotification.start_date = startDate
+                moveNotification.end_date = endDate
+
+                moveNotification.save()
+                return types.EditTripResponse(ok=True, moveNotification=moveNotification)
+            except IntegrityError as e:
+                print(e)
+                raise Exception("Can't Save Trip")
 
 
 class DeleteTrip(graphene.Mutation):
@@ -126,20 +116,15 @@ class DeleteTrip(graphene.Mutation):
         moveNotificationId = kwargs.get('moveNotificationId')
         user = info.context.user
 
-        if user.is_authenticated:
+        try:
+            moveNotification = user.movenotification.get(id=moveNotificationId)
+        except user.movenotification.DoesNotExist:
+            raise Exception('Trip Not Found')
 
-            try:
-                moveNotification = user.movenotification.get(id=moveNotificationId)
-            except user.movenotification.DoesNotExist:
-                raise Exception('Trip Not Found')
+        if moveNotification.actor.id == user.id:
 
-            if moveNotification.actor.id == user.id:
-
-                moveNotification.delete()
-                return types.DeleteTripResponse(ok=True, tripId=moveNotificationId)
-
-            else:
-                raise Exception('You need to log in')
+            moveNotification.delete()
+            return types.DeleteTripResponse(ok=True, tripId=moveNotificationId)
 
         else:
-            raise Exception('Unauthorized')
+            raise Exception('You need to log in')

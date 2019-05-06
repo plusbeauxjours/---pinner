@@ -67,7 +67,6 @@ def resolve_get_cards(self, info, **kwargs):
             city = location_models.City.objects.prefetch_related('cards').get(city_name=cityName)
             cards = city.cards.all().order_by('-created_at')[offset:12 + offset]
             hasNextPage = offset < city.card_count
-            print(city.card_count)
             return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')
@@ -77,7 +76,6 @@ def resolve_get_cards(self, info, **kwargs):
             country = location_models.Country.objects.prefetch_related('cards').get(country_name=countryName)
             cards = country.cards.all().order_by('-created_at')[offset:12 + offset]
             hasNextPage = offset < country.card_count
-            print(country.card_count)
             return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')
@@ -95,7 +93,6 @@ def resolve_get_cards(self, info, **kwargs):
             user = User.objects.prefetch_related('cards').get(username=userName)
             cards = user.cards.order_by('-created_at')[offset:12 + offset]
             hasNextPage = offset < user.profile.post_count
-            print(hasNextPage)
             return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')
@@ -140,7 +137,7 @@ def resolve_card_detail(self, info, **kwargs):
     cardId = kwargs.get('cardId')
     user = info.context.user
 
-    if cardId:
+    if cardId.exists():
         try:
             card = models.Card.objects.get(id=cardId)
         except models.Card.DoesNotExist:
@@ -194,7 +191,6 @@ def resolve_get_duration_cards(self, info, **kwargs):
         cardCount = cards.count()
         cards = cards[offset:12 + offset]
         hasNextPage = offset < cardCount
-        print(hasNextPage)
         return types.DurationCardsResponse(cards=cards,page=nextPage, hasNextPage=hasNextPage)
 
     except models.Card.DoesNotExist:

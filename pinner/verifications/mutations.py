@@ -49,7 +49,6 @@ class StartPhoneVerification(graphene.Mutation):
             existingVerification = models.Verification.objects.get(
                 payload=phoneNumber
             )
-            print(existingVerification)
             existingVerification.delete()
 
         except IntegrityError as e:

@@ -18,15 +18,12 @@ def resolve_get_coffees(self, info, **kwargs):
     profile = user.profile
     followings = profile.followed_by.all()
     matches = user.guest.all()
-    print(cityName)
-    print(coffeePage)
     if (coffeePage is 0):
         coffees = city.coffee.filter((Q(target='everyone') |
                                       Q(target='nationality', host__profile__nationality=profile.nationality) |
                                       Q(target='gender', host__profile__gender=profile.gender) |
                                       Q(target='followers', host__profile__in=followings)) &
                                      Q(expires__gt=timezone.now())).exclude(match__in=matches).order_by('-created_at')
-        print(coffees)
         return types.GetCoffeesResponse(coffees=coffees)
 
 
@@ -36,24 +33,19 @@ def resolve_get_my_coffee(self, info, **kwargs):
     username = kwargs.get('username')
     user = info.context.user
 
-    if user.is_authenticated:
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return types.GetMyCoffeeResponse(coffees=None)
 
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            return types.GetMyCoffeeResponse(coffees=None)
-
-        try:
-            coffees = user.coffee.filter(expires__lt=timezone.now()).order_by(
-                '-created_at')
-            requesting_coffees = models.Coffee.objects.filter(host=user, expires__gt=timezone.now()).order_by(
-                '-created_at')
-            return types.GetMyCoffeeResponse(coffees=coffees, requesting_coffees=requesting_coffees)
-        except models.Coffee.DoesNotExist:
-            return types.GetMyCoffeeResponse(coffees=None, requesting_coffees=None)
-
-    else:
-        raise Exception('You need to log in')
+    try:
+        coffees = user.coffee.filter(expires__lt=timezone.now()).order_by(
+            '-created_at')
+        requesting_coffees = models.Coffee.objects.filter(host=user, expires__gt=timezone.now()).order_by(
+            '-created_at')
+        return types.GetMyCoffeeResponse(coffees=coffees, requesting_coffees=requesting_coffees)
+    except models.Coffee.DoesNotExist:
+        return types.GetMyCoffeeResponse(coffees=None, requesting_coffees=None)
 
 
 @login_required
@@ -62,7 +54,7 @@ def resolve_coffee_detail(self, info, **kwargs):
     coffeeId = kwargs.get('coffeeId')
     user = info.context.user
 
-    if coffeeId:
+    if coffeeId.exists():
         try:
             coffee = models.Coffee.objects.get(id=coffeeId)
         except models.Coffee.DoesNotExist:

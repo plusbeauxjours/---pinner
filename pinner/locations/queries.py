@@ -111,7 +111,6 @@ def resolve_trip_profile(self, info, **kwargs):
             startDate, endDate))).order_by('actor_id').distinct('actor_id')
     userCount = usersBefore.count()
     coffees = city.coffee.filter(created_at__range=(startDate, endDate))
-    print(coffees)
 
     return types.TripProfileResponse(city=city, usersBefore=usersBefore, userCount=userCount, coffees=coffees)
 
@@ -235,15 +234,11 @@ def resolve_near_cities(self, info, **kwargs):
         )
         near_cities_from_here = city.near_city.all().annotate(distance=distance_raw_sql)[:6]
         near_cities_from_there = city.near_cities.all().annotate(distance=distance_raw_sql)[:6]
-        print(near_cities_from_here, near_cities_from_there)
 
         qs = near_cities_from_here.union(near_cities_from_there).order_by('distance')[:6]
         return qs
     
     combined = get_locations_nearby_coords(city.latitude, city.longitude)
-    print(combined)
-    for i in combined: 
-        print(i.distance)
 
     return types.CitiesResponse(cities=combined)
 
