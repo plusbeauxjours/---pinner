@@ -1231,6 +1231,69 @@ export interface FeedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetFeedCards
+// ====================================================
+
+export interface GetFeedCards_getFeedCards_cards_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetFeedCards_getFeedCards_cards_city {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetFeedCards_getFeedCards_cards_city_country;
+}
+
+export interface GetFeedCards_getFeedCards_cards_creator_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
+}
+
+export interface GetFeedCards_getFeedCards_cards_creator {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: GetFeedCards_getFeedCards_cards_creator_profile | null;
+}
+
+export interface GetFeedCards_getFeedCards_cards {
+  __typename: "CardType";
+  id: string;
+  file: string | null;
+  caption: string;
+  city: GetFeedCards_getFeedCards_cards_city | null;
+  likeCount: number | null;
+  commentCount: number | null;
+  isLiked: boolean | null;
+  naturalTime: string | null;
+  creator: GetFeedCards_getFeedCards_cards_creator;
+}
+
+export interface GetFeedCards_getFeedCards {
+  __typename: "GetCardsResponse";
+  cards: (GetFeedCards_getFeedCards_cards | null)[] | null;
+}
+
+export interface GetFeedCards {
+  getFeedCards: GetFeedCards_getFeedCards;
+}
+
+export interface GetFeedCardsVariables {
+  page: number;
+  cityName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: RecommandUsers
 // ====================================================
 
@@ -1975,39 +2038,6 @@ export interface UserList {
 // GraphQL query operation: UserProfile
 // ====================================================
 
-export interface UserProfile_userProfile_user_profile_cities_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface UserProfile_userProfile_user_profile_cities {
-  __typename: "CityType";
-  id: string;
-  count: number | null;
-  diff: number | null;
-  latitude: number | null;
-  longitude: number | null;
-  cityName: string | null;
-  cityPhoto: string | null;
-  country: UserProfile_userProfile_user_profile_cities_country;
-}
-
-export interface UserProfile_userProfile_user_profile_countries_continent {
-  __typename: "ContinentType";
-  continentName: string | null;
-}
-
-export interface UserProfile_userProfile_user_profile_countries {
-  __typename: "CountryType";
-  id: string;
-  count: number | null;
-  diff: number | null;
-  countryName: string | null;
-  countryCode: string | null;
-  countryPhoto: string | null;
-  continent: UserProfile_userProfile_user_profile_countries_continent | null;
-}
-
 export interface UserProfile_userProfile_user_profile_followings_user_profile {
   __typename: "ProfileType";
   avatar: string;
@@ -2063,8 +2093,6 @@ export interface UserProfile_userProfile_user_profile_currentCity {
 
 export interface UserProfile_userProfile_user_profile {
   __typename: "ProfileType";
-  cities: (UserProfile_userProfile_user_profile_cities | null)[] | null;
-  countries: (UserProfile_userProfile_user_profile_countries | null)[] | null;
   bio: string | null;
   gender: string | null;
   avatar: string;
@@ -2337,12 +2365,12 @@ export interface DeleteTripVariables {
 // GraphQL query operation: TopCountries
 // ====================================================
 
-export interface TopCountries_topCountries_user_profile_countries_continent {
+export interface TopCountries_topCountries_countries_continent {
   __typename: "ContinentType";
   continentName: string | null;
 }
 
-export interface TopCountries_topCountries_user_profile_countries {
+export interface TopCountries_topCountries_countries {
   __typename: "CountryType";
   id: string;
   count: number | null;
@@ -2350,22 +2378,12 @@ export interface TopCountries_topCountries_user_profile_countries {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
-  continent: TopCountries_topCountries_user_profile_countries_continent | null;
-}
-
-export interface TopCountries_topCountries_user_profile {
-  __typename: "ProfileType";
-  countries: (TopCountries_topCountries_user_profile_countries | null)[] | null;
-}
-
-export interface TopCountries_topCountries_user {
-  __typename: "UserType";
-  profile: TopCountries_topCountries_user_profile | null;
+  continent: TopCountries_topCountries_countries_continent | null;
 }
 
 export interface TopCountries_topCountries {
-  __typename: "UserProfileResponse";
-  user: TopCountries_topCountries_user | null;
+  __typename: "CountriesResponse";
+  countries: (TopCountries_topCountries_countries | null)[] | null;
 }
 
 export interface TopCountries {
@@ -2384,12 +2402,12 @@ export interface TopCountriesVariables {
 // GraphQL query operation: FrequentVisits
 // ====================================================
 
-export interface FrequentVisits_frequentVisits_user_profile_cities_country {
+export interface FrequentVisits_frequentVisits_cities_country {
   __typename: "CountryType";
   countryName: string | null;
 }
 
-export interface FrequentVisits_frequentVisits_user_profile_cities {
+export interface FrequentVisits_frequentVisits_cities {
   __typename: "CityType";
   id: string;
   count: number | null;
@@ -2398,22 +2416,12 @@ export interface FrequentVisits_frequentVisits_user_profile_cities {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
-  country: FrequentVisits_frequentVisits_user_profile_cities_country;
-}
-
-export interface FrequentVisits_frequentVisits_user_profile {
-  __typename: "ProfileType";
-  cities: (FrequentVisits_frequentVisits_user_profile_cities | null)[] | null;
-}
-
-export interface FrequentVisits_frequentVisits_user {
-  __typename: "UserType";
-  profile: FrequentVisits_frequentVisits_user_profile | null;
+  country: FrequentVisits_frequentVisits_cities_country;
 }
 
 export interface FrequentVisits_frequentVisits {
-  __typename: "UserProfileResponse";
-  user: FrequentVisits_frequentVisits_user | null;
+  __typename: "CitiesResponse";
+  cities: (FrequentVisits_frequentVisits_cities | null)[] | null;
 }
 
 export interface FrequentVisits {

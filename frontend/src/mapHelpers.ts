@@ -14,7 +14,6 @@ export const reverseGeoCode = async (latitude: number, longitude: number) => {
       countryCode: ""
     };
     console.log(results);
-    console.log(latitude, longitude);
     for (const components of results) {
       for (const component of components.address_components) {
         if (
@@ -34,7 +33,6 @@ export const reverseGeoCode = async (latitude: number, longitude: number) => {
         }
       }
     }
-    console.log(storableLocation);
     return { storableLocation };
   } else {
     toast.error(data.error_message);

@@ -8,9 +8,6 @@ import {
 export const GET_FEED = gql`
   query Feed($page: Int!, $cityName: String!) {
     feed(page: $page, cityName: $cityName) {
-      cards {
-        ...DetailParts
-      }
       usersNow {
         id
         username
@@ -53,6 +50,16 @@ export const GET_FEED = gql`
         }
         userCount
         userLogCount
+      }
+    }
+  }
+`;
+
+export const GET_FEED_CARDS = gql`
+  query GetFeedCards($page: Int!, $cityName: String!) {
+    getFeedCards(page: $page, cityName: $cityName) {
+      cards {
+        ...DetailParts
       }
       hasNextPage
     }

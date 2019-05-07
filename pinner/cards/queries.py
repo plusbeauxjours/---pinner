@@ -103,6 +103,33 @@ def resolve_get_cards(self, info, **kwargs):
         return types.GetCardsResponse(cards=None, page=nextPage, hasNextPage=hasNextPage)
 
 
+
+@login_required
+def resolve_get_feed_cards(self, info, **kwargs):
+
+    user = info.context.user
+    page = kwargs.get('page', 0)
+    offset = 6 * page
+
+    cityName = kwargs.get('cityName')
+
+    nextPage = page+1
+
+    try:
+        following_profiles = user.profile.followings.values('id').all()
+        following_cards = models.Card.objects.filter(
+            creator__profile__id__in=following_profiles)
+        city_cards = models.Card.objects.filter(
+            city__city_name=cityName)
+        my_cards = user.cards.all()
+        combined = following_cards.union(city_cards).union(my_cards).order_by(
+                '-created_at')[offset:6 + offset]
+        print(combined)
+        return types.GetCardsResponse(cards=combined, page=nextPage, hasNextPage=True)
+    except models.Card.DoesNotExist:
+        raise Exception('Card not found')
+ 
+
 @login_required
 def resolve_get_comments(self, info, **kwargs):
 

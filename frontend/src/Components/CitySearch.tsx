@@ -12,16 +12,8 @@ const Input = styled.input`
   padding: 5px;
   color: white;
   font-size: 14px;
-
   &::placeholder {
     color: ${props => props.theme.greyColor};
-  }
-`;
-
-const SScript = styled(Script)`
-  & > .pac-container {
-    font-size: 1px;
-    color: red;
   }
 `;
 
@@ -51,20 +43,20 @@ class CitySearch extends Component<any, IState> {
   }
 
   public render() {
-    const { city } = this.state;
+    const { query } = this.state;
 
     const URL = `https://maps.googleapis.com/maps/api/js?language=en&key=${GOOGLE_PLACE_KEY}&libraries=places`;
     return (
-      <div>
-        <SScript url={URL} onLoad={this.handleScriptLoad} />{" "}
+      <>
+        <Script url={URL} onLoad={this.handleScriptLoad} />
         <Input
           id="autocomplete"
           placeholder="Search"
-          value={city}
+          value={query}
           type="text"
           onChange={this.onChange}
         />
-      </div>
+      </>
     );
   }
   public handleScriptLoad() {
@@ -99,7 +91,7 @@ class CitySearch extends Component<any, IState> {
       target: { value }
     } = event;
     this.setState({
-      city: value
+      query: value
     } as any);
     console.log(this.state);
   };

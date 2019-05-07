@@ -230,6 +230,8 @@ interface IProps {
   feedLoading: boolean;
   coffeeData: any;
   coffeeLoading: boolean;
+  cardsData: any;
+  cardsLoading: boolean;
 
   currentCity: string;
   nowModalOpen: boolean;
@@ -259,15 +261,11 @@ interface IProps {
 
 const FeedPresenter: React.SFC<IProps> = ({
   feedData: {
-    feed: {
-      cards = null,
-      usersNow = null,
-      usersBefore = null,
-      city = null,
-      hasNextPage = false
-    } = {}
+    feed: { usersNow = null, usersBefore = null, city = null } = {}
   } = {},
   feedLoading,
+  cardsData: { getFeedCards: { cards = null, hasNextPage = true } = {} } = {},
+  cardsLoading,
   coffeeData: { getCoffees: { coffees = null } = {} } = {},
   coffeeLoading,
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},
@@ -492,7 +490,7 @@ const FeedPresenter: React.SFC<IProps> = ({
           <LoaderCoffee />
           <GreyLine />
 
-          {cards && cards.length !== 0 ? (
+          {!cardsLoading && cards && cards.length !== 0 ? (
             <InfiniteScroll
               hasMore={hasNextPage}
               loader={<Loader key={0} />}

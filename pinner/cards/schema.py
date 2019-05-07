@@ -65,6 +65,14 @@ class Query(object):
               'userName': graphene.String()
         }
     )
+    get_feed_cards = graphene.Field(
+        types.GetCardsResponse,
+        resolver=queries.resolve_get_feed_cards,
+        required=True,
+        args={'page': graphene.Int(),
+              'cityName': graphene.String(),
+        }
+    )
     
 
 
