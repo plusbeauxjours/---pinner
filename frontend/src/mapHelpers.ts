@@ -7,10 +7,6 @@ export const reverseGeoCode = async (latitude: number, longitude: number) => {
   const { data } = await axios(URL);
   if (!data.error_message) {
     const { results } = data;
-    const firstPlace = results.reverse()[1];
-    if (!firstPlace.address_components) {
-      return false;
-    }
 
     let storableLocation = {
       city: "",

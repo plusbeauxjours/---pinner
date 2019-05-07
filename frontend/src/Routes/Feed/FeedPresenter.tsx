@@ -15,6 +15,7 @@ import Weather from "src/Components/Weather";
 import LoaderCoffee from "src/Components/LoaderCoffee";
 import AvatarGrid from "../../Components/AvatarGrid";
 import InfiniteScroll from "react-infinite-scroller";
+import CitySearch from "src/Components/CitySearch";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -466,6 +467,7 @@ const FeedPresenter: React.SFC<IProps> = ({
             </UserContainer>
           </PHeader>
           <GreyLine />
+          <CitySearch />
           <Title>
             <SText text={"RECOMMAND USER"} />
             <SeeAll onClick={toggleRecommandUserSeeAll}>SEE ALL</SeeAll>
