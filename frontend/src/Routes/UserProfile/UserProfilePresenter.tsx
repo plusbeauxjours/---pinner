@@ -593,7 +593,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   } = {},
   frequentVisitsLoading,
 
-  getTripsData: { getTrips: { footprints: getTrips = null } = {} } = {},
+  getTripsData: { getTrips: { trip: getTrips = null } = {} } = {},
   getTipsLoading,
 
   knowingFollowersData: {

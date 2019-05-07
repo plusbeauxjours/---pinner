@@ -99,7 +99,7 @@ export const DELETE_PROFILE = gql`
 export const GET_TRIPS = gql`
   query GetTrips($username: String!, $tripPage: Int) {
     getTrips(username: $username, tripPage: $tripPage) {
-      footprints {
+      trip {
         id
         city {
           cityName
@@ -223,7 +223,7 @@ export const FREQUENT_VISITS = gql`
 export const GET_CITIES = gql`
   query GetCities($username: String!) {
     getCities(username: $username) {
-      footprints {
+      trip {
         id
         city {
           cityName
@@ -240,7 +240,7 @@ export const GET_CITIES = gql`
 export const GET_COUNTRIES = gql`
   query GetCountries($username: String!) {
     getCountries(username: $username) {
-      footprints {
+      trip {
         id
         city {
           country {
@@ -259,7 +259,7 @@ export const GET_COUNTRIES = gql`
 export const GET_CONTINENTS = gql`
   query GetContinents($username: String!) {
     getContinents(username: $username) {
-      footprints {
+      trip {
         id
         city {
           country {

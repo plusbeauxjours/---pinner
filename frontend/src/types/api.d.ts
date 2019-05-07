@@ -1088,47 +1088,6 @@ export interface LatestCitiesVariables {
 // GraphQL query operation: Feed
 // ====================================================
 
-export interface Feed_feed_cards_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface Feed_feed_cards_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: Feed_feed_cards_city_country;
-}
-
-export interface Feed_feed_cards_creator_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  isFollowing: boolean | null;
-  isSelf: boolean | null;
-}
-
-export interface Feed_feed_cards_creator {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: Feed_feed_cards_creator_profile | null;
-}
-
-export interface Feed_feed_cards {
-  __typename: "CardType";
-  id: string;
-  file: string | null;
-  caption: string;
-  city: Feed_feed_cards_city | null;
-  likeCount: number | null;
-  commentCount: number | null;
-  isLiked: boolean | null;
-  naturalTime: string | null;
-  creator: Feed_feed_cards_creator;
-}
-
 export interface Feed_feed_usersNow_profile_currentCity_country {
   __typename: "CountryType";
   countryName: string | null;
@@ -1210,11 +1169,9 @@ export interface Feed_feed_city {
 
 export interface Feed_feed {
   __typename: "FeedResponse";
-  cards: (Feed_feed_cards | null)[] | null;
   usersNow: (Feed_feed_usersNow | null)[] | null;
   usersBefore: (Feed_feed_usersBefore | null)[] | null;
   city: Feed_feed_city | null;
-  hasNextPage: boolean | null;
 }
 
 export interface Feed {
@@ -1278,6 +1235,7 @@ export interface GetFeedCards_getFeedCards_cards {
 export interface GetFeedCards_getFeedCards {
   __typename: "GetCardsResponse";
   cards: (GetFeedCards_getFeedCards_cards | null)[] | null;
+  hasNextPage: boolean | null;
 }
 
 export interface GetFeedCards {
@@ -2207,23 +2165,23 @@ export interface DeleteProfile {
 // GraphQL query operation: GetTrips
 // ====================================================
 
-export interface GetTrips_getTrips_footprints_city_country {
+export interface GetTrips_getTrips_trip_city_country {
   __typename: "CountryType";
   countryName: string | null;
   countryCode: string | null;
 }
 
-export interface GetTrips_getTrips_footprints_city {
+export interface GetTrips_getTrips_trip_city {
   __typename: "CityType";
   cityName: string | null;
   cityPhoto: string | null;
-  country: GetTrips_getTrips_footprints_city_country;
+  country: GetTrips_getTrips_trip_city_country;
 }
 
-export interface GetTrips_getTrips_footprints {
+export interface GetTrips_getTrips_trip {
   __typename: "MoveNotificationType";
   id: string;
-  city: GetTrips_getTrips_footprints_city | null;
+  city: GetTrips_getTrips_trip_city | null;
   startDate: any | null;
   endDate: any | null;
   naturalTime: string | null;
@@ -2231,8 +2189,8 @@ export interface GetTrips_getTrips_footprints {
 }
 
 export interface GetTrips_getTrips {
-  __typename: "FootprintsResponse";
-  footprints: (GetTrips_getTrips_footprints | null)[] | null;
+  __typename: "TripResponse";
+  trip: (GetTrips_getTrips_trip | null)[] | null;
 }
 
 export interface GetTrips {
@@ -2440,27 +2398,27 @@ export interface FrequentVisitsVariables {
 // GraphQL query operation: GetCities
 // ====================================================
 
-export interface GetCities_getCities_footprints_city_country {
+export interface GetCities_getCities_trip_city_country {
   __typename: "CountryType";
   countryName: string | null;
 }
 
-export interface GetCities_getCities_footprints_city {
+export interface GetCities_getCities_trip_city {
   __typename: "CityType";
   cityName: string | null;
   cityPhoto: string | null;
-  country: GetCities_getCities_footprints_city_country;
+  country: GetCities_getCities_trip_city_country;
 }
 
-export interface GetCities_getCities_footprints {
+export interface GetCities_getCities_trip {
   __typename: "MoveNotificationType";
   id: string;
-  city: GetCities_getCities_footprints_city | null;
+  city: GetCities_getCities_trip_city | null;
 }
 
 export interface GetCities_getCities {
-  __typename: "FootprintsResponse";
-  footprints: (GetCities_getCities_footprints | null)[] | null;
+  __typename: "TripResponse";
+  trip: (GetCities_getCities_trip | null)[] | null;
 }
 
 export interface GetCities {
@@ -2479,32 +2437,32 @@ export interface GetCitiesVariables {
 // GraphQL query operation: GetCountries
 // ====================================================
 
-export interface GetCountries_getCountries_footprints_city_country_continent {
+export interface GetCountries_getCountries_trip_city_country_continent {
   __typename: "ContinentType";
   continentName: string | null;
 }
 
-export interface GetCountries_getCountries_footprints_city_country {
+export interface GetCountries_getCountries_trip_city_country {
   __typename: "CountryType";
   countryName: string | null;
   countryPhoto: string | null;
-  continent: GetCountries_getCountries_footprints_city_country_continent | null;
+  continent: GetCountries_getCountries_trip_city_country_continent | null;
 }
 
-export interface GetCountries_getCountries_footprints_city {
+export interface GetCountries_getCountries_trip_city {
   __typename: "CityType";
-  country: GetCountries_getCountries_footprints_city_country;
+  country: GetCountries_getCountries_trip_city_country;
 }
 
-export interface GetCountries_getCountries_footprints {
+export interface GetCountries_getCountries_trip {
   __typename: "MoveNotificationType";
   id: string;
-  city: GetCountries_getCountries_footprints_city | null;
+  city: GetCountries_getCountries_trip_city | null;
 }
 
 export interface GetCountries_getCountries {
-  __typename: "FootprintsResponse";
-  footprints: (GetCountries_getCountries_footprints | null)[] | null;
+  __typename: "TripResponse";
+  trip: (GetCountries_getCountries_trip | null)[] | null;
 }
 
 export interface GetCountries {
@@ -2523,31 +2481,31 @@ export interface GetCountriesVariables {
 // GraphQL query operation: GetContinents
 // ====================================================
 
-export interface GetContinents_getContinents_footprints_city_country_continent {
+export interface GetContinents_getContinents_trip_city_country_continent {
   __typename: "ContinentType";
   continentName: string | null;
   continentPhoto: string | null;
 }
 
-export interface GetContinents_getContinents_footprints_city_country {
+export interface GetContinents_getContinents_trip_city_country {
   __typename: "CountryType";
-  continent: GetContinents_getContinents_footprints_city_country_continent | null;
+  continent: GetContinents_getContinents_trip_city_country_continent | null;
 }
 
-export interface GetContinents_getContinents_footprints_city {
+export interface GetContinents_getContinents_trip_city {
   __typename: "CityType";
-  country: GetContinents_getContinents_footprints_city_country;
+  country: GetContinents_getContinents_trip_city_country;
 }
 
-export interface GetContinents_getContinents_footprints {
+export interface GetContinents_getContinents_trip {
   __typename: "MoveNotificationType";
   id: string;
-  city: GetContinents_getContinents_footprints_city | null;
+  city: GetContinents_getContinents_trip_city | null;
 }
 
 export interface GetContinents_getContinents {
-  __typename: "FootprintsResponse";
-  footprints: (GetContinents_getContinents_footprints | null)[] | null;
+  __typename: "TripResponse";
+  trip: (GetContinents_getContinents_trip | null)[] | null;
 }
 
 export interface GetContinents {

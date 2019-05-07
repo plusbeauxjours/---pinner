@@ -10,12 +10,12 @@ class GetCitiesQuery extends Query<GetCities, GetCitiesVariables> {}
 
 const GetCities: React.SFC<any> = username => (
   <GetCitiesQuery query={GET_CITIES} variables={username}>
-    {({ data: { getCities: { footprints = null } = {} } = {}, loading }) => {
+    {({ data: { getCities: { trip = null } = {} } = {}, loading }) => {
       if (loading) {
         return <Loader />;
-      } else if (!loading && footprints) {
-        console.log(footprints);
-        return footprints.map(city => (
+      } else if (!loading && trip) {
+        console.log(trip);
+        return trip.map(city => (
           <LocationRow
             key={city.id}
             id={city.id}

@@ -31,18 +31,25 @@ def resolve_get_notifications(self, info, **kwargs):
 @login_required
 def resolve_get_trips(self, info, **kwargs):
 
-    user = info.context.user
+    me = info.context.user
     username = kwargs.get('username')
-    profile = User.objects.prefetch_related('movenotification').get(username=username)
+    user = User.objects.prefetch_related('movenotification').get(username=username)
     tripPage = kwargs.get('tripPage', 0)
 
+    user_trips = user.movenotification.values('city').all()
+    my_trips = me.movenotification.values('city').all()
+
+    intersection = user_trips.intersection(my_trips)
+    print(intersection)
+
     if (tripPage is 0):
-        footprints = profile.movenotification.order_by('-start_date')[:3]
+        trip = user.movenotification.order_by('-start_date')[:3]
 
     else:
-        footprints = profile.movenotification.all().order_by('-start_date')[3:30]
+        trip = user.movenotification.all().order_by('-start_date')[3:30]
+    
 
-    return location_types.FootprintsResponse(footprints=footprints)
+    return location_types.TripResponse(trip=trip)
 
 
 @login_required

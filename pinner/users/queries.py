@@ -155,7 +155,7 @@ def resolve_get_knowing_followers(sel, info, **kwargs):
         user = User.objects.select_related('profile').get(username=username)
         my_followers = me.profile.followers.all()
         user_followers = user.profile.followers.all()
-        knowing_followers = my_followers & user_followers
+        knowing_followers = my_followers.intersection(user_followers)
         count = knowing_followers.count()
         return types.KnowingFollowersResponse(profiles=knowing_followers, count=count)
 

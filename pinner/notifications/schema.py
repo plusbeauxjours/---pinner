@@ -13,7 +13,7 @@ class Query(object):
         args={'page': graphene.Int()}
     )
     get_trips = graphene.Field(
-        location_types.FootprintsResponse,
+        location_types.TripResponse,
         resolver=queries.resolve_get_trips,
         required=True,
         args={

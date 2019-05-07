@@ -10,12 +10,12 @@ class GetCountriesQuery extends Query<GetCountries, GetCountriesVariables> {}
 
 const GetCountries: React.SFC<any> = username => (
   <GetCountriesQuery query={GET_COUNTRIES} variables={username}>
-    {({ data: { getCountries: { footprints = null } = {} } = {}, loading }) => {
+    {({ data: { getCountries: { trip = null } = {} } = {}, loading }) => {
       if (loading) {
         return <Loader />;
-      } else if (!loading && footprints) {
-        console.log(footprints);
-        return footprints.map(country => (
+      } else if (!loading && trip) {
+        console.log(trip);
+        return trip.map(country => (
           <LocationRow
             key={country.id}
             id={country.id}

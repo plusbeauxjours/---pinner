@@ -21,7 +21,7 @@ def resolve_get_cities(self, info, **kwargs):
 
     cities = profile.movenotification.all().distinct('city')
 
-    return types.FootprintsResponse(footprints=cities)
+    return types.TripResponse(trip=cities)
 
 
 @login_required
@@ -32,7 +32,7 @@ def resolve_get_countries(self, info, **kwargs):
 
     countries = profile.movenotification.all().distinct('city__country')
 
-    return types.FootprintsResponse(footprints=countries)
+    return types.TripResponse(trip=countries)
 
 
 @login_required
@@ -43,7 +43,7 @@ def resolve_get_continents(self, info, **kwargs):
 
     continents = profile.movenotification.all().distinct('city__country__continent')
 
-    return types.FootprintsResponse(footprints=continents)
+    return types.TripResponse(trip=continents)
 
 
 @login_required
@@ -208,9 +208,9 @@ def resolve_get_footprints(self, info, **kwargs):
     page = kwargs.get('page', 0)
     offset = 10 * page
 
-    footprints = user.movenotification.all().order_by('-start_date')[offset:10 + offset]
+    trip = user.movenotification.all().order_by('-start_date')[offset:10 + offset]
 
-    return types.FootprintsResponse(footprints=footprints)
+    return types.TripResponse(trip=trip)
 
 
 @login_required

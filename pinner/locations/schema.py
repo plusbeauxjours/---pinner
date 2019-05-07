@@ -43,7 +43,7 @@ class Query(object):
         }
     )
     get_footprints = graphene.Field(
-        types.FootprintsResponse,
+        types.TripResponse,
         resolver=queries.resolve_get_footprints,
         required=True
     )
@@ -90,7 +90,7 @@ class Query(object):
         args={'term': graphene.String(required=True)}
     )
     get_cities = graphene.Field(
-        types.FootprintsResponse,
+        types.TripResponse,
         resolver=queries.resolve_get_cities,
         required=True,
         args={
@@ -98,7 +98,7 @@ class Query(object):
         }
     )
     get_countries = graphene.Field(
-        types.FootprintsResponse,
+        types.TripResponse,
         resolver=queries.resolve_get_countries,
         required=True,
         args={
@@ -106,7 +106,7 @@ class Query(object):
         }
     )
     get_continents = graphene.Field(
-        types.FootprintsResponse,
+        types.TripResponse,
         resolver=queries.resolve_get_continents,
         required=True,
         args={

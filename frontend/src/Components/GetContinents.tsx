@@ -11,13 +11,13 @@ class GetContinentQuery extends Query<GetContinents, GetContinentsVariables> {}
 const GetContinents: React.SFC<any> = username => (
   <GetContinentQuery query={GET_CONTINENTS} variables={username}>
     {({
-      data: { getContinents: { footprints = null } = {} } = {},
+      data: { getContinents: { trip = null } = {} } = {},
       loading
     }) => {
       if (loading) {
         return <Loader />;
-      } else if (!loading && footprints) {
-        return footprints.map(continent => (
+      } else if (!loading && trip) {
+        return trip.map(continent => (
           <LocationRow
             key={continent.id}
             id={continent.id}

@@ -865,9 +865,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
           return {
             getTrips: {
               ...previousResult.getTrips,
-              footprints: [
-                ...previousResult.getTrips.footprints,
-                ...fetchMoreResult.getTrips.footprints
+              trip: [
+                ...previousResult.getTrips.trip,
+                ...fetchMoreResult.getTrips.trip
               ]
             }
           };
@@ -1150,10 +1150,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         variables: { username, tripPage }
       });
       if (data) {
-        data.getTrips.footprints = data.getTrips.footprints.filter(
+        data.getTrips.trip = data.getTrips.trip.filter(
           i => parseInt(i.id, 10) !== deleteTrip.tripId
         );
-        console.log(data.getTrips.footprints);
+        console.log(data.getTrips.trip);
         console.log(deleteTrip);
         cache.writeQuery({
           query: GET_TRIPS,
