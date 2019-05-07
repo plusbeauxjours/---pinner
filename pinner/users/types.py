@@ -3,6 +3,7 @@ from graphene_django.types import DjangoObjectType
 from . import models
 from django.contrib.auth.models import User
 from config import types as config_types
+from locations import types as location_types
 
 
 class ProfileType(DjangoObjectType):
@@ -16,6 +17,8 @@ class ProfileType(DjangoObjectType):
     trip_count = graphene.Int(source='trip_count')
     is_following = graphene.Boolean()
     is_self = graphene.Boolean()
+    cities = graphene.List(location_types.CityType, source='cities')
+    countries = graphene.List(location_types.CountryType, source='countries')
 
     def resolve_is_following(self, info):
         user = info.context.user
@@ -35,15 +38,9 @@ class ProfileType(DjangoObjectType):
         model = models.Profile
 
 
-class UserType(DjangoObjectType):
-
-    class Meta:
-        model = User
-        exclude_fields = ('password',)
-
 
 class UserProfileResponse(graphene.ObjectType):
-    user = graphene.Field(UserType)
+    user = graphene.Field(config_types.UserType)
 
 
 class ProfileListResponse(graphene.ObjectType):
@@ -56,7 +53,7 @@ class FollowUnfollowResponse(graphene.ObjectType):
 
 class EditProfileResponse(graphene.ObjectType):
     ok = graphene.Boolean()
-    user = graphene.Field(UserType)
+    user = graphene.Field(config_types.UserType)
 
 
 class DeleteProfileResponse(graphene.ObjectType):
@@ -68,7 +65,7 @@ class ChangePasswordResponse(graphene.ObjectType, config_types.ResponseFields):
 
 
 class SearchUsersResponse(graphene.ObjectType):
-    users = graphene.List(UserType)
+    users = graphene.List(config_types.UserType)
 
 
 class CheckUsernameResponse(graphene.ObjectType):
@@ -85,7 +82,7 @@ class FacebookConnectResponse(graphene.ObjectType):
 
 
 class RecommandUsersResponse(graphene.ObjectType):
-    users = graphene.List(UserType)
+    users = graphene.List(config_types.UserType)
 
 
 class ReportLocationResponse(graphene.ObjectType):
@@ -93,7 +90,7 @@ class ReportLocationResponse(graphene.ObjectType):
 
 
 class UserListResponse(graphene.ObjectType):
-    users = graphene.List(UserType)
+    users = graphene.List(config_types.UserType)
 
 
 class KnowingFollowersResponse(graphene.ObjectType):

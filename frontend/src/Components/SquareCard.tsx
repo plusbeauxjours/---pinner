@@ -105,7 +105,6 @@ const SquareCard: React.SFC<IProps> = ({
 }) => (
   <Link to={`/p/${id}`}>
     <Square bg={`${BACKEND_URL}/media/${file}`}>
-      {console.log(`${BACKEND_URL}/media/${file}`)}
       <Caption text={caption} />
       <Overlay>
         <ListOverlay>

@@ -1,13 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 from config import models as config_models
-from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill
-from django.dispatch import receiver
-from django.db.models.signals import pre_init
-
-from cached_property import cached_property
 from locations import models as location_models
+# from django.db.models import Count, Sum
+
+# from django.dispatch import receiver
+
+# from imagekit.models import ProcessedImageField
+# from imagekit.processors import ResizeToFill
+from cached_property import cached_property
 
 
 class Profile(config_models.TimeStampedModel):
@@ -76,6 +77,20 @@ class Profile(config_models.TimeStampedModel):
     @cached_property
     def trip_count(self):
         return self.user.movenotification.all().count()
+
+    # @property
+    # def cities(self):
+    #     return location_models.City.objects.filter(
+    #         movenotification__actor__username=self.user.username).annotate(
+    #         count=Count('movenotification', distinct=True)).annotate(
+    #         diff=Sum('movenotification__diff_days')).order_by('-count')[:6]
+
+    # @property
+    # def countries(self):
+    #     return location_models.Country.objects.filter(
+    #         cities__movenotification__actor__username=self.user.username).annotate(
+    #         count=Count('cities__movenotification', distinct=True)).annotate(
+    #         diff=Sum('cities__movenotification__diff_days')).order_by('-count')[:6]
 
     class Meta:
         ordering = ['-created_at']

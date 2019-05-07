@@ -352,6 +352,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                             variables={{
                                                               username
                                                             }}
+                                                            fetchPolicy="cache-and-network"
                                                           >
                                                             {({
                                                               data: topCountriesData,
@@ -365,6 +366,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                   variables={{
                                                                     username
                                                                   }}
+                                                                  fetchPolicy="cache-and-network"
                                                                 >
                                                                   {({
                                                                     data: frequentVisitsData,

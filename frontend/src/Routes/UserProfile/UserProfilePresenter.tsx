@@ -1299,7 +1299,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               )}
             </TripBox>
           </Container>
-          {console.log(username)}
           <GetCards
             toggleUploadModal={toggleUploadModal}
             upload={user.profile.isSelf ? true : false}

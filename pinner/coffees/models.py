@@ -1,16 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
 from config import models as config_models
-from django.contrib.humanize.templatetags.humanize import naturaltime
-
 from locations import models as location_models
+
+from django.utils import timezone
+from django.core.exceptions import ValidationError
+from django.contrib.humanize.templatetags.humanize import naturaltime
+import datetime
 
 from cached_property import cached_property
 from django.db.models.signals import pre_save, pre_init
 from django.dispatch import receiver
-from django.core.exceptions import ValidationError
-from django.utils import timezone
-import datetime
 
 
 class Coffee (config_models.TimeStampedModel):

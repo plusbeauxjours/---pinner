@@ -5,6 +5,7 @@ from config import models as config_models
 
 from cached_property import cached_property
 
+
 class Continent (config_models.TimeStampedModel):
 
     continent_name = models.CharField(max_length=20, null=True, blank=True)

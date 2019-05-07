@@ -60,7 +60,7 @@ class EditCard(graphene.Mutation):
         except models.Card.DoesNotExist:
             raise Exception("Cannot find Card")
 
-        if card.exists():
+        if card:
             cityName = kwargs.get('cityName', card.city.city_name)
             caption = kwargs.get('caption', card.caption)
 
@@ -77,7 +77,6 @@ class EditCard(graphene.Mutation):
             else:
 
                 try:
-
                     card.caption = caption
                     card.city = city
                     card.save()

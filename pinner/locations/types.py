@@ -4,7 +4,6 @@ from . import models
 
 from config import types as config_types
 from users import types as user_types
-from cards import types as koko_types
 from notifications import types as notification_types
 from coffees import types as coffee_types
 
@@ -41,7 +40,7 @@ class ContinentType(DjangoObjectType):
 
 class CityProfileResponse(graphene.ObjectType):
     city = graphene.Field(CityType)
-    usersNow = graphene.List(user_types.UserType)
+    usersNow = graphene.List(config_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 
@@ -55,7 +54,7 @@ class TripProfileResponse(graphene.ObjectType):
 class CountryProfileResponse(graphene.ObjectType):
     country = graphene.Field(CountryType)
     cities = graphene.List(CityType)
-    usersNow = graphene.List(user_types.UserType)
+    usersNow = graphene.List(config_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 

@@ -167,10 +167,7 @@ class FeedContainer extends React.Component<IProps, IState> {
                     query={GET_COFFEES}
                     variables={{ cityName: currentCity, coffeePage }}
                   >
-                    {({
-                      data: coffeeData,
-                      loading: coffeeLoading,
-                    }) => {
+                    {({ data: coffeeData, loading: coffeeLoading }) => {
                       return (
                         <RequestCoffeeMutation
                           mutation={REQUEST_COFFEE}
@@ -336,7 +333,6 @@ class FeedContainer extends React.Component<IProps, IState> {
       continentPhotoURL
     });
     localStorage.setItem("cityName", currentCity);
-    console.log(typeof latitude);
     this.ReportLocationFn({
       variables: {
         currentLat: latitude,

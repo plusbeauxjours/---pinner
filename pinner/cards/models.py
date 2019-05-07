@@ -1,15 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.humanize.templatetags.humanize import naturaltime
 from config import models as config_models
 from locations import models as location_models
-from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill
-from cached_property import cached_property
+
+from django.contrib.humanize.templatetags.humanize import naturaltime
 
 from django.dispatch import receiver
 from django.db.models.signals import pre_save
 from django.db.models.signals import post_delete 
+
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
+from cached_property import cached_property
 
 
 class Card(config_models.TimeStampedModel):

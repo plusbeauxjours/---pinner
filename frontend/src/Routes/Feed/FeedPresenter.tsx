@@ -496,7 +496,6 @@ const FeedPresenter: React.SFC<IProps> = ({
               loader={<Loader key={0} />}
               loadMore={loadMore}
             >
-              {console.log(hasNextPage)}
               {cards &&
                 cards.map(card => (
                   <Photo

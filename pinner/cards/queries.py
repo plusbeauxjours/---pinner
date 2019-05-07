@@ -1,11 +1,12 @@
-from django.db import IntegrityError
 from . import types, models
-from graphql_jwt.decorators import login_required
-from django.db.models import Count
-
 from django.contrib.auth.models import User
 from locations import models as location_models
 from notifications import models as notification_models
+
+from django.db.models import Count
+from django.db import IntegrityError
+
+from graphql_jwt.decorators import login_required
 
 
 @login_required
@@ -109,7 +110,7 @@ def resolve_get_comments(self, info, **kwargs):
     user = info.context.user
 
     try:
-        card = models.Card.objects.select_related('comments').get(id=cardId)
+        card = models.Card.objects.prefetch_related('comments').get(id=cardId)
     except models.Card.DoesNotExist:
         raise Exception('Card not found')
 
@@ -138,7 +139,7 @@ def resolve_card_detail(self, info, **kwargs):
     cardId = kwargs.get('cardId')
     user = info.context.user
 
-    if cardId.exists():
+    if cardId:
         try:
             card = models.Card.objects.get(id=cardId)
         except models.Card.DoesNotExist:

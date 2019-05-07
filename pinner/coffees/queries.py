@@ -54,7 +54,7 @@ def resolve_coffee_detail(self, info, **kwargs):
     coffeeId = kwargs.get('coffeeId')
     user = info.context.user
 
-    if coffeeId.exists():
+    if coffeeId:
         try:
             coffee = models.Coffee.objects.get(id=coffeeId)
         except models.Coffee.DoesNotExist:

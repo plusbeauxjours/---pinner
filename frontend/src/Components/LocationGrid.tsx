@@ -9,7 +9,7 @@ const ScrollContainer = styled.div`
   width: 200px;
   height: 200px;
   display: flex;
-  margin: 0 15px 25px 0;
+  margin: 0 10px 25px 0;
 `;
 
 const Square = styled.div`

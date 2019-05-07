@@ -2,6 +2,7 @@ import graphene
 from graphene_django.types import DjangoObjectType
 from . import models
 
+from config import types as config_types
 from users import types as user_types
 from locations import types as location_types
 from notifications import types as notification_types
@@ -51,7 +52,7 @@ class CommentType(DjangoObjectType):
 
 class FeedResponse(graphene.ObjectType):
     city = graphene.Field(location_types.CityType)
-    usersNow = graphene.List(user_types.UserType)
+    usersNow = graphene.List(config_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
     cards = graphene.List(CardType)
     page = graphene.Int()
@@ -67,7 +68,7 @@ class ToggleLikeCommentResponse(graphene.ObjectType):
 
 
 class CardLikeResponse(graphene.ObjectType):
-    users = graphene.List(user_types.UserType)
+    users = graphene.List(config_types.UserType)
 
 
 class UploadCardResponse(graphene.ObjectType):
@@ -114,7 +115,7 @@ class FileInputType(graphene.InputObjectType):
 
 class FirstAnnotateRespose(graphene.ObjectType):
     city = graphene.Field(location_types.CityType)
-    usersNow = graphene.List(user_types.UserType)
+    usersNow = graphene.List(config_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
     coffees = graphene.List(coffee_types.CoffeeType)
 
@@ -122,7 +123,7 @@ class FirstAnnotateRespose(graphene.ObjectType):
 class SecondAnnotateRespose(graphene.ObjectType):
     country = graphene.Field(location_types.CountryType)
     cities = graphene.List(location_types.CityType)
-    usersNow = graphene.List(user_types.UserType)
+    usersNow = graphene.List(config_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
     coffees = graphene.List(coffee_types.CoffeeType)
 
@@ -130,7 +131,7 @@ class SecondAnnotateRespose(graphene.ObjectType):
 class ThirdAnnotateRespose(graphene.ObjectType):
     continent = graphene.Field(location_types.ContinentType)
     countries = graphene.List(location_types.CountryType)
-    usersNow = graphene.List(user_types.UserType)
+    usersNow = graphene.List(config_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
     coffees = graphene.List(coffee_types.CoffeeType)
 

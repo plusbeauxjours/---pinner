@@ -48,7 +48,6 @@ class Weather extends React.Component<IProps, IState> {
   public componentDidMount() {
     const { latitude, longitude } = this.props;
     this.getWeather(latitude, longitude);
-    console.log(latitude, longitude);
   }
   public render() {
     const { aqi, icon, humidity, temp, chill } = this.state;

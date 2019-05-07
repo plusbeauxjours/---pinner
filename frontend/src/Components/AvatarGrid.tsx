@@ -89,7 +89,6 @@ const AvatarGrid: React.SFC<IProps> = ({
         coffees.map(coffee => (
           <AvatarContainer key={coffee.id}>
             <Link to={`/c/${coffee.id}`}>
-              {console.log(coffee.target)}
               {(() => {
                 switch (coffee.target) {
                   case "EVERYONE":
