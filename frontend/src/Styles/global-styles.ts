@@ -32,6 +32,19 @@ const GlobalStyle = createGlobalStyle`
     h1,h2,h3,h4,h5,h6{
         font-family: 'Maven Pro', sans-serif;
     }
+    .pac-container {
+        border-radius: 0 0 5px 5px;
+        z-index: 1000000000;
+        background-image: none;
+        font-size: 1px;
+        color: red;
+    }
+    .pac-item-query {
+        color: red;
+    }
+    .pac-item {
+        padding: 20px;
+    }
 `;
 
 export default GlobalStyle;

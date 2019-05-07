@@ -42,7 +42,6 @@ class ReportLocation(graphene.Mutation):
         print('reportlocation')
 
         def get_locations_nearby_coords(latitude, longitude, max_distance=None):
- 
             gcd_formula = "6371 * acos(cos(radians(%s)) * \
             cos(radians(latitude)) \
             * cos(radians(longitude) - radians(%s)) + \
@@ -67,12 +66,11 @@ class ReportLocation(graphene.Mutation):
         except models.Country.DoesNotExist:
             country = models.Country.objects.create(
                 country_code=currentCountryCode, country_name=currentCountry, country_photo=countryPhotoURL, continent=continent)
-
         try:
             city = models.City.objects.get(city_name=currentCity)
             profile.current_city = city
             profile.save()
-            if city.near_city.count() < 7 :
+            if city.near_city.count() < 6 :
                 nearCities = get_locations_nearby_coords(currentLat, currentLng, 3000)[:6]
                 for i in nearCities:
                     city.near_city.add(i)
@@ -84,8 +82,10 @@ class ReportLocation(graphene.Mutation):
                 city_name=currentCity, country=country, city_photo=cityPhotoURL, latitude=currentLat, longitude=currentLng)
             for i in nearCities:
                 city.near_city.add(i)
+                city.save()
+            profile.current_city = city
             profile.save()
-
+        
         try:
             latest = user.movenotification.latest('created_at')
             if not latest.city == city:

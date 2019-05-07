@@ -19,7 +19,8 @@ export const reverseGeoCode = async (latitude: number, longitude: number) => {
       for (const component of components.address_components) {
         if (
           component.types[0] === "locality" ||
-          component.types[0] === "sublocality"
+          component.types[0] === "sublocality" ||
+          component.types[0] === "colloquial_area"
         ) {
           storableLocation.city = component.long_name;
         } else if (
