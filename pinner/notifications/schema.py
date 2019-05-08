@@ -32,16 +32,7 @@ class Query(object):
             'endDate': graphene.Date(required=True)
         }
     )
-    get_duration_avatars = graphene.Field(
-        types.DurationAvatarsResponse,
-        resolver=queries.resolve_get_duration_avatars,
-        required=True,
-        args={
-            'cityName': graphene.String(required=True),
-            'startDate': graphene.Date(required=True),
-            'endDate': graphene.Date(required=True)
-        }
-    )
+
     
 
 

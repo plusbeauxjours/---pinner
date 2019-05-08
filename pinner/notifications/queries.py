@@ -36,18 +36,11 @@ def resolve_get_trips(self, info, **kwargs):
     user = User.objects.prefetch_related('movenotification').get(username=username)
     tripPage = kwargs.get('tripPage', 0)
 
-    user_trips = user.movenotification.values('city').all()
-    my_trips = me.movenotification.values('city').all()
-
-    intersection = user_trips.intersection(my_trips)
-    print(intersection)
-
     if (tripPage is 0):
-        trip = user.movenotification.order_by('-start_date')[:3]
+        trip = user.movenotification.all().order_by('-start_date')[:3]
 
     else:
         trip = user.movenotification.all().order_by('-start_date')[3:30]
-    
 
     return location_types.TripResponse(trip=trip)
 
@@ -65,29 +58,6 @@ def resolve_get_duration_my_trip(self, info, **kwargs):
             startDate, endDate)) | user.movenotification.filter(city__city_name=cityName, end_date__range=(startDate, endDate))
 
         return types.DurationTripsResponse(moveNotifications=my_trip)
-
-    except models.MoveNotification.DoesNotExist:
-        raise Exception("You've never been there at the same time")
-
-
-@login_required
-def resolve_get_duration_avatars(self, info, **kwargs):
-
-    user = info.context.user
-    cityName = kwargs.get('cityName')
-    startDate = kwargs.get('startDate')
-    endDate = kwargs.get('endDate')
-
-    try:
-        city = location_models.City.objects.prefetch_related('movenotification').get(city_name=cityName)
-        usersBefore = city.movenotification.filter(Q(start_date__range=(
-            startDate, endDate)) | Q(end_date__range=(
-                startDate, endDate))).order_by('actor_id').distinct('actor_id')
-
-        userCount = usersBefore.count()
-
-        usersBefore = usersBefore[:5]
-        return types.DurationAvatarsResponse(usersBefore=usersBefore, userCount=userCount)
 
     except models.MoveNotification.DoesNotExist:
         raise Exception("You've never been there at the same time")

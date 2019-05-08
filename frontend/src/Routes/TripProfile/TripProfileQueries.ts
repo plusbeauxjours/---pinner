@@ -39,30 +39,6 @@ export const TRIP_PROFILE = gql`
   }
 `;
 
-export const GET_DURATION_AVATARS = gql`
-  query GetDurationAvatars(
-    $cityName: String!
-    $startDate: Date!
-    $endDate: Date!
-  ) {
-    getDurationAvatars(
-      cityName: $cityName
-      startDate: $startDate
-      endDate: $endDate
-    ) {
-      userCount
-      usersBefore {
-        actor {
-          profile {
-            id
-            avatar
-          }
-        }
-      }
-    }
-  }
-`;
-
 export const GET_DURATION_CARDS = gql`
   query GetDurationCards(
     $page: Int!

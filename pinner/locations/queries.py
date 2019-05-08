@@ -106,11 +106,13 @@ def resolve_trip_profile(self, info, **kwargs):
     endDate = kwargs.get('endDate')
 
     city = models.City.objects.prefetch_related('movenotification').prefetch_related('coffee').get(city_name=cityName)
-    usersBefore = city.movenotification.filter(Q(start_date__range=(
-        startDate, endDate)) | Q(end_date__range=(
-            startDate, endDate))).order_by('actor_id').distinct('actor_id')
+   
+    usersBefore = city.movenotification.filter(Q(start_date__lte=(endDate)) | 
+        Q(end_date__gte=(startDate))).order_by('actor_id').distinct('actor_id')
+
     userCount = usersBefore.count()
-    coffees = city.coffee.filter(created_at__range=(startDate, endDate))
+
+    coffees = city.coffee.filter(created_at__range=(startDate, endDate))[:42]
 
     return types.TripProfileResponse(city=city, usersBefore=usersBefore, userCount=userCount, coffees=coffees)
 

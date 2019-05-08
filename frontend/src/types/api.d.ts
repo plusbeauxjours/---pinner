@@ -1874,46 +1874,6 @@ export interface TripProfileVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetDurationAvatars
-// ====================================================
-
-export interface GetDurationAvatars_getDurationAvatars_usersBefore_actor_profile {
-  __typename: "ProfileType";
-  id: string;
-  avatar: string;
-}
-
-export interface GetDurationAvatars_getDurationAvatars_usersBefore_actor {
-  __typename: "UserType";
-  profile: GetDurationAvatars_getDurationAvatars_usersBefore_actor_profile | null;
-}
-
-export interface GetDurationAvatars_getDurationAvatars_usersBefore {
-  __typename: "MoveNotificationType";
-  actor: GetDurationAvatars_getDurationAvatars_usersBefore_actor;
-}
-
-export interface GetDurationAvatars_getDurationAvatars {
-  __typename: "DurationAvatarsResponse";
-  userCount: number | null;
-  usersBefore: (GetDurationAvatars_getDurationAvatars_usersBefore | null)[] | null;
-}
-
-export interface GetDurationAvatars {
-  getDurationAvatars: GetDurationAvatars_getDurationAvatars;
-}
-
-export interface GetDurationAvatarsVariables {
-  cityName: string;
-  startDate: any;
-  endDate: any;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: GetDurationCards
 // ====================================================
 

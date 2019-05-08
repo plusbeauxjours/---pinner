@@ -20,7 +20,6 @@ import GetCountries from "../../Components/GetCountries";
 import GetContinents from "../../Components/GetContinents";
 import GetFollowers from "src/Components/GetFollowers";
 import GetFollowings from "src/Components/GetFollowings";
-import GetDurationAvatars from "src/Components/GetDurationAvatars";
 import Flag from "src/Components/Flag";
 import GetKnowingFollowers from "src/Components/GetKnowingFollowers";
 import Weather from "src/Components/Weather";
@@ -312,12 +311,13 @@ const TripOverlay = styled.div`
 
 const TripRow = styled.div<ITheme>`
   display: grid;
-  grid-template-columns: 1fr 3fr 3fr 2fr 2fr 1.5fr 3fr 0.2fr;
+  grid-template-columns: 1fr 3fr 3fr 2fr 2fr 1.5fr 0.2fr;
   justify-content: space-between;
   align-items: center;
-  background-color: #2d3a41;
   border-radius: 3px;
-  border: 1px solid grey;
+  :not(:last-child) {
+    border-bottom: 1px solid grey;
+  }
   padding: 10px;
   &:hover {
     ${TripOverlay} {
@@ -1183,13 +1183,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <TripText>{trip.endDate}</TripText>
                   <TripText>
                     <p>{trip.diffDays} Days</p>
-                  </TripText>
-                  <TripText>
-                    <GetDurationAvatars
-                      cityName={trip.city.cityName}
-                      startDate={trip.startDate}
-                      endDate={trip.endDate}
-                    />
                   </TripText>
                   <TripOverlay
                     onClick={() => {
