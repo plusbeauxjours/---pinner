@@ -4,18 +4,34 @@ export const CONTINENT_PROFILE = gql`
   query ContinentProfile($page: Int, $continentName: String!) {
     continentProfile(page: $page, continentName: $continentName) {
       usersNow {
-        id
         profile {
+          id
           username
           avatar
+          isFollowing
+          isSelf
+          currentCity {
+            cityName
+            country {
+              countryName
+            }
+          }
         }
       }
       usersBefore {
-        id
         actor {
           profile {
+            id
             username
             avatar
+            isFollowing
+            isSelf
+            currentCity {
+              cityName
+              country {
+                countryName
+              }
+            }
           }
         }
       }

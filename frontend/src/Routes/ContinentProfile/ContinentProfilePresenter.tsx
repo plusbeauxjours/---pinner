@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "../../Styles/typed-components";
+import { Link } from "react-router-dom";
 
 import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
-import Flag from "../../Components/Flag";
 import LocationGrid from "../../Components/LocationGrid";
 import AvatarGrid from "../../Components/AvatarGrid";
 import GetCards from "../../Components/GetCards";
@@ -14,85 +14,6 @@ const SWrapper = styled(Wrapper)`
   z-index: 1;
 `;
 
-const PHeader = styled.header`
-  display: flex;
-  flex-direction: column;
-  height: 300px;
-  align-items: center;
-  background: ${props => props.theme.headerColor};
-`;
-
-const PAvatar = styled(Avatar)`
-  margin: 40px;
-`;
-
-const Username = styled.span`
-  text-align: center;
-  font-size: 22px;
-  font-weight: 100;
-`;
-
-const PBody = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin: 20px 0 20px 0;
-  justify-content: center;
-  background: ${props => props.theme.bgColor};
-`;
-
-const InfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
-  width: 300px;
-  margin-right: 15px;
-`;
-
-const Info = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 100%;
-  margin-bottom: 10px;
-  height: 200px;
-  border-radius: 3px;
-  border: 1px solid grey;
-  padding: 5px;
-`;
-
-const InfoInlineContainer = styled(InfoContainer)`
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const HalfInfo = styled(Info)`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 48%;
-  height: 100px;
-  display: flex;
-  margin-bottom: 0;
-  padding-bottom: 30px;
-`;
-
-const InfoRow = styled.span``;
-
-const FollowContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-width: 400px;
-  margin-bottom: 10px;
-`;
-
-const Follow = styled.div`
-  display: flex;
-  flex: 1;
-  margin-bottom: 10px;
-  height: 150px;
-  border-radius: 3px;
-  border: 1px solid grey;
-  padding: 5px;
-`;
 const Container = styled.div`
   border-bottom: 4px;
   display: flex;
@@ -103,6 +24,52 @@ const Container = styled.div`
   height: 280px;
   padding: 15px;
 `;
+
+const PHeader = styled.header`
+  display: flex;
+  padding: 40px 15px 40px 15px;
+  @media screen and (max-width: 600px) {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+`;
+
+const Username = styled.span`
+  text-align: center;
+  font-size: 22px;
+  font-weight: 100;
+`;
+
+const CountryPhoto = styled.img`
+  margin-bottom: 10px;
+  display: flex;
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+  border-radius: 3px;
+  z-index: 1;
+  object-fit: cover;
+`;
+
+const ContinentName = styled(Bold)`
+  position: absolute;
+  display: flex;
+  z-index: 5;
+  font-size: 40px;
+  font-family: "Qwigley";
+  font-weight: 200;
+  pointer-events: none;
+`;
+
+const ContinentContainer = styled.div`
+  margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+`;
+
+const InfoRow = styled.span``;
 
 const SText = styled(Bold)`
   font-size: 18px;
@@ -117,21 +84,14 @@ const SSText = styled(Bold)`
 const Title = styled.div`
   display: flex;
   margin-top: 10px;
+  @media screen and (max-width: 935px) {
+    margin-left: 10px;
+  }
 `;
 
 const SmallTitle = styled(Title)`
   flex-direction: column;
   align-items: center;
-`;
-
-const GreyLine = styled.div`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid grey;
-`;
-
-const SmallGreyLine = styled(GreyLine)`
-  width: 40%;
 `;
 
 const Box = styled.div`
@@ -155,14 +115,92 @@ const Box = styled.div`
   }
 `;
 
-const FlagGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 40px;
-  padding: 20px;
+const GreyLine = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid grey;
+  @media screen and (max-width: 935px) {
+    margin: 0 10px 0 10px;
+  }
 `;
 
-const AvatarContainer = styled.div``;
+const SmallGreyLine = styled(GreyLine)`
+  width: 40%;
+`;
+
+const UserRow = styled.div`
+  display: grid;
+  flex-direction: row;
+  grid-template-columns: 4fr 1fr;
+  grid-gap: 15px;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: grey;
+  }
+  border-top: 1px solid grey;
+`;
+
+const CAvatar = styled(Avatar)`
+  border-radius: 3px;
+  height: 300px;
+  width: 300px;
+  margin-right: 20px;
+  @media screen and (max-width: 600px) {
+    margin-right: 0px;
+  }
+`;
+
+const UserContainer = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  @media screen and (max-width: 800px) {
+    min-width: 300px;
+  }
+`;
+
+const UserNameRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const AvatarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Header = styled.header`
+  padding: 10px 10px 10px 0;
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+`;
+
+const HeaderText = styled(Bold)`
+  display: flex;
+`;
+
+const HeaderColumn = styled.div`
+  margin-left: 15px;
+`;
+
+const SAvatar = styled(Avatar)`
+  border-radius: 3px;
+`;
+
+const Location = styled.span`
+  display: flex;
+  margin-top: 5px;
+  display: block;
+  font-size: 12px;
+  font-weight: 200;
+`;
 
 interface IProps {
   data?: any;
@@ -196,70 +234,39 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
   } else if (!loading && continent && countries) {
     return (
       <>
-        <PHeader>
-          <PAvatar size="lg" url={continent.continentPhoto} />
-          <Username>{continent.continentName}</Username>
-        </PHeader>
         <SWrapper>
-          <PBody>
-            <InfoContainer>
-              <Info>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with....
-              </Info>
-              <InfoInlineContainer>
-                <HalfInfo>
-                  <InfoRow>
-                    <SText text={String(continent.countryCount)} />
-                    AQI
-                  </InfoRow>
-                  <InfoRow>
-                    <SText text={String(continent.countryCount)} />
-                    TEMPERATURE
-                  </InfoRow>
-                  <InfoRow>
-                    <SText text={String(continent.countryCount)} />
-                    DISTANCE
-                  </InfoRow>
-                </HalfInfo>
-                <HalfInfo>
-                  <InfoRow>
-                    cardCount
-                    <SText text={String(continent.countryCount)} />
-                  </InfoRow>
-
-                  <InfoRow>
-                    userCount
-                    <SText text={String(continent.countryCount)} />
-                  </InfoRow>
-
-                  <InfoRow>
-                    userLogCount
-                    <SText text={String(continent.countryCount)} />
-                  </InfoRow>
-                </HalfInfo>
-              </InfoInlineContainer>
-            </InfoContainer>
-            <FollowContainer>
-              COUNTRIES
-              <SText text={String(continent.countryCount)} />
-              <Follow>
-                <FlagGrid>
-                  {countries &&
-                    countries.map(country => (
-                      <AvatarContainer key={country.id}>
-                        <Flag size={"sm"} countryCode={country.countryCode} />
-                      </AvatarContainer>
-                    ))}
-                </FlagGrid>
-              </Follow>
-            </FollowContainer>
-          </PBody>
+          <PHeader>
+            <AvatarContainer>
+              <CAvatar size="lg" url={continent.continentPhoto} />
+              <InfoRow>
+                <SText text={String(continent.countryCount)} />
+                cities
+              </InfoRow>
+            </AvatarContainer>
+            <UserContainer>
+              <UserNameRow>
+                <Username>{continent.continentName}</Username>
+              </UserNameRow>
+              {countries &&
+                countries.map(country => (
+                  <>
+                    <UserRow key={country.id}>
+                      <Link to={`/country/${country.countryName}`}>
+                        <Header>
+                          <SAvatar size={"sm"} url={country.countryPhoto} />
+                          <HeaderColumn>
+                            <HeaderText text={country.countryName} />
+                            <Location>
+                              {country.continent.continentName}
+                            </Location>
+                          </HeaderColumn>
+                        </Header>
+                      </Link>
+                    </UserRow>
+                  </>
+                ))}
+            </UserContainer>
+          </PHeader>
           {usersBefore && usersBefore.length !== 0 ? (
             <>
               <SmallTitle>
@@ -289,14 +296,18 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
           ) : null}
           <GreyLine />
           <Title>
-            <SText text={"COUNTRIES"} />
+            <SText text={`WHERE ${continent.continentName} IS`} />
           </Title>
           <Container>
+            <ContinentContainer>
+              <Link to={`/continent/${continent.continentName}`}>
+                <CountryPhoto src={continent.continentPhoto} />
+              </Link>
+              <ContinentName text={continent.continentName} />
+            </ContinentContainer>
             <Box>
-              {!loading && countries ? (
+              {countries && (
                 <LocationGrid countries={countries} type={"country"} />
-              ) : (
-                <Loader />
               )}
             </Box>
           </Container>

@@ -162,12 +162,9 @@ def resolve_country_profile(self, info, **kwargs):
         usersBefore = notification_models.MoveNotification.objects.filter(
             id=0)
 
-    if (page is 0):
-        cities = models.City.objects.filter(country__country_name=countryName)[:6]
-    else:
-        cities = models.City.objects.filter(country__country_name=countryName)[6:20]
+    cities = models.City.objects.filter(country__country_name=countryName)
 
-    coffees = coffee_models.Coffee.objects.filter(Q(city__id__in=allCities) & Q(expires__gt=timezone.now()))[:1]
+    coffees = coffee_models.Coffee.objects.filter(Q(city__id__in=allCities) & Q(expires__gt=timezone.now()))
 
     return card_types.SecondAnnotateRespose(cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country, coffees=coffees)
 
@@ -188,15 +185,13 @@ def resolve_continent_profile(self, info, **kwargs):
 
     if usersNow.count() < 5:
         usersBefore = notification_models.MoveNotification.objects.filter(
-            city__country__continent__continent_name=continentName).order_by('-actor_id').distinct('actor_id')
+            city__country__continent__continent_name=continentName).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')
     else:
         usersBefore = notification_models.MoveNotification.objects.filter(
             id=0)
 
-    if (page is 0):
-        countries = models.Country.objects.filter(continent__continent_name=continentName)[:6]
-    else:
-        countries = models.Country.objects.filter(continent__continent_name=continentName)[6:20]
+ 
+    countries = models.Country.objects.filter(continent__continent_name=continentName)
 
     coffees = coffee_models.Coffee.objects.filter(Q(city__id__in=allCities) & Q(expires__gt=timezone.now()))
 
