@@ -9,23 +9,35 @@ import Bold from "../../Components/Bold";
 import moment = require("moment");
 import CardGrid from "src/Components/CardGrid";
 import LocationGrid from "src/Components/LocationGrid";
+import Weather from "src/Components/Weather";
 import AvatarGrid from "../../Components/AvatarGrid";
+import FollowBtn from "../../Components/FollowBtn";
+import UserHeader from "../../Components/UserHeader";
 import InfiniteScroll from "react-infinite-scroller";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
 `;
 
-const PHeader = styled.header`
+const Container = styled.div`
+  border-bottom: 4px;
   display: flex;
-  flex-direction: column;
-  height: 300px;
   align-items: center;
-  background: ${props => props.theme.headerColor};
+  flex-direction: row;
+  -webkit-box-flex: 0;
+  flex: 0 0 auto;
+  height: 280px;
+  padding: 15px;
 `;
 
-const PAvatar = styled(Avatar)`
-  margin: 40px;
+const PHeader = styled.header`
+  display: flex;
+  padding: 40px 15px 40px 15px;
+
+  @media screen and (max-width: 600px) {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 `;
 
 const Username = styled.span`
@@ -34,15 +46,7 @@ const Username = styled.span`
   font-weight: 100;
 `;
 
-const PBody = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin: 20px 0 20px 0;
-  justify-content: center;
-  background: ${props => props.theme.bgColor};
-`;
-
-const CountryPhoto = styled.img`
+const CityPhoto = styled.img`
   margin-bottom: 10px;
   display: flex;
   width: 200px;
@@ -64,46 +68,11 @@ const CountryName = styled(Bold)`
 `;
 
 const CountryContainer = styled.div`
-  margin-right: 15px;
+  margin-right: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-`;
-
-const InfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
-  width: 300px;
-  margin-right: 15px;
-`;
-
-const Info = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 100%;
-  margin-bottom: 10px;
-  height: 200px;
-  border-radius: 3px;
-  border: 1px solid grey;
-  padding: 5px;
-`;
-
-const InfoInlineContainer = styled(InfoContainer)`
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const HalfInfo = styled(Info)`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 48%;
-  height: 100px;
-  display: flex;
-  margin-bottom: 0;
-  padding-bottom: 30px;
 `;
 
 const InfoRow = styled.span``;
@@ -127,25 +96,6 @@ const SmallTitle = styled(Title)`
   flex-direction: column;
   align-items: center;
 `;
-const GreyLine = styled.div`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid grey;
-`;
-const SmallGreyLine = styled(GreyLine)`
-  width: 40%;
-`;
-
-const Container = styled.div`
-  border-bottom: 4px;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  -webkit-box-flex: 0;
-  flex: 0 0 auto;
-  height: 280px;
-  padding: 15px;
-`;
 
 const Box = styled.div`
   width: 905px;
@@ -168,6 +118,62 @@ const Box = styled.div`
   }
 `;
 
+const GreyLine = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid grey;
+`;
+
+const SmallGreyLine = styled(GreyLine)`
+  width: 40%;
+`;
+
+const CAvatar = styled(Avatar)`
+  border-radius: 3px;
+  height: 300px;
+  width: 300px;
+  margin-right: 20px;
+`;
+
+const UserContainer = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  @media screen and (max-width: 800px) {
+    min-width: 300px;
+  }
+`;
+
+const UserRow = styled.div`
+  display: grid;
+  flex-direction: row;
+  grid-template-columns: 4fr 1fr;
+  grid-gap: 15px;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: grey;
+  }
+  border-top: 1px solid grey;
+`;
+
+const UserNameRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const AvatarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const CWeather = styled(Weather)`
+  margin-top: 10px;
+`;
+
 interface IProps {
   cityName: string;
   cityPhoto: string;
@@ -180,8 +186,6 @@ interface IProps {
   profileLoading: boolean;
   nearCitiesData?: any;
   nearCitiesLoading: boolean;
-  nearCountriesData?: any;
-  nearCountriesLoading: boolean;
   loadMore: any;
 }
 
@@ -201,8 +205,6 @@ const TripProfilePresenter: React.SFC<IProps> = ({
   profileLoading,
   nearCitiesData: { nearCities: { cities: nearCities = null } = {} } = {},
   nearCitiesLoading,
-  nearCountriesData: { nearCountries: { countries = null } = {} } = {},
-  nearCountriesLoading,
   loadMore
 }) => {
   if (profileLoading) {
@@ -210,84 +212,60 @@ const TripProfilePresenter: React.SFC<IProps> = ({
   } else if (!profileLoading && city) {
     return (
       <>
-        <PHeader>
-          <PAvatar size="lg" url={cityPhoto} />
-          <Username>{cityName}</Username>
-          <Username>
-            From {startDate} To {endDate}
-          </Username>
-        </PHeader>
         <SWrapper>
-          <PBody>
-            {!profileLoading && city ? (
-              <CountryContainer>
-                <Link to={`/country/${countryName}`}>
-                  <CountryPhoto src={city.country.countryPhoto} />
-                </Link>
-                <CountryName text={countryName} />
-              </CountryContainer>
-            ) : (
-              <Loader />
-            )}
-            <InfoContainer>
-              <Info>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with....
-              </Info>
-              <InfoInlineContainer>
-                <HalfInfo>
-                  <InfoRow>
-                    {/* <SText text={String(country.cityCount)} /> */}
-                    VISA for you
-                  </InfoRow>
-                  <InfoRow>
-                    {/* <SText text={String(country.cityCount)} /> */}
-                    English Skill
-                  </InfoRow>
-                  <InfoRow>
-                    {/* <SText text={String(country.cityCount)} /> */}
-                    GDP
-                  </InfoRow>
-                  <InfoRow>
-                    {/* <SText text={String(country.cityCount)} /> */}
-                    Flag
-                  </InfoRow>
-                </HalfInfo>
-                <HalfInfo>
-                  <InfoRow>
-                    AirLine
-                    {/* <SText text={String(country.cityCount)} /> */}
-                  </InfoRow>
-                  <InfoRow>
-                    SNS
-                    {/* <SText text={String(country.cityCount)} /> */}
-                  </InfoRow>
-                  <InfoRow>
-                    Capital
-                    {/* <SText text={String(country.cityCount)} /> */}
-                  </InfoRow>
-                  <InfoRow>
-                    Potal
-                    {/* <SText text={String(country.cityCount)} /> */}
-                  </InfoRow>
-                </HalfInfo>
-              </InfoInlineContainer>
-            </InfoContainer>
-          </PBody>
-          {usersBefore && usersBefore.length !== 0 ? (
-            <>
-              <SmallTitle>
-                <SmallGreyLine />
-                <SSText text={"USERS AT THAT TIME"} />
-              </SmallTitle>
-              <AvatarGrid usersBefore={usersBefore} />
-            </>
-          ) : null}
+          <PHeader>
+            <AvatarContainer>
+              <CAvatar size="lg" url={city.cityPhoto} />
+              <InfoRow>
+                <SText text={String(city.userLogCount)} />
+                DISTANCE
+              </InfoRow>
+              <InfoRow>
+                <SText text={String(city.cardCount)} />
+                cards
+              </InfoRow>
+              <SText text={String(city.distance)} />
+              <InfoRow>
+                TIME DIFFERENCE
+                <SText text={String(city.userCount)} />
+              </InfoRow>
+              <CWeather latitude={city.latitude} longitude={city.longitude} />
+            </AvatarContainer>
+            <UserContainer>
+              <UserNameRow>
+                <Username>{cityName}</Username>
+                <Username>
+                  From {startDate} To {endDate}
+                </Username>
+              </UserNameRow>
+              {usersBefore &&
+                usersBefore.map(user => (
+                  <>
+                    <UserRow key={user.actor.profile.id}>
+                      <Link to={`/${user.actor.profile.username}`}>
+                        <UserHeader
+                          username={user.actor.profile.username}
+                          currentCity={user.actor.profile.currentCity.cityName}
+                          currentCountry={
+                            user.actor.profile.currentCity.country.countryName
+                          }
+                          avatar={user.actor.profile.avatar}
+                          size={"sm"}
+                        />
+                      </Link>
+                      {!user.actor.profile.isSelf && (
+                        <FollowBtn
+                          isFollowing={user.actor.profile.isFollowing}
+                          userId={user.actor.profile.id}
+                          username={user.actor.profile.username}
+                        />
+                      )}
+                    </UserRow>
+                  </>
+                ))}
+            </UserContainer>
+          </PHeader>
+
           {coffees && coffees.length !== 0 ? (
             <>
               <SmallTitle>
@@ -297,6 +275,26 @@ const TripProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid coffees={coffees} />
             </>
           ) : null}
+          <GreyLine />
+          <Title>
+            <SText text={`WHERE ${cityName} IS`} />
+          </Title>
+          <Container>
+            <CountryContainer>
+              <Link to={`/country/${city.country.countryName}`}>
+                <CityPhoto src={city.country.countryPhoto} />
+              </Link>
+              <CountryName text={city.country.countryName} />
+              {console.log(city)}
+            </CountryContainer>
+            <Box>
+              {!nearCitiesLoading && nearCities ? (
+                <LocationGrid cities={nearCities} type={"city"} />
+              ) : (
+                <Loader />
+              )}
+            </Box>
+          </Container>
           <GreyLine />
           <Title>
             <SText text={"NEAR CITIES"} />
@@ -311,18 +309,6 @@ const TripProfilePresenter: React.SFC<IProps> = ({
             </Box>
           </Container>
           <GreyLine />
-          <Title>
-            <SText text={"NEAR COUNTRIES"} />
-          </Title>
-          <Container>
-            <Box>
-              {!nearCountriesLoading && countries ? (
-                <LocationGrid countries={countries} type={"country"} />
-              ) : (
-                <Loader />
-              )}
-            </Box>
-          </Container>
           {!cardsLoading && cards && cards.length !== 0 ? (
             <InfiniteScroll
               hasMore={hasNextPage}

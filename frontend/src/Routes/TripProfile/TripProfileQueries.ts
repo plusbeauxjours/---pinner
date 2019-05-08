@@ -10,6 +10,14 @@ export const TRIP_PROFILE = gql`
             id
             username
             avatar
+            isFollowing
+            isSelf
+            currentCity {
+              cityName
+              country {
+                countryName
+              }
+            }
           }
         }
       }
@@ -24,6 +32,8 @@ export const TRIP_PROFILE = gql`
         }
       }
       city {
+        latitude
+        longitude
         cityName
         cityPhoto
         country {

@@ -45,14 +45,6 @@ const Username = styled.span`
   font-weight: 100;
 `;
 
-const PBody = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin: 20px 0 20px 0;
-  justify-content: center;
-  background: ${props => props.theme.bgColor};
-`;
-
 const CityPhoto = styled.img`
   margin-bottom: 10px;
   display: flex;
@@ -196,7 +188,7 @@ const CAvatar = styled(Avatar)`
 
 const UserContainer = styled.div`
   display: flex;
-  width: 100%
+  width: 100%;
   flex-direction: column;
   @media screen and (max-width: 800px) {
     min-width: 300px;
@@ -238,8 +230,7 @@ interface IProps {
   cityLoading: boolean;
   nearCitiesData?: any;
   nearCitiesLoading: boolean;
-  nearCountriesData?: any;
-  nearCountriesLoading: boolean;
+
   coffeeReportModalOpen: boolean;
   toggleCoffeeReportModal: () => void;
   cityName: string;
@@ -257,8 +248,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   cityLoading,
   nearCitiesData: { nearCities: { cities: nearCities = null } = {} } = {},
   nearCitiesLoading,
-  nearCountriesData: { nearCountries: { countries = null } = {} } = {},
-  nearCountriesLoading,
+
   coffeeReportModalOpen,
   toggleCoffeeReportModal,
   cityName
@@ -354,7 +344,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                 ))}
             </UserContainer>
           </PHeader>
-          <PBody />
           {coffees && coffees.length !== 0 ? (
             <>
               <SmallTitle>
@@ -392,19 +381,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
             <Box>
               {!nearCitiesLoading && nearCities ? (
                 <LocationGrid cities={nearCities} type={"city"} />
-              ) : (
-                <Loader />
-              )}
-            </Box>
-          </Container>
-          <GreyLine />
-          <Title>
-            <SText text={"NEAR COUNTRIES"} />
-          </Title>
-          <Container>
-            <Box>
-              {!nearCountriesLoading && countries ? (
-                <LocationGrid countries={countries} type={"country"} />
               ) : (
                 <Loader />
               )}

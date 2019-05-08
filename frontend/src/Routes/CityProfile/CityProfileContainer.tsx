@@ -5,21 +5,14 @@ import {
   CityProfile,
   CityProfileVariables,
   NearCities,
-  NearCountries,
-  NearCitiesVariables,
-  NearCountriesVariables
+  NearCitiesVariables
 } from "../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
-import {
-  CITY_PROFILE,
-  NEAR_CITIES,
-  NEAR_COUNTRIES
-} from "./CityProfileQueries";
+import { CITY_PROFILE, NEAR_CITIES } from "./CityProfileQueries";
 
 class CityProfileQuery extends Query<CityProfile, CityProfileVariables> {}
 
 class NearCitiesQuery extends Query<NearCities, NearCitiesVariables> {}
-class NearCountriesQuery extends Query<NearCountries, NearCountriesVariables> {}
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
@@ -29,8 +22,6 @@ interface IState {
 
 class CityProfileContainer extends React.Component<IProps, IState> {
   public coffeeFetchMore;
-  public nearCitiesFetchMore;
-  public nearCountriesFetchMore;
   constructor(props) {
     super(props);
     this.state = {
@@ -50,45 +41,27 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     const { page, coffeeReportModalOpen } = this.state;
     return (
       <NearCitiesQuery query={NEAR_CITIES} variables={{ cityName }}>
-        {({
-          data: nearCitiesData,
-          loading: nearCitiesLoading,
-          fetchMore: nearCitiesFetchMore
-        }) => {
-          this.nearCitiesFetchMore = nearCitiesFetchMore;
+        {({ data: nearCitiesData, loading: nearCitiesLoading }) => {
           return (
-            <NearCountriesQuery query={NEAR_COUNTRIES} variables={{ cityName }}>
-              {({
-                data: nearCountriesData,
-                loading: nearCountriesLoading,
-                fetchMore: nearCountriesFetchMore
-              }) => {
-                this.nearCountriesFetchMore = nearCountriesFetchMore;
+            <CityProfileQuery
+              query={CITY_PROFILE}
+              variables={{ page, cityName }}
+            >
+              {({ data: cityData, loading: cityLoading }) => {
+                console.log("ho");
                 return (
-                  <CityProfileQuery
-                    query={CITY_PROFILE}
-                    variables={{ page, cityName }}
-                  >
-                    {({ data: cityData, loading: cityLoading }) => {
-                      console.log("ho");
-                      return (
-                        <CityProfilePresenter
-                          cityData={cityData}
-                          cityLoading={cityLoading}
-                          nearCitiesData={nearCitiesData}
-                          nearCitiesLoading={nearCitiesLoading}
-                          nearCountriesData={nearCountriesData}
-                          nearCountriesLoading={nearCountriesLoading}
-                          coffeeReportModalOpen={coffeeReportModalOpen}
-                          toggleCoffeeReportModal={this.toggleCoffeeReportModal}
-                          cityName={cityName}
-                        />
-                      );
-                    }}
-                  </CityProfileQuery>
+                  <CityProfilePresenter
+                    cityData={cityData}
+                    cityLoading={cityLoading}
+                    nearCitiesData={nearCitiesData}
+                    nearCitiesLoading={nearCitiesLoading}
+                    coffeeReportModalOpen={coffeeReportModalOpen}
+                    toggleCoffeeReportModal={this.toggleCoffeeReportModal}
+                    cityName={cityName}
+                  />
                 );
               }}
-            </NearCountriesQuery>
+            </CityProfileQuery>
           );
         }}
       </NearCitiesQuery>

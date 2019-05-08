@@ -7,14 +7,12 @@ import {
   TripProfile,
   TripProfileVariables,
   NearCities,
-  NearCountries,
-  NearCitiesVariables,
-  NearCountriesVariables
+  NearCitiesVariables
 } from "../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
 import { GET_DURATION_CARDS, TRIP_PROFILE } from "./TripProfileQueries";
 import TripProfilePresenter from "./TripProfilePresenter";
-import { NEAR_CITIES, NEAR_COUNTRIES } from "../CityProfile/CityProfileQueries";
+import { NEAR_CITIES } from "../CityProfile/CityProfileQueries";
 
 class GetDurationCardsQuery extends Query<
   GetDurationCards,
@@ -24,7 +22,6 @@ class GetDurationCardsQuery extends Query<
 class TripProfileQuery extends Query<TripProfile, TripProfileVariables> {}
 
 class NearCitiesQuery extends Query<NearCities, NearCitiesVariables> {}
-class NearCountriesQuery extends Query<NearCountries, NearCountriesVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
 
@@ -70,49 +67,37 @@ class TripProfileContainer extends React.Component<IProps, IState> {
       <NearCitiesQuery query={NEAR_CITIES} variables={{ cityName }}>
         {({ data: nearCitiesData, loading: nearCitiesLoading }) => {
           return (
-            <NearCountriesQuery query={NEAR_COUNTRIES} variables={{ cityName }}>
-              {({ data: nearCountriesData, loading: nearCountriesLoading }) => {
-                return (
-                  <TripProfileQuery
-                    query={TRIP_PROFILE}
-                    variables={{ cityName, startDate, endDate }}
-                  >
-                    {({ data: profileDate, loading: profileLoading }) => (
-                      <GetDurationCardsQuery
-                        query={GET_DURATION_CARDS}
-                        variables={{ page, cityName, startDate, endDate }}
-                      >
-                        {({
-                          data: cardsData,
-                          loading: cardsLoading,
-                          fetchMore
-                        }) => {
-                          this.fetchMore = fetchMore;
-                          return (
-                            <TripProfilePresenter
-                              cityName={cityName}
-                              cityPhoto={cityPhoto}
-                              countryName={countryName}
-                              startDate={startDate}
-                              endDate={endDate}
-                              cardsData={cardsData}
-                              cardsLoading={cardsLoading}
-                              profileDate={profileDate}
-                              profileLoading={profileLoading}
-                              nearCitiesData={nearCitiesData}
-                              nearCitiesLoading={nearCitiesLoading}
-                              nearCountriesData={nearCountriesData}
-                              nearCountriesLoading={nearCountriesLoading}
-                              loadMore={this.loadMore}
-                            />
-                          );
-                        }}
-                      </GetDurationCardsQuery>
-                    )}
-                  </TripProfileQuery>
-                );
-              }}
-            </NearCountriesQuery>
+            <TripProfileQuery
+              query={TRIP_PROFILE}
+              variables={{ cityName, startDate, endDate }}
+            >
+              {({ data: profileDate, loading: profileLoading }) => (
+                <GetDurationCardsQuery
+                  query={GET_DURATION_CARDS}
+                  variables={{ page, cityName, startDate, endDate }}
+                >
+                  {({ data: cardsData, loading: cardsLoading, fetchMore }) => {
+                    this.fetchMore = fetchMore;
+                    return (
+                      <TripProfilePresenter
+                        cityName={cityName}
+                        cityPhoto={cityPhoto}
+                        countryName={countryName}
+                        startDate={startDate}
+                        endDate={endDate}
+                        cardsData={cardsData}
+                        cardsLoading={cardsLoading}
+                        profileDate={profileDate}
+                        profileLoading={profileLoading}
+                        nearCitiesData={nearCitiesData}
+                        nearCitiesLoading={nearCitiesLoading}
+                        loadMore={this.loadMore}
+                      />
+                    );
+                  }}
+                </GetDurationCardsQuery>
+              )}
+            </TripProfileQuery>
           );
         }}
       </NearCitiesQuery>
