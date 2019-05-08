@@ -113,7 +113,9 @@ class Query(object):
             'username': graphene.String(required=True),
         }
     )
+    
 
 
 class Mutation(object):
     report_location = mutations.ReportLocation.Field(required=True)
+    like_city = mutations.LikeCity.Field(required=True)

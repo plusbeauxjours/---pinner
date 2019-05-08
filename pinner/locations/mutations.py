@@ -94,3 +94,42 @@ class ReportLocation(graphene.Mutation):
             notification_models.MoveNotification.objects.create(actor=user, city=city)
 
         return types.ReportLocationResponse(ok=True)
+
+
+
+class LikeCity(graphene.Mutation):
+
+    """ Like a City """
+
+    class Arguments:
+        cityId = graphene.Int(required=True)
+
+    Output = types.LikeCityResponse
+
+    @login_required
+    def mutate(self, info, **kwargs):
+
+        cityId = kwargs.get('cityId')
+        user = info.context.user
+
+        try:
+            city = models.City.objects.get(id=cityId)
+        except models.City.DoesNotExist:
+            raise Exception("City Not Found")
+
+        try:
+            like = models.Like.objects.get(
+                creator=user, city=city)
+            like.delete()
+            return types.LikeCityResponse(ok=True)
+
+        except models.Like.DoesNotExist:
+            pass
+
+        try:
+            like = models.Like.objects.create(
+                creator=user, city=city)
+            return types.LikeCityResponse(ok=True)
+
+        except IntegrityError as e:
+            raise Exception("Can't Like City")

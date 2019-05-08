@@ -82,3 +82,5 @@ class TripResponse(graphene.ObjectType):
 class ReportLocationResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
+class LikeCityResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
