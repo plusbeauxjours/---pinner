@@ -16,18 +16,34 @@ export const COUNTRY_PROFILE = gql`
         }
       }
       usersNow {
-        id
         profile {
+          id
           username
           avatar
+          isFollowing
+          isSelf
+          currentCity {
+            cityName
+            country {
+              countryName
+            }
+          }
         }
       }
       usersBefore {
-        id
         actor {
           profile {
+            id
             username
             avatar
+            isFollowing
+            isSelf
+            currentCity {
+              cityName
+              country {
+                countryName
+              }
+            }
           }
         }
       }

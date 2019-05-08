@@ -6,9 +6,7 @@ import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
-import LocationGrid from "../../Components/LocationGrid";
-import { keyframes } from "styled-components";
-import LocationRow from "src/Components/LocationRow";
+import LocationGrid from "src/Components/LocationGrid";
 import AvatarGrid from "../../Components/AvatarGrid";
 import GetCards from "../../Components/GetCards";
 
@@ -16,30 +14,30 @@ const SWrapper = styled(Wrapper)`
   z-index: 1;
 `;
 
-const PHeader = styled.header`
+const Container = styled.div`
+  border-bottom: 4px;
   display: flex;
-  flex-direction: column;
-  height: 300px;
   align-items: center;
-  background: ${props => props.theme.headerColor};
+  flex-direction: row;
+  -webkit-box-flex: 0;
+  flex: 0 0 auto;
+  height: 280px;
+  padding: 15px;
 `;
 
-const PAvatar = styled(Avatar)`
-  margin: 40px;
+const PHeader = styled.header`
+  display: flex;
+  padding: 40px 15px 40px 15px;
+  @media screen and (max-width: 600px) {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 `;
 
 const Username = styled.span`
   text-align: center;
   font-size: 22px;
   font-weight: 100;
-`;
-
-const PBody = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin: 20px 0 20px 0;
-  justify-content: center;
-  background: ${props => props.theme.bgColor};
 `;
 
 const CountryPhoto = styled.img`
@@ -71,41 +69,6 @@ const ContinentContainer = styled.div`
   position: relative;
 `;
 
-const InfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
-  width: 300px;
-  margin-right: 15px;
-`;
-
-const Info = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 100%;
-  margin-bottom: 10px;
-  height: 200px;
-  border-radius: 3px;
-  border: 1px solid grey;
-  padding: 5px;
-`;
-
-const InfoInlineContainer = styled(InfoContainer)`
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const HalfInfo = styled(Info)`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 48%;
-  height: 100px;
-  display: flex;
-  margin-bottom: 0;
-  padding-bottom: 30px;
-`;
-
 const InfoRow = styled.span``;
 
 const SText = styled(Bold)`
@@ -121,30 +84,14 @@ const SSText = styled(Bold)`
 const Title = styled.div`
   display: flex;
   margin-top: 10px;
+  @media screen and (max-width: 935px) {
+    margin-left: 10px;
+  }
 `;
 
 const SmallTitle = styled(Title)`
   flex-direction: column;
   align-items: center;
-`;
-const GreyLine = styled.div`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid grey;
-`;
-const SmallGreyLine = styled(GreyLine)`
-  width: 40%;
-`;
-
-const Container = styled.div`
-  border-bottom: 4px;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  -webkit-box-flex: 0;
-  flex: 0 0 auto;
-  height: 280px;
-  padding: 15px;
 `;
 
 const Box = styled.div`
@@ -168,53 +115,96 @@ const Box = styled.div`
   }
 `;
 
-const ModalAnimation = keyframes`
-	  from{
-	    opacity:0;
-	    transform:scale(1.1);
-	  }
-	  to{
-	    opacity:1;
-	    transform:none;
-	  }
-	`;
-
-const ModalContainer = styled.div`
-  z-index: 8;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 0;
+const GreyLine = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid grey;
+  @media screen and (max-width: 935px) {
+    margin: 0 10px 0 10px;
+  }
 `;
 
-const ModalOverlay = styled.div`
-  z-index: 5;
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+const SmallGreyLine = styled(GreyLine)`
+  width: 40%;
 `;
 
-const Modal = styled.div`
-  z-index: 10;
-  animation: ${ModalAnimation} 0.1s linear;
-  text-align: center;
+const UserRow = styled.div`
+  display: grid;
+  flex-direction: row;
+  grid-template-columns: 4fr 1fr;
+  grid-gap: 15px;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: grey;
+  }
+  border-top: 1px solid grey;
+`;
+
+const CAvatar = styled(Avatar)`
+  border-radius: 3px;
+  height: 300px;
+  width: 300px;
+  margin-right: 20px;
+  @media screen and (max-width: 600px) {
+    margin-right: 0px;
+  }
+`;
+
+const UserContainer = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  @media screen and (max-width: 800px) {
+    min-width: 300px;
+  }
+`;
+
+const UserNameRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const AvatarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Header = styled.header`
+  padding: 10px 10px 10px 0;
   display: flex;
   align-items: center;
-  justify-content: center;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+`;
+
+const HeaderText = styled(Bold)`
+  display: flex;
+`;
+
+const HeaderColumn = styled.div`
+  margin-left: 15px;
+`;
+
+const SAvatar = styled(Avatar)`
+  border-radius: 3px;
+`;
+
+const Location = styled.span`
+  display: flex;
+  margin-top: 5px;
+  display: block;
+  font-size: 12px;
+  font-weight: 200;
 `;
 
 interface IProps {
   data?: any;
   loading: boolean;
-  toggleCitySeeAll: () => void;
-  cityList: any;
-  cityModalOpen: boolean;
-  toggleCityModal: () => void;
   countryName: string;
 }
 
@@ -229,10 +219,6 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
     } = {}
   } = {},
   loading,
-  toggleCitySeeAll,
-  cityList,
-  cityModalOpen,
-  toggleCityModal,
   countryName
 }) => {
   if (loading) {
@@ -240,88 +226,45 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
   } else if (!loading && cities && usersNow && usersBefore && country) {
     return (
       <>
-        {cityModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleCityModal} />
-            <Modal>
-              <Wrapper>
-                {cityList.map(list => (
-                  <LocationRow
-                    key={list.id}
-                    id={list.id}
-                    cityName={list.cityName}
-                    avatar={list.cityPhoto}
-                    countryName={list.country.countryName}
-                    type={"nearCity"}
-                  />
-                ))}
-              </Wrapper>
-            </Modal>
-          </ModalContainer>
-        )}
-        {console.log(cities, usersNow, usersBefore, country)}
-        <PHeader>
-          <PAvatar size="lg" url={country.countryPhoto} />
-          <Username>{country.countryName}</Username>
-        </PHeader>
         <SWrapper>
-          <PBody>
-            <ContinentContainer>
-              <Link to={`/continent/${country.continent.continentName}`}>
-                <CountryPhoto src={country.continent.continentPhoto} />
-              </Link>
-              <ContinentName text={country.continent.continentName} />
-            </ContinentContainer>
-            <InfoContainer>
-              <Info>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with....
-              </Info>
-              <InfoInlineContainer>
-                <HalfInfo>
-                  <InfoRow>
-                    <SText text={String(country.cityCount)} />
-                    VISA for you
-                  </InfoRow>
-                  <InfoRow>
-                    <SText text={String(country.cityCount)} />
-                    English Skill
-                  </InfoRow>
-                  <InfoRow>
-                    <SText text={String(country.cityCount)} />
-                    GDP
-                  </InfoRow>
-                  <InfoRow>
-                    <SText text={String(country.cityCount)} />
-                    Flag
-                  </InfoRow>
-                </HalfInfo>
-                <HalfInfo>
-                  <InfoRow>
-                    AirLine
-                    <SText text={String(country.cityCount)} />
-                  </InfoRow>
-                  <InfoRow>
-                    SNS
-                    <SText text={String(country.cityCount)} />
-                  </InfoRow>
-                  <InfoRow>
-                    Capital
-                    <SText text={String(country.cityCount)} />
-                  </InfoRow>
-                  <InfoRow>
-                    Potal
-                    <SText text={String(country.cityCount)} />
-                  </InfoRow>
-                </HalfInfo>
-              </InfoInlineContainer>
-            </InfoContainer>
-          </PBody>
+          <PHeader>
+            <AvatarContainer>
+              <CAvatar size="lg" url={country.countryPhoto} />
+              <InfoRow>
+                <SText text={String(country.cityCount)} />
+                cities
+              </InfoRow>
+              <InfoRow>
+                <SText text={String(country.cardCount)} />
+                cards
+              </InfoRow>
+              <InfoRow>
+                <SText text={String(country.distance)} />
+                TIME DIFFERENCE
+              </InfoRow>
+            </AvatarContainer>
+            <UserContainer>
+              <UserNameRow>
+                <Username>{country.countryName}</Username>
+              </UserNameRow>
+              {cities &&
+                cities.map(city => (
+                  <>
+                    <UserRow key={city.id}>
+                      <Link to={`/city/${city.cityName}`}>
+                        <Header>
+                          <SAvatar size={"sm"} url={city.cityPhoto} />
+                          <HeaderColumn>
+                            <HeaderText text={city.cityName} />
+                            <Location>{countryName}</Location>
+                          </HeaderColumn>
+                        </Header>
+                      </Link>
+                    </UserRow>
+                  </>
+                ))}
+            </UserContainer>
+          </PHeader>
           {usersBefore && usersBefore.length !== 0 ? (
             <>
               <SmallTitle>
@@ -351,15 +294,17 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
           ) : null}
           <GreyLine />
           <Title>
-            <SText text={"CITIES"} />
+            <SText text={`WHERE ${country.countryName} IS`} />
           </Title>
           <Container>
+            <ContinentContainer>
+              <Link to={`/continent/${country.continent.continentName}`}>
+                <CountryPhoto src={country.continent.continentPhoto} />
+              </Link>
+              <ContinentName text={country.continent.continentName} />
+            </ContinentContainer>
             <Box>
-              {!loading && cities ? (
-                <LocationGrid cities={cities} type={"city"} />
-              ) : (
-                <Loader />
-              )}
+              {cities && <LocationGrid cities={cities} type={"city"} />}
             </Box>
           </Container>
           <GetCards location={"country"} countryName={countryName} />

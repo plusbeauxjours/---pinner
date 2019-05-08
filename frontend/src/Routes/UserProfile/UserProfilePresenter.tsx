@@ -1095,15 +1095,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid knowingFollowers={knowingFollowers} />
             </>
           ) : null}
-          {knowingFollowers && knowingFollowers.length !== 0 ? (
-            <>
-              <SmallTitle>
-                <SmallGreyLine />
-                <SSText text={" CROSS PATHS WITH MOST"} />
-              </SmallTitle>
-              <AvatarGrid knowingFollowers={knowingFollowers} />
-            </>
-          ) : null}
           {!myCoffeeLoading &&
           !user.profile.isSelf &&
           requestingCoffees &&

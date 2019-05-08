@@ -5,8 +5,7 @@ import Avatar from "./Avatar";
 import Input from "./Input";
 
 const Header = styled.header`
-  padding: 10px;
-  margin: 0 15px 0 15px;
+  padding: 10px 10px 10px 0;
   display: flex;
   align-items: center;
   cursor: pointer;

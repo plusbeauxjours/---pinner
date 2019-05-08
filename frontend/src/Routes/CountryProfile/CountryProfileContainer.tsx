@@ -14,8 +14,6 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   page: number;
-  cityList: any;
-  cityModalOpen: boolean;
 }
 
 class CountryProfileContainer extends React.Component<IProps, IState> {
@@ -23,9 +21,7 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      page: 0,
-      cityList: null,
-      cityModalOpen: false
+      page: 0
     };
   }
   public render() {
@@ -34,7 +30,7 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
         params: { countryName }
       }
     } = this.props;
-    const { page, cityList, cityModalOpen } = this.state;
+    const { page } = this.state;
     return (
       <CountryProfileQuery
         query={COUNTRY_PROFILE}
@@ -46,10 +42,6 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
             <CountryProfilePresenter
               loading={loading}
               data={data}
-              cityList={cityList}
-              cityModalOpen={cityModalOpen}
-              toggleCityModal={this.toggleCityModal}
-              toggleCitySeeAll={this.toggleCitySeeAll}
               countryName={countryName}
             />
           );
@@ -57,36 +49,6 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
       </CountryProfileQuery>
     );
   }
-  public toggleCityModal = () => {
-    const { cityModalOpen } = this.state;
-    this.setState({
-      cityModalOpen: !cityModalOpen
-    } as any);
-  };
-  public toggleCitySeeAll = () => {
-    const {
-      match: {
-        params: { countryName }
-      }
-    } = this.props;
-    const { cityModalOpen } = this.state;
-    this.fetchMore({
-      query: COUNTRY_PROFILE,
-      variables: { page: 1, countryName },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult) {
-          return previousResult;
-        }
-        this.setState({
-          cityList: [
-            ...previousResult.countryProfile.cities,
-            ...fetchMoreResult.countryProfile.cities
-          ],
-          cityModalOpen: !cityModalOpen
-        });
-      }
-    });
-  };
 }
 
 export default withRouter(CountryProfileContainer);

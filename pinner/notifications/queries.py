@@ -62,19 +62,3 @@ def resolve_get_duration_my_trip(self, info, **kwargs):
     except models.MoveNotification.DoesNotExist:
         raise Exception("You've never been there at the same time")
 
-
-@login_required
-def resolve_get_cross_paths_avatars(self, info, **kwargs):
-
-    user = info.context.user
-    username = kwargs.get('username')
-    page = kwargs.get('page', 0)
-
-    try:
-        profile = User.profile.objects.prefetch_related('movenotification').get(username=username)
-        users = profile.movenotification.filter(end_date__range=(startDate, endDate))
-        users = users.order_by('actor_id', '-end_date').distinct('actor_id')
-        return types.DurationAvatarsResponse(users=users)
-
-    except models.MoveNotification.DoesNotExist:
-        raise Exception("You've never been there at the same time")

@@ -7,8 +7,6 @@ import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import Flag from "../../Components/Flag";
 import LocationGrid from "../../Components/LocationGrid";
-import LocationRow from "src/Components/LocationRow";
-import { keyframes } from "styled-components";
 import AvatarGrid from "../../Components/AvatarGrid";
 import GetCards from "../../Components/GetCards";
 
@@ -157,46 +155,6 @@ const Box = styled.div`
   }
 `;
 
-const ModalAnimation = keyframes`
-	  from{
-	    opacity:0;
-	    transform:scale(1.1);
-	  }
-	  to{
-	    opacity:1;
-	    transform:none;
-	  }
-	`;
-
-const ModalContainer = styled.div`
-  z-index: 8;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 0;
-`;
-
-const ModalOverlay = styled.div`
-  z-index: 5;
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-`;
-
-const Modal = styled.div`
-  z-index: 10;
-  animation: ${ModalAnimation} 0.1s linear;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 const FlagGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -238,25 +196,6 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
   } else if (!loading && continent && countries) {
     return (
       <>
-        {countryModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleCountryModal} />
-            <Modal>
-              <Wrapper>
-                {countryList.map(list => (
-                  <LocationRow
-                    key={list.id}
-                    id={list.id}
-                    avatar={list.countryPhoto}
-                    countryName={list.countryName}
-                    continentName={list.continent.continentName}
-                    type={"nearCountry"}
-                  />
-                ))}
-              </Wrapper>
-            </Modal>
-          </ModalContainer>
-        )}
         <PHeader>
           <PAvatar size="lg" url={continent.continentPhoto} />
           <Username>{continent.continentName}</Username>

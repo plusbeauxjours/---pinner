@@ -31,7 +31,7 @@ def resolve_get_coffees(self, info, **kwargs):
 def resolve_get_my_coffee(self, info, **kwargs):
 
     username = kwargs.get('username')
-    user = info.context.user
+    me = info.context.user
 
     try:
         user = User.objects.prefetch_related('coffee').get(username=username)
@@ -39,11 +39,15 @@ def resolve_get_my_coffee(self, info, **kwargs):
         return types.GetMyCoffeeResponse(coffees=None)
 
     try:
-        coffees = user.coffee.filter(expires__lt=timezone.now()).order_by(
-            '-created_at')
         requesting_coffees = models.Coffee.objects.filter(host=user, expires__gt=timezone.now()).order_by(
             '-created_at')
-        return types.GetMyCoffeeResponse(coffees=coffees, requesting_coffees=requesting_coffees)
+        if(me.username == username):
+            coffees = user.coffee.filter(expires__lt=timezone.now()).order_by(
+                '-created_at')
+            return types.GetMyCoffeeResponse(coffees=coffees, requesting_coffees=requesting_coffees)
+        else: 
+            return types.GetMyCoffeeResponse(coffees=None, requesting_coffees=requesting_coffees)
+        
     except models.Coffee.DoesNotExist:
         return types.GetMyCoffeeResponse(coffees=None, requesting_coffees=None)
 

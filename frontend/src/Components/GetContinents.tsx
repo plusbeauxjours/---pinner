@@ -10,10 +10,7 @@ class GetContinentQuery extends Query<GetContinents, GetContinentsVariables> {}
 
 const GetContinents: React.SFC<any> = username => (
   <GetContinentQuery query={GET_CONTINENTS} variables={username}>
-    {({
-      data: { getContinents: { trip = null } = {} } = {},
-      loading
-    }) => {
+    {({ data: { getContinents: { trip = null } = {} } = {}, loading }) => {
       if (loading) {
         return <Loader />;
       } else if (!loading && trip) {

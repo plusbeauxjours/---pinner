@@ -87,22 +87,6 @@ const LocationRow: React.SFC<IProps> = ({
               </Link>
             </>
           );
-        case "nearCountry":
-          return (
-            <>
-              <Link to={`/country/${countryName}`}>
-                <Container>
-                  <Header>
-                    <SAvatar size={"sm"} url={avatar} />
-                    <HeaderColumn>
-                      <SText text={countryName} />
-                      <Location>{continentName}</Location>
-                    </HeaderColumn>
-                  </Header>
-                </Container>
-              </Link>
-            </>
-          );
         case "latestCity":
           return (
             <>

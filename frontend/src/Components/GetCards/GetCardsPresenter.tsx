@@ -10,12 +10,18 @@ const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid grey;
+  @media screen and (max-width: 935px) {
+    margin: 0 10px 0 10px;
+  }
 `;
 
 const Title = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+  @media screen and (max-width: 935px) {
+    margin-left: 10px;
+  }
 `;
 
 const SText = styled(Bold)`
