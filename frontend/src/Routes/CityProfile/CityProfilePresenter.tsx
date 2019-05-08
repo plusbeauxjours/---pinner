@@ -11,6 +11,8 @@ import LocationGrid from "src/Components/LocationGrid";
 import Weather from "src/Components/Weather";
 import AvatarGrid from "../../Components/AvatarGrid";
 import GetCards from "../../Components/GetCards";
+import FollowBtn from "../../Components/FollowBtn";
+import UserHeader from "../../Components/UserHeader";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -29,14 +31,12 @@ const Container = styled.div`
 
 const PHeader = styled.header`
   display: flex;
-  flex-direction: column;
-  height: 300px;
-  align-items: center;
-  background: ${props => props.theme.headerColor};
-`;
+  padding: 40px 15px 40px 15px;
 
-const PAvatar = styled(Avatar)`
-  margin: 40px;
+  @media screen and (max-width: 600px) {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 `;
 
 const Username = styled.span`
@@ -75,46 +75,11 @@ const CountryName = styled(Bold)`
 `;
 
 const CountryContainer = styled.div`
-  margin-right: 15px;
+  margin-right: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-`;
-
-const InfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
-  width: 300px;
-  margin-right: 15px;
-`;
-
-const Info = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 100%;
-  margin-bottom: 10px;
-  height: 100px;
-  border-radius: 3px;
-  border: 1px solid grey;
-  padding: 5px;
-`;
-
-const InfoInlineContainer = styled(InfoContainer)`
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const HalfInfo = styled(Info)`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 48%;
-  height: 100px;
-  display: flex;
-  margin-bottom: 0;
-  padding-bottom: 30px;
 `;
 
 const InfoRow = styled.span``;
@@ -222,9 +187,50 @@ const Modal = styled.div`
   animation: ${ModalAnimation} 0.1s linear;
 `;
 
-const WeatherIcon = styled.div`
+const CAvatar = styled(Avatar)`
+  border-radius: 3px;
+  height: 300px;
+  width: 300px;
+  margin-right: 20px;
+`;
+
+const UserContainer = styled.div`
   display: flex;
-  flex-direction: row-reverse;
+  width: 100%
+  flex-direction: column;
+  @media screen and (max-width: 800px) {
+    min-width: 300px;
+  }
+`;
+
+const UserRow = styled.div`
+  display: grid;
+  flex-direction: row;
+  grid-template-columns: 4fr 1fr;
+  grid-gap: 15px;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: grey;
+  }
+  border-top: 1px solid grey;
+`;
+
+const UserNameRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const AvatarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const CWeather = styled(Weather)`
+  margin-top: 10px;
 `;
 
 interface IProps {
@@ -273,67 +279,82 @@ const CityProfilePresenter: React.SFC<IProps> = ({
             </Modal>
           </ModalContainer>
         )}
-        {console.log("joi")}
-        <PHeader>
-          <PAvatar size="lg" url={city.cityPhoto} />
-          <Username>{city.cityName}</Username>
-        </PHeader>
         <SWrapper>
-          <PBody>
-            <CountryContainer>
-              <Link to={`/country/${city.country.countryName}`}>
-                <CityPhoto src={city.country.countryPhoto} />
-              </Link>
-              <CountryName text={city.country.countryName} />
-              {console.log(city)}
-            </CountryContainer>
-            <InfoContainer>
-              <Info>
-                {console.log(city.latitude)}
-                <Weather latitude={city.latitude} longitude={city.longitude} />
-              </Info>
-              <InfoInlineContainer>
-                <HalfInfo>
-                  <InfoRow>
-                    <SText text={String(city.userLogCount)} />
-                    DISTANCE
-                  </InfoRow>
-                </HalfInfo>
-                <HalfInfo>
-                  <InfoRow>
-                    <SText text={String(city.cardCount)} />
-                    card - done
-                  </InfoRow>
-                  <WeatherIcon>
-                    {/* <Weather icon={icon} size={"md"} /> */}
-                  </WeatherIcon>
-                  <SText text={String(city.distance)} />
-                  <InfoRow>
-                    TIME DIFFERENCE
-                    <SText text={String(city.userCount)} />
-                  </InfoRow>
-                </HalfInfo>
-              </InfoInlineContainer>
-            </InfoContainer>
-          </PBody>
-          {usersBefore && usersBefore.length !== 0 ? (
-            <>
-              <SmallTitle>
-                <SmallGreyLine />
-                <SSText text={"USERS WHO HAVE BEEN HERE"} />
-              </SmallTitle>
-              <AvatarGrid usersBefore={usersBefore} />
-            </>
-          ) : null}
-          {usersNow && usersNow.length !== 0 ? (
-            <>
-              <SmallTitle>
-                <SmallGreyLine />
-                <SSText text={"USERS NOW"} />
-              </SmallTitle>
-              <AvatarGrid usersNow={usersNow} />
-            </>
-          ) : null}
+          <PHeader>
+            <AvatarContainer>
+              <CAvatar size="lg" url={city.cityPhoto} />
+              <InfoRow>
+                <SText text={String(city.userLogCount)} />
+                DISTANCE
+              </InfoRow>
+              <InfoRow>
+                <SText text={String(city.cardCount)} />
+                cards
+              </InfoRow>
+              <SText text={String(city.distance)} />
+              <InfoRow>
+                TIME DIFFERENCE
+                <SText text={String(city.userCount)} />
+              </InfoRow>
+              <CWeather latitude={city.latitude} longitude={city.longitude} />
+            </AvatarContainer>
+            <UserContainer>
+              <UserNameRow>
+                <Username>{city.cityName}</Username>
+              </UserNameRow>
+              {usersNow &&
+                usersNow.map(user => (
+                  <>
+                    <UserRow key={user.profile.id}>
+                      <Link to={`/${user.profile.username}`}>
+                        <UserHeader
+                          username={user.profile.username}
+                          currentCity={user.profile.currentCity.cityName}
+                          currentCountry={
+                            user.profile.currentCity.country.countryName
+                          }
+                          avatar={user.profile.avatar}
+                          size={"sm"}
+                        />
+                      </Link>
+                      {!user.profile.isSelf && (
+                        <FollowBtn
+                          isFollowing={user.profile.isFollowing}
+                          userId={user.profile.id}
+                          username={user.profile.username}
+                        />
+                      )}
+                    </UserRow>
+                  </>
+                ))}
+              {usersBefore &&
+                usersBefore.map(user => (
+                  <>
+                    <UserRow key={user.actor.profile.id}>
+                      <Link to={`/${user.actor.profile.username}`}>
+                        <UserHeader
+                          username={user.actor.profile.username}
+                          currentCity={user.actor.profile.currentCity.cityName}
+                          currentCountry={
+                            user.actor.profile.currentCity.country.countryName
+                          }
+                          avatar={user.actor.profile.avatar}
+                          size={"sm"}
+                        />
+                      </Link>
+                      {!user.actor.profile.isSelf && (
+                        <FollowBtn
+                          isFollowing={user.actor.profile.isFollowing}
+                          userId={user.actor.profile.id}
+                          username={user.actor.profile.username}
+                        />
+                      )}
+                    </UserRow>
+                  </>
+                ))}
+            </UserContainer>
+          </PHeader>
+          <PBody />
           {coffees && coffees.length !== 0 ? (
             <>
               <SmallTitle>
@@ -343,6 +364,26 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid coffees={coffees} />
             </>
           ) : null}
+          <GreyLine />
+          <Title>
+            <SText text={`WHERE ${city.cityName} IS`} />
+          </Title>
+          <Container>
+            <CountryContainer>
+              <Link to={`/country/${city.country.countryName}`}>
+                <CityPhoto src={city.country.countryPhoto} />
+              </Link>
+              <CountryName text={city.country.countryName} />
+              {console.log(city)}
+            </CountryContainer>
+            <Box>
+              {!nearCitiesLoading && nearCities ? (
+                <LocationGrid cities={nearCities} type={"city"} />
+              ) : (
+                <Loader />
+              )}
+            </Box>
+          </Container>
           <GreyLine />
           <Title>
             <SText text={"NEAR CITIES"} />

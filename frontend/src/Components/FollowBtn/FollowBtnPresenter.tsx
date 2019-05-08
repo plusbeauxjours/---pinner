@@ -5,7 +5,7 @@ import { MutationFn } from "react-apollo";
 
 const SButton = styled(Button)`
   z-index: 1;
-  width: 50%;
+  width: 100%;
 `;
 
 interface IProps {

@@ -5,18 +5,34 @@ export const CITY_PROFILE = gql`
   query CityProfile($page: Int!, $cityName: String!) {
     cityProfile(page: $page, cityName: $cityName) {
       usersNow {
-        id
         profile {
+          id
           username
           avatar
+          isFollowing
+          isSelf
+          currentCity {
+            cityName
+            country {
+              countryName
+            }
+          }
         }
       }
       usersBefore {
-        id
         actor {
           profile {
+            id
             username
             avatar
+            isFollowing
+            isSelf
+            currentCity {
+              cityName
+              country {
+                countryName
+              }
+            }
           }
         }
       }

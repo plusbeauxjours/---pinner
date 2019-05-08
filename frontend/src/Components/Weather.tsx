@@ -5,7 +5,7 @@ import LoaderData from "./LoaderData";
 
 const Container = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 `;
 
 const WeatherInfo = styled.div`
