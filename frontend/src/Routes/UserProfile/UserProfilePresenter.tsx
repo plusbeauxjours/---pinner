@@ -18,30 +18,25 @@ import Input from "../../Components/Input";
 import GetCities from "../../Components/GetCities";
 import GetCountries from "../../Components/GetCountries";
 import GetContinents from "../../Components/GetContinents";
-import Flag from "src/Components/Flag";
 import AvatarGrid from "../../Components/AvatarGrid";
 import GetCards from "../../Components/GetCards";
+import Weather from "../../Components/Weather";
 
-const PHeader = styled.header`
+const Header = styled.header`
   display: flex;
   flex-direction: column;
-  height: 280px;
+  text-align: center;
+  height: 300px;
   align-items: center;
   background: ${props => props.theme.headerColor};
 `;
 
 const PAvatar = styled(Avatar)`
-  margin: 40px;
-`;
-
-const Username = styled.span`
-  text-align: center;
-  font-size: 22px;
-  font-weight: 100;
+  margin: 40px 0 20px 0;
 `;
 
 const NameContainer = styled.span`
-  display: flex;
+  margin-bottom: 20px;
 `;
 
 const GearContainer = styled.span`
@@ -51,19 +46,118 @@ const GearContainer = styled.span`
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
-  height: 50vh;
-  text-align: center;
 `;
 
-const PBody = styled.div`
+const PHeader = styled.header`
+  display: flex;
+  padding: 40px 15px 40px 15px;
+  @media screen and (max-width: 600px) {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+`;
+
+const AvatarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const CAvatar = styled(Avatar)`
+  border-radius: 3px;
+  height: 200px;
+  width: 200px;
+  margin-right: 20px;
+  @media screen and (max-width: 600px) {
+    margin-right: 0px;
+  }
+`;
+
+const SText = styled(Bold)`
+  font-size: 18px;
+  font-weight: 100;
+`;
+
+const UserContainer = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  @media screen and (max-width: 600px) {
+    min-width: 300px;
+  }
+`;
+
+const UserNameRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Username = styled.span`
+  text-align: center;
+  font-size: 22px;
+  font-weight: 100;
+`;
+
+const TripOverlay = styled.div`
+  z-index: 1;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  svg {
+    fill: white;
+    transition: fill 0.3s ease-in-out;
+    &:hover {
+      fill: red;
+    }
+  }
+  transition: opacity 0.3s ease-in-out;
+`;
+
+const UserRow = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-auto-rows: 200px;
+  flex-direction: row;
+  grid-template-columns: 3.2fr 1fr 1fr 1fr 0.2fr;
+  padding: 0 5px 0 5px;
   grid-gap: 15px;
-  flex-wrap: wrap;
-  justify-content: center;
-  background: ${props => props.theme.bgColor};
-  padding: 15px;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: grey;
+  }
+  &:hover {
+    ${TripOverlay} {
+      opacity: 1;
+    }
+  }
+  border-top: 1px solid grey;
+`;
+
+const HeaderColumn = styled.div`
+  margin-left: 15px;
+`;
+
+const HeaderText = styled(Bold)`
+  display: flex;
+`;
+
+const Location = styled.span`
+  display: flex;
+  margin-top: 5px;
+  display: block;
+  font-size: 12px;
+  font-weight: 200;
+`;
+
+const THeader = styled.header`
+  padding: 10px 10px 10px 0;
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 `;
 
 const Container = styled.div`
@@ -114,27 +208,6 @@ const CityPhoto = styled.img<ITheme>`
   object-fit: cover;
 `;
 
-const CityName = styled(Bold)`
-  position: absolute;
-  display: flex;
-  z-index: 5;
-  font-size: 40px;
-  font-family: "Qwigley";
-  font-weight: 200;
-  pointer-events: none;
-`;
-
-const CountryName = styled(CityName)`
-  font-size: 20px;
-  margin-top: 20px;
-  pointer-events: none;
-`;
-
-const InfoContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(200px, 1fr));
-`;
-
 const Icon = styled.span`
   display: flex;
   align-items: center;
@@ -153,7 +226,7 @@ const Icon = styled.span`
 const TripIcon = styled(Icon)`
   align-self: center;
   justify-self: center;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 `;
 
 const Bio = styled.p`
@@ -172,18 +245,10 @@ const ModalAnimation = keyframes`
 	  }
   `;
 
-const ColumnContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 const Row = styled.div`
   display: flex;
   padding: 5px;
-  border: 1px solid grey;
 `;
-
-const AvatarContainer = styled.div``;
 
 const UBold = styled(Bold)`
   display: flex;
@@ -194,7 +259,7 @@ const UBold = styled(Bold)`
 `;
 
 const SAvatar = styled(Avatar)`
-  margin-right: -12px;
+  border-radius: 3px;
 `;
 
 const ModalContainer = styled.div`
@@ -263,62 +328,10 @@ const ExtendedInput = styled(Input)`
   height: 48px;
 `;
 
-const TripContainer = styled.div`
-  display: grid;
-  flex-direction: column;
-  margin: 20px 10px 20px 10px;
-`;
-
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid grey;
-`;
-
-const SText = styled(Bold)`
-  font-size: 20px;
-  font-weight: 100;
-`;
-
-const CountryNameText = styled.div`
-  z-index: 5;
-`;
-
-const SFlag = styled(Flag)`
-  opacity: 0.4;
-`;
-
-const TripOverlay = styled.div`
-  z-index: 1;
-  opacity: 0;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  svg {
-    fill: white;
-    transition: fill 0.3s ease-in-out;
-    &:hover {
-      fill: red;
-    }
-  }
-  transition: opacity 0.3s ease-in-out;
-`;
-
-const TripRow = styled.div<ITheme>`
-  display: grid;
-  grid-template-columns: 1fr 3fr 3fr 2fr 2fr 1.5fr 0.2fr;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 3px;
-  :not(:last-child) {
-    border-bottom: 1px solid grey;
-  }
-  padding: 10px;
-  &:hover {
-    ${TripOverlay} {
-      opacity: 1;
-    }
-  }
 `;
 
 const TripText = styled.div`
@@ -347,76 +360,22 @@ const TripBox = styled.div`
   }
 `;
 
-const SeeAll = styled.p`
-  font-size: 12px;
-  font-weight: 100;
-  cursor: pointer;
+const ScrollContainer = styled.div`
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  margin: 0 15px 25px 0;
 `;
 
-// const ScrollContainer = styled.div`
-//   position: relative;
-//   width: 200px;
-//   height: 200px;
-//   display: flex;
-//   margin: 0 15px 25px 0;
-// `;
-
-// const Square = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 100%;
-//   width: 100%;
-//   background-position: cover;
-//   background-size: 100%;
-// `;
-
-// const Overlay = styled.div`
-//   color: white;
-//   z-index: 1;
-//   opacity: 0;
-//   display: flex;
-//   position: absolute;
-//   align-items: flex-end;
-//   justify-content: center;
-//   width: 100%;
-//   height: 100%;
-//   background: rgba(0, 0, 0, 0.7);
-//   cursor: pointer;
-//   svg {
-//     fill: white;
-//   }
-//   transition: opacity 0.2s ease-in-out;
-//   &:hover {
-//     opacity: 1;
-//   }
-// `;
-
-// const DistanceFront = styled.div`
-//   font-size: 20px;
-//   position: absolute;
-//   display: flex;
-//   margin: 10px 0 0 10px;
-// `;
-
-// const DistanceBack = styled.div`
-//   font-size: 20px;
-//   position: absolute;
-//   top: 20px;
-//   display: flex;
-//   margin: 10px 0 0 10px;
-// `;
-
-// const OverlayContents = styled.div`
-//   position: relative;
-//   display: flex;
-//   width: 100%;
-//   height: 100%;
-//   padding: 5px;
-// `;
-
-const STripText = styled(TripText)`
-  margin-left: 15px;
+const Square = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-position: cover;
+  background-size: 100%;
 `;
 
 const STextArea = styled(Textarea)`
@@ -855,21 +814,21 @@ const UserProfilePresenter: React.SFC<IProps> = ({
         {/* 
         ////////////// HEADER //////////////
         */}
-        <PHeader>
+        <Header>
           <PAvatar size="lg" url={user.profile.avatar} />
-          {editMode ? (
-            <ExtendedInput
-              onChange={onInputChange}
-              type={"text"}
-              value={userName}
-              placeholder={user.username}
-              name={"userName"}
-              onKeyUp={onKeyUp}
-            />
-          ) : (
-            <Username>{user.username}</Username>
-          )}
           <NameContainer>
+            {editMode ? (
+              <ExtendedInput
+                onChange={onInputChange}
+                type={"text"}
+                value={userName}
+                placeholder={user.username}
+                name={"userName"}
+                onKeyUp={onKeyUp}
+              />
+            ) : (
+              <Username>{user.username}</Username>
+            )}
             {user.profile.isSelf ? (
               <GearContainer onClick={toggleModal}>
                 <Gear />
@@ -881,135 +840,139 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               />
             )}
           </NameContainer>
-        </PHeader>
+        </Header>
         {/* 
         ////////////// BODY //////////////
         */}
         <SWrapper>
-          <PBody>
-            <InfoContainer>
-              <CityContainer>
-                <Link to={`/city/${user.profile.currentCity.cityName}`}>
-                  <CityPhoto
-                    src={user.profile.currentCity.cityPhoto}
-                    size={"md"}
+          <PHeader>
+            <AvatarContainer>
+              <Link to={`/city/${user.profile.currentCity.cityName}`}>
+                <CAvatar size="lg" url={user.profile.currentCity.cityPhoto} />
+              </Link>
+              {editMode ? (
+                <>
+                  <ExtendedInput
+                    onChange={onInputChange}
+                    type={"text"}
+                    value={firstName}
+                    placeholder={user.firstName || "First Name"}
+                    name={"firstName"}
+                    onKeyUp={onKeyUp}
                   />
-                </Link>
-
-                <CityName text={user.profile.currentCity.cityName} />
-                <CountryName
-                  text={user.profile.currentCity.country.countryName}
-                />
-              </CityContainer>
-              <ColumnContainer>
+                  <ExtendedInput
+                    onChange={onInputChange}
+                    type={"text"}
+                    value={lastName}
+                    placeholder={user.lastName || "Last Name"}
+                    name={"lastName"}
+                    onKeyUp={onKeyUp}
+                  />
+                </>
+              ) : (
                 <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book. It has survived not only five centuries, but
-                  also the leap into electronic typesetting, remaining
-                  essentially unchanged. It was popularised in the 1960s
-                  with....
+                  {user.firstName} {user.lastName}
                 </p>
-                {editMode ? (
-                  <>
-                    <ExtendedInput
-                      onChange={onInputChange}
-                      type={"text"}
-                      value={firstName}
-                      placeholder={user.firstName || "First Name"}
-                      name={"firstName"}
-                      onKeyUp={onKeyUp}
-                    />
-                    <ExtendedInput
-                      onChange={onInputChange}
-                      type={"text"}
-                      value={lastName}
-                      placeholder={user.lastName || "Last Name"}
-                      name={"lastName"}
-                      onKeyUp={onKeyUp}
-                    />
-                  </>
+              )}
+              {user.profile.bio &&
+                (editMode ? (
+                  <ExtendedInput
+                    onChange={onInputChange}
+                    type={"text"}
+                    value={bio}
+                    placeholder={user.profile.bio || "Bio"}
+                    name={"bio"}
+                    onKeyUp={onKeyUp}
+                  />
                 ) : (
-                  <p>
-                    {user.firstName} {user.lastName}
-                  </p>
-                )}
-              </ColumnContainer>
-            </InfoContainer>
-            <InfoContainer>
-              <ColumnContainer>
-                <Row>
-                  <UBold text={String(user.profile.postCount)} />
-                  <UBold text={" POSTS - done"} />
-                </Row>
-                <Row>
-                  <UBold text={String(user.profile.postCount)} />
-                  <UBold text={" KM"} />
-                </Row>
-                <Row>
-                  <UBold text={String(user.profile.tripCount)} />
-                  <UBold text={" TRIPS - done"} />
-                </Row>
-                <Row onClick={toggleCityModal}>
-                  <UBold text={String(user.profile.cityCount)} />
-                  <UBold text={" CITIES - done"} />
-                </Row>
-                <Row onClick={toggleCountryModal}>
-                  <UBold text={String(user.profile.countryCount)} />
-                  <UBold text={" COUNTRIES - done"} />
-                </Row>
-                <Row onClick={toggleContinentModal}>
-                  <UBold text={String(user.profile.continentCount)} />
-                  <UBold text={" CONTINENT - done"} />
-                </Row>
-                {user.profile.bio &&
-                  (editMode ? (
-                    <ExtendedInput
-                      onChange={onInputChange}
-                      type={"text"}
-                      value={bio}
-                      placeholder={user.profile.bio || "Bio"}
-                      name={"bio"}
-                      onKeyUp={onKeyUp}
-                    />
-                  ) : (
-                    <Bio>{`${user.profile.bio}`}</Bio>
-                  ))}
-              </ColumnContainer>
-              <ColumnContainer>
-                <Row onClick={toggleFollowersModal}>
-                  {user.profile.followers &&
-                    user.profile.followers.map(follower => (
-                      <AvatarContainer key={follower.id}>
-                        <SAvatar
-                          size={"sm"}
-                          key={follower.id}
-                          url={follower.user.profile.avatar}
-                        />
-                      </AvatarContainer>
-                    ))}
-                  <UBold text={String(user.profile.followersCount)} />
-                  <UBold text={"FOLLOWERS - done"} />
-                </Row>
-                <Row onClick={toggleFollowingsModal}>
-                  {user.profile.followings &&
-                    user.profile.followings.map(following => (
-                      <AvatarContainer key={following.id}>
-                        <SAvatar
-                          size={"sm"}
-                          key={following.id}
-                          url={following.user.profile.avatar}
-                        />
-                      </AvatarContainer>
-                    ))}
-                  <UBold text={String(user.profile.followingCount)} />
-                  <UBold text={"FOLLOWINGS - done"} />
-                </Row>
-              </ColumnContainer>
-            </InfoContainer>
-          </PBody>
+                  <Bio>{`${user.profile.bio}`}</Bio>
+                ))}
+              <SText text={String(user.profile.countryCount.userCount)} />
+              <SText text={String(user.profile.cityCount.cardCount)} />
+              <Row>
+                <UBold text={String(user.profile.postCount)} />
+                <UBold text={" POSTS - done"} />
+              </Row>
+              <Row>
+                <UBold text={String(user.profile.postCount)} />
+                <UBold text={" KM"} />
+              </Row>
+              <Row>
+                <UBold text={String(user.profile.tripCount)} />
+                <UBold text={" TRIPS - done"} />
+              </Row>
+              <Row onClick={toggleCityModal}>
+                <UBold text={String(user.profile.cityCount)} />
+                <UBold text={" CITIES - done"} />
+              </Row>
+              <Row onClick={toggleCountryModal}>
+                <UBold text={String(user.profile.countryCount)} />
+                <UBold text={" COUNTRIES - done"} />
+              </Row>
+              <Row onClick={toggleContinentModal}>
+                <UBold text={String(user.profile.continentCount)} />
+                <UBold text={" CONTINENT - done"} />
+              </Row>
+              <Weather
+                latitude={user.profile.currentCity.latitude}
+                longitude={user.profile.currentCity.longitude}
+              />
+            </AvatarContainer>
+            <UserContainer>
+              <UserNameRow>
+                <Username>TRIPS</Username>
+              </UserNameRow>
+              {user.profile.isSelf && (
+                <TripIcon onClick={addTrip}>
+                  <Upload />
+                </TripIcon>
+              )}
+              {!getTipsLoading && getTrips ? (
+                getTrips.map(trip => (
+                  <UserRow key={trip.id}>
+                    <Link to={`/city/${trip.city.cityName}`}>
+                      <THeader>
+                        <SAvatar size={"sm"} url={trip.city.cityPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={trip.city.cityName} />
+                          <Location>{trip.city.country.countryName}</Location>
+                        </HeaderColumn>
+                      </THeader>
+                    </Link>
+                    <TripText>{trip.startDate}</TripText>
+                    <TripText>{trip.endDate}</TripText>
+                    <TripText>
+                      <p>{trip.diffDays} Days</p>
+                    </TripText>
+                    <TripOverlay
+                      onClick={() => {
+                        user.profile.isSelf
+                          ? toggleTripModal(
+                              trip.id,
+                              trip.city.cityName,
+                              trip.city.cityPhoto,
+                              trip.city.country.countryName,
+                              trip.startDate,
+                              trip.endDate
+                            )
+                          : gotoTrip(
+                              trip.city.cityName,
+                              trip.city.cityPhoto,
+                              trip.city.country.countryName,
+                              trip.startDate,
+                              trip.endDate
+                            );
+                      }}
+                    >
+                      <List />
+                    </TripOverlay>
+                  </UserRow>
+                ))
+              ) : (
+                <Loader />
+              )}
+            </UserContainer>
+          </PHeader>
           {!user.profile.isSelf &&
           knowingFollowers &&
           knowingFollowers.length !== 0 ? (
@@ -1030,7 +993,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid coffees={coffees} />
             </>
           ) : null}
-          {console.log(coffees)}
           {user.profile.isSelf && coffees.length === 0 ? (
             <>
               <SmallTitle>
@@ -1041,99 +1003,86 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </>
           ) : null}
           <GreyLine />
-          <Title>
-            <SText text={"TRIPS"} />
-            <SeeAll onClick={toggleTripSeeAll}>SEE ALL</SeeAll>
-          </Title>
-          <TripContainer>
-            {user.profile.isSelf && (
-              <TripIcon onClick={addTrip}>
-                <Upload />
-              </TripIcon>
-            )}
-            {!getTipsLoading && getTrips ? (
-              getTrips.map(trip => (
-                <TripRow key={trip.id}>
-                  <CityPhoto src={trip.city.cityPhoto} size={"sm"} />
-                  <STripText>{trip.city.cityName}</STripText>
-                  <TripText>
-                    <SFlag
-                      countryCode={trip.city.country.countryCode}
-                      size={"sm"}
-                    />
-                    <CountryNameText>
-                      {trip.city.country.countryName}
-                    </CountryNameText>
-                  </TripText>
-                  <TripText>{trip.startDate}</TripText>
-                  <TripText>{trip.endDate}</TripText>
-                  <TripText>
-                    <p>{trip.diffDays} Days</p>
-                  </TripText>
-                  <TripOverlay
-                    onClick={() => {
-                      user.profile.isSelf
-                        ? toggleTripModal(
-                            trip.id,
-                            trip.city.cityName,
-                            trip.city.cityPhoto,
-                            trip.city.country.countryName,
-                            trip.startDate,
-                            trip.endDate
-                          )
-                        : gotoTrip(
-                            trip.city.cityName,
-                            trip.city.cityPhoto,
-                            trip.city.country.countryName,
-                            trip.startDate,
-                            trip.endDate
-                          );
-                    }}
-                  >
-                    <List />
-                  </TripOverlay>
-                </TripRow>
-              ))
-            ) : (
-              <Loader />
-            )}
-          </TripContainer>
-          <GreyLine />
           {/* 
           ////////////// LOCATIONS //////////////
           */}
           <Title>
-            <SText text={"TOP COUNTRIES"} />
+            <SText text={`ABOUT ${username}`} />
           </Title>
           <Container>
             <TripBox>
-              {/* {!topCountriesLoading && topCountries ? (
-                topCountries.map(topCountry => (
-                  <ScrollContainer key={topCountry.id}>
-                    <Link to={`/country/${topCountry.countryName}`}>
-                      <CityContainer>
-                        <Square>
-                          <CityPhoto
-                            src={topCountry.countryPhoto}
-                            size={"md"}
-                          />
-                          <CityName text={topCountry.countryName} />
-                          <Overlay>
-                            <OverlayContents>
-                              <DistanceFront>
-                                {topCountry.count}TIMES
-                              </DistanceFront>
-                              <DistanceBack>{topCountry.diff}DAYS</DistanceBack>
-                            </OverlayContents>
-                          </Overlay>
-                        </Square>
-                      </CityContainer>
-                    </Link>
-                  </ScrollContainer>
-                ))
-              ) : (
-                <Loader />
-              )} */}
+              <ScrollContainer>
+                <Link to={`/${username}/followers`}>
+                  <CityContainer>
+                    <Square>
+                      <CityPhoto
+                        src={
+                          "http://img.khan.co.kr/news/2017/08/09/l_2017080901001275500096051.jpg"
+                        }
+                        size={"md"}
+                      />
+                    </Square>
+                  </CityContainer>
+                </Link>
+              </ScrollContainer>
+              <ScrollContainer>
+                <Link to={`/${username}/followings`}>
+                  <CityContainer>
+                    <Square>
+                      <CityPhoto
+                        src={
+                          "http://image.dongascience.com/Photo/2018/12/2d5efe44bdd02f3e2ec4e99189d89d18.jpg"
+                        }
+                        size={"md"}
+                      />
+                    </Square>
+                  </CityContainer>
+                </Link>
+              </ScrollContainer>
+              <ScrollContainer>
+                <Link to={`/${username}/cities`}>
+                  <CityContainer>
+                    <Square>
+                      <CityPhoto
+                        src={
+                          "https://image.fmkorea.com/files/attach/images/3842645/451/442/046/5b8bcef55357387016a4a5d5343249ea.jpg"
+                        }
+                        size={"md"}
+                      />
+                    </Square>
+                  </CityContainer>
+                </Link>
+              </ScrollContainer>
+              <ScrollContainer>
+                <Link to={`/${username}/countries`}>
+                  <CityContainer>
+                    <Square>
+                      <CityPhoto
+                        src={
+                          "http://playwares.com/files/attach/images/23503529/733/482/043/c64e3f04515122d1aee2879590ee250c.jpg"
+                        }
+                        size={"md"}
+                      />
+                    </Square>
+                  </CityContainer>
+                </Link>
+              </ScrollContainer>
+              {user.profile.isSelf && (
+                <ScrollContainer>
+                  <Link to={`/${username}/coffees`}>
+                    <CityContainer>
+                      <Square>
+                        <CityPhoto
+                          src={
+                            "https://media.hojunara.com/wp-content/uploads/2015/01/%EC%BD%94%EC%95%8C%EB%9D%BC.jpg"
+                          }
+                          size={"md"}
+                        />
+                      </Square>
+                    </CityContainer>
+                  </Link>
+                </ScrollContainer>
+              )}
             </TripBox>
           </Container>
           <GetCards

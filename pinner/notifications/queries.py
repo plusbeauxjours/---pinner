@@ -37,10 +37,10 @@ def resolve_get_trips(self, info, **kwargs):
     tripPage = kwargs.get('tripPage', 0)
 
     if (tripPage is 0):
-        trip = user.movenotification.all().order_by('-start_date')[:3]
+        trip = user.movenotification.all().order_by('-start_date')[:20]
 
     else:
-        trip = user.movenotification.all().order_by('-start_date')[3:30]
+        trip = user.movenotification.all().order_by('-start_date')[:20]
 
     return location_types.TripResponse(trip=trip)
 

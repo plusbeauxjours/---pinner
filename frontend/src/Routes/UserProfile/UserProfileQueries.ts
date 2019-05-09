@@ -42,6 +42,8 @@ export const GET_USER = gql`
           isFollowing
           isSelf
           currentCity {
+            latitude
+            longitude
             cityName
             cityPhoto
             country {
