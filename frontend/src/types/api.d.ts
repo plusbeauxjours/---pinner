@@ -4,6 +4,27 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: ToggleLikeCity
+// ====================================================
+
+export interface ToggleLikeCity_toggleLikeCity {
+  __typename: "ToggleLikeCityResponse";
+  ok: boolean | null;
+}
+
+export interface ToggleLikeCity {
+  toggleLikeCity: ToggleLikeCity_toggleLikeCity;
+}
+
+export interface ToggleLikeCityVariables {
+  cityId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: Match
 // ====================================================
 
@@ -708,6 +729,7 @@ export interface CityProfile_cityProfile_city {
   cityName: string | null;
   cityPhoto: string | null;
   country: CityProfile_cityProfile_city_country;
+  likeCount: number | null;
   cardCount: number | null;
   userCount: number | null;
   userLogCount: number | null;

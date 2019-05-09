@@ -11,8 +11,8 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { CITY_PROFILE, NEAR_CITIES } from "./CityProfileQueries";
 
 class CityProfileQuery extends Query<CityProfile, CityProfileVariables> {}
-
 class NearCitiesQuery extends Query<NearCities, NearCitiesVariables> {}
+
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
@@ -40,7 +40,11 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     } = this.props;
     const { page, coffeeReportModalOpen } = this.state;
     return (
-      <NearCitiesQuery query={NEAR_CITIES} variables={{ cityName }}>
+      <NearCitiesQuery
+        query={NEAR_CITIES}
+        variables={{ cityName }}
+        fetchPolicy="cache-and-network"
+      >
         {({ data: nearCitiesData, loading: nearCitiesLoading }) => {
           return (
             <CityProfileQuery

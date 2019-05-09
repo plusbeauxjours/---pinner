@@ -13,6 +13,7 @@ import AvatarGrid from "../../Components/AvatarGrid";
 import GetCards from "../../Components/GetCards";
 import FollowBtn from "../../Components/FollowBtn";
 import UserHeader from "../../Components/UserHeader";
+import CityLikeBtn from "../../Components/CityLikeBtn";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -207,7 +208,7 @@ const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   grid-template-columns: 4fr 1fr;
-  padding: 0 5px 0 5px
+  padding: 0 5px 0 5px;
   grid-gap: 15px;
   align-items: center;
   cursor: pointer;
@@ -287,13 +288,19 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                 DISTANCE
               </InfoRow>
               <InfoRow>
+                TIME DIFFERENCE
+                <SText text={String(city.userCount)} />
+              </InfoRow>
+              <InfoRow>
                 <SText text={String(city.cardCount)} />
                 cards
               </InfoRow>
-              <SText text={String(city.distance)} />
               <InfoRow>
-                TIME DIFFERENCE
-                <SText text={String(city.userCount)} />
+                <CityLikeBtn
+                  isLiked={city.isLiked}
+                  cityId={city.id}
+                  likeCount={city.likeCount}
+                />
               </InfoRow>
               <CWeather latitude={city.latitude} longitude={city.longitude} />
             </AvatarContainer>

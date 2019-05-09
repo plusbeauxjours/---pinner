@@ -46,6 +46,7 @@ export const CITY_PROFILE = gql`
         }
       }
       city {
+        id
         latitude
         longitude
         cityName
@@ -55,6 +56,8 @@ export const CITY_PROFILE = gql`
           countryPhoto
           countryCode
         }
+        likeCount
+        isLiked
         cardCount
         userCount
         userLogCount

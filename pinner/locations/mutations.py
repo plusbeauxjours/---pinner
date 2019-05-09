@@ -97,14 +97,14 @@ class ReportLocation(graphene.Mutation):
 
 
 
-class LikeCity(graphene.Mutation):
+class ToggleLikeCity(graphene.Mutation):
 
     """ Like a City """
 
     class Arguments:
         cityId = graphene.Int(required=True)
 
-    Output = types.LikeCityResponse
+    Output = types.ToggleLikeCityResponse
 
     @login_required
     def mutate(self, info, **kwargs):
@@ -121,7 +121,7 @@ class LikeCity(graphene.Mutation):
             like = models.Like.objects.get(
                 creator=user, city=city)
             like.delete()
-            return types.LikeCityResponse(ok=True)
+            return types.ToggleLikeCityResponse(ok=True)
 
         except models.Like.DoesNotExist:
             pass
@@ -129,7 +129,7 @@ class LikeCity(graphene.Mutation):
         try:
             like = models.Like.objects.create(
                 creator=user, city=city)
-            return types.LikeCityResponse(ok=True)
+            return types.ToggleLikeCityResponse(ok=True)
 
         except IntegrityError as e:
             raise Exception("Can't Like City")

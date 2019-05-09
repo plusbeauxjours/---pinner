@@ -9,13 +9,22 @@ from coffees import types as coffee_types
 
 
 class CityType(DjangoObjectType):
-    city_count = graphene.Int(source='city_count')
     user_count = graphene.Int(source='user_count')
     user_log_count = graphene.Int(source='user_log_count')
     card_count = graphene.Int(source='card_count')
+    like_count =graphene.Int(source='like_count')
     distance = graphene.Int()
     count = graphene.Int()
     diff = graphene.Int()
+    is_liked = graphene.Boolean()
+
+    def resolve_is_liked(self, info):
+        user = info.context.user
+        try:
+            like = models.Like.objects.get(city=self, creator=user)
+            return True
+        except models.Like.DoesNotExist:
+            return False
 
     class Meta:
         model = models.City
@@ -82,5 +91,5 @@ class TripResponse(graphene.ObjectType):
 class ReportLocationResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
-class LikeCityResponse(graphene.ObjectType):
+class ToggleLikeCityResponse(graphene.ObjectType):
     ok = graphene.Boolean()

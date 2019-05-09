@@ -64,11 +64,11 @@ class City (config_models.TimeStampedModel):
 
     @cached_property
     def user_count(self):
-        return self.currentCity.all().order_by('-user_id').distinct('user_id').count()
+        return self.currentCity.values('id').all().count()
 
     @cached_property
     def user_log_count(self):
-        return self.movenotification.all().order_by('-actor_id').distinct('actor_id').count()
+        return self.movenotification.values('actor__id').all().order_by('-actor__id').distinct('actor__id').count()
 
     def __str__(self):
         return self.city_name

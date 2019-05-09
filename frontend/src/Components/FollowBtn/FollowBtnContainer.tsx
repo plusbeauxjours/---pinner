@@ -26,7 +26,6 @@ class FollowBtnContainer extends React.Component<any, IState> {
       <FollowMutation
         mutation={FOLLOW_USER}
         variables={{ userId: parseInt(userId, 10) }}
-        onCompleted={this.toggleBtn}
         refetchQueries={[
           {
             query: GET_FEED,
@@ -37,12 +36,15 @@ class FollowBtnContainer extends React.Component<any, IState> {
           }
         ]}
       >
-        {followUserFn => (
-          <FollowBtnPresenter
-            isFollowing={isFollowing}
-            toggleBtn={followUserFn}
-          />
-        )}
+        {followUserFn => {
+          this.followUserFn = followUserFn;
+          return (
+            <FollowBtnPresenter
+              isFollowing={isFollowing}
+              toggleBtn={this.toggleBtn}
+            />
+          );
+        }}
       </FollowMutation>
     );
   }
@@ -51,6 +53,7 @@ class FollowBtnContainer extends React.Component<any, IState> {
       return {
         isFollowing: !state.isFollowing
       };
+      this.followUserFn();
     });
   };
 }

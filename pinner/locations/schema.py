@@ -118,4 +118,4 @@ class Query(object):
 
 class Mutation(object):
     report_location = mutations.ReportLocation.Field(required=True)
-    like_city = mutations.LikeCity.Field(required=True)
+    toggle_like_city = mutations.ToggleLikeCity.Field(required=True)
