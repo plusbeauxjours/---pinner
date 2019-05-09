@@ -40,11 +40,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     } = this.props;
     const { page, coffeeReportModalOpen } = this.state;
     return (
-      <NearCitiesQuery
-        query={NEAR_CITIES}
-        variables={{ cityName }}
-        fetchPolicy="cache-and-network"
-      >
+      <NearCitiesQuery query={NEAR_CITIES} variables={{ cityName }}>
         {({ data: nearCitiesData, loading: nearCitiesLoading }) => {
           return (
             <CityProfileQuery

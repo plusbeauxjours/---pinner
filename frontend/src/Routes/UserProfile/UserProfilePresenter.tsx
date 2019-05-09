@@ -326,14 +326,6 @@ const TripText = styled.div`
   align-items: center;
 `;
 
-const ScrollContainer = styled.div`
-  position: relative;
-  width: 200px;
-  height: 200px;
-  display: flex;
-  margin: 0 15px 25px 0;
-`;
-
 const TripBox = styled.div`
   width: 905px;
   display: flex;
@@ -361,36 +353,67 @@ const SeeAll = styled.p`
   cursor: pointer;
 `;
 
-const Square = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  background-position: cover;
-  background-size: 100%;
-`;
+// const ScrollContainer = styled.div`
+//   position: relative;
+//   width: 200px;
+//   height: 200px;
+//   display: flex;
+//   margin: 0 15px 25px 0;
+// `;
 
-const Overlay = styled.div`
-  color: white;
-  z-index: 1;
-  opacity: 0;
-  display: flex;
-  position: absolute;
-  align-items: flex-end;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  cursor: pointer;
-  svg {
-    fill: white;
-  }
-  transition: opacity 0.2s ease-in-out;
-  &:hover {
-    opacity: 1;
-  }
-`;
+// const Square = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100%;
+//   width: 100%;
+//   background-position: cover;
+//   background-size: 100%;
+// `;
+
+// const Overlay = styled.div`
+//   color: white;
+//   z-index: 1;
+//   opacity: 0;
+//   display: flex;
+//   position: absolute;
+//   align-items: flex-end;
+//   justify-content: center;
+//   width: 100%;
+//   height: 100%;
+//   background: rgba(0, 0, 0, 0.7);
+//   cursor: pointer;
+//   svg {
+//     fill: white;
+//   }
+//   transition: opacity 0.2s ease-in-out;
+//   &:hover {
+//     opacity: 1;
+//   }
+// `;
+
+// const DistanceFront = styled.div`
+//   font-size: 20px;
+//   position: absolute;
+//   display: flex;
+//   margin: 10px 0 0 10px;
+// `;
+
+// const DistanceBack = styled.div`
+//   font-size: 20px;
+//   position: absolute;
+//   top: 20px;
+//   display: flex;
+//   margin: 10px 0 0 10px;
+// `;
+
+// const OverlayContents = styled.div`
+//   position: relative;
+//   display: flex;
+//   width: 100%;
+//   height: 100%;
+//   padding: 5px;
+// `;
 
 const STripText = styled(TripText)`
   margin-left: 15px;
@@ -417,29 +440,6 @@ const SmallGreyLine = styled(GreyLine)`
   width: 40%;
 `;
 
-const DistanceFront = styled.div`
-  font-size: 20px;
-  position: absolute;
-  display: flex;
-  margin: 10px 0 0 10px;
-`;
-
-const DistanceBack = styled.div`
-  font-size: 20px;
-  position: absolute;
-  top: 20px;
-  display: flex;
-  margin: 10px 0 0 10px;
-`;
-
-const OverlayContents = styled.div`
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  padding: 5px;
-`;
-
 interface ITheme {
   size?: string;
 }
@@ -447,9 +447,6 @@ interface ITheme {
 interface IProps {
   userProfileData: any;
   userProfileLoading: boolean;
-
-  topCountriesData?: any;
-  topCountriesLoading: boolean;
 
   getTripsData?: any;
   getTipsLoading: boolean;
@@ -553,11 +550,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   userProfileData: { userProfile: { user = null } = {} } = {},
   userProfileLoading,
 
-  topCountriesData: {
-    topCountries: { countries: topCountries = null } = {}
-  } = {},
-  topCountriesLoading,
-
   getTripsData: { getTrips: { trip: getTrips = null } = {} } = {},
   getTipsLoading,
 
@@ -643,7 +635,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 }) => {
   if (userProfileLoading) {
     return <Loader />;
-  } else if (user && topCountries) {
+  } else if (user) {
     return (
       <>
         {requestingCoffeeModalOpen && (
@@ -1115,7 +1107,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           </Title>
           <Container>
             <TripBox>
-              {!topCountriesLoading && topCountries ? (
+              {/* {!topCountriesLoading && topCountries ? (
                 topCountries.map(topCountry => (
                   <ScrollContainer key={topCountry.id}>
                     <Link to={`/country/${topCountry.countryName}`}>
@@ -1141,7 +1133,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 ))
               ) : (
                 <Loader />
-              )}
+              )} */}
             </TripBox>
           </Container>
           <GetCards

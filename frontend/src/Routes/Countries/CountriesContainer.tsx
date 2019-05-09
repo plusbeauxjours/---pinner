@@ -1,19 +1,18 @@
 import React from "react";
 import { Query } from "react-apollo";
-import CitiesPresenter from "./CitiesPresenter";
-import { FrequentVisits, FrequentVisitsVariables } from "../../types/api";
+import ContinentProfilePresenter from "./CountriesPresenter";
+import { TopCountries, TopCountriesVariables } from "../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
-import { FREQUENT_VISITS } from "./CitiesQueries";
+import { TOP_COUNTRIES } from "./CountriesQueries";
 
-class GetCitiesQuery extends Query<FrequentVisits, FrequentVisitsVariables> {}
+class GetCountriesQuery extends Query<TopCountries, TopCountriesVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   page: number;
 }
-
-class CitiesContainerContainer extends React.Component<IProps, IState> {
+class CountriesContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,25 +25,23 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
         params: { username }
       }
     } = this.props;
-
     return (
-      <GetCitiesQuery
-        query={FREQUENT_VISITS}
+      <GetCountriesQuery
+        query={TOP_COUNTRIES}
         variables={{ userName: username }}
       >
         {({ data, loading }) => {
-          console.log(username);
           return (
-            <CitiesPresenter
-              loading={loading}
+            <ContinentProfilePresenter
               data={data}
+              loading={loading}
               userName={username}
             />
           );
         }}
-      </GetCitiesQuery>
+      </GetCountriesQuery>
     );
   }
 }
 
-export default withRouter(CitiesContainerContainer);
+export default withRouter(CountriesContainer);

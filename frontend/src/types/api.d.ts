@@ -1096,6 +1096,43 @@ export interface ContinentProfileVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: TopCountries
+// ====================================================
+
+export interface TopCountries_topCountries_countries_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
+export interface TopCountries_topCountries_countries {
+  __typename: "CountryType";
+  count: number | null;
+  diff: number | null;
+  id: string;
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+  continent: TopCountries_topCountries_countries_continent | null;
+}
+
+export interface TopCountries_topCountries {
+  __typename: "CountriesResponse";
+  countries: (TopCountries_topCountries_countries | null)[] | null;
+}
+
+export interface TopCountries {
+  topCountries: TopCountries_topCountries;
+}
+
+export interface TopCountriesVariables {
+  userName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: CountryProfile
 // ====================================================
 
@@ -2501,43 +2538,6 @@ export interface DeleteTrip {
 
 export interface DeleteTripVariables {
   moveNotificationId: number;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: TopCountries
-// ====================================================
-
-export interface TopCountries_topCountries_countries_continent {
-  __typename: "ContinentType";
-  continentName: string | null;
-}
-
-export interface TopCountries_topCountries_countries {
-  __typename: "CountryType";
-  id: string;
-  count: number | null;
-  diff: number | null;
-  countryName: string | null;
-  countryCode: string | null;
-  countryPhoto: string | null;
-  continent: TopCountries_topCountries_countries_continent | null;
-}
-
-export interface TopCountries_topCountries {
-  __typename: "CountriesResponse";
-  countries: (TopCountries_topCountries_countries | null)[] | null;
-}
-
-export interface TopCountries {
-  topCountries: TopCountries_topCountries;
-}
-
-export interface TopCountriesVariables {
-  userName: string;
 }
 
 

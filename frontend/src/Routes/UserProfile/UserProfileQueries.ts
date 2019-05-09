@@ -183,24 +183,6 @@ export const DELETE_TRIP = gql`
   }
 `;
 
-export const TOP_COUNTRIES = gql`
-  query TopCountries($userName: String!) {
-    topCountries(userName: $userName) {
-      countries {
-        id
-        count
-        diff
-        countryName
-        countryCode
-        countryPhoto
-        continent {
-          continentName
-        }
-      }
-    }
-  }
-`;
-
 export const GET_CITIES = gql`
   query GetCities($username: String!) {
     getCities(username: $username) {
