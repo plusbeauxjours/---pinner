@@ -35,28 +35,6 @@ const SText = styled(Bold)`
   font-weight: 100;
 `;
 
-const Container = styled.div`
-  background-color: #2d3a41;
-  width: 100%;
-  border-radius: 3px;
-  border: ${props => props.theme.boxBorder};
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  padding: 10px;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-  &:hover {
-    background-color: #e6e6e6;
-  }
-`;
-
-const UBold = styled(Bold)`
-  font-weight: 100;
-  font-size: 7px;
-`;
-
 // const GreyLine = styled.div`
 //   margin-top: 10px;
 //   margin-bottom: 10px;
@@ -88,7 +66,7 @@ const UserContainer = styled.div`
 const UserRow = styled.div`
   display: grid;
   flex-direction: row;
-  grid-template-columns: 4fr 1fr;
+  grid-template-columns: 3fr 1fr 1fr;
   padding: 0 5px 0 5px;
   grid-gap: 15px;
   align-items: center;
@@ -110,6 +88,10 @@ const UserNameRow = styled.div`
 const AvatarContainer = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const GreyText = styled(Bold)`
+  color: #999;
 `;
 
 interface IProps {
@@ -134,7 +116,7 @@ const FollowingsPresenter: React.SFC<IProps> = ({
             <CAvatar
               size="lg"
               url={
-                "http://image.dongascience.com/Photo/2018/12/2d5efe44bdd02f3e2ec4e99189d89d18.jpg"
+                "https://media.hojunara.com/wp-content/uploads/2015/01/%EC%BD%94%EC%95%8C%EB%9D%BC.jpg"
               }
             />
             <InfoRow>
@@ -148,20 +130,22 @@ const FollowingsPresenter: React.SFC<IProps> = ({
             </UserNameRow>
             {coffees &&
               coffees.map(coffee => (
-                <UserRow key={coffee.id}>
+                <React.Fragment key={coffee.id}>
                   <Link to={`/c/${coffee.id}`}>
-                    <Container>
+                    <UserRow>
                       <UserHeader
-                        username={coffee.target}
-                        currentCity={coffee.city.cityName}
-                        currentCountry={coffee.city.country.countryName}
+                        username={coffee.city.cityName}
+                        currentCity={coffee.city.country.countryName}
                         avatar={coffee.host.profile.avatar}
                         size={"sm"}
+                        type={"coffee"}
+                        target={coffee.target}
                       />
-                      <UBold text={coffee.target} />
-                    </Container>
+                      <GreyText text={coffee.target} />
+                      <GreyText text={coffee.expires} />
+                    </UserRow>
                   </Link>
-                </UserRow>
+                </React.Fragment>
               ))}
           </UserContainer>
         </PHeader>

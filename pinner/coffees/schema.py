@@ -12,7 +12,6 @@ class Query(object):
             'location': graphene.String(required=True),
             'cityName': graphene.String(),
             'userName': graphene.String(),
-            'coffeePage': graphene.Int()
         }
     )
     coffee_detail = graphene.Field(

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import Bold from "./Bold";
-import Avatar from "./Avatar";
 import Input from "./Input";
 
 const Header = styled.header`
@@ -23,8 +22,6 @@ const Location = styled.span`
   font-weight: 200;
 `;
 
-const SAvatar = styled(Avatar)``;
-
 const SText = styled(Bold)`
   display: flex;
 `;
@@ -32,6 +29,13 @@ const SText = styled(Bold)`
 const ExtendedInput = styled(Input)`
   width: 287px;
   height: 48px;
+`;
+
+const Target = styled.div`
+  display: flex;
+  bottom: 0;
+  font-size: 30px;
+  font-weight: 200;
 `;
 
 interface IProps {
@@ -45,6 +49,8 @@ interface IProps {
   editCardOnKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   cityName?: string;
+  type?: string;
+  target?: string;
 }
 
 const UserHeader: React.SFC<IProps> = ({
@@ -57,30 +63,74 @@ const UserHeader: React.SFC<IProps> = ({
   cardEditMode,
   onInputChange,
   editCardOnKeyUp,
-  cityName
+  cityName,
+  type,
+  target
 }) => {
   return (
     <Header>
-      <SAvatar size={size} url={avatar} />
+      {(() => {
+        switch (target) {
+          case "EVERYONE":
+            return (
+              <>
+                <Target>E</Target>
+              </>
+            );
+          case "GENDER":
+            return (
+              <>
+                <Target>G</Target>
+              </>
+            );
+          case "NATIONALITY":
+            return (
+              <>
+                <Target>N</Target>
+              </>
+            );
+          case "FOLLOWERS":
+            return (
+              <>
+                <Target>F</Target>
+              </>
+            );
+          default:
+            return null;
+        }
+      })()}
       <HeaderColumn>
         <SText text={username} />
         <Location>
-          {editMode || cardEditMode ? (
-            <>
-              <ExtendedInput
-                onChange={onInputChange}
-                type={"text"}
-                placeholder={currentCity}
-                name={"cityName"}
-                onKeyUp={editCardOnKeyUp}
-              />
-              , {currentCountry}
-            </>
-          ) : (
-            <>
-              {currentCity}, {currentCountry}
-            </>
-          )}
+          {(() => {
+            switch (type) {
+              case "coffee":
+                return <>{currentCity}</>;
+              case "FOLLOWERS":
+                return (
+                  <>
+                    {editMode || cardEditMode ? (
+                      <>
+                        <ExtendedInput
+                          onChange={onInputChange}
+                          type={"text"}
+                          placeholder={currentCity}
+                          name={"cityName"}
+                          onKeyUp={editCardOnKeyUp}
+                        />
+                        , {currentCountry}
+                      </>
+                    ) : (
+                      <>
+                        {currentCity}, {currentCountry}
+                      </>
+                    )}
+                  </>
+                );
+              default:
+                return null;
+            }
+          })()}
         </Location>
       </HeaderColumn>
     </Header>

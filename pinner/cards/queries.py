@@ -77,6 +77,7 @@ def resolve_get_cards(self, info, **kwargs):
             user = User.objects.prefetch_related('cards').get(username=userName)
             cards = user.cards.order_by('-created_at')[offset:12 + offset]
             hasNextPage = offset < user.profile.post_count
+            print(hasNextPage)
             return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')
@@ -85,7 +86,6 @@ def resolve_get_cards(self, info, **kwargs):
         try:
             user = User.objects.select_related('profile').get(username=userName)
             following_profiles = user.profile.followers.values('id').all()
-            print(following_profiles)
             following_cards = models.Card.objects.filter(
                 creator__profile__id__in=following_profiles).order_by('-created_at')
             hasNextPage = offset < following_cards.count()

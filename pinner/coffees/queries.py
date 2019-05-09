@@ -12,21 +12,20 @@ def resolve_get_coffees(self, info, **kwargs):
 
     user = info.context.user
     me = info.context.user
-    coffeePage = kwargs.get('coffeePage', 0)
-    offset = 12 * page
 
     location = kwargs.get('location')
     cityName = kwargs.get('cityName')
     userName = kwargs.get('userName')
 
-    nextPage = page+1
 
-    if location == "city":
+    if location == "feed":
         try:
             city = location_models.City.objects.prefetch_related('coffee').get(city_name=cityName)
+
         except location_models.City.DoesNotExist:
             return types.GetCoffeesResponse(coffees=None)
 
+        try:
             profile = me.profile
             followings = profile.followed_by.values('id').all()
             matches = me.guest.values('id').all()
@@ -35,7 +34,8 @@ def resolve_get_coffees(self, info, **kwargs):
                                         Q(target='gender', host__profile__gender=profile.gender) |
                                         Q(target='followers', host__profile__id__in=followings)) &
                                         Q(expires__gt=timezone.now())).exclude(match__id__in=matches).order_by('-created_at')
-            return types.GetCoffeesResponse(coffees=None)
+            
+            return types.GetCoffeesResponse(coffees=coffees)
       
         except models.Coffee.DoesNotExist:
             return types.GetCoffeesResponse(coffees=None)
@@ -62,8 +62,7 @@ def resolve_get_coffees(self, info, **kwargs):
 
         if(me.username == userName):
             try:
-                coffees = user.coffee.filter(expires__lt=timezone.now()).order_by(
-                    '-created_at')
+                coffees = user.coffee.all()
                 return types.GetCoffeesResponse(coffees=coffees)
             except models.Coffee.DoesNotExist:
                 return types.GetCoffeesResponse(coffees=None)
