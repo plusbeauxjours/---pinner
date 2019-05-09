@@ -18,10 +18,7 @@ import Input from "../../Components/Input";
 import GetCities from "../../Components/GetCities";
 import GetCountries from "../../Components/GetCountries";
 import GetContinents from "../../Components/GetContinents";
-import GetFollowers from "src/Components/GetFollowers";
-import GetFollowings from "src/Components/GetFollowings";
 import Flag from "src/Components/Flag";
-import GetKnowingFollowers from "src/Components/GetKnowingFollowers";
 import Weather from "src/Components/Weather";
 import CoffeeGrid from "src/Components/CoffeeGrid";
 import AvatarGrid from "../../Components/AvatarGrid";
@@ -813,36 +810,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </RowModal>
           </ModalContainer>
         )}
-        {followersModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleFollowersModal} />
-            <RowModal onClick={toggleFollowersModal}>
-              <Wrapper>
-                <GetFollowers username={user.username} />
-              </Wrapper>
-            </RowModal>
-          </ModalContainer>
-        )}
-        {followingsModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleFollowingsModal} />
-            <RowModal onClick={toggleFollowingsModal}>
-              <Wrapper>
-                <GetFollowings username={user.username} />
-              </Wrapper>
-            </RowModal>
-          </ModalContainer>
-        )}
-        {knowingFollowersModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleKnowingFollowersModal} />
-            <RowModal onClick={toggleKnowingFollowersModal}>
-              <Wrapper>
-                <GetKnowingFollowers username={user.username} />
-              </Wrapper>
-            </RowModal>
-          </ModalContainer>
-        )}
+
         {tripModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleTripModal} />

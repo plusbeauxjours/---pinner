@@ -20,14 +20,29 @@ export const USER_FRAGMENT = gql`
     id
     username
     profile {
-      isFollowing
       avatar
+      isFollowing
       currentCity {
+        cityName
         country {
           countryName
         }
-        cityName
       }
+    }
+  }
+`;
+
+export const PROFILE_FRAGMENT = gql`
+  fragment ProfileParts on ProfileType {
+      id
+      username
+      avatar
+      isFollowing
+      currentCity {
+        cityName
+        country {
+          countryName
+        }
     }
   }
 `;

@@ -274,25 +274,6 @@ export const GET_CONTINENTS = gql`
   }
 `;
 
-export const GET_FOLLOWERS = gql`
-  query GetFollowers($username: String!) {
-    getFollowers(username: $username) {
-      profiles {
-        id
-        username
-        avatar
-        isFollowing
-        currentCity {
-          cityName
-          country {
-            countryName
-          }
-        }
-      }
-    }
-  }
-`;
-
 export const GET_FOLLOWINGS = gql`
   query GetFollowings($username: String!) {
     getFollowings(username: $username) {

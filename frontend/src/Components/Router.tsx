@@ -22,6 +22,7 @@ import CoffeeDetail from "../Routes/CoffeeDetail";
 import Match from "../Routes/Match";
 
 import UserProfile from "../Routes/UserProfile";
+import Followers from "../Routes/Followers";
 
 import Home from "../Routes/Home";
 import VerifyPhone from "../Routes/VerifyPhone";
@@ -51,6 +52,12 @@ const LoggedInPages = () => (
       <Route path="/city/:cityName/:duration" component={TripProfile} />
       <Route path="/city/:cityName" component={CityProfile} />
       <Route path="/c/:id" component={CoffeeDetail} />
+      <Route path="/:username/commons" component={UserProfile} />
+      <Route path="/:username/coffees" component={UserProfile} />
+      <Route path="/:username/countries" component={UserProfile} />
+      <Route path="/:username/cities" component={UserProfile} />
+      <Route path="/:username/followings" component={UserProfile} />
+      <Route path="/:username/followers" component={Followers} />
       <Route path="/:username" component={UserProfile} />
       <Redirect from="*" to="/" />
     </Switch>

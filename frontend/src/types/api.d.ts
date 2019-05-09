@@ -42,6 +42,8 @@ export interface Match_match_match_city {
   cityPhoto: string | null;
   distance: number | null;
   country: Match_match_match_city_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
 }
 
 export interface Match_match_match_host_profile_currentCity_country {
@@ -51,14 +53,14 @@ export interface Match_match_match_host_profile_currentCity_country {
 
 export interface Match_match_match_host_profile_currentCity {
   __typename: "CityType";
-  country: Match_match_match_host_profile_currentCity_country;
   cityName: string | null;
+  country: Match_match_match_host_profile_currentCity_country;
 }
 
 export interface Match_match_match_host_profile {
   __typename: "ProfileType";
-  isFollowing: boolean | null;
   avatar: string;
+  isFollowing: boolean | null;
   currentCity: Match_match_match_host_profile_currentCity | null;
 }
 
@@ -79,14 +81,14 @@ export interface Match_match_match_guest_profile_currentCity_country {
 
 export interface Match_match_match_guest_profile_currentCity {
   __typename: "CityType";
-  country: Match_match_match_guest_profile_currentCity_country;
   cityName: string | null;
+  country: Match_match_match_guest_profile_currentCity_country;
 }
 
 export interface Match_match_match_guest_profile {
   __typename: "ProfileType";
-  isFollowing: boolean | null;
   avatar: string;
+  isFollowing: boolean | null;
   currentCity: Match_match_match_guest_profile_currentCity | null;
 }
 
@@ -724,12 +726,14 @@ export interface CityProfile_cityProfile_city_country {
 
 export interface CityProfile_cityProfile_city {
   __typename: "CityType";
+  id: string;
   latitude: number | null;
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: CityProfile_cityProfile_city_country;
   likeCount: number | null;
+  isLiked: boolean | null;
   cardCount: number | null;
   userCount: number | null;
   userLogCount: number | null;
@@ -774,6 +778,8 @@ export interface NearCities_nearCities_cities {
   cityPhoto: string | null;
   distance: number | null;
   country: NearCities_nearCities_cities_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
 }
 
 export interface NearCities_nearCities {
@@ -1094,6 +1100,8 @@ export interface CountryProfile_countryProfile_cities {
   cityPhoto: string | null;
   distance: number | null;
   country: CountryProfile_countryProfile_cities_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
 }
 
 export interface CountryProfile_countryProfile {
@@ -1136,6 +1144,8 @@ export interface LatestCities_latestCities_cities {
   cityPhoto: string | null;
   distance: number | null;
   country: LatestCities_latestCities_cities_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
 }
 
 export interface LatestCities_latestCities {
@@ -1333,14 +1343,14 @@ export interface RecommandUsers_recommandUsers_users_profile_currentCity_country
 
 export interface RecommandUsers_recommandUsers_users_profile_currentCity {
   __typename: "CityType";
-  country: RecommandUsers_recommandUsers_users_profile_currentCity_country;
   cityName: string | null;
+  country: RecommandUsers_recommandUsers_users_profile_currentCity_country;
 }
 
 export interface RecommandUsers_recommandUsers_users_profile {
   __typename: "ProfileType";
-  isFollowing: boolean | null;
   avatar: string;
+  isFollowing: boolean | null;
   currentCity: RecommandUsers_recommandUsers_users_profile_currentCity | null;
 }
 
@@ -1491,6 +1501,47 @@ export interface GetCoffeesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetFollowers
+// ====================================================
+
+export interface GetFollowers_getFollowers_profiles_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetFollowers_getFollowers_profiles_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetFollowers_getFollowers_profiles_currentCity_country;
+}
+
+export interface GetFollowers_getFollowers_profiles {
+  __typename: "ProfileType";
+  id: string;
+  username: string | null;
+  avatar: string;
+  isFollowing: boolean | null;
+  currentCity: GetFollowers_getFollowers_profiles_currentCity | null;
+}
+
+export interface GetFollowers_getFollowers {
+  __typename: "ProfileListResponse";
+  profiles: (GetFollowers_getFollowers_profiles | null)[] | null;
+}
+
+export interface GetFollowers {
+  getFollowers: GetFollowers_getFollowers;
+}
+
+export interface GetFollowersVariables {
+  username: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ReportLocation
 // ====================================================
 
@@ -1537,6 +1588,8 @@ export interface GetMatches_getMatches_matches_city {
   cityPhoto: string | null;
   distance: number | null;
   country: GetMatches_getMatches_matches_city_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
 }
 
 export interface GetMatches_getMatches_matches_host_profile_currentCity_country {
@@ -1546,14 +1599,14 @@ export interface GetMatches_getMatches_matches_host_profile_currentCity_country 
 
 export interface GetMatches_getMatches_matches_host_profile_currentCity {
   __typename: "CityType";
-  country: GetMatches_getMatches_matches_host_profile_currentCity_country;
   cityName: string | null;
+  country: GetMatches_getMatches_matches_host_profile_currentCity_country;
 }
 
 export interface GetMatches_getMatches_matches_host_profile {
   __typename: "ProfileType";
-  isFollowing: boolean | null;
   avatar: string;
+  isFollowing: boolean | null;
   currentCity: GetMatches_getMatches_matches_host_profile_currentCity | null;
 }
 
@@ -1574,14 +1627,14 @@ export interface GetMatches_getMatches_matches_guest_profile_currentCity_country
 
 export interface GetMatches_getMatches_matches_guest_profile_currentCity {
   __typename: "CityType";
-  country: GetMatches_getMatches_matches_guest_profile_currentCity_country;
   cityName: string | null;
+  country: GetMatches_getMatches_matches_guest_profile_currentCity_country;
 }
 
 export interface GetMatches_getMatches_matches_guest_profile {
   __typename: "ProfileType";
-  isFollowing: boolean | null;
   avatar: string;
+  isFollowing: boolean | null;
   currentCity: GetMatches_getMatches_matches_guest_profile_currentCity | null;
 }
 
@@ -1759,14 +1812,14 @@ export interface SearchTerms_searchUsers_users_profile_currentCity_country {
 
 export interface SearchTerms_searchUsers_users_profile_currentCity {
   __typename: "CityType";
-  country: SearchTerms_searchUsers_users_profile_currentCity_country;
   cityName: string | null;
+  country: SearchTerms_searchUsers_users_profile_currentCity_country;
 }
 
 export interface SearchTerms_searchUsers_users_profile {
   __typename: "ProfileType";
-  isFollowing: boolean | null;
   avatar: string;
+  isFollowing: boolean | null;
   currentCity: SearchTerms_searchUsers_users_profile_currentCity | null;
 }
 
@@ -1813,6 +1866,8 @@ export interface SearchTerms_searchCities_cities {
   cityPhoto: string | null;
   distance: number | null;
   country: SearchTerms_searchCities_cities_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
 }
 
 export interface SearchTerms_searchCities {
@@ -2005,14 +2060,14 @@ export interface UserList_userList_users_profile_currentCity_country {
 
 export interface UserList_userList_users_profile_currentCity {
   __typename: "CityType";
-  country: UserList_userList_users_profile_currentCity_country;
   cityName: string | null;
+  country: UserList_userList_users_profile_currentCity_country;
 }
 
 export interface UserList_userList_users_profile {
   __typename: "ProfileType";
-  isFollowing: boolean | null;
   avatar: string;
+  isFollowing: boolean | null;
   currentCity: UserList_userList_users_profile_currentCity | null;
 }
 
@@ -2568,47 +2623,6 @@ export interface GetContinentsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetFollowers
-// ====================================================
-
-export interface GetFollowers_getFollowers_profiles_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface GetFollowers_getFollowers_profiles_currentCity {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetFollowers_getFollowers_profiles_currentCity_country;
-}
-
-export interface GetFollowers_getFollowers_profiles {
-  __typename: "ProfileType";
-  id: string;
-  username: string | null;
-  avatar: string;
-  isFollowing: boolean | null;
-  currentCity: GetFollowers_getFollowers_profiles_currentCity | null;
-}
-
-export interface GetFollowers_getFollowers {
-  __typename: "ProfileListResponse";
-  profiles: (GetFollowers_getFollowers_profiles | null)[] | null;
-}
-
-export interface GetFollowers {
-  getFollowers: GetFollowers_getFollowers;
-}
-
-export interface GetFollowersVariables {
-  username: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: GetFollowings
 // ====================================================
 
@@ -2942,14 +2956,14 @@ export interface UserParts_profile_currentCity_country {
 
 export interface UserParts_profile_currentCity {
   __typename: "CityType";
-  country: UserParts_profile_currentCity_country;
   cityName: string | null;
+  country: UserParts_profile_currentCity_country;
 }
 
 export interface UserParts_profile {
   __typename: "ProfileType";
-  isFollowing: boolean | null;
   avatar: string;
+  isFollowing: boolean | null;
   currentCity: UserParts_profile_currentCity | null;
 }
 
@@ -2961,6 +2975,34 @@ export interface UserParts {
    */
   username: string;
   profile: UserParts_profile | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: ProfileParts
+// ====================================================
+
+export interface ProfileParts_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface ProfileParts_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: ProfileParts_currentCity_country;
+}
+
+export interface ProfileParts {
+  __typename: "ProfileType";
+  id: string;
+  username: string | null;
+  avatar: string;
+  isFollowing: boolean | null;
+  currentCity: ProfileParts_currentCity | null;
 }
 
 
@@ -3002,6 +3044,8 @@ export interface CityParts {
   cityPhoto: string | null;
   distance: number | null;
   country: CityParts_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
 }
 
 
