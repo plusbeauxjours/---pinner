@@ -74,7 +74,6 @@ class GetCardsContainer extends React.Component<IProps, IState> {
       continentName,
       userName
     } = this.props;
-
     this.fetchMore({
       query: GET_CARDS,
       variables: {

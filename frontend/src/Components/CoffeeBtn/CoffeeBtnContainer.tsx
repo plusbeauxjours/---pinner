@@ -8,7 +8,7 @@ import {
 } from "../../types/api";
 import { MATCH, UNMATCH } from "./CoffeeBtnQueries";
 import { GET_MATCHES } from "../../Routes/Match/MatchQueries";
-import { GET_COFFEES } from "../../Routes/Feed/FeedQueries";
+import { GET_COFFEES } from "../../Routes/Coffees/CoffeesQueries";
 import CoffeeBtnPresenter from "./CoffeeBtnPresenter";
 import { toast } from "react-toastify";
 import { RouteComponentProps, withRouter } from "react-router";
@@ -102,7 +102,10 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
     try {
       const feedData = cache.readQuery({
         query: GET_COFFEES,
-        variables: { coffeePage: 0, cityName: localStorage.getItem("cityName") }
+        variables: {
+          cityName: localStorage.getItem("cityName"),
+          location: "feed"
+        }
       });
       console.log(feedData);
       if (feedData) {
@@ -114,8 +117,8 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
         await cache.writeQuery({
           query: GET_COFFEES,
           variables: {
-            coffeePage: 0,
-            cityName: localStorage.getItem("cityName")
+            cityName: localStorage.getItem("cityName"),
+            location: "feed"
           },
           data: feedData
         });
@@ -159,8 +162,8 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
         const feedData = cache.readQuery({
           query: GET_COFFEES,
           variables: {
-            coffeePage: 0,
-            cityName: localStorage.getItem("cityName")
+            cityName: localStorage.getItem("cityName"),
+            location: "feed"
           }
         });
         console.log(unMatch.coffee);
@@ -170,8 +173,8 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
           await cache.writeQuery({
             query: GET_COFFEES,
             variables: {
-              coffeePage: 0,
-              cityName: localStorage.getItem("cityName")
+              cityName: localStorage.getItem("cityName"),
+              location: "feed"
             },
             data: feedData
           });

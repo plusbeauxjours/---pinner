@@ -23,9 +23,9 @@ import {
   RECOMMAND_USERS,
   GET_FEED,
   REQUEST_COFFEE,
-  GET_COFFEES,
   GET_FEED_CARDS
 } from "./FeedQueries";
+import { GET_COFFEES } from "../Coffees/CoffeesQueries";
 import {
   cityThumbnail,
   countryThumbnail,
@@ -74,7 +74,6 @@ interface IState {
   requestModalOpen: boolean;
   requestingCoffeeModalOpen: boolean;
   coffeeReportModalOpen: boolean;
-  coffeePage: number;
   coffeeId: string;
 }
 
@@ -105,7 +104,6 @@ class FeedContainer extends React.Component<IProps, IState> {
       requestModalOpen: false,
       requestingCoffeeModalOpen: false,
       coffeeReportModalOpen: false,
-      coffeePage: 0,
       coffeeId: null
     };
   }
@@ -137,7 +135,7 @@ class FeedContainer extends React.Component<IProps, IState> {
       requestModalOpen,
       requestingCoffeeModalOpen,
       coffeeReportModalOpen,
-      coffeePage,
+
       coffeeId
     } = this.state;
     return (
@@ -181,7 +179,6 @@ class FeedContainer extends React.Component<IProps, IState> {
                           query={GET_COFFEES}
                           variables={{
                             cityName: currentCity,
-                            coffeePage,
                             location: "feed"
                           }}
                         >
@@ -453,17 +450,17 @@ class FeedContainer extends React.Component<IProps, IState> {
     }
   };
   public updateRequestCoffee = (cache, { data: { requestCoffee } }) => {
-    const { coffeePage, currentCity } = this.state;
+    const { currentCity } = this.state;
     try {
       const feedData = cache.readQuery({
         query: GET_COFFEES,
-        variables: { coffeePage, cityName: currentCity, location: "feed" }
+        variables: { cityName: currentCity, location: "feed" }
       });
       if (feedData) {
         feedData.getCoffees.coffees.unshift(requestCoffee.coffee);
         cache.writeQuery({
           query: GET_COFFEES,
-          variables: { coffeePage, cityName: currentCity, location: "feed" },
+          variables: { cityName: currentCity, location: "feed" },
           data: feedData
         });
       }
@@ -505,7 +502,7 @@ class FeedContainer extends React.Component<IProps, IState> {
   };
   public updateDeleteCoffee = (cache, { data: { deleteCoffee } }) => {
     const { username } = deleteCoffee;
-    const { currentCity, coffeePage } = this.state;
+    const { currentCity } = this.state;
     console.log(deleteCoffee);
 
     try {
@@ -532,7 +529,7 @@ class FeedContainer extends React.Component<IProps, IState> {
     try {
       const feedData = cache.readQuery({
         query: GET_COFFEES,
-        variables: { coffeePage, cityName: currentCity, location: "feed" }
+        variables: { cityName: currentCity, location: "feed" }
       });
       if (feedData) {
         feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
@@ -541,7 +538,6 @@ class FeedContainer extends React.Component<IProps, IState> {
         cache.writeQuery({
           query: GET_COFFEES,
           variables: {
-            coffeePage,
             cityName: currentCity,
             location: "feed"
           },

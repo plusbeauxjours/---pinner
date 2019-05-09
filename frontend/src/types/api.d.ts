@@ -305,6 +305,7 @@ export interface GetCards_getCards_cards {
 
 export interface GetCards_getCards {
   __typename: "GetCardsResponse";
+  page: number | null;
   hasNextPage: boolean | null;
   cards: (GetCards_getCards_cards | null)[] | null;
 }
@@ -870,6 +871,67 @@ export interface CoffeeDetailVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetCoffees
+// ====================================================
+
+export interface GetCoffees_getCoffees_coffees_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetCoffees_getCoffees_coffees_city {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetCoffees_getCoffees_coffees_city_country;
+}
+
+export interface GetCoffees_getCoffees_coffees_host_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  isSelf: boolean | null;
+}
+
+export interface GetCoffees_getCoffees_coffees_host {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: GetCoffees_getCoffees_coffees_host_profile | null;
+}
+
+export interface GetCoffees_getCoffees_coffees {
+  __typename: "CoffeeType";
+  id: string;
+  city: GetCoffees_getCoffees_coffees_city;
+  host: GetCoffees_getCoffees_coffees_host;
+  status: string | null;
+  expires: any | null;
+  target: CoffeeTarget;
+  createdAt: any;
+}
+
+export interface GetCoffees_getCoffees {
+  __typename: "GetCoffeesResponse";
+  coffees: (GetCoffees_getCoffees_coffees | null)[] | null;
+}
+
+export interface GetCoffees {
+  getCoffees: GetCoffees_getCoffees;
+}
+
+export interface GetCoffeesVariables {
+  cityName?: string | null;
+  userName?: string | null;
+  location: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: ContinentProfile
 // ====================================================
 
@@ -1316,6 +1378,7 @@ export interface GetFeedCards_getFeedCards {
   __typename: "GetCardsResponse";
   cards: (GetFeedCards_getFeedCards_cards | null)[] | null;
   hasNextPage: boolean | null;
+  page: number | null;
 }
 
 export interface GetFeedCards {
@@ -1419,6 +1482,7 @@ export interface RequestCoffee_requestCoffee_coffee {
   status: string | null;
   expires: any | null;
   target: CoffeeTarget;
+  createdAt: any;
 }
 
 export interface RequestCoffee_requestCoffee {
@@ -1434,66 +1498,6 @@ export interface RequestCoffee {
 export interface RequestCoffeeVariables {
   currentCity: string;
   target?: string | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetCoffees
-// ====================================================
-
-export interface GetCoffees_getCoffees_coffees_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface GetCoffees_getCoffees_coffees_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetCoffees_getCoffees_coffees_city_country;
-}
-
-export interface GetCoffees_getCoffees_coffees_host_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  isSelf: boolean | null;
-}
-
-export interface GetCoffees_getCoffees_coffees_host {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: GetCoffees_getCoffees_coffees_host_profile | null;
-}
-
-export interface GetCoffees_getCoffees_coffees {
-  __typename: "CoffeeType";
-  id: string;
-  city: GetCoffees_getCoffees_coffees_city;
-  host: GetCoffees_getCoffees_coffees_host;
-  status: string | null;
-  expires: any | null;
-  target: CoffeeTarget;
-}
-
-export interface GetCoffees_getCoffees {
-  __typename: "GetCoffeesResponse";
-  coffees: (GetCoffees_getCoffees_coffees | null)[] | null;
-}
-
-export interface GetCoffees {
-  getCoffees: GetCoffees_getCoffees;
-}
-
-export interface GetCoffeesVariables {
-  cityName?: string | null;
-  userName?: string | null;
-  location: string;
 }
 
 
@@ -3081,6 +3085,7 @@ export interface CoffeeParts {
   status: string | null;
   expires: any | null;
   target: CoffeeTarget;
+  createdAt: any;
 }
 
 /* tslint:disable */

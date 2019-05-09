@@ -20,7 +20,6 @@ import GetCountries from "../../Components/GetCountries";
 import GetContinents from "../../Components/GetContinents";
 import Flag from "src/Components/Flag";
 import Weather from "src/Components/Weather";
-import CoffeeGrid from "src/Components/CoffeeGrid";
 import AvatarGrid from "../../Components/AvatarGrid";
 import GetCards from "../../Components/GetCards";
 
@@ -406,28 +405,6 @@ const STextArea = styled(Textarea)`
   padding: 15px 0px;
 `;
 
-const Box = styled.div`
-  width: 905px;
-  height: 225px;
-  display: flex;
-  overflow-x: auto;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  ::-webkit-scrollbar {
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    background-color: ${props => props.theme.bgColor};
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-    background-color: ${props => props.theme.greyColor};
-  }
-`;
-
 const SSText = styled(Bold)`
   font-size: 12px;
   font-weight: 100;
@@ -601,9 +578,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   } = {},
   knowingFollowersLoading,
 
-  coffeeData: {
-    getMyCoffee: { coffees = null } = {}
-  } = {},
+  coffeeData: { getCoffees: { coffees = null } = {} } = {},
   coffeeLoading,
 
   modalOpen,
@@ -1063,10 +1038,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid knowingFollowers={knowingFollowers} />
             </>
           ) : null}
-          {!coffeeLoading &&
-          !user.profile.isSelf &&
-          coffees &&
-          coffees.length !== 0 ? (
+          {!coffeeLoading && coffees && coffees.length !== 0 ? (
             <>
               <SmallTitle>
                 <SmallGreyLine />
@@ -1075,44 +1047,16 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid coffees={coffees} />
             </>
           ) : null}
-          {user.profile.isSelf && (
+          {console.log(coffees)}
+          {user.profile.isSelf && coffees.length === 0 ? (
             <>
-              <GreyLine />
-              <Title>
-                <SText text={"COFFEES"} />
-              </Title>
-              <Container>
-                {coffeeLoading && <Loader />}
-                {!coffeeLoading &&
-                  coffees &&
-                  coffees.length !== 0 && (
-                    <CoffeeGrid
-                      coffees={coffees}
-                      type={"myRequestingCoffee"}
-                      getCoffeeId={getCoffeeId}
-                      getRequestingCoffeeId={getRequestingCoffeeId}
-                    />
-                  )}
-                {!coffeeLoading &&
-                  coffees &&
-                  coffees.length === 0 && (
-                    <Icon onClick={toggleRequestModal}>
-                      <Upload />
-                    </Icon>
-                  )}
-                <Box>
-                  {!coffeeLoading && coffees ? (
-                    <CoffeeGrid
-                      coffees={coffees}
-                      type={"myCoffees"}
-                      getCoffeeId={getCoffeeId}
-                      toggleCoffeeReportModal={toggleCoffeeReportModal}
-                    />
-                  ) : null}
-                </Box>
-              </Container>
+              <SmallTitle>
+                <SmallGreyLine />
+                <SSText text={"COFFEE NOW"} />
+              </SmallTitle>
+              <AvatarGrid toggleRequestModal={toggleRequestModal} />
             </>
-          )}
+          ) : null}
           <GreyLine />
           <Title>
             <SText text={"TRIPS"} />
@@ -1186,7 +1130,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     <Link to={`/country/${topCountry.countryName}`}>
                       <CityContainer>
                         <Square>
-                          {console.log(topCountry.countryCount)}
                           <CityPhoto
                             src={topCountry.countryPhoto}
                             size={"md"}

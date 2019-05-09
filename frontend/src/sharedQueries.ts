@@ -34,15 +34,15 @@ export const USER_FRAGMENT = gql`
 
 export const PROFILE_FRAGMENT = gql`
   fragment ProfileParts on ProfileType {
-      id
-      username
-      avatar
-      isFollowing
-      currentCity {
-        cityName
-        country {
-          countryName
-        }
+    id
+    username
+    avatar
+    isFollowing
+    currentCity {
+      cityName
+      country {
+        countryName
+      }
     }
   }
 `;
@@ -140,5 +140,6 @@ export const COFFEE_FRAGMENT = gql`
     status
     expires
     target
+    createdAt
   }
 `;

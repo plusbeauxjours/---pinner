@@ -45,11 +45,8 @@ import {
   DELETE_COFFEE,
   UPLOAD_CARD
 } from "./UserProfileQueries";
-import {
-  REQUEST_COFFEE,
-  GET_COFFEES,
-  GET_FEED
-} from "../../../../frontend/src/Routes/Feed/FeedQueries";
+import { REQUEST_COFFEE, GET_FEED } from "../Feed/FeedQueries";
+import { GET_COFFEES } from "../Coffees/CoffeesQueries";
 import { withRouter, RouteComponentProps } from "react-router";
 import { LOG_USER_OUT } from "src/sharedQueries.local";
 import { toast } from "react-toastify";
@@ -1188,13 +1185,13 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         variables: { userName: username, location: "profile" }
       });
       if (data) {
-        data.getMyCoffee.coffees = data.getMyCoffee.coffees.filter(
+        data.getCoffees.coffees = data.getCoffees.coffees.filter(
           i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
         );
-        data.getMyCoffee.coffees = data.getMyCoffee.coffees.filter(
+        data.getCoffees.coffees = data.getCoffees.coffees.filter(
           i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
         );
-        data.getMyCoffee.cache.writeQuery({
+        data.getCoffees.cache.writeQuery({
           query: GET_COFFEES,
           variables: { userName: username, location: "profile" },
           data
@@ -1207,7 +1204,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       const feedData = cache.readQuery({
         query: GET_COFFEES,
         variables: {
-          coffeePage: 0,
           cityName: localStorage.getItem("cityName"),
           location: "feed"
         }
@@ -1219,7 +1215,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         cache.writeQuery({
           query: GET_COFFEES,
           variables: {
-            coffeePage: 0,
             cityName: localStorage.getItem("cityName"),
             location: "feed"
           },
@@ -1290,7 +1285,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       const feedData = cache.readQuery({
         query: GET_COFFEES,
         variables: {
-          coffeePage: 0,
           cityName: localStorage.getItem("cityName"),
           location: "feed"
         }
@@ -1300,7 +1294,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         cache.writeQuery({
           query: GET_COFFEES,
           variables: {
-            coffeePage: 0,
             cityName: localStorage.getItem("cityName"),
             location: "feed"
           },
@@ -1319,7 +1312,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         }
       });
       if (profileData) {
-        profileData.getMyCoffee.coffees.push(requestCoffee.coffee);
+        profileData.getCoffees.coffees.push(requestCoffee.coffee);
         cache.writeQuery({
           query: GET_COFFEES,
           variables: {
