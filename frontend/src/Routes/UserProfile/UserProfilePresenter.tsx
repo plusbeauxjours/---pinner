@@ -118,7 +118,7 @@ const TripOverlay = styled.div`
 const UserRow = styled.div`
   display: grid;
   flex-direction: row;
-  grid-template-columns: 3.2fr 1fr 1fr 1fr 0.2fr;
+  grid-template-columns: 3fr 1fr 1fr 1fr 0.2fr;
   padding: 0 5px 0 5px;
   grid-gap: 15px;
   align-items: center;
@@ -334,11 +334,6 @@ const GreyLine = styled.div`
   border-bottom: 1px solid grey;
 `;
 
-const TripText = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 const TripBox = styled.div`
   width: 905px;
   display: flex;
@@ -397,6 +392,10 @@ const SmallTitle = styled(Title)`
 
 const SmallGreyLine = styled(GreyLine)`
   width: 40%;
+`;
+
+const GreyText = styled(Bold)`
+  color: #999;
 `;
 
 interface ITheme {
@@ -939,11 +938,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                         </HeaderColumn>
                       </THeader>
                     </Link>
-                    <TripText>{trip.startDate}</TripText>
-                    <TripText>{trip.endDate}</TripText>
-                    <TripText>
-                      <p>{trip.diffDays} Days</p>
-                    </TripText>
+                    <GreyText text={trip.startDate} />
+                    <GreyText text={trip.endDate} />
+                    <GreyText text={`${trip.diffDays} Days`} />
                     <TripOverlay
                       onClick={() => {
                         user.profile.isSelf
