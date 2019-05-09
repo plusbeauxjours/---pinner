@@ -9,6 +9,7 @@ import Bold from "../../Components/Bold";
 import LocationGrid from "src/Components/LocationGrid";
 import AvatarGrid from "../../Components/AvatarGrid";
 import GetCards from "../../Components/GetCards";
+import CityLikeBtn from "../../Components/CityLikeBtn";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -132,7 +133,7 @@ const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   grid-template-columns: 4fr 1fr;
-  padding: 0 5px 0 5px
+  padding: 0 5px 0 5px;
   grid-gap: 15px;
   align-items: center;
   cursor: pointer;
@@ -261,6 +262,13 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
                           </HeaderColumn>
                         </Header>
                       </Link>
+
+                      <CityLikeBtn
+                        isLiked={city.isLiked}
+                        cityId={city.id}
+                        likeCount={city.likeCount}
+                        type={"row"}
+                      />
                     </UserRow>
                   </>
                 ))}

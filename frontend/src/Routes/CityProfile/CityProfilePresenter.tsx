@@ -300,6 +300,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                   isLiked={city.isLiked}
                   cityId={city.id}
                   likeCount={city.likeCount}
+                  type={"profile"}
                 />
               </InfoRow>
               <CWeather latitude={city.latitude} longitude={city.longitude} />

@@ -53,6 +53,8 @@ export const CITY_FRAGMENT = gql`
     country {
       countryName
     }
+    likeCount
+    isLiked
   }
 `;
 

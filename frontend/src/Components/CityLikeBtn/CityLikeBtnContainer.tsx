@@ -13,6 +13,7 @@ interface IProps {
   isLiked: boolean;
   cityId: string;
   likeCount: number;
+  type: string;
 }
 interface IState {
   isLiked: boolean;
@@ -30,7 +31,7 @@ class CityLikeBtnContainer extends React.Component<IProps, IState> {
   }
   public render() {
     const { isLiked, likeCount } = this.state;
-    const { cityId } = this.props;
+    const { cityId, type } = this.props;
     return (
       <ToggleLikeMutation
         mutation={TOGGLE_LIKE_CITY}
@@ -43,6 +44,7 @@ class CityLikeBtnContainer extends React.Component<IProps, IState> {
               likeCount={likeCount}
               isLiked={isLiked}
               onLikeClick={this.onLikeClick}
+              type={type}
             />
           );
         }}

@@ -1,13 +1,18 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
 import Bold from "../Bold";
+import { SmallHeartEmpty, SmallHeartFilled } from "../../Icons";
 
-import { HeartFilled, HeartEmpty, Bubble } from "../../Icons";
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+`;
 
-const Button = styled.span<IProps>`
+const Button = styled.span<ITheme>`
   cursor: pointer;
   &:first-child {
-    margin-right: 20px;
+    margin-left: 10px;
   }
   transition: all 0.3s ease-in-out;
   svg {
@@ -16,23 +21,56 @@ const Button = styled.span<IProps>`
   }
 `;
 
-interface IProps {
-  likeCount?: number;
+const GreyText = styled(Bold)`
+  color: #999;
+`;
+
+interface ITheme {
   isLiked: boolean;
-  onLikeClick?: () => void;
+}
+
+interface IProps {
+  likeCount: number;
+  isLiked: boolean;
+  onLikeClick: () => void;
+  type: string;
 }
 
 const CityLikeBtnPresenter: React.SFC<IProps> = ({
   likeCount,
   isLiked,
-  onLikeClick
+  onLikeClick,
+  type
 }) => (
   <>
-    <Button isLiked={isLiked} onClick={onLikeClick}>
-      {isLiked ? <HeartFilled /> : <HeartEmpty />}
-    </Button>
-    <Bubble />
-    <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
+    {(() => {
+      switch (type) {
+        case "row":
+          return (
+            <ButtonContainer>
+              <GreyText
+                text={likeCount === 1 ? "1 like" : `${likeCount} likes`}
+              />
+              <Button isLiked={isLiked} onClick={onLikeClick}>
+                {isLiked ? <SmallHeartFilled /> : <SmallHeartEmpty />}
+              </Button>
+            </ButtonContainer>
+          );
+        case "profile":
+          return (
+            <>
+              <Button isLiked={isLiked} onClick={onLikeClick}>
+                {isLiked ? <SmallHeartFilled /> : <SmallHeartEmpty />}
+              </Button>
+              <GreyText
+                text={likeCount === 1 ? "1 like" : `${likeCount} likes`}
+              />
+            </>
+          );
+        default:
+          return null;
+      }
+    })()}
   </>
 );
 
