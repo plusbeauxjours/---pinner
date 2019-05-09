@@ -13,23 +13,10 @@ from graphql_jwt.decorators import login_required
 def resolve_feed(self, info, **kwargs):
 
     user = info.context.user
-    page = kwargs.get('page', 0)
     cityName = kwargs.get('cityName')
-    offset = 5 * page
 
-    nextPage = page+1
     
     city = location_models.City.objects.get(city_name=cityName)
-
-    following_profiles = user.profile.followings.values('id').all()
-
-    following_cards = models.Card.objects.filter(
-        creator__profile__id__in=following_profiles)
-
-    city_cards = models.Card.objects.filter(
-        city__city_name=cityName)
-
-    my_cards = user.cards.all()
 
     usersNow = User.objects.filter(
         profile__current_city__city_name=cityName).order_by('-username').distinct('username')
@@ -41,12 +28,7 @@ def resolve_feed(self, info, **kwargs):
         usersBefore = notification_models.MoveNotification.objects.filter(
             id=0)
 
-    combined = following_cards.union(city_cards).union(my_cards).order_by(
-        '-created_at')
-    hasNextPage = offset < combined.count()
-    combined = combined[offset:5 + offset]
-
-    return types.FeedResponse(cards=combined, usersNow=usersNow, usersBefore=usersBefore, city=city,  page=nextPage, hasNextPage=hasNextPage)
+    return types.FeedResponse( usersNow=usersNow, usersBefore=usersBefore, city=city)
 
 
 @login_required
@@ -102,7 +84,8 @@ def resolve_get_cards(self, info, **kwargs):
     elif location == "followers":
         try:
             user = User.objects.select_related('profile').get(username=userName)
-            following_profiles = user.profile.followings.values('id').all()
+            following_profiles = user.profile.followers.values('id').all()
+            print(following_profiles)
             following_cards = models.Card.objects.filter(
                 creator__profile__id__in=following_profiles).order_by('-created_at')
             hasNextPage = offset < following_cards.count()
@@ -110,6 +93,19 @@ def resolve_get_cards(self, info, **kwargs):
             return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')
+
+    elif location == "followings":
+        try:
+            user = User.objects.select_related('profile').get(username=userName)
+            followers_profiles = user.profile.followings.values('id').all()
+            followers_cards = models.Card.objects.filter(
+                creator__profile__id__in=followers_profiles).order_by('-created_at')
+            hasNextPage = offset < followers_cards.count()
+            cards = followers_cards[offset:12 + offset]
+            return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
+        except models.Card.DoesNotExist:
+            raise Exception('Card not found')
+
 
     else:
         return types.GetCardsResponse(cards=None, page=nextPage, hasNextPage=hasNextPage)

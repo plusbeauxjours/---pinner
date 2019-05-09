@@ -54,9 +54,6 @@ class FeedResponse(graphene.ObjectType):
     city = graphene.Field(location_types.CityType)
     usersNow = graphene.List(config_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
-    cards = graphene.List(CardType)
-    page = graphene.Int()
-    hasNextPage = graphene.Boolean()
 
 
 class LikeCardResponse(graphene.ObjectType):

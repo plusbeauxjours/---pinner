@@ -484,8 +484,8 @@ interface IProps {
   knowingFollowersData: any;
   knowingFollowersLoading: boolean;
 
-  myCoffeeData?: any;
-  myCoffeeLoading: boolean;
+  coffeeData?: any;
+  coffeeLoading: boolean;
 
   modalOpen: boolean;
   confirmModalOpen: boolean;
@@ -601,10 +601,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   } = {},
   knowingFollowersLoading,
 
-  myCoffeeData: {
-    getMyCoffee: { requestingCoffees = null, coffees = null } = {}
+  coffeeData: {
+    getMyCoffee: { coffees = null } = {}
   } = {},
-  myCoffeeLoading,
+  coffeeLoading,
 
   modalOpen,
   tripModalOpen,
@@ -1063,16 +1063,16 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid knowingFollowers={knowingFollowers} />
             </>
           ) : null}
-          {!myCoffeeLoading &&
+          {!coffeeLoading &&
           !user.profile.isSelf &&
-          requestingCoffees &&
-          requestingCoffees.length !== 0 ? (
+          coffees &&
+          coffees.length !== 0 ? (
             <>
               <SmallTitle>
                 <SmallGreyLine />
                 <SSText text={"COFFEE NOW"} />
               </SmallTitle>
-              <AvatarGrid coffees={requestingCoffees} />
+              <AvatarGrid coffees={coffees} />
             </>
           ) : null}
           {user.profile.isSelf && (
@@ -1082,26 +1082,26 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 <SText text={"COFFEES"} />
               </Title>
               <Container>
-                {myCoffeeLoading && <Loader />}
-                {!myCoffeeLoading &&
-                  requestingCoffees &&
-                  requestingCoffees.length !== 0 && (
+                {coffeeLoading && <Loader />}
+                {!coffeeLoading &&
+                  coffees &&
+                  coffees.length !== 0 && (
                     <CoffeeGrid
-                      requestingCoffees={requestingCoffees}
+                      coffees={coffees}
                       type={"myRequestingCoffee"}
                       getCoffeeId={getCoffeeId}
                       getRequestingCoffeeId={getRequestingCoffeeId}
                     />
                   )}
-                {!myCoffeeLoading &&
-                  requestingCoffees &&
-                  requestingCoffees.length === 0 && (
+                {!coffeeLoading &&
+                  coffees &&
+                  coffees.length === 0 && (
                     <Icon onClick={toggleRequestModal}>
                       <Upload />
                     </Icon>
                   )}
                 <Box>
-                  {!myCoffeeLoading && coffees ? (
+                  {!coffeeLoading && coffees ? (
                     <CoffeeGrid
                       coffees={coffees}
                       type={"myCoffees"}

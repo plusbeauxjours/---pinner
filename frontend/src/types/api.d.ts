@@ -1260,7 +1260,6 @@ export interface Feed {
 }
 
 export interface FeedVariables {
-  page: number;
   cityName: string;
 }
 
@@ -1535,6 +1534,47 @@ export interface GetFollowers {
 }
 
 export interface GetFollowersVariables {
+  userName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetFollowings
+// ====================================================
+
+export interface GetFollowings_getFollowings_profiles_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetFollowings_getFollowings_profiles_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetFollowings_getFollowings_profiles_currentCity_country;
+}
+
+export interface GetFollowings_getFollowings_profiles {
+  __typename: "ProfileType";
+  id: string;
+  username: string | null;
+  avatar: string;
+  isFollowing: boolean | null;
+  currentCity: GetFollowings_getFollowings_profiles_currentCity | null;
+}
+
+export interface GetFollowings_getFollowings {
+  __typename: "ProfileListResponse";
+  profiles: (GetFollowings_getFollowings_profiles | null)[] | null;
+}
+
+export interface GetFollowings {
+  getFollowings: GetFollowings_getFollowings;
+}
+
+export interface GetFollowingsVariables {
   userName: string;
 }
 
@@ -2617,47 +2657,6 @@ export interface GetContinents {
 
 export interface GetContinentsVariables {
   username: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetFollowings
-// ====================================================
-
-export interface GetFollowings_getFollowings_profiles_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface GetFollowings_getFollowings_profiles_currentCity {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetFollowings_getFollowings_profiles_currentCity_country;
-}
-
-export interface GetFollowings_getFollowings_profiles {
-  __typename: "ProfileType";
-  id: string;
-  username: string | null;
-  avatar: string;
-  isFollowing: boolean | null;
-  currentCity: GetFollowings_getFollowings_profiles_currentCity | null;
-}
-
-export interface GetFollowings_getFollowings {
-  __typename: "ProfileListResponse";
-  profiles: (GetFollowings_getFollowings_profiles | null)[] | null;
-}
-
-export interface GetFollowings {
-  getFollowings: GetFollowings_getFollowings;
-}
-
-export interface GetFollowingsVariables {
-  userName: string;
 }
 
 

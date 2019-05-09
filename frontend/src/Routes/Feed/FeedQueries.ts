@@ -6,8 +6,8 @@ import {
 } from "../../sharedQueries";
 
 export const GET_FEED = gql`
-  query Feed($page: Int!, $cityName: String!) {
-    feed(page: $page, cityName: $cityName) {
+  query Feed($cityName: String!) {
+    feed(cityName: $cityName) {
       usersNow {
         id
         username

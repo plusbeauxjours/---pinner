@@ -11,7 +11,6 @@ import Feed from "../Routes/Feed";
 import CardDetail from "../Routes/CardDetail";
 import Search from "../Routes/Search";
 import UpLoad from "../Routes/UpLoad";
-// import Explore from "../Routes/Explore";
 import UserList from "../Routes/UserList";
 import Notification from "../Routes/Notification";
 import CityProfile from "../Routes/CityProfile";
@@ -23,6 +22,7 @@ import Match from "../Routes/Match";
 
 import UserProfile from "../Routes/UserProfile";
 import Followers from "../Routes/Followers";
+import Followings from "../Routes/Followings";
 
 import Home from "../Routes/Home";
 import VerifyPhone from "../Routes/VerifyPhone";
@@ -56,7 +56,7 @@ const LoggedInPages = () => (
       <Route path="/:username/coffees" component={UserProfile} />
       <Route path="/:username/countries" component={UserProfile} />
       <Route path="/:username/cities" component={UserProfile} />
-      <Route path="/:username/followings" component={UserProfile} />
+      <Route path="/:username/followings" component={Followings} />
       <Route path="/:username/followers" component={Followers} />
       <Route path="/:username" component={UserProfile} />
       <Redirect from="*" to="/" />

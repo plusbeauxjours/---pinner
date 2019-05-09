@@ -98,8 +98,8 @@ interface IProps {
   userName: string;
 }
 
-const FollowersPresenter: React.SFC<IProps> = ({
-  data: { getFollowers: { profiles = null } = {} } = {},
+const FollowingsPresenter: React.SFC<IProps> = ({
+  data: { getFollowings: { profiles = null } = {} } = {},
   loading,
   userName
 }) => {
@@ -114,7 +114,7 @@ const FollowersPresenter: React.SFC<IProps> = ({
               <CAvatar
                 size="lg"
                 url={
-                  "http://img.khan.co.kr/news/2017/08/09/l_2017080901001275500096051.jpg"
+                  "http://image.dongascience.com/Photo/2018/12/2d5efe44bdd02f3e2ec4e99189d89d18.jpg"
                 }
               />
               <InfoRow>
@@ -124,7 +124,7 @@ const FollowersPresenter: React.SFC<IProps> = ({
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>
-                <Username>{userName} Followers</Username>
+                <Username>{userName} Followings</Username>
               </UserNameRow>
               {profiles &&
                 profiles.map(profile => (
@@ -160,7 +160,7 @@ const FollowersPresenter: React.SFC<IProps> = ({
             </>
           ) : null} */}
           <GreyLine />
-          <GetCards location={"followers"} userName={userName} />
+          <GetCards location={"followings"} userName={userName} />
         </SWrapper>
       </>
     );
@@ -168,4 +168,4 @@ const FollowersPresenter: React.SFC<IProps> = ({
   return null;
 };
 
-export default FollowersPresenter;
+export default FollowingsPresenter;

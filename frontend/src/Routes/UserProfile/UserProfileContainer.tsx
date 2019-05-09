@@ -245,7 +245,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                 location: "profile"
               }}
             >
-              {({ data: myCoffeeData, loading: myCoffeeLoading }) => {
+              {({ data: coffeeData, loading: coffeeLoading }) => {
                 return (
                   <DeleteCoffeeMutation
                     mutation={DELETE_COFFEE}
@@ -710,11 +710,11 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                 newCardCaption={
                                                                                                   newCardCaption
                                                                                                 }
-                                                                                                myCoffeeData={
-                                                                                                  myCoffeeData
+                                                                                                coffeeData={
+                                                                                                  coffeeData
                                                                                                 }
-                                                                                                myCoffeeLoading={
-                                                                                                  myCoffeeLoading
+                                                                                                coffeeLoading={
+                                                                                                  coffeeLoading
                                                                                                 }
                                                                                                 toggleRequestModal={
                                                                                                   this
