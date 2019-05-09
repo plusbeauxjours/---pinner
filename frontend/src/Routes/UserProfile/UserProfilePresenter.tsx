@@ -19,7 +19,6 @@ import GetCities from "../../Components/GetCities";
 import GetCountries from "../../Components/GetCountries";
 import GetContinents from "../../Components/GetContinents";
 import Flag from "src/Components/Flag";
-import Weather from "src/Components/Weather";
 import AvatarGrid from "../../Components/AvatarGrid";
 import GetCards from "../../Components/GetCards";
 
@@ -452,9 +451,6 @@ interface IProps {
   topCountriesData?: any;
   topCountriesLoading: boolean;
 
-  frequentVisitsData?: any;
-  frequentVisitsLoading: boolean;
-
   getTripsData?: any;
   getTipsLoading: boolean;
 
@@ -562,11 +558,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   } = {},
   topCountriesLoading,
 
-  frequentVisitsData: {
-    frequentVisits: { cities: frequentCities = null } = {}
-  } = {},
-  frequentVisitsLoading,
-
   getTripsData: { getTrips: { trip: getTrips = null } = {} } = {},
   getTipsLoading,
 
@@ -652,7 +643,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 }) => {
   if (userProfileLoading) {
     return <Loader />;
-  } else if (user && topCountries && frequentCities) {
+  } else if (user && topCountries) {
     return (
       <>
         {requestingCoffeeModalOpen && (
@@ -1141,47 +1132,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                                 {topCountry.count}TIMES
                               </DistanceFront>
                               <DistanceBack>{topCountry.diff}DAYS</DistanceBack>
-                            </OverlayContents>
-                          </Overlay>
-                        </Square>
-                      </CityContainer>
-                    </Link>
-                  </ScrollContainer>
-                ))
-              ) : (
-                <Loader />
-              )}
-            </TripBox>
-          </Container>
-          <GreyLine />
-          <Title>
-            <SText text={"FREQUENT VISITS"} />
-          </Title>
-          <Container>
-            <TripBox>
-              {!frequentVisitsLoading && frequentCities ? (
-                frequentCities.map(frequentCity => (
-                  <ScrollContainer key={frequentCity.id}>
-                    <Link to={`/city/${frequentCity.cityName}`}>
-                      <CityContainer>
-                        <Square>
-                          <CityPhoto src={frequentCity.cityPhoto} size={"md"} />
-                          <CityName text={frequentCity.cityName} />
-                          <CountryName
-                            text={frequentCity.country.countryName}
-                          />
-                          <Overlay>
-                            <OverlayContents>
-                              <Weather
-                                latitude={frequentCity.latitude}
-                                longitude={frequentCity.longitude}
-                              />
-                              <DistanceFront>
-                                {frequentCity.count}TIMES
-                              </DistanceFront>
-                              <DistanceBack>
-                                {frequentCity.diff}DAYS
-                              </DistanceBack>
                             </OverlayContents>
                           </Overlay>
                         </Square>

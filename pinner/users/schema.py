@@ -48,7 +48,7 @@ class Query(object):
         resolver=queries.resolve_top_countries,
         required=True,
         args={
-            'username': graphene.String(required=True),
+            'userName': graphene.String(required=True),
         }
     )
     frequent_visits = graphene.Field(
@@ -56,7 +56,7 @@ class Query(object):
         resolver=queries.resolve_frequent_visits,
         required=True,
         args={
-            'username': graphene.String(required=True),
+            'userName': graphene.String(required=True),
         }
     )
     get_followers = graphene.Field(

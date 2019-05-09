@@ -24,6 +24,7 @@ import UserProfile from "../Routes/UserProfile";
 import Followers from "../Routes/Followers";
 import Followings from "../Routes/Followings";
 import Coffees from "../Routes/Coffees";
+import Cities from "../Routes/Cities";
 
 import Home from "../Routes/Home";
 import VerifyPhone from "../Routes/VerifyPhone";
@@ -55,7 +56,7 @@ const LoggedInPages = () => (
       <Route path="/c/:id" component={CoffeeDetail} />
       <Route path="/:username/commons" component={UserProfile} />
       <Route path="/:username/countries" component={UserProfile} />
-      <Route path="/:username/cities" component={UserProfile} />
+      <Route path="/:username/cities" component={Cities} />
       <Route path="/:username/coffees" component={Coffees} />
       <Route path="/:username/followings" component={Followings} />
       <Route path="/:username/followers" component={Followers} />

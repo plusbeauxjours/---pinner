@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Bold from "./Bold";
 import Input from "./Input";
+import Avatar from "./Avatar";
 
 const Header = styled.header`
   padding: 10px 10px 10px 0;
@@ -14,6 +15,8 @@ const Header = styled.header`
 const HeaderColumn = styled.div`
   margin-left: 15px;
 `;
+
+const SAvatar = styled(Avatar)``;
 
 const Location = styled.span`
   margin-top: 5px;
@@ -96,7 +99,7 @@ const UserHeader: React.SFC<IProps> = ({
               </>
             );
           default:
-            return null;
+            return <SAvatar size={size} url={avatar} />;
         }
       })()}
       <HeaderColumn>
@@ -106,7 +109,7 @@ const UserHeader: React.SFC<IProps> = ({
             switch (type) {
               case "coffee":
                 return <>{currentCity}</>;
-              case "FOLLOWERS":
+              default:
                 return (
                   <>
                     {editMode || cardEditMode ? (
@@ -127,8 +130,6 @@ const UserHeader: React.SFC<IProps> = ({
                     )}
                   </>
                 );
-              default:
-                return null;
             }
           })()}
         </Location>

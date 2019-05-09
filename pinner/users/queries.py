@@ -24,12 +24,12 @@ def resolve_profile(self, info, **kwargs):
 def resolve_top_countries(self, info, **kwargs):
 
     user = info.context.user
-    username = kwargs.get('username')
+    userName = kwargs.get('userName')
 
     countries = location_models.Country.objects.filter(
-        cities__movenotification__actor__username=username).annotate(
+        cities__movenotification__actor__username=userName).annotate(
         count=Count('cities__movenotification', distinct=True)).annotate(
-        diff=Sum('cities__movenotification__diff_days')).order_by('-count')[:6]
+        diff=Sum('cities__movenotification__diff_days')).order_by('-count', '-diff')
     
     return location_types.CountriesResponse(countries=countries)
 
@@ -38,12 +38,12 @@ def resolve_top_countries(self, info, **kwargs):
 def resolve_frequent_visits(self, info, **kwargs):
 
     user = info.context.user
-    username = kwargs.get('username')
+    userName = kwargs.get('userName')
 
     cities = location_models.City.objects.filter(
-        movenotification__actor__username=username).annotate(
+        movenotification__actor__username=userName).annotate(
         count=Count('movenotification', distinct=True)).annotate(
-        diff=Sum('movenotification__diff_days')).order_by('-count')[:6]
+        diff=Sum('movenotification__diff_days')).order_by('-count', '-diff')
 
     return location_types.CitiesResponse(cities=cities)
 

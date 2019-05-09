@@ -641,6 +641,47 @@ export interface CardDetailVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: FrequentVisits
+// ====================================================
+
+export interface FrequentVisits_frequentVisits_cities_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface FrequentVisits_frequentVisits_cities {
+  __typename: "CityType";
+  count: number | null;
+  diff: number | null;
+  id: string;
+  latitude: number | null;
+  longitude: number | null;
+  cityName: string | null;
+  cityPhoto: string | null;
+  distance: number | null;
+  country: FrequentVisits_frequentVisits_cities_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
+}
+
+export interface FrequentVisits_frequentVisits {
+  __typename: "CitiesResponse";
+  cities: (FrequentVisits_frequentVisits_cities | null)[] | null;
+}
+
+export interface FrequentVisits {
+  frequentVisits: FrequentVisits_frequentVisits;
+}
+
+export interface FrequentVisitsVariables {
+  userName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: CityProfile
 // ====================================================
 
@@ -2496,45 +2537,7 @@ export interface TopCountries {
 }
 
 export interface TopCountriesVariables {
-  username: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: FrequentVisits
-// ====================================================
-
-export interface FrequentVisits_frequentVisits_cities_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface FrequentVisits_frequentVisits_cities {
-  __typename: "CityType";
-  id: string;
-  count: number | null;
-  diff: number | null;
-  latitude: number | null;
-  longitude: number | null;
-  cityName: string | null;
-  cityPhoto: string | null;
-  country: FrequentVisits_frequentVisits_cities_country;
-}
-
-export interface FrequentVisits_frequentVisits {
-  __typename: "CitiesResponse";
-  cities: (FrequentVisits_frequentVisits_cities | null)[] | null;
-}
-
-export interface FrequentVisits {
-  frequentVisits: FrequentVisits_frequentVisits;
-}
-
-export interface FrequentVisitsVariables {
-  username: string;
+  userName: string;
 }
 
 
