@@ -33,10 +33,7 @@ import {
 } from "../../locationThumbnail";
 import continents from "../../continents";
 import { toast } from "react-toastify";
-import {
-  GET_MY_COFFEE,
-  DELETE_COFFEE
-} from "../../Routes/UserProfile/UserProfileQueries";
+import { DELETE_COFFEE } from "../../Routes/UserProfile/UserProfileQueries";
 
 class RequestCoffeeMutation extends Mutation<
   RequestCoffee,
@@ -182,7 +179,11 @@ class FeedContainer extends React.Component<IProps, IState> {
                       return (
                         <GetCoffeesQuery
                           query={GET_COFFEES}
-                          variables={{ cityName: currentCity, coffeePage }}
+                          variables={{
+                            cityName: currentCity,
+                            coffeePage,
+                            location: "feed"
+                          }}
                         >
                           {({ data: coffeeData, loading: coffeeLoading }) => {
                             return (
@@ -457,13 +458,13 @@ class FeedContainer extends React.Component<IProps, IState> {
     try {
       const feedData = cache.readQuery({
         query: GET_COFFEES,
-        variables: { coffeePage, cityName: currentCity }
+        variables: { coffeePage, cityName: currentCity, location: "feed" }
       });
       if (feedData) {
         feedData.getCoffees.coffees.unshift(requestCoffee.coffee);
         cache.writeQuery({
           query: GET_COFFEES,
-          variables: { coffeePage, cityName: currentCity },
+          variables: { coffeePage, cityName: currentCity, location: "feed" },
           data: feedData
         });
       }
@@ -477,15 +478,14 @@ class FeedContainer extends React.Component<IProps, IState> {
     } = requestCoffee;
     try {
       const profileData = cache.readQuery({
-        query: GET_MY_COFFEE,
-        variables: { username }
+        query: GET_COFFEES,
+        variables: { userName: username, location: "profile" }
       });
-      console.log(username);
       if (profileData) {
-        profileData.getMyCoffee.requestingCoffees.push(requestCoffee.coffee);
+        profileData.getCoffees.coffees.push(requestCoffee.coffee);
         cache.writeQuery({
-          query: GET_MY_COFFEE,
-          variables: { username },
+          query: GET_COFFEES,
+          variables: { userName: username, location: "profile" },
           data: profileData
         });
       }
@@ -510,23 +510,21 @@ class FeedContainer extends React.Component<IProps, IState> {
     console.log(deleteCoffee);
 
     try {
-      const data = cache.readQuery({
-        query: GET_MY_COFFEE,
-        variables: { username }
+      const profileData = cache.readQuery({
+        query: GET_COFFEES,
+        variables: { username, location: "profile" }
       });
-      console.log(data);
-      if (data) {
-        data.getMyCoffee.coffees = data.getMyCoffee.coffees.filter(
+      if (profileData) {
+        profileData.getCoffees.coffees = profileData.getCoffees.coffees.filter(
           i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
         );
-        data.getMyCoffee.requestingCoffees = data.getMyCoffee.requestingCoffees.filter(
+        profileData.getCoffees.coffees = profileData.getCoffees.coffees.filter(
           i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
         );
-        console.log(data.getMyCoffee);
-        data.getMyCoffee.cache.writeQuery({
-          query: GET_MY_COFFEE,
-          variables: { username },
-          data
+        cache.writeQuery({
+          query: GET_COFFEES,
+          variables: { username, location: "profile" },
+          data: profileData
         });
       }
     } catch (e) {
@@ -535,7 +533,7 @@ class FeedContainer extends React.Component<IProps, IState> {
     try {
       const feedData = cache.readQuery({
         query: GET_COFFEES,
-        variables: { coffeePage, cityName: currentCity }
+        variables: { coffeePage, cityName: currentCity, location: "feed" }
       });
       if (feedData) {
         feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
@@ -545,7 +543,8 @@ class FeedContainer extends React.Component<IProps, IState> {
           query: GET_COFFEES,
           variables: {
             coffeePage,
-            cityName: currentCity
+            cityName: currentCity,
+            location: "feed"
           },
           data: feedData
         });

@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { DETAIL_CARD_FRAGMENT, COFFEE_FRAGMENT } from "src/sharedQueries";
+import { DETAIL_CARD_FRAGMENT } from "src/sharedQueries";
 
 export const GET_USER = gql`
   query UserProfile($username: String!) {
@@ -275,8 +275,8 @@ export const GET_CONTINENTS = gql`
 `;
 
 export const GET_FOLLOWINGS = gql`
-  query GetFollowings($username: String!) {
-    getFollowings(username: $username) {
+  query GetFollowings($userName: String!) {
+    getFollowings(userName: $userName) {
       profiles {
         id
         username
@@ -322,20 +322,6 @@ export const UPLOAD_CARD = gql`
     }
   }
   ${DETAIL_CARD_FRAGMENT}
-`;
-
-export const GET_MY_COFFEE = gql`
-  query GetMyCoffee($username: String!) {
-    getMyCoffee(username: $username) {
-      requestingCoffees {
-        ...CoffeeParts
-      }
-      coffees {
-        ...CoffeeParts
-      }
-    }
-  }
-  ${COFFEE_FRAGMENT}
 `;
 
 export const DELETE_COFFEE = gql`

@@ -118,10 +118,10 @@ def resolve_user_list(self, info):
 @login_required
 def resolve_get_followers(self, info, **kwargs):
 
-    username = kwargs.get('username')
+    userName = kwargs.get('userName')
 
     try:
-        user = User.objects.select_related('profile').get(username=username)
+        user = User.objects.select_related('profile').get(username=userName)
         followers_profile = user.profile.followers.all()
 
     except User.DoesNotExist:
@@ -133,10 +133,10 @@ def resolve_get_followers(self, info, **kwargs):
 @login_required
 def resolve_get_followings(self, info, **kwargs):
 
-    username = kwargs.get('username')
+    userName = kwargs.get('userName')
 
     try:
-        user = User.objects.select_related('profile').get(username=username)
+        user = User.objects.select_related('profile').get(username=userName)
         following_profile = user.profile.followings.all()
 
     except User.DoesNotExist:

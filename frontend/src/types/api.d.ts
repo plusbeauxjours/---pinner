@@ -1492,8 +1492,9 @@ export interface GetCoffees {
 }
 
 export interface GetCoffeesVariables {
-  cityName: string;
-  coffeePage?: number | null;
+  cityName?: string | null;
+  userName?: string | null;
+  location: string;
 }
 
 
@@ -1534,7 +1535,7 @@ export interface GetFollowers {
 }
 
 export interface GetFollowersVariables {
-  username: string;
+  userName: string;
 }
 
 
@@ -2656,7 +2657,7 @@ export interface GetFollowings {
 }
 
 export interface GetFollowingsVariables {
-  username: string;
+  userName: string;
 }
 
 
@@ -2761,102 +2762,6 @@ export interface UploadCard {
 
 export interface UploadCardVariables {
   caption: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetMyCoffee
-// ====================================================
-
-export interface GetMyCoffee_getMyCoffee_requestingCoffees_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface GetMyCoffee_getMyCoffee_requestingCoffees_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetMyCoffee_getMyCoffee_requestingCoffees_city_country;
-}
-
-export interface GetMyCoffee_getMyCoffee_requestingCoffees_host_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  isSelf: boolean | null;
-}
-
-export interface GetMyCoffee_getMyCoffee_requestingCoffees_host {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: GetMyCoffee_getMyCoffee_requestingCoffees_host_profile | null;
-}
-
-export interface GetMyCoffee_getMyCoffee_requestingCoffees {
-  __typename: "CoffeeType";
-  id: string;
-  city: GetMyCoffee_getMyCoffee_requestingCoffees_city;
-  host: GetMyCoffee_getMyCoffee_requestingCoffees_host;
-  status: string | null;
-  expires: any | null;
-  target: CoffeeTarget;
-}
-
-export interface GetMyCoffee_getMyCoffee_coffees_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface GetMyCoffee_getMyCoffee_coffees_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetMyCoffee_getMyCoffee_coffees_city_country;
-}
-
-export interface GetMyCoffee_getMyCoffee_coffees_host_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  isSelf: boolean | null;
-}
-
-export interface GetMyCoffee_getMyCoffee_coffees_host {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: GetMyCoffee_getMyCoffee_coffees_host_profile | null;
-}
-
-export interface GetMyCoffee_getMyCoffee_coffees {
-  __typename: "CoffeeType";
-  id: string;
-  city: GetMyCoffee_getMyCoffee_coffees_city;
-  host: GetMyCoffee_getMyCoffee_coffees_host;
-  status: string | null;
-  expires: any | null;
-  target: CoffeeTarget;
-}
-
-export interface GetMyCoffee_getMyCoffee {
-  __typename: "GetMyCoffeeResponse";
-  requestingCoffees: (GetMyCoffee_getMyCoffee_requestingCoffees | null)[] | null;
-  coffees: (GetMyCoffee_getMyCoffee_coffees | null)[] | null;
-}
-
-export interface GetMyCoffee {
-  getMyCoffee: GetMyCoffee_getMyCoffee;
-}
-
-export interface GetMyCoffeeVariables {
-  username: string;
 }
 
 

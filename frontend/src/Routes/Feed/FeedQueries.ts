@@ -91,8 +91,8 @@ export const REQUEST_COFFEE = gql`
 `;
 
 export const GET_COFFEES = gql`
-  query GetCoffees($cityName: String!, $coffeePage: Int) {
-    getCoffees(cityName: $cityName, coffeePage: $coffeePage) {
+  query GetCoffees($cityName: String, $userName: String, $location: String!) {
+    getCoffees(cityName: $cityName, userName: $userName, location: $location) {
       coffees {
         ...CoffeeParts
       }

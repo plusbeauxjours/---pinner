@@ -28,8 +28,8 @@ import {
   DeleteCoffeeVariables,
   RequestCoffee,
   RequestCoffeeVariables,
-  GetMyCoffee,
-  GetMyCoffeeVariables
+  GetCoffeesVariables,
+  GetCoffees
 } from "src/types/api";
 import {
   GET_USER,
@@ -43,7 +43,6 @@ import {
   DELETE_TRIP,
   GET_KNOWING_FOLLOWERS,
   DELETE_COFFEE,
-  GET_MY_COFFEE,
   UPLOAD_CARD
 } from "./UserProfileQueries";
 import {
@@ -75,7 +74,7 @@ class RequestCoffeeMutation extends Mutation<
   RequestCoffee,
   RequestCoffeeVariables
 > {}
-class GetMyCoffeeQuery extends Query<GetMyCoffee, GetMyCoffeeVariables> {}
+class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
 class DeleteCoffeeMutation extends Mutation<
   DeleteCoffee,
   DeleteCoffeeVariables
@@ -239,10 +238,11 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         {requestCoffeeFn => {
           this.requestCoffeeFn = requestCoffeeFn;
           return (
-            <GetMyCoffeeQuery
-              query={GET_MY_COFFEE}
+            <GetCoffeesQuery
+              query={GET_COFFEES}
               variables={{
-                username
+                userName: username,
+                location: "profile"
               }}
             >
               {({ data: myCoffeeData, loading: myCoffeeLoading }) => {
@@ -783,7 +783,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                   </DeleteCoffeeMutation>
                 );
               }}
-            </GetMyCoffeeQuery>
+            </GetCoffeesQuery>
           );
         }}
       </RequestCoffeeMutation>
@@ -1184,19 +1184,19 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } = this.props;
     try {
       const data = cache.readQuery({
-        query: GET_MY_COFFEE,
-        variables: { username }
+        query: GET_COFFEES,
+        variables: { userName: username, location: "profile" }
       });
       if (data) {
         data.getMyCoffee.coffees = data.getMyCoffee.coffees.filter(
           i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
         );
-        data.getMyCoffee.requestingCoffees = data.getMyCoffee.requestingCoffees.filter(
+        data.getMyCoffee.coffees = data.getMyCoffee.coffees.filter(
           i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
         );
         data.getMyCoffee.cache.writeQuery({
-          query: GET_MY_COFFEE,
-          variables: { username },
+          query: GET_COFFEES,
+          variables: { userName: username, location: "profile" },
           data
         });
       }
@@ -1206,7 +1206,11 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     try {
       const feedData = cache.readQuery({
         query: GET_COFFEES,
-        variables: { coffeePage: 0, cityName: localStorage.getItem("cityName") }
+        variables: {
+          coffeePage: 0,
+          cityName: localStorage.getItem("cityName"),
+          location: "feed"
+        }
       });
       if (feedData) {
         feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
@@ -1216,7 +1220,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
           query: GET_COFFEES,
           variables: {
             coffeePage: 0,
-            cityName: localStorage.getItem("cityName")
+            cityName: localStorage.getItem("cityName"),
+            location: "feed"
           },
           data: feedData
         });
@@ -1286,7 +1291,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         query: GET_COFFEES,
         variables: {
           coffeePage: 0,
-          cityName: localStorage.getItem("cityName")
+          cityName: localStorage.getItem("cityName"),
+          location: "feed"
         }
       });
       if (feedData) {
@@ -1295,7 +1301,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
           query: GET_COFFEES,
           variables: {
             coffeePage: 0,
-            cityName: localStorage.getItem("cityName")
+            cityName: localStorage.getItem("cityName"),
+            location: "feed"
           },
           data: feedData
         });
@@ -1305,17 +1312,19 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     }
     try {
       const profileData = cache.readQuery({
-        query: GET_MY_COFFEE,
+        query: GET_COFFEES,
         variables: {
-          username
+          userName: username,
+          location: "profile"
         }
       });
       if (profileData) {
-        profileData.getMyCoffee.requestingCoffees.push(requestCoffee.coffee);
+        profileData.getMyCoffee.coffees.push(requestCoffee.coffee);
         cache.writeQuery({
-          query: GET_MY_COFFEE,
+          query: GET_COFFEES,
           variables: {
-            username
+            userName: username,
+            location: "profile"
           },
           data: profileData
         });

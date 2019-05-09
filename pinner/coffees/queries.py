@@ -11,46 +11,65 @@ from django.db.models import Q
 def resolve_get_coffees(self, info, **kwargs):
 
     user = info.context.user
-    cityName = kwargs.get('cityName')
-    coffeePage = kwargs.get('coffeePage', 0)
-
-    city = location_models.City.objects.prefetch_related('coffee').get(city_name=cityName)
-    profile = user.profile
-    followings = profile.followed_by.values('id').all()
-    matches = user.guest.values('id').all()
-    if (coffeePage is 0):
-        coffees = city.coffee.filter((Q(target='everyone') |
-                                      Q(target='nationality', host__profile__nationality=profile.nationality) |
-                                      Q(target='gender', host__profile__gender=profile.gender) |
-                                      Q(target='followers', host__profile__id__in=followings)) &
-                                     Q(expires__gt=timezone.now())).exclude(match__id__in=matches).order_by('-created_at')
-        return types.GetCoffeesResponse(coffees=coffees)
-
-
-@login_required
-def resolve_get_my_coffee(self, info, **kwargs):
-
-    username = kwargs.get('username')
     me = info.context.user
+    coffeePage = kwargs.get('coffeePage', 0)
+    offset = 12 * page
 
-    try:
-        user = User.objects.prefetch_related('coffee').get(username=username)
-    except User.DoesNotExist:
-        return types.GetMyCoffeeResponse(coffees=None)
+    location = kwargs.get('location')
+    cityName = kwargs.get('cityName')
+    userName = kwargs.get('userName')
 
-    try:
-        requesting_coffees = models.Coffee.objects.filter(host=user, expires__gt=timezone.now()).order_by(
-            '-created_at')
-        if(me.username == username):
-            coffees = user.coffee.filter(expires__lt=timezone.now()).order_by(
+    nextPage = page+1
+
+    if location == "city":
+        try:
+            city = location_models.City.objects.prefetch_related('coffee').get(city_name=cityName)
+        except location_models.City.DoesNotExist:
+            return types.GetCoffeesResponse(coffees=None)
+
+            profile = me.profile
+            followings = profile.followed_by.values('id').all()
+            matches = me.guest.values('id').all()
+            coffees = city.coffee.filter((Q(target='everyone') |
+                                        Q(target='nationality', host__profile__nationality=profile.nationality) |
+                                        Q(target='gender', host__profile__gender=profile.gender) |
+                                        Q(target='followers', host__profile__id__in=followings)) &
+                                        Q(expires__gt=timezone.now())).exclude(match__id__in=matches).order_by('-created_at')
+            return types.GetCoffeesResponse(coffees=None)
+      
+        except models.Coffee.DoesNotExist:
+            return types.GetCoffeesResponse(coffees=None)
+            
+    elif location == "profile":
+        try:
+            user = User.objects.prefetch_related('coffee').get(username=userName)
+        except User.DoesNotExist:
+            return types.GetCoffeesResponse(coffees=None)
+
+        try:
+            coffees = models.Coffee.objects.filter(host=user, expires__gt=timezone.now()).order_by(
                 '-created_at')
-            return types.GetMyCoffeeResponse(coffees=coffees, requesting_coffees=requesting_coffees)
-        else: 
-            return types.GetMyCoffeeResponse(coffees=None, requesting_coffees=requesting_coffees)
-        
-    except models.Coffee.DoesNotExist:
-        return types.GetMyCoffeeResponse(coffees=None, requesting_coffees=None)
+            return types.GetCoffeesResponse(coffees=coffees)
+  
+        except models.Coffee.DoesNotExist:
+            return types.GetCoffeesResponse(coffees=None)
 
+    elif location == "history":
+        try:
+            user = User.objects.prefetch_related('coffee').get(username=userName)
+        except User.DoesNotExist:
+            return types.GetCoffeesResponse(coffees=None)
+
+        if(me.username == userName):
+            try:
+                coffees = user.coffee.filter(expires__lt=timezone.now()).order_by(
+                    '-created_at')
+                return types.GetCoffeesResponse(coffees=coffees)
+            except models.Coffee.DoesNotExist:
+                return types.GetCoffeesResponse(coffees=None)
+        else: 
+            return types.GetCoffeesResponse(coffees=None)
+        
 
 @login_required
 def resolve_coffee_detail(self, info, **kwargs):

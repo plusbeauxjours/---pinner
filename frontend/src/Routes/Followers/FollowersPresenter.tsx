@@ -9,6 +9,7 @@ import Bold from "../../Components/Bold";
 // import AvatarGrid from "../../Components/AvatarGrid";
 import FollowBtn from "../../Components/FollowBtn";
 import UserHeader from "../../Components/UserHeader";
+import GetCards from "../../Components/GetCards";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -94,13 +95,13 @@ const AvatarContainer = styled.div`
 interface IProps {
   data?: any;
   loading: boolean;
-  username: string;
+  userName: string;
 }
 
 const FollowersPresenter: React.SFC<IProps> = ({
   data: { getFollowers: { profiles = null } = {} } = {},
   loading,
-  username
+  userName
 }) => {
   if (loading) {
     return <Loader />;
@@ -123,7 +124,7 @@ const FollowersPresenter: React.SFC<IProps> = ({
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>
-                <Username>{username} Followers</Username>
+                <Username>{userName} Followers</Username>
               </UserNameRow>
               {profiles &&
                 profiles.map(profile => (
@@ -158,7 +159,7 @@ const FollowersPresenter: React.SFC<IProps> = ({
             </>
           ) : null} */}
           <GreyLine />
-          {/* <GetCards location={"city"} cityName={cityName} /> */}
+          <GetCards location={"followers"} userName={userName} />
         </SWrapper>
       </>
     );

@@ -64,7 +64,7 @@ class Query(object):
         resolver=queries.resolve_get_followers,
         required=True,
         args={
-            'username': graphene.String(required=True),
+            'userName': graphene.String(required=True),
         }
     )
     get_followings = graphene.Field(
@@ -72,7 +72,7 @@ class Query(object):
         resolver=queries.resolve_get_followings,
         required=True,
         args={
-            'username': graphene.String(required=True),
+            'userName': graphene.String(required=True),
         }
     )
     get_knowing_followers = graphene.types.Field(

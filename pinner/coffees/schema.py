@@ -9,16 +9,10 @@ class Query(object):
         resolver=queries.resolve_get_coffees,
         required=True,
         args={
-            'cityName': graphene.String(required=True),
+            'location': graphene.String(required=True),
+            'cityName': graphene.String(),
+            'userName': graphene.String(),
             'coffeePage': graphene.Int()
-        }
-    )
-    get_my_coffee = graphene.Field(
-        types.GetMyCoffeeResponse,
-        resolver=queries.resolve_get_my_coffee,
-        required=True,
-        args={
-            'username': graphene.String(required=True)
         }
     )
     coffee_detail = graphene.Field(

@@ -24,16 +24,17 @@ class FollowersContainer extends React.Component<IProps, IState> {
         params: { username }
       }
     } = this.props;
-    console.log(username);
-    console.log(this.props);
     return (
-      <GetFollowersQuery query={GET_FOLLOWERS} variables={{ username }}>
+      <GetFollowersQuery
+        query={GET_FOLLOWERS}
+        variables={{ userName: username }}
+      >
         {({ data, loading }) => {
           return (
             <FollowersPresenter
               data={data}
               loading={loading}
-              username={username}
+              userName={username}
             />
           );
         }}

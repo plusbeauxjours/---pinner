@@ -86,7 +86,7 @@ def resolve_get_cards(self, info, **kwargs):
         try:
             cards = models.Card.objects.filter(
                 city__country__continent__continent_name=continentName).order_by('-created_at')[offset:12 + offset]
-            return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
+            return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=True)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')
 
@@ -95,6 +95,18 @@ def resolve_get_cards(self, info, **kwargs):
             user = User.objects.prefetch_related('cards').get(username=userName)
             cards = user.cards.order_by('-created_at')[offset:12 + offset]
             hasNextPage = offset < user.profile.post_count
+            return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
+        except models.Card.DoesNotExist:
+            raise Exception('Card not found')
+
+    elif location == "followers":
+        try:
+            user = User.objects.select_related('profile').get(username=userName)
+            following_profiles = user.profile.followings.values('id').all()
+            following_cards = models.Card.objects.filter(
+                creator__profile__id__in=following_profiles).order_by('-created_at')
+            hasNextPage = offset < following_cards.count()
+            cards = following_cards[offset:12 + offset]
             return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')
