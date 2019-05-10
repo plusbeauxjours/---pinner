@@ -39,6 +39,7 @@ const GreyLine = styled.div`
 const UserRow = styled.div`
   display: grid;
   flex-direction: row;
+  height: 50px;
   grid-template-columns: 5fr 1fr 1fr 1fr;
   padding: 0 5px 0 5px;
   grid-gap: 15px;
@@ -83,12 +84,10 @@ const AvatarContainer = styled.div`
 `;
 
 const Header = styled.header`
-  padding: 10px 10px 10px 0;
   display: flex;
   align-items: center;
   border-radius: 3px;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
 `;
 
 const HeaderText = styled(Bold)`
@@ -101,6 +100,8 @@ const HeaderColumn = styled.div`
 
 const SAvatar = styled(Avatar)`
   border-radius: 3px;
+  height: 45px;
+  width: 45px;
 `;
 
 const Location = styled.span`

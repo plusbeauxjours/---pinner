@@ -5,11 +5,10 @@ import Input from "./Input";
 import Avatar from "./Avatar";
 
 const Header = styled.header`
-  padding: 10px 10px 10px 0;
   display: flex;
   align-items: center;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  height: 50px;
 `;
 
 const HeaderColumn = styled.div`

@@ -118,6 +118,7 @@ const TripOverlay = styled.div`
 const UserRow = styled.div`
   display: grid;
   flex-direction: row;
+  height: 50px;
   grid-template-columns: 3fr 1fr 1fr 1fr 0.2fr;
   padding: 0 5px 0 5px;
   grid-gap: 15px;
@@ -152,7 +153,6 @@ const Location = styled.span`
 `;
 
 const THeader = styled.header`
-  padding: 10px 10px 10px 0;
   display: flex;
   align-items: center;
   border-radius: 3px;
@@ -260,6 +260,8 @@ const UBold = styled(Bold)`
 
 const SAvatar = styled(Avatar)`
   border-radius: 3px;
+  height: 45px;
+  width: 45px;
 `;
 
 const ModalContainer = styled.div`
