@@ -14,14 +14,18 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   page: number;
+  search: string;
+  listCities: any;
 }
 
 class CountryProfileContainer extends React.Component<IProps, IState> {
-  public fetchMore;
+  public data;
   constructor(props) {
     super(props);
     this.state = {
-      page: 0
+      page: 0,
+      search: "",
+      listCities: null
     };
   }
   public render() {
@@ -30,25 +34,40 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
         params: { countryName }
       }
     } = this.props;
-    const { page } = this.state;
+    const { search, listCities } = this.state;
     return (
-      <CountryProfileQuery
-        query={COUNTRY_PROFILE}
-        variables={{ page, countryName }}
-      >
-        {({ data, loading, fetchMore }) => {
-          this.fetchMore = fetchMore;
+      <CountryProfileQuery query={COUNTRY_PROFILE} variables={{ countryName }}>
+        {({ data, loading }) => {
+          this.data = data;
           return (
             <CountryProfilePresenter
               loading={loading}
               data={data}
               countryName={countryName}
+              onChange={this.onChange}
+              search={search}
+              listCities={listCities}
             />
           );
         }}
       </CountryProfileQuery>
     );
   }
+  public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
+    const {
+      target: { value }
+    } = event;
+    const {
+      countryProfile: { cities }
+    } = this.data;
+    const search = (list, text) =>
+      list.filter(i => i.cityName.toLowerCase().includes(text.toLowerCase()));
+    const listCities = search(cities, value);
+    this.setState({
+      search: value,
+      listCities
+    } as any);
+  };
 }
 
 export default withRouter(CountryProfileContainer);

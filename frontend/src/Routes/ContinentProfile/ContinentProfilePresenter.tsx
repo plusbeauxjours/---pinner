@@ -204,14 +204,27 @@ const Location = styled.span`
   font-weight: 200;
 `;
 
+const Input = styled.input`
+  width: 215px;
+  border: 0;
+  border: ${props => props.theme.boxBorder};
+  background-color: ${props => props.theme.bgColor};
+  border-radius: 3px;
+  padding: 5px;
+  color: white;
+  font-size: 14px;
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
-  toggleCountrySeeAll: () => void;
-  countryList: any;
-  countryModalOpen: boolean;
-  toggleCountryModal: () => void;
   continentName: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  search: string;
+  listCountries: any;
 }
 
 const ContinentProfilePresenter: React.SFC<IProps> = ({
@@ -225,11 +238,10 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
     } = {}
   } = {},
   loading,
-  toggleCountrySeeAll,
-  countryList,
-  countryModalOpen,
-  toggleCountryModal,
-  continentName
+  continentName,
+  onChange,
+  search,
+  listCountries
 }) => {
   if (loading) {
     return <Loader />;
@@ -248,24 +260,40 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
             <UserContainer>
               <UserNameRow>
                 <Username>{continent.continentName}</Username>
+                <Input
+                  placeholder="Search"
+                  value={search}
+                  onChange={onChange}
+                />
               </UserNameRow>
-              {countries &&
+              {listCountries &&
+                listCountries.map(country => (
+                  <UserRow key={country.id}>
+                    <Link to={`/country/${country.countryName}`}>
+                      <Header>
+                        <SAvatar size={"sm"} url={country.countryPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={country.countryName} />
+                          <Location>{country.continent.continentName}</Location>
+                        </HeaderColumn>
+                      </Header>
+                    </Link>
+                  </UserRow>
+                ))}
+              {!listCountries &&
+                countries &&
                 countries.map(country => (
-                  <>
-                    <UserRow key={country.id}>
-                      <Link to={`/country/${country.countryName}`}>
-                        <Header>
-                          <SAvatar size={"sm"} url={country.countryPhoto} />
-                          <HeaderColumn>
-                            <HeaderText text={country.countryName} />
-                            <Location>
-                              {country.continent.continentName}
-                            </Location>
-                          </HeaderColumn>
-                        </Header>
-                      </Link>
-                    </UserRow>
-                  </>
+                  <UserRow key={country.id}>
+                    <Link to={`/country/${country.countryName}`}>
+                      <Header>
+                        <SAvatar size={"sm"} url={country.countryPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={country.countryName} />
+                          <Location>{country.continent.continentName}</Location>
+                        </HeaderColumn>
+                      </Header>
+                    </Link>
+                  </UserRow>
                 ))}
             </UserContainer>
           </PHeader>

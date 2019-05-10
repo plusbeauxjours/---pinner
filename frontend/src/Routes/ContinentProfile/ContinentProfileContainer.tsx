@@ -14,17 +14,17 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   page: number;
-  countryList: any;
-  countryModalOpen: boolean;
+  search: string;
+  listCountries: any;
 }
 class ContinentProfileContainer extends React.Component<IProps, IState> {
-  public fetchMore;
+  public data;
   constructor(props) {
     super(props);
     this.state = {
       page: 0,
-      countryList: null,
-      countryModalOpen: false
+      search: "",
+      listCountries: null
     };
   }
   public render() {
@@ -33,62 +33,44 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
         params: { continentName }
       }
     } = this.props;
-    const { page, countryList, countryModalOpen } = this.state;
+    const { search, listCountries } = this.state;
     return (
       <ContinentProfileQuery
         query={CONTINENT_PROFILE}
-        variables={{ page, continentName }}
+        variables={{ continentName }}
       >
-        {({ data, loading, fetchMore }) => {
-          this.fetchMore = fetchMore;
-
-          console.log(data);
+        {({ data, loading }) => {
+          this.data = data;
           return (
             <ContinentProfilePresenter
               data={data}
               loading={loading}
-              countryList={countryList}
-              countryModalOpen={countryModalOpen}
-              toggleCountryModal={this.toggleCountryModal}
-              toggleCountrySeeAll={this.toggleCountrySeeAll}
               continentName={continentName}
+              onChange={this.onChange}
+              search={search}
+              listCountries={listCountries}
             />
           );
         }}
       </ContinentProfileQuery>
     );
   }
-
-  public toggleCountryModal = () => {
-    const { countryModalOpen } = this.state;
-    this.setState({
-      countryModalOpen: !countryModalOpen
-    } as any);
-  };
-  public toggleCountrySeeAll = () => {
+  public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
     const {
-      match: {
-        params: { continentName }
-      }
-    } = this.props;
-    const { countryModalOpen } = this.state;
-    this.fetchMore({
-      query: CONTINENT_PROFILE,
-      variables: { page: 1, continentName },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult) {
-          return previousResult;
-        }
-        this.setState({
-          countryList: [
-            ...previousResult.continentProfile.countries,
-            ...fetchMoreResult.continentProfile.countries
-          ],
-          countryModalOpen: !countryModalOpen
-        });
-        console.log(this.state);
-      }
-    });
+      target: { value }
+    } = event;
+    const {
+      continentProfile: { countries }
+    } = this.data;
+    const search = (list, text) =>
+      list.filter(i =>
+        i.countryName.toLowerCase().includes(text.toLowerCase())
+      );
+    const listCountries = search(countries, value);
+    this.setState({
+      search: value,
+      listCountries
+    } as any);
   };
 }
 

@@ -60,8 +60,6 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
     const {
       frequentVisits: { cities }
     } = this.data;
-    console.log(value);
-    console.log(this.data);
     const search = (list, text) =>
       list.filter(i => i.cityName.toLowerCase().includes(text.toLowerCase()));
     const listCities = search(cities, value);
@@ -69,7 +67,6 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
       search: value,
       listCities
     } as any);
-    console.log(this.state);
   };
 }
 

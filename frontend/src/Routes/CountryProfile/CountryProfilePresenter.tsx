@@ -205,10 +205,27 @@ const Location = styled.span`
   font-weight: 200;
 `;
 
+const Input = styled.input`
+  width: 215px;
+  border: 0;
+  border: ${props => props.theme.boxBorder};
+  background-color: ${props => props.theme.bgColor};
+  border-radius: 3px;
+  padding: 5px;
+  color: white;
+  font-size: 14px;
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
   countryName: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  search: string;
+  listCities: any;
 }
 
 const CountryProfilePresenter: React.SFC<IProps> = ({
@@ -222,7 +239,10 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
     } = {}
   } = {},
   loading,
-  countryName
+  countryName,
+  listCities,
+  search,
+  onChange
 }) => {
   if (loading) {
     return <Loader />;
@@ -249,29 +269,52 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
             <UserContainer>
               <UserNameRow>
                 <Username>{country.countryName}</Username>
+                <Input
+                  placeholder="Search"
+                  value={search}
+                  onChange={onChange}
+                />
               </UserNameRow>
-              {cities &&
+              {listCities &&
+                listCities.map(city => (
+                  <UserRow key={city.id}>
+                    <Link to={`/city/${city.cityName}`}>
+                      <Header>
+                        <SAvatar size={"sm"} url={city.cityPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={city.cityName} />
+                          <Location>{countryName}</Location>
+                        </HeaderColumn>
+                      </Header>
+                    </Link>
+                    <CityLikeBtn
+                      isLiked={city.isLiked}
+                      cityId={city.id}
+                      likeCount={city.likeCount}
+                      type={"row"}
+                    />
+                  </UserRow>
+                ))}
+              {!listCities &&
+                cities &&
                 cities.map(city => (
-                  <>
-                    <UserRow key={city.id}>
-                      <Link to={`/city/${city.cityName}`}>
-                        <Header>
-                          <SAvatar size={"sm"} url={city.cityPhoto} />
-                          <HeaderColumn>
-                            <HeaderText text={city.cityName} />
-                            <Location>{countryName}</Location>
-                          </HeaderColumn>
-                        </Header>
-                      </Link>
-
-                      <CityLikeBtn
-                        isLiked={city.isLiked}
-                        cityId={city.id}
-                        likeCount={city.likeCount}
-                        type={"row"}
-                      />
-                    </UserRow>
-                  </>
+                  <UserRow key={city.id}>
+                    <Link to={`/city/${city.cityName}`}>
+                      <Header>
+                        <SAvatar size={"sm"} url={city.cityPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={city.cityName} />
+                          <Location>{countryName}</Location>
+                        </HeaderColumn>
+                      </Header>
+                    </Link>
+                    <CityLikeBtn
+                      isLiked={city.isLiked}
+                      cityId={city.id}
+                      likeCount={city.likeCount}
+                      type={"row"}
+                    />
+                  </UserRow>
                 ))}
             </UserContainer>
           </PHeader>
