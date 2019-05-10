@@ -116,16 +116,36 @@ const GreyText = styled(Bold)`
   color: #999;
 `;
 
+const Input = styled.input`
+  width: 215px;
+  border: 0;
+  border: ${props => props.theme.boxBorder};
+  background-color: ${props => props.theme.bgColor};
+  border-radius: 3px;
+  padding: 5px;
+  color: white;
+  font-size: 14px;
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
   userName: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  search: string;
+  listCities: any;
 }
 
 const CitiesPresenter: React.SFC<IProps> = ({
   data: { frequentVisits: { cities = null } = {} } = {},
   loading,
-  userName
+  userName,
+  listCities,
+  search,
+  onChange
 }) => {
   if (loading) {
     return <Loader />;
@@ -146,8 +166,37 @@ const CitiesPresenter: React.SFC<IProps> = ({
             <UserContainer>
               <UserNameRow>
                 <Username>{userName} Cities</Username>
+                <Input
+                  placeholder="Search"
+                  value={search}
+                  onChange={onChange}
+                />
               </UserNameRow>
-              {cities &&
+              {console.log(listCities)}
+              {listCities &&
+                listCities.map(city => (
+                  <UserRow key={city.id}>
+                    <Link to={`/city/${city.cityName}`}>
+                      <Header>
+                        <SAvatar size={"sm"} url={city.cityPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={city.cityName} />
+                          <Location>{city.country.countryName}</Location>
+                        </HeaderColumn>
+                      </Header>
+                    </Link>
+                    <GreyText text={`x ${city.count}`} />
+                    <GreyText text={`${city.diff} d`} />
+                    <CityLikeBtn
+                      isLiked={city.isLiked}
+                      cityId={city.id}
+                      likeCount={city.likeCount}
+                      type={"row"}
+                    />
+                  </UserRow>
+                ))}
+              {!listCities &&
+                cities &&
                 cities.map(city => (
                   <UserRow key={city.id}>
                     <Link to={`/city/${city.cityName}`}>
