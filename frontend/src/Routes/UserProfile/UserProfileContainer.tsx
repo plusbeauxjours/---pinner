@@ -110,6 +110,8 @@ interface IState {
   coffeeId: string;
   tripPage: number;
   newCardCaption: string;
+  search: string;
+  tripList: any;
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
@@ -122,6 +124,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   public deleteCoffeeFn: MutationFn;
   public uploadCardFn: MutationFn;
   public requestCoffeeFn: MutationFn;
+
+  public data;
 
   public fetchMore;
 
@@ -164,7 +168,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       moveNotificationId: null,
       coffeeId: null,
       tripPage: 0,
-      newCardCaption: ""
+      newCardCaption: "",
+      search: "",
+      tripList: null
     };
   }
   public render() {
@@ -210,7 +216,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       moveNotificationId,
       coffeeId,
       tripPage,
-      newCardCaption
+      newCardCaption,
+      search,
+      tripList
     } = this.state;
     return (
       <RequestCoffeeMutation
@@ -343,6 +351,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                               loading: getTipsLoading,
                                                               fetchMore
                                                             }) => {
+                                                              this.data = getTripsData;
                                                               this.fetchMore = fetchMore;
                                                               return (
                                                                 <AddTripMutation
@@ -685,6 +694,16 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                     }
                                                                                     username={
                                                                                       username
+                                                                                    }
+                                                                                    search={
+                                                                                      search
+                                                                                    }
+                                                                                    onChange={
+                                                                                      this
+                                                                                        .onChange
+                                                                                    }
+                                                                                    tripList={
+                                                                                      tripList
                                                                                     }
                                                                                   />
                                                                                 );
@@ -1266,6 +1285,27 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } catch (e) {
       console.log(e);
     }
+  };
+  public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
+    const {
+      target: { value }
+    } = event;
+    console.log(this.data);
+    const { getTrips: { trip = {} } = {} } = ({} = this.data);
+    const nowSearch = (list, text) =>
+      list.filter(
+        i =>
+          i.city.cityName.toLowerCase().includes(text.toLowerCase()) ||
+          i.city.country.countryName.toLowerCase().includes(text.toLowerCase())
+      );
+    const tripList = nowSearch(trip, value);
+    console.log(this.data);
+
+    console.log(tripList);
+    this.setState({
+      search: value,
+      tripList
+    } as any);
   };
 }
 

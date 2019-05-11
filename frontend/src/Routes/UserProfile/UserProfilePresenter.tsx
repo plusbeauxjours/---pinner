@@ -400,6 +400,20 @@ const GreyText = styled(Bold)`
   color: #999;
 `;
 
+const TripInput = styled.input`
+  width: 215px;
+  border: 0;
+  border: ${props => props.theme.boxBorder};
+  background-color: ${props => props.theme.bgColor};
+  border-radius: 3px;
+  padding: 5px;
+  color: white;
+  font-size: 14px;
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+`;
+
 interface ITheme {
   size?: string;
 }
@@ -504,6 +518,10 @@ interface IProps {
   getCoffeeId: any;
   getRequestingCoffeeId: any;
   username: string;
+
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  search: string;
+  tripList: any;
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
@@ -591,7 +609,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   deleteCoffee,
   getCoffeeId,
   getRequestingCoffeeId,
-  username
+  username,
+  search,
+  onChange,
+  tripList
 }) => {
   if (userProfileLoading) {
     return <Loader />;
@@ -922,13 +943,60 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             <UserContainer>
               <UserNameRow>
                 <Username>TRIPS</Username>
+                <TripInput
+                  placeholder="Search"
+                  value={search}
+                  onChange={onChange}
+                />
               </UserNameRow>
               {user.profile.isSelf && (
                 <TripIcon onClick={addTrip}>
                   <Upload />
                 </TripIcon>
               )}
-              {!getTipsLoading && getTrips ? (
+              {getTipsLoading && <Loader />}
+              {tripList &&
+                tripList.map(trip => (
+                  <UserRow key={trip.id}>
+                    <Link to={`/city/${trip.city.cityName}`}>
+                      <THeader>
+                        <SAvatar size={"sm"} url={trip.city.cityPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={trip.city.cityName} />
+                          <Location>{trip.city.country.countryName}</Location>
+                        </HeaderColumn>
+                      </THeader>
+                    </Link>
+                    <GreyText text={trip.startDate} />
+                    <GreyText text={trip.endDate} />
+                    <GreyText text={`${trip.diffDays} Days`} />
+                    <TripOverlay
+                      onClick={() => {
+                        user.profile.isSelf
+                          ? toggleTripModal(
+                              trip.id,
+                              trip.city.cityName,
+                              trip.city.cityPhoto,
+                              trip.city.country.countryName,
+                              trip.startDate,
+                              trip.endDate
+                            )
+                          : gotoTrip(
+                              trip.city.cityName,
+                              trip.city.cityPhoto,
+                              trip.city.country.countryName,
+                              trip.startDate,
+                              trip.endDate
+                            );
+                      }}
+                    >
+                      <List />
+                    </TripOverlay>
+                  </UserRow>
+                ))}
+              {!tripList &&
+                !getTipsLoading &&
+                getTrips &&
                 getTrips.map(trip => (
                   <UserRow key={trip.id}>
                     <Link to={`/city/${trip.city.cityName}`}>
@@ -966,10 +1034,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                       <List />
                     </TripOverlay>
                   </UserRow>
-                ))
-              ) : (
-                <Loader />
-              )}
+                ))}
             </UserContainer>
           </PHeader>
           {!user.profile.isSelf &&
