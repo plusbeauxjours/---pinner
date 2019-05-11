@@ -95,16 +95,36 @@ const GreyText = styled(Bold)`
   color: #999;
 `;
 
+const Input = styled.input`
+  width: 215px;
+  border: 0;
+  border: ${props => props.theme.boxBorder};
+  background-color: ${props => props.theme.bgColor};
+  border-radius: 3px;
+  padding: 5px;
+  color: white;
+  font-size: 14px;
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
   userName: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  search: string;
+  coffeesList: any;
 }
 
 const FollowingsPresenter: React.SFC<IProps> = ({
   data: { getCoffees: { coffees = null } = {} } = {},
   loading,
-  userName
+  userName,
+  onChange,
+  search,
+  coffeesList
 }) => {
   if (loading) {
     return <Loader />;
@@ -128,8 +148,29 @@ const FollowingsPresenter: React.SFC<IProps> = ({
           <UserContainer>
             <UserNameRow>
               <Username>{userName} Coffees</Username>
+              <Input placeholder="Search" value={search} onChange={onChange} />
             </UserNameRow>
-            {coffees &&
+            {coffeesList &&
+              coffeesList.map(coffee => (
+                <React.Fragment key={coffee.id}>
+                  <Link to={`/c/${coffee.id}`}>
+                    <UserRow>
+                      <UserHeader
+                        username={coffee.city.cityName}
+                        currentCity={coffee.city.country.countryName}
+                        avatar={coffee.host.profile.avatar}
+                        size={"sm"}
+                        type={"coffee"}
+                        target={coffee.target}
+                      />
+                      <GreyText text={coffee.target} />
+                      <GreyText text={coffee.expires} />
+                    </UserRow>
+                  </Link>
+                </React.Fragment>
+              ))}
+            {!coffeesList &&
+              coffees &&
               coffees.map(coffee => (
                 <React.Fragment key={coffee.id}>
                   <Link to={`/c/${coffee.id}`}>

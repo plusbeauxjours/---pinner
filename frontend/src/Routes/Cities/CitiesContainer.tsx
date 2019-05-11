@@ -61,7 +61,11 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
       frequentVisits: { cities = null }
     } = this.data;
     const search = (list, text) =>
-      list.filter(i => i.cityName.toLowerCase().includes(text.toLowerCase()));
+      list.filter(
+        i =>
+          i.cityName.toLowerCase().includes(text.toLowerCase()) ||
+          i.country.countryName.toLowerCase().includes(text.toLowerCase())
+      );
     const cityList = search(cities, value);
     this.setState({
       search: value,

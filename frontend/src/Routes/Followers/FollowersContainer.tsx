@@ -57,7 +57,14 @@ class FollowersContainer extends React.Component<IProps, IState> {
       getFollowers: { profiles = null }
     } = this.data;
     const nowSearch = (list, text) =>
-      list.filter(i => i.username.toLowerCase().includes(text.toLowerCase()));
+      list.filter(
+        i =>
+          i.username.toLowerCase().includes(text.toLowerCase()) ||
+          i.currentCity.cityName.toLowerCase().includes(text.toLowerCase()) ||
+          i.currentCity.country.countryName
+            .toLowerCase()
+            .includes(text.toLowerCase())
+      );
     const usersList = nowSearch(profiles, value);
     this.setState({
       search: value,

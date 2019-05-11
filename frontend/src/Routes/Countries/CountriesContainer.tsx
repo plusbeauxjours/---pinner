@@ -60,8 +60,10 @@ class CountriesContainer extends React.Component<IProps, IState> {
       topCountries: { countries = null }
     } = this.data;
     const search = (list, text) =>
-      list.filter(i =>
-        i.countryName.toLowerCase().includes(text.toLowerCase())
+      list.filter(
+        i =>
+          i.countryName.toLowerCase().includes(text.toLowerCase()) ||
+          i.continent.continentName.toLowerCase().includes(text.toLowerCase())
       );
     const countryList = search(countries, value);
     this.setState({

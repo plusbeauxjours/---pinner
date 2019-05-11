@@ -91,27 +91,27 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       target: { value }
     } = event;
     console.log(this.data);
-    const {
-      cityProfile: { usersNow = null }
-    } = this.data;
-    const {
-      cityProfile: { usersBefore = null }
-    } = this.data;
+    const { cityProfile: { usersNow = {} } = {} } = ({} = this.data);
+    const { cityProfile: { usersBefore = {} } = {} } = ({} = this.data);
     const nowSearch = (list, text) =>
       list.filter(i =>
         i.profile.username.toLowerCase().includes(text.toLowerCase())
       );
-    const beforeSearch = (list, text) =>
-      list.filter(i =>
-        i.actor.profile.username.toLowerCase().includes(text.toLowerCase())
-      );
     const nowUsersList = nowSearch(usersNow, value);
-    const beforeUsersList = beforeSearch(usersBefore, value);
     this.setState({
       search: value,
-      nowUsersList,
-      beforeUsersList
+      nowUsersList
     } as any);
+    if (usersBefore) {
+      const beforeSearch = (list, text) =>
+        list.filter(i =>
+          i.actor.profile.username.toLowerCase().includes(text.toLowerCase())
+        );
+      const beforeUsersList = beforeSearch(usersBefore, value);
+      this.setState({
+        beforeUsersList
+      } as any);
+    }
   };
 }
 
