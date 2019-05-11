@@ -115,16 +115,36 @@ const GreyText = styled(Bold)`
   color: #999;
 `;
 
+const Input = styled.input`
+  width: 215px;
+  border: 0;
+  border: ${props => props.theme.boxBorder};
+  background-color: ${props => props.theme.bgColor};
+  border-radius: 3px;
+  padding: 5px;
+  color: white;
+  font-size: 14px;
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
   userName: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  search: string;
+  countryList: any;
 }
 
 const CountriesPresenter: React.SFC<IProps> = ({
   data: { topCountries: { countries = null } = {} } = {},
   loading,
-  userName
+  userName,
+  onChange,
+  search,
+  countryList
 }) => {
   if (loading) {
     return <Loader />;
@@ -145,26 +165,45 @@ const CountriesPresenter: React.SFC<IProps> = ({
             <UserContainer>
               <UserNameRow>
                 <Username>{userName} Countries</Username>
+                <Input
+                  placeholder="Search"
+                  value={search}
+                  onChange={onChange}
+                />
               </UserNameRow>
-              {countries &&
+              {countryList &&
+                countryList &&
+                countryList.map(country => (
+                  <UserRow key={country.id}>
+                    <Link to={`/country/${country.countryName}`}>
+                      <Header>
+                        <SAvatar size={"sm"} url={country.countryPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={country.countryName} />
+                          <Location>{country.continent.continentName}</Location>
+                        </HeaderColumn>
+                      </Header>
+                    </Link>
+                    <GreyText text={`x ${country.count}`} />
+                    <GreyText text={`${country.diff} d`} />
+                  </UserRow>
+                ))}
+              {!countryList &&
+                countries &&
                 countries.map(country => (
-                  <>
-                    <UserRow key={country.id}>
-                      <Link to={`/country/${country.countryName}`}>
-                        <Header>
-                          <SAvatar size={"sm"} url={country.countryPhoto} />
-                          <HeaderColumn>
-                            <HeaderText text={country.countryName} />
-                            <Location>
-                              {country.continent.continentName}
-                            </Location>
-                          </HeaderColumn>
-                        </Header>
-                      </Link>
-                      <GreyText text={`x ${country.count}`} />
-                      <GreyText text={`${country.diff} d`} />
-                    </UserRow>
-                  </>
+                  <UserRow key={country.id}>
+                    <Link to={`/country/${country.countryName}`}>
+                      <Header>
+                        <SAvatar size={"sm"} url={country.countryPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={country.countryName} />
+                          <Location>{country.continent.continentName}</Location>
+                        </HeaderColumn>
+                      </Header>
+                    </Link>
+                    <GreyText text={`x ${country.count}`} />
+                    <GreyText text={`${country.diff} d`} />
+                  </UserRow>
                 ))}
             </UserContainer>
           </PHeader>

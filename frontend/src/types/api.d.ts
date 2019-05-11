@@ -794,7 +794,7 @@ export interface CityProfile {
 }
 
 export interface CityProfileVariables {
-  page: number;
+  page?: number | null;
   cityName: string;
 }
 
@@ -2269,6 +2269,8 @@ export interface UserProfile_userProfile_user_profile_currentCity_country {
 
 export interface UserProfile_userProfile_user_profile_currentCity {
   __typename: "CityType";
+  latitude: number | null;
+  longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: UserProfile_userProfile_user_profile_currentCity_country;

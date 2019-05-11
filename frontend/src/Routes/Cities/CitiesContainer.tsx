@@ -12,7 +12,7 @@ interface IProps extends RouteComponentProps<any> {}
 interface IState {
   page: number;
   search: string;
-  listCities: any;
+  cityList: any;
 }
 
 class CitiesContainerContainer extends React.Component<IProps, IState> {
@@ -22,7 +22,7 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
     this.state = {
       page: 0,
       search: "",
-      listCities: null
+      cityList: null
     };
   }
   public render() {
@@ -31,7 +31,7 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
         params: { username }
       }
     } = this.props;
-    const { search, listCities } = this.state;
+    const { search, cityList } = this.state;
     return (
       <GetCitiesQuery
         query={FREQUENT_VISITS}
@@ -46,7 +46,7 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
               userName={username}
               onChange={this.onChange}
               search={search}
-              listCities={listCities}
+              cityList={cityList}
             />
           );
         }}
@@ -58,14 +58,14 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
       target: { value }
     } = event;
     const {
-      frequentVisits: { cities }
+      frequentVisits: { cities = null }
     } = this.data;
     const search = (list, text) =>
       list.filter(i => i.cityName.toLowerCase().includes(text.toLowerCase()));
-    const listCities = search(cities, value);
+    const cityList = search(cities, value);
     this.setState({
       search: value,
-      listCities
+      cityList
     } as any);
   };
 }

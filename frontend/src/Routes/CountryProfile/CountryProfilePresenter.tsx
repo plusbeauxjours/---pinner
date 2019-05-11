@@ -225,7 +225,7 @@ interface IProps {
   countryName: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
-  listCities: any;
+  cityList: any;
 }
 
 const CountryProfilePresenter: React.SFC<IProps> = ({
@@ -240,7 +240,7 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
   } = {},
   loading,
   countryName,
-  listCities,
+  cityList,
   search,
   onChange
 }) => {
@@ -275,8 +275,8 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
                   onChange={onChange}
                 />
               </UserNameRow>
-              {listCities &&
-                listCities.map(city => (
+              {cityList &&
+                cityList.map(city => (
                   <UserRow key={city.id}>
                     <Link to={`/city/${city.cityName}`}>
                       <Header>
@@ -295,7 +295,7 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
                     />
                   </UserRow>
                 ))}
-              {!listCities &&
+              {!cityList &&
                 cities &&
                 cities.map(city => (
                   <UserRow key={city.id}>

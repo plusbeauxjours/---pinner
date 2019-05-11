@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 import { CITY_FRAGMENT } from "src/sharedQueries";
 
 export const CITY_PROFILE = gql`
-  query CityProfile($page: Int!, $cityName: String!) {
+  query CityProfile($page: Int, $cityName: String!) {
     cityProfile(page: $page, cityName: $cityName) {
       usersNow {
         profile {

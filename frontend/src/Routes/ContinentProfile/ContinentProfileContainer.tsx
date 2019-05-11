@@ -15,7 +15,7 @@ interface IProps extends RouteComponentProps<any> {}
 interface IState {
   page: number;
   search: string;
-  listCountries: any;
+  countryList: any;
 }
 class ContinentProfileContainer extends React.Component<IProps, IState> {
   public data;
@@ -24,7 +24,7 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
     this.state = {
       page: 0,
       search: "",
-      listCountries: null
+      countryList: null
     };
   }
   public render() {
@@ -33,7 +33,7 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
         params: { continentName }
       }
     } = this.props;
-    const { search, listCountries } = this.state;
+    const { search, countryList } = this.state;
     return (
       <ContinentProfileQuery
         query={CONTINENT_PROFILE}
@@ -48,7 +48,7 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
               continentName={continentName}
               onChange={this.onChange}
               search={search}
-              listCountries={listCountries}
+              countryList={countryList}
             />
           );
         }}
@@ -60,16 +60,16 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
       target: { value }
     } = event;
     const {
-      continentProfile: { countries }
+      continentProfile: { countries = null }
     } = this.data;
     const search = (list, text) =>
       list.filter(i =>
         i.countryName.toLowerCase().includes(text.toLowerCase())
       );
-    const listCountries = search(countries, value);
+    const countryList = search(countries, value);
     this.setState({
       search: value,
-      listCountries
+      countryList
     } as any);
   };
 }

@@ -136,14 +136,14 @@ interface IProps {
   userName: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
-  listCities: any;
+  cityList: any;
 }
 
 const CitiesPresenter: React.SFC<IProps> = ({
   data: { frequentVisits: { cities = null } = {} } = {},
   loading,
   userName,
-  listCities,
+  cityList,
   search,
   onChange
 }) => {
@@ -172,9 +172,9 @@ const CitiesPresenter: React.SFC<IProps> = ({
                   onChange={onChange}
                 />
               </UserNameRow>
-              {console.log(listCities)}
-              {listCities &&
-                listCities.map(city => (
+              {console.log(cityList)}
+              {cityList &&
+                cityList.map(city => (
                   <UserRow key={city.id}>
                     <Link to={`/city/${city.cityName}`}>
                       <Header>
@@ -195,7 +195,7 @@ const CitiesPresenter: React.SFC<IProps> = ({
                     />
                   </UserRow>
                 ))}
-              {!listCities &&
+              {!cityList &&
                 cities &&
                 cities.map(city => (
                   <UserRow key={city.id}>

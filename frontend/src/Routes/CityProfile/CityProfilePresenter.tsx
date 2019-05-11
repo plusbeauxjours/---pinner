@@ -231,8 +231,18 @@ const AvatarContainer = styled.div`
   flex-direction: column;
 `;
 
-const CWeather = styled(Weather)`
-  margin-top: 10px;
+const Input = styled.input`
+  width: 215px;
+  border: 0;
+  border: ${props => props.theme.boxBorder};
+  background-color: ${props => props.theme.bgColor};
+  border-radius: 3px;
+  padding: 5px;
+  color: white;
+  font-size: 14px;
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
 `;
 
 interface IProps {
@@ -244,6 +254,11 @@ interface IProps {
   coffeeReportModalOpen: boolean;
   toggleCoffeeReportModal: () => void;
   cityName: string;
+
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  search: string;
+  nowUsersList: any;
+  beforeUsersList: any;
 }
 
 const CityProfilePresenter: React.SFC<IProps> = ({
@@ -261,7 +276,11 @@ const CityProfilePresenter: React.SFC<IProps> = ({
 
   coffeeReportModalOpen,
   toggleCoffeeReportModal,
-  cityName
+  cityName,
+  search,
+  onChange,
+  nowUsersList,
+  beforeUsersList
 }) => {
   if (cityLoading) {
     return <Loader />;
@@ -303,13 +322,66 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                   type={"profile"}
                 />
               </InfoRow>
-              <CWeather latitude={city.latitude} longitude={city.longitude} />
+              <Weather latitude={city.latitude} longitude={city.longitude} />
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>
                 <Username>{city.cityName}</Username>
+                <Input
+                  placeholder="Search"
+                  value={search}
+                  onChange={onChange}
+                />
               </UserNameRow>
-              {usersNow &&
+              {nowUsersList &&
+                nowUsersList.map(user => (
+                  <UserRow key={user.profile.id}>
+                    <Link to={`/${user.profile.username}`}>
+                      <UserHeader
+                        username={user.profile.username}
+                        currentCity={user.profile.currentCity.cityName}
+                        currentCountry={
+                          user.profile.currentCity.country.countryName
+                        }
+                        avatar={user.profile.avatar}
+                        size={"sm"}
+                      />
+                    </Link>
+                    {!user.profile.isSelf && (
+                      <FollowBtn
+                        isFollowing={user.profile.isFollowing}
+                        userId={user.profile.id}
+                        username={user.profile.username}
+                      />
+                    )}
+                  </UserRow>
+                ))}
+              {beforeUsersList &&
+                beforeUsersList.map(user => (
+                  <UserRow key={user.actor.profile.id}>
+                    <Link to={`/${user.actor.profile.username}`}>
+                      <UserHeader
+                        username={user.actor.profile.username}
+                        currentCity={user.actor.profile.currentCity.cityName}
+                        currentCountry={
+                          user.actor.profile.currentCity.country.countryName
+                        }
+                        avatar={user.actor.profile.avatar}
+                        size={"sm"}
+                      />
+                    </Link>
+                    {!user.actor.profile.isSelf && (
+                      <FollowBtn
+                        isFollowing={user.actor.profile.isFollowing}
+                        userId={user.actor.profile.id}
+                        username={user.actor.profile.username}
+                      />
+                    )}
+                  </UserRow>
+                ))}
+              {!nowUsersList &&
+                !beforeUsersList &&
+                usersNow &&
                 usersNow.map(user => (
                   <>
                     <UserRow key={user.profile.id}>
@@ -334,7 +406,9 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                     </UserRow>
                   </>
                 ))}
-              {usersBefore &&
+              {!nowUsersList &&
+                !beforeUsersList &&
+                usersBefore &&
                 usersBefore.map(user => (
                   <>
                     <UserRow key={user.actor.profile.id}>
@@ -380,7 +454,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                 <CityPhoto src={city.country.countryPhoto} />
               </Link>
               <CountryName text={city.country.countryName} />
-              {console.log(city)}
             </CountryContainer>
             <Box>
               {!nearCitiesLoading && nearCities ? (
