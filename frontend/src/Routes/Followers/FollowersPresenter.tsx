@@ -93,16 +93,36 @@ const AvatarContainer = styled.div`
   flex-direction: column;
 `;
 
+const Input = styled.input`
+  width: 215px;
+  border: 0;
+  border: ${props => props.theme.boxBorder};
+  background-color: ${props => props.theme.bgColor};
+  border-radius: 3px;
+  padding: 5px;
+  color: white;
+  font-size: 14px;
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
   userName: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  search: string;
+  usersList: any;
 }
 
 const FollowersPresenter: React.SFC<IProps> = ({
   data: { getFollowers: { profiles = null } = {} } = {},
   loading,
-  userName
+  userName,
+  onChange,
+  search,
+  usersList
 }) => {
   if (loading) {
     return <Loader />;
@@ -126,8 +146,35 @@ const FollowersPresenter: React.SFC<IProps> = ({
             <UserContainer>
               <UserNameRow>
                 <Username>{userName} Followers</Username>
+                <Input
+                  placeholder="Search"
+                  value={search}
+                  onChange={onChange}
+                />
               </UserNameRow>
-              {profiles &&
+              {usersList &&
+                usersList.map(user => (
+                  <UserRow key={user.id}>
+                    <Link to={`/${user.username}`}>
+                      <UserHeader
+                        username={user.username}
+                        currentCity={user.currentCity.cityName}
+                        currentCountry={user.currentCity.country.countryName}
+                        avatar={user.avatar}
+                        size={"sm"}
+                      />
+                    </Link>
+                    {!user.isSelf && (
+                      <FollowBtn
+                        isFollowing={user.isFollowing}
+                        userId={user.id}
+                        username={user.username}
+                      />
+                    )}
+                  </UserRow>
+                ))}
+              {!usersList &&
+                profiles &&
                 profiles.map(profile => (
                   <UserRow key={profile.id}>
                     <Link to={`/${profile.username}`}>
