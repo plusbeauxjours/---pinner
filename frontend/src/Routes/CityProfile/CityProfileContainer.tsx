@@ -91,8 +91,12 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       target: { value }
     } = event;
     console.log(this.data);
-    const { cityProfile: { usersNow = {} } = {} } = ({} = this.data);
-    const { cityProfile: { usersBefore = {} } = {} } = ({} = this.data);
+    const {
+      cityProfile: { usersNow = null }
+    } = this.data;
+    const {
+      cityProfile: { usersBefore = null }
+    } = this.data;
     const nowSearch = (list, text) =>
       list.filter(i =>
         i.profile.username.toLowerCase().includes(text.toLowerCase())
