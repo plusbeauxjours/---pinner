@@ -134,6 +134,7 @@ def resolve_city_profile(self, info, **kwargs):
     if usersNow.count() < 5:
         usersBefore = notification_models.MoveNotification.objects.filter(
             city__city_name=cityName).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')
+        print(usersBefore)
         return card_types.FirstAnnotateRespose(usersNow=usersNow, usersBefore=usersBefore, city=city, coffees=coffees)
 
     return card_types.FirstAnnotateRespose(usersNow=usersNow, usersBefore=None, city=city, coffees=coffees)

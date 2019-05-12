@@ -1,5 +1,6 @@
 import React from "react";
 import { MutationFn, Mutation } from "react-apollo";
+import { RouteComponentProps, withRouter } from "react-router";
 import CityLikeBtnPresenter from "./CityLikeBtnPresenter";
 import { TOGGLE_LIKE_CITY } from "./CityLikeBtnQueries";
 import { ToggleLikeCity, ToggleLikeCityVariables } from "../../types/api";
@@ -9,12 +10,13 @@ class ToggleLikeMutation extends Mutation<
   ToggleLikeCityVariables
 > {}
 
-interface IProps {
+interface IProps extends RouteComponentProps<any> {
   isLiked: boolean;
   cityId: string;
   likeCount: number;
   type: string;
 }
+
 interface IState {
   isLiked: boolean;
   likeCount: number;
@@ -28,6 +30,16 @@ class CityLikeBtnContainer extends React.Component<IProps, IState> {
       isLiked: props.isLiked,
       likeCount: props.likeCount
     };
+  }
+  public componentDidUpdate(oldProps) {
+    const newProps = this.props;
+    console.log(oldProps.match.params.cityName);
+    console.log(newProps.match.params.cityName);
+
+    if (oldProps.match.params.cityName !== newProps.match.params.cityName) {
+      // this.setState({ isLiked: props.isLiked, likeCount: props.likeCount });
+      console.log(this.state);
+    }
   }
   public render() {
     const { isLiked, likeCount } = this.state;
@@ -77,4 +89,4 @@ class CityLikeBtnContainer extends React.Component<IProps, IState> {
   };
 }
 
-export default CityLikeBtnContainer;
+export default withRouter(CityLikeBtnContainer);

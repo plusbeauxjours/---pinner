@@ -31,13 +31,17 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     this.state = {
       page: 0,
       search: "",
-      nowUsersList: null,
-      beforeUsersList: null,
+      nowUsersList: [],
+      beforeUsersList: [],
       coffeeReportModalOpen: false
     };
   }
-  public componentDidMount() {
-    console.log("goodmorning");
+  public componentDidUpdate(oldProps) {
+    const newProps = this.props;
+    if (oldProps.match.params.cityName !== newProps.match.params.cityName) {
+      this.setState({ search: "", nowUsersList: [], beforeUsersList: [] });
+      console.log(this.state);
+    }
   }
   public render() {
     const {
@@ -71,6 +75,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                     search={search}
                     nowUsersList={nowUsersList}
                     beforeUsersList={beforeUsersList}
+                    state={this.state}
                   />
                 );
               }}
@@ -90,7 +95,6 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     const {
       target: { value }
     } = event;
-    console.log(this.data);
     const {
       cityProfile: { usersNow = null }
     } = this.data;

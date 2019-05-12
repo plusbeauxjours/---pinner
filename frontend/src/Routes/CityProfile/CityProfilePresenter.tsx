@@ -259,6 +259,8 @@ interface IProps {
   search: string;
   nowUsersList: any;
   beforeUsersList: any;
+
+  state: any;
 }
 
 const CityProfilePresenter: React.SFC<IProps> = ({
@@ -280,7 +282,9 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   search,
   onChange,
   nowUsersList,
-  beforeUsersList
+  beforeUsersList,
+
+  state
 }) => {
   if (cityLoading) {
     return <Loader />;
@@ -329,11 +333,11 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                 <Username>{city.cityName}</Username>
                 <Input
                   placeholder="Search"
-                  value={search}
                   onChange={onChange}
+                  value={search}
                 />
               </UserNameRow>
-              {nowUsersList &&
+              {nowUsersList.length !== 0 &&
                 nowUsersList.map(user => (
                   <UserRow key={user.profile.id}>
                     <Link to={`/${user.profile.username}`}>
@@ -356,7 +360,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                     )}
                   </UserRow>
                 ))}
-              {beforeUsersList &&
+              {beforeUsersList.length !== 0 &&
                 beforeUsersList.map(user => (
                   <UserRow key={user.actor.profile.id}>
                     <Link to={`/${user.actor.profile.username}`}>
@@ -379,8 +383,8 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                     )}
                   </UserRow>
                 ))}
-              {!nowUsersList &&
-                !beforeUsersList &&
+              {nowUsersList.length === 0 &&
+                beforeUsersList.length === 0 &&
                 usersNow &&
                 usersNow.map(user => (
                   <>
@@ -406,8 +410,8 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                     </UserRow>
                   </>
                 ))}
-              {!nowUsersList &&
-                !beforeUsersList &&
+              {nowUsersList.length === 0 &&
+                beforeUsersList.length === 0 &&
                 usersBefore &&
                 usersBefore.map(user => (
                   <>
