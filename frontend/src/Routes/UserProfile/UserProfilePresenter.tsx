@@ -955,7 +955,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 </TripIcon>
               )}
               {getTipsLoading && <Loader />}
-              {tripList &&
+              {tripList.length !== 0 &&
                 tripList.map(trip => (
                   <UserRow key={trip.id}>
                     <Link to={`/city/${trip.city.cityName}`}>
@@ -994,7 +994,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     </TripOverlay>
                   </UserRow>
                 ))}
-              {!tripList &&
+              {tripList.length === 0 &&
                 !getTipsLoading &&
                 getTrips &&
                 getTrips.map(trip => (
