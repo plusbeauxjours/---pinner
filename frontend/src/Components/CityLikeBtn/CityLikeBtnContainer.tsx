@@ -33,11 +33,11 @@ class CityLikeBtnContainer extends React.Component<IProps, IState> {
   }
   public componentDidUpdate(oldProps) {
     const newProps = this.props;
-    console.log(oldProps.match.params.cityName);
-    console.log(newProps.match.params.cityName);
-
     if (oldProps.match.params.cityName !== newProps.match.params.cityName) {
-      // this.setState({ isLiked: props.isLiked, likeCount: props.likeCount });
+      this.setState({
+        isLiked: newProps.isLiked,
+        likeCount: newProps.likeCount
+      });
       console.log(this.state);
     }
   }

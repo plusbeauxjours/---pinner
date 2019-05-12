@@ -459,13 +459,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               </Link>
               <CountryName text={city.country.countryName} />
             </CountryContainer>
-            <Box>
-              {!nearCitiesLoading && nearCities ? (
-                <LocationGrid cities={nearCities} type={"city"} />
-              ) : (
-                <Loader />
-              )}
-            </Box>
+            <Box />
           </Container>
           <GreyLine />
           <Title>

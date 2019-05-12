@@ -2,10 +2,8 @@ import React from "react";
 import styled from "../Styles/typed-components";
 import { Link } from "react-router-dom";
 import Bold from "./Bold";
-import Weather from "src/Components/Weather";
 
 const ScrollContainer = styled.div`
-  position: relative;
   width: 200px;
   height: 200px;
   display: flex;
@@ -13,9 +11,8 @@ const ScrollContainer = styled.div`
 `;
 
 const Square = styled.div`
+  position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100%;
   width: 100%;
   background-position: cover;
@@ -28,8 +25,6 @@ const Overlay = styled.div`
   opacity: 0;
   display: flex;
   position: absolute;
-  align-items: flex-end;
-  justify-content: center;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
@@ -79,12 +74,15 @@ const Distance = styled.div`
   font-size: 20px;
   position: absolute;
   display: flex;
+  align-self: flex-start;
   margin: 10px 0 0 10px;
 `;
 
 const OverlayContents = styled.div`
   position: relative;
   display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
   padding: 5px;
@@ -114,22 +112,16 @@ const LocationGrid: React.SFC<IProps> = ({
               {cities.map(city => (
                 <ScrollContainer key={city.id}>
                   <Link to={`/city/${city.cityName}`}>
-                    <LocationContainer>
-                      <Square>
-                        <LocationPhoto src={city.cityPhoto} />
-                        <LocationName text={city.cityName} />
-                        <CountryName text={city.country.countryName} />
-                        <Overlay>
-                          <OverlayContents>
-                            <Distance>{city.distance}km</Distance>
-                            <Weather
-                              latitude={city.latitude}
-                              longitude={city.longitude}
-                            />
-                          </OverlayContents>
-                        </Overlay>
-                      </Square>
-                    </LocationContainer>
+                    <Square>
+                      <LocationPhoto src={city.cityPhoto} />
+                      <Overlay>
+                        <OverlayContents>
+                          <LocationName text={city.cityName} />
+                          <CountryName text={city.country.countryName} />
+                          <Distance>{city.distance}km</Distance>
+                        </OverlayContents>
+                      </Overlay>
+                    </Square>
                   </Link>
                 </ScrollContainer>
               ))}
@@ -144,7 +136,11 @@ const LocationGrid: React.SFC<IProps> = ({
                     <LocationContainer>
                       <Square>
                         <LocationPhoto src={country.countryPhoto} />
-                        <LocationName text={country.countryName} />
+                        <Overlay>
+                          <OverlayContents>
+                            <LocationName text={country.countryName} />
+                          </OverlayContents>
+                        </Overlay>
                       </Square>
                     </LocationContainer>
                   </Link>
@@ -161,8 +157,11 @@ const LocationGrid: React.SFC<IProps> = ({
                     <LocationContainer>
                       <Square>
                         <LocationPhoto src={continent.continentPhoto} />
-                        <LocationName text={continent.continentName} />
-                        <Overlay />
+                        <Overlay>
+                          <OverlayContents>
+                            <LocationName text={continent.continentName} />
+                          </OverlayContents>
+                        </Overlay>
                       </Square>
                     </LocationContainer>
                   </Link>
