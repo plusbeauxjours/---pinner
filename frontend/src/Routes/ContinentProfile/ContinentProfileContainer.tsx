@@ -24,8 +24,18 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
     this.state = {
       page: 0,
       search: "",
-      countryList: null
+      countryList: []
     };
+  }
+  public componentDidUpdate(oldProps) {
+    const newProps = this.props;
+    if (
+      oldProps.match.params.continentName !==
+      newProps.match.params.continentName
+    ) {
+      this.setState({ search: "", countryList: [] });
+      console.log(this.state);
+    }
   }
   public render() {
     const {

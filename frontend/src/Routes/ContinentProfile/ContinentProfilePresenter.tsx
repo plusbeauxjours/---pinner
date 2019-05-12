@@ -266,7 +266,7 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
                   onChange={onChange}
                 />
               </UserNameRow>
-              {countryList &&
+              {countryList.length !== 0 &&
                 countryList.map(country => (
                   <UserRow key={country.id}>
                     <Link to={`/country/${country.countryName}`}>
@@ -280,7 +280,7 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
                     </Link>
                   </UserRow>
                 ))}
-              {!countryList &&
+              {countryList.length === 0 &&
                 countries &&
                 countries.map(country => (
                   <UserRow key={country.id}>

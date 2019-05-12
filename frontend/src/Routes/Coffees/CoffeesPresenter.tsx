@@ -150,7 +150,7 @@ const FollowingsPresenter: React.SFC<IProps> = ({
               <Username>{userName} Coffees</Username>
               <Input placeholder="Search" value={search} onChange={onChange} />
             </UserNameRow>
-            {coffeesList &&
+            {coffeesList.length !== 0 &&
               coffeesList.map(coffee => (
                 <React.Fragment key={coffee.id}>
                   <Link to={`/c/${coffee.id}`}>
@@ -169,7 +169,7 @@ const FollowingsPresenter: React.SFC<IProps> = ({
                   </Link>
                 </React.Fragment>
               ))}
-            {!coffeesList &&
+            {coffeesList.length === 0 &&
               coffees &&
               coffees.map(coffee => (
                 <React.Fragment key={coffee.id}>

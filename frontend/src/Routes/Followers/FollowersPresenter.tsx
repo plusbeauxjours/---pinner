@@ -152,7 +152,7 @@ const FollowersPresenter: React.SFC<IProps> = ({
                   onChange={onChange}
                 />
               </UserNameRow>
-              {usersList &&
+              {usersList.length !== 0 &&
                 usersList.map(user => (
                   <UserRow key={user.id}>
                     <Link to={`/${user.username}`}>
@@ -173,7 +173,7 @@ const FollowersPresenter: React.SFC<IProps> = ({
                     )}
                   </UserRow>
                 ))}
-              {!usersList &&
+              {usersList.length === 0 &&
                 profiles &&
                 profiles.map(profile => (
                   <UserRow key={profile.id}>

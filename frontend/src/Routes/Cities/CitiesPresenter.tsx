@@ -173,7 +173,7 @@ const CitiesPresenter: React.SFC<IProps> = ({
                 />
               </UserNameRow>
               {console.log(cityList)}
-              {cityList &&
+              {cityList.length !== 0 &&
                 cityList.map(city => (
                   <UserRow key={city.id}>
                     <Link to={`/city/${city.cityName}`}>
@@ -195,7 +195,7 @@ const CitiesPresenter: React.SFC<IProps> = ({
                     />
                   </UserRow>
                 ))}
-              {!cityList &&
+              {cityList.length === 0 &&
                 cities &&
                 cities.map(city => (
                   <UserRow key={city.id}>

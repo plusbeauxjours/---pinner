@@ -171,7 +171,7 @@ const CountriesPresenter: React.SFC<IProps> = ({
                   onChange={onChange}
                 />
               </UserNameRow>
-              {countryList &&
+              {countryList.length !== 0 &&
                 countryList &&
                 countryList.map(country => (
                   <UserRow key={country.id}>
@@ -188,7 +188,7 @@ const CountriesPresenter: React.SFC<IProps> = ({
                     <GreyText text={`${country.diff} d`} />
                   </UserRow>
                 ))}
-              {!countryList &&
+              {countryList.length === 0 &&
                 countries &&
                 countries.map(country => (
                   <UserRow key={country.id}>

@@ -18,7 +18,14 @@ class FollowersContainer extends React.Component<IProps, IState> {
   public data;
   constructor(props) {
     super(props);
-    this.state = { username: props.username, search: "", usersList: null };
+    this.state = { username: props.username, search: "", usersList: [] };
+  }
+  public componentDidUpdate(oldProps) {
+    const newProps = this.props;
+    if (oldProps.match.params.username !== newProps.match.params.username) {
+      this.setState({ search: "", usersList: [] });
+      console.log(this.state);
+    }
   }
   public render = () => {
     const {
