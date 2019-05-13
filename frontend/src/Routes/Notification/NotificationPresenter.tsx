@@ -53,6 +53,7 @@ interface IProps {
   search: string;
   notificationList: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onMarkRead: (notificationId: string) => void;
 }
 
 const NotificationPresenter: React.SFC<IProps> = ({
@@ -61,7 +62,8 @@ const NotificationPresenter: React.SFC<IProps> = ({
   modalOpen,
   search,
   notificationList,
-  onChange
+  onChange,
+  onMarkRead
 }) => {
   if (loading) {
     return <Loader />;
@@ -83,6 +85,7 @@ const NotificationPresenter: React.SFC<IProps> = ({
                     notification={notification}
                     actor={notification.actor.profile}
                     isRead={notification.read}
+                    onMarkRead={onMarkRead}
                   />
                 );
               })}
@@ -95,6 +98,7 @@ const NotificationPresenter: React.SFC<IProps> = ({
                     notification={notification}
                     actor={notification.actor.profile}
                     isRead={notification.read}
+                    onMarkRead={onMarkRead}
                   />
                 );
               })}
