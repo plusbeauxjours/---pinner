@@ -21,6 +21,7 @@ interface IState {
 
 class NotificationContainer extends React.Component<any, IState> {
   public data;
+  public fetchMore;
   public markAsReadFn: MutationFn;
   constructor(props) {
     super(props);
@@ -46,8 +47,9 @@ class NotificationContainer extends React.Component<any, IState> {
               query={GET_NOTIFICATION}
               variables={{ page }}
             >
-              {({ data, loading }) => {
+              {({ data, loading, fetchMore }) => {
                 this.data = data;
+                this.fetchMore = fetchMore;
                 return (
                   <NotificationPresenter
                     data={data}
@@ -58,6 +60,7 @@ class NotificationContainer extends React.Component<any, IState> {
                     notificationList={notificationList}
                     onChange={this.onChange}
                     onMarkRead={this.onMarkRead}
+                    loadMore={this.loadMore}
                   />
                 );
               }}
@@ -116,6 +119,29 @@ class NotificationContainer extends React.Component<any, IState> {
     } catch (e) {
       console.log(e);
     }
+  };
+  public loadMore = page => {
+    this.fetchMore({
+      query: GET_NOTIFICATION,
+      variables: {
+        page
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return previousResult;
+        }
+        const newData = {
+          getNotifications: {
+            ...previousResult.getNotifications,
+            notifications: [
+              ...previousResult.getNotifications.notifications,
+              ...fetchMoreResult.getNotifications.notifications
+            ]
+          }
+        };
+        return newData;
+      }
+    });
   };
 }
 

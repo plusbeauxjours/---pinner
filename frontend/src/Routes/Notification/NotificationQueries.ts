@@ -3,6 +3,8 @@ import gql from "graphql-tag";
 export const GET_NOTIFICATION = gql`
   query GetNotifications($page: Int) {
     getNotifications(page: $page) {
+      page
+      hasNextPage
       notifications {
         id
         actor {

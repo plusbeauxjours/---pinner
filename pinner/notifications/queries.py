@@ -15,6 +15,8 @@ def resolve_get_notifications(self, info, **kwargs):
     page = kwargs.get('page', 0)
     offset = 20 * page
 
+    nextPage = page+1
+
     following_profiles = user.profile.followings.values('id').all()
 
     upload_notifications = models.Notification.objects.filter(
@@ -23,9 +25,13 @@ def resolve_get_notifications(self, info, **kwargs):
     notifications = user.notification_to.all()
 
     combined = notifications.union(upload_notifications).order_by(
-        '-created_at')[offset:20 + offset]
+        '-created_at')
 
-    return types.GetNotificationsResponse(ok=True, notifications=combined)
+    hasNextPage = offset < combined.count()
+
+    notifications = combined[offset:20 + offset]
+
+    return types.GetNotificationsResponse(ok=True, notifications=notifications, page=nextPage, hasNextPage=hasNextPage)
 
 
 @login_required

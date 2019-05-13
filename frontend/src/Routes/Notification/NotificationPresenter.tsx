@@ -6,6 +6,8 @@ import Wrapper from "src/Components/Wrapper";
 import Loader from "src/Components/Loader";
 import { Route } from "react-router";
 
+import InfiniteScroll from "react-infinite-scroller";
+
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
 `;
@@ -54,16 +56,20 @@ interface IProps {
   notificationList: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onMarkRead: (notificationId: string) => void;
+  loadMore: any;
 }
 
 const NotificationPresenter: React.SFC<IProps> = ({
-  data: { getNotifications: { notifications = null } = {} } = {},
+  data: {
+    getNotifications: { notifications = null, hasNextPage = false } = {}
+  } = {},
   loading,
   modalOpen,
   search,
   notificationList,
   onChange,
-  onMarkRead
+  onMarkRead,
+  loadMore
 }) => {
   if (loading) {
     return <Loader />;
@@ -72,37 +78,48 @@ const NotificationPresenter: React.SFC<IProps> = ({
       <>
         {modalOpen && <Route path="/p/:id" component={CardDetail} />}
         <SWrapper>
-          <UserContainer>
-            <UserNameRow>
-              <Username>NOTIFICATIONS</Username>
-              <Input placeholder="Search" value={search} onChange={onChange} />
-            </UserNameRow>
-            {notificationList.length !== 0 &&
-              notifications.map(notification => {
-                return (
-                  <NotificationRow
-                    key={notification.id}
-                    notification={notification}
-                    actor={notification.actor.profile}
-                    isRead={notification.read}
-                    onMarkRead={onMarkRead}
-                  />
-                );
-              })}
-            {notificationList.length === 0 &&
-              notifications &&
-              notifications.map(notification => {
-                return (
-                  <NotificationRow
-                    key={notification.id}
-                    notification={notification}
-                    actor={notification.actor.profile}
-                    isRead={notification.read}
-                    onMarkRead={onMarkRead}
-                  />
-                );
-              })}
-          </UserContainer>
+          {" "}
+          <InfiniteScroll
+            hasMore={hasNextPage}
+            loader={<Loader key={0} />}
+            loadMore={loadMore}
+          >
+            <UserContainer>
+              <UserNameRow>
+                <Username>NOTIFICATIONS</Username>
+                <Input
+                  placeholder="Search"
+                  value={search}
+                  onChange={onChange}
+                />
+              </UserNameRow>
+              {notificationList.length !== 0 &&
+                notifications.map(notification => {
+                  return (
+                    <NotificationRow
+                      key={notification.id}
+                      notification={notification}
+                      actor={notification.actor.profile}
+                      isRead={notification.read}
+                      onMarkRead={onMarkRead}
+                    />
+                  );
+                })}
+              {notificationList.length === 0 &&
+                notifications &&
+                notifications.map(notification => {
+                  return (
+                    <NotificationRow
+                      key={notification.id}
+                      notification={notification}
+                      actor={notification.actor.profile}
+                      isRead={notification.read}
+                      onMarkRead={onMarkRead}
+                    />
+                  );
+                })}
+            </UserContainer>
+          </InfiniteScroll>
         </SWrapper>
       </>
     );

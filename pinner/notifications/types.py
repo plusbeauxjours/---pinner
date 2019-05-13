@@ -37,6 +37,8 @@ class DurationDaysResponse(graphene.ObjectType):
 
 
 class GetNotificationsResponse(graphene.ObjectType):
+    page = graphene.Int()
+    hasNextPage = graphene.Boolean()
     notifications = graphene.List(NotificationType)
     ok = graphene.Boolean()
 

@@ -1867,6 +1867,8 @@ export interface GetNotifications_getNotifications_notifications {
 
 export interface GetNotifications_getNotifications {
   __typename: "GetNotificationsResponse";
+  page: number | null;
+  hasNextPage: boolean | null;
   notifications: (GetNotifications_getNotifications_notifications | null)[] | null;
 }
 
