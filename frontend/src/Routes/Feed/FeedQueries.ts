@@ -56,7 +56,7 @@ export const GET_FEED = gql`
 `;
 
 export const GET_FEED_CARDS = gql`
-  query GetFeedCards($page: Int!, $cityName: String!) {
+  query GetFeedCards($page: Int, $cityName: String!) {
     getFeedCards(page: $page, cityName: $cityName) {
       cards {
         ...DetailParts
@@ -90,4 +90,3 @@ export const REQUEST_COFFEE = gql`
   }
   ${COFFEE_FRAGMENT}
 `;
-

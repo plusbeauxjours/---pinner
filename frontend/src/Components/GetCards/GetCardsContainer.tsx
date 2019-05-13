@@ -29,7 +29,6 @@ class GetCardsContainer extends React.Component<IProps, IState> {
     };
   }
   public render() {
-    const { page } = this.state;
     const {
       location,
       cityName,
@@ -43,7 +42,6 @@ class GetCardsContainer extends React.Component<IProps, IState> {
       <GetCardsQuery
         query={GET_CARDS}
         variables={{
-          page,
           location,
           cityName,
           countryName,

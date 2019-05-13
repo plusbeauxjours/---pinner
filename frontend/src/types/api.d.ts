@@ -1487,7 +1487,7 @@ export interface GetFeedCards {
 }
 
 export interface GetFeedCardsVariables {
-  page: number;
+  page?: number | null;
   cityName: string;
 }
 

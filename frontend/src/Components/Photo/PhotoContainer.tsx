@@ -22,12 +22,12 @@ import {
   EditCardVariables
 } from "../../types/api";
 import { FOLLOW_USER } from "../FollowBtn/FollowBtnQueries";
-import { GET_FEED } from "../../../../frontend/src/Routes/Feed/FeedQueries";
 import { toast } from "react-toastify";
 import { withRouter, RouteComponentProps } from "react-router";
-import { GET_USER } from "../../Routes/UserProfile/UserProfileQueries";
 import { GET_COMMENTS } from "../Comments/CommentsQueries";
 import { EDIT_CARD } from "../../../../frontend/src/Components/Photo/PhotoQueries";
+import { GET_CARDS } from "../GetCards/GetCardsQueries";
+import { GET_FEED_CARDS } from "../../Routes/Feed/FeedQueries";
 
 class AddCommentMutation extends Mutation<AddComment, AddCommentVariables> {}
 class DeleteCommentMutation extends Mutation<
@@ -387,24 +387,23 @@ class PhotoContainer extends React.Component<IProps, IState> {
     }
   };
   public updateDeleteCard = (cache, { data: { deleteCard } }) => {
-    const { page, currentCity, creatorUsername } = this.props;
+    const { currentCity, creatorUsername } = this.props;
+    const { cardId } = deleteCard;
     try {
       const feedData = cache.readQuery({
-        query: GET_FEED,
+        query: GET_FEED_CARDS,
         variables: {
-          cityName: currentCity || localStorage.getItem("cityName"),
-          page: page || 0
+          cityName: currentCity || localStorage.getItem("cityName")
         }
       });
       if (feedData) {
-        feedData.feed.cards = feedData.feed.cards.filter(
-          i => parseInt(i.id, 10) !== deleteCard.cardId
+        feedData.getFeedCards.cards = feedData.getFeedCards.cards.filter(
+          i => parseInt(i.id, 10) !== parseInt(cardId, 10)
         );
         cache.writeQuery({
-          query: GET_FEED,
+          query: GET_FEED_CARDS,
           variables: {
-            cityName: currentCity || localStorage.getItem("cityName"),
-            page: page || 0
+            cityName: currentCity || localStorage.getItem("cityName")
           },
           data: feedData
         });
@@ -412,21 +411,26 @@ class PhotoContainer extends React.Component<IProps, IState> {
     } catch (e) {
       console.log(e);
     }
-
     try {
       const userData = cache.readQuery({
-        query: GET_USER,
+        query: GET_CARDS,
         variables: {
-          username: creatorUsername
+          location: "user",
+          userName: creatorUsername
         }
       });
+      console.log(userData);
       if (userData) {
-        userData.userProfile.user.cards = userData.userProfile.user.cards.filter(
+        userData.getCards.cards = userData.getCards.cards.filter(
           i => parseInt(i.id, 10) !== deleteCard.cardId
         );
+        console.log(userData);
         cache.writeQuery({
-          query: GET_USER,
-          username: creatorUsername,
+          query: GET_CARDS,
+          variables: {
+            location: "user",
+            userName: creatorUsername
+          },
           data: userData
         });
       }
@@ -461,7 +465,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
           i => parseInt(i.id, 10) !== parseInt(commentId, 10)
         );
         console.log(data);
-
         cache.writeQuery({
           query: GET_COMMENTS,
           variables: {

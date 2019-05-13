@@ -124,15 +124,18 @@ class CommentsContainer extends React.Component<IProps, IState> {
   //     const data = cache.readQuery({
   //       query: GET_COMMENTS,
   //       variables: {
-  //         cardId: parseInt(cardId, 10)
+  //         cardId
   //       }
   //     });
   //     console.log(data);
   //     if (data) {
+  //       data.getComments.comments.find(
+  //         i => parseInt(i.id, 10) === editComment.id
+  //       ) = editComment.comment;
   //       cache.writeQuery({
   //         query: GET_COMMENTS,
   //         variables: {
-  //           cardId: parseInt(cardId, 10)
+  //           cardId
   //         },
   //         data
   //       });

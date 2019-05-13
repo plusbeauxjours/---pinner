@@ -142,7 +142,6 @@ class FeedContainer extends React.Component<IProps, IState> {
       <GetCardsQuery
         query={GET_FEED_CARDS}
         variables={{
-          page,
           cityName: currentCity
         }}
       >
