@@ -1,59 +1,53 @@
 import React from "react";
-import { Query, Mutation, MutationFn } from "react-apollo";
+import { Query } from "react-apollo";
 import { GetNotifications, GetNotificationsVariables } from "../../types/api";
 
 import NotificationPresenter from "./NotificationPresenter";
-import { GET_NOTIFICATION, MARK_AS_READ } from "./NotificationQueries";
-import { MarkAsRead, MarkAsReadVariables } from "../../types/api";
+import { GET_NOTIFICATION } from "./NotificationQueries";
 
 class GetNotificationsQuery extends Query<
   GetNotifications,
   GetNotificationsVariables
 > {}
 
-class MarkAsReadMutation extends Mutation<MarkAsRead, MarkAsReadVariables> {}
-
 interface IState {
   page: number;
   modalOpen: boolean;
   notificationId: string;
+  search: string;
+  notificationList: any;
 }
 
 class NotificationContainer extends React.Component<any, IState> {
-  public markAsReadFn: MutationFn;
+  public data;
   constructor(props) {
     super(props);
     this.state = {
       page: 0,
       modalOpen: false,
-      notificationId: ""
+      notificationId: "",
+      search: "",
+      notificationList: []
     };
   }
   public render() {
-    const { page, modalOpen, notificationId } = this.state;
+    const { page, modalOpen, search, notificationList } = this.state;
     return (
       <GetNotificationsQuery query={GET_NOTIFICATION} variables={{ page }}>
-        {({ data, loading }) => (
-          <MarkAsReadMutation
-            mutation={MARK_AS_READ}
-            variables={{
-              notificationId: parseInt(notificationId, 10)
-            }}
-          >
-            {markAsReadFn => {
-              this.markAsReadFn = markAsReadFn;
-              return (
-                <NotificationPresenter
-                  data={data}
-                  loading={loading}
-                  modalOpen={modalOpen}
-                  toggleModal={this.toggleModal}
-                  onMarkRead={this.onMarkRead}
-                />
-              );
-            }}
-          </MarkAsReadMutation>
-        )}
+        {({ data, loading }) => {
+          this.data = data;
+          return (
+            <NotificationPresenter
+              data={data}
+              loading={loading}
+              modalOpen={modalOpen}
+              toggleModal={this.toggleModal}
+              search={search}
+              notificationList={notificationList}
+              onChange={this.onChange}
+            />
+          );
+        }}
       </GetNotificationsQuery>
     );
   }
@@ -63,13 +57,27 @@ class NotificationContainer extends React.Component<any, IState> {
       modalOpen: !modalOpen
     } as any);
   };
-  public onMarkRead = (notificationId: string, isRead: boolean) => {
+
+  public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
+    const {
+      target: { value }
+    } = event;
+    console.log(this.data);
+    const { getNotifications: { notifications = {} } = {} } = ({} = this.data);
+    const nowSearch = (list, text) =>
+      list.filter(
+        i =>
+          i.city.cityName.toLowerCase().includes(text.toLowerCase()) ||
+          i.city.country.countryName.toLowerCase().includes(text.toLowerCase())
+      );
+    const notificationList = nowSearch(notifications, value);
+    console.log(this.data);
+
+    console.log(notificationList);
     this.setState({
-      notificationId,
-      isRead
+      search: value,
+      notificationList
     } as any);
-    console.log(isRead, this.state);
-    this.markAsReadFn({ variables: { notificationId } });
   };
 }
 

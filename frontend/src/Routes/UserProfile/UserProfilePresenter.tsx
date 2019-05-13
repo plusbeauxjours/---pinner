@@ -995,7 +995,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   </UserRow>
                 ))}
               {tripList.length === 0 &&
-                !getTipsLoading &&
                 getTrips &&
                 getTrips.map(trip => (
                   <UserRow key={trip.id}>

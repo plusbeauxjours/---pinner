@@ -150,13 +150,8 @@ export const Upload: React.SFC = () => (
 );
 
 export const RedDot: React.SFC = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="5"
-    height="5"
-    viewBox="0 0 24 24"
-  >
-    <path d="M12 0c-6.623 0-12 5.377-12 12s5.377 12 12 12 12-5.377 12-12-5.377-12-12-12zm0 22c-5.519 0-10-4.48-10-10 0-5.519 4.481-10 10-10 5.52 0 10 4.481 10 10 0 5.52-4.48 10-10 10z" />
+  <svg>
+    <circle cx="2.5" cy="2.5" r="2.5" fill="red" />
   </svg>
 );
 
