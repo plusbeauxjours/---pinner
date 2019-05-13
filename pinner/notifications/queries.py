@@ -28,7 +28,7 @@ def resolve_get_notifications(self, info, **kwargs):
         '-created_at')
 
     hasNextPage = offset < combined.count()
-
+    print(hasNextPage)
     notifications = combined[offset:20 + offset]
 
     return types.GetNotificationsResponse(ok=True, notifications=notifications, page=nextPage, hasNextPage=hasNextPage)

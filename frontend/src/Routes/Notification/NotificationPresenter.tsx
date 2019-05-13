@@ -78,12 +78,7 @@ const NotificationPresenter: React.SFC<IProps> = ({
       <>
         {modalOpen && <Route path="/p/:id" component={CardDetail} />}
         <SWrapper>
-          {" "}
-          <InfiniteScroll
-            hasMore={hasNextPage}
-            loader={<Loader key={0} />}
-            loadMore={loadMore}
-          >
+          <InfiniteScroll hasMore={hasNextPage} loadMore={loadMore}>
             <UserContainer>
               <UserNameRow>
                 <Username>NOTIFICATIONS</Username>
@@ -94,7 +89,7 @@ const NotificationPresenter: React.SFC<IProps> = ({
                 />
               </UserNameRow>
               {notificationList.length !== 0 &&
-                notifications.map(notification => {
+                notificationList.map(notification => {
                   return (
                     <NotificationRow
                       key={notification.id}
@@ -105,7 +100,9 @@ const NotificationPresenter: React.SFC<IProps> = ({
                     />
                   );
                 })}
+              {console.log(notificationList)}
               {notificationList.length === 0 &&
+                !search &&
                 notifications &&
                 notifications.map(notification => {
                   return (

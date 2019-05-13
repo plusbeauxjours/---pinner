@@ -33,6 +33,15 @@ class NotificationContainer extends React.Component<any, IState> {
       notificationList: []
     };
   }
+  public componentDidUpdate(prevProps) {
+    const newProps = this.props;
+    console.log(prevProps);
+    console.log(newProps);
+    // if (prevProps.match.params.cityName !== newProps.match.params.cityName) {
+    //   this.setState({ search: "", nowUsersList: [], beforeUsersList: [] });
+    //   console.log(this.state);
+    // }
+  }
   public render() {
     const { page, modalOpen, search, notificationList } = this.state;
     return (
@@ -80,17 +89,14 @@ class NotificationContainer extends React.Component<any, IState> {
     const {
       target: { value }
     } = event;
-    console.log(this.data);
-    const { getNotifications: { notifications = {} } = {} } = ({} = this.data);
+    const {
+      getNotifications: { notifications = null }
+    } = this.data;
     const nowSearch = (list, text) =>
-      list.filter(
-        i =>
-          i.city.cityName.toLowerCase().includes(text.toLowerCase()) ||
-          i.city.country.countryName.toLowerCase().includes(text.toLowerCase())
+      list.filter(i =>
+        i.actor.username.toLowerCase().includes(text.toLowerCase())
       );
     const notificationList = nowSearch(notifications, value);
-    console.log(this.data);
-
     console.log(notificationList);
     this.setState({
       search: value,
@@ -102,9 +108,10 @@ class NotificationContainer extends React.Component<any, IState> {
   };
   public updateMarkAsRead = (cache, { data: { markAsRead } }) => {
     try {
+      const { page } = this.state;
       const data = cache.readQuery({
         query: GET_NOTIFICATION,
-        variables: { page: 0 }
+        variables: { page }
       });
       if (data) {
         data.getNotifications.notifications.find(
@@ -112,7 +119,7 @@ class NotificationContainer extends React.Component<any, IState> {
         ).read = true;
         cache.writeQuery({
           query: GET_NOTIFICATION,
-          variables: { page: 0 },
+          variables: { page },
           data
         });
       }

@@ -14,7 +14,6 @@ def resolve_feed(self, info, **kwargs):
 
     user = info.context.user
     cityName = kwargs.get('cityName')
-
     
     city = location_models.City.objects.get(city_name=cityName)
 
