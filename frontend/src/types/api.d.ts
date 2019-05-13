@@ -228,9 +228,32 @@ export interface GetCommentsVariables {
 // GraphQL mutation operation: EditComment
 // ====================================================
 
+export interface EditComment_editComment_comment_creator_profile {
+  __typename: "ProfileType";
+  isSelf: boolean | null;
+}
+
+export interface EditComment_editComment_comment_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: EditComment_editComment_comment_creator_profile | null;
+}
+
+export interface EditComment_editComment_comment {
+  __typename: "CommentType";
+  id: string;
+  message: string;
+  edited: boolean;
+  creator: EditComment_editComment_comment_creator | null;
+  isLiked: boolean | null;
+}
+
 export interface EditComment_editComment {
   __typename: "EditCommentResponse";
-  ok: boolean | null;
+  comment: EditComment_editComment_comment | null;
 }
 
 export interface EditComment {

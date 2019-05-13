@@ -388,7 +388,6 @@ class PhotoContainer extends React.Component<IProps, IState> {
   };
   public updateDeleteCard = (cache, { data: { deleteCard } }) => {
     const { page, currentCity, creatorUsername } = this.props;
-
     try {
       const feedData = cache.readQuery({
         query: GET_FEED,
@@ -513,7 +512,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
   };
   public onCompletedEditCard = data => {
     const { closeEditMode } = this.props;
-    if (data.editCard.ok) {
+    if (data.editCard) {
       toast.success("Card edited");
     } else {
       toast.error("error");

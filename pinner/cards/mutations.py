@@ -72,7 +72,7 @@ class EditCard(graphene.Mutation):
             if card.creator.id != user.id:
 
                 error = "Unauthorized"
-                return types.EditCardResponse(ok=False, card=None)
+                return types.EditCardResponse( card=None)
 
             else:
 
@@ -80,13 +80,13 @@ class EditCard(graphene.Mutation):
                     card.caption = caption
                     card.city = city
                     card.save()
-                    return types.EditCardResponse(ok=True, card=card)
+                    return types.EditCardResponse( card=card)
                 except IntegrityError as e:
                     print(e)
-                    return types.EditCardResponse(ok=False, card=None)
+                    return types.EditCardResponse( card=None)
 
         else:
-            return types.EditCardResponse(ok=False, card=None)
+            return types.EditCardResponse( card=None)
 
 
 class DeleteCard(graphene.Mutation):
@@ -198,7 +198,7 @@ class AddComment(graphene.Mutation):
             return types.AddCommentResponse(comment=comment)
 
         except models.Card.DoesNotExist:
-            return types.EditCommentResponse(ok=False)
+            return types.AddCommentResponse(comment=None)
 
 
 class EditComment(graphene.Mutation):
@@ -232,16 +232,16 @@ class EditComment(graphene.Mutation):
                     comment.edited = True
                     comment.save()
 
-                    return types.EditCommentResponse(ok=True)
+                    return types.EditCommentResponse(comment=comment)
 
                 else:
-                    return types.EditCommentResponse(ok=False)
+                    return types.EditCommentResponse(comment=None)
 
             except models.Comment.DoesNotExist:
-                return types.EditCommentResponse(ok=False)
+                return types.EditCommentResponse(comment=None)
 
         except models.Card.DoesNotExist:
-            return types.EditCommentResponse(ok=False)
+            return types.EditCommentResponse(comment=None)
 
 
 

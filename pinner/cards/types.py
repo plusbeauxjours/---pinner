@@ -74,7 +74,6 @@ class UploadCardResponse(graphene.ObjectType):
 
 
 class EditCardResponse(graphene.ObjectType):
-    ok = graphene.Boolean()
     card = graphene.Field(CardType)
 
 
@@ -138,7 +137,7 @@ class GetCommentsResponse(graphene.ObjectType):
 
 
 class EditCommentResponse(graphene.ObjectType):
-    ok = graphene.Boolean()
+    comment = graphene.Field(CommentType)
 
 
 class GetCardsResponse(graphene.ObjectType):

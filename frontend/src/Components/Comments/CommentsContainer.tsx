@@ -32,7 +32,7 @@ class CommentsContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      message: props.message,
+      message: "",
       commentId: null,
       commentEditMode: false,
       openedComment: props.openedComment
@@ -50,11 +50,11 @@ class CommentsContainer extends React.Component<IProps, IState> {
           commentId: parseInt(commentId, 10),
           message
         }}
+        // update={this.updateEditComment}
         onCompleted={this.onCompletedEditComment}
       >
         {editCommentFn => {
           this.editCommentFn = editCommentFn;
-
           return (
             <GetCommentsQuery
               query={GET_COMMENTS}
@@ -88,7 +88,6 @@ class CommentsContainer extends React.Component<IProps, IState> {
     this.setState({
       message: value
     } as any);
-    console.log(this.state);
   };
   public editCommentGetId = commentId => {
     const { commentEditMode } = this.state;
@@ -105,10 +104,9 @@ class CommentsContainer extends React.Component<IProps, IState> {
       return;
     }
   };
-
   public onCompletedEditComment = data => {
     const { commentEditMode } = this.state;
-    if (data.editComment.ok) {
+    if (data.editComment) {
       toast.success("Comment edited");
     } else {
       toast.error("error");
@@ -119,6 +117,30 @@ class CommentsContainer extends React.Component<IProps, IState> {
       message: ""
     });
   };
+  // public updateEditComment = (cache, { data: { editComment } }) => {
+  //   console.log(editComment);
+  //   const { cardId } = this.props;
+  //   try {
+  //     const data = cache.readQuery({
+  //       query: GET_COMMENTS,
+  //       variables: {
+  //         cardId: parseInt(cardId, 10)
+  //       }
+  //     });
+  //     console.log(data);
+  //     if (data) {
+  //       cache.writeQuery({
+  //         query: GET_COMMENTS,
+  //         variables: {
+  //           cardId: parseInt(cardId, 10)
+  //         },
+  //         data
+  //       });
+  //     }
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 }
 
 export default CommentsContainer;
