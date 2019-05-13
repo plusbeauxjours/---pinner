@@ -88,7 +88,6 @@ class GetCardsContainer extends React.Component<IProps, IState> {
         if (!fetchMoreResult) {
           return previousResult;
         }
-        console.log(previousResult, fetchMoreResult);
         const newData = {
           getCards: {
             ...previousResult.getCards,
@@ -101,7 +100,6 @@ class GetCardsContainer extends React.Component<IProps, IState> {
         return newData;
       }
     });
-    console.log(this.state);
   };
 }
 

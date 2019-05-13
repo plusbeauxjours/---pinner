@@ -27,10 +27,10 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
       countryList: []
     };
   }
-  public componentDidUpdate(oldProps) {
+  public componentDidUpdate(prevProps) {
     const newProps = this.props;
     if (
-      oldProps.match.params.continentName !==
+      prevProps.match.params.continentName !==
       newProps.match.params.continentName
     ) {
       this.setState({ search: "", countryList: [] });

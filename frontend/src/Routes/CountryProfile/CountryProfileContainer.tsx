@@ -28,10 +28,10 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
       cityList: []
     };
   }
-  public componentDidUpdate(oldProps) {
+  public componentDidUpdate(prevProps) {
     const newProps = this.props;
     if (
-      oldProps.match.params.countryName !== newProps.match.params.countryName
+      prevProps.match.params.countryName !== newProps.match.params.countryName
     ) {
       this.setState({ search: "", cityList: [] });
       console.log(this.state);

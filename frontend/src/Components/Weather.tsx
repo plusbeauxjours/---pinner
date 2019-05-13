@@ -49,9 +49,9 @@ class Weather extends React.Component<IProps, IState> {
     const { latitude, longitude } = this.props;
     this.getWeather(latitude, longitude);
   }
-  public componentDidUpdate(oldProps) {
+  public componentDidUpdate(prevProps) {
     const newProps = this.props;
-    if (oldProps !== newProps) {
+    if (prevProps !== newProps) {
       this.getWeather(newProps.latitude, newProps.longitude);
     }
   }

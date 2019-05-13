@@ -19,6 +19,20 @@ class FollowBtnContainer extends React.Component<any, IState> {
       isFollowing: props.isFollowing
     };
   }
+  public componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+  }
+  public componentDidUpdate(prevProps, prevState) {
+    console.log(prevProps);
+    console.log(this.props);
+    console.log(prevState);
+    console.log(this.state);
+    console.log("something");
+    // if (this.props.isFollowing !== this.state.isFollowing) {
+    //   const { isFollowing } = this.state;
+    //   this.setState({ isFollowing: !isFollowing });
+    // }
+  }
   public render() {
     const { isFollowing } = this.state;
     const { userId } = this.props;
@@ -35,6 +49,7 @@ class FollowBtnContainer extends React.Component<any, IState> {
             }
           }
         ]}
+        fetchPolicy="no-cache"
       >
         {followUserFn => {
           this.followUserFn = followUserFn;
@@ -49,11 +64,11 @@ class FollowBtnContainer extends React.Component<any, IState> {
     );
   }
   public toggleBtn = () => {
+    this.followUserFn();
     this.setState(state => {
       return {
         isFollowing: !state.isFollowing
       };
-      this.followUserFn();
     });
   };
 }

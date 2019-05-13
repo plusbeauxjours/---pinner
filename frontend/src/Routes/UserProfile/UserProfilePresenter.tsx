@@ -1048,7 +1048,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid knowingFollowers={knowingFollowers} />
             </>
           ) : null}
-          {!coffeeLoading && coffees && coffees.length !== 0 ? (
+          {!coffeeLoading && coffees ? (
             <>
               <SmallTitle>
                 <SmallGreyLine />
@@ -1057,7 +1057,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid coffees={coffees} />
             </>
           ) : null}
-          {user.profile.isSelf && coffees.length === 0 ? (
+          {user.profile.isSelf && !coffees ? (
             <>
               <SmallTitle>
                 <SmallGreyLine />

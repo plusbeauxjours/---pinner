@@ -21,9 +21,9 @@ class FollowingsContainer extends React.Component<IProps, IState> {
     super(props);
     this.state = { username: props.username, search: "", usersList: [] };
   }
-  public componentDidUpdate(oldProps) {
+  public componentDidUpdate(prevProps) {
     const newProps = this.props;
-    if (oldProps.match.params.username !== newProps.match.params.username) {
+    if (prevProps.match.params.username !== newProps.match.params.username) {
       this.setState({ search: "", usersList: [] });
       console.log(this.state);
     }

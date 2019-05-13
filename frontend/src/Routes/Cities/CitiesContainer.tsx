@@ -25,9 +25,9 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
       cityList: []
     };
   }
-  public componentDidUpdate(oldProps) {
+  public componentDidUpdate(prevProps) {
     const newProps = this.props;
-    if (oldProps.match.params.username !== newProps.match.params.username) {
+    if (prevProps.match.params.username !== newProps.match.params.username) {
       this.setState({ search: "", cityList: [] });
       console.log(this.state);
     }
