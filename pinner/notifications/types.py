@@ -42,6 +42,7 @@ class GetNotificationsResponse(graphene.ObjectType):
 
 
 class MarkAsReadResponse(graphene.ObjectType):
+    notificationId = graphene.Int()
     ok = graphene.Boolean()
 
 

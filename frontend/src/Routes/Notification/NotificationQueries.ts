@@ -38,6 +38,7 @@ export const GET_NOTIFICATION = gql`
 export const MARK_AS_READ = gql`
   mutation MarkAsRead($notificationId: Int!) {
     markAsRead(notificationId: $notificationId) {
+      notificationId
       ok
     }
   }

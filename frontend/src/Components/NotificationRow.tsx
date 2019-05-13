@@ -5,7 +5,10 @@ import Bold from "./Bold";
 import { Link } from "react-router-dom";
 import { RedDot } from "../Icons";
 import { MutationFn, Mutation } from "react-apollo";
-import { MARK_AS_READ } from "../Routes/Notification/NotificationQueries";
+import {
+  MARK_AS_READ,
+  GET_NOTIFICATION
+} from "../Routes/Notification/NotificationQueries";
 import { MarkAsRead, MarkAsReadVariables } from "../types/api";
 
 class MarkAsReadMutation extends Mutation<MarkAsRead, MarkAsReadVariables> {}
@@ -32,10 +35,7 @@ const GreyText = styled(Bold)`
 
 const ICon = styled.div`
   position: absolute;
-  margin-top: 5px;
-  svg {
-    fill: red;
-  }
+  margin-top: 1px;
 `;
 
 const Column = styled.div`
@@ -50,7 +50,6 @@ interface IProps {
 }
 
 interface IState {
-  notificationId: string;
   isRead: boolean;
 }
 
@@ -59,19 +58,16 @@ class NotificationRow extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      notificationId: "",
       isRead: props.isRead
     };
   }
   public render() {
     const { notification, actor } = this.props;
-    const { notificationId, isRead } = this.state;
+    const { isRead } = this.state;
     return (
       <MarkAsReadMutation
         mutation={MARK_AS_READ}
-        variables={{
-          notificationId: parseInt(notificationId, 10)
-        }}
+        update={this.updateMarkAsRead}
       >
         {markAsReadFn => {
           this.markAsReadFn = markAsReadFn;
@@ -271,11 +267,31 @@ class NotificationRow extends React.Component<IProps, IState> {
   }
   public onMarkRead = (notificationId: string) => {
     this.markAsReadFn({ variables: { notificationId } });
-    console.log(this.state);
     this.setState({
-      notificationId: "",
       isRead: false
     } as any);
+  };
+  public updateMarkAsRead = (cache, { data: { markAsRead } }) => {
+    try {
+      const data = cache.readQuery({
+        query: GET_NOTIFICATION,
+        variables: { page: 0 }
+      });
+      if (data) {
+        const notification = data.getNotifications.notifications.find(
+          i => parseInt(i.id, 10) === markAsRead.notificationId
+        );
+        console.log(notification);
+        notification.read = true;
+        cache.writeQuery({
+          query: GET_NOTIFICATION,
+          variables: { page: 0 },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 }
 

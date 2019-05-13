@@ -1888,6 +1888,7 @@ export interface GetNotificationsVariables {
 
 export interface MarkAsRead_markAsRead {
   __typename: "MarkAsReadResponse";
+  notificationId: number | null;
   ok: boolean | null;
 }
 

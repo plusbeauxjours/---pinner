@@ -13,7 +13,7 @@ def resolve_get_notifications(self, info, **kwargs):
 
     user = info.context.user
     page = kwargs.get('page', 0)
-    offset = 10 * page
+    offset = 20 * page
 
     following_profiles = user.profile.followings.values('id').all()
 
@@ -23,7 +23,7 @@ def resolve_get_notifications(self, info, **kwargs):
     notifications = user.notification_to.all()
 
     combined = notifications.union(upload_notifications).order_by(
-        '-created_at')[offset:10 + offset]
+        '-created_at')[offset:20 + offset]
 
     return types.GetNotificationsResponse(ok=True, notifications=combined)
 

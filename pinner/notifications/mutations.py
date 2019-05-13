@@ -25,7 +25,7 @@ class MarkAsRead(graphene.Mutation):
             )
             notification.read = True
             notification.save()
-            return types.MarkAsReadResponse(ok=True)
+            return types.MarkAsReadResponse(ok=True,notificationId=notificationId)
 
         except models.Notification.DoesNotExist:
             raise Exception('Notification Not Found')
