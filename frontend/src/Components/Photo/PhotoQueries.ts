@@ -7,6 +7,7 @@ export const TOGGLE_LIKE_CARD = gql`
       ok
       card {
         isLiked
+        likeCount
       }
     }
   }

@@ -549,6 +549,9 @@ class PhotoContainer extends React.Component<IProps, IState> {
         data.getFeedCards.cards.find(
           i => parseInt(i.id, 10) === parseInt(cardId, 10)
         ).isLiked = toggleLikeCard.card.isLiked;
+        data.getFeedCards.cards.find(
+          i => parseInt(i.id, 10) === parseInt(cardId, 10)
+        ).likeCount = toggleLikeCard.card.likeCount;
         cache.writeQuery({
           query: GET_FEED_CARDS,
           variables: { cityName },
@@ -565,6 +568,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
       });
       if (data) {
         data.cardDetail.card.isLiked = toggleLikeCard.card.isLiked;
+        data.cardDetail.card.likeCount = toggleLikeCard.card.likeCount;
         cache.writeQuery({
           query: GET_CARD,
           variables: { cardId: parseInt(cardId, 10) },
