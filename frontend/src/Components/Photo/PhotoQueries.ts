@@ -12,7 +12,6 @@ export const TOGGLE_LIKE_CARD = gql`
 export const EDIT_CARD = gql`
   mutation EditCard($cardId: Int!, $cityName: String, $caption: String) {
     editCard(cardId: $cardId, cityName: $cityName, caption: $caption) {
-      ok
       card {
         ...DetailParts
       }

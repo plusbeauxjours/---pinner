@@ -274,9 +274,15 @@ export interface EditCommentVariables {
 // GraphQL mutation operation: ToggleLikeComment
 // ====================================================
 
+export interface ToggleLikeComment_toggleLikeComment_comment {
+  __typename: "CommentType";
+  isLiked: boolean | null;
+}
+
 export interface ToggleLikeComment_toggleLikeComment {
   __typename: "ToggleLikeCommentResponse";
   ok: boolean | null;
+  comment: ToggleLikeComment_toggleLikeComment_comment | null;
 }
 
 export interface ToggleLikeComment {
@@ -440,7 +446,6 @@ export interface EditCard_editCard_card {
 
 export interface EditCard_editCard {
   __typename: "EditCardResponse";
-  ok: boolean | null;
   card: EditCard_editCard_card | null;
 }
 

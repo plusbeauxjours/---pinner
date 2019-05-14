@@ -3,7 +3,7 @@ import FollowBtnPresenter from "./FollowBtnPresenter";
 import { Mutation, MutationFn } from "react-apollo";
 import { FollowUser, FollowUserVariables } from "../../types/api";
 import { FOLLOW_USER } from "./FollowBtnQueries";
-import { GET_FEED } from "../../Routes/Feed/FeedQueries";
+import { GET_FEED_CARDS } from "../../Routes/Feed/FeedQueries";
 
 class FollowMutation extends Mutation<FollowUser, FollowUserVariables> {}
 
@@ -42,9 +42,8 @@ class FollowBtnContainer extends React.Component<any, IState> {
         variables={{ userId: parseInt(userId, 10) }}
         refetchQueries={[
           {
-            query: GET_FEED,
+            query: GET_FEED_CARDS,
             variables: {
-              page: 0,
               cityName: localStorage.getItem("cityName")
             }
           }

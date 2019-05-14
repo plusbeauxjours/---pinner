@@ -62,6 +62,7 @@ class LikeCardResponse(graphene.ObjectType):
 
 class ToggleLikeCommentResponse(graphene.ObjectType):
     ok = graphene.Boolean()
+    comment = graphene.Field(CommentType)
 
 
 class CardLikeResponse(graphene.ObjectType):

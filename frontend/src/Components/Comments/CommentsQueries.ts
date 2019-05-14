@@ -42,6 +42,9 @@ export const TOGGLE_LIKE_COMMENT = gql`
   mutation ToggleLikeComment($cardId: Int!, $commentId: Int!) {
     toggleLikeComment(cardId: $cardId, commentId: $commentId) {
       ok
+      comment {
+        isLiked
+      }
     }
   }
 `;
