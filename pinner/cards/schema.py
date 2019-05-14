@@ -81,7 +81,7 @@ class Mutation(object):
     upload_card = mutations.UploadCard.Field(required=True)
     edit_card = mutations.EditCard.Field(required=True)
     delete_card = mutations.DeleteCard.Field(required=True)
-    like_card = mutations.LikeCard.Field(required=True)
+    toggle_like_card = mutations.ToggleLikeCard.Field(required=True)
 
     add_comment = mutations.AddComment.Field(required=True)
     edit_comment = mutations.EditComment.Field(required=True)

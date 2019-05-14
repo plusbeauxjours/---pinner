@@ -2,9 +2,12 @@ import { gql } from "apollo-boost";
 import { DETAIL_CARD_FRAGMENT } from "../../sharedQueries";
 
 export const TOGGLE_LIKE_CARD = gql`
-  mutation LikeCard($cardId: Int!) {
-    likeCard(cardId: $cardId) {
+  mutation ToggleLikeCard($cardId: Int!) {
+    toggleLikeCard(cardId: $cardId) {
       ok
+      card {
+        isLiked
+      }
     }
   }
 `;

@@ -379,19 +379,25 @@ export interface logInVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: LikeCard
+// GraphQL mutation operation: ToggleLikeCard
 // ====================================================
 
-export interface LikeCard_likeCard {
-  __typename: "LikeCardResponse";
+export interface ToggleLikeCard_toggleLikeCard_card {
+  __typename: "CardType";
+  isLiked: boolean | null;
+}
+
+export interface ToggleLikeCard_toggleLikeCard {
+  __typename: "ToggleLikeCardResponse";
   ok: boolean | null;
+  card: ToggleLikeCard_toggleLikeCard_card | null;
 }
 
-export interface LikeCard {
-  likeCard: LikeCard_likeCard;
+export interface ToggleLikeCard {
+  toggleLikeCard: ToggleLikeCard_toggleLikeCard;
 }
 
-export interface LikeCardVariables {
+export interface ToggleLikeCardVariables {
   cardId: number;
 }
 

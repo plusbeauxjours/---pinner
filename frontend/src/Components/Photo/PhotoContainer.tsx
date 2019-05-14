@@ -14,8 +14,8 @@ import {
   FollowUserVariables,
   DeleteCardVariables,
   DeleteCard,
-  LikeCard,
-  LikeCardVariables,
+  ToggleLikeCard,
+  ToggleLikeCardVariables,
   AddComment,
   AddCommentVariables,
   EditCard,
@@ -28,13 +28,17 @@ import { GET_COMMENTS } from "../Comments/CommentsQueries";
 import { EDIT_CARD } from "../../../../frontend/src/Components/Photo/PhotoQueries";
 import { GET_CARDS } from "../GetCards/GetCardsQueries";
 import { GET_FEED_CARDS } from "../../Routes/Feed/FeedQueries";
+import { GET_CARD } from "../../Routes/CardDetail/CardDetailQueries";
 
 class AddCommentMutation extends Mutation<AddComment, AddCommentVariables> {}
 class DeleteCommentMutation extends Mutation<
   DeleteComment,
   DeleteCommentVariables
 > {}
-class ToggleLikeMutation extends Mutation<LikeCard, LikeCardVariables> {}
+class ToggleLikeMutation extends Mutation<
+  ToggleLikeCard,
+  ToggleLikeCardVariables
+> {}
 class FollowMutation extends Mutation<FollowUser, FollowUserVariables> {}
 class EditCardMutation extends Mutation<EditCard, EditCardVariables> {}
 class DeleteCardMutation extends Mutation<DeleteCard, DeleteCardVariables> {}
@@ -178,6 +182,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
                             <ToggleLikeMutation
                               mutation={TOGGLE_LIKE_CARD}
                               variables={{ cardId: parseInt(cardId, 10) }}
+                              update={this.updateToggleLike}
                             >
                               {toggleLikeFn => {
                                 this.toggleLikeFn = toggleLikeFn;
@@ -531,6 +536,44 @@ class PhotoContainer extends React.Component<IProps, IState> {
       cardEditMode: !cardEditMode,
       cardMenuModalOpen: !cardMenuModalOpen
     } as any);
+  };
+  public updateToggleLike = (cache, { data: { toggleLikeCard } }) => {
+    const cityName = localStorage.getItem("cityName");
+    const { cardId } = this.props;
+    try {
+      const data = cache.readQuery({
+        query: GET_FEED_CARDS,
+        variables: { cityName }
+      });
+      if (data) {
+        data.getFeedCards.cards.find(
+          i => parseInt(i.id, 10) === parseInt(cardId, 10)
+        ).isLiked = toggleLikeCard.card.isLiked;
+        cache.writeQuery({
+          query: GET_FEED_CARDS,
+          variables: { cityName },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const data = cache.readQuery({
+        query: GET_CARD,
+        variables: { cardId: parseInt(cardId, 10) }
+      });
+      if (data) {
+        data.cardDetail.card.isLiked = toggleLikeCard.card.isLiked;
+        cache.writeQuery({
+          query: GET_CARD,
+          variables: { cardId: parseInt(cardId, 10) },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 }
 

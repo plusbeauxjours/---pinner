@@ -56,8 +56,9 @@ class FeedResponse(graphene.ObjectType):
     usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 
-class LikeCardResponse(graphene.ObjectType):
+class ToggleLikeCardResponse(graphene.ObjectType):
     ok = graphene.Boolean()
+    card = graphene.Field(CardType)
 
 
 class ToggleLikeCommentResponse(graphene.ObjectType):

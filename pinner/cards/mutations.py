@@ -118,14 +118,14 @@ class DeleteCard(graphene.Mutation):
 
 
 
-class LikeCard(graphene.Mutation):
+class ToggleLikeCard(graphene.Mutation):
 
     """ Like a Card """
 
     class Arguments:
         cardId = graphene.Int(required=True)
 
-    Output = types.LikeCardResponse
+    Output = types.ToggleLikeCardResponse
 
     @login_required
     def mutate(self, info, **kwargs):
@@ -147,10 +147,10 @@ class LikeCard(graphene.Mutation):
                     actor=user, target=card.creator, verb='like', card=card
                 )
                 notification.delete()
-                return types.LikeCardResponse(ok=True)
+                return types.ToggleLikeCardResponse(ok=True, card=card)
             except:
                 pass
-            return types.LikeCardResponse(ok=True)
+            return types.ToggleLikeCardResponse(ok=True, card=card)
 
         except models.Like.DoesNotExist:
             pass
@@ -162,7 +162,7 @@ class LikeCard(graphene.Mutation):
                 notification_models.Notification.objects.create(
                     actor=user, target=card.creator, verb="like", card=card
                 )
-            return types.LikeCardResponse(ok=True)
+            return types.ToggleLikeCardResponse(ok=True, card=card)
 
         except IntegrityError as e:
             raise Exception("Can't Like Card")

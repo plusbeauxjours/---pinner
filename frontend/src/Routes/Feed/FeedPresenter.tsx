@@ -483,7 +483,6 @@ const FeedPresenter: React.SFC<IProps> = ({
             <SmallGreyLine />
             <SSText text={"NEED SOME COFFEE NOW"} />
           </SmallTitle>
-          {console.log(coffees)}
           <AvatarGrid
             coffees={coffees}
             toggleRequestModal={toggleRequestModal}
