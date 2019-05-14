@@ -6,7 +6,6 @@ import styled, { keyframes } from "../../Styles/typed-components";
 import "react-dates/lib/css/_datepicker.css";
 import "react-dates/initialize";
 import { DateRangePicker } from "react-dates";
-import Textarea from "react-expanding-textarea";
 import { Upload } from "../../Icons";
 
 import Wrapper from "../../Components/Wrapper";
@@ -375,14 +374,6 @@ const Square = styled.div`
   background-size: 100%;
 `;
 
-const STextArea = styled(Textarea)`
-  width: 100%;
-  border: 0;
-  resize: none;
-  font-size: 14px;
-  padding: 15px 0px;
-`;
-
 const SSText = styled(Bold)`
   font-size: 12px;
   font-weight: 100;
@@ -441,10 +432,6 @@ interface IProps {
   cityModalOpen: boolean;
   countryModalOpen: boolean;
   continentModalOpen: boolean;
-  followersModalOpen: boolean;
-  followingsModalOpen: boolean;
-  knowingFollowersModalOpen: boolean;
-  uploadModalOpen: boolean;
   requestModalOpen: boolean;
   coffeeModalOpen: boolean;
   requestingCoffeeModalOpen: boolean;
@@ -473,7 +460,6 @@ interface IProps {
   }) => void;
   onFocusChange: (arg: "startDate" | "endDate" | null) => void;
 
-  toggleTripSeeAll: () => void;
   toggleModal: () => void;
   toggleConfirmModal: () => void;
 
@@ -484,10 +470,7 @@ interface IProps {
   toggleCityModal: () => void;
   toggleCountryModal: () => void;
   toggleContinentModal: () => void;
-  toggleFollowersModal: () => void;
-  toggleFollowingsModal: () => void;
-  toggleKnowingFollowersModal: () => void;
-  toggleUploadModal: () => void;
+
   toggleRequestModal: () => void;
   toggleCoffeeModal: () => void;
   toggleRequestingCoffeeModal: () => void;
@@ -510,10 +493,7 @@ interface IProps {
   submitCoffee: any;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  onKeyUpCard: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 
-  uploadNewCard: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  newCardCaption: string;
   deleteCoffee: () => void;
   getCoffeeId: any;
   getRequestingCoffeeId: any;
@@ -551,16 +531,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   cityModalOpen,
   countryModalOpen,
   continentModalOpen,
-  followersModalOpen,
-  followingsModalOpen,
-  knowingFollowersModalOpen,
-  uploadModalOpen,
   requestModalOpen,
   coffeeModalOpen,
   requestingCoffeeModalOpen,
   coffeeReportModalOpen,
   editMode,
-  toggleTripSeeAll,
+
   toggleModal,
   toggleConfirmModal,
   toggleTripModal,
@@ -570,10 +546,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleCityModal,
   toggleCountryModal,
   toggleContinentModal,
-  toggleFollowersModal,
-  toggleFollowingsModal,
-  toggleKnowingFollowersModal,
-  toggleUploadModal,
+
   toggleRequestModal,
   toggleCoffeeModal,
   toggleRequestingCoffeeModal,
@@ -602,9 +575,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   focusedInput,
   onDatesChange,
   onFocusChange,
-  newCardCaption,
-  onKeyUpCard,
-  uploadNewCard,
   submitCoffee,
   deleteCoffee,
   getCoffeeId,
@@ -683,22 +653,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </Modal>
           </ModalContainer>
         )}
-        {uploadModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleUploadModal} />
-            <Modal>
-              <Wrapper>
-                <STextArea
-                  placeholder="Add a comment..."
-                  onChange={uploadNewCard}
-                  value={newCardCaption}
-                  onKeyUp={onKeyUpCard}
-                />
-              </Wrapper>
-            </Modal>
-          </ModalContainer>
-        )}
-
         {modalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleModal} />
@@ -1149,7 +1103,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </TripBox>
           </Container>
           <GetCards
-            toggleUploadModal={toggleUploadModal}
             upload={user.profile.isSelf ? true : false}
             location={"user"}
             userName={username}

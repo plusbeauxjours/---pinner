@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
 import SquareCard from "./SquareCard";
-import { Upload } from "../Icons";
+import UpLoad from "src/Routes/UpLoad";
 
 const Container = styled.div`
   display: grid;
@@ -13,22 +13,6 @@ const Container = styled.div`
   padding: 15px;
 `;
 
-const UploadIcon = styled.div`
-  width: 200px;
-  height: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 15px 15px 0;
-  svg {
-    fill: white;
-    transition: fill 0.2s ease-in-out;
-    &:hover {
-      fill: grey;
-    }
-  }
-`;
-
 interface IProps {
   cards?: any;
   className?: string;
@@ -36,18 +20,9 @@ interface IProps {
   toggleUploadModal?: () => void;
 }
 
-const CardGrid: React.SFC<IProps> = ({
-  cards,
-  className,
-  upload,
-  toggleUploadModal
-}) => (
+const CardGrid: React.SFC<IProps> = ({ cards, className, upload }) => (
   <Container className={className}>
-    {upload && (
-      <UploadIcon onClick={toggleUploadModal}>
-        <Upload />
-      </UploadIcon>
-    )}
+    <UpLoad upload={upload} />
     {cards &&
       cards.map(card => (
         <SquareCard

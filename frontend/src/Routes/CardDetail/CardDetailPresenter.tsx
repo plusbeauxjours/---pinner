@@ -10,7 +10,7 @@ const ModalContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: fixed;
-  height: 110%;
+  height: 100%;
   width: 100%;
   top: 0;
 `;

@@ -3,13 +3,15 @@ import Wrapper from "src/Components/Wrapper";
 import styled from "styled-components";
 import { keyframes } from "styled-components";
 import Textarea from "react-expanding-textarea";
+import { Upload } from "../../Icons";
 
 const ModalContainer = styled.div`
+  z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
-  height: 110%;
+  height: 100%;
   width: 100%;
   top: 0;
 `;
@@ -50,12 +52,30 @@ const STextArea = styled(Textarea)`
   padding: 15px 0px;
 `;
 
+const UploadIcon = styled.div`
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 15px 15px 0;
+  svg {
+    fill: white;
+    transition: fill 0.2s ease-in-out;
+    &:hover {
+      fill: grey;
+    }
+  }
+`;
+
 interface IProps {
   back: any;
   caption: string;
   uploadNewCard: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   modalOpen: boolean;
+  upload: boolean;
+  toggleUploadModal: () => void;
 }
 
 const UpLoadPresenter: React.SFC<IProps> = ({
@@ -63,13 +83,15 @@ const UpLoadPresenter: React.SFC<IProps> = ({
   caption,
   uploadNewCard,
   onKeyUp,
-  modalOpen
+  modalOpen,
+  upload,
+  toggleUploadModal
 }) => {
   return (
     <>
       {modalOpen && (
         <ModalContainer>
-          <ModalOverlay onClick={back} />
+          <ModalOverlay onClick={toggleUploadModal} />
           <Modal>
             <Wrapper>
               <STextArea
@@ -81,6 +103,11 @@ const UpLoadPresenter: React.SFC<IProps> = ({
             </Wrapper>
           </Modal>
         </ModalContainer>
+      )}
+      {upload && (
+        <UploadIcon onClick={toggleUploadModal}>
+          <Upload />
+        </UploadIcon>
       )}
     </>
   );

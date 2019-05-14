@@ -46,7 +46,6 @@ const LoggedInPages = () => (
       <Route path="/" exact={true} component={Feed} />
       <Route path="/p/:id" component={CardDetail} />
       <Route path="/search" component={Search} />
-      <Route path="/upload" component={UpLoad} />
       <Route path="/match" exact={true} component={Match} />
       <Route path="/explore/userlist" component={UserList} />
       <Route path="/notification" component={Notification} />
@@ -55,6 +54,7 @@ const LoggedInPages = () => (
       <Route path="/city/:cityName/:duration" component={TripProfile} />
       <Route path="/city/:cityName" component={CityProfile} />
       <Route path="/c/:id" component={CoffeeDetail} />
+      <Route path="/:username/upload" component={UpLoad} />
       <Route path="/:username/countries" component={Countries} />
       <Route path="/:username/cities" component={Cities} />
       <Route path="/:username/coffees" component={Coffees} />

@@ -2204,6 +2204,68 @@ export interface GetDurationCardsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: UploadCard
+// ====================================================
+
+export interface UploadCard_uploadCard_card_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface UploadCard_uploadCard_card_city {
+  __typename: "CityType";
+  cityName: string | null;
+  country: UploadCard_uploadCard_card_city_country;
+}
+
+export interface UploadCard_uploadCard_card_creator_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
+}
+
+export interface UploadCard_uploadCard_card_creator {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: UploadCard_uploadCard_card_creator_profile | null;
+}
+
+export interface UploadCard_uploadCard_card {
+  __typename: "CardType";
+  id: string;
+  file: string | null;
+  caption: string;
+  city: UploadCard_uploadCard_card_city | null;
+  likeCount: number | null;
+  commentCount: number | null;
+  isLiked: boolean | null;
+  naturalTime: string | null;
+  creator: UploadCard_uploadCard_card_creator;
+}
+
+export interface UploadCard_uploadCard {
+  __typename: "UploadCardResponse";
+  card: UploadCard_uploadCard_card | null;
+}
+
+export interface UploadCard {
+  uploadCard: UploadCard_uploadCard;
+}
+
+export interface UploadCardVariables {
+  caption: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: UserList
 // ====================================================
 
@@ -2739,68 +2801,6 @@ export interface GetKnowingFollowers {
 
 export interface GetKnowingFollowersVariables {
   username: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: UploadCard
-// ====================================================
-
-export interface UploadCard_uploadCard_card_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface UploadCard_uploadCard_card_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: UploadCard_uploadCard_card_city_country;
-}
-
-export interface UploadCard_uploadCard_card_creator_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  isFollowing: boolean | null;
-  isSelf: boolean | null;
-}
-
-export interface UploadCard_uploadCard_card_creator {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: UploadCard_uploadCard_card_creator_profile | null;
-}
-
-export interface UploadCard_uploadCard_card {
-  __typename: "CardType";
-  id: string;
-  file: string | null;
-  caption: string;
-  city: UploadCard_uploadCard_card_city | null;
-  likeCount: number | null;
-  commentCount: number | null;
-  isLiked: boolean | null;
-  naturalTime: string | null;
-  creator: UploadCard_uploadCard_card_creator;
-}
-
-export interface UploadCard_uploadCard {
-  __typename: "UploadCardResponse";
-  card: UploadCard_uploadCard_card | null;
-}
-
-export interface UploadCard {
-  uploadCard: UploadCard_uploadCard;
-}
-
-export interface UploadCardVariables {
-  caption: string;
 }
 
 
