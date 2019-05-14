@@ -55,7 +55,7 @@ class FollowUser(graphene.Mutation):
                 print(e)
                 pass
 
-        return types.FollowUnfollowResponse(ok=True)
+        return types.FollowUnfollowResponse(ok=True, user=target)
 
 
 class EditProfile(graphene.Mutation):

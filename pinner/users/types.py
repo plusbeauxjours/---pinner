@@ -48,6 +48,7 @@ class ProfileListResponse(graphene.ObjectType):
 
 
 class FollowUnfollowResponse(graphene.ObjectType):
+    user = graphene.Field(config_types.UserType)
     ok = graphene.Boolean()
 
 

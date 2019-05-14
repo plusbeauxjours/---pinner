@@ -78,7 +78,6 @@ interface IState {
   cityModalOpen: boolean;
   countryModalOpen: boolean;
   continentModalOpen: boolean;
-
   requestModalOpen: boolean;
   coffeeModalOpen: boolean;
   requestingCoffeeModalOpen: boolean;
@@ -130,7 +129,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       cityModalOpen: false,
       countryModalOpen: false,
       continentModalOpen: false,
-
       requestModalOpen: false,
       coffeeModalOpen: false,
       requestingCoffeeModalOpen: false,
@@ -154,7 +152,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       moveNotificationId: null,
       coffeeId: null,
       tripPage: 0,
-
       search: "",
       tripList: []
     };

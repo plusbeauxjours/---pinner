@@ -23,7 +23,6 @@ class UpLoadContainer extends React.Component<IProps, IState> {
   public uploadCardFn: MutationFn;
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       caption: "",
       modalOpen: false
