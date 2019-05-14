@@ -121,7 +121,7 @@ class ToggleLikeCity(graphene.Mutation):
             like = models.Like.objects.get(
                 creator=user, city=city)
             like.delete()
-            return types.ToggleLikeCityResponse(ok=True)
+            return types.ToggleLikeCityResponse(ok=True, city=city)
 
         except models.Like.DoesNotExist:
             pass
@@ -129,7 +129,7 @@ class ToggleLikeCity(graphene.Mutation):
         try:
             like = models.Like.objects.create(
                 creator=user, city=city)
-            return types.ToggleLikeCityResponse(ok=True)
+            return types.ToggleLikeCityResponse(ok=True, city=city)
 
         except IntegrityError as e:
             raise Exception("Can't Like City")

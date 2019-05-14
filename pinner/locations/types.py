@@ -92,4 +92,5 @@ class ReportLocationResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
 class ToggleLikeCityResponse(graphene.ObjectType):
+    city = graphene.Field(CityType)
     ok = graphene.Boolean()

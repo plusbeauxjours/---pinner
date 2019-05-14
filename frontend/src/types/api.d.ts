@@ -7,9 +7,23 @@
 // GraphQL mutation operation: ToggleLikeCity
 // ====================================================
 
+export interface ToggleLikeCity_toggleLikeCity_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface ToggleLikeCity_toggleLikeCity_city {
+  __typename: "CityType";
+  id: string;
+  isLiked: boolean | null;
+  likeCount: number | null;
+  country: ToggleLikeCity_toggleLikeCity_city_country;
+}
+
 export interface ToggleLikeCity_toggleLikeCity {
   __typename: "ToggleLikeCityResponse";
   ok: boolean | null;
+  city: ToggleLikeCity_toggleLikeCity_city | null;
 }
 
 export interface ToggleLikeCity {
@@ -385,6 +399,7 @@ export interface logInVariables {
 export interface ToggleLikeCard_toggleLikeCard_card {
   __typename: "CardType";
   isLiked: boolean | null;
+  likeCount: number | null;
 }
 
 export interface ToggleLikeCard_toggleLikeCard {
