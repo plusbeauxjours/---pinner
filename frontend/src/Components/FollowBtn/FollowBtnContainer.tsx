@@ -7,6 +7,8 @@ import { FOLLOW_USER } from "./FollowBtnQueries";
 import { withRouter, RouteComponentProps } from "react-router";
 import { GET_FOLLOWERS } from "../../Routes/Followers/FollowersQueries";
 import { GET_FOLLOWINGS } from "../../Routes/Followings/FollowingsQueries";
+import { GET_USER } from "../../Routes/UserProfile/UserProfileQueries";
+import { CITY_PROFILE } from "../../Routes/CityProfile/CityProfileQueries";
 
 class FollowMutation extends Mutation<FollowUser, FollowUserVariables> {}
 
@@ -86,6 +88,7 @@ class FollowBtnContainer extends React.Component<IProps, IState> {
         query: GET_FOLLOWINGS,
         variables: { userName: username }
       });
+      console.log(data);
       if (data) {
         try {
           data.getFollowings.profiles.find(
@@ -101,6 +104,58 @@ class FollowBtnContainer extends React.Component<IProps, IState> {
         cache.writeQuery({
           query: GET_FOLLOWINGS,
           variables: { userName: username },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const data = cache.readQuery({
+        query: GET_USER,
+        variables: { username: followUser.user.profile.username }
+      });
+      if (data) {
+        data.userProfile.user.profile.isFollowing =
+          followUser.user.profile.isFollowing;
+        cache.writeQuery({
+          query: GET_USER,
+          variables: { userName: followUser.user.profile.username },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const data = cache.readQuery({
+        query: GET_USER,
+        variables: { username: followUser.user.profile.username }
+      });
+      if (data) {
+        data.userProfile.user.profile.isFollowing =
+          followUser.user.profile.isFollowing;
+        cache.writeQuery({
+          query: GET_USER,
+          variables: { userName: followUser.user.profile.username },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const data = cache.readQuery({
+        query: CITY_PROFILE,
+        variables: { cityName: followUser.user.profile.currentCity.cityName }
+      });
+      if (data) {
+        data.cityProfile.usersNow.profile.find(
+          i => parseInt(i.id, 10) === parseInt(userId, 10)
+        ).isFollowing = followUser.user.profile.isFollowing;
+        cache.writeQuery({
+          query: CITY_PROFILE,
+          variables: { cityName: followUser.user.profile.currentCity.cityName },
           data
         });
       }

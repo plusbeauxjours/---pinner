@@ -22,6 +22,7 @@ export const USER_FRAGMENT = gql`
     profile {
       avatar
       isFollowing
+      isSelf
       currentCity {
         cityName
         country {
@@ -38,6 +39,7 @@ export const PROFILE_FRAGMENT = gql`
     username
     avatar
     isFollowing
+    isSelf
     currentCity {
       cityName
       country {

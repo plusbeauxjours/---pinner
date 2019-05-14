@@ -387,7 +387,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                 beforeUsersList.length === 0 &&
                 usersNow &&
                 usersNow.map(user => (
-                  <>
                     <UserRow key={user.profile.id}>
                       <Link to={`/${user.profile.username}`}>
                         <UserHeader
@@ -408,13 +407,11 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                         />
                       )}
                     </UserRow>
-                  </>
                 ))}
               {nowUsersList.length === 0 &&
                 beforeUsersList.length === 0 &&
                 usersBefore &&
                 usersBefore.map(user => (
-                  <>
                     <UserRow key={user.actor.profile.id}>
                       <Link to={`/${user.actor.profile.username}`}>
                         <UserHeader
@@ -435,7 +432,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                         />
                       )}
                     </UserRow>
-                  </>
                 ))}
             </UserContainer>
           </PHeader>

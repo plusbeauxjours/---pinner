@@ -320,7 +320,6 @@ class FeedContainer extends React.Component<IProps, IState> {
     const {
       coords: { latitude, longitude }
     } = position;
-    console.log(typeof latitude);
     this.setState({
       currentLat: latitude,
       currentLng: longitude

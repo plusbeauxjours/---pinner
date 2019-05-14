@@ -561,6 +561,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
     } catch (e) {
       console.log(e);
     }
+    console.log(toggleLikeCard);
     try {
       const data = cache.readQuery({
         query: GET_CARD,
