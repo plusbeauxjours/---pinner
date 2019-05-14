@@ -88,7 +88,6 @@ class FollowBtnContainer extends React.Component<IProps, IState> {
         query: GET_FOLLOWINGS,
         variables: { userName: username }
       });
-      console.log(data);
       if (data) {
         try {
           data.getFollowings.profiles.find(
