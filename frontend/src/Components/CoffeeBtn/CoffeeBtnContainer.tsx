@@ -82,17 +82,15 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
     }
     this.props.history.goBack();
   };
-  public updateMatch = async (cache, { data: { match } }) => {
+  public updateMatch = (cache, { data: { match } }) => {
     try {
       const matchData = cache.readQuery({
-        query: GET_MATCHES,
-        variables: { matchPage: 0 }
+        query: GET_MATCHES
       });
       if (matchData) {
         matchData.getMatches.matches.unshift(match.match);
-        await cache.writeQuery({
+        cache.writeQuery({
           query: GET_MATCHES,
-          variables: { matchPage: 0 },
           data: matchData
         });
       }
@@ -107,14 +105,11 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
           location: "feed"
         }
       });
-      console.log(feedData);
       if (feedData) {
         feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
           i => parseInt(i.id, 10) !== match.coffeeId
         );
-        console.log(feedData.getCoffees);
-        console.log(match);
-        await cache.writeQuery({
+        cache.writeQuery({
           query: GET_COFFEES,
           variables: {
             cityName: localStorage.getItem("cityName"),
@@ -136,21 +131,18 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
       toast.error("error");
     }
   };
-  public updateUnMatch = async (cache, { data: { unMatch } }) => {
+  public updateUnMatch = (cache, { data: { unMatch } }) => {
     try {
       const matchData = cache.readQuery({
-        query: GET_MATCHES,
-        variables: { matchPage: 0 }
+        query: GET_MATCHES
       });
-      console.log(unMatch.coffee);
-      console.log(matchData);
       if (matchData) {
         matchData.getMatches.matches = matchData.getMatches.matches.filter(
           i => parseInt(i.id, 10) !== unMatch.matchId
         );
-        await cache.writeQuery({
+        console.log(matchData.getMatches.matches);
+        cache.writeQuery({
           query: GET_MATCHES,
-          variables: { matchPage: 0 },
           data: matchData
         });
       }
@@ -166,11 +158,9 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
             location: "feed"
           }
         });
-        console.log(unMatch.coffee);
-        console.log(feedData);
         if (feedData) {
           feedData.getCoffees.coffees.unshift(unMatch.coffee);
-          await cache.writeQuery({
+          cache.writeQuery({
             query: GET_COFFEES,
             variables: {
               cityName: localStorage.getItem("cityName"),

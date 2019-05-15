@@ -145,3 +145,53 @@ export const COFFEE_FRAGMENT = gql`
     createdAt
   }
 `;
+
+export const MATCH_FRAGMENT = gql`
+  fragment MatchParts on MatchType {
+    id
+    naturalTime
+    city {
+      cityName
+      country {
+        countryName
+      }
+    }
+    host {
+      profile {
+        id
+        username
+        avatar
+        isFollowing
+        isSelf
+        currentCity {
+          cityName
+          country {
+            countryName
+          }
+        }
+      }
+    }
+    guest {
+      profile {
+        id
+        username
+        avatar
+        isFollowing
+        isSelf
+        currentCity {
+          cityName
+          country {
+            countryName
+          }
+        }
+      }
+    }
+    coffee {
+      id
+      target
+    }
+    isHost
+    isGuest
+    isMatching
+  }
+`;

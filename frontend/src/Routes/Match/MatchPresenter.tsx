@@ -6,6 +6,7 @@ import UserHeader from "../../Components/UserHeader";
 import FollowBtn from "../../Components/FollowBtn";
 import CoffeeBtn from "src/Components/CoffeeBtn";
 import Wrapper from "src/Components/Wrapper";
+import Bold from "../../Components/Bold";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -20,11 +21,15 @@ const UserContainer = styled.div`
   }
 `;
 
+const GreyText = styled(Bold)`
+  color: #999;
+`;
+
 const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   height: 50px;
-  grid-template-columns: 4fr 0.5fr 0.5fr;
+  grid-template-columns: 4fr 1fr 1fr 0.5fr 0.5fr;
   padding: 0 5px 0 5px;
   grid-gap: 15px;
   align-items: center;
@@ -93,7 +98,7 @@ const MatchPresenter: React.SFC<IProps> = ({
           </UserNameRow>
           {matchList.length !== 0 &&
             matchList.map(match => (
-              <>
+              <React.Fragment key={match.id}>
                 {match.isGuest ? (
                   <UserRow key={match.id}>
                     <Link to={`/${match.host.profile.username}`}>
@@ -107,7 +112,7 @@ const MatchPresenter: React.SFC<IProps> = ({
                         size={"sm"}
                       />
                     </Link>
-                    {status}
+                    <GreyText text={match.status} />
                     <FollowBtn
                       isFollowing={match.host.profile.isFollowing}
                       userId={match.host.profile.id}
@@ -147,13 +152,13 @@ const MatchPresenter: React.SFC<IProps> = ({
                     ) : null}
                   </UserRow>
                 )}
-              </>
+              </React.Fragment>
             ))}
           {matchList.length === 0 &&
             !search &&
             matches &&
             matches.map(match => (
-              <>
+              <React.Fragment key={match.id}>
                 {match.isGuest ? (
                   <UserRow key={match.id}>
                     <Link to={`/${match.host.profile.username}`}>
@@ -167,7 +172,7 @@ const MatchPresenter: React.SFC<IProps> = ({
                         size={"sm"}
                       />
                     </Link>
-                    {status}
+                    <GreyText text={match.status} />
                     <FollowBtn
                       isFollowing={match.host.profile.isFollowing}
                       userId={match.host.profile.id}
@@ -207,7 +212,7 @@ const MatchPresenter: React.SFC<IProps> = ({
                     ) : null}
                   </UserRow>
                 )}
-              </>
+              </React.Fragment>
             ))}
         </UserContainer>
       </SWrapper>

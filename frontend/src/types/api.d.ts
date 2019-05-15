@@ -1790,7 +1790,6 @@ export interface GetMatches_getMatches_matches {
   host: GetMatches_getMatches_matches_host | null;
   guest: GetMatches_getMatches_matches_guest | null;
   coffee: GetMatches_getMatches_matches_coffee | null;
-  status: MatchStatus;
   isHost: boolean | null;
   isGuest: boolean | null;
   isMatching: boolean | null;
@@ -3104,6 +3103,96 @@ export interface CoffeeParts {
   expires: any | null;
   target: CoffeeTarget;
   createdAt: any;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: MatchParts
+// ====================================================
+
+export interface MatchParts_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface MatchParts_city {
+  __typename: "CityType";
+  cityName: string | null;
+  country: MatchParts_city_country;
+}
+
+export interface MatchParts_host_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface MatchParts_host_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: MatchParts_host_profile_currentCity_country;
+}
+
+export interface MatchParts_host_profile {
+  __typename: "ProfileType";
+  id: string;
+  username: string | null;
+  avatar: string;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
+  currentCity: MatchParts_host_profile_currentCity | null;
+}
+
+export interface MatchParts_host {
+  __typename: "UserType";
+  profile: MatchParts_host_profile | null;
+}
+
+export interface MatchParts_guest_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface MatchParts_guest_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: MatchParts_guest_profile_currentCity_country;
+}
+
+export interface MatchParts_guest_profile {
+  __typename: "ProfileType";
+  id: string;
+  username: string | null;
+  avatar: string;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
+  currentCity: MatchParts_guest_profile_currentCity | null;
+}
+
+export interface MatchParts_guest {
+  __typename: "UserType";
+  profile: MatchParts_guest_profile | null;
+}
+
+export interface MatchParts_coffee {
+  __typename: "CoffeeType";
+  id: string;
+  target: CoffeeTarget;
+}
+
+export interface MatchParts {
+  __typename: "MatchType";
+  id: string;
+  naturalTime: string | null;
+  city: MatchParts_city | null;
+  host: MatchParts_host | null;
+  guest: MatchParts_guest | null;
+  coffee: MatchParts_coffee | null;
+  isHost: boolean | null;
+  isGuest: boolean | null;
+  isMatching: boolean | null;
 }
 
 /* tslint:disable */
