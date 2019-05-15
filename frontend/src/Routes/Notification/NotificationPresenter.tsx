@@ -24,6 +24,7 @@ const UserNameRow = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 10px;
 `;
 
 const Username = styled.span`

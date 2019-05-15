@@ -18,7 +18,7 @@ const UserRow = styled.div`
   &:hover {
     background-color: grey;
   }
-  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
 `;
 
 const GreyText = styled(Bold)`

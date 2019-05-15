@@ -468,7 +468,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
           </Title>
           <Container>
             <Box>
-              {!nearCitiesLoading && nearCities ? (
+              {!nearCitiesLoading && nearCities && nearCities.length !== 0 ? (
                 <LocationGrid cities={nearCities} type={"city"} />
               ) : (
                 <Loader />

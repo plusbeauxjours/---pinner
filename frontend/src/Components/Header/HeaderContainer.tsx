@@ -35,12 +35,23 @@ class HeaderContainer extends React.Component<any, IState> {
       currentCity: null
     };
   }
+  public componentDidUpdate(prevProps) {
+    const newProps = this.props;
+    if (prevProps.match !== newProps.match) {
+      const location = localStorage.getItem("cityName");
+      if (!location) {
+        navigator.geolocation.getCurrentPosition(
+          this.handleGeoSuccess,
+          this.handleGeoError
+        );
+      }
+    }
+  }
   public componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       this.handleGeoSuccess,
       this.handleGeoError
     );
-    console.log("goodmorning");
   }
   public render() {
     const { currentLat, currentLng, currentCity } = this.state;
@@ -49,7 +60,6 @@ class HeaderContainer extends React.Component<any, IState> {
       <ReportLocationMutation mutation={REPORT_LOCATION}>
         {ReportLocationFn => {
           this.ReportLocationFn = ReportLocationFn;
-          console.log(this.state);
           return (
             <HeaderPresenter
               onChange={this.onChange}
