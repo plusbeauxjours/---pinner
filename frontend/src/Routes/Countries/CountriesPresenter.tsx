@@ -48,7 +48,9 @@ const UserRow = styled.div`
   &:hover {
     background-color: grey;
   }
-  border-top: 1px solid grey;
+  &:not(:last-child) {
+    border-bottom: 1px solid grey;
+  }
 `;
 
 const CAvatar = styled(Avatar)`
@@ -75,6 +77,7 @@ const UserNameRow = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 10px;
 `;
 
 const AvatarContainer = styled.div`
@@ -189,6 +192,7 @@ const CountriesPresenter: React.SFC<IProps> = ({
                   </UserRow>
                 ))}
               {countryList.length === 0 &&
+                !search &&
                 countries &&
                 countries.map(country => (
                   <UserRow key={country.id}>

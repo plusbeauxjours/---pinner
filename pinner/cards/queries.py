@@ -76,7 +76,6 @@ def resolve_get_cards(self, info, **kwargs):
             user = User.objects.prefetch_related('cards').get(username=userName)
             cards = user.cards.order_by('-created_at')[offset:12 + offset]
             hasNextPage = offset < user.profile.post_count
-            print(hasNextPage)
             return types.GetCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
         except models.Card.DoesNotExist:
             raise Exception('Card not found')
@@ -131,7 +130,6 @@ def resolve_get_feed_cards(self, info, **kwargs):
         my_cards = user.cards.all()
         combined = following_cards.union(city_cards).union(my_cards).order_by(
                 '-created_at')[offset:6 + offset]
-        print(combined)
         return types.GetCardsResponse(cards=combined, page=nextPage, hasNextPage=True)
     except models.Card.DoesNotExist:
         raise Exception('Card not found')

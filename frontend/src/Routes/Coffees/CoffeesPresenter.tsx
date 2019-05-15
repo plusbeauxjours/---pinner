@@ -76,7 +76,9 @@ const UserRow = styled.div`
   &:hover {
     background-color: grey;
   }
-  border-top: 1px solid grey;
+  &:not(:last-child) {
+    border-bottom: 1px solid grey;
+  }
 `;
 
 const UserNameRow = styled.div`
@@ -84,6 +86,7 @@ const UserNameRow = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 10px;
 `;
 
 const AvatarContainer = styled.div`
@@ -131,7 +134,6 @@ const FollowingsPresenter: React.SFC<IProps> = ({
   } else if (!loading && coffees) {
     return (
       <SWrapper>
-        {console.log(coffees)}
         <PHeader>
           <AvatarContainer>
             <CAvatar
@@ -170,6 +172,7 @@ const FollowingsPresenter: React.SFC<IProps> = ({
                 </React.Fragment>
               ))}
             {coffeesList.length === 0 &&
+              !search &&
               coffees &&
               coffees.map(coffee => (
                 <React.Fragment key={coffee.id}>

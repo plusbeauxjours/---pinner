@@ -90,6 +90,7 @@ const UserNameRow = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 10px;
 `;
 
 const Username = styled.span`
@@ -132,7 +133,9 @@ const UserRow = styled.div`
       opacity: 1;
     }
   }
-  border-top: 1px solid grey;
+  &:not(:last-child) {
+    border-bottom: 1px solid grey;
+  }
 `;
 
 const HeaderColumn = styled.div`
@@ -949,6 +952,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   </UserRow>
                 ))}
               {tripList.length === 0 &&
+                !search &&
                 getTrips &&
                 getTrips.map(trip => (
                   <UserRow key={trip.id}>
@@ -1001,7 +1005,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid knowingFollowers={knowingFollowers} />
             </>
           ) : null}
-          {!coffeeLoading && coffees ? (
+          {!coffeeLoading && coffees.length !== 0 ? (
             <>
               <SmallTitle>
                 <SmallGreyLine />
@@ -1010,7 +1014,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid coffees={coffees} />
             </>
           ) : null}
-          {user.profile.isSelf && !coffees ? (
+          {user.profile.isSelf && !coffeeLoading && coffees.length === 0 ? (
             <>
               <SmallTitle>
                 <SmallGreyLine />

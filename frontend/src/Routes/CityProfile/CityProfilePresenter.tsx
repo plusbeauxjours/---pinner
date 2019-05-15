@@ -216,7 +216,9 @@ const UserRow = styled.div`
   &:hover {
     background-color: grey;
   }
-  border-top: 1px solid grey;
+  &:not(:last-child) {
+    border-bottom: 1px solid grey;
+  }
 `;
 
 const UserNameRow = styled.div`
@@ -224,6 +226,7 @@ const UserNameRow = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 10px;
 `;
 
 const AvatarContainer = styled.div`
@@ -384,54 +387,56 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                   </UserRow>
                 ))}
               {nowUsersList.length === 0 &&
+                !search &&
                 beforeUsersList.length === 0 &&
                 usersNow &&
                 usersNow.map(user => (
-                    <UserRow key={user.profile.id}>
-                      <Link to={`/${user.profile.username}`}>
-                        <UserHeader
-                          username={user.profile.username}
-                          currentCity={user.profile.currentCity.cityName}
-                          currentCountry={
-                            user.profile.currentCity.country.countryName
-                          }
-                          avatar={user.profile.avatar}
-                          size={"sm"}
-                        />
-                      </Link>
-                      {!user.profile.isSelf && (
-                        <FollowBtn
-                          isFollowing={user.profile.isFollowing}
-                          userId={user.profile.id}
-                          username={user.profile.username}
-                        />
-                      )}
-                    </UserRow>
+                  <UserRow key={user.profile.id}>
+                    <Link to={`/${user.profile.username}`}>
+                      <UserHeader
+                        username={user.profile.username}
+                        currentCity={user.profile.currentCity.cityName}
+                        currentCountry={
+                          user.profile.currentCity.country.countryName
+                        }
+                        avatar={user.profile.avatar}
+                        size={"sm"}
+                      />
+                    </Link>
+                    {!user.profile.isSelf && (
+                      <FollowBtn
+                        isFollowing={user.profile.isFollowing}
+                        userId={user.profile.id}
+                        username={user.profile.username}
+                      />
+                    )}
+                  </UserRow>
                 ))}
               {nowUsersList.length === 0 &&
+                !search &&
                 beforeUsersList.length === 0 &&
                 usersBefore &&
                 usersBefore.map(user => (
-                    <UserRow key={user.actor.profile.id}>
-                      <Link to={`/${user.actor.profile.username}`}>
-                        <UserHeader
-                          username={user.actor.profile.username}
-                          currentCity={user.actor.profile.currentCity.cityName}
-                          currentCountry={
-                            user.actor.profile.currentCity.country.countryName
-                          }
-                          avatar={user.actor.profile.avatar}
-                          size={"sm"}
-                        />
-                      </Link>
-                      {!user.actor.profile.isSelf && (
-                        <FollowBtn
-                          isFollowing={user.actor.profile.isFollowing}
-                          userId={user.actor.profile.id}
-                          username={user.actor.profile.username}
-                        />
-                      )}
-                    </UserRow>
+                  <UserRow key={user.actor.profile.id}>
+                    <Link to={`/${user.actor.profile.username}`}>
+                      <UserHeader
+                        username={user.actor.profile.username}
+                        currentCity={user.actor.profile.currentCity.cityName}
+                        currentCountry={
+                          user.actor.profile.currentCity.country.countryName
+                        }
+                        avatar={user.actor.profile.avatar}
+                        size={"sm"}
+                      />
+                    </Link>
+                    {!user.actor.profile.isSelf && (
+                      <FollowBtn
+                        isFollowing={user.actor.profile.isFollowing}
+                        userId={user.actor.profile.id}
+                        username={user.actor.profile.username}
+                      />
+                    )}
+                  </UserRow>
                 ))}
             </UserContainer>
           </PHeader>
