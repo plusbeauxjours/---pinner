@@ -52,8 +52,6 @@ class CommentType(DjangoObjectType):
 
 class FeedResponse(graphene.ObjectType):
     city = graphene.Field(location_types.CityType)
-    usersNow = graphene.List(config_types.UserType)
-    usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 
 class ToggleLikeCardResponse(graphene.ObjectType):

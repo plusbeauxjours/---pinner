@@ -1,5 +1,4 @@
 import { gql } from "apollo-boost";
-import { CITY_FRAGMENT, USER_FRAGMENT } from "src/sharedQueries";
 
 export const GET_MATCHES = gql`
   query GetMatches($matchPage: Int) {
@@ -8,16 +7,38 @@ export const GET_MATCHES = gql`
         id
         naturalTime
         city {
-          ...CityParts
+          cityName
+          country {
+            countryName
+          }
         }
         host {
-          ...UserParts
+          profile {
+            username
+            avatar
+            currentCity {
+              cityName
+              country {
+                countryName
+              }
+            }
+          }
         }
         guest {
-          ...UserParts
+          profile {
+            username
+            avatar
+            currentCity {
+              cityName
+              country {
+                countryName
+              }
+            }
+          }
         }
         coffee {
           id
+          target
         }
         status
         isHost
@@ -26,6 +47,4 @@ export const GET_MATCHES = gql`
       }
     }
   }
-  ${USER_FRAGMENT}
-  ${CITY_FRAGMENT}
 `;

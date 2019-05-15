@@ -7,7 +7,6 @@ import styled from "../../Styles/typed-components";
 import Loader from "../../Components/Loader";
 import Photo from "../../Components/Photo";
 import Wrapper from "../../Components/Wrapper";
-import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import UserRow from "../../Components/UserRow";
 import UserGrid from "../../Components/UserGrid";
@@ -58,27 +57,9 @@ const UserContainer = styled.div`
   align-content: center;
 `;
 
-const User = styled.div`
-  display: flex;
-  padding: 5px;
-`;
-
 const SText = styled(Bold)`
   display: flex;
   align-self: flex-end;
-`;
-
-const UBold = styled(SText)`
-  font-weight: 100;
-  font-size: 7px;
-`;
-
-const AvatarContainer = styled.div`
-  display: flex;
-`;
-
-const SAvatar = styled(Avatar)`
-  margin-right: -12px;
 `;
 
 const CityPhoto = styled.img<ITheme>`
@@ -234,10 +215,6 @@ interface IProps {
   cardsLoading: boolean;
 
   currentCity: string;
-  nowModalOpen: boolean;
-  beforeModalOpen: boolean;
-  toggleNowModal: () => void;
-  toggleBeforeModal: () => void;
   recommandUsersData: any;
   recommandUsersLoading: boolean;
   recommandUserList: any;
@@ -254,15 +231,12 @@ interface IProps {
   currentLat: number;
   currentLng: number;
   page: number;
-  getRequestingCoffeeId: (coffeeId: string) => void;
   deleteCoffee: () => void;
   loadMore: any;
 }
 
 const FeedPresenter: React.SFC<IProps> = ({
-  feedData: {
-    feed: { usersNow = null, usersBefore = null, city = null } = {}
-  } = {},
+  feedData: { feed: { city = null } = {} } = {},
   feedLoading,
   cardsData: { getFeedCards: { cards = null, hasNextPage = true } = {} } = {},
   cardsLoading,
@@ -270,10 +244,6 @@ const FeedPresenter: React.SFC<IProps> = ({
   coffeeLoading,
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},
   recommandUsersLoading,
-  nowModalOpen,
-  beforeModalOpen,
-  toggleNowModal,
-  toggleBeforeModal,
   toggleRecommandUserSeeAll,
   recommandUserList,
   toggleRecommandUserModal,
@@ -289,13 +259,12 @@ const FeedPresenter: React.SFC<IProps> = ({
   currentLng,
   currentCity,
   page,
-  getRequestingCoffeeId,
   deleteCoffee,
   loadMore
 }) => {
   if (feedLoading) {
     return <Loader />;
-  } else if (!feedLoading && usersNow && usersBefore && city) {
+  } else if (!feedLoading && city) {
     return (
       <>
         {requestingCoffeeModalOpen && (
@@ -371,52 +340,6 @@ const FeedPresenter: React.SFC<IProps> = ({
             </Modal>
           </ModalContainer>
         )}
-        {nowModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleNowModal} />
-            <Modal>
-              <Wrapper>
-                {usersNow.map(user => (
-                  <UserRow
-                    key={user.id}
-                    id={user.id}
-                    username={user.username}
-                    avatar={user.profile.avatar}
-                    currentCity={user.profile.currentCity.cityName}
-                    currentCountry={
-                      user.profile.currentCity.country.countryName
-                    }
-                    isFollowing={user.profile.isFollowing}
-                    isSelf={user.profile.isSelf}
-                    size={"sm"}
-                  />
-                ))}
-              </Wrapper>
-            </Modal>
-          </ModalContainer>
-        )}
-        {beforeModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleBeforeModal} />
-            <Modal>
-              {usersBefore.map(user => (
-                <UserRow
-                  key={user.id}
-                  id={user.id}
-                  username={user.actor.username}
-                  avatar={user.actor.profile.avatar}
-                  currentCity={user.actor.profile.currentCity.cityName}
-                  currentCountry={
-                    user.actor.profile.currentCity.country.countryName
-                  }
-                  isFollowing={user.actor.profile.isFollowing}
-                  isSelf={user.actor.profile.isSelf}
-                  size={"sm"}
-                />
-              ))}
-            </Modal>
-          </ModalContainer>
-        )}
         <SWrapper>
           <PHeader>
             <UserContainer>
@@ -430,38 +353,6 @@ const FeedPresenter: React.SFC<IProps> = ({
                 </Header>
               </Link>
               <Weather latitude={currentLat} longitude={currentLng} />
-            </UserContainer>
-            <UserContainer>
-              <User onClick={toggleNowModal}>
-                {usersNow &&
-                  usersNow.map(user => (
-                    <AvatarContainer key={user.id}>
-                      <SAvatar
-                        size={"sm"}
-                        key={user.id}
-                        url={user.profile.avatar}
-                      />
-                    </AvatarContainer>
-                  ))}
-                <UBold text={String(city.userCount)} />
-                <UBold text={"USERS IS HERE, NOW"} />
-              </User>
-              {usersBefore && usersBefore.length !== 0 ? (
-                <User onClick={toggleBeforeModal}>
-                  {usersBefore &&
-                    usersBefore.map(user => (
-                      <AvatarContainer key={user.id}>
-                        <SAvatar
-                          size={"sm"}
-                          key={user.id}
-                          url={user.actor.profile.avatar}
-                        />
-                      </AvatarContainer>
-                    ))}
-                  <UBold text={String(city.userLogCount)} />
-                  <UBold text={"USERS HAS BEEN HERE"} />
-                </User>
-              ) : null}
             </UserContainer>
           </PHeader>
           <GreyLine />
@@ -483,10 +374,12 @@ const FeedPresenter: React.SFC<IProps> = ({
             <SmallGreyLine />
             <SSText text={"NEED SOME COFFEE NOW"} />
           </SmallTitle>
-          <AvatarGrid
-            coffees={coffees}
-            toggleRequestModal={toggleRequestModal}
-          />
+          {!coffeeLoading && (
+            <AvatarGrid
+              coffees={coffees}
+              toggleRequestModal={toggleRequestModal}
+            />
+          )}
           <LoaderCoffee />
           <GreyLine />
 

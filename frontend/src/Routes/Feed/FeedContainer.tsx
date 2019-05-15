@@ -60,17 +60,9 @@ interface IState {
   recommandUserList: any;
   recommandUserModalOpen: boolean;
   page: number;
-  nowModalOpen: boolean;
-  beforeModalOpen: boolean;
   currentLat: number;
   currentLng: number;
   currentCity: string;
-  currentCountry: string;
-  currentCountryCode: string;
-  currentContinent: string;
-  cityPhotoURL: string;
-  countryPhotoURL: string;
-  continentPhotoURL: string;
   requestModalOpen: boolean;
   requestingCoffeeModalOpen: boolean;
   coffeeReportModalOpen: boolean;
@@ -90,17 +82,9 @@ class FeedContainer extends React.Component<IProps, IState> {
       recommandUserList: null,
       recommandUserModalOpen: false,
       page: 0,
-      nowModalOpen: false,
-      beforeModalOpen: false,
       currentLat: 0,
       currentLng: 0,
       currentCity: null,
-      currentCountry: null,
-      currentCountryCode: null,
-      currentContinent: null,
-      cityPhotoURL: null,
-      countryPhotoURL: null,
-      continentPhotoURL: null,
       requestModalOpen: false,
       requestingCoffeeModalOpen: false,
       coffeeReportModalOpen: false,
@@ -121,17 +105,9 @@ class FeedContainer extends React.Component<IProps, IState> {
       recommandUserList,
       recommandUserModalOpen,
       page,
-      nowModalOpen,
-      beforeModalOpen,
       currentLat,
       currentLng,
       currentCity,
-      currentCountry,
-      currentCountryCode,
-      currentContinent,
-      cityPhotoURL,
-      countryPhotoURL,
-      continentPhotoURL,
       requestModalOpen,
       requestingCoffeeModalOpen,
       coffeeReportModalOpen,
@@ -207,17 +183,6 @@ class FeedContainer extends React.Component<IProps, IState> {
                                         return (
                                           <ReportLocationMutation
                                             mutation={REPORT_LOCATION}
-                                            variables={{
-                                              currentLat,
-                                              currentLng,
-                                              currentCity,
-                                              currentCountry,
-                                              currentCountryCode,
-                                              currentContinent,
-                                              cityPhotoURL,
-                                              countryPhotoURL,
-                                              continentPhotoURL
-                                            }}
                                           >
                                             {ReportLocationFn => {
                                               this.ReportLocationFn = ReportLocationFn;
@@ -228,16 +193,6 @@ class FeedContainer extends React.Component<IProps, IState> {
                                                   coffeeData={coffeeData}
                                                   coffeeLoading={coffeeLoading}
                                                   currentCity={currentCity}
-                                                  nowModalOpen={nowModalOpen}
-                                                  beforeModalOpen={
-                                                    beforeModalOpen
-                                                  }
-                                                  toggleNowModal={
-                                                    this.toggleNowModal
-                                                  }
-                                                  toggleBeforeModal={
-                                                    this.toggleBeforeModal
-                                                  }
                                                   toggleRequestingCoffeeModal={
                                                     this
                                                       .toggleRequestingCoffeeModal
@@ -283,9 +238,6 @@ class FeedContainer extends React.Component<IProps, IState> {
                                                   currentLat={currentLat}
                                                   currentLng={currentLng}
                                                   page={page}
-                                                  getRequestingCoffeeId={
-                                                    this.getRequestingCoffeeId
-                                                  }
                                                   deleteCoffee={
                                                     this.deleteCoffee
                                                   }
@@ -330,10 +282,9 @@ class FeedContainer extends React.Component<IProps, IState> {
     const address = await reverseGeoCode(latitude, longitude);
     if (address) {
       this.setState({
-        currentCity: address.storableLocation.city,
-        currentCountry: address.storableLocation.country,
-        currentCountryCode: address.storableLocation.countryCode
+        currentCity: address.storableLocation.city
       });
+      localStorage.setItem("cityName", address.storableLocation.city);
       this.reportLocation(
         latitude,
         longitude,
@@ -354,13 +305,6 @@ class FeedContainer extends React.Component<IProps, IState> {
     const countryPhotoURL = await countryThumbnail(currentCountry);
     const currentContinent = await continents[currentCountryCode];
     const continentPhotoURL = await continentThumbnail(currentContinent);
-    this.setState({
-      cityPhotoURL,
-      countryPhotoURL,
-      currentContinent,
-      continentPhotoURL
-    });
-    localStorage.setItem("cityName", currentCity);
     this.ReportLocationFn({
       variables: {
         currentLat: latitude,
@@ -377,18 +321,6 @@ class FeedContainer extends React.Component<IProps, IState> {
   };
   public handleGeoError = () => {
     console.log("No location");
-  };
-  public toggleNowModal = () => {
-    const { nowModalOpen } = this.state;
-    this.setState({
-      nowModalOpen: !nowModalOpen
-    } as any);
-  };
-  public toggleBeforeModal = () => {
-    const { beforeModalOpen } = this.state;
-    this.setState({
-      beforeModalOpen: !beforeModalOpen
-    } as any);
   };
   public toggleRecommandUserModal = () => {
     const { recommandUserModalOpen } = this.state;
@@ -545,13 +477,6 @@ class FeedContainer extends React.Component<IProps, IState> {
     } catch (e) {
       console.log(e);
     }
-  };
-  public getRequestingCoffeeId = coffeeId => {
-    const { requestingCoffeeModalOpen } = this.state;
-    this.setState({
-      requestingCoffeeModalOpen: !requestingCoffeeModalOpen,
-      coffeeId
-    } as any);
   };
   public deleteCoffee = () => {
     const { coffeeId } = this.state;

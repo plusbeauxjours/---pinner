@@ -1,66 +1,179 @@
 import React from "react";
 import styled from "../../Styles/typed-components";
-
+import { Link } from "react-router-dom";
 import Loader from "../../Components/Loader";
-import Wrapper from "../../Components/Wrapper";
-import Bold from "../../Components/Bold";
-import MatchGrid from "src/Components/MatchGrid";
+import UserHeader from "../../Components/UserHeader";
+import FollowBtn from "../../Components/FollowBtn";
+import CoffeeBtn from "src/Components/CoffeeBtn";
+import Wrapper from "src/Components/Wrapper";
 
-const TallWrapper = styled(Wrapper)`
-  height: 50vh;
-  text-align: center;
+const SWrapper = styled(Wrapper)`
+  max-width: 650px;
 `;
 
-const Container = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 170px));
-  grid-template-rows: 200px;
-  grid-auto-rows: 170px;
-  grid-gap: 15px;
-  margin-bottom: 85px;
-`;
-
-const GreyLine = styled.div`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid grey;
-`;
-
-const Title = styled.div`
+const UserContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+  width: 100%;
+  flex-direction: column;
+  @media screen and (max-width: 800px) {
+    min-width: 300px;
+  }
 `;
 
-const SText = styled(Bold)`
-  font-size: 20px;
+const UserRow = styled.div`
+  display: grid;
+  flex-direction: row;
+  height: 50px;
+  grid-template-columns: 4fr 0.5fr 0.5fr;
+  padding: 0 5px 0 5px;
+  grid-gap: 15px;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: grey;
+  }
+  &:not(:last-child) {
+    border-bottom: 1px solid grey;
+  }
+`;
+
+const Username = styled.span`
+  text-align: center;
+  font-size: 22px;
   font-weight: 100;
 `;
 
+const UserNameRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+`;
+
+const Input = styled.input`
+  width: 215px;
+  border: 0;
+  border: ${props => props.theme.boxBorder};
+  background-color: ${props => props.theme.bgColor};
+  border-radius: 3px;
+  padding: 5px;
+  color: white;
+  font-size: 14px;
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+`;
+
 interface IProps {
-  matchData?: any;
-  matchLoading: boolean;
+  data: any;
+  loading: boolean;
+  search: string;
+  matchList: any;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const MatchPresenter: React.SFC<IProps> = ({
-  matchData: { getMatches: { matches = null } = {} } = {},
-  matchLoading
+  data: { getMatches: { matches = null } = {} } = {},
+  loading,
+  search,
+  matchList,
+  onChange
 }) => {
-  if (matchLoading) {
+  if (loading) {
     return <Loader />;
-  } else if (!matchLoading && matches) {
+  } else if (!loading && matches) {
     return (
-      <>
-        <TallWrapper>
-          <Title>
-            <SText text={"MATCHES"} />
-          </Title>
-          <Container>
-            <MatchGrid matches={matches} />
-          </Container>
-          <GreyLine />
-        </TallWrapper>
-      </>
+      <SWrapper>
+        <UserContainer>
+          <UserNameRow>
+            <Username>Matches</Username>
+            <Input placeholder="Search" value={search} onChange={onChange} />
+          </UserNameRow>
+          {matchList.length !== 0 &&
+            matchList.map(user => (
+              <UserRow key={user.id}>
+                <Link to={`/${user.username}`}>
+                  <UserHeader
+                    username={user.username}
+                    currentCity={user.currentCity.cityName}
+                    currentCountry={user.currentCity.country.countryName}
+                    avatar={user.avatar}
+                    size={"sm"}
+                  />
+                </Link>
+                {!user.isSelf && (
+                  <FollowBtn
+                    isFollowing={user.isFollowing}
+                    userId={user.id}
+                    username={user.username}
+                  />
+                )}
+              </UserRow>
+            ))}
+          {matchList.length === 0 &&
+            !search &&
+            matches &&
+            matches.map(match => (
+              <>
+                {match.isGuest ? (
+                  <UserRow key={match.id}>
+                    <Link to={`/${match.host.profile.username}`}>
+                      <UserHeader
+                        username={match.host.profile.username}
+                        currentCity={match.host.profile.currentCity.cityName}
+                        currentCountry={
+                          match.host.profile.currentCity.country.countryName
+                        }
+                        avatar={match.host.profile.avatar}
+                        size={"sm"}
+                      />
+                    </Link>
+                    {status}
+                    <FollowBtn
+                      isFollowing={match.host.profile.isFollowing}
+                      userId={match.host.profile.id}
+                      username={match.host.profile.username}
+                    />
+                    {match.isMatching ? (
+                      <CoffeeBtn
+                        isMatching={match.isMatching}
+                        matchId={match.id}
+                      />
+                    ) : null}
+                  </UserRow>
+                ) : (
+                  <UserRow key={match.id}>
+                    <Link to={`/${match.guest.profile.username}`}>
+                      <UserHeader
+                        username={match.guest.profile.username}
+                        currentCity={match.guest.profile.currentCity.cityName}
+                        currentCountry={
+                          match.guest.profile.currentCity.country.countryName
+                        }
+                        avatar={match.guest.profile.avatar}
+                        size={"sm"}
+                      />
+                    </Link>
+                    {status}
+                    <FollowBtn
+                      isFollowing={match.guest.profile.isFollowing}
+                      userId={match.guest.profile.id}
+                      username={match.guest.profile.username}
+                    />
+                    {match.isMatching ? (
+                      <CoffeeBtn
+                        isMatching={match.isMatching}
+                        matchId={match.id}
+                      />
+                    ) : null}
+                  </UserRow>
+                )}
+              </>
+            ))}
+        </UserContainer>
+      </SWrapper>
     );
   } else {
     return null;

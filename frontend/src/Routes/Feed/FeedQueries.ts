@@ -8,38 +8,6 @@ import {
 export const GET_FEED = gql`
   query Feed($cityName: String!) {
     feed(cityName: $cityName) {
-      usersNow {
-        id
-        username
-        profile {
-          avatar
-          currentCity {
-            cityName
-            country {
-              countryName
-            }
-          }
-          isFollowing
-          isSelf
-        }
-      }
-      usersBefore {
-        id
-        actor {
-          username
-          profile {
-            avatar
-            currentCity {
-              cityName
-              country {
-                countryName
-              }
-            }
-            isFollowing
-            isSelf
-          }
-        }
-      }
       city {
         cityName
         cityPhoto

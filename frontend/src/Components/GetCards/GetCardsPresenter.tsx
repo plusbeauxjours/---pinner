@@ -46,7 +46,7 @@ const GetCardsPresenter: React.SFC<IProps> = ({
 }) => {
   if (loading) {
     return <Loader />;
-  } else if (cards && cards.length !== 0) {
+  } else {
     return (
       <InfiniteScroll
         hasMore={hasNextPage}

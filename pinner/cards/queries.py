@@ -17,17 +17,7 @@ def resolve_feed(self, info, **kwargs):
     
     city = location_models.City.objects.get(city_name=cityName)
 
-    usersNow = User.objects.filter(
-        profile__current_city__city_name=cityName).order_by('-username').distinct('username')
-
-    if usersNow.count() < 5:
-        usersBefore = notification_models.MoveNotification.objects.filter(
-            city__city_name=cityName).order_by('-actor_id').distinct('actor_id')
-    else:
-        usersBefore = notification_models.MoveNotification.objects.filter(
-            id=0)
-
-    return types.FeedResponse( usersNow=usersNow, usersBefore=usersBefore, city=city)
+    return types.FeedResponse(city=city)
 
 
 @login_required

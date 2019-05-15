@@ -160,7 +160,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     const newProps = this.props;
     if (prevProps.match.params.username !== newProps.match.params.username) {
       this.setState({ search: "", tripList: [] });
-      console.log(this.state);
     }
   }
   public render() {
@@ -733,7 +732,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripStartDate,
       tripEndDate
     } as any);
-    console.log(this.state);
   };
   public toggleModal = () => {
     const { modalOpen } = this.state;
@@ -915,8 +913,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         data.getTrips.trip = data.getTrips.trip.filter(
           i => parseInt(i.id, 10) !== deleteTrip.tripId
         );
-        console.log(data.getTrips.trip);
-        console.log(deleteTrip);
         cache.writeQuery({
           query: GET_TRIPS,
           variables: { username, tripPage },
@@ -1095,7 +1091,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     const {
       target: { value }
     } = event;
-    console.log(this.data);
     const { getTrips: { trip = {} } = {} } = ({} = this.data);
     const nowSearch = (list, text) =>
       list.filter(
@@ -1104,9 +1099,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
           i.city.country.countryName.toLowerCase().includes(text.toLowerCase())
       );
     const tripList = nowSearch(trip, value);
-    console.log(this.data);
-
-    console.log(tripList);
     this.setState({
       search: value,
       tripList
