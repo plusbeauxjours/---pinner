@@ -9,6 +9,7 @@ import { GET_FOLLOWERS } from "../../Routes/Followers/FollowersQueries";
 import { GET_FOLLOWINGS } from "../../Routes/Followings/FollowingsQueries";
 import { GET_USER } from "../../Routes/UserProfile/UserProfileQueries";
 import { CITY_PROFILE } from "../../Routes/CityProfile/CityProfileQueries";
+import { GET_MATCHES } from "../../Routes/Match/MatchQueries";
 
 class FollowMutation extends Mutation<FollowUser, FollowUserVariables> {}
 
@@ -155,6 +156,25 @@ class FollowBtnContainer extends React.Component<IProps, IState> {
         cache.writeQuery({
           query: CITY_PROFILE,
           variables: { cityName: followUser.user.profile.currentCity.cityName },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const data = cache.readQuery({
+        query: GET_MATCHES
+      });
+      if (data) {
+        data.getMatches.host.profile.find(
+          i => parseInt(i.id, 10) === parseInt(userId, 10)
+        ).isFollowing = followUser.user.profile.isFollowing;
+        data.getMatches.guest.profile.find(
+          i => parseInt(i.id, 10) === parseInt(userId, 10)
+        ).isFollowing = followUser.user.profile.isFollowing;
+        cache.writeQuery({
+          query: GET_MATCHES,
           data
         });
       }

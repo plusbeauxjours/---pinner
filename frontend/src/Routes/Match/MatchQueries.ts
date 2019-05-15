@@ -14,8 +14,11 @@ export const GET_MATCHES = gql`
         }
         host {
           profile {
+            id
             username
             avatar
+            isFollowing
+            isSelf
             currentCity {
               cityName
               country {
@@ -26,8 +29,11 @@ export const GET_MATCHES = gql`
         }
         guest {
           profile {
+            id
             username
             avatar
+            isFollowing
+            isSelf
             currentCity {
               cityName
               country {
