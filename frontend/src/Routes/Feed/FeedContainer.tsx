@@ -2,8 +2,6 @@ import React from "react";
 import { Mutation, Query, MutationFn } from "react-apollo";
 import FeedPresenter from "./FeedPresenter";
 import {
-  ReportLocation,
-  ReportLocationVariables,
   Feed,
   FeedVariables,
   RecommandUsers,
@@ -16,9 +14,7 @@ import {
   GetFeedCards,
   GetFeedCardsVariables
 } from "../../types/api";
-import { RouteComponentProps } from "react-router";
-import { REPORT_LOCATION } from "../Home/HomeQueries";
-import { reverseGeoCode } from "../../mapHelpers";
+import { RouteComponentProps, withRouter } from "react-router";
 import {
   RECOMMAND_USERS,
   GET_FEED,
@@ -26,12 +22,6 @@ import {
   GET_FEED_CARDS
 } from "./FeedQueries";
 import { GET_COFFEES } from "../Coffees/CoffeesQueries";
-import {
-  cityThumbnail,
-  countryThumbnail,
-  continentThumbnail
-} from "../../locationThumbnail";
-import continents from "../../continents";
 import { toast } from "react-toastify";
 import { DELETE_COFFEE } from "../../Routes/UserProfile/UserProfileQueries";
 
@@ -45,10 +35,7 @@ class DeleteCoffeeMutation extends Mutation<
 > {}
 
 class RecommandUsersQuery extends Query<RecommandUsers> {}
-class ReportLocationMutation extends Mutation<
-  ReportLocation,
-  ReportLocationVariables
-> {}
+
 class FeedQuery extends Query<Feed, FeedVariables> {}
 class GetCardsQuery extends Query<GetFeedCards, GetFeedCardsVariables> {}
 class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
@@ -77,29 +64,23 @@ class FeedContainer extends React.Component<IProps, IState> {
   public deleteCoffeeFn: MutationFn;
   constructor(props) {
     super(props);
+    const { location: { state = {} } = {} } = ({} = props);
     this.state = {
       recommandUserPage: 0,
       recommandUserList: null,
       recommandUserModalOpen: false,
       page: 0,
-      currentLat: 0,
-      currentLng: 0,
-      currentCity: null,
+      currentLat: state.currentLat,
+      currentLng: state.currentLng,
+      currentCity: state.currentCity,
       requestModalOpen: false,
       requestingCoffeeModalOpen: false,
       coffeeReportModalOpen: false,
       coffeeId: null
     };
   }
-  public componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
-      this.handleGeoSuccess,
-      this.handleGeoError
-    );
-    console.log("goodmorning");
-  }
-
   public render() {
+    console.log(this.state);
     const {
       recommandUserPage,
       recommandUserList,
@@ -181,73 +162,55 @@ class FeedContainer extends React.Component<IProps, IState> {
                                         loading: feedLoading
                                       }) => {
                                         return (
-                                          <ReportLocationMutation
-                                            mutation={REPORT_LOCATION}
-                                          >
-                                            {ReportLocationFn => {
-                                              this.ReportLocationFn = ReportLocationFn;
-                                              return (
-                                                <FeedPresenter
-                                                  feedData={feedData}
-                                                  feedLoading={feedLoading}
-                                                  coffeeData={coffeeData}
-                                                  coffeeLoading={coffeeLoading}
-                                                  currentCity={currentCity}
-                                                  toggleRequestingCoffeeModal={
-                                                    this
-                                                      .toggleRequestingCoffeeModal
-                                                  }
-                                                  toggleCoffeeReportModal={
-                                                    this.toggleCoffeeReportModal
-                                                  }
-                                                  recommandUsersData={
-                                                    recommandUsersData
-                                                  }
-                                                  recommandUsersLoading={
-                                                    recommandUsersLoading
-                                                  }
-                                                  recommandUserList={
-                                                    recommandUserList
-                                                  }
-                                                  recommandUserModalOpen={
-                                                    recommandUserModalOpen
-                                                  }
-                                                  toggleRecommandUserModal={
-                                                    this
-                                                      .toggleRecommandUserModal
-                                                  }
-                                                  toggleRecommandUserSeeAll={
-                                                    this
-                                                      .toggleRecommandUserSeeAll
-                                                  }
-                                                  requestModalOpen={
-                                                    requestModalOpen
-                                                  }
-                                                  requestingCoffeeModalOpen={
-                                                    requestingCoffeeModalOpen
-                                                  }
-                                                  coffeeReportModalOpen={
-                                                    coffeeReportModalOpen
-                                                  }
-                                                  toggleRequestModal={
-                                                    this.toggleRequestModal
-                                                  }
-                                                  submitCoffee={
-                                                    this.submitCoffee
-                                                  }
-                                                  currentLat={currentLat}
-                                                  currentLng={currentLng}
-                                                  page={page}
-                                                  deleteCoffee={
-                                                    this.deleteCoffee
-                                                  }
-                                                  loadMore={this.loadMore}
-                                                  cardsData={cardsData}
-                                                  cardsLoading={cardsLoading}
-                                                />
-                                              );
-                                            }}
-                                          </ReportLocationMutation>
+                                          <FeedPresenter
+                                            feedData={feedData}
+                                            feedLoading={feedLoading}
+                                            coffeeData={coffeeData}
+                                            coffeeLoading={coffeeLoading}
+                                            currentCity={currentCity}
+                                            toggleRequestingCoffeeModal={
+                                              this.toggleRequestingCoffeeModal
+                                            }
+                                            toggleCoffeeReportModal={
+                                              this.toggleCoffeeReportModal
+                                            }
+                                            recommandUsersData={
+                                              recommandUsersData
+                                            }
+                                            recommandUsersLoading={
+                                              recommandUsersLoading
+                                            }
+                                            recommandUserList={
+                                              recommandUserList
+                                            }
+                                            recommandUserModalOpen={
+                                              recommandUserModalOpen
+                                            }
+                                            toggleRecommandUserModal={
+                                              this.toggleRecommandUserModal
+                                            }
+                                            toggleRecommandUserSeeAll={
+                                              this.toggleRecommandUserSeeAll
+                                            }
+                                            requestModalOpen={requestModalOpen}
+                                            requestingCoffeeModalOpen={
+                                              requestingCoffeeModalOpen
+                                            }
+                                            coffeeReportModalOpen={
+                                              coffeeReportModalOpen
+                                            }
+                                            toggleRequestModal={
+                                              this.toggleRequestModal
+                                            }
+                                            submitCoffee={this.submitCoffee}
+                                            currentLat={currentLat}
+                                            currentLng={currentLng}
+                                            page={page}
+                                            deleteCoffee={this.deleteCoffee}
+                                            loadMore={this.loadMore}
+                                            cardsData={cardsData}
+                                            cardsLoading={cardsLoading}
+                                          />
                                         );
                                       }}
                                     </FeedQuery>
@@ -268,60 +231,6 @@ class FeedContainer extends React.Component<IProps, IState> {
       </GetCardsQuery>
     );
   }
-  public handleGeoSuccess = (position: Position) => {
-    const {
-      coords: { latitude, longitude }
-    } = position;
-    this.setState({
-      currentLat: latitude,
-      currentLng: longitude
-    });
-    this.getAddress(latitude, longitude);
-  };
-  public getAddress = async (latitude: number, longitude: number) => {
-    const address = await reverseGeoCode(latitude, longitude);
-    if (address) {
-      this.setState({
-        currentCity: address.storableLocation.city
-      });
-      localStorage.setItem("cityName", address.storableLocation.city);
-      this.reportLocation(
-        latitude,
-        longitude,
-        address.storableLocation.city,
-        address.storableLocation.country,
-        address.storableLocation.countryCode
-      );
-    }
-  };
-  public reportLocation = async (
-    latitude: number,
-    longitude: number,
-    currentCity: string,
-    currentCountry: string,
-    currentCountryCode: string
-  ) => {
-    const cityPhotoURL = await cityThumbnail(currentCity);
-    const countryPhotoURL = await countryThumbnail(currentCountry);
-    const currentContinent = await continents[currentCountryCode];
-    const continentPhotoURL = await continentThumbnail(currentContinent);
-    this.ReportLocationFn({
-      variables: {
-        currentLat: latitude,
-        currentLng: longitude,
-        currentCity,
-        currentCountry,
-        currentCountryCode,
-        currentContinent,
-        cityPhotoURL,
-        countryPhotoURL,
-        continentPhotoURL
-      }
-    });
-  };
-  public handleGeoError = () => {
-    console.log("No location");
-  };
   public toggleRecommandUserModal = () => {
     const { recommandUserModalOpen } = this.state;
     this.setState({
@@ -510,4 +419,4 @@ class FeedContainer extends React.Component<IProps, IState> {
   };
 }
 
-export default FeedContainer;
+export default withRouter(FeedContainer);

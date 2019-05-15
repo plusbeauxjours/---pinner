@@ -7,6 +7,7 @@ import { Profile, HeartEmpty, Compass } from "../../Icons";
 
 import Wrapper from "../Wrapper";
 import Me from "../Me";
+import { RouteComponentProps, withRouter } from "react-router";
 
 const Header = styled.header`
   background-color: white;
@@ -63,17 +64,36 @@ const Icon = styled.span`
   }
 `;
 
-interface IProps {
+interface IProps extends RouteComponentProps<any> {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
+  currentLat: number;
+  currentLng: number;
+  currentCity: string;
 }
 
-const HeaderPresenter: React.SFC<IProps> = ({ onSubmit, onChange, search }) => (
+const HeaderPresenter: React.SFC<IProps> = ({
+  onSubmit,
+  onChange,
+  search,
+  currentLat,
+  currentLng,
+  currentCity
+}) => (
   <Header>
     <SWrapper>
       <Column>
-        <Link to="/">
+        <Link
+          to={{
+            pathname: "/",
+            state: {
+              currentLat,
+              currentLng,
+              currentCity
+            }
+          }}
+        >
           <svg
             width="24"
             height="24"
@@ -116,4 +136,4 @@ const HeaderPresenter: React.SFC<IProps> = ({ onSubmit, onChange, search }) => (
   </Header>
 );
 
-export default HeaderPresenter;
+export default withRouter(HeaderPresenter);
