@@ -96,10 +96,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       target: { value }
     } = event;
     const {
-      cityProfile: { usersNow = null }
-    } = this.data;
-    const {
-      cityProfile: { usersBefore = null }
+      cityProfile: { usersNow = null, usersBefore = null }
     } = this.data;
     const nowSearch = (list, text) =>
       list.filter(i =>
@@ -117,6 +114,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
         );
       const beforeUsersList = beforeSearch(usersBefore, value);
       this.setState({
+        search: value,
         beforeUsersList
       } as any);
     }

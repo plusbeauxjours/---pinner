@@ -42,18 +42,29 @@ class MatchContainer extends React.Component<any, IState> {
     } = event;
     console.log(this.data);
     const {
-      getFollowers: { profiles = null }
+      getMatches: { matches = null }
     } = this.data;
     const nowSearch = (list, text) =>
       list.filter(
         i =>
-          i.username.toLowerCase().includes(text.toLowerCase()) ||
-          i.currentCity.cityName.toLowerCase().includes(text.toLowerCase()) ||
-          i.currentCity.country.countryName
+          i.host.profile.username.toLowerCase().includes(text.toLowerCase()) ||
+          i.host.profile.currentCity.cityName
             .toLowerCase()
-            .includes(text.toLowerCase())
+            .includes(text.toLowerCase()) ||
+          i.host.profile.currentCity.country.countryName
+            .toLowerCase()
+            .includes(text.toLowerCase()) ||
+          i.guest.profile.username.toLowerCase().includes(text.toLowerCase()) ||
+          i.guest.profile.currentCity.cityName
+            .toLowerCase()
+            .includes(text.toLowerCase()) ||
+          i.guest.profile.currentCity.country.countryName
+            .toLowerCase()
+            .includes(text.toLowerCase()) ||
+          i.city.cityName.toLowerCase().includes(text.toLowerCase()) ||
+          i.city.country.countryName.toLowerCase().includes(text.toLowerCase())
       );
-    const matchList = nowSearch(profiles, value);
+    const matchList = nowSearch(matches, value);
     this.setState({
       search: value,
       matchList

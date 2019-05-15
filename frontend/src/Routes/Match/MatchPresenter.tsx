@@ -92,25 +92,62 @@ const MatchPresenter: React.SFC<IProps> = ({
             <Input placeholder="Search" value={search} onChange={onChange} />
           </UserNameRow>
           {matchList.length !== 0 &&
-            matchList.map(user => (
-              <UserRow key={user.id}>
-                <Link to={`/${user.username}`}>
-                  <UserHeader
-                    username={user.username}
-                    currentCity={user.currentCity.cityName}
-                    currentCountry={user.currentCity.country.countryName}
-                    avatar={user.avatar}
-                    size={"sm"}
-                  />
-                </Link>
-                {!user.isSelf && (
-                  <FollowBtn
-                    isFollowing={user.isFollowing}
-                    userId={user.id}
-                    username={user.username}
-                  />
+            matchList.map(match => (
+              <>
+                {match.isGuest ? (
+                  <UserRow key={match.id}>
+                    <Link to={`/${match.host.profile.username}`}>
+                      <UserHeader
+                        username={match.host.profile.username}
+                        currentCity={match.host.profile.currentCity.cityName}
+                        currentCountry={
+                          match.host.profile.currentCity.country.countryName
+                        }
+                        avatar={match.host.profile.avatar}
+                        size={"sm"}
+                      />
+                    </Link>
+                    {status}
+                    <FollowBtn
+                      isFollowing={match.host.profile.isFollowing}
+                      userId={match.host.profile.id}
+                      username={match.host.profile.username}
+                    />
+                    {match.isMatching ? (
+                      <CoffeeBtn
+                        isMatching={match.isMatching}
+                        matchId={match.id}
+                      />
+                    ) : null}
+                  </UserRow>
+                ) : (
+                  <UserRow key={match.id}>
+                    <Link to={`/${match.guest.profile.username}`}>
+                      <UserHeader
+                        username={match.guest.profile.username}
+                        currentCity={match.guest.profile.currentCity.cityName}
+                        currentCountry={
+                          match.guest.profile.currentCity.country.countryName
+                        }
+                        avatar={match.guest.profile.avatar}
+                        size={"sm"}
+                      />
+                    </Link>
+                    {status}
+                    <FollowBtn
+                      isFollowing={match.guest.profile.isFollowing}
+                      userId={match.guest.profile.id}
+                      username={match.guest.profile.username}
+                    />
+                    {match.isMatching ? (
+                      <CoffeeBtn
+                        isMatching={match.isMatching}
+                        matchId={match.id}
+                      />
+                    ) : null}
+                  </UserRow>
                 )}
-              </UserRow>
+              </>
             ))}
           {matchList.length === 0 &&
             !search &&
