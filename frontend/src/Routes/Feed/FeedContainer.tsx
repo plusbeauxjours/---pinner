@@ -46,7 +46,6 @@ interface IState {
   recommandUserPage: number;
   recommandUserList: any;
   recommandUserModalOpen: boolean;
-  page: number;
   currentLat: number;
   currentLng: number;
   currentCity: string;
@@ -69,10 +68,9 @@ class FeedContainer extends React.Component<IProps, IState> {
       recommandUserPage: 0,
       recommandUserList: null,
       recommandUserModalOpen: false,
-      page: 0,
       currentLat: state.currentLat,
       currentLng: state.currentLng,
-      currentCity: state.currentCity,
+      currentCity: state.currentCity || localStorage.getItem("cityName"),
       requestModalOpen: false,
       requestingCoffeeModalOpen: false,
       coffeeReportModalOpen: false,
@@ -85,14 +83,12 @@ class FeedContainer extends React.Component<IProps, IState> {
       recommandUserPage,
       recommandUserList,
       recommandUserModalOpen,
-      page,
       currentLat,
       currentLng,
       currentCity,
       requestModalOpen,
       requestingCoffeeModalOpen,
       coffeeReportModalOpen,
-
       coffeeId
     } = this.state;
     return (
@@ -205,7 +201,6 @@ class FeedContainer extends React.Component<IProps, IState> {
                                             submitCoffee={this.submitCoffee}
                                             currentLat={currentLat}
                                             currentLng={currentLng}
-                                            page={page}
                                             deleteCoffee={this.deleteCoffee}
                                             loadMore={this.loadMore}
                                             cardsData={cardsData}

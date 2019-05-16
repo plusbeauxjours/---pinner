@@ -66,8 +66,10 @@ class ReportLocation(graphene.Mutation):
         except models.Country.DoesNotExist:
             country = models.Country.objects.create(
                 country_code=currentCountryCode, country_name=currentCountry, country_photo=countryPhotoURL, continent=continent)
+
         try:
             city = models.City.objects.get(city_name=currentCity)
+            print("what")
             profile.current_city = city
             profile.save()
             if city.near_city.count() < 6 :

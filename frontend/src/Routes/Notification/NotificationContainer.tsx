@@ -12,7 +12,6 @@ class GetNotificationsQuery extends Query<
 > {}
 
 interface IState {
-  page: number;
   modalOpen: boolean;
   notificationId: string;
   search: string;
@@ -26,7 +25,6 @@ class NotificationContainer extends React.Component<any, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      page: 0,
       modalOpen: false,
       notificationId: "",
       search: "",
@@ -37,13 +35,13 @@ class NotificationContainer extends React.Component<any, IState> {
     const newProps = this.props;
     console.log(prevProps);
     console.log(newProps);
-    // if (prevProps.match.params.cityName !== newProps.match.params.cityName) {
-    //   this.setState({ search: "", nowUsersList: [], beforeUsersList: [] });
-    //   console.log(this.state);
-    // }
+    if (prevProps.match.params.cityName !== newProps.match.params.cityName) {
+      this.setState({ search: "", notificationList: [] });
+      console.log(this.state);
+    }
   }
   public render() {
-    const { page, modalOpen, search, notificationList } = this.state;
+    const { modalOpen, search, notificationList } = this.state;
     return (
       <MarkAsReadMutation
         mutation={MARK_AS_READ}
@@ -52,10 +50,7 @@ class NotificationContainer extends React.Component<any, IState> {
         {markAsReadFn => {
           this.markAsReadFn = markAsReadFn;
           return (
-            <GetNotificationsQuery
-              query={GET_NOTIFICATION}
-              variables={{ page }}
-            >
+            <GetNotificationsQuery query={GET_NOTIFICATION}>
               {({ data, loading, fetchMore }) => {
                 this.data = data;
                 this.fetchMore = fetchMore;
@@ -92,6 +87,7 @@ class NotificationContainer extends React.Component<any, IState> {
     const {
       getNotifications: { notifications = null }
     } = this.data;
+    console.log(this.data);
     const nowSearch = (list, text) =>
       list.filter(i =>
         i.actor.username.toLowerCase().includes(text.toLowerCase())
@@ -108,10 +104,8 @@ class NotificationContainer extends React.Component<any, IState> {
   };
   public updateMarkAsRead = (cache, { data: { markAsRead } }) => {
     try {
-      const { page } = this.state;
       const data = cache.readQuery({
-        query: GET_NOTIFICATION,
-        variables: { page }
+        query: GET_NOTIFICATION
       });
       if (data) {
         data.getNotifications.notifications.find(
@@ -119,7 +113,6 @@ class NotificationContainer extends React.Component<any, IState> {
         ).read = true;
         cache.writeQuery({
           query: GET_NOTIFICATION,
-          variables: { page },
           data
         });
       }

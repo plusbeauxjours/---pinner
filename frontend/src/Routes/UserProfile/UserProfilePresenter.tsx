@@ -778,6 +778,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 onFocusChange={onFocusChange}
                 focusedInput={focusedInput}
                 isOutsideRange={() => false}
+                // isDayBlocked={isDayBlocked}
               />
               <ExtendedInput
                 onChange={onInputChange}

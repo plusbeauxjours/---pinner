@@ -59,7 +59,6 @@ interface IProps extends RouteComponentProps {
   isFollowing?: boolean;
   isSelf?: boolean;
   currentCity?: string;
-  page?: number;
   editCardCaption: (event: React.ChangeEvent<HTMLInputElement>) => void;
   editCardOnKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onCompletedEditCard: (data: any) => void;

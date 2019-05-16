@@ -125,7 +125,16 @@ const HeaderPresenter: React.SFC<IProps> = ({
         <Icon>
           <Me>
             {user => (
-              <Link to={`/${user ? user.username : ""}`}>
+              <Link
+                to={{
+                  pathname: `/${user ? user.username : ""}`,
+                  state: {
+                    currentLat,
+                    currentLng,
+                    currentCity
+                  }
+                }}
+              >
                 <Profile />
               </Link>
             )}

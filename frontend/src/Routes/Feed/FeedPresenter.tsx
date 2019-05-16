@@ -230,7 +230,6 @@ interface IProps {
   submitCoffee: any;
   currentLat: number;
   currentLng: number;
-  page: number;
   deleteCoffee: () => void;
   loadMore: any;
 }
@@ -258,7 +257,6 @@ const FeedPresenter: React.SFC<IProps> = ({
   currentLat,
   currentLng,
   currentCity,
-  page,
   deleteCoffee,
   loadMore
 }) => {
@@ -385,6 +383,7 @@ const FeedPresenter: React.SFC<IProps> = ({
 
           {!cardsLoading && cards && cards.length !== 0 ? (
             <InfiniteScroll
+              pageStart={0}
               hasMore={hasNextPage}
               loader={<Loader key={0} />}
               loadMore={loadMore}
@@ -409,7 +408,6 @@ const FeedPresenter: React.SFC<IProps> = ({
                     naturalTime={card.naturalTime}
                     isLiked={card.isLiked}
                     currentCity={currentCity}
-                    page={page}
                   />
                 ))}
             </InfiniteScroll>

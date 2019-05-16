@@ -79,16 +79,17 @@ const NotificationPresenter: React.SFC<IProps> = ({
       <>
         {modalOpen && <Route path="/p/:id" component={CardDetail} />}
         <SWrapper>
-          <InfiniteScroll hasMore={hasNextPage} loadMore={loadMore}>
-            <UserContainer>
-              <UserNameRow>
-                <Username>NOTIFICATIONS</Username>
-                <Input
-                  placeholder="Search"
-                  value={search}
-                  onChange={onChange}
-                />
-              </UserNameRow>
+          <UserContainer>
+            <UserNameRow>
+              <Username>NOTIFICATIONS</Username>
+              <Input placeholder="Search" value={search} onChange={onChange} />
+            </UserNameRow>
+            <InfiniteScroll
+              hasMore={hasNextPage}
+              loadMore={loadMore}
+              pageStart={0}
+              initialLoad={false}
+            >
               {notificationList.length !== 0 &&
                 notificationList.map(notification => {
                   return (
@@ -101,7 +102,7 @@ const NotificationPresenter: React.SFC<IProps> = ({
                     />
                   );
                 })}
-              {console.log(notificationList)}
+              {console.log("hasNextPage:  ", hasNextPage)}
               {notificationList.length === 0 &&
                 !search &&
                 notifications &&
@@ -116,8 +117,8 @@ const NotificationPresenter: React.SFC<IProps> = ({
                     />
                   );
                 })}
-            </UserContainer>
-          </InfiniteScroll>
+            </InfiniteScroll>
+          </UserContainer>
         </SWrapper>
       </>
     );

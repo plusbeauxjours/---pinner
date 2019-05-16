@@ -103,6 +103,7 @@ interface IState {
   tripPage: number;
   search: string;
   tripList: any;
+  currentCity: string;
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
@@ -119,6 +120,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
 
   constructor(props) {
     super(props);
+    const { location: { state = {} } = {} } = ({} = props);
     this.state = {
       modalOpen: false,
       confirmModalOpen: false,
@@ -153,7 +155,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       coffeeId: null,
       tripPage: 0,
       search: "",
-      tripList: []
+      tripList: [],
+      currentCity: state.currentCity || localStorage.getItem("cityName")
     };
   }
   public componentDidUpdate(prevProps) {
@@ -179,7 +182,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       cityModalOpen,
       countryModalOpen,
       continentModalOpen,
-
+      currentCity,
       requestModalOpen,
       coffeeModalOpen,
       requestingCoffeeModalOpen,
@@ -209,7 +212,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       <RequestCoffeeMutation
         mutation={REQUEST_COFFEE}
         variables={{
-          currentCity: localStorage.getItem("cityName")
+          currentCity
         }}
         onCompleted={this.onCompletedRequestCoffee}
         update={this.updateRequestCoffee}

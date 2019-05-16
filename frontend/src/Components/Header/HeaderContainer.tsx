@@ -52,6 +52,7 @@ class HeaderContainer extends React.Component<any, IState> {
       this.handleGeoSuccess,
       this.handleGeoError
     );
+    console.log("hader did mount");
   }
   public render() {
     const { currentLat, currentLng, currentCity } = this.state;
