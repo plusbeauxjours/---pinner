@@ -18,10 +18,10 @@ class ReportLocationMutation extends Mutation<
 > {}
 
 interface IState {
-  search: string;
   currentLat: number;
   currentLng: number;
   currentCity: string;
+  modalOpen: boolean;
 }
 
 class HeaderContainer extends React.Component<any, IState> {
@@ -29,10 +29,10 @@ class HeaderContainer extends React.Component<any, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      search: "",
       currentLat: 0,
       currentLng: 0,
-      currentCity: null
+      currentCity: null,
+      modalOpen: false
     };
   }
   public componentDidUpdate(prevProps) {
@@ -55,26 +55,31 @@ class HeaderContainer extends React.Component<any, IState> {
     console.log("hader did mount");
   }
   public render() {
-    const { currentLat, currentLng, currentCity } = this.state;
-    const { search } = this.props;
+    const { currentLat, currentLng, currentCity, modalOpen } = this.state;
     return (
       <ReportLocationMutation mutation={REPORT_LOCATION}>
         {ReportLocationFn => {
           this.ReportLocationFn = ReportLocationFn;
           return (
             <HeaderPresenter
-              onChange={this.onChange}
-              onSubmit={this.onSubmit}
-              search={search}
               currentLat={currentLat}
               currentLng={currentLng}
               currentCity={currentCity}
+              modalOpen={modalOpen}
+              toggleModal={this.toggleModal}
             />
           );
         }}
       </ReportLocationMutation>
     );
   }
+  public toggleModal = () => {
+    const { modalOpen } = this.state;
+    this.setState({
+      modalOpen: !modalOpen
+    } as any);
+    console.log(this.state);
+  };
   public handleGeoSuccess = (position: Position) => {
     const {
       coords: { latitude, longitude }
@@ -128,25 +133,6 @@ class HeaderContainer extends React.Component<any, IState> {
   };
   public handleGeoError = () => {
     console.log("No location");
-  };
-  public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
-    const {
-      target: { value }
-    } = event;
-    // autocompleteSearch(value);
-    console.log(value);
-    this.setState({
-      search: value
-    } as any);
-  };
-  public onSubmit: React.FormEventHandler<HTMLFormElement> = event => {
-    const { history } = this.props;
-    const { search } = this.state;
-    event.preventDefault();
-    history.push({
-      pathname: "/search",
-      search: `?term=${search}`
-    });
   };
 }
 

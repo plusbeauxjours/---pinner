@@ -29,7 +29,7 @@ class Query(object):
         types.SearchCardsResponse,
         resolver=queries.resolve_search_cards,
         required=True,
-        args={'term': graphene.String(required=True)}
+        args={'search': graphene.String(required=True)}
     )
     latest_cards = graphene.Field(
         types.LatestCardsResponse,

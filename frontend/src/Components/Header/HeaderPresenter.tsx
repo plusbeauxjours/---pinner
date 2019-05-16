@@ -2,12 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
-import { Profile, HeartEmpty, Compass } from "../../Icons";
-// import { Compass } from "../../Icons";
+import { Profile, HeartEmpty, Compass, SearchIcon } from "../../Icons";
 
 import Wrapper from "../Wrapper";
 import Me from "../Me";
 import { RouteComponentProps, withRouter } from "react-router";
+import Search from "../Search/";
 
 const Header = styled.header`
   background-color: white;
@@ -43,20 +43,6 @@ const Column = styled.div`
   }
 `;
 
-const Input = styled.input`
-  width: 215px;
-  border: 0;
-  border: ${props => props.theme.boxBorder};
-  background-color: ${props => props.theme.bgColor};
-  border-radius: 3px;
-  padding: 5px;
-  color: white;
-  font-size: 14px;
-  &::placeholder {
-    color: ${props => props.theme.greyColor};
-  }
-`;
-
 const Icon = styled.span`
   margin-right: 30px;
   &:last-child {
@@ -65,23 +51,22 @@ const Icon = styled.span`
 `;
 
 interface IProps extends RouteComponentProps<any> {
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  search: string;
   currentLat: number;
   currentLng: number;
   currentCity: string;
+  modalOpen: boolean;
+  toggleModal: () => void;
 }
 
 const HeaderPresenter: React.SFC<IProps> = ({
-  onSubmit,
-  onChange,
-  search,
   currentLat,
   currentLng,
-  currentCity
+  currentCity,
+  modalOpen,
+  toggleModal
 }) => (
   <Header>
+    {modalOpen && <Search />}
     <SWrapper>
       <Column>
         <Link
@@ -111,11 +96,9 @@ const HeaderPresenter: React.SFC<IProps> = ({
         </Link>
       </Icon>
 
-      <Column>
-        <form onSubmit={onSubmit}>
-          <Input placeholder="Search" value={search} onChange={onChange} />
-        </form>
-      </Column>
+      <Icon onClick={toggleModal}>
+        <SearchIcon />
+      </Icon>
       <Column>
         <Icon>
           <Link to="/notification">

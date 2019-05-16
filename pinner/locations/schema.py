@@ -75,19 +75,19 @@ class Query(object):
         types.CitiesResponse,
         resolver=queries.resolve_search_citiess,
         required=True,
-        args={'term': graphene.String(required=True)}
+        args={'search': graphene.String(required=True)}
     )
     search_countries = graphene.Field(
         types.CountriesResponse,
         resolver=queries.resolve_search_countries,
         required=True,
-        args={'term': graphene.String(required=True)}
+        args={'search': graphene.String(required=True)}
     )
     search_continents = graphene.Field(
         types.ContinentsResponse,
         resolver=queries.resolve_search_continents,
         required=True,
-        args={'term': graphene.String(required=True)}
+        args={'search': graphene.String(required=True)}
     )
     get_cities = graphene.Field(
         types.TripResponse,

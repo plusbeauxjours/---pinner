@@ -8,28 +8,28 @@ import {
 } from "src/sharedQueries";
 
 export const SEARCH = gql`
-  query SearchTerms($term: String!) {
-    searchUsers(term: $term) {
+  query SearchTerms($search: String!) {
+    searchUsers(search: $search) {
       users {
         ...UserParts
       }
     }
-    searchCards(term: $term) {
+    searchCards(search: $search) {
       cards {
         ...CardParts
       }
     }
-    searchCities(term: $term) {
+    searchCities(search: $search) {
       cities {
         ...CityParts
       }
     }
-    searchCountries(term: $term) {
+    searchCountries(search: $search) {
       countries {
         ...CountryParts
       }
     }
-    searchContinents(term: $term) {
+    searchContinents(search: $search) {
       continents {
         ...ContinentParts
       }

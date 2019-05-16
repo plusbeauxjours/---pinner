@@ -24,7 +24,7 @@ class Query(object):
         types.SearchUsersResponse,
         resolver=queries.resolve_search_users,
         required=True,
-        args={'term': graphene.String(required=True)}
+        args={'search': graphene.String(required=True)}
     )
     check_username = graphene.Field(
         types.CheckUsernameResponse,

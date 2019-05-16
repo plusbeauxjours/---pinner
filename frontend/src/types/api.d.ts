@@ -613,6 +613,128 @@ export interface DeleteCommentVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: SearchTerms
+// ====================================================
+
+export interface SearchTerms_searchUsers_users_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface SearchTerms_searchUsers_users_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: SearchTerms_searchUsers_users_profile_currentCity_country;
+}
+
+export interface SearchTerms_searchUsers_users_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
+  currentCity: SearchTerms_searchUsers_users_profile_currentCity | null;
+}
+
+export interface SearchTerms_searchUsers_users {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: SearchTerms_searchUsers_users_profile | null;
+}
+
+export interface SearchTerms_searchUsers {
+  __typename: "SearchUsersResponse";
+  users: (SearchTerms_searchUsers_users | null)[] | null;
+}
+
+export interface SearchTerms_searchCards_cards {
+  __typename: "CardType";
+  id: string;
+  file: string | null;
+  caption: string;
+  likeCount: number | null;
+  commentCount: number | null;
+}
+
+export interface SearchTerms_searchCards {
+  __typename: "SearchCardsResponse";
+  cards: (SearchTerms_searchCards_cards | null)[] | null;
+}
+
+export interface SearchTerms_searchCities_cities_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface SearchTerms_searchCities_cities {
+  __typename: "CityType";
+  id: string;
+  latitude: number | null;
+  longitude: number | null;
+  cityName: string | null;
+  cityPhoto: string | null;
+  distance: number | null;
+  country: SearchTerms_searchCities_cities_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
+}
+
+export interface SearchTerms_searchCities {
+  __typename: "CitiesResponse";
+  cities: (SearchTerms_searchCities_cities | null)[] | null;
+}
+
+export interface SearchTerms_searchCountries_countries_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
+export interface SearchTerms_searchCountries_countries {
+  __typename: "CountryType";
+  id: string;
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+  continent: SearchTerms_searchCountries_countries_continent | null;
+}
+
+export interface SearchTerms_searchCountries {
+  __typename: "CountriesResponse";
+  countries: (SearchTerms_searchCountries_countries | null)[] | null;
+}
+
+export interface SearchTerms_searchContinents_continents {
+  __typename: "ContinentType";
+  id: string;
+  continentName: string | null;
+  continentPhoto: string | null;
+}
+
+export interface SearchTerms_searchContinents {
+  __typename: "ContinentsResponse";
+  continents: (SearchTerms_searchContinents_continents | null)[] | null;
+}
+
+export interface SearchTerms {
+  searchUsers: SearchTerms_searchUsers;
+  searchCards: SearchTerms_searchCards;
+  searchCities: SearchTerms_searchCities;
+  searchCountries: SearchTerms_searchCountries;
+  searchContinents: SearchTerms_searchContinents;
+}
+
+export interface SearchTermsVariables {
+  search: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: signUp
 // ====================================================
 
@@ -1934,128 +2056,6 @@ export interface StartPhoneVerification {
 
 export interface StartPhoneVerificationVariables {
   phoneNumber: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: SearchTerms
-// ====================================================
-
-export interface SearchTerms_searchUsers_users_profile_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface SearchTerms_searchUsers_users_profile_currentCity {
-  __typename: "CityType";
-  cityName: string | null;
-  country: SearchTerms_searchUsers_users_profile_currentCity_country;
-}
-
-export interface SearchTerms_searchUsers_users_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  isFollowing: boolean | null;
-  isSelf: boolean | null;
-  currentCity: SearchTerms_searchUsers_users_profile_currentCity | null;
-}
-
-export interface SearchTerms_searchUsers_users {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: SearchTerms_searchUsers_users_profile | null;
-}
-
-export interface SearchTerms_searchUsers {
-  __typename: "SearchUsersResponse";
-  users: (SearchTerms_searchUsers_users | null)[] | null;
-}
-
-export interface SearchTerms_searchCards_cards {
-  __typename: "CardType";
-  id: string;
-  file: string | null;
-  caption: string;
-  likeCount: number | null;
-  commentCount: number | null;
-}
-
-export interface SearchTerms_searchCards {
-  __typename: "SearchCardsResponse";
-  cards: (SearchTerms_searchCards_cards | null)[] | null;
-}
-
-export interface SearchTerms_searchCities_cities_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface SearchTerms_searchCities_cities {
-  __typename: "CityType";
-  id: string;
-  latitude: number | null;
-  longitude: number | null;
-  cityName: string | null;
-  cityPhoto: string | null;
-  distance: number | null;
-  country: SearchTerms_searchCities_cities_country;
-  likeCount: number | null;
-  isLiked: boolean | null;
-}
-
-export interface SearchTerms_searchCities {
-  __typename: "CitiesResponse";
-  cities: (SearchTerms_searchCities_cities | null)[] | null;
-}
-
-export interface SearchTerms_searchCountries_countries_continent {
-  __typename: "ContinentType";
-  continentName: string | null;
-}
-
-export interface SearchTerms_searchCountries_countries {
-  __typename: "CountryType";
-  id: string;
-  countryName: string | null;
-  countryCode: string | null;
-  countryPhoto: string | null;
-  continent: SearchTerms_searchCountries_countries_continent | null;
-}
-
-export interface SearchTerms_searchCountries {
-  __typename: "CountriesResponse";
-  countries: (SearchTerms_searchCountries_countries | null)[] | null;
-}
-
-export interface SearchTerms_searchContinents_continents {
-  __typename: "ContinentType";
-  id: string;
-  continentName: string | null;
-  continentPhoto: string | null;
-}
-
-export interface SearchTerms_searchContinents {
-  __typename: "ContinentsResponse";
-  continents: (SearchTerms_searchContinents_continents | null)[] | null;
-}
-
-export interface SearchTerms {
-  searchUsers: SearchTerms_searchUsers;
-  searchCards: SearchTerms_searchCards;
-  searchCities: SearchTerms_searchCities;
-  searchCountries: SearchTerms_searchCountries;
-  searchContinents: SearchTerms_searchContinents;
-}
-
-export interface SearchTermsVariables {
-  term: string;
 }
 
 

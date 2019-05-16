@@ -50,51 +50,36 @@ def resolve_get_continents(self, info, **kwargs):
 def resolve_search_citiess(self, info, **kwargs):
 
     user = info.context.user
-    term = kwargs.get('term')
 
-    if len(term) < 2:
+    search = kwargs.get('search')
 
-        raise Exception("Search Term is Too Short")
+    cities = models.City.objects.filter(city_name__istartswith=search)
 
-    else:
-
-        cities = models.City.objects.filter(city_name__icontains=term)
-
-        return types.CitiesResponse(cities=cities)
+    return types.CitiesResponse(cities=cities)
 
 
 @login_required
 def resolve_search_countries(self, info, **kwargs):
 
     user = info.context.user
-    term = kwargs.get('term')
 
-    if len(term) < 2:
+    search = kwargs.get('search')
 
-        raise Exception("Search Term is Too Short")
+    countries = models.Country.objects.filter(country_name__istartswith=search)
 
-    else:
-
-        countries = models.Country.objects.filter(country_name__icontains=term)
-
-        return types.CountriesResponse(countries=countries)
+    return types.CountriesResponse(countries=countries)
 
 
 @login_required
 def resolve_search_continents(self, info, **kwargs):
 
     user = info.context.user
-    term = kwargs.get('term')
+    
+    search = kwargs.get('search')
 
-    if len(term) < 2:
+    continents = models.Continent.objects.filter(continent_name__istartswith=search)
 
-        raise Exception("Search Term is Too Short")
-
-    else:
-
-        continents = models.Continent.objects.filter(continent_name__icontains=term)
-
-        return types.ContinentsResponse(continents=continents)
+    return types.ContinentsResponse(continents=continents)
 
 
 @login_required

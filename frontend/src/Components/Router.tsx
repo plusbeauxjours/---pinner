@@ -9,7 +9,6 @@ import styled from "styled-components";
 
 import Feed from "../Routes/Feed";
 import CardDetail from "../Routes/CardDetail";
-import Search from "../Routes/Search";
 import UpLoad from "../Routes/UpLoad";
 import UserList from "../Routes/UserList";
 import Notification from "../Routes/Notification";
@@ -45,7 +44,6 @@ const LoggedInPages = () => (
     <Switch>
       <Route path="/" exact={true} component={Feed} />
       <Route path="/p/:id" component={CardDetail} />
-      <Route path="/search" component={Search} />
       <Route path="/match" exact={true} component={Match} />
       <Route path="/explore/userlist" component={UserList} />
       <Route path="/notification" component={Notification} />

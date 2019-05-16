@@ -49,6 +49,20 @@ const SText = styled(Bold)`
   font-weight: 100;
 `;
 
+const Input = styled.input`
+  width: 215px;
+  border: 0;
+  border: ${props => props.theme.boxBorder};
+  background-color: ${props => props.theme.bgColor};
+  border-radius: 3px;
+  padding: 5px;
+  color: white;
+  font-size: 14px;
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+`;
+
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
@@ -57,32 +71,29 @@ const GreyLine = styled.div`
 
 interface IProps {
   data?: any;
-  empty: boolean;
   loading: boolean;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  search: string;
 }
 
 const SearchPresenter: React.SFC<IProps> = ({
   data: {
-    searchUsers: { users = null } = {},
     searchCards: { cards = null } = {},
+    searchUsers: { users = null } = {},
     searchCities: { cities = null } = {},
     searchCountries: { countries = null } = {},
     searchContinents: { continents = null } = {}
   },
-  empty,
-  loading
+  loading,
+  onChange,
+  search
 }) => {
-  if (empty) {
-    return (
-      <SWrapper>
-        <Bold text="Search for something..." />
-      </SWrapper>
-    );
-  } else if (loading) {
+  if (loading) {
     return <Loader />;
-  } else if (!loading && users && cards) {
+  } else if (!loading && users && cards && cities && countries && continents) {
     return (
       <SWrapper>
+        <Input placeholder="Search" value={search} onChange={onChange} />
         {users && users.length > 0 && (
           <>
             <SText text={"USERS"} />

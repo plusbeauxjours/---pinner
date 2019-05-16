@@ -174,17 +174,12 @@ def resolve_card_detail(self, info, **kwargs):
 def resolve_search_cards(self, info, **kwargs):
 
     user = info.context.user
-    term = kwargs.get('term')
+    
+    search = kwargs.get('search')
 
-    if len(term) < 2:
+    cards = models.Card.objects.filter(caption__istartswith=search)
 
-        raise Exception('Search Term is too short')
-
-    else:
-
-        cards = models.Card.objects.filter(caption__icontains=term)
-
-        return types.SearchCardsResponse(cards=cards)
+    return types.SearchCardsResponse(cards=cards)
 
 
 @login_required

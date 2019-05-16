@@ -60,17 +60,12 @@ def resolve_me(self, info):
 def resolve_search_users(self, info, **kwargs):
 
     user = info.context.user
-    term = kwargs.get('term')
+    
+    search = kwargs.get('search')
+   
+    users = User.objects.filter(username__icontains=search)
 
-    if len(term) < 2:
-
-        raise Exception("Search Term is Too Short")
-
-    else:
-
-        users = User.objects.filter(username__icontains=term)
-
-        return types.SearchUsersResponse(users=users)
+    return types.SearchUsersResponse(users=users)
 
 
 @login_required
