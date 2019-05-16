@@ -17,19 +17,12 @@ def resolve_get_notifications(self, info, **kwargs):
 
     nextPage = page+1
 
-    following_profiles = user.profile.followings.values('id').all()
-
-    upload_notifications = models.Notification.objects.filter(
-        actor__profile__id__in=following_profiles, verb='upload')
-
-    notifications = user.notification_to.all()
-
-    combined = notifications.union(upload_notifications).order_by(
+    notifications = user.notification_to.all().order_by(
         '-created_at')
 
-    notifications = combined[offset:20 + offset]
+    hasNextPage = offset < notifications.count()
 
-    hasNextPage = offset < combined.count()
+    notifications = notifications[offset:20 + offset]
     print(hasNextPage)
 
     return types.GetNotificationsResponse(
@@ -43,31 +36,24 @@ def resolve_get_notifications(self, info, **kwargs):
 def resolve_search_get_notifications(self, info, **kwargs):
 
     user = info.context.user
-    term = kwargs.get('term', "")
+    search = kwargs.get('search',"")
     page = kwargs.get('page', 0)
     offset = 20 * page
 
     nextPage = page+1
+    print(len(search))
 
-    following_profiles = user.profile.followings.values('id').all()
+    notifications = user.notification_to.all().order_by(
+        '-created_at')
 
-    upload_notifications = models.Notification.objects.filter(
-        actor__profile__id__in=following_profiles, verb='upload').filter(
-            actor__username__icontains=term)
+    if search:
 
-    notifications = user.notification_to.all().filter(
-            actor__username__icontains=term)
+        notifications = notifications.filter(
+            actor__username__icontains=search)[offset:20 + offset]
 
-    if len(term) > 1:
-        combined = notifications.union(upload_notifications).order_by(
-            '-created_at')
-        for i in combined:
-            print()
-            
-        notifications = combined[offset:20 + offset]
+        hasNextPage = offset < notifications.count()
 
-        hasNextPage = offset < combined.count()
-        print(hasNextPage)
+        print("search")
 
         return types.GetNotificationsResponse(
             notifications=notifications, 
@@ -75,10 +61,15 @@ def resolve_search_get_notifications(self, info, **kwargs):
             hasNextPage=hasNextPage
             )
     else: 
+
+        hasNextPage = offset < notifications.count()
+
+        notifications = notifications[offset:20 + offset]
+
         return types.GetNotificationsResponse(
-            notifications=None, 
+            notifications=notifications, 
             page=nextPage, 
-            hasNextPage=False
+            hasNextPage=hasNextPage
             )
 
 

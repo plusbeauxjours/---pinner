@@ -1,8 +1,12 @@
 import React from "react";
 import { Query, MutationFn, Mutation } from "react-apollo";
-import { GetNotifications, GetNotificationsVariables } from "../../types/api";
+import {
+  GetNotifications,
+  GetNotificationsVariables,
+  MarkAsRead,
+  MarkAsReadVariables
+} from "../../types/api";
 import NotificationPresenter from "./NotificationPresenter";
-import { MarkAsRead, MarkAsReadVariables } from "../../types/api";
 import { MARK_AS_READ, GET_NOTIFICATION } from "./NotificationQueries";
 
 class MarkAsReadMutation extends Mutation<MarkAsRead, MarkAsReadVariables> {}
@@ -85,21 +89,18 @@ class NotificationContainer extends React.Component<any, IState> {
       target: { value }
     } = event;
     const {
-      getNotifications: { notifications = null, hasNextPage = null }
+      getNotifications: { notifications = null }
     } = this.data;
-    if (!hasNextPage) {
-      console.log(this.data);
-      const nowSearch = (list, text) =>
-        list.filter(i =>
-          i.actor.username.toLowerCase().includes(text.toLowerCase())
-        );
-      const notificationList = nowSearch(notifications, value);
-      console.log(notificationList);
-      this.setState({
-        search: value,
-        notificationList
-      } as any);
-    }
+    const nowSearch = (list, text) =>
+      list.filter(i =>
+        i.actor.username.toLowerCase().includes(text.toLowerCase())
+      );
+    const notificationList = nowSearch(notifications, value);
+    console.log(notificationList);
+    this.setState({
+      search: value,
+      notificationList
+    } as any);
   };
   public onMarkRead = (notificationId: string) => {
     this.markAsReadFn({ variables: { notificationId } });

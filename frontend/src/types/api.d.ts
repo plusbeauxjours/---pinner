@@ -49,15 +49,8 @@ export interface Match_match_match_city_country {
 
 export interface Match_match_match_city {
   __typename: "CityType";
-  id: string;
-  latitude: number | null;
-  longitude: number | null;
   cityName: string | null;
-  cityPhoto: string | null;
-  distance: number | null;
   country: Match_match_match_city_country;
-  likeCount: number | null;
-  isLiked: boolean | null;
 }
 
 export interface Match_match_match_host_profile_currentCity_country {
@@ -73,6 +66,8 @@ export interface Match_match_match_host_profile_currentCity {
 
 export interface Match_match_match_host_profile {
   __typename: "ProfileType";
+  id: string;
+  username: string | null;
   avatar: string;
   isFollowing: boolean | null;
   isSelf: boolean | null;
@@ -81,11 +76,6 @@ export interface Match_match_match_host_profile {
 
 export interface Match_match_match_host {
   __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
   profile: Match_match_match_host_profile | null;
 }
 
@@ -102,6 +92,8 @@ export interface Match_match_match_guest_profile_currentCity {
 
 export interface Match_match_match_guest_profile {
   __typename: "ProfileType";
+  id: string;
+  username: string | null;
   avatar: string;
   isFollowing: boolean | null;
   isSelf: boolean | null;
@@ -110,17 +102,13 @@ export interface Match_match_match_guest_profile {
 
 export interface Match_match_match_guest {
   __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
   profile: Match_match_match_guest_profile | null;
 }
 
 export interface Match_match_match_coffee {
   __typename: "CoffeeType";
   id: string;
+  target: CoffeeTarget;
 }
 
 export interface Match_match_match {
@@ -131,7 +119,6 @@ export interface Match_match_match {
   host: Match_match_match_host | null;
   guest: Match_match_match_guest | null;
   coffee: Match_match_match_coffee | null;
-  status: MatchStatus;
   isHost: boolean | null;
   isGuest: boolean | null;
   isMatching: boolean | null;
@@ -160,21 +147,42 @@ export interface MatchVariables {
 // GraphQL mutation operation: UnMatch
 // ====================================================
 
+export interface UnMatch_unMatch_coffee_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface UnMatch_unMatch_coffee_city {
+  __typename: "CityType";
+  cityName: string | null;
+  country: UnMatch_unMatch_coffee_city_country;
+}
+
 export interface UnMatch_unMatch_coffee_host_profile {
   __typename: "ProfileType";
   avatar: string;
+  isSelf: boolean | null;
 }
 
 export interface UnMatch_unMatch_coffee_host {
   __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
   profile: UnMatch_unMatch_coffee_host_profile | null;
 }
 
 export interface UnMatch_unMatch_coffee {
   __typename: "CoffeeType";
   id: string;
-  target: CoffeeTarget;
+  city: UnMatch_unMatch_coffee_city;
   host: UnMatch_unMatch_coffee_host;
+  status: string | null;
+  expires: any | null;
+  target: CoffeeTarget;
+  createdAt: any;
 }
 
 export interface UnMatch_unMatch {
@@ -1890,6 +1898,84 @@ export interface GetNotificationsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: SearchGetNotifications
+// ====================================================
+
+export interface SearchGetNotifications_searchGetNotifications_notifications_actor_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface SearchGetNotifications_searchGetNotifications_notifications_actor_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: SearchGetNotifications_searchGetNotifications_notifications_actor_profile_currentCity_country;
+}
+
+export interface SearchGetNotifications_searchGetNotifications_notifications_actor_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  currentCity: SearchGetNotifications_searchGetNotifications_notifications_actor_profile_currentCity | null;
+}
+
+export interface SearchGetNotifications_searchGetNotifications_notifications_actor {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: SearchGetNotifications_searchGetNotifications_notifications_actor_profile | null;
+}
+
+export interface SearchGetNotifications_searchGetNotifications_notifications_card {
+  __typename: "CardType";
+  id: string;
+}
+
+export interface SearchGetNotifications_searchGetNotifications_notifications_comment {
+  __typename: "CommentType";
+  id: string;
+  message: string;
+}
+
+export interface SearchGetNotifications_searchGetNotifications_notifications_match {
+  __typename: "MatchType";
+  id: string;
+}
+
+export interface SearchGetNotifications_searchGetNotifications_notifications {
+  __typename: "NotificationType";
+  id: string;
+  actor: SearchGetNotifications_searchGetNotifications_notifications_actor;
+  verb: NotificationVerb;
+  card: SearchGetNotifications_searchGetNotifications_notifications_card | null;
+  comment: SearchGetNotifications_searchGetNotifications_notifications_comment | null;
+  match: SearchGetNotifications_searchGetNotifications_notifications_match | null;
+  read: boolean;
+  naturalTime: string | null;
+}
+
+export interface SearchGetNotifications_searchGetNotifications {
+  __typename: "GetNotificationsResponse";
+  page: number | null;
+  hasNextPage: boolean | null;
+  notifications: (SearchGetNotifications_searchGetNotifications_notifications | null)[] | null;
+}
+
+export interface SearchGetNotifications {
+  searchGetNotifications: SearchGetNotifications_searchGetNotifications;
+}
+
+export interface SearchGetNotificationsVariables {
+  page?: number | null;
+  search?: string | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: MarkAsRead
 // ====================================================
 
@@ -3064,6 +3150,68 @@ export interface DetailParts {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: NotificationParts
+// ====================================================
+
+export interface NotificationParts_actor_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface NotificationParts_actor_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: NotificationParts_actor_profile_currentCity_country;
+}
+
+export interface NotificationParts_actor_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  currentCity: NotificationParts_actor_profile_currentCity | null;
+}
+
+export interface NotificationParts_actor {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: NotificationParts_actor_profile | null;
+}
+
+export interface NotificationParts_card {
+  __typename: "CardType";
+  id: string;
+}
+
+export interface NotificationParts_comment {
+  __typename: "CommentType";
+  id: string;
+  message: string;
+}
+
+export interface NotificationParts_match {
+  __typename: "MatchType";
+  id: string;
+}
+
+export interface NotificationParts {
+  __typename: "NotificationType";
+  id: string;
+  actor: NotificationParts_actor;
+  verb: NotificationVerb;
+  card: NotificationParts_card | null;
+  comment: NotificationParts_comment | null;
+  match: NotificationParts_match | null;
+  read: boolean;
+  naturalTime: string | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: CoffeeParts
 // ====================================================
 
@@ -3201,14 +3349,6 @@ export interface MatchParts {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
-
-/**
- * An enumeration.
- */
-export enum MatchStatus {
-  CANCELED = "CANCELED",
-  ONGOING = "ONGOING",
-}
 
 /**
  * An enumeration.

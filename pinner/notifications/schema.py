@@ -18,7 +18,7 @@ class Query(object):
         required=True,
         args={
             'page': graphene.Int(),
-            'term': graphene.String()
+            'search': graphene.String()
         }
     )
     get_trips = graphene.Field(

@@ -6,9 +6,9 @@ const Container = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  position: fixed;
+  position: absolute;
   justify-content: center;
-  align-items: center;
+  align-self: center;
   text-align: inline;
 `;
 

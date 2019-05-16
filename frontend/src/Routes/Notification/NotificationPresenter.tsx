@@ -72,18 +72,17 @@ const NotificationPresenter: React.SFC<IProps> = ({
   onMarkRead,
   loadMore
 }) => {
-  if (loading) {
-    return <Loader />;
-  } else if (!loading && notifications) {
-    return (
-      <>
-        {modalOpen && <Route path="/p/:id" component={CardDetail} />}
-        <SWrapper>
-          <UserContainer>
-            <UserNameRow>
-              <Username>NOTIFICATIONS</Username>
-              <Input placeholder="Search" value={search} onChange={onChange} />
-            </UserNameRow>
+  return (
+    <>
+      {modalOpen && <Route path="/p/:id" component={CardDetail} />}
+      <SWrapper>
+        <UserContainer>
+          <UserNameRow>
+            <Username>NOTIFICATIONS</Username>
+            <Input placeholder="Search" value={search} onChange={onChange} />
+          </UserNameRow>
+          {loading && <Loader />}
+          {!loading && (
             <InfiniteScroll
               hasMore={hasNextPage}
               loadMore={loadMore}
@@ -104,7 +103,6 @@ const NotificationPresenter: React.SFC<IProps> = ({
                 })}
               {console.log("hasNextPage:  ", hasNextPage)}
               {notificationList.length === 0 &&
-                !search &&
                 notifications &&
                 notifications.map(notification => {
                   return (
@@ -118,13 +116,11 @@ const NotificationPresenter: React.SFC<IProps> = ({
                   );
                 })}
             </InfiniteScroll>
-          </UserContainer>
-        </SWrapper>
-      </>
-    );
-  } else {
-    return null;
-  }
+          )}
+        </UserContainer>
+      </SWrapper>
+    </>
+  );
 };
 
 export default NotificationPresenter;

@@ -122,6 +122,37 @@ export const DETAIL_CARD_FRAGMENT = gql`
   }
 `;
 
+export const NOTIFICATION_FRAGMENT = gql`
+  fragment NotificationParts on NotificationType {
+    id
+    actor {
+      username
+      profile {
+        avatar
+        currentCity {
+          cityName
+          country {
+            countryName
+          }
+        }
+      }
+    }
+    verb
+    card {
+      id
+    }
+    comment {
+      id
+      message
+    }
+    match {
+      id
+    }
+    read
+    naturalTime
+  }
+`;
+
 export const COFFEE_FRAGMENT = gql`
   fragment CoffeeParts on CoffeeType {
     id
