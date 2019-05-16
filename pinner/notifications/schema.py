@@ -12,6 +12,15 @@ class Query(object):
         required=True,
         args={'page': graphene.Int()}
     )
+    search_get_notifications = graphene.Field(
+        types.GetNotificationsResponse,
+        resolver=queries.resolve_search_get_notifications,
+        required=True,
+        args={
+            'page': graphene.Int(),
+            'term': graphene.String()
+        }
+    )
     get_trips = graphene.Field(
         location_types.TripResponse,
         resolver=queries.resolve_get_trips,
@@ -32,9 +41,6 @@ class Query(object):
             'endDate': graphene.Date(required=True)
         }
     )
-
-    
-
 
 class Mutation(object):
 

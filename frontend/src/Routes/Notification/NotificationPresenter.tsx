@@ -62,7 +62,7 @@ interface IProps {
 
 const NotificationPresenter: React.SFC<IProps> = ({
   data: {
-    getNotifications: { notifications = null, hasNextPage = false } = {}
+    getNotifications: { notifications = null, hasNextPage = null } = {}
   } = {},
   loading,
   modalOpen,

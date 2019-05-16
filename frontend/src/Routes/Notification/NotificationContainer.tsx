@@ -35,7 +35,7 @@ class NotificationContainer extends React.Component<any, IState> {
     const newProps = this.props;
     console.log(prevProps);
     console.log(newProps);
-    if (prevProps.match.params.cityName !== newProps.match.params.cityName) {
+    if (prevProps.match !== newProps.match) {
       this.setState({ search: "", notificationList: [] });
       console.log(this.state);
     }
@@ -85,19 +85,21 @@ class NotificationContainer extends React.Component<any, IState> {
       target: { value }
     } = event;
     const {
-      getNotifications: { notifications = null }
+      getNotifications: { notifications = null, hasNextPage = null }
     } = this.data;
-    console.log(this.data);
-    const nowSearch = (list, text) =>
-      list.filter(i =>
-        i.actor.username.toLowerCase().includes(text.toLowerCase())
-      );
-    const notificationList = nowSearch(notifications, value);
-    console.log(notificationList);
-    this.setState({
-      search: value,
-      notificationList
-    } as any);
+    if (!hasNextPage) {
+      console.log(this.data);
+      const nowSearch = (list, text) =>
+        list.filter(i =>
+          i.actor.username.toLowerCase().includes(text.toLowerCase())
+        );
+      const notificationList = nowSearch(notifications, value);
+      console.log(notificationList);
+      this.setState({
+        search: value,
+        notificationList
+      } as any);
+    }
   };
   public onMarkRead = (notificationId: string) => {
     this.markAsReadFn({ variables: { notificationId } });
@@ -130,16 +132,17 @@ class NotificationContainer extends React.Component<any, IState> {
         if (!fetchMoreResult) {
           return previousResult;
         }
-        const newData = {
+        const data = {
           getNotifications: {
             ...previousResult.getNotifications,
+            hasNextPage: fetchMoreResult.getNotifications.hasNextPage,
             notifications: [
               ...previousResult.getNotifications.notifications,
               ...fetchMoreResult.getNotifications.notifications
             ]
           }
         };
-        return newData;
+        return data;
       }
     });
   };

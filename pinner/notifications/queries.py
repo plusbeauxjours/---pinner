@@ -27,11 +27,59 @@ def resolve_get_notifications(self, info, **kwargs):
     combined = notifications.union(upload_notifications).order_by(
         '-created_at')
 
-    hasNextPage = offset < combined.count()
-    print(hasNextPage)
     notifications = combined[offset:20 + offset]
 
-    return types.GetNotificationsResponse(ok=True, notifications=notifications, page=nextPage, hasNextPage=hasNextPage)
+    hasNextPage = offset < combined.count()
+    print(hasNextPage)
+
+    return types.GetNotificationsResponse(
+        notifications=notifications, 
+        page=nextPage, 
+        hasNextPage=hasNextPage
+        )
+
+
+@login_required
+def resolve_search_get_notifications(self, info, **kwargs):
+
+    user = info.context.user
+    term = kwargs.get('term', "")
+    page = kwargs.get('page', 0)
+    offset = 20 * page
+
+    nextPage = page+1
+
+    following_profiles = user.profile.followings.values('id').all()
+
+    upload_notifications = models.Notification.objects.filter(
+        actor__profile__id__in=following_profiles, verb='upload').filter(
+            actor__username__icontains=term)
+
+    notifications = user.notification_to.all().filter(
+            actor__username__icontains=term)
+
+    if len(term) > 1:
+        combined = notifications.union(upload_notifications).order_by(
+            '-created_at')
+        for i in combined:
+            print()
+            
+        notifications = combined[offset:20 + offset]
+
+        hasNextPage = offset < combined.count()
+        print(hasNextPage)
+
+        return types.GetNotificationsResponse(
+            notifications=notifications, 
+            page=nextPage, 
+            hasNextPage=hasNextPage
+            )
+    else: 
+        return types.GetNotificationsResponse(
+            notifications=None, 
+            page=nextPage, 
+            hasNextPage=False
+            )
 
 
 @login_required
@@ -60,8 +108,12 @@ def resolve_get_duration_my_trip(self, info, **kwargs):
     endDate = kwargs.get('endDate')
 
     try:
-        my_trip = user.movenotification.filter(city__city_name=cityName, start_date__range=(
-            startDate, endDate)) | user.movenotification.filter(city__city_name=cityName, end_date__range=(startDate, endDate))
+        my_trip = user.movenotification.filter(
+            city__city_name=cityName, start_date__range=(
+            startDate, endDate)) | user.movenotification.filter(
+                city__city_name=cityName, 
+                end_date__range=(startDate, endDate)
+            )
 
         return types.DurationTripsResponse(moveNotifications=my_trip)
 
