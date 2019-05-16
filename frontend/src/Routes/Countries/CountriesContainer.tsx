@@ -10,7 +10,6 @@ class GetCountriesQuery extends Query<TopCountries, TopCountriesVariables> {}
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
-  page: number;
   search: string;
   countryList: any;
 }
@@ -19,7 +18,6 @@ class CountriesContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      page: 0,
       search: "",
       countryList: []
     };

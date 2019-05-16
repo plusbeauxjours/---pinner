@@ -16,7 +16,6 @@ class NearCitiesQuery extends Query<NearCities, NearCitiesVariables> {}
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
-  page: number;
   search: string;
   nowUsersList: any;
   beforeUsersList: any;
@@ -29,7 +28,6 @@ class CityProfileContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      page: 0,
       search: "",
       nowUsersList: [],
       beforeUsersList: [],

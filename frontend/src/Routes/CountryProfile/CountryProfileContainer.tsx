@@ -13,7 +13,6 @@ class CountryProfileQuery extends Query<
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
-  page: number;
   search: string;
   cityList: any;
 }
@@ -23,7 +22,6 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      page: 0,
       search: "",
       cityList: []
     };

@@ -66,7 +66,7 @@ class FeedContainer extends React.Component<IProps, IState> {
     const { location: { state = {} } = {} } = ({} = props);
     this.state = {
       recommandUserPage: 0,
-      recommandUserList: null,
+      recommandUserList: [],
       recommandUserModalOpen: false,
       currentLat: state.currentLat,
       currentLng: state.currentLng,

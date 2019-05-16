@@ -10,7 +10,6 @@ class GetCitiesQuery extends Query<FrequentVisits, FrequentVisitsVariables> {}
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
-  page: number;
   search: string;
   cityList: any;
 }
@@ -20,7 +19,6 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      page: 0,
       search: "",
       cityList: []
     };
