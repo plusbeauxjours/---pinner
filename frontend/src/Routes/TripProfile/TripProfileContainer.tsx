@@ -26,7 +26,6 @@ class NearCitiesQuery extends Query<NearCities, NearCitiesVariables> {}
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
-  page: number;
   cityName: string;
   cityPhoto: string;
   countryName: string;
@@ -43,7 +42,6 @@ class TripProfileContainer extends React.Component<IProps, IState> {
       props.history.goBack();
     }
     this.state = {
-      page: 0,
       cityName: state.cityName,
       cityPhoto: state.cityPhoto,
       countryName: state.countryName,
@@ -55,14 +53,7 @@ class TripProfileContainer extends React.Component<IProps, IState> {
     console.log("goodmorning");
   }
   public render() {
-    const {
-      page,
-      cityName,
-      cityPhoto,
-      countryName,
-      startDate,
-      endDate
-    } = this.state;
+    const { cityName, cityPhoto, countryName, startDate, endDate } = this.state;
     return (
       <NearCitiesQuery query={NEAR_CITIES} variables={{ cityName }}>
         {({ data: nearCitiesData, loading: nearCitiesLoading }) => {
@@ -74,7 +65,7 @@ class TripProfileContainer extends React.Component<IProps, IState> {
               {({ data: profileDate, loading: profileLoading }) => (
                 <GetDurationCardsQuery
                   query={GET_DURATION_CARDS}
-                  variables={{ page, cityName, startDate, endDate }}
+                  variables={{ cityName, startDate, endDate }}
                 >
                   {({ data: cardsData, loading: cardsLoading, fetchMore }) => {
                     this.fetchMore = fetchMore;

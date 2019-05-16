@@ -48,21 +48,24 @@ const GetCardsPresenter: React.SFC<IProps> = ({
     return <Loader />;
   } else {
     return (
-      <InfiniteScroll
-        hasMore={hasNextPage}
-        loader={<Loader key={0} />}
-        loadMore={loadMore}
-      >
+      <>
         <GreyLine />
         <Title>
           <SText text={"POSTS"} />
         </Title>
-        <CardGrid
-          cards={cards}
-          upload={upload}
-          toggleUploadModal={toggleUploadModal}
-        />
-      </InfiniteScroll>
+        <InfiniteScroll
+          hasMore={hasNextPage}
+          loadMore={loadMore}
+          pageStart={0}
+          initialLoad={false}
+        >
+          <CardGrid
+            cards={cards}
+            upload={upload}
+            toggleUploadModal={toggleUploadModal}
+          />
+        </InfiniteScroll>
+      </>
     );
   }
   return null;

@@ -312,18 +312,20 @@ const TripProfilePresenter: React.SFC<IProps> = ({
           </Container>
           <GreyLine />
           {!cardsLoading && cards && cards.length !== 0 ? (
-            <InfiniteScroll
-              hasMore={hasNextPage}
-              loader={<Loader />}
-              loadMore={loadMore}
-            >
-              {console.log(hasNextPage)}
+            <>
               <GreyLine />
               <Title>
                 <SText text={"POSTS"} />
               </Title>
-              <CardGrid cards={cards} />
-            </InfiniteScroll>
+              <InfiniteScroll
+                hasMore={hasNextPage}
+                pageStart={0}
+                loadMore={loadMore}
+                initialLoad={false}
+              >
+                <CardGrid cards={cards} />
+              </InfiniteScroll>
+            </>
           ) : null}
         </SWrapper>
       </>

@@ -51,7 +51,7 @@ export const TRIP_PROFILE = gql`
 
 export const GET_DURATION_CARDS = gql`
   query GetDurationCards(
-    $page: Int!
+    $page: Int
     $cityName: String!
     $startDate: Date!
     $endDate: Date!

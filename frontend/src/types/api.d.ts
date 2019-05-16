@@ -1898,84 +1898,6 @@ export interface GetNotificationsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: SearchGetNotifications
-// ====================================================
-
-export interface SearchGetNotifications_searchGetNotifications_notifications_actor_profile_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface SearchGetNotifications_searchGetNotifications_notifications_actor_profile_currentCity {
-  __typename: "CityType";
-  cityName: string | null;
-  country: SearchGetNotifications_searchGetNotifications_notifications_actor_profile_currentCity_country;
-}
-
-export interface SearchGetNotifications_searchGetNotifications_notifications_actor_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  currentCity: SearchGetNotifications_searchGetNotifications_notifications_actor_profile_currentCity | null;
-}
-
-export interface SearchGetNotifications_searchGetNotifications_notifications_actor {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: SearchGetNotifications_searchGetNotifications_notifications_actor_profile | null;
-}
-
-export interface SearchGetNotifications_searchGetNotifications_notifications_card {
-  __typename: "CardType";
-  id: string;
-}
-
-export interface SearchGetNotifications_searchGetNotifications_notifications_comment {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-}
-
-export interface SearchGetNotifications_searchGetNotifications_notifications_match {
-  __typename: "MatchType";
-  id: string;
-}
-
-export interface SearchGetNotifications_searchGetNotifications_notifications {
-  __typename: "NotificationType";
-  id: string;
-  actor: SearchGetNotifications_searchGetNotifications_notifications_actor;
-  verb: NotificationVerb;
-  card: SearchGetNotifications_searchGetNotifications_notifications_card | null;
-  comment: SearchGetNotifications_searchGetNotifications_notifications_comment | null;
-  match: SearchGetNotifications_searchGetNotifications_notifications_match | null;
-  read: boolean;
-  naturalTime: string | null;
-}
-
-export interface SearchGetNotifications_searchGetNotifications {
-  __typename: "GetNotificationsResponse";
-  page: number | null;
-  hasNextPage: boolean | null;
-  notifications: (SearchGetNotifications_searchGetNotifications_notifications | null)[] | null;
-}
-
-export interface SearchGetNotifications {
-  searchGetNotifications: SearchGetNotifications_searchGetNotifications;
-}
-
-export interface SearchGetNotificationsVariables {
-  page?: number | null;
-  search?: string | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL mutation operation: MarkAsRead
 // ====================================================
 
@@ -2257,7 +2179,7 @@ export interface GetDurationCards {
 }
 
 export interface GetDurationCardsVariables {
-  page: number;
+  page?: number | null;
   cityName: string;
   startDate: any;
   endDate: any;

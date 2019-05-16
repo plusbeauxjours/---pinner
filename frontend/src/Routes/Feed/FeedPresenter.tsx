@@ -385,8 +385,8 @@ const FeedPresenter: React.SFC<IProps> = ({
             <InfiniteScroll
               pageStart={0}
               hasMore={hasNextPage}
-              loader={<Loader key={0} />}
               loadMore={loadMore}
+              initialLoad={false}
             >
               {cards &&
                 cards.map(card => (
