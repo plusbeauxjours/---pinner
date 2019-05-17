@@ -177,7 +177,7 @@ def resolve_search_cards(self, info, **kwargs):
     
     search = kwargs.get('search')
 
-    cards = models.Card.objects.filter(caption__istartswith=search)
+    cards = models.Card.objects.filter(caption__icontains=search)
 
     return types.SearchCardsResponse(cards=cards)
 

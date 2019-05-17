@@ -1,7 +1,6 @@
 import { gql } from "apollo-boost";
 import {
   USER_FRAGMENT,
-  CARD_FRAGMENT,
   CITY_FRAGMENT,
   COUNTRY_FRAGMENT,
   CONTINENT_FRAGMENT
@@ -12,11 +11,6 @@ export const SEARCH = gql`
     searchUsers(search: $search) {
       users {
         ...UserParts
-      }
-    }
-    searchCards(search: $search) {
-      cards {
-        ...CardParts
       }
     }
     searchCities(search: $search) {
@@ -36,7 +30,6 @@ export const SEARCH = gql`
     }
   }
   ${USER_FRAGMENT}
-  ${CARD_FRAGMENT}
   ${CITY_FRAGMENT}
   ${COUNTRY_FRAGMENT}
   ${CONTINENT_FRAGMENT}

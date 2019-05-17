@@ -53,7 +53,7 @@ def resolve_search_citiess(self, info, **kwargs):
 
     search = kwargs.get('search')
 
-    cities = models.City.objects.filter(city_name__istartswith=search)
+    cities = models.City.objects.filter(city_name__icontains=search)
 
     return types.CitiesResponse(cities=cities)
 
@@ -65,8 +65,8 @@ def resolve_search_countries(self, info, **kwargs):
 
     search = kwargs.get('search')
 
-    countries = models.Country.objects.filter(country_name__istartswith=search)
-
+    countries = models.Country.objects.filter(country_name__icontains=search)
+    
     return types.CountriesResponse(countries=countries)
 
 
@@ -77,7 +77,7 @@ def resolve_search_continents(self, info, **kwargs):
     
     search = kwargs.get('search')
 
-    continents = models.Continent.objects.filter(continent_name__istartswith=search)
+    continents = models.Continent.objects.filter(continent_name__icontains=search)
 
     return types.ContinentsResponse(continents=continents)
 
@@ -119,7 +119,6 @@ def resolve_city_profile(self, info, **kwargs):
     if usersNow.count() < 5:
         usersBefore = notification_models.MoveNotification.objects.filter(
             city__city_name=cityName).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')
-        print(usersBefore)
         return card_types.FirstAnnotateRespose(usersNow=usersNow, usersBefore=usersBefore, city=city, coffees=coffees)
 
     return card_types.FirstAnnotateRespose(usersNow=usersNow, usersBefore=None, city=city, coffees=coffees)

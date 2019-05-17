@@ -1,4 +1,5 @@
 import React from "react";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import SearchPresenter from "./SearchPresenter";
 import { Query } from "react-apollo";
 import { SearchTerms, SearchTermsVariables } from "../../types/api";
@@ -6,15 +7,19 @@ import { SEARCH } from "./SearchQueries";
 
 class SearchQuery extends Query<SearchTerms, SearchTermsVariables> {}
 
+interface IProps extends RouteComponentProps<any> {
+  search: string;
+}
+
 interface IState {
   search: string;
 }
 
-class SearchContainer extends React.Component<any, IState> {
+class SearchContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      search: "red"
+      search: "sa"
     };
   }
   public componentDidUpdate(prevProps) {
@@ -23,20 +28,12 @@ class SearchContainer extends React.Component<any, IState> {
       console.log("didUpdate");
     }
   }
-  public componentDidMount() {
-    console.log("didMount");
-  }
   public render() {
-    const { search } = this.state;
+    const { search } = this.props;
     return (
       <SearchQuery query={SEARCH} variables={{ search }} skip={search === ""}>
         {({ data, loading }) => (
-          <SearchPresenter
-            loading={loading}
-            data={data}
-            search={search}
-            onChange={this.onChange}
-          />
+          <SearchPresenter loading={loading} data={data} />
         )}
       </SearchQuery>
     );
@@ -45,7 +42,6 @@ class SearchContainer extends React.Component<any, IState> {
     const {
       target: { value }
     } = event;
-    // autocompleteSearch(value);
     console.log(value);
     this.setState({
       search: value
@@ -53,4 +49,4 @@ class SearchContainer extends React.Component<any, IState> {
   };
 }
 
-export default SearchContainer;
+export default withRouter(SearchContainer);

@@ -2,78 +2,66 @@ import React from "react";
 import styled from "../../Styles/typed-components";
 import Wrapper from "src/Components/Wrapper";
 import Bold from "../../Components/Bold";
-import UserGrid from "src/Components/UserGrid";
-import CardGrid from "src/Components/CardGrid";
 import Loader from "src/Components/Loader";
-import LocationGrid from "../../Components/LocationGrid";
+import { Link } from "react-router-dom";
+import UserHeader from "../UserHeader";
+import Avatar from "../Avatar";
+import FollowBtnContainer from "../FollowBtn/index";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
 `;
 
-const Container = styled.div`
-  border-bottom: 4px;
+const UserRow = styled.div`
+  display: grid;
+  flex-direction: row;
+  height: 50px;
+  grid-template-columns: 5fr 1fr 1fr 1fr;
+  padding: 0 5px 0 5px;
+  grid-gap: 15px;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: grey;
+  }
+  &:not(:last-child) {
+    border-bottom: 1px solid grey;
+  }
+`;
+
+const Header = styled.header`
   display: flex;
   align-items: center;
-  flex-direction: row;
-  -webkit-box-flex: 0;
-  flex: 0 0 auto;
-  height: 280px;
-  padding: 15px;
-`;
-
-const Box = styled.div`
-  width: 905px;
-  display: flex;
-  overflow-x: auto;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  ::-webkit-scrollbar {
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    background-color: ${props => props.theme.bgColor};
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-    background-color: ${props => props.theme.greyColor};
-  }
-`;
-
-const SText = styled(Bold)`
-  display: flex;
-  font-size: 20px;
-  font-weight: 100;
-`;
-
-const Input = styled.input`
-  width: 215px;
-  border: 0;
-  border: ${props => props.theme.boxBorder};
-  background-color: ${props => props.theme.bgColor};
   border-radius: 3px;
-  padding: 5px;
-  color: white;
-  font-size: 14px;
-  &::placeholder {
-    color: ${props => props.theme.greyColor};
-  }
+  cursor: pointer;
 `;
 
-const GreyLine = styled.div`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid grey;
+const HeaderText = styled(Bold)`
+  display: flex;
+`;
+
+const HeaderColumn = styled.div`
+  margin-left: 15px;
+`;
+
+const SAvatar = styled(Avatar)`
+  border-radius: 3px;
+  height: 45px;
+  width: 45px;
+`;
+
+const Location = styled.span`
+  display: flex;
+  margin-top: 5px;
+  display: block;
+  font-size: 12px;
+  font-weight: 200;
 `;
 
 interface IProps {
   data?: any;
   loading: boolean;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  search: string;
 }
 
 const SearchPresenter: React.SFC<IProps> = ({
@@ -84,72 +72,81 @@ const SearchPresenter: React.SFC<IProps> = ({
     searchCountries: { countries = null } = {},
     searchContinents: { continents = null } = {}
   },
-  loading,
-  onChange,
-  search
+  loading
 }) => {
   if (loading) {
     return <Loader />;
-  } else if (!loading && users && cards && cities && countries && continents) {
+  } else if (!loading && users && cities && countries && continents) {
     return (
       <SWrapper>
-        <Input placeholder="Search" value={search} onChange={onChange} />
-        {users && users.length > 0 && (
-          <>
-            <SText text={"USERS"} />
-            <Container>
-              <Box>
-                <UserGrid users={users} />
-              </Box>
-            </Container>
-            <GreyLine />
-          </>
-        )}
-
-        {cities && cities.length > 0 && (
-          <>
-            <SText text={"CITIES"} />
-            <Container>
-              <Box>
-                <LocationGrid cities={cities} type={"city"} />
-              </Box>
-            </Container>
-            <GreyLine />
-          </>
-        )}
-        {countries && countries.length > 0 && (
-          <>
-            <SText text={"COUNTRIES"} />
-            <Container>
-              <Box>
-                <LocationGrid countries={countries} type={"country"} />
-              </Box>
-            </Container>
-            <GreyLine />
-          </>
-        )}
-        {continents && continents.length > 0 && (
-          <>
-            <SText text={"CONTINENTS"} />
-            <Container>
-              <Box>
-                <LocationGrid continents={continents} type={"continent"} />
-              </Box>
-            </Container>
-            <GreyLine />
-          </>
-        )}
-        {cards && cards.length > 0 && (
-          <>
-            <SText text={"POSTS"} />
-            <CardGrid cards={cards} />
-            <GreyLine />
-          </>
-        )}
+        {users &&
+          users.length > 0 &&
+          users.map(user => (
+            <UserRow key={user.id}>
+              <Link to={`/${user.username}`}>
+                <UserHeader
+                  username={user.username}
+                  currentCity={user.profile.currentCity.cityName}
+                  currentCountry={user.profile.currentCity.country.countryName}
+                  avatar={user.profile.avatar}
+                  size={"sm"}
+                />
+              </Link>
+              {!user.isSelf && (
+                <FollowBtnContainer
+                  isFollowing={user.profile.isFollowing}
+                  userId={user.id}
+                  username={user.profile.username}
+                />
+              )}
+            </UserRow>
+          ))}
+        {cities &&
+          cities.length > 0 &&
+          cities.map(city => (
+            <UserRow key={city.id}>
+              <Link to={`/city/${city.cityName}`}>
+                <Header>
+                  <SAvatar size={"sm"} url={city.cityPhoto} />
+                  <HeaderColumn>
+                    <HeaderText text={city.cityName} />
+                    <Location>{city.country.countryName}</Location>
+                  </HeaderColumn>
+                </Header>
+              </Link>
+            </UserRow>
+          ))}
+        {countries &&
+          countries.length > 0 &&
+          countries.map(country => (
+            <UserRow key={country.id}>
+              <Link to={`/country/${country.countryName}`}>
+                <Header>
+                  <SAvatar size={"sm"} url={country.countryPhoto} />
+                  <HeaderColumn>
+                    <HeaderText text={country.countryName} />
+                    <Location>{country.continent.continentName}</Location>
+                  </HeaderColumn>
+                </Header>
+              </Link>
+            </UserRow>
+          ))}
+        {continents &&
+          continents.length > 0 &&
+          continents.map(continent => (
+            <UserRow key={continent.id}>
+              <Link to={`/continent/${continent.continentName}`}>
+                <Header>
+                  <SAvatar size={"sm"} url={continent.continentPhoto} />
+                  <HeaderColumn>
+                    <HeaderText text={continent.continentName} />
+                  </HeaderColumn>
+                </Header>
+              </Link>
+            </UserRow>
+          ))}
         {users &&
           users.length === 0 &&
-          cards &&
-          cards.length === 0 &&
           cities &&
           cities.length === 0 &&
           countries &&

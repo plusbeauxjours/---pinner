@@ -49,7 +49,7 @@ def resolve_search_get_notifications(self, info, **kwargs):
     if search:
 
         notifications = notifications.filter(
-            actor__username__istartswith=search)[offset:20 + offset]
+            actor__username__icontains=search)[offset:20 + offset]
 
         hasNextPage = offset < notifications.count()
 

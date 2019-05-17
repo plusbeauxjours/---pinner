@@ -650,8 +650,20 @@ export interface SearchTerms_searchUsers {
   users: (SearchTerms_searchUsers_users | null)[] | null;
 }
 
+export interface SearchTerms_searchCards_cards_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface SearchTerms_searchCards_cards_city {
+  __typename: "CityType";
+  cityName: string | null;
+  country: SearchTerms_searchCards_cards_city_country;
+}
+
 export interface SearchTerms_searchCards_cards {
   __typename: "CardType";
+  city: SearchTerms_searchCards_cards_city | null;
   id: string;
   file: string | null;
   caption: string;

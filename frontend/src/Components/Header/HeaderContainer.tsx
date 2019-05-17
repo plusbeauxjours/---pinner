@@ -22,6 +22,7 @@ interface IState {
   currentLng: number;
   currentCity: string;
   modalOpen: boolean;
+  search: string;
 }
 
 class HeaderContainer extends React.Component<any, IState> {
@@ -32,7 +33,8 @@ class HeaderContainer extends React.Component<any, IState> {
       currentLat: 0,
       currentLng: 0,
       currentCity: null,
-      modalOpen: false
+      modalOpen: false,
+      search: "sa"
     };
   }
   public componentDidUpdate(prevProps) {
@@ -55,7 +57,13 @@ class HeaderContainer extends React.Component<any, IState> {
     console.log("hader did mount");
   }
   public render() {
-    const { currentLat, currentLng, currentCity, modalOpen } = this.state;
+    const {
+      currentLat,
+      currentLng,
+      currentCity,
+      modalOpen,
+      search
+    } = this.state;
     return (
       <ReportLocationMutation mutation={REPORT_LOCATION}>
         {ReportLocationFn => {
@@ -66,7 +74,9 @@ class HeaderContainer extends React.Component<any, IState> {
               currentLng={currentLng}
               currentCity={currentCity}
               modalOpen={modalOpen}
+              search={search}
               toggleModal={this.toggleModal}
+              onChange={this.onChange}
             />
           );
         }}
@@ -133,6 +143,15 @@ class HeaderContainer extends React.Component<any, IState> {
   };
   public handleGeoError = () => {
     console.log("No location");
+  };
+  public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
+    const {
+      target: { value }
+    } = event;
+    console.log(value);
+    this.setState({
+      search: value
+    } as any);
   };
 }
 

@@ -8,6 +8,7 @@ import Wrapper from "../Wrapper";
 import Me from "../Me";
 import { RouteComponentProps, withRouter } from "react-router";
 import Search from "../Search/";
+import { keyframes } from "styled-components";
 
 const Header = styled.header`
   background-color: white;
@@ -50,12 +51,72 @@ const Icon = styled.span`
   }
 `;
 
+const ModalAnimation = keyframes`
+	  from{
+	    opacity:0;
+	    transform:scale(1.1);
+	  }
+	  to{
+	    opacity:1;
+	    transform:none;
+	  }
+  `;
+
+const ModalContainer = styled.div`
+  z-index: 8;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+`;
+
+const ModalOverlay = styled.div`
+  z-index: 5;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+`;
+
+const Modal = styled.div`
+  background-color: #2d3a41;
+  width: 50%;
+  border-radius: 12px;
+  z-index: 10;
+  animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const Input = styled.input`
+  width: 215px;
+  border: 0;
+  position: absolute;
+  display: flex;
+  align-self: center;
+  border: ${props => props.theme.boxBorder};
+  background-color: ${props => props.theme.bgColor};
+  border-radius: 3px;
+  padding: 5px;
+  color: white;
+  font-size: 14px;
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+`;
+
 interface IProps extends RouteComponentProps<any> {
   currentLat: number;
   currentLng: number;
   currentCity: string;
   modalOpen: boolean;
+  search: string;
   toggleModal: () => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const HeaderPresenter: React.SFC<IProps> = ({
@@ -63,10 +124,25 @@ const HeaderPresenter: React.SFC<IProps> = ({
   currentLng,
   currentCity,
   modalOpen,
-  toggleModal
+  search,
+  toggleModal,
+  onChange
 }) => (
   <Header>
-    {modalOpen && <Search />}
+    {modalOpen && (
+      <ModalContainer>
+        <ModalOverlay onClick={toggleModal} />
+        <Modal>
+          <Input
+            autoFocus={true}
+            placeholder="Search"
+            value={search}
+            onChange={onChange}
+          />
+          <Search search={search} />
+        </Modal>
+      </ModalContainer>
+    )}
     <SWrapper>
       <Column>
         <Link
