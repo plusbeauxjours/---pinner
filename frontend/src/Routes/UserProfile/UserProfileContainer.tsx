@@ -75,7 +75,7 @@ interface IState {
   tripConfirmModalOpen: boolean;
   tripAddModalOpen: boolean;
   tripEditModalOpen: boolean;
-  cityModalOpen: boolean;
+
   countryModalOpen: boolean;
   continentModalOpen: boolean;
   requestModalOpen: boolean;
@@ -128,7 +128,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripConfirmModalOpen: false,
       tripAddModalOpen: false,
       tripEditModalOpen: false,
-      cityModalOpen: false,
+
       countryModalOpen: false,
       continentModalOpen: false,
       requestModalOpen: false,
@@ -179,7 +179,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripConfirmModalOpen,
       tripAddModalOpen,
       tripEditModalOpen,
-      cityModalOpen,
+
       countryModalOpen,
       continentModalOpen,
       currentCity,
@@ -420,9 +420,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                               tripEditModalOpen={
                                                                                 tripEditModalOpen
                                                                               }
-                                                                              cityModalOpen={
-                                                                                cityModalOpen
-                                                                              }
                                                                               countryModalOpen={
                                                                                 countryModalOpen
                                                                               }
@@ -471,10 +468,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                               toggleEditTripModal={
                                                                                 this
                                                                                   .toggleEditTripModal
-                                                                              }
-                                                                              toggleCityModal={
-                                                                                this
-                                                                                  .toggleCityModal
                                                                               }
                                                                               toggleCountryModal={
                                                                                 this
@@ -771,12 +764,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripModalOpen: !tripModalOpen
     });
   };
-  public toggleCityModal = () => {
-    const { cityModalOpen } = this.state;
-    this.setState({
-      cityModalOpen: !cityModalOpen
-    });
-  };
+
   public toggleCountryModal = () => {
     const { countryModalOpen } = this.state;
     this.setState({
@@ -861,7 +849,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     tripEndDate
   ) => {
     this.props.history.push({
-      pathname: `/city/${cityName}/${tripStartDate}${" "}${tripEndDate}`,
+      pathname: `/city/${cityName}/${tripStartDate}${"-"}${tripEndDate}`,
       state: {
         cityName,
         cityPhoto,

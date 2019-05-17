@@ -15,8 +15,6 @@ const HeaderColumn = styled.div`
   margin-left: 15px;
 `;
 
-const SAvatar = styled(Avatar)``;
-
 const Location = styled.span`
   margin-top: 5px;
   display: block;
@@ -98,7 +96,7 @@ const UserHeader: React.SFC<IProps> = ({
               </>
             );
           default:
-            return <SAvatar size={size} url={avatar} />;
+            return <Avatar size={size} url={avatar} />;
         }
       })()}
       <HeaderColumn>

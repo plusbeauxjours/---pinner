@@ -80,7 +80,6 @@ const NotificationRow: React.SFC<IProps> = ({
                         <GreyText text={"Commented on card"} />
                         <GreyText text={notification.naturalTime} />
                       </Column>
-                      {/* <GreyText text={notification.comment.message} /> */}
                     </UserRow>
                   </Link>
                 </>

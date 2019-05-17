@@ -2,6 +2,7 @@ import React from "react";
 import styled from "../Styles/typed-components";
 import { Link } from "react-router-dom";
 import Bold from "./Bold";
+import Avatar from "./Avatar";
 
 const ScrollContainer = styled.div`
   width: 200px;
@@ -38,14 +39,12 @@ const Overlay = styled.div`
   }
 `;
 
-const LocationPhoto = styled.img`
+const CAvatar = styled(Avatar)`
   display: flex;
-  width: 200px;
-  height: 200px;
-  background-size: cover;
   border-radius: 3px;
-  z-index: 1;
-  object-fit: cover;
+  height: 200px;
+  width: 200px;
+  margin-right: 20px;
 `;
 
 const LocationName = styled(Bold)`
@@ -113,7 +112,7 @@ const LocationGrid: React.SFC<IProps> = ({
                 <ScrollContainer key={city.id}>
                   <Link to={`/city/${city.cityName}`}>
                     <Square>
-                      <LocationPhoto src={city.cityPhoto} />
+                      <CAvatar size="lg" url={city.cityPhoto} />
                       <Overlay>
                         <OverlayContents>
                           <LocationName text={city.cityName} />
@@ -135,7 +134,7 @@ const LocationGrid: React.SFC<IProps> = ({
                   <Link to={`/country/${country.countryName}`}>
                     <LocationContainer>
                       <Square>
-                        <LocationPhoto src={country.countryPhoto} />
+                        <CAvatar size="lg" url={country.countryPhoto} />
                         <Overlay>
                           <OverlayContents>
                             <LocationName text={country.countryName} />
@@ -156,7 +155,7 @@ const LocationGrid: React.SFC<IProps> = ({
                   <Link to={`/continent/${continent.continentName}`}>
                     <LocationContainer>
                       <Square>
-                        <LocationPhoto src={continent.continentPhoto} />
+                        <CAvatar size="lg" url={continent.continentPhoto} />
                         <Overlay>
                           <OverlayContents>
                             <LocationName text={continent.continentName} />

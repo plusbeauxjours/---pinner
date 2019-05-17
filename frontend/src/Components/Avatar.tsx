@@ -9,7 +9,7 @@ const Container = styled.img<IProps>`
     } else if (props.size === "sm") {
       return "30px";
     } else if (props.size === "lg") {
-      return "170px";
+      return "200px";
     } else {
       return "30px";
     }
@@ -20,7 +20,7 @@ const Container = styled.img<IProps>`
     } else if (props.size === "sm") {
       return "30px";
     } else if (props.size === "lg") {
-      return "170px";
+      return "200px";
     } else {
       return "30px";
     }
@@ -31,10 +31,31 @@ const Container = styled.img<IProps>`
   object-fit: cover;
 `;
 
-const Placeholder = styled.div`
+const Placeholder = styled.div<IProps>`
   background-color: ${props => props.color};
-  height: 100;
-  width: 100;
+  height: ${props => {
+    if (props.size === "md") {
+      return "50px";
+    } else if (props.size === "sm") {
+      return "30px";
+    } else if (props.size === "lg") {
+      return "200px";
+    } else {
+      return "30px";
+    }
+  }};
+  width: ${props => {
+    if (props.size === "md") {
+      return "50px";
+    } else if (props.size === "sm") {
+      return "30px";
+    } else if (props.size === "lg") {
+      return "200px";
+    } else {
+      return "30px";
+    }
+  }};
+  border-radius: 50%;
 `;
 
 interface IProps {
@@ -50,7 +71,7 @@ const Avatar: React.SFC<IProps> = ({ className, url, size }) => {
       <ProgressiveImage delay={1000} src={url} placeholder="">
         {(src, loading) => {
           return loading ? (
-            <Placeholder className={className} color={"#141313"} />
+            <Placeholder className={className} color={"#141313"} size={size} />
           ) : (
             <Container className={className} src={src} size={size} />
           );

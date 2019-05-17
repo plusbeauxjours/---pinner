@@ -13,7 +13,6 @@ import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import FollowBtn from "../../Components/FollowBtn";
-import GetCities from "../../Components/GetCities";
 import GetCountries from "../../Components/GetCountries";
 import GetContinents from "../../Components/GetContinents";
 import AvatarGrid from "../../Components/AvatarGrid";
@@ -445,7 +444,6 @@ interface IProps {
   tripConfirmModalOpen: boolean;
   tripAddModalOpen: boolean;
   tripEditModalOpen: boolean;
-  cityModalOpen: boolean;
   countryModalOpen: boolean;
   continentModalOpen: boolean;
   requestModalOpen: boolean;
@@ -483,7 +481,7 @@ interface IProps {
   toggleTripConfirmModal: () => void;
   toggleAddTripModal: () => void;
   toggleEditTripModal: () => void;
-  toggleCityModal: () => void;
+
   toggleCountryModal: () => void;
   toggleContinentModal: () => void;
 
@@ -544,7 +542,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   tripConfirmModalOpen,
   tripAddModalOpen,
   tripEditModalOpen,
-  cityModalOpen,
+
   countryModalOpen,
   continentModalOpen,
   requestModalOpen,
@@ -559,7 +557,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleTripConfirmModal,
   toggleAddTripModal,
   toggleEditTripModal,
-  toggleCityModal,
   toggleCountryModal,
   toggleContinentModal,
 
@@ -689,16 +686,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </Modal>
           </ModalContainer>
         )}
-        {cityModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleCityModal} />
-            <RowModal>
-              <Wrapper>
-                <GetCities username={user.username} />
-              </Wrapper>
-            </RowModal>
-          </ModalContainer>
-        )}
+
         {countryModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleCountryModal} />
@@ -893,7 +881,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 <UBold text={String(user.profile.tripCount)} />
                 <UBold text={" TRIPS - done"} />
               </Row>
-              <Row onClick={toggleCityModal}>
+              <Row>
                 <UBold text={String(user.profile.cityCount)} />
                 <UBold text={" CITIES - done"} />
               </Row>
