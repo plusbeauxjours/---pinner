@@ -19,7 +19,7 @@ class SearchContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      search: "sa"
+      search: ""
     };
   }
   public componentDidUpdate(prevProps) {
@@ -30,8 +30,13 @@ class SearchContainer extends React.Component<IProps, IState> {
   }
   public render() {
     const { search } = this.props;
+    console.log(search);
     return (
-      <SearchQuery query={SEARCH} variables={{ search }} skip={search === ""}>
+      <SearchQuery
+        query={SEARCH}
+        variables={{ search }}
+        skip={search.length === 0}
+      >
         {({ data, loading }) => (
           <SearchPresenter loading={loading} data={data} />
         )}

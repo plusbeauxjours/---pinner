@@ -34,7 +34,7 @@ class HeaderContainer extends React.Component<any, IState> {
       currentLng: 0,
       currentCity: null,
       modalOpen: false,
-      search: "sa"
+      search: "plus"
     };
   }
   public componentDidUpdate(prevProps) {

@@ -81,32 +81,40 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.75);
 `;
 
 const Modal = styled.div`
-  background-color: #2d3a41;
-  width: 50%;
-  border-radius: 12px;
+  top: 30%;
+  width: 30%;
   z-index: 10;
+  position: absolute;
+  margin-top: 80px;
   animation: ${ModalAnimation} 0.1s linear;
 `;
 
 const Input = styled.input`
-  width: 215px;
+  z-index: 10;
+  top: 30%;
+  width: 30%;
   border: 0;
   position: absolute;
   display: flex;
   align-self: center;
-  border: ${props => props.theme.boxBorder};
-  background-color: ${props => props.theme.bgColor};
-  border-radius: 3px;
+  border-bottom: 1px solid ${props => props.theme.greyColor};
   padding: 5px;
   color: white;
-  font-size: 14px;
+  background-color: transparent;
+  font-size: 34px;
+  font-weight: 100;
+  transition: border-bottom 0.1s linear;
+  &:focus {
+    outline: none;
+  }
   &::placeholder {
     color: ${props => props.theme.greyColor};
   }
+  animation: ${ModalAnimation} 0.1s linear;
 `;
 
 interface IProps extends RouteComponentProps<any> {
@@ -132,13 +140,13 @@ const HeaderPresenter: React.SFC<IProps> = ({
     {modalOpen && (
       <ModalContainer>
         <ModalOverlay onClick={toggleModal} />
+        <Input
+          autoFocus={true}
+          placeholder="Search"
+          value={search}
+          onChange={onChange}
+        />
         <Modal>
-          <Input
-            autoFocus={true}
-            placeholder="Search"
-            value={search}
-            onChange={onChange}
-          />
           <Search search={search} />
         </Modal>
       </ModalContainer>
