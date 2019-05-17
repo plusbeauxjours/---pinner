@@ -66,6 +66,7 @@ export const CITY_FRAGMENT = gql`
     longitude
     cityName
     cityPhoto
+    cityPhotoPlaceholder
     distance
     country {
       countryName
@@ -81,6 +82,7 @@ export const COUNTRY_FRAGMENT = gql`
     countryName
     countryCode
     countryPhoto
+    countryPhotoPlaceholder
     continent {
       continentName
     }
@@ -92,6 +94,7 @@ export const CONTINENT_FRAGMENT = gql`
     id
     continentName
     continentPhoto
+    continentPhotoPlaceholder
   }
 `;
 

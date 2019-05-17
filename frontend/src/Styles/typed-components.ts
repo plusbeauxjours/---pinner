@@ -8,6 +8,7 @@ interface IThemeInterface {
   blackColor: string;
   blueColor: string;
   boxBorder: string;
+  randColor: string;
   whiteColor: string;
   darkBlueColor: string;
   size: string;

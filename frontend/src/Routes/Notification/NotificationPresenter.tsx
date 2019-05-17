@@ -41,7 +41,7 @@ const Input = styled.input`
   border-radius: 3px;
   padding: 5px;
   color: white;
-  font-size: 14px;
+  font-size: 12px;
   &::placeholder {
     color: ${props => props.theme.greyColor};
   }
@@ -103,6 +103,7 @@ const NotificationPresenter: React.SFC<IProps> = ({
                 })}
               {console.log("hasNextPage:  ", hasNextPage)}
               {notificationList.length === 0 &&
+                !search &&
                 notifications &&
                 notifications.map(notification => {
                   return (

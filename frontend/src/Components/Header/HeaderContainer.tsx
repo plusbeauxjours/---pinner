@@ -34,7 +34,7 @@ class HeaderContainer extends React.Component<any, IState> {
       currentLng: 0,
       currentCity: null,
       modalOpen: false,
-      search: "plus"
+      search: ""
     };
   }
   public componentDidUpdate(prevProps) {
@@ -86,7 +86,8 @@ class HeaderContainer extends React.Component<any, IState> {
   public toggleModal = () => {
     const { modalOpen } = this.state;
     this.setState({
-      modalOpen: !modalOpen
+      modalOpen: !modalOpen,
+      search: ""
     } as any);
     console.log(this.state);
   };

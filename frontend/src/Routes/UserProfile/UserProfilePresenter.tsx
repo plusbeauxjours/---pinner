@@ -13,7 +13,6 @@ import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import FollowBtn from "../../Components/FollowBtn";
-import Input from "../../Components/Input";
 import GetCities from "../../Components/GetCities";
 import GetCountries from "../../Components/GetCountries";
 import GetContinents from "../../Components/GetContinents";
@@ -327,9 +326,23 @@ const ModalLink = styled.div`
   }
 `;
 
-const ExtendedInput = styled(Input)`
-  width: 287px;
-  height: 48px;
+const Input = styled.input`
+  z-index: 10;
+  border: 0;
+  border-bottom: 1px solid ${props => props.theme.greyColor};
+  padding: 5px;
+  color: white;
+  background-color: transparent;
+  font-size: 12px;
+  font-weight: 100;
+  transition: border-bottom 0.1s linear;
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+  animation: ${ModalAnimation} 0.1s linear;
 `;
 
 const GreyLine = styled.div`
@@ -402,7 +415,7 @@ const TripInput = styled.input`
   border-radius: 3px;
   padding: 5px;
   color: white;
-  font-size: 14px;
+  font-size: 12px;
   &::placeholder {
     color: ${props => props.theme.greyColor};
   }
@@ -756,7 +769,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 focusedInput={focusedInput}
                 isOutsideRange={() => false}
               />
-              <ExtendedInput
+              <Input
                 onChange={onInputChange}
                 type={"text"}
                 placeholder={"Search a City"}
@@ -780,7 +793,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 isOutsideRange={() => false}
                 // isDayBlocked={isDayBlocked}
               />
-              <ExtendedInput
+              <Input
                 onChange={onInputChange}
                 type={"text"}
                 value={cityName}
@@ -798,7 +811,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           <PAvatar size="lg" url={user.profile.avatar} />
           <NameContainer>
             {editMode ? (
-              <ExtendedInput
+              <Input
                 onChange={onInputChange}
                 type={"text"}
                 value={userName}
@@ -832,7 +845,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               </Link>
               {editMode ? (
                 <>
-                  <ExtendedInput
+                  <Input
                     onChange={onInputChange}
                     type={"text"}
                     value={firstName}
@@ -840,7 +853,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     name={"firstName"}
                     onKeyUp={onKeyUp}
                   />
-                  <ExtendedInput
+                  <Input
                     onChange={onInputChange}
                     type={"text"}
                     value={lastName}
@@ -854,19 +867,18 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   {user.firstName} {user.lastName}
                 </p>
               )}
-              {user.profile.bio &&
-                (editMode ? (
-                  <ExtendedInput
-                    onChange={onInputChange}
-                    type={"text"}
-                    value={bio}
-                    placeholder={user.profile.bio || "Bio"}
-                    name={"bio"}
-                    onKeyUp={onKeyUp}
-                  />
-                ) : (
-                  <Bio>{`${user.profile.bio}`}</Bio>
-                ))}
+              {editMode ? (
+                <Input
+                  onChange={onInputChange}
+                  type={"text"}
+                  value={bio}
+                  placeholder={user.profile.bio || "Bio"}
+                  name={"bio"}
+                  onKeyUp={onKeyUp}
+                />
+              ) : (
+                <Bio>{`${user.profile.bio}`}</Bio>
+              )}
               <SText text={String(user.profile.countryCount.userCount)} />
               <SText text={String(user.profile.cityCount.cardCount)} />
               <Row>
@@ -908,7 +920,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 />
               </UserNameRow>
               {user.profile.isSelf && (
-                <TripIcon onClick={addTrip}>
+                <TripIcon onClick={toggleAddTripModal}>
                   <Upload />
                 </TripIcon>
               )}

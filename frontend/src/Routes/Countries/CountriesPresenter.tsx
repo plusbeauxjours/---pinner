@@ -126,7 +126,7 @@ const Input = styled.input`
   border-radius: 3px;
   padding: 5px;
   color: white;
-  font-size: 14px;
+  font-size: 12px;
   &::placeholder {
     color: ${props => props.theme.greyColor};
   }

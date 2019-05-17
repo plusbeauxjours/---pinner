@@ -48,7 +48,7 @@ const STextArea = styled(Textarea)`
   width: 100%;
   border: 0;
   resize: none;
-  font-size: 14px;
+  font-size: 12px;
   padding: 15px 0px;
 `;
 

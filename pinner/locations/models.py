@@ -10,6 +10,7 @@ class Continent (config_models.TimeStampedModel):
 
     continent_name = models.CharField(max_length=20, null=True, blank=True)
     continent_photo = models.URLField(null=True, blank=True)
+    continent_photo_placeholder = models.CharField(max_length=10, null=True, blank=True)
 
     @cached_property
     def country_count(self):
@@ -24,6 +25,7 @@ class Country (config_models.TimeStampedModel):
     country_name = models.CharField(max_length=50, null=True, blank=True)
     country_code = models.CharField(max_length=2, null=True, blank=True)
     country_photo = models.URLField(null=True, blank=True)
+    country_photo_placeholder = models.CharField(max_length=10, null=True, blank=True)
     continent = models.ForeignKey(Continent, null=True, blank=True, on_delete=models.CASCADE, related_name='countries')
 
     @cached_property
@@ -46,6 +48,7 @@ class City (config_models.TimeStampedModel):
         Country, on_delete=models.CASCADE, related_name='cities')
     city_name = models.CharField(max_length=50, null=True, blank=True)
     city_photo = models.URLField(null=True, blank=True)
+    city_photo_placeholder = models.CharField(max_length=10, null=True, blank=True)
     population = models.IntegerField(null=True, blank=True)
     area = models.IntegerField(null=True, blank=True)
     info = models.TextField(null=True, blank=True)

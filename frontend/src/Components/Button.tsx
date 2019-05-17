@@ -11,7 +11,7 @@ const SButton = styled.button<IProps>`
   font-weight: 600;
   width: 100%;
   border-radius: 4px;
-  font-size: ${props => (props.size === "md" ? "14px" : "12px")};
+  font-size: ${props => (props.size === "md" ? "12px" : "12px")};
   cursor: pointer;
   border: ${props =>
     props.inverted ? `1px solid ${props.theme.greyColor}` : "none"};
