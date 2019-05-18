@@ -136,6 +136,30 @@ const UserRow = styled.div`
   }
 `;
 
+const TripRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 50px;
+  padding: 0 5px 0 5px;
+  align-items: flex-start;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: grey;
+  }
+  &:not(:last-child) {
+    border-bottom: 1px solid grey;
+  }
+`;
+
+const TripHeader = styled.div`
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
+`;
+
 const HeaderColumn = styled.div`
   margin-left: 15px;
 `;
@@ -275,7 +299,30 @@ const ModalContainer = styled.div`
   top: 0;
 `;
 
-const FromModalContainer = styled(ModalContainer)``;
+const TripModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  top: 30%;
+  width: 30%;
+  z-index: 10;
+  position: absolute;
+  margin-top: 80px;
+  animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const TripModalContainer = styled.div`
+  z-index: 8;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+`;
 
 const Modal = styled.div`
   background-color: #2d3a41;
@@ -283,15 +330,6 @@ const Modal = styled.div`
   border-radius: 12px;
   z-index: 10;
   animation: ${ModalAnimation} 0.1s linear;
-`;
-
-const FormModal = styled(Modal)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-  height: 30%;
 `;
 
 const RowModal = styled.div`
@@ -309,7 +347,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.75);
 `;
 
 const ModalLink = styled.div`
@@ -333,6 +371,30 @@ const Input = styled.input`
   color: white;
   background-color: transparent;
   font-size: 12px;
+  font-weight: 100;
+  transition: border-bottom 0.1s linear;
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+  animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const SearchCitiesInput = styled.input`
+  z-index: 10;
+  top: 30%;
+  width: 30%;
+  border: 0;
+  position: absolute;
+  display: flex;
+  align-self: center;
+  border-bottom: 1px solid ${props => props.theme.greyColor};
+  padding: 5px;
+  color: white;
+  background-color: transparent;
+  font-size: 34px;
   font-weight: 100;
   transition: border-bottom 0.1s linear;
   &:focus {
@@ -750,33 +812,31 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           </ModalContainer>
         )}
         {tripAddModalOpen && (
-          <FromModalContainer>
+          <ModalContainer>
             <ModalOverlay onClick={addTrip} />
-            <FormModal>
-              <DateRangePicker
-                startDateId="startDate"
-                endDateId="endDate"
-                startDate={startDate}
-                endDate={endDate}
-                onDatesChange={onDatesChange}
-                onFocusChange={onFocusChange}
-                focusedInput={focusedInput}
-                isOutsideRange={() => false}
-              />
-              <Input
-                onChange={onInputChange}
-                type={"text"}
-                placeholder={"Search a City"}
-                name={"cityName"}
-              />
-            </FormModal>
-          </FromModalContainer>
+            <DateRangePicker
+              startDateId="startDate"
+              endDateId="endDate"
+              startDate={startDate}
+              endDate={endDate}
+              onDatesChange={onDatesChange}
+              onFocusChange={onFocusChange}
+              focusedInput={focusedInput}
+              isOutsideRange={() => false}
+            />
+            <Input
+              onChange={onInputChange}
+              type={"text"}
+              placeholder={"Search a City"}
+              name={"cityName"}
+            />
+          </ModalContainer>
         )}
+
         {tripEditModalOpen && (
-          <FromModalContainer>
+          <TripModalContainer>
             <ModalOverlay onClick={editTrip} />
-            <FormModal>
-              <DateRangePicker
+            {/* <DateRangePicker
                 startDateId="startDate"
                 endDateId="endDate"
                 startDate={startDate}
@@ -786,32 +846,34 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 focusedInput={focusedInput}
                 isOutsideRange={() => false}
                 // isDayBlocked={isDayBlocked}
-              />
-              <Input
-                onChange={onInputChange}
-                type={"text"}
-                value={cityName}
-                placeholder={cityName || "cityName"}
-                name={"cityName"}
-              />
+              /> */}
+            <SearchCitiesInput
+              autoFocus={true}
+              placeholder={cityName || "cityName"}
+              value={cityName}
+              onChange={onInputChange}
+              name={"cityName"}
+            />
+            <TripModal>
               {!searchCitiesLoading &&
                 cities &&
                 cities.map(city => (
-                  <UserRow key={city.id}>
+                  <TripRow key={city.id}>
                     <Link to={`/city/${city.cityName}`}>
-                      <Header>
+                      <TripHeader>
                         <SAvatar size={"sm"} url={city.cityPhoto} />
                         <HeaderColumn>
                           <HeaderText text={city.cityName} />
                           <Location>{city.country.countryName}</Location>
                         </HeaderColumn>
-                      </Header>
+                      </TripHeader>
                     </Link>
-                  </UserRow>
+                  </TripRow>
                 ))}
-            </FormModal>
-          </FromModalContainer>
+            </TripModal>
+          </TripModalContainer>
         )}
+
         {/* 
         ////////////// HEADER //////////////
         */}
