@@ -650,32 +650,6 @@ export interface SearchTerms_searchUsers {
   users: (SearchTerms_searchUsers_users | null)[] | null;
 }
 
-export interface SearchTerms_searchCards_cards_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface SearchTerms_searchCards_cards_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: SearchTerms_searchCards_cards_city_country;
-}
-
-export interface SearchTerms_searchCards_cards {
-  __typename: "CardType";
-  city: SearchTerms_searchCards_cards_city | null;
-  id: string;
-  file: string | null;
-  caption: string;
-  likeCount: number | null;
-  commentCount: number | null;
-}
-
-export interface SearchTerms_searchCards {
-  __typename: "SearchCardsResponse";
-  cards: (SearchTerms_searchCards_cards | null)[] | null;
-}
-
 export interface SearchTerms_searchCities_cities_country {
   __typename: "CountryType";
   countryName: string | null;
@@ -688,6 +662,7 @@ export interface SearchTerms_searchCities_cities {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
+  cityPhotoPlaceholder: string | null;
   distance: number | null;
   country: SearchTerms_searchCities_cities_country;
   likeCount: number | null;
@@ -710,6 +685,7 @@ export interface SearchTerms_searchCountries_countries {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  countryPhotoPlaceholder: string | null;
   continent: SearchTerms_searchCountries_countries_continent | null;
 }
 
@@ -723,6 +699,7 @@ export interface SearchTerms_searchContinents_continents {
   id: string;
   continentName: string | null;
   continentPhoto: string | null;
+  continentPhotoPlaceholder: string | null;
 }
 
 export interface SearchTerms_searchContinents {
@@ -732,7 +709,6 @@ export interface SearchTerms_searchContinents {
 
 export interface SearchTerms {
   searchUsers: SearchTerms_searchUsers;
-  searchCards: SearchTerms_searchCards;
   searchCities: SearchTerms_searchCities;
   searchCountries: SearchTerms_searchCountries;
   searchContinents: SearchTerms_searchContinents;
@@ -878,6 +854,7 @@ export interface FrequentVisits_frequentVisits_cities {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
+  cityPhotoPlaceholder: string | null;
   distance: number | null;
   country: FrequentVisits_frequentVisits_cities_country;
   likeCount: number | null;
@@ -1038,6 +1015,7 @@ export interface NearCities_nearCities_cities {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
+  cityPhotoPlaceholder: string | null;
   distance: number | null;
   country: NearCities_nearCities_cities_country;
   likeCount: number | null;
@@ -1332,6 +1310,7 @@ export interface TopCountries_topCountries_countries {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  countryPhotoPlaceholder: string | null;
   continent: TopCountries_topCountries_countries_continent | null;
 }
 
@@ -1458,6 +1437,7 @@ export interface CountryProfile_countryProfile_cities {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
+  cityPhotoPlaceholder: string | null;
   distance: number | null;
   country: CountryProfile_countryProfile_cities_country;
   likeCount: number | null;
@@ -1502,6 +1482,7 @@ export interface LatestCities_latestCities_cities {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
+  cityPhotoPlaceholder: string | null;
   distance: number | null;
   country: LatestCities_latestCities_cities_country;
   likeCount: number | null;
@@ -2494,6 +2475,7 @@ export interface GetTrips_getTrips_trip_city {
   __typename: "CityType";
   cityName: string | null;
   cityPhoto: string | null;
+  cityPhotoPlaceholder: string | null;
   country: GetTrips_getTrips_trip_city_country;
 }
 
@@ -2830,6 +2812,46 @@ export interface DeleteCoffeeVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: SearchCities
+// ====================================================
+
+export interface SearchCities_searchCities_cities_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface SearchCities_searchCities_cities {
+  __typename: "CityType";
+  id: string;
+  latitude: number | null;
+  longitude: number | null;
+  cityName: string | null;
+  cityPhoto: string | null;
+  cityPhotoPlaceholder: string | null;
+  distance: number | null;
+  country: SearchCities_searchCities_cities_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
+}
+
+export interface SearchCities_searchCities {
+  __typename: "CitiesResponse";
+  cities: (SearchCities_searchCities_cities | null)[] | null;
+}
+
+export interface SearchCities {
+  searchCities: SearchCities_searchCities;
+}
+
+export interface SearchCitiesVariables {
+  search: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CompletePhoneVerification
 // ====================================================
 
@@ -2987,6 +3009,7 @@ export interface CityParts {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
+  cityPhotoPlaceholder: string | null;
   distance: number | null;
   country: CityParts_country;
   likeCount: number | null;
@@ -3012,6 +3035,7 @@ export interface CountryParts {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  countryPhotoPlaceholder: string | null;
   continent: CountryParts_continent | null;
 }
 
@@ -3028,6 +3052,7 @@ export interface ContinentParts {
   id: string;
   continentName: string | null;
   continentPhoto: string | null;
+  continentPhotoPlaceholder: string | null;
 }
 
 

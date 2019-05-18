@@ -47,7 +47,7 @@ def resolve_get_continents(self, info, **kwargs):
 
 
 @login_required
-def resolve_search_citiess(self, info, **kwargs):
+def resolve_search_cities(self, info, **kwargs):
 
     user = info.context.user
 

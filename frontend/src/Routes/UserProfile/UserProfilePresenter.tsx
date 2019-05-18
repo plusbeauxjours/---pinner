@@ -440,6 +440,9 @@ interface IProps {
   modalOpen: boolean;
   confirmModalOpen: boolean;
 
+  searchCitiesData: any;
+  searchCitiesLoading: boolean;
+
   tripModalOpen: boolean;
   tripConfirmModalOpen: boolean;
   tripAddModalOpen: boolean;
@@ -535,6 +538,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 
   coffeeData: { getCoffees: { coffees = null } = {} } = {},
   coffeeLoading,
+
+  searchCitiesData: { searchCities: { cities = null } = {} } = {},
+  searchCitiesLoading,
 
   modalOpen,
   tripModalOpen,
@@ -788,7 +794,21 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 placeholder={cityName || "cityName"}
                 name={"cityName"}
               />
-              {console.log(cityName)}
+              {!searchCitiesLoading &&
+                cities &&
+                cities.map(city => (
+                  <UserRow key={city.id}>
+                    <Link to={`/city/${city.cityName}`}>
+                      <Header>
+                        <SAvatar size={"sm"} url={city.cityPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={city.cityName} />
+                          <Location>{city.country.countryName}</Location>
+                        </HeaderColumn>
+                      </Header>
+                    </Link>
+                  </UserRow>
+                ))}
             </FormModal>
           </FromModalContainer>
         )}

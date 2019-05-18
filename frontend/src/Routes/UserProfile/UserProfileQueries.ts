@@ -1,4 +1,5 @@
 import { gql } from "apollo-boost";
+import { CITY_FRAGMENT } from "src/sharedQueries";
 
 export const GET_USER = gql`
   query UserProfile($username: String!) {
@@ -267,4 +268,15 @@ export const DELETE_COFFEE = gql`
       username
     }
   }
+`;
+
+export const SEARCH_CITIES = gql`
+  query SearchCities($search: String!) {
+    searchCities(search: $search) {
+      cities {
+        ...CityParts
+      }
+    }
+  }
+  ${CITY_FRAGMENT}
 `;
