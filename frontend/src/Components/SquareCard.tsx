@@ -19,7 +19,7 @@ const Square = styled.div<{ bg: string }>`
 
 const ListOverlay = styled.div`
   padding: 10px;
-  z-index: 5;
+  z-index: 0;
   opacity: 0;
   display: flex;
 
@@ -34,7 +34,7 @@ const ListOverlay = styled.div`
       fill: red;
     }
   }
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.1s ease-in-out;
 `;
 
 const Overlay = styled.div`
@@ -42,7 +42,7 @@ const Overlay = styled.div`
   align-items: center;
   justify-content: center;
   color: white;
-  z-index: 5;
+  z-index: 0;
   opacity: 0;
   svg {
     fill: white;
@@ -51,7 +51,7 @@ const Overlay = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
   cursor: pointer;
-  transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.1s ease-in-out;
   &:hover {
     opacity: 1;
     ${ListOverlay} {
@@ -81,7 +81,7 @@ const Caption = styled(Bold)`
   display: flex;
   align-self: center;
   justify-self: center;
-  z-index: 1;
+  z-index: 0;
   font-size: 40px;
   font-family: "Qwigley";
   font-weight: 200;

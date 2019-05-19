@@ -228,7 +228,6 @@ const CityPhoto = styled.img<ITheme>`
   }};
   background-size: cover;
   border-radius: 3px;
-  z-index: 1;
   object-fit: cover;
 `;
 
@@ -310,10 +309,11 @@ const TripModal = styled.div`
 const DateRangePickerContainer = styled.div`
   display: flex;
   align-self: center;
+  z-index: 10;
 `;
 
 const TripModalContainer = styled.div`
-  z-index: 8;
+  z-index: 1;
   display: flex;
   position: relative;
   flex-direction: column;
@@ -451,6 +451,7 @@ const SSText = styled(Bold)`
   font-size: 12px;
   font-weight: 100;
 `;
+
 const SmallTitle = styled(Title)`
   flex-direction: column;
   align-items: center;

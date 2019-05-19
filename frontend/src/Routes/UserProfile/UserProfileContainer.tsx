@@ -120,6 +120,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   public deleteCoffeeFn: MutationFn;
   public requestCoffeeFn: MutationFn;
 
+  public getTripsData;
   public data;
 
   constructor(props) {
@@ -163,18 +164,14 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       currentCity: state.currentCity || localStorage.getItem("cityName")
     };
   }
-  public componentDidUpdate(prevProps,prevState) {
+  public componentDidUpdate(prevProps, prevState) {
     const newProps = this.props;
-    console.log(prevState.startDate)
-    console.log(this.state.startDate)
-    console.log(prevState.endDate)
-    console.log(this.state.endDate)
-
+    console.log(this.getTripsData);
     if (prevProps.match.params.username !== newProps.match.params.username) {
       this.setState({ search: "", tripList: [] });
-      console.log("updated")
-      console.log(prevState)
-      console.log(this.state)
+      console.log("updated");
+      console.log(prevState);
+      console.log(this.state);
     }
   }
   public render() {
@@ -859,8 +856,25 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     });
   };
   public onDatesChange = ({ startDate, endDate }) => {
+    console.log(this.getTripsData);
     this.setState({ startDate, endDate });
   };
+  public isDayBlocked = () => {
+    const {
+      getTrips: { trip }
+    } = this.getTripsData;
+    console.log(trip);
+    const Moment = require("moment");
+    const MomentRange = require("moment-range");
+    const moments = MomentRange.extendMoment(Moment);
+
+    const start = moments();
+    const end = moments().add(2, "months");
+    const range = moments.range(start, end);
+    const arrayOfDates = Array.from(range.by("days"));
+    console.log(arrayOfDates);
+  };
+
   public onFocusChange = focusedInput => {
     this.setState({ focusedInput });
   };

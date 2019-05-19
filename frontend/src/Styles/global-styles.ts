@@ -1,5 +1,7 @@
 import { createGlobalStyle } from "./typed-components";
 import reset from "styled-reset";
+import "react-dates/initialize";
+import "react-dates/lib/css/_datepicker.css";
 
 const GlobalStyle = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css?family=Maven+Pro');
@@ -45,6 +47,16 @@ const GlobalStyle = createGlobalStyle`
     .pac-item {
         padding: 20px;
     }
+    /* .DateRangePicker_picker {
+        background-color: red;
+        color: red;
+        z-index: 10;
+    }
+    .DateRangePicker_picker__portal {
+        background-color: red;
+        color: red;
+        z-index: 10;
+    } */
 `;
 
 export default GlobalStyle;
