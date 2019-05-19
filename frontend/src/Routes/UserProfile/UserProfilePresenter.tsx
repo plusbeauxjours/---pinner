@@ -3,8 +3,8 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import { Gear, List } from "../../Icons";
 import styled, { keyframes } from "../../Styles/typed-components";
-import "react-dates/lib/css/_datepicker.css";
 import "react-dates/initialize";
+import "react-dates/lib/css/_datepicker.css";
 import { DateRangePicker } from "react-dates";
 import { Upload } from "../../Icons";
 
@@ -300,15 +300,16 @@ const ModalContainer = styled.div`
 `;
 
 const TripModal = styled.div`
+  z-index: 10;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
-  z-index: 10;
-  top: 30%;
-  width: 30%;
-  z-index: 10;
-  position: absolute;
-  margin-top: 80px;
   animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const DateRangePickerContainer = styled.div`
+  display: flex;
+  align-self: center;
 `;
 
 const TripModalContainer = styled.div`
@@ -347,7 +348,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.8);
 `;
 
 const ModalLink = styled.div`
@@ -373,6 +374,9 @@ const Input = styled.input`
   font-size: 12px;
   font-weight: 100;
   transition: border-bottom 0.1s linear;
+  &:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px white inset !important;
+  }
   &:focus {
     outline: none;
   }
@@ -382,28 +386,20 @@ const Input = styled.input`
   animation: ${ModalAnimation} 0.1s linear;
 `;
 
-const SearchCitiesInput = styled.input`
+const TripInputContainer = styled.div`
   z-index: 10;
   top: 30%;
   width: 30%;
   border: 0;
   position: absolute;
   display: flex;
+  flex-direction: column;
   align-self: center;
-  border-bottom: 1px solid ${props => props.theme.greyColor};
-  padding: 5px;
-  color: white;
-  background-color: transparent;
+`;
+
+const SearchCitiesInput = styled(Input)`
+  margin-top: 20px;
   font-size: 34px;
-  font-weight: 100;
-  transition: border-bottom 0.1s linear;
-  &:focus {
-    outline: none;
-  }
-  &::placeholder {
-    color: ${props => props.theme.greyColor};
-  }
-  animation: ${ModalAnimation} 0.1s linear;
 `;
 
 const GreyLine = styled.div`
@@ -836,41 +832,47 @@ const UserProfilePresenter: React.SFC<IProps> = ({
         {tripEditModalOpen && (
           <TripModalContainer>
             <ModalOverlay onClick={editTrip} />
-            {/* <DateRangePicker
-                startDateId="startDate"
-                endDateId="endDate"
-                startDate={startDate}
-                endDate={endDate}
-                onDatesChange={onDatesChange}
-                onFocusChange={onFocusChange}
-                focusedInput={focusedInput}
-                isOutsideRange={() => false}
-                // isDayBlocked={isDayBlocked}
-              /> */}
-            <SearchCitiesInput
-              autoFocus={true}
-              placeholder={cityName || "cityName"}
-              value={cityName}
-              onChange={onInputChange}
-              name={"cityName"}
-            />
-            <TripModal>
-              {!searchCitiesLoading &&
-                cities &&
-                cities.map(city => (
-                  <TripRow key={city.id}>
-                    <Link to={`/city/${city.cityName}`}>
-                      <TripHeader>
-                        <SAvatar size={"sm"} url={city.cityPhoto} />
-                        <HeaderColumn>
-                          <HeaderText text={city.cityName} />
-                          <Location>{city.country.countryName}</Location>
-                        </HeaderColumn>
-                      </TripHeader>
-                    </Link>
-                  </TripRow>
-                ))}
-            </TripModal>
+            <TripInputContainer>
+              <DateRangePickerContainer>
+                <DateRangePicker
+                  startDateId="startDate"
+                  endDateId="endDate"
+                  startDate={startDate}
+                  endDate={endDate}
+                  onDatesChange={onDatesChange}
+                  onFocusChange={onFocusChange}
+                  focusedInput={focusedInput}
+                  isOutsideRange={() => false}
+                  withPortal={true}
+                  // isDayBlocked={isDayBlocked}
+                />
+              </DateRangePickerContainer>
+              <SearchCitiesInput
+                autoFocus={true}
+                placeholder={cityName || "cityName"}
+                value={cityName}
+                onChange={onInputChange}
+                name={"cityName"}
+                autoComplete={"off"}
+              />
+              <TripModal>
+                {!searchCitiesLoading &&
+                  cities &&
+                  cities.map(city => (
+                    <TripRow key={city.id}>
+                      <Link to={`/city/${city.cityName}`}>
+                        <TripHeader>
+                          <SAvatar size={"sm"} url={city.cityPhoto} />
+                          <HeaderColumn>
+                            <HeaderText text={city.cityName} />
+                            <Location>{city.country.countryName}</Location>
+                          </HeaderColumn>
+                        </TripHeader>
+                      </Link>
+                    </TripRow>
+                  ))}
+              </TripModal>
+            </TripInputContainer>
           </TripModalContainer>
         )}
 

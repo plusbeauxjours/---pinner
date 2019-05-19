@@ -163,10 +163,18 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       currentCity: state.currentCity || localStorage.getItem("cityName")
     };
   }
-  public componentDidUpdate(prevProps) {
+  public componentDidUpdate(prevProps,prevState) {
     const newProps = this.props;
+    console.log(prevState.startDate)
+    console.log(this.state.startDate)
+    console.log(prevState.endDate)
+    console.log(this.state.endDate)
+
     if (prevProps.match.params.username !== newProps.match.params.username) {
       this.setState({ search: "", tripList: [] });
+      console.log("updated")
+      console.log(prevState)
+      console.log(this.state)
     }
   }
   public render() {
