@@ -166,7 +166,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   }
   public componentDidUpdate(prevProps, prevState) {
     const newProps = this.props;
-    console.log(this.getTripsData);
     if (prevProps.match.params.username !== newProps.match.params.username) {
       this.setState({ search: "", tripList: [] });
       console.log("updated");
@@ -342,7 +341,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                             data: getTripsData,
                                                             loading: getTipsLoading
                                                           }) => {
-                                                            this.data = getTripsData;
+                                                            this.getTripsData = getTripsData;
                                                             return (
                                                               <AddTripMutation
                                                                 mutation={
@@ -651,6 +650,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                   tripList={
                                                                                     tripList
                                                                                   }
+                                                                                  isDayBlocked={
+                                                                                    this
+                                                                                      .isDayBlocked
+                                                                                  }
                                                                                 />
                                                                               );
                                                                             }}
@@ -780,17 +783,17 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } as any);
   };
   public toggleAddTripModal = () => {
-    const { tripModalOpen, tripAddModalOpen } = this.state;
+    const { tripAddModalOpen } = this.state;
     this.setState({
       tripAddModalOpen: !tripAddModalOpen,
-      tripModalOpen: !tripModalOpen
+      tripModalOpen: false
     });
   };
   public toggleEditTripModal = () => {
-    const { tripModalOpen, tripEditModalOpen } = this.state;
+    const { tripEditModalOpen } = this.state;
     this.setState({
       tripEditModalOpen: !tripEditModalOpen,
-      tripModalOpen: !tripModalOpen
+      tripModalOpen: false
     });
   };
 
@@ -859,20 +862,27 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     console.log(this.getTripsData);
     this.setState({ startDate, endDate });
   };
-  public isDayBlocked = () => {
+  public isDayBlocked = (day: moment.Moment) => {
     const {
       getTrips: { trip }
     } = this.getTripsData;
     console.log(trip);
-    const Moment = require("moment");
-    const MomentRange = require("moment-range");
-    const moments = MomentRange.extendMoment(Moment);
+    // const Moment = require("moment");
+    // const MomentRange = require("moment-range");
+    // const moments = MomentRange.extendMoment(Moment);
+    // const a = moments.Moment;
+    // console.log(a);
 
-    const start = moments();
-    const end = moments().add(2, "months");
-    const range = moments.range(start, end);
-    const arrayOfDates = Array.from(range.by("days"));
-    console.log(arrayOfDates);
+    // for (const i of trip) {
+    //   console.log(i.startDate, i.endDate);
+    // }
+    // const start = trip[19].startDate;
+    // const end = trip[19].endDate;
+    // const range = moments.range(start, end);
+    // console.log(range);
+    // const arrayOfDates = Array.from(range.by("days"));
+    // console.log(arrayOfDates);
+    // return arrayOfDates;
   };
 
   public onFocusChange = focusedInput => {

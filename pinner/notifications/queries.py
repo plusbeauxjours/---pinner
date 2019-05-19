@@ -76,16 +76,11 @@ def resolve_search_get_notifications(self, info, **kwargs):
 @login_required
 def resolve_get_trips(self, info, **kwargs):
 
-    me = info.context.user
     username = kwargs.get('username')
     user = User.objects.prefetch_related('movenotification').get(username=username)
     tripPage = kwargs.get('tripPage', 0)
 
-    if (tripPage is 0):
-        trip = user.movenotification.all().order_by('-start_date')[:20]
-
-    else:
-        trip = user.movenotification.all().order_by('-start_date')[:20]
+    trip = user.movenotification.all().order_by('-start_date')
 
     return location_types.TripResponse(trip=trip)
 

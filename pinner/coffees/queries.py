@@ -32,9 +32,6 @@ def resolve_get_coffees(self, info, **kwargs):
             # matches = me.host.values('id').values('guest').all()
             # not allow to join. only showing is allowed if they already matched
 
-            for i in matches:
-                print(i)
-            print(matches)
             coffees = city.coffee.filter((Q(target='everyone') |
                                         Q(target='nationality', host__profile__nationality=profile.nationality) |
                                         Q(target='gender', host__profile__gender=profile.gender) |
