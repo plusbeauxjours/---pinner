@@ -24,8 +24,8 @@ import {
   RequestCoffeeVariables,
   GetCoffeesVariables,
   GetCoffees,
-  SearchCities,
-  SearchCitiesVariables
+  SearchTripCities,
+  SearchTripCitiesVariables
 } from "src/types/api";
 import {
   GET_USER,
@@ -37,7 +37,7 @@ import {
   DELETE_TRIP,
   GET_KNOWING_FOLLOWERS,
   DELETE_COFFEE,
-  SEARCH_CITIES
+  SEARCH_TRIP_CITIES
 } from "./UserProfileQueries";
 import { REQUEST_COFFEE } from "../Feed/FeedQueries";
 import { GET_COFFEES } from "../Coffees/CoffeesQueries";
@@ -45,7 +45,10 @@ import { withRouter, RouteComponentProps } from "react-router";
 import { LOG_USER_OUT } from "src/sharedQueries.local";
 import { toast } from "react-toastify";
 
-class SearchCitiesQuery extends Query<SearchCities, SearchCitiesVariables> {}
+class SearchCitiesQuery extends Query<
+  SearchTripCities,
+  SearchTripCitiesVariables
+> {}
 class UserProfileQuery extends Query<UserProfile, UserProfileVariables> {}
 class GetTiprsQuery extends Query<GetTrips, GetTripsVariables> {}
 class AddTripMutation extends Mutation<AddTrip, AddTripVariables> {}
@@ -218,11 +221,11 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } = this.state;
     return (
       <SearchCitiesQuery
-        query={SEARCH_CITIES}
+        query={SEARCH_TRIP_CITIES}
         variables={{ search: cityName }}
         skip={!cityName}
       >
-        {({ data: searchCitiesData, loading: searchCitiesLoading }) => (
+        {({ data: searchTripCitiesData, loading: searchTripCitiesLoading }) => (
           <RequestCoffeeMutation
             mutation={REQUEST_COFFEE}
             variables={{
@@ -422,11 +425,11 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                               this.deleteTripFn = deleteTripFn;
                                                                               return (
                                                                                 <UserProfilePresenter
-                                                                                  searchCitiesData={
-                                                                                    searchCitiesData
+                                                                                  searchTripCitiesData={
+                                                                                    searchTripCitiesData
                                                                                   }
-                                                                                  searchCitiesLoading={
-                                                                                    searchCitiesLoading
+                                                                                  searchTripCitiesLoading={
+                                                                                    searchTripCitiesLoading
                                                                                   }
                                                                                   modalOpen={
                                                                                     modalOpen
@@ -1139,7 +1142,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     const {
       target: { value }
     } = event;
-    const { getTrips: { trip = {} } = {} } = ({} = this.data);
+    const { getTrips: { trip = {} } = {} } = ({} = this.getTripsData);
     const nowSearch = (list, text) =>
       list.filter(
         i =>

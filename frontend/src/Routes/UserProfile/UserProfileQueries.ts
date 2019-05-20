@@ -270,9 +270,9 @@ export const DELETE_COFFEE = gql`
   }
 `;
 
-export const SEARCH_CITIES = gql`
-  query SearchCities($search: String!) {
-    searchCities(search: $search) {
+export const SEARCH_TRIP_CITIES = gql`
+  query SearchTripCities($search: String!) {
+    searchTripCities(search: $search) {
       cities {
         ...CityParts
       }

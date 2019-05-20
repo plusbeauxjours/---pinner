@@ -135,12 +135,7 @@ const FollowingsPresenter: React.SFC<IProps> = ({
         <SWrapper>
           <PHeader>
             <AvatarContainer>
-              <CAvatar
-                size="lg"
-                url={
-                  "http://image.dongascience.com/Photo/2018/12/2d5efe44bdd02f3e2ec4e99189d89d18.jpg"
-                }
-              />
+              <CAvatar size="lg" url={"http://localhost:8000/media/281.jpg"} />
               <InfoRow>
                 <SText text={String("undefined")} />
                 Count

@@ -219,7 +219,7 @@ interface IProps {
   recommandUsersLoading: boolean;
   recommandUserList: any;
   recommandUserModalOpen: boolean;
-  toggleRecommandUserSeeAll: () => void;
+
   toggleRecommandUserModal: () => void;
   requestModalOpen: boolean;
   requestingCoffeeModalOpen: boolean;
@@ -243,7 +243,7 @@ const FeedPresenter: React.SFC<IProps> = ({
   coffeeLoading,
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},
   recommandUsersLoading,
-  toggleRecommandUserSeeAll,
+
   recommandUserList,
   toggleRecommandUserModal,
   recommandUserModalOpen,
@@ -357,7 +357,9 @@ const FeedPresenter: React.SFC<IProps> = ({
           <CitySearch />
           <Title>
             <SText text={"RECOMMAND USER"} />
-            <SeeAll onClick={toggleRecommandUserSeeAll}>SEE ALL</SeeAll>
+            <Link to={`/people`}>
+              <SeeAll>SEE ALL</SeeAll>
+            </Link>
           </Title>
           <Container>
             <Box>

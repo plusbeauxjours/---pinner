@@ -1,13 +1,15 @@
 from django.conf import settings
 from twilio.rest import Client
 
-TWILIO_SID = "ACe45be468996891a959f54a05dbaf164b"
-TWILIO_TOKEN = "f5fad23d4772fc5249af8f78945987ee"
-from_number = "+16623301384"
+TWILIO_SID = "ACeff95fa032e064459f62ff59c89ef78c"
+TWILIO_TOKEN = "b5a234ecd9da3ff3cc47d784e01ea0e6"
+from_number = "+12025688737"
+
 client = Client(TWILIO_SID, TWILIO_TOKEN)
 
 
 def sendSMS(to, body):
+    print(to)
     return client.messages.create(to=to,
                                   from_=from_number,
                                   body=body)

@@ -26,7 +26,7 @@ class PhoneLoginContainer extends React.Component<
 > {
   public phoneMutation: MutationFn;
   public state = {
-    countryCode: "+66",
+    countryCode: "+82",
     phoneNumber: "",
     isSubmitted: false
   };

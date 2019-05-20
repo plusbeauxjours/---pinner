@@ -32,7 +32,7 @@ class Card(config_models.TimeStampedModel):
     file = ProcessedImageField(
         null=True,
         blank=True,
-        processors = [ResizeToFill(600, 400)],
+        processors = [ResizeToFill(1200, 1200)],
         format = 'JPEG',
         options = {'quality':100}
     )

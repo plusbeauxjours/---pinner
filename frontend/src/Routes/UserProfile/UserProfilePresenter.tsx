@@ -499,8 +499,8 @@ interface IProps {
   modalOpen: boolean;
   confirmModalOpen: boolean;
 
-  searchCitiesData: any;
-  searchCitiesLoading: boolean;
+  searchTripCitiesData: any;
+  searchTripCitiesLoading: boolean;
 
   tripModalOpen: boolean;
   tripConfirmModalOpen: boolean;
@@ -599,8 +599,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   coffeeData: { getCoffees: { coffees = null } = {} } = {},
   coffeeLoading,
 
-  searchCitiesData: { searchCities: { cities = null } = {} } = {},
-  searchCitiesLoading,
+  searchTripCitiesData: { searchTripCities: { cities = null } = {} } = {},
+  searchTripCitiesLoading,
 
   modalOpen,
   tripModalOpen,
@@ -812,48 +812,48 @@ const UserProfilePresenter: React.SFC<IProps> = ({
         )}
         {tripAddModalOpen && (
           <TripModalContainer>
-          <ModalOverlay onClick={addTrip} />
-          <TripInputContainer>
-            <DateRangePickerContainer>
-              <DateRangePicker
-                startDateId="startDate"
-                endDateId="endDate"
-                startDate={startDate}
-                endDate={endDate}
-                onDatesChange={onDatesChange}
-                onFocusChange={onFocusChange}
-                focusedInput={focusedInput}
-                isOutsideRange={() => false}
-                withPortal={true}
-                isDayBlocked={isDayBlocked()}
+            <ModalOverlay onClick={addTrip} />
+            <TripInputContainer>
+              <DateRangePickerContainer>
+                <DateRangePicker
+                  startDateId="startDate"
+                  endDateId="endDate"
+                  startDate={startDate}
+                  endDate={endDate}
+                  onDatesChange={onDatesChange}
+                  onFocusChange={onFocusChange}
+                  focusedInput={focusedInput}
+                  isOutsideRange={() => false}
+                  withPortal={true}
+                  isDayBlocked={isDayBlocked()}
+                />
+              </DateRangePickerContainer>
+              <SearchCitiesInput
+                autoFocus={true}
+                placeholder={"Search a City"}
+                onChange={onInputChange}
+                name={"cityName"}
+                autoComplete={"off"}
               />
-            </DateRangePickerContainer>
-            <SearchCitiesInput
-              autoFocus={true}
-              placeholder={"Search a City"}
-              onChange={onInputChange}
-              name={"cityName"}
-              autoComplete={"off"}
-            />
-            <TripModal>
-              {!searchCitiesLoading &&
-                cities &&
-                cities.map(city => (
-                  <TripRow key={city.id}>
-                    <Link to={`/city/${city.cityName}`}>
-                      <TripHeader>
-                        <SAvatar size={"sm"} url={city.cityPhoto} />
-                        <HeaderColumn>
-                          <HeaderText text={city.cityName} />
-                          <Location>{city.country.countryName}</Location>
-                        </HeaderColumn>
-                      </TripHeader>
-                    </Link>
-                  </TripRow>
-                ))}
-            </TripModal>
-          </TripInputContainer>
-        </TripModalContainer>
+              <TripModal>
+                {!searchTripCitiesLoading &&
+                  cities &&
+                  cities.map(city => (
+                    <TripRow key={city.id}>
+                      <Link to={`/city/${city.cityName}`}>
+                        <TripHeader>
+                          <SAvatar size={"sm"} url={city.cityPhoto} />
+                          <HeaderColumn>
+                            <HeaderText text={city.cityName} />
+                            <Location>{city.country.countryName}</Location>
+                          </HeaderColumn>
+                        </TripHeader>
+                      </Link>
+                    </TripRow>
+                  ))}
+              </TripModal>
+            </TripInputContainer>
+          </TripModalContainer>
         )}
 
         {tripEditModalOpen && (
@@ -883,7 +883,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 autoComplete={"off"}
               />
               <TripModal>
-                {!searchCitiesLoading &&
+                {!searchTripCitiesLoading &&
                   cities &&
                   cities.map(city => (
                     <TripRow key={city.id}>
@@ -1148,9 +1148,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <CityContainer>
                     <Square>
                       <CityPhoto
-                        src={
-                          "http://img.khan.co.kr/news/2017/08/09/l_2017080901001275500096051.jpg"
-                        }
+                        src={"http://localhost:8000/media/28_rAdzSHi.jpg"}
                         size={"md"}
                       />
                     </Square>
@@ -1162,9 +1160,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <CityContainer>
                     <Square>
                       <CityPhoto
-                        src={
-                          "http://image.dongascience.com/Photo/2018/12/2d5efe44bdd02f3e2ec4e99189d89d18.jpg"
-                        }
+                        src={"http://localhost:8000/media/281.jpg"}
                         size={"md"}
                       />
                     </Square>

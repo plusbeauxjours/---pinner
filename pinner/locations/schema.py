@@ -77,6 +77,12 @@ class Query(object):
         required=True,
         args={'search': graphene.String(required=True)}
     )
+    search_trip_cities = graphene.Field(
+        types.CitiesResponse,
+        resolver=queries.resolve_search_trip_cities,
+        required=True,
+        args={'search': graphene.String(required=True)}
+    )
     search_countries = graphene.Field(
         types.CountriesResponse,
         resolver=queries.resolve_search_countries,

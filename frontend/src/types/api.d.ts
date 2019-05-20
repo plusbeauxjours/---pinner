@@ -1609,56 +1609,6 @@ export interface GetFeedCardsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: RecommandUsers
-// ====================================================
-
-export interface RecommandUsers_recommandUsers_users_profile_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface RecommandUsers_recommandUsers_users_profile_currentCity {
-  __typename: "CityType";
-  cityName: string | null;
-  country: RecommandUsers_recommandUsers_users_profile_currentCity_country;
-}
-
-export interface RecommandUsers_recommandUsers_users_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  isFollowing: boolean | null;
-  isSelf: boolean | null;
-  currentCity: RecommandUsers_recommandUsers_users_profile_currentCity | null;
-}
-
-export interface RecommandUsers_recommandUsers_users {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: RecommandUsers_recommandUsers_users_profile | null;
-}
-
-export interface RecommandUsers_recommandUsers {
-  __typename: "RecommandUsersResponse";
-  users: (RecommandUsers_recommandUsers_users | null)[] | null;
-}
-
-export interface RecommandUsers {
-  recommandUsers: RecommandUsers_recommandUsers;
-}
-
-export interface RecommandUsersVariables {
-  recommandUserPage?: number | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL mutation operation: RequestCoffee
 // ====================================================
 
@@ -2028,6 +1978,56 @@ export interface MarkAsRead {
 
 export interface MarkAsReadVariables {
   notificationId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: RecommandUsers
+// ====================================================
+
+export interface RecommandUsers_recommandUsers_users_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface RecommandUsers_recommandUsers_users_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: RecommandUsers_recommandUsers_users_profile_currentCity_country;
+}
+
+export interface RecommandUsers_recommandUsers_users_profile {
+  __typename: "ProfileType";
+  avatar: string;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
+  currentCity: RecommandUsers_recommandUsers_users_profile_currentCity | null;
+}
+
+export interface RecommandUsers_recommandUsers_users {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: RecommandUsers_recommandUsers_users_profile | null;
+}
+
+export interface RecommandUsers_recommandUsers {
+  __typename: "RecommandUsersResponse";
+  users: (RecommandUsers_recommandUsers_users | null)[] | null;
+}
+
+export interface RecommandUsers {
+  recommandUsers: RecommandUsers_recommandUsers;
+}
+
+export interface RecommandUsersVariables {
+  recommandUserPage?: number | null;
 }
 
 
@@ -2812,15 +2812,15 @@ export interface DeleteCoffeeVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: SearchCities
+// GraphQL query operation: SearchTripCities
 // ====================================================
 
-export interface SearchCities_searchCities_cities_country {
+export interface SearchTripCities_searchTripCities_cities_country {
   __typename: "CountryType";
   countryName: string | null;
 }
 
-export interface SearchCities_searchCities_cities {
+export interface SearchTripCities_searchTripCities_cities {
   __typename: "CityType";
   id: string;
   latitude: number | null;
@@ -2829,21 +2829,21 @@ export interface SearchCities_searchCities_cities {
   cityPhoto: string | null;
   cityPhotoPlaceholder: string | null;
   distance: number | null;
-  country: SearchCities_searchCities_cities_country;
+  country: SearchTripCities_searchTripCities_cities_country;
   likeCount: number | null;
   isLiked: boolean | null;
 }
 
-export interface SearchCities_searchCities {
+export interface SearchTripCities_searchTripCities {
   __typename: "CitiesResponse";
-  cities: (SearchCities_searchCities_cities | null)[] | null;
+  cities: (SearchTripCities_searchTripCities_cities | null)[] | null;
 }
 
-export interface SearchCities {
-  searchCities: SearchCities_searchCities;
+export interface SearchTripCities {
+  searchTripCities: SearchTripCities_searchTripCities;
 }
 
-export interface SearchCitiesVariables {
+export interface SearchTripCitiesVariables {
   search: string;
 }
 

@@ -1,9 +1,5 @@
 import { gql } from "apollo-boost";
-import {
-  DETAIL_CARD_FRAGMENT,
-  COFFEE_FRAGMENT,
-  USER_FRAGMENT
-} from "../../sharedQueries";
+import { DETAIL_CARD_FRAGMENT, COFFEE_FRAGMENT } from "../../sharedQueries";
 
 export const GET_FEED = gql`
   query Feed($cityName: String!) {
@@ -34,17 +30,6 @@ export const GET_FEED_CARDS = gql`
     }
   }
   ${DETAIL_CARD_FRAGMENT}
-`;
-
-export const RECOMMAND_USERS = gql`
-  query RecommandUsers($recommandUserPage: Int) {
-    recommandUsers(recommandUserPage: $recommandUserPage) {
-      users {
-        ...UserParts
-      }
-    }
-  }
-  ${USER_FRAGMENT}
 `;
 
 export const REQUEST_COFFEE = gql`
