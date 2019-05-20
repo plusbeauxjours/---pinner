@@ -25,8 +25,7 @@ class Profile(config_models.TimeStampedModel):
     bio = models.TextField(default='', blank=True, null=True)
     website = models.URLField(blank=True, null=True)
     gender = models.CharField(max_length=15, blank=True, null=True)
-    nationality = models.ForeignKey(location_models.Country, on_delete=models.SET_NULL,
-                                    null=True, blank=True, related_name='nationality')
+    nationality = models.CharField(max_length=15, blank=True, null=True)
     avatar = models.URLField(
         blank=True,
         default="http://basmed.unilag.edu.ng/wp-content/uploads/2018/10/avatar__181424.png")
@@ -38,6 +37,7 @@ class Profile(config_models.TimeStampedModel):
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     verified_phone_number = models.BooleanField(default=False)
     verified_email = models.BooleanField(default=False)
+    email = models.EmailField(blank=True, null=True, max_length=50)
     fbId = models.CharField(blank=True, null=True, max_length=20)
 
     current_city = models.ForeignKey(

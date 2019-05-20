@@ -82,6 +82,7 @@ interface IState {
   tripConfirmModalOpen: boolean;
   tripAddModalOpen: boolean;
   tripEditModalOpen: boolean;
+  profilFormModalOpen: boolean;
 
   countryModalOpen: boolean;
   continentModalOpen: boolean;
@@ -94,6 +95,8 @@ interface IState {
   userName: string;
   bio: string;
   gender: string;
+  nationality: string;
+  email: string;
   avatar: string;
   firstName: string;
   lastName: string;
@@ -136,6 +139,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripConfirmModalOpen: false,
       tripAddModalOpen: false,
       tripEditModalOpen: false,
+      profilFormModalOpen: true,
 
       countryModalOpen: false,
       continentModalOpen: false,
@@ -149,6 +153,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       bio: props.bio,
       gender: props.gender,
       avatar: props.avatar,
+      nationality: props.nationality,
+      email: props.email,
       firstName: props.FirstName,
       lastName: props.lastName,
       cityName: props.cityName,
@@ -190,6 +196,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripConfirmModalOpen,
       tripAddModalOpen,
       tripEditModalOpen,
+      profilFormModalOpen,
 
       countryModalOpen,
       continentModalOpen,
@@ -203,6 +210,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       bio,
       gender,
       avatar,
+      nationality,
+      email,
       firstName,
       lastName,
       cityName,
@@ -280,20 +289,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                           }) => (
                                             <EditProfileMutation
                                               mutation={EDIT_PROFILE}
-                                              refetchQueries={[
-                                                {
-                                                  query: GET_USER,
-                                                  variables: { username }
-                                                }
-                                              ]}
-                                              variables={{
-                                                userName,
-                                                bio,
-                                                gender,
-                                                avatar,
-                                                firstName,
-                                                lastName
-                                              }}
+                                              update={this.updatEditProfile}
                                               onCompleted={editData => {
                                                 const {
                                                   editProfile
@@ -464,6 +460,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                   coffeeReportModalOpen={
                                                                                     coffeeReportModalOpen
                                                                                   }
+                                                                                  profilFormModalOpen={
+                                                                                    profilFormModalOpen
+                                                                                  }
                                                                                   editMode={
                                                                                     editMode
                                                                                   }
@@ -518,6 +517,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                     this
                                                                                       .toggleCoffeeReportModal
                                                                                   }
+                                                                                  toggleProfileFormModal={
+                                                                                    this
+                                                                                      .toggleProfileFormModal
+                                                                                  }
                                                                                   openEditMode={
                                                                                     this
                                                                                       .openEditMode
@@ -556,6 +559,15 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                   }
                                                                                   gender={
                                                                                     gender
+                                                                                  }
+                                                                                  avatar={
+                                                                                    avatar
+                                                                                  }
+                                                                                  nationality={
+                                                                                    nationality
+                                                                                  }
+                                                                                  email={
+                                                                                    email
                                                                                   }
                                                                                   firstName={
                                                                                     firstName
@@ -720,7 +732,16 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     this.logUserOutFn();
   };
   public onKeyUp = event => {
-    const { userName, bio, gender, avatar, firstName, lastName } = this.state;
+    const {
+      userName,
+      bio,
+      gender,
+      avatar,
+      firstName,
+      lastName,
+      nationality,
+      email
+    } = this.state;
     const { keyCode } = event;
     if (keyCode === 13) {
       this.editProfileFn({
@@ -730,15 +751,14 @@ class UserProfileContainer extends React.Component<IProps, IState> {
           gender,
           avatar,
           firstName,
-          lastName
+          lastName,
+          nationality,
+          email
         }
       });
     } else {
       return null;
     }
-    this.setState({
-      editMode: false
-    });
   };
 
   //
@@ -816,6 +836,11 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     const { coffeeReportModalOpen } = this.state;
     this.setState({
       coffeeReportModalOpen: !coffeeReportModalOpen
+    } as any);
+  };
+  public toggleProfileFormModal = () => {
+    this.setState({
+      profilFormModalOpen: false
     } as any);
   };
   public addTrip = () => {
@@ -985,6 +1010,29 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       requestingCoffeeModalOpen: false
     } as any);
   };
+  public updatEditProfile = (cache, { data: { editProfile } }) => {
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    try {
+      const data = cache.readQuery({
+        query: GET_USER,
+        variables: { username }
+      });
+      if (data) {
+        data.user = editProfile.user;
+        data.getCoffees.cache.writeQuery({
+          query: GET_USER,
+          variables: { username },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   public updateDeleteCoffee = (cache, { data: { deleteCoffee } }) => {
     const {
       match: {
@@ -997,9 +1045,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         variables: { userName: username, location: "profile" }
       });
       if (data) {
-        data.getCoffees.coffees = data.getCoffees.coffees.filter(
-          i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
-        );
         data.getCoffees.coffees = data.getCoffees.coffees.filter(
           i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
         );

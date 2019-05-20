@@ -14,6 +14,8 @@ export const GET_USER = gql`
           gender
           avatar
           website
+          email
+          nationality
           postCount
           followersCount
           followingCount
@@ -65,6 +67,8 @@ export const EDIT_PROFILE = gql`
     $avatar: String
     $firstName: String
     $lastName: String
+    $nationality: String
+    $email: String
   ) {
     editProfile(
       username: $userName
@@ -73,6 +77,8 @@ export const EDIT_PROFILE = gql`
       avatar: $avatar
       firstName: $firstName
       lastName: $lastName
+      nationality: $nationality
+      email: $email
     ) {
       ok
       user {
@@ -84,6 +90,8 @@ export const EDIT_PROFILE = gql`
           bio
           gender
           avatar
+          nationality
+          email
         }
       }
     }

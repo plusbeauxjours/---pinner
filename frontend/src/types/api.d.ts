@@ -1055,11 +1055,6 @@ export interface CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity {
   country: CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity_country;
 }
 
-export interface CoffeeDetail_coffeeDetail_coffee_host_profile_nationality {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
 export interface CoffeeDetail_coffeeDetail_coffee_host_profile {
   __typename: "ProfileType";
   isSelf: boolean | null;
@@ -1067,7 +1062,7 @@ export interface CoffeeDetail_coffeeDetail_coffee_host_profile {
   gender: string | null;
   currentCity: CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity | null;
   isFollowing: boolean | null;
-  nationality: CoffeeDetail_coffeeDetail_coffee_host_profile_nationality | null;
+  nationality: string | null;
   followersCount: number | null;
   followingCount: number | null;
   tripCount: number | null;
@@ -2358,6 +2353,8 @@ export interface UserProfile_userProfile_user_profile {
   gender: string | null;
   avatar: string;
   website: string | null;
+  email: string | null;
+  nationality: string | null;
   postCount: number | null;
   followersCount: number | null;
   followingCount: number | null;
@@ -2410,6 +2407,8 @@ export interface EditProfile_editProfile_user_profile {
   bio: string | null;
   gender: string | null;
   avatar: string;
+  nationality: string | null;
+  email: string | null;
 }
 
 export interface EditProfile_editProfile_user {
@@ -2441,6 +2440,8 @@ export interface EditProfileVariables {
   avatar?: string | null;
   firstName?: string | null;
   lastName?: string | null;
+  nationality?: string | null;
+  email?: string | null;
 }
 
 

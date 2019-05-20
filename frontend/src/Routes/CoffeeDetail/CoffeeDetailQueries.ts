@@ -23,9 +23,7 @@ export const COFFEE_DETAIL = gql`
               }
             }
             isFollowing
-            nationality {
-              countryName
-            }
+            nationality
             followersCount
             followingCount
             tripCount

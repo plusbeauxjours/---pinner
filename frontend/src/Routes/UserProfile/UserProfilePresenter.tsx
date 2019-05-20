@@ -512,6 +512,7 @@ interface IProps {
   coffeeModalOpen: boolean;
   requestingCoffeeModalOpen: boolean;
   coffeeReportModalOpen: boolean;
+  profilFormModalOpen: boolean;
 
   editMode: boolean;
   openEditMode: () => void;
@@ -519,6 +520,9 @@ interface IProps {
   userName: string;
   bio: string;
   gender: string;
+  avatar: string;
+  nationality: string;
+  email: string;
   firstName: string;
   lastName: string;
   cityName: string;
@@ -551,6 +555,7 @@ interface IProps {
   toggleCoffeeModal: () => void;
   toggleRequestingCoffeeModal: () => void;
   toggleCoffeeReportModal: () => void;
+  toggleProfileFormModal: () => void;
 
   logUserOutFn: () => void;
 
@@ -615,6 +620,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   coffeeModalOpen,
   requestingCoffeeModalOpen,
   coffeeReportModalOpen,
+  profilFormModalOpen,
+
   editMode,
 
   toggleModal,
@@ -630,6 +637,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleCoffeeModal,
   toggleRequestingCoffeeModal,
   toggleCoffeeReportModal,
+  toggleProfileFormModal,
   openEditMode,
   logUserOutFn,
   confirmDeleteProfile,
@@ -644,6 +652,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   gender,
   firstName,
   lastName,
+  avatar,
+  nationality,
+  email,
   cityName,
   cityPhoto,
   countryName,
@@ -669,6 +680,84 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   } else if (user) {
     return (
       <>
+        {(!user.profile.nationality ||
+          !user.profile.gender ||
+          !user.profile.email) &&
+          profilFormModalOpen && (
+            <ModalContainer>
+              <ModalOverlay onClick={toggleProfileFormModal} />
+              <Modal>
+                <ModalLink>
+                  <Input
+                    onChange={onInputChange}
+                    type={"text"}
+                    value={username}
+                    placeholder={user.username}
+                    name={"userName"}
+                    onKeyUp={onKeyUp}
+                  />
+                </ModalLink>
+                <ModalLink>
+                  <Input
+                    onChange={onInputChange}
+                    type={"text"}
+                    value={avatar}
+                    placeholder={user.profile.avatar}
+                    name={"avatar"}
+                    onKeyUp={onKeyUp}
+                  />
+                </ModalLink>
+                {!user.profile.nationality ? (
+                  <ModalLink>
+                    <Input
+                      onChange={onInputChange}
+                      type={"text"}
+                      value={nationality}
+                      placeholder={"nationality"}
+                      name={"nationality"}
+                      onKeyUp={onKeyUp}
+                    />
+                  </ModalLink>
+                ) : null}
+                {!user.profile.gender ? (
+                  <ModalLink>
+                    <Input
+                      onChange={onInputChange}
+                      type={"text"}
+                      value={gender}
+                      placeholder={"gender"}
+                      name={"gender"}
+                      onKeyUp={onKeyUp}
+                    />
+                  </ModalLink>
+                ) : null}
+                               {!user.profile.bio ? (
+                  <ModalLink>
+                    <Input
+                      onChange={onInputChange}
+                      type={"text"}
+                      value={bio}
+                      placeholder={"bio"}
+                      name={"bio"}
+                      onKeyUp={onKeyUp}
+                    />
+                  </ModalLink>
+                ) : null}
+                {!user.profile.email ? (
+                  <ModalLink>
+                    <Input
+                      onChange={onInputChange}
+                      type={"text"}
+                      value={email}
+                      placeholder={"email"}
+                      name={"email"}
+                      onKeyUp={onKeyUp}
+                    />
+                  </ModalLink>
+                ) : null}
+              </Modal>
+            </ModalContainer>
+          )}
         {requestingCoffeeModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleRequestingCoffeeModal} />

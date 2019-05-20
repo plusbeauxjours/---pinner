@@ -69,6 +69,8 @@ class EditProfile(graphene.Mutation):
         first_name = graphene.String()
         last_name = graphene.String()
         username = graphene.String()
+        nationality = graphene.String()
+        email=graphene.String()
 
     Output = types.EditProfileResponse
 
@@ -87,11 +89,15 @@ class EditProfile(graphene.Mutation):
             first_name = kwargs.get('first_name', user.first_name)
             last_name = kwargs.get('last_name', user.last_name)
             username = kwargs.get('username', user.username)
+            nationality=kwargs.get('nationality', user.profile.nationality)
+            email=kwargs.get('email', user.profile.email)
 
             try:
                 profile.bio = bio
                 profile.gender = gender
                 profile.avatar = avatar
+                profile.nationality = nationality
+                profile.email = email
 
                 user.first_name = first_name
                 user.last_name = last_name
@@ -99,13 +105,13 @@ class EditProfile(graphene.Mutation):
 
                 profile.save()
                 user.save()
+                print("updated")
+                return types.EditProfileResponse(ok=True, user=user)
 
             except IntegrityError as e:
                 print(e)
                 error = "Can't save"
                 return types.EditProfileResponse(ok=False)
-
-            return types.EditProfileResponse(ok=True, user=user)
 
         else:
             error = 'You need to log in'
