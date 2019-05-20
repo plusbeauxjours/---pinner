@@ -12,7 +12,7 @@ import Weather from "src/Components/Weather";
 import LoaderCoffee from "src/Components/LoaderCoffee";
 import AvatarGrid from "../../Components/AvatarGrid";
 import InfiniteScroll from "react-infinite-scroller";
-import CitySearch from "src/Components/CitySearch";
+// import CitySearch from "src/Components/CitySearch";
 import UserHeader from "../../Components/UserHeader";
 import FollowBtn from "src/Components/FollowBtn";
 
@@ -338,7 +338,7 @@ const FeedPresenter: React.SFC<IProps> = ({
             </UserContainer>
           </PHeader>
           <GreyLine />
-          <CitySearch />
+          {/* <CitySearch /> */}
           <Title>
             <SText text={"RECOMMAND USER"} />
             <Link to={`/people`}>

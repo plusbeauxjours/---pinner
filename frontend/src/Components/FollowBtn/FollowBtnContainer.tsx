@@ -10,6 +10,7 @@ import { GET_FOLLOWINGS } from "../../Routes/Followings/FollowingsQueries";
 import { GET_USER } from "../../Routes/UserProfile/UserProfileQueries";
 import { CITY_PROFILE } from "../../Routes/CityProfile/CityProfileQueries";
 import { GET_MATCHES } from "../../Routes/Match/MatchQueries";
+import { RECOMMAND_USERS } from "../../Routes/People/PeopleQueries";
 
 class FollowMutation extends Mutation<FollowUser, FollowUserVariables> {}
 
@@ -129,23 +130,6 @@ class FollowBtnContainer extends React.Component<IProps, IState> {
     }
     try {
       const data = cache.readQuery({
-        query: GET_USER,
-        variables: { username: followUser.user.profile.username }
-      });
-      if (data) {
-        data.userProfile.user.profile.isFollowing =
-          followUser.user.profile.isFollowing;
-        cache.writeQuery({
-          query: GET_USER,
-          variables: { userName: followUser.user.profile.username },
-          data
-        });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-    try {
-      const data = cache.readQuery({
         query: CITY_PROFILE,
         variables: { cityName: followUser.user.profile.currentCity.cityName }
       });
@@ -175,6 +159,24 @@ class FollowBtnContainer extends React.Component<IProps, IState> {
         ).isFollowing = followUser.user.profile.isFollowing;
         cache.writeQuery({
           query: GET_MATCHES,
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const data = cache.readQuery({
+        query: RECOMMAND_USERS
+      });
+      if (data) {
+        console.log(data);
+        data.recommandUsers.users.find(
+          i => parseInt(i.id, 10) === parseInt(userId, 10)
+        ).profile.isFollowing = followUser.user.profile.isFollowing;
+        console.log(data);
+        cache.writeQuery({
+          query: RECOMMAND_USERS,
           data
         });
       }

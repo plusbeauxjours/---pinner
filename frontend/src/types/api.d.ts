@@ -355,6 +355,7 @@ export interface FollowUser_followUser_user {
 export interface FollowUser_followUser {
   __typename: "FollowUnfollowResponse";
   ok: boolean | null;
+  follow: boolean | null;
   user: FollowUser_followUser_user | null;
 }
 
