@@ -8,13 +8,13 @@ import Loader from "../../Components/Loader";
 import Photo from "../../Components/Photo";
 import Wrapper from "../../Components/Wrapper";
 import Bold from "../../Components/Bold";
-import UserRow from "../../Components/UserRow";
-import UserGrid from "../../Components/UserGrid";
 import Weather from "src/Components/Weather";
 import LoaderCoffee from "src/Components/LoaderCoffee";
 import AvatarGrid from "../../Components/AvatarGrid";
 import InfiniteScroll from "react-infinite-scroller";
 import CitySearch from "src/Components/CitySearch";
+import UserHeader from "../../Components/UserHeader";
+import FollowBtn from "src/Components/FollowBtn";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -58,8 +58,8 @@ const UserContainer = styled.div`
 `;
 
 const SText = styled(Bold)`
-  display: flex;
-  align-self: flex-end;
+  font-size: 18px;
+  font-weight: 100;
 `;
 
 const CityPhoto = styled.img<ITheme>`
@@ -140,17 +140,6 @@ const ModalLink = styled.div`
   }
 `;
 
-const Container = styled.div`
-  border-bottom: 4px;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  -webkit-box-flex: 0;
-  flex: 0 0 auto;
-  height: 280px;
-  padding: 15px;
-`;
-
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
@@ -162,10 +151,38 @@ const Title = styled.div`
   margin-top: 10px;
 `;
 
+const UserRow = styled.div`
+  display: grid;
+  height: 50px;
+  min-width: 400px;
+  grid-template-columns: 4fr 1fr;
+  padding: 0 5px 0 5px;
+  grid-gap: 15px;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: grey;
+  }
+  border-bottom: 1px solid grey;
+  &:last-child {
+    margin-bottom: 15px;
+  }
+`;
+
+const Container = styled.div`
+  -webkit-box-flex: 0;
+  padding: 15px;
+`;
+
 const Box = styled.div`
-  width: 905px;
-  display: flex;
+  max-width: 905px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(3, 50px);
+  column-gap: 10px;
   overflow-x: auto;
+  padding-bottom: 15px;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   ::-webkit-scrollbar {
     height: 6px;
@@ -175,7 +192,6 @@ const Box = styled.div`
     border-radius: 10px;
     background-color: ${props => props.theme.bgColor};
   }
-
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
@@ -213,14 +229,9 @@ interface IProps {
   coffeeLoading: boolean;
   cardsData: any;
   cardsLoading: boolean;
-
   currentCity: string;
   recommandUsersData: any;
   recommandUsersLoading: boolean;
-  recommandUserList: any;
-  recommandUserModalOpen: boolean;
-
-  toggleRecommandUserModal: () => void;
   requestModalOpen: boolean;
   requestingCoffeeModalOpen: boolean;
   coffeeReportModalOpen: boolean;
@@ -243,10 +254,6 @@ const FeedPresenter: React.SFC<IProps> = ({
   coffeeLoading,
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},
   recommandUsersLoading,
-
-  recommandUserList,
-  toggleRecommandUserModal,
-  recommandUserModalOpen,
   requestModalOpen,
   requestingCoffeeModalOpen,
   coffeeReportModalOpen,
@@ -315,29 +322,6 @@ const FeedPresenter: React.SFC<IProps> = ({
             </Modal>
           </ModalContainer>
         )}
-        {recommandUserModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleRecommandUserModal} />
-            <Modal>
-              <Wrapper>
-                {recommandUserList.map(user => (
-                  <UserRow
-                    key={user.id}
-                    id={user.id}
-                    username={user.username}
-                    avatar={user.profile.avatar}
-                    currentCity={user.profile.currentCity.cityName}
-                    currentCountry={
-                      user.profile.currentCity.country.countryName
-                    }
-                    isFollowing={user.profile.isFollowing}
-                    size={"sm"}
-                  />
-                ))}
-              </Wrapper>
-            </Modal>
-          </ModalContainer>
-        )}
         <SWrapper>
           <PHeader>
             <UserContainer>
@@ -363,11 +347,31 @@ const FeedPresenter: React.SFC<IProps> = ({
           </Title>
           <Container>
             <Box>
-              {!recommandUsersLoading && users ? (
-                <UserGrid users={users} />
-              ) : (
-                <Loader />
-              )}
+              {users &&
+                users.map(user => {
+                  return (
+                    <UserRow key={user.id}>
+                      <Link to={`/${user.username}`}>
+                        <UserHeader
+                          username={user.username}
+                          currentCity={user.profile.currentCity.cityName}
+                          currentCountry={
+                            user.profile.currentCity.country.countryName
+                          }
+                          avatar={user.profile.avatar}
+                          size={"sm"}
+                        />
+                      </Link>
+                      {!user.isSelf && (
+                        <FollowBtn
+                          isFollowing={user.profile.isFollowing}
+                          userId={user.id}
+                          username={user.username}
+                        />
+                      )}
+                    </UserRow>
+                  );
+                })}
             </Box>
           </Container>
           <SmallTitle>

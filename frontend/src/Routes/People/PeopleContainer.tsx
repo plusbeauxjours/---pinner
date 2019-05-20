@@ -41,6 +41,7 @@ class PeopleContainer extends React.Component<any, IState> {
           loading: recommandUsersLoading,
           fetchMore: recommandUsersFetchMore
         }) => {
+          this.recommandUsersData = recommandUsersData;
           this.recommandUsersFetchMore = recommandUsersFetchMore;
           return (
             <PeoplePresenter

@@ -20,6 +20,7 @@ const UserContainer = styled.div`
   width: 100%;
   flex-direction: column;
 `;
+
 const UserRow = styled.div`
   display: grid;
   flex-direction: row;
@@ -37,6 +38,7 @@ const UserRow = styled.div`
     border-bottom: 1px solid grey;
   }
 `;
+
 const UserNameRow = styled.div`
   display: flex;
   flex-direction: row;

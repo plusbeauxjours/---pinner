@@ -39,8 +39,6 @@ class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
-  recommandUserList: any;
-  recommandUserModalOpen: boolean;
   currentLat: number;
   currentLng: number;
   currentCity: string;
@@ -51,7 +49,6 @@ interface IState {
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
-  public recommandUsersFetchMore;
   public cardsFetchMore;
   public requestCoffeeFn: MutationFn;
   public ReportLocationFn: MutationFn;
@@ -60,8 +57,6 @@ class FeedContainer extends React.Component<IProps, IState> {
     super(props);
     const { location: { state = {} } = {} } = ({} = props);
     this.state = {
-      recommandUserList: [],
-      recommandUserModalOpen: false,
       currentLat: state.currentLat,
       currentLng: state.currentLng,
       currentCity: state.currentCity || localStorage.getItem("cityName"),
@@ -74,8 +69,6 @@ class FeedContainer extends React.Component<IProps, IState> {
   public render() {
     console.log(this.state);
     const {
-      recommandUserList,
-      recommandUserModalOpen,
       currentLat,
       currentLng,
       currentCity,
@@ -112,10 +105,8 @@ class FeedContainer extends React.Component<IProps, IState> {
                   <RecommandUsersQuery query={RECOMMAND_USERS}>
                     {({
                       data: recommandUsersData,
-                      loading: recommandUsersLoading,
-                      fetchMore: recommandUsersFetchMore
+                      loading: recommandUsersLoading
                     }) => {
-                      this.recommandUsersFetchMore = recommandUsersFetchMore;
                       return (
                         <GetCoffeesQuery
                           query={GET_COFFEES}
@@ -166,15 +157,6 @@ class FeedContainer extends React.Component<IProps, IState> {
                                             recommandUsersLoading={
                                               recommandUsersLoading
                                             }
-                                            recommandUserList={
-                                              recommandUserList
-                                            }
-                                            recommandUserModalOpen={
-                                              recommandUserModalOpen
-                                            }
-                                            toggleRecommandUserModal={
-                                              this.toggleRecommandUserModal
-                                            }
                                             requestModalOpen={requestModalOpen}
                                             requestingCoffeeModalOpen={
                                               requestingCoffeeModalOpen
@@ -213,12 +195,6 @@ class FeedContainer extends React.Component<IProps, IState> {
       </GetCardsQuery>
     );
   }
-  public toggleRecommandUserModal = () => {
-    const { recommandUserModalOpen } = this.state;
-    this.setState({
-      recommandUserModalOpen: !recommandUserModalOpen
-    } as any);
-  };
   public toggleRequestingCoffeeModal = () => {
     const { requestingCoffeeModalOpen } = this.state;
     this.setState({

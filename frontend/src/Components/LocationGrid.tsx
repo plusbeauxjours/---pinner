@@ -44,7 +44,6 @@ const CAvatar = styled(Avatar)`
   border-radius: 3px;
   height: 200px;
   width: 200px;
-  margin-right: 20px;
 `;
 
 const LocationName = styled(Bold)`
