@@ -2019,6 +2019,8 @@ export interface RecommandUsers_recommandUsers_users {
 
 export interface RecommandUsers_recommandUsers {
   __typename: "RecommandUsersResponse";
+  page: number | null;
+  hasNextPage: boolean | null;
   users: (RecommandUsers_recommandUsers_users | null)[] | null;
 }
 
@@ -2027,7 +2029,7 @@ export interface RecommandUsers {
 }
 
 export interface RecommandUsersVariables {
-  recommandUserPage?: number | null;
+  page?: number | null;
 }
 
 

@@ -85,18 +85,20 @@ def resolve_check_username(self, info, **kwargs):
 def resolve_recommand_users(self, info, **kwargs):
 
     user = info.context.user
-    recommandUserPage = kwargs.get('recommandUserPage', 0)
+    page = kwargs.get('page', 0)
+    offset = 12 * page
+
+    nextPage = page+1
 
     following_profiles = user.profile.followings.values('id')
 
-    if (recommandUserPage is 0):
-        users = models.User.objects.all().exclude(id=user.id).exclude(id__in=following_profiles).order_by(
-            '-id')[:9]
-    else:
-        users = models.User.objects.all().exclude(id=user.id).order_by(
-            '-id')[9:18]
+    users = models.User.objects.all().exclude(id=user.id).exclude(profile__id__in=following_profiles).order_by('-profile__created_at')
 
-    return types.RecommandUsersResponse(users=users)
+    hasNextPage = offset < users.count()
+
+    users = users[offset:12 + offset]
+
+    return types.RecommandUsersResponse(users=users, page=nextPage, hasNextPage=hasNextPage)
 
 
 @login_required
