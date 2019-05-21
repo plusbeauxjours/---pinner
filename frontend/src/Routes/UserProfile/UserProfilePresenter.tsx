@@ -7,7 +7,7 @@ import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import { DateRangePicker } from "react-dates";
 import { Upload } from "../../Icons";
-import countries from "../../countries";
+import { countries } from "../../countryData";
 
 import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
@@ -480,8 +480,8 @@ const TripInput = styled.input`
   }
 `;
 
-const CountrySelect = styled.select`
-  font-size: 20px;
+const Select = styled.select`
+  font-size: 12px;
   color: "#2c3e50";
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -492,7 +492,7 @@ const CountrySelect = styled.select`
   width: 90%;
 `;
 
-const CountryOption = styled.option``;
+const Option = styled.option``;
 
 interface ITheme {
   size?: string;
@@ -702,7 +702,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
         {(!user.profile.nationality ||
           !user.profile.gender ||
           !user.profile.email) &&
-          profilFormModalOpen && (
+          profilFormModalOpen &&
+          user.profile.isSelf && (
             <ModalContainer>
               <ModalOverlay onClick={toggleProfileFormModal} />
               <Modal>
@@ -726,43 +727,42 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     onKeyUp={onKeyUp}
                   />
                 </ModalLink>
+                <ModalLink>
+                  <Input
+                    onChange={onInputChange}
+                    type={"text"}
+                    value={bio}
+                    placeholder={"bio"}
+                    name={"bio"}
+                    onKeyUp={onKeyUp}
+                  />
+                </ModalLink>
                 {!user.profile.nationality ? (
                   <ModalLink>
-                    <CountrySelect
+                    <Select
                       value={nationality}
                       name={"nationality"}
                       onChange={onSelectChange}
                     >
                       {countries.map((country, index) => (
-                        <CountryOption key={index} value={country.code}>
-                          {country.flag} {country.name}
-                        </CountryOption>
+                        <Option key={index} value={country.code}>
+                          {country.emoji} {country.name}
+                        </Option>
                       ))}
-                    </CountrySelect>
+                    </Select>
                   </ModalLink>
                 ) : null}
                 {!user.profile.gender ? (
                   <ModalLink>
-                    <Input
-                      onChange={onInputChange}
-                      type={"text"}
+                    <Select
                       value={gender}
-                      placeholder={"gender"}
                       name={"gender"}
-                      onKeyUp={onKeyUp}
-                    />
-                  </ModalLink>
-                ) : null}
-                {!user.profile.bio ? (
-                  <ModalLink>
-                    <Input
-                      onChange={onInputChange}
-                      type={"text"}
-                      value={bio}
-                      placeholder={"bio"}
-                      name={"bio"}
-                      onKeyUp={onKeyUp}
-                    />
+                      onChange={onSelectChange}
+                    >
+                      <Option value={"M"}>Masculine</Option>
+                      <Option value={"F"}>Feminine</Option>
+                      <Option value={"GQ"}>Genderqueer</Option>
+                    </Select>
                   </ModalLink>
                 ) : null}
                 {!user.profile.email ? (

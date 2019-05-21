@@ -21,6 +21,7 @@ interface IState {
   currentLat: number;
   currentLng: number;
   currentCity: string;
+  currentCountryCode: string;
   modalOpen: boolean;
   search: string;
 }
@@ -33,6 +34,7 @@ class HeaderContainer extends React.Component<any, IState> {
       currentLat: 0,
       currentLng: 0,
       currentCity: null,
+      currentCountryCode: null,
       modalOpen: false,
       search: ""
     };
@@ -61,6 +63,7 @@ class HeaderContainer extends React.Component<any, IState> {
       currentLat,
       currentLng,
       currentCity,
+      currentCountryCode,
       modalOpen,
       search
     } = this.state;
@@ -73,6 +76,7 @@ class HeaderContainer extends React.Component<any, IState> {
               currentLat={currentLat}
               currentLng={currentLng}
               currentCity={currentCity}
+              currentCountryCode={currentCountryCode}
               modalOpen={modalOpen}
               search={search}
               toggleModal={this.toggleModal}
@@ -105,7 +109,8 @@ class HeaderContainer extends React.Component<any, IState> {
     const address = await reverseGeoCode(latitude, longitude);
     if (address) {
       this.setState({
-        currentCity: address.storableLocation.city
+        currentCity: address.storableLocation.city,
+        currentCountryCode: address.storableLocation.countryCode
       });
       localStorage.setItem("cityName", address.storableLocation.city);
       this.reportLocation(

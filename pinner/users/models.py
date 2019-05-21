@@ -17,14 +17,15 @@ class Profile(config_models.TimeStampedModel):
 
     GENDERS = (
         ('M', 'Masculine'),
-        ('F', 'Feminine')
+        ('F', 'Feminine'),
+        ('GQ', 'Genderqueer')
     )
 
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='profile')
     bio = models.TextField(default='', blank=True, null=True)
     website = models.URLField(blank=True, null=True)
-    gender = models.CharField(max_length=15, blank=True, null=True)
+    gender = models.CharField(max_length=15, blank=True, null=True, choices=GENDERS)
     nationality = models.CharField(max_length=15, blank=True, null=True)
     avatar = models.URLField(
         blank=True,

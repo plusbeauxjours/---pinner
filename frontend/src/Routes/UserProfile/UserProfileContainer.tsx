@@ -114,6 +114,8 @@ interface IState {
   search: string;
   tripList: any;
   currentCity: string;
+  lat: number;
+  lng: number;
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
@@ -153,7 +155,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       bio: props.bio,
       gender: props.gender,
       avatar: props.avatar,
-      nationality: props.nationality,
+      nationality: state.currentCountryCode,
       email: props.email,
       firstName: props.FirstName,
       lastName: props.lastName,
@@ -170,8 +172,14 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripPage: 0,
       search: "",
       tripList: [],
+      lat: state.currentLat,
+      lng: state.currentLng,
       currentCity: state.currentCity || localStorage.getItem("cityName")
     };
+  }
+  public componentDidMount() {
+    console.log(this.state);
+    console.log(this.props);
   }
   public componentDidUpdate(prevProps, prevState) {
     const newProps = this.props;

@@ -121,6 +121,7 @@ interface IProps extends RouteComponentProps<any> {
   currentLat: number;
   currentLng: number;
   currentCity: string;
+  currentCountryCode: string;
   modalOpen: boolean;
   search: string;
   toggleModal: () => void;
@@ -131,6 +132,7 @@ const HeaderPresenter: React.SFC<IProps> = ({
   currentLat,
   currentLng,
   currentCity,
+  currentCountryCode,
   modalOpen,
   search,
   toggleModal,
@@ -157,6 +159,7 @@ const HeaderPresenter: React.SFC<IProps> = ({
           to={{
             pathname: "/",
             state: {
+              currentCountryCode,
               currentLat,
               currentLng,
               currentCity
@@ -196,6 +199,7 @@ const HeaderPresenter: React.SFC<IProps> = ({
                 to={{
                   pathname: `/${user ? user.username : ""}`,
                   state: {
+                    currentCountryCode,
                     currentLat,
                     currentLng,
                     currentCity
