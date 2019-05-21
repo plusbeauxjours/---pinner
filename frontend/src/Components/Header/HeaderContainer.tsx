@@ -2,15 +2,16 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import HeaderPresenter from "./HeaderPresenter";
 import { reverseGeoCode } from "../../mapHelpers";
-import {
-  cityThumbnail,
-  countryThumbnail,
-  continentThumbnail
-} from "../../locationThumbnail";
+// import {
+//   cityThumbnail,
+//   countryThumbnail,
+//   continentThumbnail
+// } from "../../locationThumbnail";
 import continents from "../../continents";
 import { ReportLocation, ReportLocationVariables } from "../../types/api";
 import { Mutation, MutationFn } from "react-apollo";
 import { REPORT_LOCATION } from "../../Routes/Home/HomeQueries";
+// import { countries } from "../../countryData";
 
 class ReportLocationMutation extends Mutation<
   ReportLocation,
@@ -117,7 +118,6 @@ class HeaderContainer extends React.Component<any, IState> {
         latitude,
         longitude,
         address.storableLocation.city,
-        address.storableLocation.country,
         address.storableLocation.countryCode
       );
     }
@@ -126,26 +126,23 @@ class HeaderContainer extends React.Component<any, IState> {
     latitude: number,
     longitude: number,
     currentCity: string,
-    currentCountry: string,
     currentCountryCode: string
   ) => {
-    const cityPhotoURL = await cityThumbnail(currentCity);
-    const countryPhotoURL = await countryThumbnail(currentCountry);
     const currentContinent = await continents[currentCountryCode];
-    const continentPhotoURL = await continentThumbnail(currentContinent);
-    this.ReportLocationFn({
-      variables: {
-        currentLat: latitude,
-        currentLng: longitude,
-        currentCity,
-        currentCountry,
-        currentCountryCode,
-        currentContinent,
-        cityPhotoURL,
-        countryPhotoURL,
-        continentPhotoURL
-      }
-    });
+    console.log("starving");
+    try {
+      this.ReportLocationFn({
+        variables: {
+          currentLat: latitude,
+          currentLng: longitude,
+          currentCity,
+          currentCountryCode,
+          currentContinent
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
   public handleGeoError = () => {
     console.log("No location");

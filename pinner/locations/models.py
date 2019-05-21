@@ -10,7 +10,6 @@ class Continent (config_models.TimeStampedModel):
 
     continent_name = models.CharField(max_length=20, null=True, blank=True)
     continent_photo = models.URLField(null=True, blank=True)
-    continent_photo_placeholder = models.CharField(max_length=10, null=True, blank=True)
 
     @cached_property
     def country_count(self):
@@ -20,12 +19,26 @@ class Continent (config_models.TimeStampedModel):
         return self.continent_name
 
 
+class Language(config_models.TimeStampedModel):
+    language_name =models.CharField(max_length=20, null=True, blank=True)
+    language_code =models.CharField(max_length=5, null=True, blank=True)
+    language_native = models.CharField(max_length=20, null=True, blank=True)
+
+    def __str__(self):
+        return self.language_name
+
+
 class Country (config_models.TimeStampedModel):
 
     country_name = models.CharField(max_length=50, null=True, blank=True)
     country_code = models.CharField(max_length=2, null=True, blank=True)
     country_photo = models.URLField(null=True, blank=True)
-    country_photo_placeholder = models.CharField(max_length=10, null=True, blank=True)
+    country_capital = models.CharField(max_length=50, null=True, blank=True)
+    language = models.ForeignKey(Language, null=True, blank=True, on_delete=models.CASCADE, related_name='countries')
+    country_name_native =  models.CharField(max_length=20, null=True, blank=True)
+    country_phone = models.CharField(max_length=10, null=True, blank=True)
+    country_emoji = models.CharField(max_length=20, null=True, blank=True)
+    country_emojiU = models.CharField(max_length=20, null=True, blank=True)
     continent = models.ForeignKey(Continent, null=True, blank=True, on_delete=models.CASCADE, related_name='countries')
 
     @cached_property
@@ -48,14 +61,10 @@ class City (config_models.TimeStampedModel):
         Country, on_delete=models.CASCADE, related_name='cities')
     city_name = models.CharField(max_length=50, null=True, blank=True)
     city_photo = models.URLField(null=True, blank=True)
-    city_photo_placeholder = models.CharField(max_length=10, null=True, blank=True)
     population = models.IntegerField(null=True, blank=True)
-    area = models.IntegerField(null=True, blank=True)
     info = models.TextField(null=True, blank=True)
     near_city = models.ManyToManyField(
         'self',  blank=True, symmetrical=False, related_name='near_cities')
-    near_country = models.ManyToManyField(
-        Country,  blank=True, symmetrical=False, related_name='near_countries')
 
     @cached_property
     def like_count(self):

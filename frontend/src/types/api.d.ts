@@ -663,7 +663,6 @@ export interface SearchTerms_searchCities_cities {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
-  cityPhotoPlaceholder: string | null;
   distance: number | null;
   country: SearchTerms_searchCities_cities_country;
   likeCount: number | null;
@@ -686,7 +685,6 @@ export interface SearchTerms_searchCountries_countries {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
-  countryPhotoPlaceholder: string | null;
   continent: SearchTerms_searchCountries_countries_continent | null;
 }
 
@@ -700,7 +698,6 @@ export interface SearchTerms_searchContinents_continents {
   id: string;
   continentName: string | null;
   continentPhoto: string | null;
-  continentPhotoPlaceholder: string | null;
 }
 
 export interface SearchTerms_searchContinents {
@@ -855,7 +852,6 @@ export interface FrequentVisits_frequentVisits_cities {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
-  cityPhotoPlaceholder: string | null;
   distance: number | null;
   country: FrequentVisits_frequentVisits_cities_country;
   likeCount: number | null;
@@ -1016,7 +1012,6 @@ export interface NearCities_nearCities_cities {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
-  cityPhotoPlaceholder: string | null;
   distance: number | null;
   country: NearCities_nearCities_cities_country;
   likeCount: number | null;
@@ -1059,7 +1054,7 @@ export interface CoffeeDetail_coffeeDetail_coffee_host_profile {
   __typename: "ProfileType";
   isSelf: boolean | null;
   avatar: string;
-  gender: string | null;
+  gender: ProfileGender | null;
   currentCity: CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity | null;
   isFollowing: boolean | null;
   nationality: string | null;
@@ -1306,7 +1301,6 @@ export interface TopCountries_topCountries_countries {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
-  countryPhotoPlaceholder: string | null;
   continent: TopCountries_topCountries_countries_continent | null;
 }
 
@@ -1433,7 +1427,6 @@ export interface CountryProfile_countryProfile_cities {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
-  cityPhotoPlaceholder: string | null;
   distance: number | null;
   country: CountryProfile_countryProfile_cities_country;
   likeCount: number | null;
@@ -1478,7 +1471,6 @@ export interface LatestCities_latestCities_cities {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
-  cityPhotoPlaceholder: string | null;
   distance: number | null;
   country: LatestCities_latestCities_cities_country;
   likeCount: number | null;
@@ -1769,9 +1761,9 @@ export interface ReportLocationVariables {
   currentCountry: string;
   currentCountryCode: string;
   currentContinent: string;
-  cityPhotoURL: string;
-  countryPhotoURL: string;
-  continentPhotoURL: string;
+  cityPhotoURL?: string | null;
+  countryPhotoURL?: string | null;
+  continentPhotoURL?: string | null;
 }
 
 
@@ -2350,7 +2342,7 @@ export interface UserProfile_userProfile_user_profile_currentCity {
 export interface UserProfile_userProfile_user_profile {
   __typename: "ProfileType";
   bio: string | null;
-  gender: string | null;
+  gender: ProfileGender | null;
   avatar: string;
   website: string | null;
   email: string | null;
@@ -2405,7 +2397,7 @@ export interface UserProfileVariables {
 export interface EditProfile_editProfile_user_profile {
   __typename: "ProfileType";
   bio: string | null;
-  gender: string | null;
+  gender: ProfileGender | null;
   avatar: string;
   nationality: string | null;
   email: string | null;
@@ -2479,7 +2471,6 @@ export interface GetTrips_getTrips_trip_city {
   __typename: "CityType";
   cityName: string | null;
   cityPhoto: string | null;
-  cityPhotoPlaceholder: string | null;
   country: GetTrips_getTrips_trip_city_country;
 }
 
@@ -2625,132 +2616,6 @@ export interface DeleteTripVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetCities
-// ====================================================
-
-export interface GetCities_getCities_trip_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface GetCities_getCities_trip_city {
-  __typename: "CityType";
-  cityName: string | null;
-  cityPhoto: string | null;
-  country: GetCities_getCities_trip_city_country;
-}
-
-export interface GetCities_getCities_trip {
-  __typename: "MoveNotificationType";
-  id: string;
-  city: GetCities_getCities_trip_city | null;
-}
-
-export interface GetCities_getCities {
-  __typename: "TripResponse";
-  trip: (GetCities_getCities_trip | null)[] | null;
-}
-
-export interface GetCities {
-  getCities: GetCities_getCities;
-}
-
-export interface GetCitiesVariables {
-  username: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetCountries
-// ====================================================
-
-export interface GetCountries_getCountries_trip_city_country_continent {
-  __typename: "ContinentType";
-  continentName: string | null;
-}
-
-export interface GetCountries_getCountries_trip_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-  countryPhoto: string | null;
-  continent: GetCountries_getCountries_trip_city_country_continent | null;
-}
-
-export interface GetCountries_getCountries_trip_city {
-  __typename: "CityType";
-  country: GetCountries_getCountries_trip_city_country;
-}
-
-export interface GetCountries_getCountries_trip {
-  __typename: "MoveNotificationType";
-  id: string;
-  city: GetCountries_getCountries_trip_city | null;
-}
-
-export interface GetCountries_getCountries {
-  __typename: "TripResponse";
-  trip: (GetCountries_getCountries_trip | null)[] | null;
-}
-
-export interface GetCountries {
-  getCountries: GetCountries_getCountries;
-}
-
-export interface GetCountriesVariables {
-  username: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetContinents
-// ====================================================
-
-export interface GetContinents_getContinents_trip_city_country_continent {
-  __typename: "ContinentType";
-  continentName: string | null;
-  continentPhoto: string | null;
-}
-
-export interface GetContinents_getContinents_trip_city_country {
-  __typename: "CountryType";
-  continent: GetContinents_getContinents_trip_city_country_continent | null;
-}
-
-export interface GetContinents_getContinents_trip_city {
-  __typename: "CityType";
-  country: GetContinents_getContinents_trip_city_country;
-}
-
-export interface GetContinents_getContinents_trip {
-  __typename: "MoveNotificationType";
-  id: string;
-  city: GetContinents_getContinents_trip_city | null;
-}
-
-export interface GetContinents_getContinents {
-  __typename: "TripResponse";
-  trip: (GetContinents_getContinents_trip | null)[] | null;
-}
-
-export interface GetContinents {
-  getContinents: GetContinents_getContinents;
-}
-
-export interface GetContinentsVariables {
-  username: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: GetKnowingFollowers
 // ====================================================
 
@@ -2831,7 +2696,6 @@ export interface SearchTripCities_searchTripCities_cities {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
-  cityPhotoPlaceholder: string | null;
   distance: number | null;
   country: SearchTripCities_searchTripCities_cities_country;
   likeCount: number | null;
@@ -3013,7 +2877,6 @@ export interface CityParts {
   longitude: number | null;
   cityName: string | null;
   cityPhoto: string | null;
-  cityPhotoPlaceholder: string | null;
   distance: number | null;
   country: CityParts_country;
   likeCount: number | null;
@@ -3039,7 +2902,6 @@ export interface CountryParts {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
-  countryPhotoPlaceholder: string | null;
   continent: CountryParts_continent | null;
 }
 
@@ -3056,7 +2918,6 @@ export interface ContinentParts {
   id: string;
   continentName: string | null;
   continentPhoto: string | null;
-  continentPhotoPlaceholder: string | null;
 }
 
 
@@ -3321,6 +3182,15 @@ export enum CoffeeTarget {
   FOLLOWERS = "FOLLOWERS",
   GENDER = "GENDER",
   NATIONALITY = "NATIONALITY",
+}
+
+/**
+ * An enumeration.
+ */
+export enum ProfileGender {
+  F = "F",
+  GQ = "GQ",
+  M = "M",
 }
 
 /**

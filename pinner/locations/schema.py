@@ -95,30 +95,6 @@ class Query(object):
         required=True,
         args={'search': graphene.String(required=True)}
     )
-    get_cities = graphene.Field(
-        types.TripResponse,
-        resolver=queries.resolve_get_cities,
-        required=True,
-        args={
-            'username': graphene.String(required=True),
-        }
-    )
-    get_countries = graphene.Field(
-        types.TripResponse,
-        resolver=queries.resolve_get_countries,
-        required=True,
-        args={
-            'username': graphene.String(required=True),
-        }
-    )
-    get_continents = graphene.Field(
-        types.TripResponse,
-        resolver=queries.resolve_get_continents,
-        required=True,
-        args={
-            'username': graphene.String(required=True),
-        }
-    )
     
 
 

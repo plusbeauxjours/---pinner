@@ -262,8 +262,6 @@ interface IProps {
   search: string;
   nowUsersList: any;
   beforeUsersList: any;
-
-  state: any;
 }
 
 const CityProfilePresenter: React.SFC<IProps> = ({
@@ -285,9 +283,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   search,
   onChange,
   nowUsersList,
-  beforeUsersList,
-
-  state
+  beforeUsersList
 }) => {
   if (cityLoading) {
     return <Loader />;

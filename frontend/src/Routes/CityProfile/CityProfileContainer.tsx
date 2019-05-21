@@ -36,6 +36,9 @@ class CityProfileContainer extends React.Component<IProps, IState> {
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
+    console.log(prevProps);
+    console.log(newProps);
+
     if (prevProps.match.params.cityName !== newProps.match.params.cityName) {
       this.setState({ search: "", nowUsersList: [], beforeUsersList: [] });
       console.log(this.state);
@@ -73,7 +76,6 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                     search={search}
                     nowUsersList={nowUsersList}
                     beforeUsersList={beforeUsersList}
-                    state={this.state}
                   />
                 );
               }}

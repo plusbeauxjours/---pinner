@@ -172,10 +172,6 @@ const AvatarContainer = styled.div`
   flex-direction: column;
 `;
 
-const CWeather = styled(Weather)`
-  margin-top: 10px;
-`;
-
 interface IProps {
   cityName: string;
   cityPhoto: string;
@@ -231,7 +227,7 @@ const TripProfilePresenter: React.SFC<IProps> = ({
                 TIME DIFFERENCE
                 <SText text={String(city.userCount)} />
               </InfoRow>
-              <CWeather latitude={city.latitude} longitude={city.longitude} />
+              <Weather latitude={city.latitude} longitude={city.longitude} />
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>

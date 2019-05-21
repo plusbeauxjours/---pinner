@@ -10,7 +10,6 @@ export const reverseGeoCode = async (latitude: number, longitude: number) => {
 
     let storableLocation = {
       city: "",
-      country: "",
       countryCode: ""
     };
     console.log(results);
@@ -28,7 +27,6 @@ export const reverseGeoCode = async (latitude: number, longitude: number) => {
         ) {
           storableLocation.city = component.long_name;
         } else if (component.types.includes("country")) {
-          storableLocation.country = component.long_name;
           storableLocation.countryCode = component.short_name;
         }
       }

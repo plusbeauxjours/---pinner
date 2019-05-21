@@ -15,11 +15,7 @@ class ReportLocation(graphene.Mutation):
         currentLat = graphene.Float(required=True)
         currentLng = graphene.Float(required=True)
         currentCity = graphene.String(required=True)
-        currentCountry = graphene.String(required=True)
         currentCountryCode = graphene.String(required=True)
-        cityPhotoURL = graphene.String(required=True)
-        countryPhotoURL = graphene.String(required=True)
-        continentPhotoURL = graphene.String(required=True)
         currentContinent = graphene.String(required=True)
 
     Output = types.ReportLocationResponse
@@ -32,11 +28,7 @@ class ReportLocation(graphene.Mutation):
         currentLat = kwargs.get('currentLat')
         currentLng = kwargs.get('currentLng')
         currentCity = kwargs.get('currentCity')
-        currentCountry = kwargs.get('currentCountry')
         currentCountryCode = kwargs.get('currentCountryCode')
-        cityPhotoURL = kwargs.get('cityPhotoURL')
-        countryPhotoURL = kwargs.get('countryPhotoURL')
-        continentPhotoURL = kwargs.get('continentPhotoURL')
         currentContinent = kwargs.get('currentContinent')
 
         print('reportlocation')
@@ -62,7 +54,7 @@ class ReportLocation(graphene.Mutation):
                 continent_name=currentContinent, continent_photo=continentPhotoURL)
 
         try:
-            country = models.Country.objects.get(country_name=currentCountry)
+            country = models.Country.objects.get(country_code=currentCountryCode)
         except models.Country.DoesNotExist:
             country = models.Country.objects.create(
                 country_code=currentCountryCode, country_name=currentCountry, country_photo=countryPhotoURL, continent=continent)
@@ -87,8 +79,10 @@ class ReportLocation(graphene.Mutation):
                 city.save()
             profile.current_city = city
             profile.save()
+            return city
         
         try:
+            print(city)
             latest = user.movenotification.latest('created_at')
             if not latest.city == city:
                 notification_models.MoveNotification.objects.create(actor=user, city=city)

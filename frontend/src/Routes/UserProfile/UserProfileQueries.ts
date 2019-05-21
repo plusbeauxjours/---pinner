@@ -114,7 +114,6 @@ export const GET_TRIPS = gql`
         city {
           cityName
           cityPhoto
-          cityPhotoPlaceholder
           country {
             countryName
             countryCode

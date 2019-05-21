@@ -14,39 +14,6 @@ from coffees import models as coffee_models
 
 
 @login_required
-def resolve_get_cities(self, info, **kwargs):
-
-    username = kwargs.get('username')
-    profile = User.objects.prefetch_related('movenotification').get(username=username)
-
-    cities = profile.movenotification.all().distinct('city')
-
-    return types.TripResponse(trip=cities)
-
-
-@login_required
-def resolve_get_countries(self, info, **kwargs):
-
-    username = kwargs.get('username')
-    profile = User.objects.prefetch_related('movenotification').get(username=username)
-
-    countries = profile.movenotification.all().distinct('city__country')
-
-    return types.TripResponse(trip=countries)
-
-
-@login_required
-def resolve_get_continents(self, info, **kwargs):
-
-    username = kwargs.get('username')
-    profile = User.objects.prefetch_related('movenotification').get(username=username)
-
-    continents = profile.movenotification.all().distinct('city__country__continent')
-
-    return types.TripResponse(trip=continents)
-
-
-@login_required
 def resolve_search_cities(self, info, **kwargs):
 
     user = info.context.user
@@ -133,8 +100,8 @@ def resolve_city_profile(self, info, **kwargs):
         usersBefore = notification_models.MoveNotification.objects.filter(
             city__city_name=cityName).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')
         return card_types.FirstAnnotateRespose(usersNow=usersNow, usersBefore=usersBefore, city=city, coffees=coffees)
-
-    return card_types.FirstAnnotateRespose(usersNow=usersNow, usersBefore=None, city=city, coffees=coffees)
+    else: 
+        return card_types.FirstAnnotateRespose(usersNow=usersNow, usersBefore=None, city=city, coffees=coffees)
 
 
 @login_required
