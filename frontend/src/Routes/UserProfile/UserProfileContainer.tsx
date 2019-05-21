@@ -547,6 +547,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                     this
                                                                                       .onInputChange
                                                                                   }
+                                                                                  onSelectChange={
+                                                                                    this
+                                                                                      .onSelectChange
+                                                                                  }
                                                                                   onKeyUp={
                                                                                     this
                                                                                       .onKeyUp
@@ -926,6 +930,18 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } as any);
     console.log(this.state);
   };
+
+  public onSelectChange: React.ChangeEventHandler<
+    HTMLInputElement | HTMLSelectElement
+  > = event => {
+    const {
+      target: { name, value }
+    } = event;
+    this.setState({
+      [name]: value
+    } as any);
+  };
+
   public gotoTrip = (
     cityName,
     cityPhoto,

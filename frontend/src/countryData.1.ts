@@ -1,13 +1,3 @@
-export const continents = {
-  AF: "Africa",
-  AN: "Antarctica",
-  AS: "Asia",
-  EU: "Europe",
-  NA: "North America",
-  OC: "Oceania",
-  SA: "South America"
-};
-
 export const countries = [
   {
     name: "Afghanistan",
@@ -61,7 +51,7 @@ export const countries = [
     name: "American Samoa",
     code: "AS",
     native: "American Samoa",
-    phone: "+1",
+    phone: "+1684",
     continent: "OC",
     capital: "Pago Pago",
     currency: "USD",
@@ -97,7 +87,7 @@ export const countries = [
     name: "Anguilla",
     code: "AI",
     native: "Anguilla",
-    phone: "+1",
+    phone: "+1264",
     continent: "NA",
     capital: "The Valley",
     currency: "XCD",
@@ -121,7 +111,7 @@ export const countries = [
     name: "Antigua and Barbuda",
     code: "AG",
     native: "Antigua and Barbuda",
-    phone: "+1",
+    phone: "+1268",
     continent: "NA",
     capital: "Saint John's",
     currency: "XCD",
@@ -205,7 +195,7 @@ export const countries = [
     name: "Bahamas",
     code: "BS",
     native: "Bahamas",
-    phone: "+1",
+    phone: "+1242",
     continent: "NA",
     capital: "Nassau",
     currency: "BSD",
@@ -241,7 +231,7 @@ export const countries = [
     name: "Barbados",
     code: "BB",
     native: "Barbados",
-    phone: "+1",
+    phone: "+1246",
     continent: "NA",
     capital: "Bridgetown",
     currency: "BBD",
@@ -301,7 +291,7 @@ export const countries = [
     name: "Bermuda",
     code: "BM",
     native: "Bermuda",
-    phone: "+1",
+    phone: "+1441",
     continent: "NA",
     capital: "Hamilton",
     currency: "BMD",
@@ -505,7 +495,7 @@ export const countries = [
     name: "Cayman Islands",
     code: "KY",
     native: "Cayman Islands",
-    phone: "+1",
+    phone: "+1345",
     continent: "NA",
     capital: "George Town",
     currency: "KYD",
@@ -757,7 +747,7 @@ export const countries = [
     name: "Dominica",
     code: "DM",
     native: "Dominica",
-    phone: "+1",
+    phone: "+1767",
     continent: "NA",
     capital: "Roseau",
     currency: "XCD",
@@ -769,7 +759,7 @@ export const countries = [
     name: "Dominican Republic",
     code: "DO",
     native: "República Dominicana",
-    phone: "+1",
+    phone: "+1809,1829,1849",
     continent: "NA",
     capital: "Santo Domingo",
     currency: "DOP",
@@ -1057,7 +1047,7 @@ export const countries = [
     name: "Grenada",
     code: "GD",
     native: "Grenada",
-    phone: "+1",
+    phone: "+1473",
     continent: "NA",
     capital: "St. George's",
     currency: "XCD",
@@ -1081,7 +1071,7 @@ export const countries = [
     name: "Guam",
     code: "GU",
     native: "Guam",
-    phone: "+1",
+    phone: "+1671",
     continent: "OC",
     capital: "Hagåtña",
     currency: "USD",
@@ -1177,7 +1167,7 @@ export const countries = [
     name: "Vatican City",
     code: "VA",
     native: "Vaticano",
-    phone: "+379",
+    phone: "+39066,379",
     continent: "EU",
     capital: "Vatican City",
     currency: "EUR",
@@ -1333,7 +1323,7 @@ export const countries = [
     name: "Jamaica",
     code: "JM",
     native: "Jamaica",
-    phone: "+1",
+    phone: "+1876",
     continent: "NA",
     capital: "Kingston",
     currency: "JMD",
@@ -1381,7 +1371,7 @@ export const countries = [
     name: "Kazakhstan",
     code: "KZ",
     native: "Қазақстан",
-    phone: "+7",
+    phone: "+76,77",
     continent: "AS",
     capital: "Astana",
     currency: "KZT",
@@ -1441,7 +1431,7 @@ export const countries = [
     name: "Kosovo",
     code: "XK",
     native: "Republika e Kosovës",
-    phone: "+383",
+    phone: "+377,381,383,386",
     continent: "EU",
     capital: "Pristina",
     currency: "EUR",
@@ -1813,7 +1803,7 @@ export const countries = [
     name: "Montserrat",
     code: "MS",
     native: "Montserrat",
-    phone: "+1",
+    phone: "+1664",
     continent: "NA",
     capital: "Plymouth",
     currency: "XCD",
@@ -1993,7 +1983,7 @@ export const countries = [
     name: "Northern Mariana Islands",
     code: "MP",
     native: "Northern Mariana Islands",
-    phone: "+1",
+    phone: "+1670",
     continent: "OC",
     capital: "Saipan",
     currency: "USD",
@@ -2161,7 +2151,7 @@ export const countries = [
     name: "Puerto Rico",
     code: "PR",
     native: "Puerto Rico",
-    phone: "+1",
+    phone: "+1787,1939",
     continent: "NA",
     capital: "San Juan",
     currency: "USD",
@@ -2257,7 +2247,7 @@ export const countries = [
     name: "Saint Kitts and Nevis",
     code: "KN",
     native: "Saint Kitts and Nevis",
-    phone: "+1",
+    phone: "+1869",
     continent: "NA",
     capital: "Basseterre",
     currency: "XCD",
@@ -2269,7 +2259,7 @@ export const countries = [
     name: "Saint Lucia",
     code: "LC",
     native: "Saint Lucia",
-    phone: "+1",
+    phone: "+1758",
     continent: "NA",
     capital: "Castries",
     currency: "XCD",
@@ -2305,7 +2295,7 @@ export const countries = [
     name: "Saint Vincent and the Grenadines",
     code: "VC",
     native: "Saint Vincent and the Grenadines",
-    phone: "+1",
+    phone: "+1784",
     continent: "NA",
     capital: "Kingstown",
     currency: "XCD",
@@ -2425,7 +2415,7 @@ export const countries = [
     name: "Sint Maarten",
     code: "SX",
     native: "Sint Maarten",
-    phone: "+1",
+    phone: "+1721",
     continent: "NA",
     capital: "Philipsburg",
     currency: "ANG",
@@ -2725,7 +2715,7 @@ export const countries = [
     name: "Trinidad and Tobago",
     code: "TT",
     native: "Trinidad and Tobago",
-    phone: "+1",
+    phone: "+1868",
     continent: "NA",
     capital: "Port of Spain",
     currency: "TTD",
@@ -2773,7 +2763,7 @@ export const countries = [
     name: "Turks and Caicos Islands",
     code: "TC",
     native: "Turks and Caicos Islands",
-    phone: "+1",
+    phone: "+1649",
     continent: "NA",
     capital: "Cockburn Town",
     currency: "USD",
@@ -2929,7 +2919,7 @@ export const countries = [
     name: "British Virgin Islands",
     code: "VG",
     native: "British Virgin Islands",
-    phone: "+1",
+    phone: "+1284",
     continent: "NA",
     capital: "Road Town",
     currency: "USD",
@@ -2941,7 +2931,7 @@ export const countries = [
     name: "U.S. Virgin Islands",
     code: "VI",
     native: "United States Virgin Islands",
-    phone: "+1",
+    phone: "+1340",
     continent: "NA",
     capital: "Charlotte Amalie",
     currency: "USD",
@@ -3008,579 +2998,5 @@ export const countries = [
     languages: ["en", "sn", "nd"],
     emoji: "🇿🇼",
     emojiU: "U+1F1FF U+1F1FC"
-  }
-];
-
-export const languages = [
-  {
-    name: "Afrikaans",
-    code: "af",
-    native: "Afrikaans"
-  },
-  {
-    name: "Amharic",
-    code: "am",
-    native: "አማርኛ"
-  },
-  {
-    name: "Arabic",
-    code: "ar",
-    native: "العربية",
-    rtl: 1
-  },
-  {
-    name: "Aymara",
-    code: "ay",
-    native: "Aymar"
-  },
-  {
-    name: "Azerbaijani",
-    code: "az",
-    native: "Azərbaycanca / آذربايجان"
-  },
-  {
-    name: "Belarusian",
-    code: "be",
-    native: "Беларуская"
-  },
-  {
-    name: "Bulgarian",
-    code: "bg",
-    native: "Български"
-  },
-  {
-    name: "Bislama",
-    code: "bi",
-    native: "Bislama"
-  },
-  {
-    name: "Bengali",
-    code: "bn",
-    native: "বাংলা"
-  },
-  {
-    name: "Bosnian",
-    code: "bs",
-    native: "Bosanski"
-  },
-  {
-    name: "Catalan",
-    code: "ca",
-    native: "Català"
-  },
-  {
-    name: "Chamorro",
-    code: "ch",
-    native: "Chamoru"
-  },
-  {
-    name: "Czech",
-    code: "cs",
-    native: "Česky"
-  },
-  {
-    name: "Danish",
-    code: "da",
-    native: "Dansk"
-  },
-  {
-    name: "German",
-    code: "de",
-    native: "Deutsch"
-  },
-  {
-    name: "Divehi",
-    code: "dv",
-    native: "ދިވެހިބަސް",
-    rtl: 1
-  },
-  {
-    name: "Dzongkha",
-    code: "dz",
-    native: "ཇོང་ཁ"
-  },
-  {
-    name: "Greek",
-    code: "el",
-    native: "Ελληνικά"
-  },
-  {
-    name: "English",
-    code: "en",
-    native: "English"
-  },
-  {
-    name: "Spanish",
-    code: "es",
-    native: "Español"
-  },
-  {
-    name: "Estonian",
-    code: "et",
-    native: "Eesti"
-  },
-  {
-    name: "Basque",
-    code: "eu",
-    native: "Euskara"
-  },
-  {
-    name: "Persian",
-    code: "fa",
-    native: "فارسی",
-    rtl: 1
-  },
-  {
-    name: "Peul",
-    code: "ff",
-    native: "Fulfulde"
-  },
-  {
-    name: "Finnish",
-    code: "fi",
-    native: "Suomi"
-  },
-  {
-    name: "Fijian",
-    code: "fj",
-    native: "Na Vosa Vakaviti"
-  },
-  {
-    name: "Faroese",
-    code: "fo",
-    native: "Føroyskt"
-  },
-  {
-    name: "French",
-    code: "fr",
-    native: "Français"
-  },
-  {
-    name: "Irish",
-    code: "ga",
-    native: "Gaeilge"
-  },
-  {
-    name: "Galician",
-    code: "gl",
-    native: "Galego"
-  },
-  {
-    name: "Guarani",
-    code: "gn",
-    native: "Avañe'ẽ"
-  },
-  {
-    name: "Manx",
-    code: "gv",
-    native: "Gaelg"
-  },
-  {
-    name: "Hebrew",
-    code: "he",
-    native: "עברית",
-    rtl: 1
-  },
-  {
-    name: "Hindi",
-    code: "hi",
-    native: "हिन्दी"
-  },
-  {
-    name: "Croatian",
-    code: "hr",
-    native: "Hrvatski"
-  },
-  {
-    name: "Haitian",
-    code: "ht",
-    native: "Krèyol ayisyen"
-  },
-  {
-    name: "Hungarian",
-    code: "hu",
-    native: "Magyar"
-  },
-  {
-    name: "Armenian",
-    code: "hy",
-    native: "Հայերեն"
-  },
-  {
-    name: "Indonesian",
-    code: "id",
-    native: "Bahasa Indonesia"
-  },
-  {
-    name: "Icelandic",
-    code: "is",
-    native: "Íslenska"
-  },
-  {
-    name: "Italian",
-    code: "it",
-    native: "Italiano"
-  },
-  {
-    name: "Japanese",
-    code: "ja",
-    native: "日本語"
-  },
-  {
-    name: "Georgian",
-    code: "ka",
-    native: "ქართული"
-  },
-  {
-    name: "Kongo",
-    code: "kg",
-    native: "KiKongo"
-  },
-  {
-    name: "Kazakh",
-    code: "kk",
-    native: "Қазақша"
-  },
-  {
-    name: "Greenlandic",
-    code: "kl",
-    native: "Kalaallisut"
-  },
-  {
-    name: "Cambodian",
-    code: "km",
-    native: "ភាសាខ្មែរ"
-  },
-  {
-    name: "Korean",
-    code: "ko",
-    native: "한국어"
-  },
-  {
-    name: "Kurdish",
-    code: "ku",
-    native: "Kurdî / كوردی",
-    rtl: 1
-  },
-  {
-    name: "Kirghiz",
-    code: "ky",
-    native: "Kırgızca / Кыргызча"
-  },
-  {
-    name: "Latin",
-    code: "la",
-    native: "Latina"
-  },
-  {
-    name: "Luxembourgish",
-    code: "lb",
-    native: "Lëtzebuergesch"
-  },
-  {
-    name: "Lingala",
-    code: "ln",
-    native: "Lingála"
-  },
-  {
-    name: "Laotian",
-    code: "lo",
-    native: "ລາວ / Pha xa lao"
-  },
-  {
-    name: "Lithuanian",
-    code: "lt",
-    native: "Lietuvių"
-  },
-  {
-    code: "lu"
-  },
-  {
-    name: "Latvian",
-    code: "lv",
-    native: "Latviešu"
-  },
-  {
-    name: "Malagasy",
-    code: "mg",
-    native: "Malagasy"
-  },
-  {
-    name: "Marshallese",
-    code: "mh",
-    native: "Kajin Majel / Ebon"
-  },
-  {
-    name: "Maori",
-    code: "mi",
-    native: "Māori"
-  },
-  {
-    name: "Macedonian",
-    code: "mk",
-    native: "Македонски"
-  },
-  {
-    name: "Mongolian",
-    code: "mn",
-    native: "Монгол"
-  },
-  {
-    name: "Malay",
-    code: "ms",
-    native: "Bahasa Melayu"
-  },
-  {
-    name: "Maltese",
-    code: "mt",
-    native: "bil-Malti"
-  },
-  {
-    name: "Burmese",
-    code: "my",
-    native: "မြန်မာစာ"
-  },
-  {
-    name: "Nauruan",
-    code: "na",
-    native: "Dorerin Naoero"
-  },
-  { code: "nb" },
-  {
-    name: "North Ndebele",
-    code: "nd",
-    native: "Sindebele"
-  },
-  {
-    name: "Nepali",
-    code: "ne",
-    native: "नेपाली"
-  },
-  {
-    name: "Dutch",
-    code: "nl",
-    native: "Nederlands"
-  },
-  {
-    name: "Norwegian Nynorsk",
-    code: "nn",
-    native: "Norsk (nynorsk)"
-  },
-  {
-    name: "Norwegian",
-    code: "no",
-    native: "Norsk (bokmål / riksmål)"
-  },
-  {
-    name: "South Ndebele",
-    code: "nr",
-    native: "isiNdebele"
-  },
-  {
-    name: "Chichewa",
-    code: "ny",
-    native: "Chi-Chewa"
-  },
-  {
-    name: "Occitan",
-    code: "oc",
-    native: "Occitan"
-  },
-  {
-    name: "Panjabi / Punjabi",
-    code: "pa",
-    native: "ਪੰਜਾਬੀ / पंजाबी / پنجابي"
-  },
-  {
-    name: "Polish",
-    code: "pl",
-    native: "Polski"
-  },
-  {
-    name: "Pashto",
-    code: "ps",
-    native: "پښتو",
-    rtl: 1
-  },
-  {
-    name: "Portuguese",
-    code: "pt",
-    native: "Português"
-  },
-  {
-    name: "Quechua",
-    code: "qu",
-    native: "Runa Simi"
-  },
-  {
-    name: "Kirundi",
-    code: "rn",
-    native: "Kirundi"
-  },
-  {
-    name: "Romanian",
-    code: "ro",
-    native: "Română"
-  },
-  {
-    name: "Russian",
-    code: "ru",
-    native: "Русский"
-  },
-  {
-    name: "Rwandi",
-    code: "rw",
-    native: "Kinyarwandi"
-  },
-  {
-    name: "Sango",
-    code: "sg",
-    native: "Sängö"
-  },
-  {
-    name: "Sinhalese",
-    code: "si",
-    native: "සිංහල"
-  },
-  {
-    name: "Slovak",
-    code: "sk",
-    native: "Slovenčina"
-  },
-  {
-    name: "Slovenian",
-    code: "sl",
-    native: "Slovenščina"
-  },
-  {
-    name: "Samoan",
-    code: "sm",
-    native: "Gagana Samoa"
-  },
-  {
-    name: "Shona",
-    code: "sn",
-    native: "chiShona"
-  },
-  {
-    name: "Somalia",
-    code: "so",
-    native: "Soomaaliga"
-  },
-  {
-    name: "Albanian",
-    code: "sq",
-    native: "Shqip"
-  },
-  {
-    name: "Serbian",
-    code: "sr",
-    native: "Српски"
-  },
-  {
-    name: "Swati",
-    code: "ss",
-    native: "SiSwati"
-  },
-  {
-    name: "Southern Sotho",
-    code: "st",
-    native: "Sesotho"
-  },
-  {
-    name: "Swedish",
-    code: "sv",
-    native: "Svenska"
-  },
-  {
-    name: "Swahili",
-    code: "sw",
-    native: "Kiswahili"
-  },
-  {
-    name: "Tamil",
-    code: "ta",
-    native: "தமிழ்"
-  },
-  {
-    name: "Tajik",
-    code: "tg",
-    native: "Тоҷикӣ"
-  },
-  {
-    name: "Thai",
-    code: "th",
-    native: "ไทย / Phasa Thai"
-  },
-  {
-    name: "Tigrinya",
-    code: "ti",
-    native: "ትግርኛ"
-  },
-  {
-    name: "Turkmen",
-    code: "tk",
-    native: "Туркмен / تركمن"
-  },
-  {
-    name: "Tswana",
-    code: "tn",
-    native: "Setswana"
-  },
-  {
-    name: "Tonga",
-    code: "to",
-    native: "Lea Faka-Tonga"
-  },
-  {
-    name: "Turkish",
-    code: "tr",
-    native: "Türkçe"
-  },
-  {
-    name: "Tsonga",
-    code: "ts",
-    native: "Xitsonga"
-  },
-  {
-    name: "Ukrainian",
-    code: "uk",
-    native: "Українська"
-  },
-  {
-    name: "Urdu",
-    code: "ur",
-    native: "اردو",
-    rtl: 1
-  },
-  {
-    name: "Uzbek",
-    code: "uz",
-    native: "Ўзбек"
-  },
-  {
-    name: "Venda",
-    code: "ve",
-    native: "Tshivenḓa"
-  },
-  {
-    name: "Vietnamese",
-    code: "vi",
-    native: "Tiếng Việt"
-  },
-  {
-    name: "Xhosa",
-    code: "xh",
-    native: "isiXhosa"
-  },
-  {
-    name: "Chinese",
-    code: "zh",
-    native: "中文"
-  },
-  {
-    name: "Zulu",
-    code: "zu",
-    native: "isiZulu"
   }
 ];

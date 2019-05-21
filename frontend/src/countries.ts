@@ -96,7 +96,7 @@ const countries = [
     code: "CC",
     flag: "🇨🇨"
   },
-  { name: "Colombia", dial_code: "+57", code: "CO", flag: "" },
+  { name: "Colombia", dial_code: "+57", code: "CO", flag: "🇨🇴" },
   { name: "Comoros", dial_code: "+269", code: "KM", flag: "🇰🇲" },
   { name: "Congo", dial_code: "+242", code: "CG", flag: "🇨🇬" },
   {

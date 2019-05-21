@@ -7,6 +7,7 @@ import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import { DateRangePicker } from "react-dates";
 import { Upload } from "../../Icons";
+import countries from "../../countries";
 
 import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
@@ -479,6 +480,20 @@ const TripInput = styled.input`
   }
 `;
 
+const CountrySelect = styled.select`
+  font-size: 20px;
+  color: "#2c3e50";
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #2d3a41;
+  border: 0;
+  margin-bottom: 20px;
+  width: 90%;
+`;
+
+const CountryOption = styled.option``;
+
 interface ITheme {
   size?: string;
 }
@@ -573,6 +588,9 @@ interface IProps {
 
   submitCoffee: any;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onSelectChange: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
   onKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 
   deleteCoffee: () => void;
@@ -646,6 +664,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   deleteTrip,
   gotoTrip,
   onInputChange,
+  onSelectChange,
   onKeyUp,
   userName,
   bio,
@@ -709,14 +728,17 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 </ModalLink>
                 {!user.profile.nationality ? (
                   <ModalLink>
-                    <Input
-                      onChange={onInputChange}
-                      type={"text"}
+                    <CountrySelect
                       value={nationality}
-                      placeholder={"nationality"}
                       name={"nationality"}
-                      onKeyUp={onKeyUp}
-                    />
+                      onChange={onSelectChange}
+                    >
+                      {countries.map((country, index) => (
+                        <CountryOption key={index} value={country.code}>
+                          {country.flag} {country.name}
+                        </CountryOption>
+                      ))}
+                    </CountrySelect>
                   </ModalLink>
                 ) : null}
                 {!user.profile.gender ? (
@@ -731,7 +753,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     />
                   </ModalLink>
                 ) : null}
-                               {!user.profile.bio ? (
+                {!user.profile.bio ? (
                   <ModalLink>
                     <Input
                       onChange={onInputChange}
