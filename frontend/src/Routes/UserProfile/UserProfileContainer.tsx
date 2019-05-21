@@ -84,8 +84,6 @@ interface IState {
   tripEditModalOpen: boolean;
   profilFormModalOpen: boolean;
 
-  countryModalOpen: boolean;
-  continentModalOpen: boolean;
   requestModalOpen: boolean;
   coffeeModalOpen: boolean;
   requestingCoffeeModalOpen: boolean;
@@ -143,8 +141,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripEditModalOpen: false,
       profilFormModalOpen: true,
 
-      countryModalOpen: false,
-      continentModalOpen: false,
       requestModalOpen: false,
       coffeeModalOpen: false,
       requestingCoffeeModalOpen: false,
@@ -206,8 +202,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripEditModalOpen,
       profilFormModalOpen,
 
-      countryModalOpen,
-      continentModalOpen,
       currentCity,
       requestModalOpen,
       coffeeModalOpen,
@@ -453,12 +447,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                   tripEditModalOpen={
                                                                                     tripEditModalOpen
                                                                                   }
-                                                                                  countryModalOpen={
-                                                                                    countryModalOpen
-                                                                                  }
-                                                                                  continentModalOpen={
-                                                                                    continentModalOpen
-                                                                                  }
                                                                                   coffeeModalOpen={
                                                                                     coffeeModalOpen
                                                                                   }
@@ -504,14 +492,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                   toggleEditTripModal={
                                                                                     this
                                                                                       .toggleEditTripModal
-                                                                                  }
-                                                                                  toggleCountryModal={
-                                                                                    this
-                                                                                      .toggleCountryModal
-                                                                                  }
-                                                                                  toggleContinentModal={
-                                                                                    this
-                                                                                      .toggleContinentModal
                                                                                   }
                                                                                   toggleCoffeeModal={
                                                                                     this
@@ -829,19 +809,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     this.setState({
       tripEditModalOpen: !tripEditModalOpen,
       tripModalOpen: false
-    });
-  };
-
-  public toggleCountryModal = () => {
-    const { countryModalOpen } = this.state;
-    this.setState({
-      countryModalOpen: !countryModalOpen
-    });
-  };
-  public toggleContinentModal = () => {
-    const { continentModalOpen } = this.state;
-    this.setState({
-      continentModalOpen: !continentModalOpen
     });
   };
   public toggleCoffeeReportModal = () => {

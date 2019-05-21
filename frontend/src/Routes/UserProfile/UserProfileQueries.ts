@@ -194,60 +194,6 @@ export const DELETE_TRIP = gql`
   }
 `;
 
-export const GET_CITIES = gql`
-  query GetCities($username: String!) {
-    getCities(username: $username) {
-      trip {
-        id
-        city {
-          cityName
-          cityPhoto
-          country {
-            countryName
-          }
-        }
-      }
-    }
-  }
-`;
-
-export const GET_COUNTRIES = gql`
-  query GetCountries($username: String!) {
-    getCountries(username: $username) {
-      trip {
-        id
-        city {
-          country {
-            countryName
-            countryPhoto
-            continent {
-              continentName
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-export const GET_CONTINENTS = gql`
-  query GetContinents($username: String!) {
-    getContinents(username: $username) {
-      trip {
-        id
-        city {
-          country {
-            continent {
-              continentName
-              continentPhoto
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
 export const GET_KNOWING_FOLLOWERS = gql`
   query GetKnowingFollowers($username: String!) {
     getKnowingFollowers(username: $username) {

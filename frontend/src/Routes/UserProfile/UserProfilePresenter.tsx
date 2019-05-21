@@ -14,8 +14,6 @@ import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import FollowBtn from "../../Components/FollowBtn";
-import GetCountries from "../../Components/GetCountries";
-import GetContinents from "../../Components/GetContinents";
 import AvatarGrid from "../../Components/AvatarGrid";
 import GetCards from "../../Components/GetCards";
 import Weather from "../../Components/Weather";
@@ -279,7 +277,6 @@ const UBold = styled(Bold)`
   align-self: flex-end;
   font-weight: 100;
   font-size: 7px;
-  cursor: pointer;
 `;
 
 const SAvatar = styled(Avatar)`
@@ -332,15 +329,6 @@ const Modal = styled.div`
   border-radius: 12px;
   z-index: 10;
   animation: ${ModalAnimation} 0.1s linear;
-`;
-
-const RowModal = styled.div`
-  z-index: 10;
-  animation: ${ModalAnimation} 0.1s linear;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const ModalOverlay = styled.div`
@@ -521,8 +509,6 @@ interface IProps {
   tripConfirmModalOpen: boolean;
   tripAddModalOpen: boolean;
   tripEditModalOpen: boolean;
-  countryModalOpen: boolean;
-  continentModalOpen: boolean;
   requestModalOpen: boolean;
   coffeeModalOpen: boolean;
   requestingCoffeeModalOpen: boolean;
@@ -562,9 +548,6 @@ interface IProps {
   toggleTripConfirmModal: () => void;
   toggleAddTripModal: () => void;
   toggleEditTripModal: () => void;
-
-  toggleCountryModal: () => void;
-  toggleContinentModal: () => void;
 
   toggleRequestModal: () => void;
   toggleCoffeeModal: () => void;
@@ -632,8 +615,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   tripAddModalOpen,
   tripEditModalOpen,
 
-  countryModalOpen,
-  continentModalOpen,
   requestModalOpen,
   coffeeModalOpen,
   requestingCoffeeModalOpen,
@@ -648,8 +629,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleTripConfirmModal,
   toggleAddTripModal,
   toggleEditTripModal,
-  toggleCountryModal,
-  toggleContinentModal,
 
   toggleRequestModal,
   toggleCoffeeModal,
@@ -715,6 +694,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     placeholder={user.username}
                     name={"userName"}
                     onKeyUp={onKeyUp}
+                    autoComplete={"off"}
                   />
                 </ModalLink>
                 <ModalLink>
@@ -725,6 +705,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     placeholder={user.profile.avatar}
                     name={"avatar"}
                     onKeyUp={onKeyUp}
+                    autoComplete={"off"}
                   />
                 </ModalLink>
                 <ModalLink>
@@ -735,6 +716,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     placeholder={"bio"}
                     name={"bio"}
                     onKeyUp={onKeyUp}
+                    autoComplete={"off"}
                   />
                 </ModalLink>
                 {!user.profile.nationality ? (
@@ -864,28 +846,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </Modal>
           </ModalContainer>
         )}
-
-        {countryModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleCountryModal} />
-            <RowModal>
-              <Wrapper>
-                <GetCountries username={user.username} />
-              </Wrapper>
-            </RowModal>
-          </ModalContainer>
-        )}
-        {continentModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleContinentModal} />
-            <RowModal>
-              <Wrapper>
-                <GetContinents username={user.username} />
-              </Wrapper>
-            </RowModal>
-          </ModalContainer>
-        )}
-
         {tripModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleTripModal} />
@@ -1107,11 +1067,11 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 <UBold text={String(user.profile.cityCount)} />
                 <UBold text={" CITIES - done"} />
               </Row>
-              <Row onClick={toggleCountryModal}>
+              <Row>
                 <UBold text={String(user.profile.countryCount)} />
                 <UBold text={" COUNTRIES - done"} />
               </Row>
-              <Row onClick={toggleContinentModal}>
+              <Row>
                 <UBold text={String(user.profile.continentCount)} />
                 <UBold text={" CONTINENT - done"} />
               </Row>
