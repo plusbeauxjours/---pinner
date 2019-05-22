@@ -10,7 +10,7 @@ class Continent (config_models.TimeStampedModel):
 
     continent_name = models.CharField(max_length=20, null=True, blank=True)
     continent_photo = models.URLField(null=True, blank=True)
-    continent_code =  models.CharField(max_length=10, null=True, blank=True)
+    continent_code =  models.CharField(max_length=20, null=True, blank=True)
 
     @cached_property
     def country_count(self):
@@ -36,10 +36,10 @@ class Country (config_models.TimeStampedModel):
     country_code = models.CharField(max_length=2, null=True, blank=True)
     country_photo = models.URLField(null=True, blank=True)
     country_capital = models.CharField(max_length=50, null=True, blank=True)
-    country_currency = models.CharField(max_length=10, null=True, blank=True)
+    country_currency = models.CharField(max_length=20, null=True, blank=True)
     language = models.ForeignKey(Language, null=True, blank=True, on_delete=models.CASCADE, related_name='countries')
     country_name_native =  models.CharField(max_length=20, null=True, blank=True)
-    country_phone = models.CharField(max_length=10, null=True, blank=True)
+    country_phone = models.CharField(max_length=20, null=True, blank=True)
     country_emoji = models.CharField(max_length=20, null=True, blank=True)
     country_emojiU = models.CharField(max_length=20, null=True, blank=True)
     continent = models.ForeignKey(Continent, null=True, blank=True, on_delete=models.CASCADE, related_name='countries')

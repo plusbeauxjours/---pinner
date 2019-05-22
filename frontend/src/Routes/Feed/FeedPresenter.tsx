@@ -9,12 +9,12 @@ import Photo from "../../Components/Photo";
 import Wrapper from "../../Components/Wrapper";
 import Bold from "../../Components/Bold";
 import Weather from "src/Components/Weather";
-import LoaderCoffee from "src/Components/LoaderCoffee";
-import AvatarGrid from "../../Components/AvatarGrid";
 import InfiniteScroll from "react-infinite-scroller";
 // import CitySearch from "src/Components/CitySearch";
-import UserHeader from "../../Components/UserHeader";
 import FollowBtn from "src/Components/FollowBtn";
+import { Upload } from "src/Icons";
+import Avatar from "../../Components/Avatar";
+import CoffeeBtn from "src/Components/CoffeeBtn";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -39,10 +39,6 @@ const Header = styled.header`
   transition: background-color 0.2s ease-in-out;
 `;
 
-const HeaderColumn = styled.div`
-  margin-left: 15px;
-`;
-
 const Location = styled.span`
   display: flex;
   margin-top: 5px;
@@ -55,6 +51,10 @@ const UserContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   align-content: center;
+`;
+
+const CText = styled(Bold)`
+  display: flex;
 `;
 
 const SText = styled(Bold)`
@@ -154,7 +154,7 @@ const Title = styled.div`
 const UserRow = styled.div`
   display: grid;
   height: 50px;
-  min-width: 400px;
+  width: 400px;
   grid-template-columns: 4fr 1fr;
   padding: 0 5px 0 5px;
   grid-gap: 15px;
@@ -205,17 +205,49 @@ const SeeAll = styled.p`
   cursor: pointer;
 `;
 
-const SSText = styled(Bold)`
-  font-size: 12px;
-  font-weight: 100;
-`;
-const SmallTitle = styled(Title)`
-  flex-direction: column;
+const IconRow = styled.div`
+  height: 50px;
+  width: 400px;
+  padding: 0 5px 0 5px;
   align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid grey;
 `;
 
-const SmallGreyLine = styled(GreyLine)`
-  width: 40%;
+const Icon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    fill: white;
+    transition: fill 0.2s ease-in-out;
+    &:hover {
+      fill: grey;
+    }
+  }
+`;
+
+const SAvatar = styled(Avatar)``;
+
+const Target = styled.div`
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  font-size: 20px;
+  font-weight: 200;
+`;
+
+const AvatarContainer = styled.div`
+  display: flex;
+  position: relative;
+`;
+
+const HeaderColumn = styled.div`
+  margin-left: 15px;
+`;
+
+const Explain = styled(Location)`
+  color: grey;
 `;
 
 interface ITheme {
@@ -352,15 +384,13 @@ const FeedPresenter: React.SFC<IProps> = ({
                   return (
                     <UserRow key={user.id}>
                       <Link to={`/${user.username}`}>
-                        <UserHeader
-                          username={user.username}
-                          currentCity={user.profile.currentCity.cityName}
-                          currentCountry={
-                            user.profile.currentCity.country.countryName
-                          }
-                          avatar={user.profile.avatar}
-                          size={"sm"}
-                        />
+                        <AvatarContainer>
+                          <Avatar size={"sm"} url={user.profile.avatar} />
+                          <HeaderColumn>
+                            <CText text={user.username} />
+                            <Explain>with same nationality</Explain>
+                          </HeaderColumn>
+                        </AvatarContainer>
                       </Link>
                       {!user.isSelf && (
                         <FollowBtn
@@ -374,19 +404,105 @@ const FeedPresenter: React.SFC<IProps> = ({
                 })}
             </Box>
           </Container>
-          <SmallTitle>
-            <SmallGreyLine />
-            <SSText text={"NEED SOME COFFEE NOW"} />
-          </SmallTitle>
-          {!coffeeLoading && (
-            <AvatarGrid
-              coffees={coffees}
-              toggleRequestModal={toggleRequestModal}
-            />
-          )}
-          <LoaderCoffee />
           <GreyLine />
-
+          <Title>
+            <SText text={"NEED SOME COFFEE NOW"} />
+            <Link to={`/people`}>
+              <SeeAll>SEE ALL</SeeAll>
+            </Link>
+          </Title>
+          <Container>
+            <Box>
+              <IconRow>
+                <Icon onClick={toggleRequestModal}>
+                  <Upload />
+                </Icon>
+              </IconRow>
+              {!coffeeLoading &&
+                coffees &&
+                coffees.map(coffee => {
+                  return (
+                    <UserRow key={coffee.id}>
+                      <Link to={`/c/${coffee.id}`}>
+                        <AvatarContainer>
+                          {(() => {
+                            switch (coffee.target) {
+                              case "EVERYONE":
+                                return (
+                                  <>
+                                    <Target>E</Target>
+                                    <SAvatar
+                                      size={"sm"}
+                                      url={coffee.host.profile.avatar}
+                                    />
+                                  </>
+                                );
+                              case "GENDER":
+                                return (
+                                  <>
+                                    <Target>G</Target>
+                                    <SAvatar
+                                      size={"sm"}
+                                      url={coffee.host.profile.avatar}
+                                    />
+                                  </>
+                                );
+                              case "NATIONALITY":
+                                return (
+                                  <>
+                                    <Target>N</Target>
+                                    <SAvatar
+                                      size={"sm"}
+                                      url={coffee.host.profile.avatar}
+                                    />
+                                  </>
+                                );
+                              case "FOLLOWERS":
+                                return (
+                                  <>
+                                    <Target>F</Target>
+                                    <SAvatar
+                                      size={"sm"}
+                                      url={coffee.host.profile.avatar}
+                                    />
+                                  </>
+                                );
+                              default:
+                                return null;
+                            }
+                          })()}
+                          <HeaderColumn>
+                            <CText text={coffee.host.username} />
+                            {(() => {
+                              switch (coffee.target) {
+                                case "EVERYONE":
+                                  return <Explain>with Someone</Explain>;
+                                case "GENDER":
+                                  return <Explain>with same gender</Explain>;
+                                case "NATIONALITY":
+                                  return (
+                                    <Explain>with same nationality</Explain>
+                                  );
+                                case "FOLLOWERS":
+                                  return <Explain>with followers</Explain>;
+                                default:
+                                  return null;
+                              }
+                            })()}
+                          </HeaderColumn>
+                        </AvatarContainer>
+                      </Link>
+                      <CoffeeBtn
+                        coffeeId={coffee.id}
+                        isMatching={coffee.isMatching}
+                        isSelf={coffee.host.profile.isSelf}
+                      />
+                    </UserRow>
+                  );
+                })}
+            </Box>
+          </Container>
+          <GreyLine />
           {!cardsLoading && cards && cards.length !== 0 ? (
             <InfiniteScroll
               pageStart={0}

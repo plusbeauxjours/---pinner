@@ -137,7 +137,7 @@ const FollowersPresenter: React.SFC<IProps> = ({
             <AvatarContainer>
               <CAvatar
                 size="lg"
-                url={"http://localhost:8000/media/28_rAdzSHi.jpg"}
+                url={"http://localhost:8000/media/28_ix0X7LD.jpg"}
               />
               <InfoRow>
                 <SText text={String("undefined")} />

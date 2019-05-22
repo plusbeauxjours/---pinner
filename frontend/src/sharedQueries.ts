@@ -168,6 +168,12 @@ export const COFFEE_FRAGMENT = gql`
       profile {
         avatar
         isSelf
+        currentCity {
+          cityName
+          country {
+            countryName
+          }
+        }
       }
     }
     status

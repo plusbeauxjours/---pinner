@@ -741,6 +741,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                       name={"gender"}
                       onChange={onSelectChange}
                     >
+                      <Option value={""}>-</Option>
                       <Option value={"M"}>Masculine</Option>
                       <Option value={"F"}>Feminine</Option>
                       <Option value={"GQ"}>Genderqueer</Option>
@@ -1219,7 +1220,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <CityContainer>
                     <Square>
                       <CityPhoto
-                        src={"http://localhost:8000/media/28_rAdzSHi.jpg"}
+                        src={"http://localhost:8000/media/28_ix0X7LD.jpg "}
                         size={"md"}
                       />
                     </Square>

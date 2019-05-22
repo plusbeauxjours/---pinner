@@ -33,7 +33,7 @@ class ReportLocation(graphene.Mutation):
 
         print('reportlocation')
 
-        def get_locations_nearby_coords(latitude, longitude, max_distance=None):
+        def get_locations_nearby_coords(latitude, longitude, max_distance=5000):
             gcd_formula = "6371 * acos(cos(radians(%s)) * \
             cos(radians(latitude)) \
             * cos(radians(longitude) - radians(%s)) + \
@@ -112,7 +112,6 @@ class ReportLocation(graphene.Mutation):
 
         try:
             city = models.City.objects.get(city_name=currentCity)
-            print("what")
             profile.current_city = city
             profile.save()
             if city.near_city.count() < 6 :
