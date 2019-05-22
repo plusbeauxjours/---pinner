@@ -335,6 +335,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                 />
                 <AddComment>
                   <STextArea
+                    autoFocus={true}
                     placeholder="Add a comment..."
                     onChange={updateNewComment}
                     value={newComment}

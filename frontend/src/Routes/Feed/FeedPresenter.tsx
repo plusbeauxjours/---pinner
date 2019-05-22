@@ -181,7 +181,7 @@ const Box = styled.div`
   display: grid;
   grid-auto-flow: column;
   grid-template-rows: repeat(3, 50px);
-  grid-auto-columns: 400px
+  grid-auto-columns: 400px;
   column-gap: 10px;
   overflow-x: auto;
   padding-bottom: 15px;
@@ -220,6 +220,7 @@ const Icon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   svg {
     fill: white;
     transition: fill 0.2s ease-in-out;

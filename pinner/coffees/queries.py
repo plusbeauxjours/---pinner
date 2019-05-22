@@ -17,7 +17,6 @@ def resolve_get_coffees(self, info, **kwargs):
     cityName = kwargs.get('cityName')
     userName = kwargs.get('userName')
 
-
     if location == "feed":
         try:
             city = location_models.City.objects.prefetch_related('coffee').get(city_name=cityName)
@@ -33,16 +32,16 @@ def resolve_get_coffees(self, info, **kwargs):
             # not allow to join. only showing is allowed if they already matched
 
             coffees = city.coffee.filter((Q(target='everyone') |
-                                        Q(target='nationality', host__profile__nationality=profile.nationality) |
-                                        Q(target='gender', host__profile__gender=profile.gender) |
-                                        Q(target='followers', host__profile__id__in=followings)) &
-                                        Q(expires__gt=timezone.now())).exclude(match__id__in=matches).order_by('-created_at')
-            
+                                          Q(target='nationality', host__profile__nationality=profile.nationality) |
+                                          Q(target='gender', host__profile__gender=profile.gender) |
+                                          Q(target='followers', host__profile__id__in=followings)) &
+                                         Q(expires__gt=timezone.now())).exclude(match__id__in=matches).order_by('-created_at')
+
             return types.GetCoffeesResponse(coffees=coffees)
-      
+
         except models.Coffee.DoesNotExist:
             return types.GetCoffeesResponse(coffees=None)
-            
+
     elif location == "profile":
         try:
             user = User.objects.prefetch_related('coffee').get(username=userName)
@@ -53,7 +52,7 @@ def resolve_get_coffees(self, info, **kwargs):
             coffees = models.Coffee.objects.filter(host=user, expires__gt=timezone.now()).order_by(
                 '-created_at')
             return types.GetCoffeesResponse(coffees=coffees)
-  
+
         except models.Coffee.DoesNotExist:
             return types.GetCoffeesResponse(coffees=None)
 
@@ -69,9 +68,9 @@ def resolve_get_coffees(self, info, **kwargs):
                 return types.GetCoffeesResponse(coffees=coffees)
             except models.Coffee.DoesNotExist:
                 return types.GetCoffeesResponse(coffees=None)
-        else: 
+        else:
             return types.GetCoffeesResponse(coffees=None)
-        
+
 
 @login_required
 def resolve_coffee_detail(self, info, **kwargs):

@@ -45,6 +45,7 @@ const LoggedInPages = () => (
     <Switch>
       <Route path="/" exact={true} component={Feed} />
       <Route path="/people" exact={true} component={People} />
+      <Route path="/coffees" exact={true} component={People} />
       <Route path="/p/:id" component={CardDetail} />
       <Route path="/match" exact={true} component={Match} />
       <Route path="/explore/userlist" component={UserList} />
