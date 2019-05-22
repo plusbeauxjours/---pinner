@@ -52,27 +52,43 @@ class ReportLocation(graphene.Mutation):
         try:
             continent = models.Continent.objects.get(continent_name=currentContinent)
         except models.Continent.DoesNotExist:
-            gp = locationThumbnail.get_photos(term=currentCity)
-            gp.num = 10
-            continentPhotoURL = gp.get_urls()
-            for i in range(gp.num):
-                print(' Downloading the')
-                gp.download(i)
+            # currentContinent = 
+            
+            # DOWNLOAD IMAGE
+            # gp = locationThumbnail.get_photos(term=currentContinent)
+            # continentPhotoURL = gp.get_urls()
+            # # for i in range(gp.num):
+            # #     print('Downloading...' + str(i) + '/' + str(gp.num))
+            # #     gp.download(i)
             continent = models.Continent.objects.create(
-                continent_name=currentContinent, continent_photo=continentPhotoURL)
+                continent_name=currentContinent, 
+                continent_photo=continentPhotoURL
+                )
 
         try:
             country = models.Country.objects.get(country_code=currentCountryCode)
         except models.Country.DoesNotExist:
-            gp = locationThumbnail.get_photos(term=currentCity)
+            with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
+                data = json.load(file)
+                currentCountry = data[currentCountryCode]
+                countryName = currentCountry['name']
+                print(countryName)
+
+            gp = locationThumbnail.get_photos(term=countryName)
             countryPhotoURL = gp.get_urls()
-            for i in range(gp.num):
-                print(' Downloading the')
-                gp.download(i)
+
+            # DOWNLOAD IMAGE
+            # for i in range(gp.num):
+            #     print('Downloading...' + str(i) + '/' + str(gp.num))
+            #     gp.download(i)
 
             country = models.Country.objects.create(
-                country_code=currentCountryCode, country_name=currentCountry, country_photo=countryPhotoURL, continent=continent)
-
+                country_code=currentCountryCode, 
+                country_name=countryName, 
+                country_photo=countryPhotoURL, 
+                continent=continent
+                )
+                
         try:
             city = models.City.objects.get(city_name=currentCity)
             print("what")
@@ -86,8 +102,24 @@ class ReportLocation(graphene.Mutation):
 
         except models.City.DoesNotExist:
             nearCities = get_locations_nearby_coords(currentLat, currentLng, 3000)[:6]
+
+            gp = locationThumbnail.get_photos(term=currentCity)
+            cityPhotoURL = gp.get_urls()
+
+            # DOWNLOAD IMAGE
+            # gp = locationThumbnail.get_photos(term=currentCity)
+            # countryPhotoURL = gp.get_urls()
+            # # for i in range(gp.num):
+            # #     print('Downloading...' + str(i) + '/' + str(gp.num))
+            # #     gp.download(i)
+
             city = models.City.objects.create(
-                city_name=currentCity, country=country, city_photo=cityPhotoURL, latitude=currentLat, longitude=currentLng)
+                city_name=currentCity, 
+                country=country, 
+                city_photo=cityPhotoURL, 
+                latitude=currentLat, 
+                longitude=currentLng
+                )
             for i in nearCities:
                 city.near_city.add(i)
                 city.save()

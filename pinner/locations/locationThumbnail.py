@@ -10,7 +10,9 @@ class get_photos(object):
         self.headers = {'Accept-Version': 'v1',
                         'Authorization': 'Client-ID ' + settings.UNSPLASH_KEY}
         self.urls = []
-        self.titles = []
+
+        # DOWNLOAD IMAGE
+        # self.titles = []
         self.num = 10
         self.term = kwargs.get('term')
     
@@ -21,19 +23,20 @@ class get_photos(object):
         data = json.loads(req.text)
         for i in range(self.num):
             self.urls.append(data['results'][i]['links']['download'])
-            self.titles.append(data['results'][i]['alt_description'])
+
+            # DOWNLOAD IMAGE
+            # self.titles.append(data['results'][i]['alt_description'])
             print(self.urls[i])
         return self.urls[0]
 
-    def download(self, i):
-        print(self.urls)
-        print(self.titles)
-
-        with closing(requests.get(url=self.urls[i], stream=True)) as r:
-         
-            with open(self.term+ str(i) +'.jpg', 'ab+') as f:
-                for chunk in r.iter_content(chunk_size=1024):
-                    if chunk:
-                        f.write(chunk)
-                        f.flush()
+    # DOWNLOAD IMAGE
+    # def download(self, i):
+    #     print(self.urls)
+    #     print(self.titles)
+    #     with closing(requests.get(url=self.urls[i], stream=True)) as r:
+    #         with open(self.term+ str(i) +'.jpg', 'ab+') as f:
+    #             for chunk in r.iter_content(chunk_size=1024):
+    #                 if chunk:
+    #                     f.write(chunk)
+    #                     f.flush()
 
