@@ -1,38 +1,18 @@
 import gql from "graphql-tag";
-import { CITY_FRAGMENT } from "src/sharedQueries";
+import { CITY_FRAGMENT, PROFILE_FRAGMENT } from "src/sharedQueries";
 
 export const CITY_PROFILE = gql`
   query CityProfile($page: Int, $cityName: String!) {
     cityProfile(page: $page, cityName: $cityName) {
       usersNow {
         profile {
-          id
-          username
-          avatar
-          isFollowing
-          isSelf
-          currentCity {
-            cityName
-            country {
-              countryName
-            }
-          }
+          ...ProfileParts
         }
       }
       usersBefore {
         actor {
           profile {
-            id
-            username
-            avatar
-            isFollowing
-            isSelf
-            currentCity {
-              cityName
-              country {
-                countryName
-              }
-            }
+            ...ProfileParts
           }
         }
       }
@@ -64,6 +44,7 @@ export const CITY_PROFILE = gql`
       }
     }
   }
+  ${PROFILE_FRAGMENT}
 `;
 
 export const NEAR_CITIES = gql`

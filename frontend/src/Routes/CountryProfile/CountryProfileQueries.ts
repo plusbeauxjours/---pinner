@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { CITY_FRAGMENT } from "src/sharedQueries";
+import { CITY_FRAGMENT, PROFILE_FRAGMENT } from "src/sharedQueries";
 
 export const COUNTRY_PROFILE = gql`
   query CountryProfile($page: Int, $countryName: String!) {
@@ -8,6 +8,9 @@ export const COUNTRY_PROFILE = gql`
         countryName
         countryCode
         countryPhoto
+        countryCapital
+        countryCurrency
+        countryEmoji
         cityCount
         cardCount
         continent {
@@ -17,33 +20,13 @@ export const COUNTRY_PROFILE = gql`
       }
       usersNow {
         profile {
-          id
-          username
-          avatar
-          isFollowing
-          isSelf
-          currentCity {
-            cityName
-            country {
-              countryName
-            }
-          }
+          ...ProfileParts
         }
       }
       usersBefore {
         actor {
           profile {
-            id
-            username
-            avatar
-            isFollowing
-            isSelf
-            currentCity {
-              cityName
-              country {
-                countryName
-              }
-            }
+            ...ProfileParts
           }
         }
       }
@@ -62,4 +45,5 @@ export const COUNTRY_PROFILE = gql`
     }
   }
   ${CITY_FRAGMENT}
+  ${PROFILE_FRAGMENT}
 `;

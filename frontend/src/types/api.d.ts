@@ -158,10 +158,22 @@ export interface UnMatch_unMatch_coffee_city {
   country: UnMatch_unMatch_coffee_city_country;
 }
 
+export interface UnMatch_unMatch_coffee_host_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface UnMatch_unMatch_coffee_host_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: UnMatch_unMatch_coffee_host_profile_currentCity_country;
+}
+
 export interface UnMatch_unMatch_coffee_host_profile {
   __typename: "ProfileType";
   avatar: string;
   isSelf: boolean | null;
+  currentCity: UnMatch_unMatch_coffee_host_profile_currentCity | null;
 }
 
 export interface UnMatch_unMatch_coffee_host {
@@ -1115,10 +1127,22 @@ export interface GetCoffees_getCoffees_coffees_city {
   country: GetCoffees_getCoffees_coffees_city_country;
 }
 
+export interface GetCoffees_getCoffees_coffees_host_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetCoffees_getCoffees_coffees_host_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: GetCoffees_getCoffees_coffees_host_profile_currentCity_country;
+}
+
 export interface GetCoffees_getCoffees_coffees_host_profile {
   __typename: "ProfileType";
   avatar: string;
   isSelf: boolean | null;
+  currentCity: GetCoffees_getCoffees_coffees_host_profile_currentCity | null;
 }
 
 export interface GetCoffees_getCoffees_coffees_host {
@@ -1336,6 +1360,9 @@ export interface CountryProfile_countryProfile_country {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  countryCapital: string | null;
+  countryCurrency: string | null;
+  countryEmoji: string | null;
   cityCount: number | null;
   cardCount: number | null;
   continent: CountryProfile_countryProfile_country_continent | null;
@@ -1611,10 +1638,22 @@ export interface RequestCoffee_requestCoffee_coffee_city {
   country: RequestCoffee_requestCoffee_coffee_city_country;
 }
 
+export interface RequestCoffee_requestCoffee_coffee_host_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface RequestCoffee_requestCoffee_coffee_host_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: RequestCoffee_requestCoffee_coffee_host_profile_currentCity_country;
+}
+
 export interface RequestCoffee_requestCoffee_coffee_host_profile {
   __typename: "ProfileType";
   avatar: string;
   isSelf: boolean | null;
+  currentCity: RequestCoffee_requestCoffee_coffee_host_profile_currentCity | null;
 }
 
 export interface RequestCoffee_requestCoffee_coffee_host {
@@ -3045,10 +3084,22 @@ export interface CoffeeParts_city {
   country: CoffeeParts_city_country;
 }
 
+export interface CoffeeParts_host_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface CoffeeParts_host_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: CoffeeParts_host_profile_currentCity_country;
+}
+
 export interface CoffeeParts_host_profile {
   __typename: "ProfileType";
   avatar: string;
   isSelf: boolean | null;
+  currentCity: CoffeeParts_host_profile_currentCity | null;
 }
 
 export interface CoffeeParts_host {

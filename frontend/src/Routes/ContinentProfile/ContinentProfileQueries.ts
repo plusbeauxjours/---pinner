@@ -1,37 +1,18 @@
 import gql from "graphql-tag";
+import { PROFILE_FRAGMENT, COUNTRY_FRAGMENT } from "src/sharedQueries";
 
 export const CONTINENT_PROFILE = gql`
   query ContinentProfile($page: Int, $continentName: String!) {
     continentProfile(page: $page, continentName: $continentName) {
       usersNow {
         profile {
-          id
-          username
-          avatar
-          isFollowing
-          isSelf
-          currentCity {
-            cityName
-            country {
-              countryName
-            }
-          }
+          ...ProfileParts
         }
       }
       usersBefore {
         actor {
           profile {
-            id
-            username
-            avatar
-            isFollowing
-            isSelf
-            currentCity {
-              cityName
-              country {
-                countryName
-              }
-            }
+            ...ProfileParts
           }
         }
       }
@@ -50,16 +31,12 @@ export const CONTINENT_PROFILE = gql`
         countryCount
       }
       countries {
-        id
-        countryName
-        countryCode
-        countryPhoto
-        continent {
-          continentName
-        }
+        ...CountryParts
         cityCount
         cardCount
       }
     }
   }
+  ${PROFILE_FRAGMENT}
+  ${COUNTRY_FRAGMENT}
 `;

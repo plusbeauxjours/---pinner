@@ -268,6 +268,22 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
                 <SText text={String(country.distance)} />
                 TIME DIFFERENCE
               </InfoRow>
+              <InfoRow>
+                <SText text={String(country.countryCapital)} />
+                countryCapital
+              </InfoRow>
+              <InfoRow>
+                <SText text={String(country.countryCurrency)} />
+                countryCurrency
+              </InfoRow>
+              <InfoRow>
+                <SText text={String(country.countryEmoji)} />
+                countryEmoji
+              </InfoRow>
+              <InfoRow>
+                <SText text={String(country.language)} />
+                language
+              </InfoRow>
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>
