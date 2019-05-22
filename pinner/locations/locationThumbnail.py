@@ -13,7 +13,7 @@ class get_photos(object):
 
         # DOWNLOAD IMAGE
         # self.titles = []
-        self.num = 10
+        # self.num = 10
         self.term = kwargs.get('term')
     
     def get_urls(self):
@@ -21,13 +21,13 @@ class get_photos(object):
         req = requests.get(url=self.base_url,
                            headers=self.headers, params=payload)
         data = json.loads(req.text)
-        for i in range(self.num):
-            self.urls.append(data['results'][i]['links']['download'])
-
-            # DOWNLOAD IMAGE
-            # self.titles.append(data['results'][i]['alt_description'])
-            print(self.urls[i])
-        return self.urls[0]
+        return data['results'][0]['urls']['regular']
+        # DOWNLOAD IMAGE
+        # for i in range(self.num):
+        #     self.urls.append(data['results'][i]['links']['download'])
+        #     self.titles.append(data['results'][i]['alt_description'])
+        #     print(self.urls[i])
+        # return self.urls[0]
 
     # DOWNLOAD IMAGE
     # def download(self, i):

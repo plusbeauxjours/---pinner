@@ -18,7 +18,6 @@ class ReportLocation(graphene.Mutation):
         currentLng = graphene.Float(required=True)
         currentCity = graphene.String(required=True)
         currentCountryCode = graphene.String(required=True)
-        currentContinent = graphene.String(required=True)
 
     Output = types.ReportLocationResponse
 
@@ -31,7 +30,6 @@ class ReportLocation(graphene.Mutation):
         currentLng = kwargs.get('currentLng')
         currentCity = kwargs.get('currentCity')
         currentCountryCode = kwargs.get('currentCountryCode')
-        currentContinent = kwargs.get('currentContinent')
 
         print('reportlocation')
 
@@ -50,32 +48,49 @@ class ReportLocation(graphene.Mutation):
             return qs
 
         try:
-            continent = models.Continent.objects.get(continent_name=currentContinent)
-        except models.Continent.DoesNotExist:
-            # currentContinent = 
-            
-            # DOWNLOAD IMAGE
-            # gp = locationThumbnail.get_photos(term=currentContinent)
-            # continentPhotoURL = gp.get_urls()
-            # # for i in range(gp.num):
-            # #     print('Downloading...' + str(i) + '/' + str(gp.num))
-            # #     gp.download(i)
-            continent = models.Continent.objects.create(
-                continent_name=currentContinent, 
-                continent_photo=continentPhotoURL
-                )
-
-        try:
             country = models.Country.objects.get(country_code=currentCountryCode)
         except models.Country.DoesNotExist:
             with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
-                data = json.load(file)
-                currentCountry = data[currentCountryCode]
+                countryData = json.load(file)
+                currentCountry = countryData[currentCountryCode]
                 countryName = currentCountry['name']
-                print(countryName)
+                countryNameNative = currentCountry['native']
+                countryCapital = currentCountry['capital']
+                countryCurrency = currentCountry['currency']
+                countryPhone = currentCountry['phone']
+                countryEmoji = currentCountry['emoji']
+                countryEmojiU = currentCountry['emojiU']
+                continentCode = currentCountry['continent']
 
-            gp = locationThumbnail.get_photos(term=countryName)
-            countryPhotoURL = gp.get_urls()
+                try: 
+                    continent = models.Continent.objects.get(continent_code=continentCode)
+                except:
+                    with open('pinner/locations/continentData.json', mode='rt', encoding='utf-8') as file:
+                        continentData = json.load(file)
+                        continentName = continentData[continentCode]
+
+                        try:
+                            gp = locationThumbnail.get_photos(term=continentName)
+                            continentPhotoURL = gp.get_urls()
+                        except:
+                            continentPhotoURL = None
+
+                        # DOWNLOAD IMAGE
+                        # continentPhotoURL = gp.get_urls()
+                        # # for i in range(gp.num):
+                        # #     print('Downloading...' + str(i) + '/' + str(gp.num))
+                        # #     gp.download(i)
+            
+                        continent = models.Continent.objects.create(
+                            continent_name=continentName, 
+                            continent_photo=continentPhotoURL,
+                            continent_code=continentCode
+                            )
+            try:
+                gp = locationThumbnail.get_photos(term=countryName)
+                countryPhotoURL = gp.get_urls()
+            except:
+                countryPhotoURL = None
 
             # DOWNLOAD IMAGE
             # for i in range(gp.num):
@@ -85,10 +100,16 @@ class ReportLocation(graphene.Mutation):
             country = models.Country.objects.create(
                 country_code=currentCountryCode, 
                 country_name=countryName, 
+                country_name_native=countryNameNative,
+                country_capital=countryCapital,
+                country_currency=countryCurrency,
+                country_phone=countryPhone,
+                country_emoji=countryEmoji,
+                country_emojiU=countryEmojiU,
                 country_photo=countryPhotoURL, 
-                continent=continent
+                continent=continent,
                 )
-                
+
         try:
             city = models.City.objects.get(city_name=currentCity)
             print("what")
@@ -103,11 +124,13 @@ class ReportLocation(graphene.Mutation):
         except models.City.DoesNotExist:
             nearCities = get_locations_nearby_coords(currentLat, currentLng, 3000)[:6]
 
-            gp = locationThumbnail.get_photos(term=currentCity)
-            cityPhotoURL = gp.get_urls()
+            try:
+                gp = locationThumbnail.get_photos(term=currentCity)
+                cityPhotoURL = gp.get_urls()
+            except:
+                cityPhotoURL = None
 
             # DOWNLOAD IMAGE
-            # gp = locationThumbnail.get_photos(term=currentCity)
             # countryPhotoURL = gp.get_urls()
             # # for i in range(gp.num):
             # #     print('Downloading...' + str(i) + '/' + str(gp.num))

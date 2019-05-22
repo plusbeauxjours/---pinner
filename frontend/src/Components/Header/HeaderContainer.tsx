@@ -2,16 +2,9 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import HeaderPresenter from "./HeaderPresenter";
 import { reverseGeoCode } from "../../mapHelpers";
-// import {
-//   cityThumbnail,
-//   countryThumbnail,
-//   continentThumbnail
-// } from "../../locationThumbnail";
-import continents from "../../continents";
 import { ReportLocation, ReportLocationVariables } from "../../types/api";
 import { Mutation, MutationFn } from "react-apollo";
 import { REPORT_LOCATION } from "../../Routes/Home/HomeQueries";
-// import { countries } from "../../countryData";
 
 class ReportLocationMutation extends Mutation<
   ReportLocation,
@@ -128,16 +121,13 @@ class HeaderContainer extends React.Component<any, IState> {
     currentCity: string,
     currentCountryCode: string
   ) => {
-    const currentContinent = await continents[currentCountryCode];
-    console.log("starving");
     try {
       this.ReportLocationFn({
         variables: {
           currentLat: latitude,
           currentLng: longitude,
           currentCity,
-          currentCountryCode,
-          currentContinent
+          currentCountryCode
         }
       });
     } catch (e) {

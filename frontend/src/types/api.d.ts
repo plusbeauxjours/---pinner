@@ -1758,12 +1758,7 @@ export interface ReportLocationVariables {
   currentLat: number;
   currentLng: number;
   currentCity: string;
-  currentCountry: string;
   currentCountryCode: string;
-  currentContinent: string;
-  cityPhotoURL?: string | null;
-  countryPhotoURL?: string | null;
-  continentPhotoURL?: string | null;
 }
 
 
