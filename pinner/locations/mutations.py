@@ -52,21 +52,26 @@ class ReportLocation(graphene.Mutation):
         try:
             continent = models.Continent.objects.get(continent_name=currentContinent)
         except models.Continent.DoesNotExist:
+            gp = locationThumbnail.get_photos(term=currentCity)
+            gp.num = 10
+            continentPhotoURL = gp.get_urls()
+            for i in range(gp.num):
+                print(' Downloading the')
+                gp.download(i)
             continent = models.Continent.objects.create(
                 continent_name=currentContinent, continent_photo=continentPhotoURL)
 
         try:
             country = models.Country.objects.get(country_code=currentCountryCode)
         except models.Country.DoesNotExist:
-            locationThumbnail.get_photos(term=currentCountryCode)
+            gp = locationThumbnail.get_photos(term=currentCity)
+            countryPhotoURL = gp.get_urls()
+            for i in range(gp.num):
+                print(' Downloading the')
+                gp.download(i)
 
-
-
-
-
-
-            # country = models.Country.objects.create(
-            #     country_code=currentCountryCode, country_name=currentCountry, country_photo=countryPhotoURL, continent=continent)
+            country = models.Country.objects.create(
+                country_code=currentCountryCode, country_name=currentCountry, country_photo=countryPhotoURL, continent=continent)
 
         try:
             city = models.City.objects.get(city_name=currentCity)
