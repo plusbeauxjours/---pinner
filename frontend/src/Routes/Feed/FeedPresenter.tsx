@@ -145,6 +145,7 @@ const GreyLine = styled.div`
   margin-bottom: 10px;
   border-bottom: 1px solid grey;
 `;
+
 const Title = styled.div`
   display: flex;
   justify-content: space-between;
@@ -180,6 +181,7 @@ const Box = styled.div`
   display: grid;
   grid-auto-flow: column;
   grid-template-rows: repeat(3, 50px);
+  grid-auto-columns: 400px
   column-gap: 10px;
   overflow-x: auto;
   padding-bottom: 15px;
