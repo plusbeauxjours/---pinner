@@ -1,4 +1,5 @@
 import graphene
+import json
 from django.db import IntegrityError
 from django.db.models import Q
 from django.db.models.expressions import RawSQL
@@ -6,6 +7,7 @@ from django.contrib.auth.models import User
 from graphql_jwt.decorators import login_required
 
 from . import models, types
+from . import locationThumbnail
 from notifications import models as notification_models
 
 
@@ -56,8 +58,15 @@ class ReportLocation(graphene.Mutation):
         try:
             country = models.Country.objects.get(country_code=currentCountryCode)
         except models.Country.DoesNotExist:
-            country = models.Country.objects.create(
-                country_code=currentCountryCode, country_name=currentCountry, country_photo=countryPhotoURL, continent=continent)
+            locationThumbnail.get_photos(term=currentCountryCode)
+
+
+
+
+
+
+            # country = models.Country.objects.create(
+            #     country_code=currentCountryCode, country_name=currentCountry, country_photo=countryPhotoURL, continent=continent)
 
         try:
             city = models.City.objects.get(city_name=currentCity)

@@ -7,23 +7,14 @@ import environ
 from os.path import join, dirname
 from dotenv import load_dotenv
 
-dotenv_path = join(dirname(__file__), '.env')
-
-env = environ.Env()
-
-load_dotenv(dotenv_path)
-
 ROOT_DIR = environ.Path(__file__) - 3  # (pinner/config/settings/base.py - 3 = pinner/)
 APPS_DIR = ROOT_DIR.path('pinner')
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+env = environ.Env()
 
-READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
-if READ_DOT_ENV_FILE:
-    # OS environment variables take precedence over variables from .env
-    env.read_env(str(ROOT_DIR.path('.env')))
-    env.read_env(env_file)
-
+dotenv_path = join(environ.Path(__file__) - 3, '.env')
+load_dotenv(dotenv_path)
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -287,10 +278,10 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:3000',
 )
 
-TWILIO_SID = "ACe45be468996891a959f54a05dbaf164b"
-TWILIO_TOKEN = "f5fad23d4772fc5249af8f78945987ee"
-TWILIO_PHONE = "+16623301384"
-TO = "+66803832506"
-
-
 ASGI_APPLICATION = 'config.routing.application'
+
+TWILIO_SID = env('TWILIO_SID')
+TWILIO_TOKEN = env('TWILIO_TOKEN')
+UNSPLASH_ACCESS_KEY = env('UNSPLASH_ACCESS_KEY')
+TWILIO_PHONE = env('TWILIO_PHONE')
+TO = env('TO')
