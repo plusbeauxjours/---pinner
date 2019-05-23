@@ -70,7 +70,7 @@ class HomeContainer extends React.Component<IProps, IState> {
         countryCode: address.storableLocation.countryCode,
         countryPhone: country.phone
       });
-      localStorage.setItem("cityName", address.storableLocation.city);
+      localStorage.setItem("countryCode", address.storableLocation.city);
     }
   };
   public handleGeoError = () => {

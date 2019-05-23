@@ -49,11 +49,11 @@ class PhoneLoginContainer extends React.Component<
       <PhoneSignInMutation
         mutation={PHONE_SIGN_IN}
         variables={{
-          phoneNumber: `${countryCode}${phoneNumber}`
+          phoneNumber: `${countryPhone}${phoneNumber}`
         }}
         onCompleted={data => {
           const { startPhoneVerification } = data;
-          const phone = `${countryCode}${phoneNumber}`;
+          const phone = `${countryPhone}${phoneNumber}`;
           if (startPhoneVerification.ok) {
             toast.success("SMS Sent! Redirectiong you...");
             history.push({
@@ -96,8 +96,9 @@ class PhoneLoginContainer extends React.Component<
   };
   public onSubmit: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
-    const { countryCode, phoneNumber, isSubmitted } = this.state;
-    const phone = `${countryCode}${phoneNumber}`;
+    const { countryPhone, phoneNumber, isSubmitted } = this.state;
+    const phone = `${countryPhone}${phoneNumber}`;
+    console.log(phone);
     const isValid = /^\+[1-9]{1}[0-9]{7,11}$/.test(phone);
     if (isValid) {
       if (!isSubmitted) {
