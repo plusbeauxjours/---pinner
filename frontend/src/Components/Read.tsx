@@ -36,10 +36,8 @@ class Read extends React.Component<IProps, IState> {
     );
   }
   public toggleBtn = () => {
-    this.setState(state => {
-      return {
-        isRead: true
-      };
+    this.setState({
+      isRead: true
     });
     console.log(this.state);
   };

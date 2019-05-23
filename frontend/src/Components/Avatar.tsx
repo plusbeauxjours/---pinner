@@ -68,7 +68,7 @@ interface IProps {
 const Avatar: React.SFC<IProps> = ({ className, url, size }) => {
   return (
     <>
-      <ProgressiveImage delay={1000} src={url} placeholder="">
+      <ProgressiveImage delay={0} src={url} placeholder="">
         {(src, loading) => {
           return loading ? (
             <Placeholder className={className} color={"#141313"} size={size} />

@@ -63,18 +63,36 @@ const Modal = styled.div`
 
 interface IProps {
   verificationKey: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: MutationFn;
   loading: boolean;
   back: (event) => void;
+  focused: boolean;
+  selectedIndex: number;
+  hideInput: boolean;
+  inputRef: any;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick: () => void;
+  onFocus: () => void;
+  onBlur: () => void;
+  onKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  CODE_LENGTH: any;
 }
 
 const VerifyPhonePresenter: React.SFC<IProps> = ({
   verificationKey,
-  onChange,
   onSubmit,
   loading,
-  back
+  back,
+  focused,
+  selectedIndex,
+  hideInput,
+  inputRef,
+  onChange,
+  onClick,
+  onFocus,
+  onBlur,
+  onKeyUp,
+  CODE_LENGTH
 }) => {
   if (loading) {
     return <Loader />;

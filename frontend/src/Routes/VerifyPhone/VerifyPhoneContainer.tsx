@@ -20,24 +20,37 @@ interface IProps extends RouteComponentProps<any> {}
 interface IState {
   verificationKey: string;
   phoneNumber: string;
+  focused: boolean;
 }
 
+const CODE_LENGTH = new Array(6).fill(0);
+
 class VerifyPhoneContainer extends React.Component<IProps, IState> {
+  public inputRef: React.RefObject<HTMLInputElement>;
   constructor(props: IProps) {
     super(props);
+    this.inputRef = React.createRef();
     const { location: { state = {} } = {} } = ({} = props);
-    console.log(state);
+    console.log(this.inputRef);
+    console.log(this.state);
     if (!props.location.state) {
       props.history.push("/");
     }
     this.state = {
       phoneNumber: state.phone,
-      verificationKey: ""
+      verificationKey: "",
+      focused: false
     };
   }
   public render() {
     const { history } = this.props;
-    const { verificationKey, phoneNumber } = this.state;
+    const { phoneNumber, verificationKey, focused } = this.state;
+    const verificationKeys = verificationKey.split("");
+    const selectedIndex =
+      verificationKeys.length < CODE_LENGTH.length
+        ? verificationKeys.length
+        : CODE_LENGTH.length - 1;
+    const hideInput = !(verificationKeys.length < CODE_LENGTH.length);
     return (
       <Mutation mutation={LOG_USER_IN}>
         {logUserIn => (
@@ -70,11 +83,20 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
           >
             {(mutation, { loading }) => (
               <VerifyPhonePresenter
-                onChange={this.onInputChange}
+                CODE_LENGTH={CODE_LENGTH}
                 onSubmit={mutation}
                 verificationKey={verificationKey}
                 loading={loading}
                 back={this.back}
+                focused={focused}
+                selectedIndex={selectedIndex}
+                hideInput={hideInput}
+                inputRef={this.inputRef}
+                onChange={this.onChange}
+                onClick={this.onClick}
+                onFocus={this.onFocus}
+                onBlur={this.onBlur}
+                onKeyUp={this.onKeyUp}
               />
             )}
           </VerifyMuataion>
@@ -82,13 +104,41 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
       </Mutation>
     );
   }
-  public onInputChange: React.ChangeEventHandler<HTMLInputElement> = event => {
-    const {
-      target: { name, value }
-    } = event;
+  public onClick = () => {
+    this.inputRef.current.focus();
+  };
+  public onFocus = () => {
+    this.setState({ focused: true });
+  };
+  public onBlur = () => {
     this.setState({
-      [name]: value
-    } as any);
+      focused: false
+    });
+  };
+  public onKeyUp = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const { keyCode } = event;
+    const { verificationKey } = this.state;
+    if (keyCode === 8) {
+      this.setState({
+        verificationKey: verificationKey.slice(0, verificationKey.length - 1)
+      });
+    }
+  };
+  public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
+    const {
+      target: { value }
+    } = event;
+    this.setState(state => {
+      if (state.verificationKey.length >= CODE_LENGTH.length) {
+        return null;
+      }
+      return {
+        verificationKey: (state.verificationKey + value).slice(
+          0,
+          CODE_LENGTH.length
+        )
+      };
+    });
   };
   public back = event => {
     event.stopPropagation();
