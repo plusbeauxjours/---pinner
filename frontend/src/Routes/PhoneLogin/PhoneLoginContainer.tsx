@@ -16,6 +16,7 @@ class PhoneSignInMutation extends Mutation<
 
 interface IState {
   countryCode: string;
+  countryPhone: string;
   phoneNumber: string;
   isSubmitted: boolean;
 }
@@ -25,15 +26,25 @@ class PhoneLoginContainer extends React.Component<
   IState
 > {
   public phoneMutation: MutationFn;
-  public state = {
-    countryCode: "+82",
-    phoneNumber: "",
-    isSubmitted: false
-  };
-
+  constructor(props) {
+    super(props);
+    const { location: { state = {} } = {} } = ({} = props);
+    if (!props.location.state) {
+      props.history.push("/");
+    }
+    this.state = {
+      countryCode: state.countryCode,
+      countryPhone: state.countryPhone,
+      phoneNumber: "",
+      isSubmitted: false
+    };
+  }
+  public componentDidMount() {
+    console.log(this.state);
+  }
   public render() {
     const { history } = this.props;
-    const { countryCode, phoneNumber } = this.state;
+    const { countryCode, phoneNumber, countryPhone } = this.state;
     return (
       <PhoneSignInMutation
         mutation={PHONE_SIGN_IN}
@@ -62,6 +73,7 @@ class PhoneLoginContainer extends React.Component<
             <PhoneLoginPresenter
               countryCode={countryCode}
               phoneNumber={phoneNumber}
+              countryPhone={countryPhone}
               onInputChange={this.onInputChange}
               onSubmit={this.onSubmit}
               loading={loading}
@@ -72,7 +84,6 @@ class PhoneLoginContainer extends React.Component<
       </PhoneSignInMutation>
     );
   }
-
   public onInputChange: React.ChangeEventHandler<
     HTMLInputElement | HTMLSelectElement
   > = event => {

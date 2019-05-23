@@ -103,6 +103,8 @@ const Icon = styled.span`
 interface IProps {
   isLogIn: boolean;
   modalOpen: boolean;
+  countryCode: string;
+  countryPhone: string;
   verificationModalOpen: boolean;
   changeMode: () => void;
   toggleModal: () => void;
@@ -112,6 +114,8 @@ interface IProps {
 const HomePresenter: React.SFC<IProps> = ({
   isLogIn,
   modalOpen,
+  countryCode,
+  countryPhone,
   verificationModalOpen,
   toggleModal,
   toggleVerificationModal,
@@ -129,7 +133,12 @@ const HomePresenter: React.SFC<IProps> = ({
             <ModalLink>
               <SocialLogin />
             </ModalLink>
-            <Link to="/phone-login">
+            <Link
+              to={{
+                pathname: `/phone-login`,
+                state: { countryCode, countryPhone }
+              }}
+            >
               <ModalLink>
                 <Icon>
                   <Phone />

@@ -1,31 +1,16 @@
 import React from "react";
 import Helmet from "react-helmet";
-import { countries } from "../../countryData";
 import Input from "../../Components/Input";
 import styled from "src/Styles/typed-components";
 import { keyframes } from "styled-components";
 import Wrapper from "src/Components/Wrapper";
 import Loader from "src/Components/Loader";
+import Button from "../../Components/Button";
 
 const Container = styled.div`
   margin-top: 10px;
   padding: 20px 10px;
 `;
-
-const CountrySelect = styled.select`
-  font-size: 20px;
-  color: "#2c3e50";
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-color: #2d3a41;
-  border: 0;
-  font-family: "Maven Pro";
-  margin-bottom: 20px;
-  width: 90%;
-`;
-
-const CountryOption = styled.option``;
 
 const Form = styled.form``;
 
@@ -67,9 +52,25 @@ const Modal = styled.div`
   animation: ${ModalAnimation} 0.1s linear;
 `;
 
+const SButton = styled(Button)`
+  width: 50px;
+  margin-top: 20px;
+`;
+
+const ExtendedForm = styled(Form)`
+  padding: 0px 40px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+`;
+
+const PhoneNumberContainer = styled.span``;
+
 interface IProps {
   countryCode: string;
   phoneNumber: string;
+  countryPhone: string;
   onInputChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
@@ -81,6 +82,7 @@ interface IProps {
 const PhoneLoginPresenter: React.SFC<IProps> = ({
   countryCode,
   phoneNumber,
+  countryPhone,
   onInputChange,
   onSubmit,
   loading,
@@ -98,25 +100,22 @@ const PhoneLoginPresenter: React.SFC<IProps> = ({
               <Helmet>
                 <title>Phone Login . Pinner </title>
               </Helmet>
-              <CountrySelect
-                value={countryCode}
-                name={"countryCode"}
-                onChange={onInputChange}
-              >
-                {countries.map((country, index) => (
-                  <CountryOption key={index} value={country.phone}>
-                    {country.emoji} {country.name} {country.phone}
-                  </CountryOption>
-                ))}
-              </CountrySelect>
-              <Form onSubmit={onSubmit}>
-                <Input
-                  placeholder={"010 8520 1031"}
-                  value={phoneNumber}
-                  name={"phoneNumber"}
-                  onChange={onInputChange}
-                />
-              </Form>
+              <PhoneNumberContainer>
+                {console.log(countryCode, countryPhone)}
+                {countryCode}
+                {countryPhone}
+                <Form onSubmit={onSubmit}>
+                  <Input
+                    placeholder={"010 8520 1031"}
+                    value={phoneNumber}
+                    name={"phoneNumber"}
+                    onChange={onInputChange}
+                  />
+                </Form>
+              </PhoneNumberContainer>
+              <ExtendedForm onSubmit={onSubmit}>
+                <SButton text={"CONTINUE"} onClick={null} inverted={loading} />
+              </ExtendedForm>
             </Container>
           </Wrapper>
         </Modal>

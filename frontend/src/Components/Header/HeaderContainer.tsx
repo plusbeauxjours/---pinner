@@ -36,8 +36,7 @@ class HeaderContainer extends React.Component<any, IState> {
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
     if (prevProps.match !== newProps.match) {
-      const location = localStorage.getItem("cityName");
-      if (!location) {
+      if (!localStorage.getItem("cityName")) {
         navigator.geolocation.getCurrentPosition(
           this.handleGeoSuccess,
           this.handleGeoError
@@ -45,13 +44,15 @@ class HeaderContainer extends React.Component<any, IState> {
       }
     }
   }
-  public componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
-      this.handleGeoSuccess,
-      this.handleGeoError
-    );
-    console.log("hader did mount");
-  }
+  // public componentDidMount() {
+  //   if (!localStorage.getItem("cityName")) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       this.handleGeoSuccess,
+  //       this.handleGeoError
+  //     );
+  //   }
+  //   console.log("hader did mount");
+  // }
   public render() {
     const {
       currentLat,
