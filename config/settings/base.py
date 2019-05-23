@@ -12,7 +12,6 @@ APPS_DIR = ROOT_DIR.path('pinner')
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 env = environ.Env()
-
 dotenv_path = join(environ.Path(__file__) - 3, '.env')
 load_dotenv(dotenv_path)
 
@@ -281,7 +280,7 @@ CORS_ORIGIN_WHITELIST = (
 ASGI_APPLICATION = 'config.routing.application'
 
 UNSPLASH_KEY = env('UNSPLASH_KEY')
-TWILIO_SID = env('TWILIO_SID')
-TWILIO_TOKEN = env('TWILIO_TOKEN')
+TWILIO_SID = "ACeff95fa032e064459f62ff59c89ef78c"
+TWILIO_TOKEN = "b5a234ecd9da3ff3cc47d784e01ea0e6"
 TWILIO_PHONE = env('TWILIO_PHONE')
 TO = env('TO')

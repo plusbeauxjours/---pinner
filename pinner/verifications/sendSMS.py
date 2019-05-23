@@ -11,6 +11,7 @@ client = Client(TWILIO_SID, TWILIO_TOKEN)
 
 def sendSMS(to, body):
     print(to)
+    print(TWILIO_SID, TWILIO_TOKEN, from_number)
     return client.messages.create(to=to,
                                   from_=from_number,
                                   body=body)

@@ -1,15 +1,26 @@
 import React from "react";
 import Helmet from "react-helmet";
-import Input from "../../Components/Input";
 import Button from "../../Components/Button";
 import { MutationFn } from "react-apollo";
 import Form from "src/Components/Form";
 import styled from "src/Styles/typed-components";
 import { keyframes } from "styled-components";
 import Loader from "src/Components/Loader";
-import Wrapper from "../../Components/Wrapper";
+import ReactCodeInput from "react-code-input";
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: grid;
+  grid-gap: 20px;
+  grid-template-rows: 2, 50px;
+  justify-items: center;
+  align-items: center;
+  padding: 20px;
+  height: 100%;
+`;
+
+const TextContainter = styled.div`
+  margin: 0 10px 0 10px;
+`;
 
 const ExtendedForm = styled(Form)`
   padding: 0px 40px;
@@ -17,10 +28,6 @@ const ExtendedForm = styled(Form)`
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
-`;
-
-const ExtendedInput = styled(Input)`
-  margin-bottom: 20px;
 `;
 
 const ModalContainer = styled.div`
@@ -50,7 +57,12 @@ const ModalAnimation = keyframes`
 	    opacity:1;
 	    transform:none;
 	  }
-	`;
+  `;
+
+const SButton = styled(Button)`
+  width: 50px;
+  margin-top: 20px;
+`;
 
 const Modal = styled.div`
   background-color: #2d3a41;
@@ -61,21 +73,29 @@ const Modal = styled.div`
   animation: ${ModalAnimation} 0.1s linear;
 `;
 
+const Text = styled.p``;
+
+const CodeInputStyle = {
+  fontFamily: "monospace",
+  borderRadius: "6px",
+  border: "1px solid lightgrey",
+  boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px",
+  margin: "4px",
+  paddingLeft: "12px",
+  width: "44px",
+  height: "50px",
+  fontSize: "32px",
+  boxSizing: "border-box",
+  color: "rgba(0,0,0,.65)",
+  backgroundColor: "white"
+};
+
 interface IProps {
   verificationKey: string;
   onSubmit: MutationFn;
   loading: boolean;
   back: (event) => void;
-  focused: boolean;
-  selectedIndex: number;
-  hideInput: boolean;
-  inputRef: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onClick: () => void;
-  onFocus: () => void;
-  onBlur: () => void;
-  onKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  CODE_LENGTH: any;
 }
 
 const VerifyPhonePresenter: React.SFC<IProps> = ({
@@ -83,16 +103,7 @@ const VerifyPhonePresenter: React.SFC<IProps> = ({
   onSubmit,
   loading,
   back,
-  focused,
-  selectedIndex,
-  hideInput,
-  inputRef,
-  onChange,
-  onClick,
-  onFocus,
-  onBlur,
-  onKeyUp,
-  CODE_LENGTH
+  onChange
 }) => {
   if (loading) {
     return <Loader />;
@@ -101,22 +112,30 @@ const VerifyPhonePresenter: React.SFC<IProps> = ({
       <ModalContainer>
         <ModalOverlay onClick={back} />
         <Modal>
-          <Wrapper>
-            <Container>
-              <Helmet>
-                <title>Verify Phone . Pinner</title>
-              </Helmet>
+          <Helmet>
+            <title>Verify Phone . Pinner</title>
+          </Helmet>
+          <Container>
+            <ReactCodeInput
+              type={"number"}
+              value={verificationKey}
+              autoFocus={true}
+              fields={6}
+              onChange={onChange}
+              inputStyle={CodeInputStyle}
+            />
+            <TextContainter>
+              <Text>
+                Changed your phone number? Login With Email When you tap
+                "Continue", Pinner will send a text with verification code.
+                Message and data rates may apply. The verified phone number can
+                be used to login.
+              </Text>
               <ExtendedForm onSubmit={onSubmit}>
-                <ExtendedInput
-                  value={verificationKey}
-                  placeholder={"Enter Verification Code"}
-                  onChange={onChange}
-                  name={"verificationKey"}
-                />
-                <Button text={"verify"} onClick={null} inverted={loading} />
+                <SButton text={"VERIFY"} onClick={null} inverted={loading} />
               </ExtendedForm>
-            </Container>
-          </Wrapper>
+            </TextContainter>
+          </Container>
         </Modal>
       </ModalContainer>
     );

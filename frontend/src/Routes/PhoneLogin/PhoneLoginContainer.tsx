@@ -45,14 +45,12 @@ class PhoneLoginContainer extends React.Component<
           const phone = `${countryCode}${phoneNumber}`;
           if (startPhoneVerification.ok) {
             toast.success("SMS Sent! Redirectiong you...");
-            setTimeout(() => {
-              history.push({
-                pathname: "/verify-phone",
-                state: {
-                  phone
-                }
-              });
-            }, 500);
+            history.push({
+              pathname: "/verify-phone",
+              state: {
+                phone
+              }
+            });
           } else {
             toast.error("Could not send you a Key");
           }

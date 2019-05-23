@@ -57,6 +57,11 @@ const GlobalStyle = createGlobalStyle`
         color: red;
         z-index: 10;
     } */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+        -webkit-appearance: none; 
+        margin: 0; 
+    }
 `;
 
 export default GlobalStyle;
