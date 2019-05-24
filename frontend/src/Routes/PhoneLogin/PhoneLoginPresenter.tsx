@@ -1,18 +1,23 @@
 import React from "react";
 import Helmet from "react-helmet";
-import Input from "../../Components/Input";
 import styled from "src/Styles/typed-components";
 import { keyframes } from "styled-components";
-import Wrapper from "src/Components/Wrapper";
 import Loader from "src/Components/Loader";
 import Button from "../../Components/Button";
 
 const Container = styled.div`
-  margin-top: 10px;
-  padding: 20px 10px;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-rows: 2, 50px;
+  justify-items: center;
+  align-items: center;
+  padding: 20px;
+  height: 100%;
 `;
 
-const Form = styled.form``;
+const Form = styled.form`
+  margin-left: 5px;
+`;
 
 const ModalContainer = styled.div`
   display: flex;
@@ -65,7 +70,46 @@ const ExtendedForm = styled(Form)`
   align-items: center;
 `;
 
-const PhoneNumberContainer = styled.span``;
+const PhoneNumberContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+`;
+
+const Text = styled.p``;
+
+const TextContainter = styled.div`
+  margin: 0 10px 0 10px;
+`;
+
+const CountryCode = styled.div`
+  font-size: 20px;
+  margin-right: 12px;
+  cursor: pointer;
+`;
+
+const CountryPhone = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  border-bottom: 1px solid ${props => props.theme.greyColor};
+  font-size: 20px;
+`;
+
+const Input = styled.input`
+  border: 0;
+  display: flex;
+  color: white;
+  background-color: transparent;
+  font-size: 20px;
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+`;
 
 interface IProps {
   countryCode: string;
@@ -95,29 +139,42 @@ const PhoneLoginPresenter: React.SFC<IProps> = ({
       <ModalContainer>
         <ModalOverlay onClick={back} />
         <Modal>
-          <Wrapper>
-            <Container>
-              <Helmet>
-                <title>Phone Login . Pinner </title>
-              </Helmet>
-              <PhoneNumberContainer>
-                {console.log(countryCode, countryPhone)}
-                {countryCode}
+          <Helmet>
+            <title>Phone Login . Pinner </title>
+          </Helmet>
+          <Container>
+            <PhoneNumberContainer>
+              {console.log(countryCode, countryPhone)}
+              <CountryCode>{countryCode}</CountryCode>
+              <CountryPhone>
                 {countryPhone}
                 <Form onSubmit={onSubmit}>
                   <Input
-                    placeholder={"010 8520 1031"}
+                    type={"number"}
+                    autoFocus={true}
                     value={phoneNumber}
                     name={"phoneNumber"}
                     onChange={onInputChange}
+                    autoComplete={"off"}
                   />
                 </Form>
-              </PhoneNumberContainer>
+              </CountryPhone>
+            </PhoneNumberContainer>
+            <TextContainter>
+              <Text>
+                <p>Changed your phone number?Login With Email.</p>
+                <p>
+                  When you tap "Continue", Tinder will send a text with
+                  verification code. Message and data rates may apply. The
+                  verified phone number can be used to login. Learn what happens
+                  when your number changes.
+                </p>
+              </Text>
               <ExtendedForm onSubmit={onSubmit}>
                 <SButton text={"CONTINUE"} onClick={null} inverted={loading} />
               </ExtendedForm>
-            </Container>
-          </Wrapper>
+            </TextContainter>
+          </Container>
         </Modal>
       </ModalContainer>
     );

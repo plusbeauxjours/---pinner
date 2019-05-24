@@ -1054,28 +1054,37 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <SText text={String(user.profile.cityCount.cardCount)} />
               <Row>
                 <UBold text={String(user.profile.postCount)} />
-                <UBold text={" POSTS - done"} />
+                <UBold text={" how many POSTS - done"} />
               </Row>
               <Row>
                 <UBold text={String(user.profile.postCount)} />
-                <UBold text={" KM"} />
+                <UBold text={" how many KM"} />
               </Row>
               <Row>
                 <UBold text={String(user.profile.tripCount)} />
-                <UBold text={" TRIPS - done"} />
+                <UBold text={" how many TRIPS - done"} />
               </Row>
               <Row>
                 <UBold text={String(user.profile.cityCount)} />
-                <UBold text={" CITIES - done"} />
+                <UBold text={" how many CITIES - done"} />
               </Row>
               <Row>
                 <UBold text={String(user.profile.countryCount)} />
-                <UBold text={" COUNTRIES - done"} />
+                <UBold text={" how many COUNTRIES - done"} />
               </Row>
               <Row>
                 <UBold text={String(user.profile.continentCount)} />
-                <UBold text={" CONTINENT - done"} />
+                <UBold text={" how many  CONTINENT - done"} />
               </Row>
+              <Row>
+                <UBold text={String(user.profile.gender)} />
+                <UBold text={" gender - done"} />
+              </Row>
+              <Row>
+                <UBold text={String(user.profile.nationality)} />
+                <UBold text={" nationality - done"} />
+              </Row>
+
               <Weather
                 latitude={user.profile.currentCity.latitude}
                 longitude={user.profile.currentCity.longitude}

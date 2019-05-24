@@ -99,7 +99,7 @@ class PhoneLoginContainer extends React.Component<
     const { countryPhone, phoneNumber, isSubmitted } = this.state;
     const phone = `${countryPhone}${phoneNumber}`;
     console.log(phone);
-    const isValid = /^\+[1-9]{1}[0-9]{7,11}$/.test(phone);
+    const isValid = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(phone);
     if (isValid) {
       if (!isSubmitted) {
         this.phoneMutation();

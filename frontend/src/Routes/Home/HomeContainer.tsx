@@ -1,8 +1,8 @@
 import React from "react";
 import HomePresenter from "./HomePresenter";
-import { reverseGeoCode } from "../../mapHelpers";
+// import { reverseGeoCode } from "../../mapHelpers";
 import { countries } from "../../countryData";
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps, withRouter } from "react-router";
 
 interface IProps extends RouteComponentProps<any> {}
 
@@ -17,22 +17,29 @@ interface IState {
 class HomeContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
-    const { location: { state = {} } = {} } = ({} = props);
     this.state = {
       isLogIn: true,
       modalOpen: false,
-      countryCode: state.countryCode,
-      countryPhone: state.countryPhone,
+      countryCode: localStorage.getItem("countryCode"),
+      countryPhone: countries.find(
+        i => i.code === localStorage.getItem("countryCode")
+      ).phone,
       verificationModalOpen: false
     };
   }
   public componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
-      this.handleGeoSuccess,
-      this.handleGeoError
-    );
     console.log(this.state);
   }
+  // public componentDidMount() {
+  //   const countryCode = localStorage.getItem("countryCode");
+  //   if (!countryCode) {
+  //     console.log("WORKING");
+  //     navigator.geolocation.getCurrentPosition(
+  //       this.handleGeoSuccess,
+  //       this.handleGeoError
+  //     );
+  //   }
+  // }
   public render() {
     const {
       isLogIn,
@@ -54,28 +61,28 @@ class HomeContainer extends React.Component<IProps, IState> {
       />
     );
   }
-  public handleGeoSuccess = (position: Position) => {
-    const {
-      coords: { latitude, longitude }
-    } = position;
-    this.getAddress(latitude, longitude);
-  };
-  public getAddress = async (latitude: number, longitude: number) => {
-    const address = await reverseGeoCode(latitude, longitude);
-    if (address) {
-      const country = countries.find(
-        i => i.code === address.storableLocation.countryCode
-      );
-      this.setState({
-        countryCode: address.storableLocation.countryCode,
-        countryPhone: country.phone
-      });
-      localStorage.setItem("countryCode", address.storableLocation.city);
-    }
-  };
-  public handleGeoError = () => {
-    console.log("No location");
-  };
+  // public handleGeoSuccess = (position: Position) => {
+  //   const {
+  //     coords: { latitude, longitude }
+  //   } = position;
+  //   console.log("who am i");
+  //   this.getAddress(latitude, longitude);
+  // };
+  // public getAddress = async (latitude: number, longitude: number) => {
+  //   const address = await reverseGeoCode(latitude, longitude);
+  //   if (address) {
+  //     this.setState({
+  //       countryCode: address.storableLocation.countryCode,
+  //       countryPhone: countries.find(
+  //         i => i.code === address.storableLocation.countryCode
+  //       ).phone
+  //     });
+  //     localStorage.setItem("countryCode", address.storableLocation.countryCode);
+  //   }
+  // };
+  // public handleGeoError = () => {
+  //   console.log("No location");
+  // };
   public toggleModal = () => {
     const { modalOpen } = this.state;
     this.setState({
@@ -98,4 +105,4 @@ class HomeContainer extends React.Component<IProps, IState> {
   };
 }
 
-export default HomeContainer;
+export default withRouter(HomeContainer);

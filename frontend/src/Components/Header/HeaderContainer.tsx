@@ -35,24 +35,24 @@ class HeaderContainer extends React.Component<any, IState> {
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
-    if (prevProps.match !== newProps.match) {
-      if (!localStorage.getItem("cityName")) {
-        navigator.geolocation.getCurrentPosition(
-          this.handleGeoSuccess,
-          this.handleGeoError
-        );
-      }
+    if (
+      prevProps.match !== newProps.match ||
+      !localStorage.getItem("cityName")
+    ) {
+      navigator.geolocation.getCurrentPosition(
+        this.handleGeoSuccess,
+        this.handleGeoError
+      );
     }
   }
-  // public componentDidMount() {
-  //   if (!localStorage.getItem("cityName")) {
-  //     navigator.geolocation.getCurrentPosition(
-  //       this.handleGeoSuccess,
-  //       this.handleGeoError
-  //     );
-  //   }
-  //   console.log("hader did mount");
-  // }
+  public componentDidMount() {
+    if (!localStorage.getItem("cityName")) {
+      navigator.geolocation.getCurrentPosition(
+        this.handleGeoSuccess,
+        this.handleGeoError
+      );
+    }
+  }
   public render() {
     const {
       currentLat,
