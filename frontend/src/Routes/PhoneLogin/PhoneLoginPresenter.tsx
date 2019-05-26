@@ -111,16 +111,53 @@ const Input = styled.input`
   }
 `;
 
+const SearchInput = styled.input`
+  z-index: 10;
+  top: 30%;
+  width: 30%;
+  border: 0;
+  position: absolute;
+  display: flex;
+  align-self: center;
+  border-bottom: 1px solid ${props => props.theme.greyColor};
+  padding: 5px;
+  color: white;
+  background-color: transparent;
+  font-size: 34px;
+  font-weight: 100;
+  transition: border-bottom 0.1s linear;
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+  animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const SearchModalContainer = styled(ModalContainer)`
+  z-index: 10;
+`;
+const SearchModalOverlay = styled(ModalOverlay)`
+  z-index: 10;
+`;
+const SearchModal = styled(Modal)`
+  z-index: 10;
+`;
+
 interface IProps {
   countryCode: string;
   phoneNumber: string;
   countryPhone: string;
+  modalOpen: boolean;
+  search: string;
+  loading: boolean;
   onInputChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  loading: boolean;
   back: (event) => void;
+  toggleModal: () => void;
 }
 
 const PhoneLoginPresenter: React.SFC<IProps> = ({
@@ -130,53 +167,76 @@ const PhoneLoginPresenter: React.SFC<IProps> = ({
   onInputChange,
   onSubmit,
   loading,
-  back
+  back,
+  modalOpen,
+  toggleModal,
+  search
 }) => {
   if (loading) {
     return <Loader />;
   } else if (!loading) {
     return (
-      <ModalContainer>
-        <ModalOverlay onClick={back} />
-        <Modal>
-          <Helmet>
-            <title>Phone Login . Pinner </title>
-          </Helmet>
-          <Container>
-            <PhoneNumberContainer>
-              {console.log(countryCode, countryPhone)}
-              <CountryCode>{countryCode}</CountryCode>
-              <CountryPhone>
-                {countryPhone}
-                <Form onSubmit={onSubmit}>
-                  <Input
-                    type={"number"}
-                    autoFocus={true}
-                    value={phoneNumber}
-                    name={"phoneNumber"}
-                    onChange={onInputChange}
-                    autoComplete={"off"}
+      <>
+        {modalOpen && (
+          <SearchModalContainer>
+            <SearchModalOverlay onClick={toggleModal} />
+            <SearchInput
+              placeholder="Search Country"
+              autoFocus={true}
+              name={"search"}
+              onChange={onInputChange}
+              value={search}
+              autoComplete={"off"}
+            />
+            <SearchModal>haha</SearchModal>
+          </SearchModalContainer>
+        )}
+        <ModalContainer>
+          <ModalOverlay onClick={back} />
+          <Modal>
+            <Helmet>
+              <title>Phone Login . Pinner </title>
+            </Helmet>
+            <Container>
+              <PhoneNumberContainer>
+                {console.log(countryCode, countryPhone)}
+                <CountryCode onClick={toggleModal}>{countryCode}</CountryCode>
+                <CountryPhone>
+                  {countryPhone}
+                  <Form onSubmit={onSubmit}>
+                    <Input
+                      type={"number"}
+                      autoFocus={true}
+                      value={phoneNumber}
+                      name={"phoneNumber"}
+                      onChange={onInputChange}
+                      autoComplete={"off"}
+                    />
+                  </Form>
+                </CountryPhone>
+              </PhoneNumberContainer>
+              <TextContainter>
+                <Text>
+                  <p>Changed your phone number?Login With Email.</p>
+                  <p>
+                    When you tap "Continue", Tinder will send a text with
+                    verification code. Message and data rates may apply. The
+                    verified phone number can be used to login. Learn what
+                    happens when your number changes.
+                  </p>
+                </Text>
+                <ExtendedForm onSubmit={onSubmit}>
+                  <SButton
+                    text={"CONTINUE"}
+                    onClick={null}
+                    inverted={loading}
                   />
-                </Form>
-              </CountryPhone>
-            </PhoneNumberContainer>
-            <TextContainter>
-              <Text>
-                <p>Changed your phone number?Login With Email.</p>
-                <p>
-                  When you tap "Continue", Tinder will send a text with
-                  verification code. Message and data rates may apply. The
-                  verified phone number can be used to login. Learn what happens
-                  when your number changes.
-                </p>
-              </Text>
-              <ExtendedForm onSubmit={onSubmit}>
-                <SButton text={"CONTINUE"} onClick={null} inverted={loading} />
-              </ExtendedForm>
-            </TextContainter>
-          </Container>
-        </Modal>
-      </ModalContainer>
+                </ExtendedForm>
+              </TextContainter>
+            </Container>
+          </Modal>
+        </ModalContainer>
+      </>
     );
   }
   return null;

@@ -19,6 +19,8 @@ interface IState {
   countryPhone: string;
   phoneNumber: string;
   isSubmitted: boolean;
+  modalOpen: boolean;
+  search: string;
 }
 
 class PhoneLoginContainer extends React.Component<
@@ -35,8 +37,10 @@ class PhoneLoginContainer extends React.Component<
     this.state = {
       countryCode: state.countryCode,
       countryPhone: state.countryPhone,
-      phoneNumber: "",
-      isSubmitted: false
+      phoneNumber: null,
+      isSubmitted: false,
+      modalOpen: false,
+      search: null
     };
   }
   public componentDidMount() {
@@ -44,7 +48,13 @@ class PhoneLoginContainer extends React.Component<
   }
   public render() {
     const { history } = this.props;
-    const { countryCode, phoneNumber, countryPhone } = this.state;
+    const {
+      countryCode,
+      phoneNumber,
+      countryPhone,
+      modalOpen,
+      search
+    } = this.state;
     return (
       <PhoneSignInMutation
         mutation={PHONE_SIGN_IN}
@@ -74,16 +84,25 @@ class PhoneLoginContainer extends React.Component<
               countryCode={countryCode}
               phoneNumber={phoneNumber}
               countryPhone={countryPhone}
+              modalOpen={modalOpen}
+              search={search}
+              loading={loading}
               onInputChange={this.onInputChange}
               onSubmit={this.onSubmit}
-              loading={loading}
               back={this.back}
+              toggleModal={this.toggleModal}
             />
           );
         }}
       </PhoneSignInMutation>
     );
   }
+  public toggleModal = () => {
+    const { modalOpen } = this.state;
+    this.setState({
+      modalOpen: !modalOpen
+    });
+  };
   public onInputChange: React.ChangeEventHandler<
     HTMLInputElement | HTMLSelectElement
   > = event => {
