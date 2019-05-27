@@ -16,7 +16,7 @@ import {
 } from "../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
 import { GET_FEED, REQUEST_COFFEE, GET_FEED_CARDS } from "./FeedQueries";
-import { RECOMMAND_USERS } from "../People/PeopleQueries";
+import { RECOMMAND_USERS } from "../PeoplePage/PeoplePageQueries";
 import { GET_COFFEES } from "../Coffees/CoffeesQueries";
 import { toast } from "react-toastify";
 import { DELETE_COFFEE } from "../../Routes/UserProfile/UserProfileQueries";

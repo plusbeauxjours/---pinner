@@ -1,51 +1,48 @@
 import React from "react";
 import { Query } from "react-apollo";
 import { GetCoffeesVariables, GetCoffees } from "src/types/api";
-import CoffeesPresenter from "./CoffeesPresenter";
-import { GET_COFFEES } from "./CoffeesQueries";
+import CoffeesPagePresenter from "./CoffeesPagePresenter";
+import { GET_COFFEES } from "../Coffees/CoffeesQueries";
 import { RouteComponentProps } from "react-router";
 
 class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
 interface IState {
-  username: string;
+  cityName: string;
   search: string;
   coffeesList: any;
 }
 
-class CoffeesContainer extends React.Component<IProps, IState> {
+class CoffeesPageContainer extends React.Component<IProps, IState> {
   public data;
   constructor(props) {
     super(props);
-    this.state = { username: props.username, search: "", coffeesList: [] };
+    const { location: { state = {} } = {} } = ({} = props);
+    this.state = { cityName: state.currentCity, search: "", coffeesList: [] };
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
-    if (prevProps.match.params.username !== newProps.match.params.username) {
+    if (prevProps.match !== newProps.match) {
       this.setState({ search: "", coffeesList: [] });
       console.log(this.state);
     }
   }
   public render = () => {
-    const {
-      match: {
-        params: { username }
-      }
-    } = this.props;
-    const { search, coffeesList } = this.state;
+    const { cityName, search, coffeesList } = this.state;
     return (
       <GetCoffeesQuery
         query={GET_COFFEES}
-        variables={{ userName: username, location: "history" }}
+        variables={{
+          cityName: cityName || localStorage.getItem("cityName"),
+          location: "feed"
+        }}
       >
-        {({ data, loading }) => {
-          this.data = data;
+        {({ data: coffeeData, loading: coffeeLoading }) => {
           return (
-            <CoffeesPresenter
-              data={data}
-              loading={loading}
-              userName={username}
+            <CoffeesPagePresenter
+              coffeeData={coffeeData}
+              coffeeLoading={coffeeLoading}
               onChange={this.onChange}
               search={search}
               coffeesList={coffeesList}
@@ -78,4 +75,4 @@ class CoffeesContainer extends React.Component<IProps, IState> {
   };
 }
 
-export default CoffeesContainer;
+export default CoffeesPageContainer;

@@ -10,7 +10,7 @@ import { GET_FOLLOWINGS } from "../../Routes/Followings/FollowingsQueries";
 import { GET_USER } from "../../Routes/UserProfile/UserProfileQueries";
 import { CITY_PROFILE } from "../../Routes/CityProfile/CityProfileQueries";
 import { GET_MATCHES } from "../../Routes/Match/MatchQueries";
-import { RECOMMAND_USERS } from "../../Routes/People/PeopleQueries";
+import { RECOMMAND_USERS } from "../../Routes/PeoplePage/PeoplePageQueries";
 
 class FollowMutation extends Mutation<FollowUser, FollowUserVariables> {}
 

@@ -1,8 +1,8 @@
 import React from "react";
 import { Query } from "react-apollo";
 import { RecommandUsers } from "../../types/api";
-import PeoplePresenter from "./PeoplePresenter";
-import { RECOMMAND_USERS } from "./PeopleQueries";
+import PeoplePagePresenter from "./PeoplePagePresenter";
+import { RECOMMAND_USERS } from "./PeoplePageQueries";
 
 class RecommandUsersQuery extends Query<RecommandUsers> {}
 
@@ -12,7 +12,7 @@ interface IState {
   recommandUserList: any;
 }
 
-class PeopleContainer extends React.Component<any, IState> {
+class PeoplePageContainer extends React.Component<any, IState> {
   public recommandUsersFetchMore;
   public recommandUsersData;
   constructor(props) {
@@ -44,7 +44,7 @@ class PeopleContainer extends React.Component<any, IState> {
           this.recommandUsersData = recommandUsersData;
           this.recommandUsersFetchMore = recommandUsersFetchMore;
           return (
-            <PeoplePresenter
+            <PeoplePagePresenter
               recommandUsersData={recommandUsersData}
               recommandUsersLoading={recommandUsersLoading}
               modalOpen={modalOpen}
@@ -107,4 +107,4 @@ class PeopleContainer extends React.Component<any, IState> {
   };
 }
 
-export default PeopleContainer;
+export default PeoplePageContainer;

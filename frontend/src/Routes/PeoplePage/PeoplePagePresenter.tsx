@@ -1,5 +1,5 @@
 import React from "react";
-import CardDetail from "../../Routes/CardDetail";
+import CardDetail from "../CardDetail";
 import styled from "src/Styles/typed-components";
 import Wrapper from "src/Components/Wrapper";
 import Loader from "src/Components/Loader";
@@ -78,7 +78,7 @@ interface IProps {
   loadMore: any;
 }
 
-const PeoplePresenter: React.SFC<IProps> = ({
+const PeoplePagePresenter: React.SFC<IProps> = ({
   recommandUsersData: {
     recommandUsers: { users = null, hasNextPage = null } = {}
   } = {},
@@ -167,4 +167,4 @@ const PeoplePresenter: React.SFC<IProps> = ({
   );
 };
 
-export default PeoplePresenter;
+export default PeoplePagePresenter;

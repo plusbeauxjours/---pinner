@@ -25,7 +25,8 @@ import Followings from "../Routes/Followings";
 import Coffees from "../Routes/Coffees";
 import Cities from "../Routes/Cities";
 import Countries from "../Routes/Countries";
-import People from "../Routes/People";
+import PeoplePage from "../Routes/PeoplePage";
+import CoffeesPage from "../Routes/CoffeesPage";
 
 import Home from "../Routes/Home";
 import VerifyPhone from "../Routes/VerifyPhone";
@@ -44,8 +45,8 @@ const LoggedInPages = () => (
     <Header />
     <Switch>
       <Route path="/" exact={true} component={Feed} />
-      <Route path="/people" exact={true} component={People} />
-      <Route path="/coffees" exact={true} component={People} />
+      <Route path="/people" exact={true} component={PeoplePage} />
+      <Route path="/coffees" exact={true} component={CoffeesPage} />
       <Route path="/p/:id" component={CardDetail} />
       <Route path="/match" exact={true} component={Match} />
       <Route path="/explore/userlist" component={UserList} />

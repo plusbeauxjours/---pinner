@@ -410,7 +410,7 @@ const FeedPresenter: React.SFC<IProps> = ({
           <GreyLine />
           <Title>
             <SText text={"NEED SOME COFFEE NOW"} />
-            <Link to={`/people`}>
+            <Link to={{ pathname: `/coffees`, state: { currentCity } }}>
               <SeeAll>SEE ALL</SeeAll>
             </Link>
           </Title>

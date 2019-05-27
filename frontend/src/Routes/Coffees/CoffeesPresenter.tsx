@@ -76,6 +76,7 @@ const UserRow = styled.div`
   &:hover {
     background-color: grey;
   }
+  border-bottom: 1px solid grey;
   &:not(:last-child) {
     border-bottom: 1px solid grey;
   }
@@ -121,7 +122,7 @@ interface IProps {
   coffeesList: any;
 }
 
-const FollowingsPresenter: React.SFC<IProps> = ({
+const CoffeesPresenter: React.SFC<IProps> = ({
   data: { getCoffees: { coffees = null } = {} } = {},
   loading,
   userName,
@@ -200,4 +201,4 @@ const FollowingsPresenter: React.SFC<IProps> = ({
   return null;
 };
 
-export default FollowingsPresenter;
+export default CoffeesPresenter;
