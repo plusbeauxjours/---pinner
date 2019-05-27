@@ -6,7 +6,6 @@ import Wrapper from "../../Components/Wrapper";
 import Loader from "../../Components/Loader";
 import Bold from "../../Components/Bold";
 // import AvatarGrid from "../../Components/AvatarGrid";
-import UserHeader from "../../Components/UserHeader";
 import CoffeeBtn from "src/Components/CoffeeBtn";
 import Avatar from "../../Components/Avatar";
 
@@ -108,10 +107,6 @@ const UserNameRow = styled.div`
   margin-bottom: 10px;
 `;
 
-const GreyText = styled(Bold)`
-  color: #999;
-`;
-
 const Input = styled.input`
   width: 215px;
   border: 0;
@@ -153,24 +148,84 @@ const CoffeesPagePresenter: React.SFC<IProps> = ({
               <Input placeholder="Search" value={search} onChange={onChange} />
             </UserNameRow>
             {coffeesList.length !== 0 &&
-              coffeesList.map(coffee => (
-                <React.Fragment key={coffee.id}>
-                  <Link to={`/c/${coffee.id}`}>
-                    <UserRow>
-                      <UserHeader
-                        username={coffee.city.cityName}
-                        currentCity={coffee.city.country.countryName}
-                        avatar={coffee.host.profile.avatar}
-                        size={"sm"}
-                        type={"coffee"}
-                        target={coffee.target}
-                      />
-                      <GreyText text={coffee.target} />
-                      <GreyText text={coffee.expires} />
-                    </UserRow>
-                  </Link>
-                </React.Fragment>
-              ))}
+              coffeesList.map(coffee => {
+                return (
+                  <UserRow key={coffee.id}>
+                    <Link to={`/c/${coffee.id}`}>
+                      <AvatarContainer>
+                        {(() => {
+                          switch (coffee.target) {
+                            case "EVERYONE":
+                              return (
+                                <>
+                                  <Target>E</Target>
+                                  <SAvatar
+                                    size={"sm"}
+                                    url={coffee.host.profile.avatar}
+                                  />
+                                </>
+                              );
+                            case "GENDER":
+                              return (
+                                <>
+                                  <Target>G</Target>
+                                  <SAvatar
+                                    size={"sm"}
+                                    url={coffee.host.profile.avatar}
+                                  />
+                                </>
+                              );
+                            case "NATIONALITY":
+                              return (
+                                <>
+                                  <Target>N</Target>
+                                  <SAvatar
+                                    size={"sm"}
+                                    url={coffee.host.profile.avatar}
+                                  />
+                                </>
+                              );
+                            case "FOLLOWERS":
+                              return (
+                                <>
+                                  <Target>F</Target>
+                                  <SAvatar
+                                    size={"sm"}
+                                    url={coffee.host.profile.avatar}
+                                  />
+                                </>
+                              );
+                            default:
+                              return null;
+                          }
+                        })()}
+                        <HeaderColumn>
+                          <CText text={coffee.host.username} />
+                          {(() => {
+                            switch (coffee.target) {
+                              case "EVERYONE":
+                                return <Explain>with Someone</Explain>;
+                              case "GENDER":
+                                return <Explain>with same gender</Explain>;
+                              case "NATIONALITY":
+                                return <Explain>with same nationality</Explain>;
+                              case "FOLLOWERS":
+                                return <Explain>with followers</Explain>;
+                              default:
+                                return null;
+                            }
+                          })()}
+                        </HeaderColumn>
+                      </AvatarContainer>
+                    </Link>
+                    <CoffeeBtn
+                      coffeeId={coffee.id}
+                      isMatching={coffee.isMatching}
+                      isSelf={coffee.host.profile.isSelf}
+                    />
+                  </UserRow>
+                );
+              })}
             {coffeesList.length === 0 &&
               !search &&
               coffees &&

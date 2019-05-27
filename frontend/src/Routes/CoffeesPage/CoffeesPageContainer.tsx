@@ -15,7 +15,7 @@ interface IState {
 }
 
 class CoffeesPageContainer extends React.Component<IProps, IState> {
-  public data;
+  public coffeeData;
   constructor(props) {
     super(props);
     const { location: { state = {} } = {} } = ({} = props);
@@ -39,6 +39,7 @@ class CoffeesPageContainer extends React.Component<IProps, IState> {
         }}
       >
         {({ data: coffeeData, loading: coffeeLoading }) => {
+          this.coffeeData = coffeeData;
           return (
             <CoffeesPagePresenter
               coffeeData={coffeeData}
@@ -56,15 +57,13 @@ class CoffeesPageContainer extends React.Component<IProps, IState> {
     const {
       target: { value }
     } = event;
-    console.log(this.data);
+    console.log(this.coffeeData);
     const {
       getCoffees: { coffees = null }
-    } = this.data;
+    } = this.coffeeData;
     const nowSearch = (list, text) =>
-      list.filter(
-        i =>
-          i.city.cityName.toLowerCase().includes(text.toLowerCase()) ||
-          i.city.country.countryName.toLowerCase().includes(text.toLowerCase())
+      list.filter(i =>
+        i.host.username.toLowerCase().includes(text.toLowerCase())
       );
 
     const coffeesList = nowSearch(coffees, value);
