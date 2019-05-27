@@ -4,6 +4,7 @@ import styled from "src/Styles/typed-components";
 import { keyframes } from "styled-components";
 import Loader from "src/Components/Loader";
 import Button from "../../Components/Button";
+import { countries } from "../../countryData";
 
 const Container = styled.div`
   display: grid;
@@ -34,7 +35,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.75);
 `;
 
 const ModalAnimation = keyframes`
@@ -113,8 +114,8 @@ const Input = styled.input`
 
 const SearchInput = styled.input`
   z-index: 10;
-  top: 30%;
-  width: 30%;
+  top: 10%;
+  width: 300px;
   border: 0;
   position: absolute;
   display: flex;
@@ -141,8 +142,23 @@ const SearchModalContainer = styled(ModalContainer)`
 const SearchModalOverlay = styled(ModalOverlay)`
   z-index: 10;
 `;
-const SearchModal = styled(Modal)`
+
+const CountryRow = styled.div`
   z-index: 10;
+  width: 300px;
+  font-size: 20px;
+  display: flex;
+  align-self: space-between;
+`;
+
+const CountryContainer = styled.div`
+  top: 50%;
+  z-index: 10;
+  display: flex;
+  align-content: flex-start;
+  position: relative;
+  width: 300px;
+  flex-direction: column;
 `;
 
 interface IProps {
@@ -188,7 +204,13 @@ const PhoneLoginPresenter: React.SFC<IProps> = ({
               value={search}
               autoComplete={"off"}
             />
-            <SearchModal>haha</SearchModal>
+            <CountryContainer>
+              {countries.map((country, index) => (
+                <CountryRow key={index}>
+                  {country.name} {country.phone}
+                </CountryRow>
+              ))}
+            </CountryContainer>
           </SearchModalContainer>
         )}
         <ModalContainer>
