@@ -4,8 +4,10 @@ import { GetFollowingsVariables, GetFollowings } from "src/types/api";
 import FollowingsPresenter from "./FollowingsPresenter";
 import { GET_FOLLOWINGS } from "./FollowingsQueries";
 import { RouteComponentProps } from "react-router";
+import { RECOMMAND_USERS } from "../PeoplePage/PeoplePageQueries";
 
 class GetFollowingsQuery extends Query<GetFollowings, GetFollowingsVariables> {}
+class RecommandUsersQuery extends Query<RecommandUsers> {}
 
 interface IProps extends RouteComponentProps<any> {}
 interface IState {

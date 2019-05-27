@@ -1,11 +1,17 @@
 import React from "react";
 import { Query } from "react-apollo";
-import { GetFollowersVariables, GetFollowers } from "src/types/api";
+import {
+  GetFollowersVariables,
+  GetFollowers,
+  RecommandUsers
+} from "src/types/api";
 import FollowersPresenter from "./FollowersPresenter";
 import { GET_FOLLOWERS } from "./FollowersQueries";
 import { RouteComponentProps } from "react-router";
+import { RECOMMAND_USERS } from "../PeoplePage/PeoplePageQueries";
 
 class GetFollowersQuery extends Query<GetFollowers, GetFollowersVariables> {}
+class RecommandUsersQuery extends Query<RecommandUsers> {}
 
 interface IProps extends RouteComponentProps<any> {}
 interface IState {
@@ -35,24 +41,32 @@ class FollowersContainer extends React.Component<IProps, IState> {
     } = this.props;
     const { search, usersList } = this.state;
     return (
-      <GetFollowersQuery
-        query={GET_FOLLOWERS}
-        variables={{ userName: username }}
-      >
-        {({ data, loading }) => {
-          this.data = data;
+      <RecommandUsersQuery query={RECOMMAND_USERS}>
+        {({ data: recommandUsersData, loading: recommandUsersLoading }) => {
           return (
-            <FollowersPresenter
-              data={data}
-              loading={loading}
-              userName={username}
-              onChange={this.onChange}
-              search={search}
-              usersList={usersList}
-            />
+            <GetFollowersQuery
+              query={GET_FOLLOWERS}
+              variables={{ userName: username }}
+            >
+              {({ data, loading }) => {
+                this.data = data;
+                return (
+                  <FollowersPresenter
+                    data={data}
+                    loading={loading}
+                    recommandUsersData={recommandUsersData}
+                    recommandUsersLoading={recommandUsersLoading}
+                    userName={username}
+                    onChange={this.onChange}
+                    search={search}
+                    usersList={usersList}
+                  />
+                );
+              }}
+            </GetFollowersQuery>
           );
         }}
-      </GetFollowersQuery>
+      </RecommandUsersQuery>
     );
   };
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
