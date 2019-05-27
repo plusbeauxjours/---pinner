@@ -35,7 +35,7 @@ import PhoneLogin from "../Routes/PhoneLogin";
 import Header from "./Header";
 
 const Wrapper = styled.div`
-  padding-top: 55px;
+  padding-top: 45px;
   min-height: 80vh;
   min-height: 50vh;
 `;

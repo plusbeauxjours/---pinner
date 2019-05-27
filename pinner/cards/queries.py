@@ -14,8 +14,10 @@ def resolve_feed(self, info, **kwargs):
 
     user = info.context.user
     cityName = kwargs.get('cityName')
-    
+
+    print(cityName)
     city = location_models.City.objects.get(city_name=cityName)
+    print('fuck')
 
     return types.FeedResponse(city=city)
 
@@ -94,10 +96,8 @@ def resolve_get_cards(self, info, **kwargs):
         except models.Card.DoesNotExist:
             raise Exception('Card not found')
 
-
     else:
         return types.GetCardsResponse(cards=None, page=nextPage, hasNextPage=hasNextPage)
-
 
 
 @login_required
@@ -119,11 +119,11 @@ def resolve_get_feed_cards(self, info, **kwargs):
             city__city_name=cityName)
         my_cards = user.cards.all()
         combined = following_cards.union(city_cards).union(my_cards).order_by(
-                '-created_at')[offset:6 + offset]
+            '-created_at')[offset:6 + offset]
         return types.GetCardsResponse(cards=combined, page=nextPage, hasNextPage=True)
     except models.Card.DoesNotExist:
         raise Exception('Card not found')
- 
+
 
 @login_required
 def resolve_get_comments(self, info, **kwargs):
@@ -174,7 +174,7 @@ def resolve_card_detail(self, info, **kwargs):
 def resolve_search_cards(self, info, **kwargs):
 
     user = info.context.user
-    
+
     search = kwargs.get('search')
 
     cards = models.Card.objects.filter(caption__icontains=search)
@@ -210,7 +210,7 @@ def resolve_get_duration_cards(self, info, **kwargs):
         cardCount = cards.count()
         cards = cards[offset:12 + offset]
         hasNextPage = offset < cardCount
-        return types.DurationCardsResponse(cards=cards,page=nextPage, hasNextPage=hasNextPage)
+        return types.DurationCardsResponse(cards=cards, page=nextPage, hasNextPage=hasNextPage)
 
     except models.Card.DoesNotExist:
         raise Exception('Card not found')

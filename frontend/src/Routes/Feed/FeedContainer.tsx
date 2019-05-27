@@ -2,8 +2,6 @@ import React from "react";
 import { Mutation, Query, MutationFn } from "react-apollo";
 import FeedPresenter from "./FeedPresenter";
 import {
-  Feed,
-  FeedVariables,
   RecommandUsers,
   RequestCoffee,
   RequestCoffeeVariables,
@@ -15,7 +13,7 @@ import {
   GetFeedCardsVariables
 } from "../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
-import { GET_FEED, REQUEST_COFFEE, GET_FEED_CARDS } from "./FeedQueries";
+import { REQUEST_COFFEE, GET_FEED_CARDS } from "./FeedQueries";
 import { RECOMMAND_USERS } from "../PeoplePage/PeoplePageQueries";
 import { GET_COFFEES } from "../Coffees/CoffeesQueries";
 import { toast } from "react-toastify";
@@ -32,7 +30,6 @@ class DeleteCoffeeMutation extends Mutation<
 
 class RecommandUsersQuery extends Query<RecommandUsers> {}
 
-class FeedQuery extends Query<Feed, FeedVariables> {}
 class GetCardsQuery extends Query<GetFeedCards, GetFeedCardsVariables> {}
 class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
 
@@ -128,56 +125,38 @@ class FeedContainer extends React.Component<IProps, IState> {
                                 {requestCoffeeFn => {
                                   this.requestCoffeeFn = requestCoffeeFn;
                                   return (
-                                    <FeedQuery
-                                      query={GET_FEED}
-                                      variables={{
-                                        cityName: currentCity
-                                      }}
-                                    >
-                                      {({
-                                        data: feedData,
-                                        loading: feedLoading
-                                      }) => {
-                                        return (
-                                          <FeedPresenter
-                                            feedData={feedData}
-                                            feedLoading={feedLoading}
-                                            coffeeData={coffeeData}
-                                            coffeeLoading={coffeeLoading}
-                                            currentCity={currentCity}
-                                            toggleRequestingCoffeeModal={
-                                              this.toggleRequestingCoffeeModal
-                                            }
-                                            toggleCoffeeReportModal={
-                                              this.toggleCoffeeReportModal
-                                            }
-                                            recommandUsersData={
-                                              recommandUsersData
-                                            }
-                                            recommandUsersLoading={
-                                              recommandUsersLoading
-                                            }
-                                            requestModalOpen={requestModalOpen}
-                                            requestingCoffeeModalOpen={
-                                              requestingCoffeeModalOpen
-                                            }
-                                            coffeeReportModalOpen={
-                                              coffeeReportModalOpen
-                                            }
-                                            toggleRequestModal={
-                                              this.toggleRequestModal
-                                            }
-                                            submitCoffee={this.submitCoffee}
-                                            currentLat={currentLat}
-                                            currentLng={currentLng}
-                                            deleteCoffee={this.deleteCoffee}
-                                            loadMore={this.loadMore}
-                                            cardsData={cardsData}
-                                            cardsLoading={cardsLoading}
-                                          />
-                                        );
-                                      }}
-                                    </FeedQuery>
+                                    <FeedPresenter
+                                      coffeeData={coffeeData}
+                                      coffeeLoading={coffeeLoading}
+                                      currentCity={currentCity}
+                                      toggleRequestingCoffeeModal={
+                                        this.toggleRequestingCoffeeModal
+                                      }
+                                      toggleCoffeeReportModal={
+                                        this.toggleCoffeeReportModal
+                                      }
+                                      recommandUsersData={recommandUsersData}
+                                      recommandUsersLoading={
+                                        recommandUsersLoading
+                                      }
+                                      requestModalOpen={requestModalOpen}
+                                      requestingCoffeeModalOpen={
+                                        requestingCoffeeModalOpen
+                                      }
+                                      coffeeReportModalOpen={
+                                        coffeeReportModalOpen
+                                      }
+                                      toggleRequestModal={
+                                        this.toggleRequestModal
+                                      }
+                                      submitCoffee={this.submitCoffee}
+                                      currentLat={currentLat}
+                                      currentLng={currentLng}
+                                      deleteCoffee={this.deleteCoffee}
+                                      loadMore={this.loadMore}
+                                      cardsData={cardsData}
+                                      cardsLoading={cardsLoading}
+                                    />
                                   );
                                 }}
                               </RequestCoffeeMutation>

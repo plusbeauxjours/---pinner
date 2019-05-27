@@ -421,6 +421,43 @@ export interface GetCardsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: Feed
+// ====================================================
+
+export interface Feed_feed_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryPhoto: string | null;
+  countryCode: string | null;
+}
+
+export interface Feed_feed_city {
+  __typename: "CityType";
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: Feed_feed_city_country;
+  userCount: number | null;
+  userLogCount: number | null;
+}
+
+export interface Feed_feed {
+  __typename: "FeedResponse";
+  city: Feed_feed_city | null;
+}
+
+export interface Feed {
+  feed: Feed_feed;
+}
+
+export interface FeedVariables {
+  cityName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: logIn
 // ====================================================
 
@@ -1515,43 +1552,6 @@ export interface LatestCities {
 
 export interface LatestCitiesVariables {
   latestCityPage?: number | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: Feed
-// ====================================================
-
-export interface Feed_feed_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-  countryPhoto: string | null;
-  countryCode: string | null;
-}
-
-export interface Feed_feed_city {
-  __typename: "CityType";
-  cityName: string | null;
-  cityPhoto: string | null;
-  country: Feed_feed_city_country;
-  userCount: number | null;
-  userLogCount: number | null;
-}
-
-export interface Feed_feed {
-  __typename: "FeedResponse";
-  city: Feed_feed_city | null;
-}
-
-export interface Feed {
-  feed: Feed_feed;
-}
-
-export interface FeedVariables {
-  cityName: string;
 }
 
 

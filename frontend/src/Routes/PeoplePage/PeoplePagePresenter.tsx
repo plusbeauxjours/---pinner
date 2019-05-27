@@ -6,9 +6,10 @@ import Loader from "src/Components/Loader";
 import { Route } from "react-router";
 
 import InfiniteScroll from "react-infinite-scroller";
-import UserHeader from "../../Components/UserHeader";
 import { Link } from "react-router-dom";
 import FollowBtn from "src/Components/FollowBtn";
+import Avatar from "../../Components/Avatar";
+import Bold from "../../Components/Bold";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -67,6 +68,31 @@ const Input = styled.input`
   }
 `;
 
+const Location = styled.span`
+  display: flex;
+  margin-top: 5px;
+  position: block;
+  font-size: 12px;
+  font-weight: 200;
+`;
+
+const AvatarContainer = styled.div`
+  display: flex;
+  position: relative;
+`;
+
+const HeaderColumn = styled.div`
+  margin-left: 15px;
+`;
+
+const CText = styled(Bold)`
+  display: flex;
+`;
+
+const Explain = styled(Location)`
+  color: grey;
+`;
+
 interface IProps {
   recommandUsersData: any;
   recommandUsersLoading: boolean;
@@ -111,15 +137,13 @@ const PeoplePagePresenter: React.SFC<IProps> = ({
                   return (
                     <UserRow key={user.id}>
                       <Link to={`/${user.username}`}>
-                        <UserHeader
-                          username={user.username}
-                          currentCity={user.profile.currentCity.cityName}
-                          currentCountry={
-                            user.profile.currentCity.country.countryName
-                          }
-                          avatar={user.profile.avatar}
-                          size={"sm"}
-                        />
+                        <AvatarContainer>
+                          <Avatar size={"sm"} url={user.profile.avatar} />
+                          <HeaderColumn>
+                            <CText text={user.username} />
+                            <Explain>with same nationality</Explain>
+                          </HeaderColumn>
+                        </AvatarContainer>
                       </Link>
                       {!user.isSelf && (
                         <FollowBtn
@@ -139,15 +163,13 @@ const PeoplePagePresenter: React.SFC<IProps> = ({
                   return (
                     <UserRow key={user.id}>
                       <Link to={`/${user.username}`}>
-                        <UserHeader
-                          username={user.username}
-                          currentCity={user.profile.currentCity.cityName}
-                          currentCountry={
-                            user.profile.currentCity.country.countryName
-                          }
-                          avatar={user.profile.avatar}
-                          size={"sm"}
-                        />
+                        <AvatarContainer>
+                          <Avatar size={"sm"} url={user.profile.avatar} />
+                          <HeaderColumn>
+                            <CText text={user.username} />
+                            <Explain>with same nationality</Explain>
+                          </HeaderColumn>
+                        </AvatarContainer>
                       </Link>
                       {!user.isSelf && (
                         <FollowBtn

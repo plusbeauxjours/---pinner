@@ -8,22 +8,66 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const WeatherInfo = styled.div`
+const WeatherInfo = styled.div<ITheme>`
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
+  justify-content: center;
+  height: ${props => {
+    if (props.type === "feed") {
+      return "25px";
+    } else {
+      return "100%";
+    }
+  }};
+  flex-wrap: wrap;
 `;
 
-const WeatherImage = styled.img`
-  height: 60px;
-  width: 60px;
-  background-position: center center;
-  background-size: 100%;
+const WeatherImage = styled.img<ITheme>`
+  height: ${props => {
+    if (props.size === "md") {
+      return "60px";
+    } else if (props.size === "sm") {
+      return "25px";
+    } else {
+      return "60px";
+    }
+  }};
+  width: ${props => {
+    if (props.size === "md") {
+      return "60px";
+    } else if (props.size === "sm") {
+      return "25px";
+    } else {
+      return "60px";
+    }
+  }};
+  margin-right: 2px;
 `;
+
+const WeatherNumber = styled.div<ITheme>`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 3px;
+  margin-right: 5px;
+  font-size: ${props => {
+    if (props.size === "sm") {
+      return "8px";
+    } else {
+      return "12px";
+    }
+  }};
+`;
+
+interface ITheme {
+  size?: string;
+  type?: string;
+}
 
 interface IProps {
   latitude: number;
   longitude: number;
+  size?: string;
+  type?: string;
 }
 
 interface IState {
@@ -56,19 +100,35 @@ class Weather extends React.Component<IProps, IState> {
     }
   }
   public render() {
+    const { size, type } = this.props;
     const { aqi, icon, humidity, temp, chill } = this.state;
     return (
       <Container>
         {icon ? (
-          <WeatherImage src={require(`../Images/weatherIcon/${icon}.svg`)} />
+          <WeatherImage
+            src={require(`../Images/weatherIcon/${icon}.svg`)}
+            size={size}
+          />
         ) : (
           <LoaderData />
         )}
-        <WeatherInfo>
-          <p>AQI {aqi}</p>
-          <p>Humidity {humidity}</p>
-          <p>Temp {temp.toFixed(1)} °C</p>
-          <p>Feels {chill.toFixed(1)} °C</p>
+        <WeatherInfo type={type}>
+          <WeatherNumber size={size}>
+            <p>Temp</p>
+            <p> {temp.toFixed(1)} °C</p>
+          </WeatherNumber>
+          <WeatherNumber size={size}>
+            <p>Feels</p>
+            <p> {chill.toFixed(1)} °C</p>
+          </WeatherNumber>
+          <WeatherNumber size={size}>
+            <p>AQI</p>
+            <p> {aqi}</p>
+          </WeatherNumber>
+          <WeatherNumber size={size}>
+            <p>Humidity</p>
+            <p> {humidity}</p>
+          </WeatherNumber>
         </WeatherInfo>
       </Container>
     );

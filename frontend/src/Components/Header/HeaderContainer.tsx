@@ -2,10 +2,17 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import HeaderPresenter from "./HeaderPresenter";
 import { reverseGeoCode } from "../../mapHelpers";
-import { ReportLocation, ReportLocationVariables } from "../../types/api";
-import { Mutation, MutationFn } from "react-apollo";
+import {
+  Feed,
+  FeedVariables,
+  ReportLocation,
+  ReportLocationVariables
+} from "../../types/api";
+import { Mutation, MutationFn, Query } from "react-apollo";
 import { REPORT_LOCATION } from "../../Routes/Home/HomeQueries";
+import { GET_FEED } from "./HeaderQueries";
 
+class FeedQuery extends Query<Feed, FeedVariables> {}
 class ReportLocationMutation extends Mutation<
   ReportLocation,
   ReportLocationVariables
@@ -24,6 +31,10 @@ class HeaderContainer extends React.Component<any, IState> {
   public ReportLocationFn: MutationFn;
   constructor(props) {
     super(props);
+    navigator.geolocation.getCurrentPosition(
+      this.handleGeoSuccess,
+      this.handleGeoError
+    );
     this.state = {
       currentLat: 0,
       currentLng: 0,
@@ -32,8 +43,11 @@ class HeaderContainer extends React.Component<any, IState> {
       modalOpen: false,
       search: ""
     };
+    console.log(this.state);
   }
   public componentDidUpdate(prevProps) {
+    console.log(this.state);
+    console.log("update");
     const newProps = this.props;
     if (
       prevProps.match !== newProps.match ||
@@ -46,7 +60,11 @@ class HeaderContainer extends React.Component<any, IState> {
     }
   }
   public componentDidMount() {
-    if (!localStorage.getItem("cityName")) {
+    const location = localStorage.getItem("cityName");
+    console.log("mount");
+    console.log(location);
+    console.log(this.state);
+    if (!location) {
       navigator.geolocation.getCurrentPosition(
         this.handleGeoSuccess,
         this.handleGeoError
@@ -67,16 +85,29 @@ class HeaderContainer extends React.Component<any, IState> {
         {ReportLocationFn => {
           this.ReportLocationFn = ReportLocationFn;
           return (
-            <HeaderPresenter
-              currentLat={currentLat}
-              currentLng={currentLng}
-              currentCity={currentCity}
-              currentCountryCode={currentCountryCode}
-              modalOpen={modalOpen}
-              search={search}
-              toggleModal={this.toggleModal}
-              onChange={this.onChange}
-            />
+            <FeedQuery
+              query={GET_FEED}
+              variables={{
+                cityName: currentCity || localStorage.getItem("cityName")
+              }}
+            >
+              {({ data }) => {
+                console.log(data);
+                return (
+                  <HeaderPresenter
+                    data={data}
+                    currentLat={currentLat}
+                    currentLng={currentLng}
+                    currentCity={currentCity}
+                    currentCountryCode={currentCountryCode}
+                    modalOpen={modalOpen}
+                    search={search}
+                    toggleModal={this.toggleModal}
+                    onChange={this.onChange}
+                  />
+                );
+              }}
+            </FeedQuery>
           );
         }}
       </ReportLocationMutation>

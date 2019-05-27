@@ -8,7 +8,6 @@ import Loader from "../../Components/Loader";
 import Photo from "../../Components/Photo";
 import Wrapper from "../../Components/Wrapper";
 import Bold from "../../Components/Bold";
-import Weather from "src/Components/Weather";
 import InfiniteScroll from "react-infinite-scroller";
 // import CitySearch from "src/Components/CitySearch";
 import FollowBtn from "src/Components/FollowBtn";
@@ -20,25 +19,6 @@ const SWrapper = styled(Wrapper)`
   z-index: 1;
 `;
 
-const PHeader = styled.header`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-
-  border: 1px;
-  border-color: white;
-  margin-top: 20px;
-`;
-
-const Header = styled.header`
-  padding: 12px;
-  margin: 0 15px 0 15px;
-  display: flex;
-  align-items: center;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-`;
-
 const Location = styled.span`
   display: flex;
   margin-top: 5px;
@@ -47,14 +27,8 @@ const Location = styled.span`
   font-weight: 200;
 `;
 
-const UserContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-content: center;
-`;
-
-const CText = styled(Bold)`
-  display: flex;
+const HeaderColumn = styled.div`
+  margin-left: 15px;
 `;
 
 const SText = styled(Bold)`
@@ -62,30 +36,8 @@ const SText = styled(Bold)`
   font-weight: 100;
 `;
 
-const CityPhoto = styled.img<ITheme>`
+const CText = styled(Bold)`
   display: flex;
-  width: ${props => {
-    if (props.size === "md") {
-      return "200px";
-    } else if (props.size === "sm") {
-      return "50px";
-    } else {
-      return "200px";
-    }
-  }};
-  height: ${props => {
-    if (props.size === "md") {
-      return "200px";
-    } else if (props.size === "sm") {
-      return "50px";
-    } else {
-      return "200px";
-    }
-  }};
-  background-size: cover;
-  border-radius: 3px;
-  z-index: 1;
-  object-fit: cover;
 `;
 
 const ModalAnimation = keyframes`
@@ -116,7 +68,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.75);
 `;
 
 const Modal = styled.div`
@@ -230,8 +182,6 @@ const Icon = styled.div`
   }
 `;
 
-const SAvatar = styled(Avatar)``;
-
 const Target = styled.div`
   display: flex;
   position: absolute;
@@ -245,21 +195,11 @@ const AvatarContainer = styled.div`
   position: relative;
 `;
 
-const HeaderColumn = styled.div`
-  margin-left: 15px;
-`;
-
 const Explain = styled(Location)`
   color: grey;
 `;
 
-interface ITheme {
-  size?: string;
-}
-
 interface IProps {
-  feedData?: any;
-  feedLoading: boolean;
   coffeeData: any;
   coffeeLoading: boolean;
   cardsData: any;
@@ -281,8 +221,6 @@ interface IProps {
 }
 
 const FeedPresenter: React.SFC<IProps> = ({
-  feedData: { feed: { city = null } = {} } = {},
-  feedLoading,
   cardsData: { getFeedCards: { cards = null, hasNextPage = true } = {} } = {},
   cardsLoading,
   coffeeData: { getCoffees: { coffees = null } = {} } = {},
@@ -302,9 +240,9 @@ const FeedPresenter: React.SFC<IProps> = ({
   deleteCoffee,
   loadMore
 }) => {
-  if (feedLoading) {
+  if (cardsLoading) {
     return <Loader />;
-  } else if (!feedLoading && city) {
+  } else if (!cardsLoading) {
     return (
       <>
         {requestingCoffeeModalOpen && (
@@ -358,21 +296,6 @@ const FeedPresenter: React.SFC<IProps> = ({
           </ModalContainer>
         )}
         <SWrapper>
-          <PHeader>
-            <UserContainer>
-              <Link to={`/city/${city.cityName}`}>
-                <Header>
-                  <CityPhoto src={city.cityPhoto} size={"sm"} />
-                  <HeaderColumn>
-                    <SText text={city.cityName} />
-                    <Location>{city.country.countryName}</Location>
-                  </HeaderColumn>
-                </Header>
-              </Link>
-              <Weather latitude={currentLat} longitude={currentLng} />
-            </UserContainer>
-          </PHeader>
-          <GreyLine />
           {/* <CitySearch /> */}
           <Title>
             <SText text={"RECOMMAND USER"} />
@@ -434,7 +357,7 @@ const FeedPresenter: React.SFC<IProps> = ({
                                 return (
                                   <>
                                     <Target>E</Target>
-                                    <SAvatar
+                                    <Avatar
                                       size={"sm"}
                                       url={coffee.host.profile.avatar}
                                     />
@@ -444,7 +367,7 @@ const FeedPresenter: React.SFC<IProps> = ({
                                 return (
                                   <>
                                     <Target>G</Target>
-                                    <SAvatar
+                                    <Avatar
                                       size={"sm"}
                                       url={coffee.host.profile.avatar}
                                     />
@@ -454,7 +377,7 @@ const FeedPresenter: React.SFC<IProps> = ({
                                 return (
                                   <>
                                     <Target>N</Target>
-                                    <SAvatar
+                                    <Avatar
                                       size={"sm"}
                                       url={coffee.host.profile.avatar}
                                     />
@@ -464,7 +387,7 @@ const FeedPresenter: React.SFC<IProps> = ({
                                 return (
                                   <>
                                     <Target>F</Target>
-                                    <SAvatar
+                                    <Avatar
                                       size={"sm"}
                                       url={coffee.host.profile.avatar}
                                     />

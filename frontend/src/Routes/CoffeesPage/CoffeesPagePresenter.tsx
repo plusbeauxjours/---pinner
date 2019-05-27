@@ -10,7 +10,7 @@ import CoffeeBtn from "src/Components/CoffeeBtn";
 import Avatar from "../../Components/Avatar";
 
 const SWrapper = styled(Wrapper)`
-  z-index: 1;
+  max-width: 650px;
 `;
 
 const PHeader = styled.header`
