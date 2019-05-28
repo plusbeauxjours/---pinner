@@ -204,7 +204,7 @@ const UserContainer = styled.div`
   }
 `;
 
-const UserRow = styled.div`
+const UserRow = styled.div<ITheme>`
   display: grid;
   flex-direction: row;
   grid-template-columns: 4fr 1fr;
@@ -213,6 +213,7 @@ const UserRow = styled.div`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -248,6 +249,10 @@ const Input = styled.input`
   }
 `;
 
+interface ITheme {
+  active?: string;
+}
+
 interface IProps {
   cityData?: any;
   cityLoading: boolean;
@@ -262,6 +267,11 @@ interface IProps {
   search: string;
   nowUsersList: any;
   beforeUsersList: any;
+  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onClick: any;
+  onBlur: any;
+  nowUsersActiveId: number;
+  beforeUsersActiveId: number;
 }
 
 const CityProfilePresenter: React.SFC<IProps> = ({
@@ -283,7 +293,12 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   search,
   onChange,
   nowUsersList,
-  beforeUsersList
+  beforeUsersList,
+  onKeyDown,
+  onClick,
+  onBlur,
+  nowUsersActiveId,
+  beforeUsersActiveId
 }) => {
   if (cityLoading) {
     return <Loader />;
@@ -334,106 +349,134 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                   placeholder="Search"
                   onChange={onChange}
                   value={search}
+                  onKeyDown={onKeyDown}
+                  onClick={onClick}
+                  onBlur={onBlur}
                 />
               </UserNameRow>
               {nowUsersList.length !== 0 &&
-                nowUsersList.map(user => (
-                  <UserRow key={user.profile.id}>
-                    <Link to={`/${user.profile.username}`}>
-                      <UserHeader
-                        username={user.profile.username}
-                        currentCity={user.profile.currentCity.cityName}
-                        currentCountry={
-                          user.profile.currentCity.country.countryName
-                        }
-                        avatar={user.profile.avatar}
-                        size={"sm"}
-                      />
-                    </Link>
-                    {!user.profile.isSelf && (
-                      <FollowBtn
-                        isFollowing={user.profile.isFollowing}
-                        userId={user.profile.id}
-                        username={user.profile.username}
-                      />
-                    )}
-                  </UserRow>
-                ))}
+                nowUsersList.map((user, index) => {
+                  let active;
+                  if (index === nowUsersActiveId) {
+                    active = "active";
+                  }
+                  return (
+                    <UserRow key={index} active={active}>
+                      <Link to={`/${user.profile.username}`}>
+                        <UserHeader
+                          username={user.profile.username}
+                          currentCity={user.profile.currentCity.cityName}
+                          currentCountry={
+                            user.profile.currentCity.country.countryName
+                          }
+                          avatar={user.profile.avatar}
+                          size={"sm"}
+                        />
+                      </Link>
+                      {!user.profile.isSelf && (
+                        <FollowBtn
+                          isFollowing={user.profile.isFollowing}
+                          userId={user.profile.id}
+                          username={user.profile.username}
+                        />
+                      )}
+                    </UserRow>
+                  );
+                })}
               {beforeUsersList.length !== 0 &&
-                beforeUsersList.map(user => (
-                  <UserRow key={user.actor.profile.id}>
-                    <Link to={`/${user.actor.profile.username}`}>
-                      <UserHeader
-                        username={user.actor.profile.username}
-                        currentCity={user.actor.profile.currentCity.cityName}
-                        currentCountry={
-                          user.actor.profile.currentCity.country.countryName
-                        }
-                        avatar={user.actor.profile.avatar}
-                        size={"sm"}
-                      />
-                    </Link>
-                    {!user.actor.profile.isSelf && (
-                      <FollowBtn
-                        isFollowing={user.actor.profile.isFollowing}
-                        userId={user.actor.profile.id}
-                        username={user.actor.profile.username}
-                      />
-                    )}
-                  </UserRow>
-                ))}
+                beforeUsersList.map((user, index) => {
+                  let active;
+                  if (index === beforeUsersActiveId) {
+                    active = "active";
+                  }
+                  return (
+                    <UserRow key={index} active={active}>
+                      {console.log("nanai")}
+                      <Link to={`/${user.actor.profile.username}`}>
+                        <UserHeader
+                          username={user.actor.profile.username}
+                          currentCity={user.actor.profile.currentCity.cityName}
+                          currentCountry={
+                            user.actor.profile.currentCity.country.countryName
+                          }
+                          avatar={user.actor.profile.avatar}
+                          size={"sm"}
+                        />
+                      </Link>
+                      {!user.actor.profile.isSelf && (
+                        <FollowBtn
+                          isFollowing={user.actor.profile.isFollowing}
+                          userId={user.actor.profile.id}
+                          username={user.actor.profile.username}
+                        />
+                      )}
+                    </UserRow>
+                  );
+                })}
               {nowUsersList.length === 0 &&
                 !search &&
                 beforeUsersList.length === 0 &&
                 usersNow &&
-                usersNow.map(user => (
-                  <UserRow key={user.profile.id}>
-                    <Link to={`/${user.profile.username}`}>
-                      <UserHeader
-                        username={user.profile.username}
-                        currentCity={user.profile.currentCity.cityName}
-                        currentCountry={
-                          user.profile.currentCity.country.countryName
-                        }
-                        avatar={user.profile.avatar}
-                        size={"sm"}
-                      />
-                    </Link>
-                    {!user.profile.isSelf && (
-                      <FollowBtn
-                        isFollowing={user.profile.isFollowing}
-                        userId={user.profile.id}
-                        username={user.profile.username}
-                      />
-                    )}
-                  </UserRow>
-                ))}
+                usersNow.map((user, index) => {
+                  let active;
+                  if (index === nowUsersActiveId) {
+                    active = "active";
+                  }
+                  return (
+                    <UserRow key={index} active={active}>
+                      <Link to={`/${user.profile.username}`}>
+                        <UserHeader
+                          username={user.profile.username}
+                          currentCity={user.profile.currentCity.cityName}
+                          currentCountry={
+                            user.profile.currentCity.country.countryName
+                          }
+                          avatar={user.profile.avatar}
+                          size={"sm"}
+                        />
+                      </Link>
+                      {!user.profile.isSelf && (
+                        <FollowBtn
+                          isFollowing={user.profile.isFollowing}
+                          userId={user.profile.id}
+                          username={user.profile.username}
+                        />
+                      )}
+                    </UserRow>
+                  );
+                })}
               {nowUsersList.length === 0 &&
                 !search &&
                 beforeUsersList.length === 0 &&
                 usersBefore &&
-                usersBefore.map(user => (
-                  <UserRow key={user.actor.profile.id}>
-                    <Link to={`/${user.actor.profile.username}`}>
-                      <UserHeader
-                        username={user.actor.profile.username}
-                        currentCity={user.actor.profile.currentCity.cityName}
-                        currentCountry={
-                          user.actor.profile.currentCity.country.countryName
-                        }
-                        avatar={user.actor.profile.avatar}
-                        size={"sm"}
-                      />
-                    </Link>
-                    {!user.actor.profile.isSelf && (
-                      <FollowBtn
-                        isFollowing={user.actor.profile.isFollowing}
-                        userId={user.actor.profile.id}
-                        username={user.actor.profile.username}
-                      />
-                    )}
-                  </UserRow>
-                ))}
+                usersBefore.map((user, index) => {
+                  let active;
+                  if (index === beforeUsersActiveId) {
+                    active = "active";
+                  }
+                  return (
+                    <UserRow key={index} active={active}>
+                      <Link to={`/${user.actor.profile.username}`}>
+                        <UserHeader
+                          username={user.actor.profile.username}
+                          currentCity={user.actor.profile.currentCity.cityName}
+                          currentCountry={
+                            user.actor.profile.currentCity.country.countryName
+                          }
+                          avatar={user.actor.profile.avatar}
+                          size={"sm"}
+                        />
+                      </Link>
+                      {!user.actor.profile.isSelf && (
+                        <FollowBtn
+                          isFollowing={user.actor.profile.isFollowing}
+                          userId={user.actor.profile.id}
+                          username={user.actor.profile.username}
+                        />
+                      )}
+                    </UserRow>
+                  );
+                })}
             </UserContainer>
           </PHeader>
           {coffees && coffees.length !== 0 ? (
