@@ -113,34 +113,42 @@ class FollowersContainer extends React.Component<IProps, IState> {
       getFollowers: { profiles = null }
     } = this.data;
 
-    if (usersList) {
-      if (keyCode === 13 && usersList) {
-        history.push({
-          pathname: `/${usersList[activeOption].username}`
-        });
-        this.setState({
-          activeOption: 0,
-          showOptions: false,
-          search: usersList[activeOption].username
-        });
-      } else if (keyCode === 38) {
-        if (activeOption === 0) {
-          return;
-        }
-        this.setState({
-          activeOption: activeOption - 1
-        });
-      } else if (keyCode === 40) {
+    if (keyCode === 13 && (usersList.length || profiles)) {
+      {
+        usersList.length
+          ? history.push({
+              pathname: `/${usersList[activeOption].username}`
+            })
+          : history.push({
+              pathname: `/${profiles[activeOption].username}`
+            });
+      }
+      this.setState({
+        activeOption: 0,
+        showOptions: false
+      });
+    } else if (keyCode === 38) {
+      if (activeOption === 0) {
+        return;
+      }
+      this.setState({
+        activeOption: activeOption - 1
+      });
+    } else if (keyCode === 40) {
+      if (usersList.length) {
         if (activeOption === usersList.length - 1) {
           console.log(activeOption);
           return;
         }
-        this.setState({
-          activeOption: activeOption + 1
-        });
+      } else {
+        if (activeOption === profiles.length - 1) {
+          console.log(activeOption);
+          return;
+        }
       }
-    } else {
-      console.log(profiles);
+      this.setState({
+        activeOption: activeOption + 1
+      });
     }
   };
   public onClick = event => {
