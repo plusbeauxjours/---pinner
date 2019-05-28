@@ -18,8 +18,7 @@ interface IState {
   username: string;
   search: string;
   usersList: any;
-  activeOption: number;
-  showOptions: boolean;
+  activeId: number;
 }
 
 class FollowersContainer extends React.Component<IProps, IState> {
@@ -30,8 +29,7 @@ class FollowersContainer extends React.Component<IProps, IState> {
       username: null,
       search: "",
       usersList: [],
-      activeOption: 0,
-      showOptions: false
+      activeId: null
     };
   }
   public componentDidUpdate(prevProps) {
@@ -47,7 +45,7 @@ class FollowersContainer extends React.Component<IProps, IState> {
         params: { username }
       }
     } = this.props;
-    const { search, usersList } = this.state;
+    const { search, usersList, activeId } = this.state;
     return (
       <RecommandUsersQuery query={RECOMMAND_USERS}>
         {({ data: recommandUsersData, loading: recommandUsersLoading }) => {
@@ -65,11 +63,13 @@ class FollowersContainer extends React.Component<IProps, IState> {
                     recommandUsersData={recommandUsersData}
                     recommandUsersLoading={recommandUsersLoading}
                     userName={username}
-                    onChange={this.onChange}
                     search={search}
+                    activeId={activeId}
+                    onChange={this.onChange}
                     usersList={usersList}
                     onKeyDown={this.onKeyDown}
                     onClick={this.onClick}
+                    onBlur={this.onBlur}
                   />
                 );
               }}
@@ -100,13 +100,12 @@ class FollowersContainer extends React.Component<IProps, IState> {
     this.setState({
       search: value,
       usersList,
-      activeOption: 0,
-      showOptions: true
+      activeId: 0
     } as any);
   };
   public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { keyCode } = event;
-    const { activeOption, usersList } = this.state;
+    const { activeId, usersList } = this.state;
     const { history } = this.props;
 
     const {
@@ -117,48 +116,47 @@ class FollowersContainer extends React.Component<IProps, IState> {
       {
         usersList.length
           ? history.push({
-              pathname: `/${usersList[activeOption].username}`
+              pathname: `/${usersList[activeId].username}`
             })
           : history.push({
-              pathname: `/${profiles[activeOption].username}`
+              pathname: `/${profiles[activeId].username}`
             });
       }
       this.setState({
-        activeOption: 0,
-        showOptions: false
+        activeId: 0
       });
     } else if (keyCode === 38) {
-      if (activeOption === 0) {
+      if (activeId === 0) {
         return;
       }
       this.setState({
-        activeOption: activeOption - 1
+        activeId: activeId - 1
       });
     } else if (keyCode === 40) {
       if (usersList.length) {
-        if (activeOption === usersList.length - 1) {
-          console.log(activeOption);
+        if (activeId === usersList.length - 1) {
+          console.log(activeId);
           return;
         }
       } else {
-        if (activeOption === profiles.length - 1) {
-          console.log(activeOption);
+        if (activeId === profiles.length - 1) {
+          console.log(activeId);
           return;
         }
       }
       this.setState({
-        activeOption: activeOption + 1
+        activeId: activeId + 1
       });
     }
   };
-  public onClick = event => {
-    const {
-      target: { value }
-    } = event;
+  public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
     this.setState({
-      activeOption: 0,
-      showOptions: false,
-      search: value
+      activeId: 0
+    });
+  };
+  public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
+    this.setState({
+      activeId: null
     });
   };
 }

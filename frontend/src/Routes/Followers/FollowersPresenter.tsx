@@ -65,7 +65,7 @@ const UserContainer = styled.div`
   }
 `;
 
-const UserRow = styled.div`
+const UserRow = styled.div<ITheme>`
   display: grid;
   flex-direction: row;
   height: 50px;
@@ -75,6 +75,7 @@ const UserRow = styled.div`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -178,6 +179,10 @@ const Explain = styled(Location)`
   color: grey;
 `;
 
+interface ITheme {
+  active?: string;
+}
+
 interface IProps {
   data?: any;
   loading: boolean;
@@ -188,7 +193,9 @@ interface IProps {
   search: string;
   usersList: any;
   onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  onClick: (event: any) => void;
+  onClick: any;
+  onBlur: any;
+  activeId: number;
 }
 
 const FollowersPresenter: React.SFC<IProps> = ({
@@ -201,7 +208,9 @@ const FollowersPresenter: React.SFC<IProps> = ({
   search,
   usersList,
   onKeyDown,
-  onClick
+  onClick,
+  onBlur,
+  activeId
 }) => {
   if (loading) {
     return <Loader />;
@@ -229,79 +238,29 @@ const FollowersPresenter: React.SFC<IProps> = ({
                   onChange={onChange}
                   onKeyDown={onKeyDown}
                   onClick={onClick}
+                  onBlur={onBlur}
                 />
               </UserNameRow>
               {usersList.length !== 0 &&
-                usersList.map(user => (
-                  <UserRow key={user.id}>
-                    <Link to={`/${user.username}`}>
-                      <UserHeader
-                        username={user.username}
-                        currentCity={user.currentCity.cityName}
-                        currentCountry={user.currentCity.country.countryName}
-                        avatar={user.avatar}
-                        size={"sm"}
-                      />
-                    </Link>
-                    {!user.isSelf && (
-                      <FollowBtn
-                        isFollowing={user.isFollowing}
-                        userId={user.id}
-                        username={user.username}
-                      />
-                    )}
-                  </UserRow>
-                ))}
-              {usersList.length === 0 &&
-                !search &&
-                profiles &&
-                profiles.map(profile => (
-                  <UserRow key={profile.id}>
-                    <Link to={`/${profile.username}`}>
-                      <UserHeader
-                        username={profile.username}
-                        currentCity={profile.currentCity.cityName}
-                        currentCountry={profile.currentCity.country.countryName}
-                        avatar={profile.avatar}
-                        size={"sm"}
-                      />
-                    </Link>
-                    {!profile.isSelf && (
-                      <FollowBtn
-                        isFollowing={profile.isFollowing}
-                        userId={profile.id}
-                        username={profile.username}
-                      />
-                    )}
-                  </UserRow>
-                ))}
-            </UserContainer>
-          </PHeader>
-          <GreyLine />
-          <Title>
-            <SText text={"RECOMMAND USER"} />
-            <Link to={`/people`}>
-              <SeeAll>SEE ALL</SeeAll>
-            </Link>
-          </Title>
-          <Container>
-            <Box>
-              {users &&
-                users.map(user => {
+                usersList.map((user, index) => {
+                  let active;
+                  if (index === activeId) {
+                    active = "active";
+                  }
                   return (
-                    <UserRow key={user.id}>
+                    <UserRow key={user.index} active={active}>
                       <Link to={`/${user.username}`}>
-                        <AvatarContainer>
-                          <Avatar size={"sm"} url={user.profile.avatar} />
-                          <HeaderColumn>
-                            <CText text={user.username} />
-                            <Explain>with same nationality</Explain>
-                          </HeaderColumn>
-                        </AvatarContainer>
+                        <UserHeader
+                          username={user.username}
+                          currentCity={user.currentCity.cityName}
+                          currentCountry={user.currentCity.country.countryName}
+                          avatar={user.avatar}
+                          size={"sm"}
+                        />
                       </Link>
                       {!user.isSelf && (
                         <FollowBtn
-                          isFollowing={user.profile.isFollowing}
+                          isFollowing={user.isFollowing}
                           userId={user.id}
                           username={user.username}
                         />
@@ -309,8 +268,79 @@ const FollowersPresenter: React.SFC<IProps> = ({
                     </UserRow>
                   );
                 })}
-            </Box>
-          </Container>
+              {usersList.length === 0 &&
+                !search &&
+                profiles &&
+                profiles.map((profile, index) => {
+                  let active;
+                  if (index === activeId) {
+                    active = "active";
+                  }
+                  return (
+                    <UserRow key={profile.index} active={active}>
+                      <Link to={`/${profile.username}`}>
+                        <UserHeader
+                          username={profile.username}
+                          currentCity={profile.currentCity.cityName}
+                          currentCountry={
+                            profile.currentCity.country.countryName
+                          }
+                          avatar={profile.avatar}
+                          size={"sm"}
+                        />
+                      </Link>
+                      {!profile.isSelf && (
+                        <FollowBtn
+                          isFollowing={profile.isFollowing}
+                          userId={profile.id}
+                          username={profile.username}
+                        />
+                      )}
+                    </UserRow>
+                  );
+                })}
+            </UserContainer>
+          </PHeader>
+          <GreyLine />
+          {recommandUsersLoading ? (
+            <>
+              <Title>
+                <SText text={"RECOMMAND USER"} />
+                <Link to={`/people`}>
+                  <SeeAll>SEE ALL</SeeAll>
+                </Link>
+              </Title>
+              <Container>
+                <Box>
+                  {users &&
+                    users.map((user, index) => {
+                      return (
+                        <UserRow key={user.index}>
+                          <Link to={`/${user.username}`}>
+                            <AvatarContainer>
+                              <Avatar size={"sm"} url={user.profile.avatar} />
+                              <HeaderColumn>
+                                <CText text={user.username} />
+                                <Explain>with same nationality</Explain>
+                              </HeaderColumn>
+                            </AvatarContainer>
+                          </Link>
+                          {!user.isSelf && (
+                            <FollowBtn
+                              isFollowing={user.profile.isFollowing}
+                              userId={user.id}
+                              username={user.username}
+                            />
+                          )}
+                        </UserRow>
+                      );
+                    })}
+                </Box>
+              </Container>
+            </>
+          ) : (
+            <Loader />
+          )}
           {/* {coffees && coffees.length !== 0 ? (
             <>
               <SmallTitle>
