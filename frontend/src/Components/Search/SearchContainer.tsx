@@ -3,6 +3,7 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import SearchPresenter from "./SearchPresenter";
 
 interface IProps extends RouteComponentProps<any> {
+  activeId: number;
   search: string;
   searchData: any;
   searchLoading: boolean;
@@ -16,7 +17,7 @@ class SearchContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      search: ""
+      search: props.search
     };
   }
   public componentDidUpdate(prevProps) {
@@ -26,10 +27,13 @@ class SearchContainer extends React.Component<IProps, IState> {
     }
   }
   public render() {
-    const { search, searchData, searchLoading } = this.props;
-    console.log(search);
+    const { activeId, searchData, searchLoading } = this.props;
     return (
-      <SearchPresenter searchData={searchData} searchLoading={searchLoading} />
+      <SearchPresenter
+        activeId={activeId}
+        searchData={searchData}
+        searchLoading={searchLoading}
+      />
     );
   }
 }

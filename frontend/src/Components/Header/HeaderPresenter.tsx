@@ -178,8 +178,10 @@ interface IProps extends RouteComponentProps<any> {
   currentCountryCode: string;
   modalOpen: boolean;
   search: string;
+  activeId: number;
   toggleModal: () => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 }
 
 const HeaderPresenter: React.SFC<IProps> = ({
@@ -192,8 +194,10 @@ const HeaderPresenter: React.SFC<IProps> = ({
   currentCountryCode,
   modalOpen,
   search,
+  activeId,
   toggleModal,
-  onChange
+  onChange,
+  onKeyDown
 }) => (
   <Header>
     {modalOpen && (
@@ -204,9 +208,11 @@ const HeaderPresenter: React.SFC<IProps> = ({
           placeholder="Search"
           value={search}
           onChange={onChange}
+          onKeyDown={onKeyDown}
         />
         <Modal>
           <Search
+            activeId={activeId}
             search={search}
             searchData={searchData}
             searchLoading={searchLoading}

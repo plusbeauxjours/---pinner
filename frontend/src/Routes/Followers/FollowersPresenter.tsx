@@ -248,7 +248,7 @@ const FollowersPresenter: React.SFC<IProps> = ({
                     active = "active";
                   }
                   return (
-                    <UserRow key={user.index} active={active}>
+                    <UserRow key={index} active={active}>
                       <Link to={`/${user.username}`}>
                         <UserHeader
                           username={user.username}
@@ -277,7 +277,7 @@ const FollowersPresenter: React.SFC<IProps> = ({
                     active = "active";
                   }
                   return (
-                    <UserRow key={profile.index} active={active}>
+                    <UserRow key={index} active={active}>
                       <Link to={`/${profile.username}`}>
                         <UserHeader
                           username={profile.username}
@@ -313,7 +313,7 @@ const FollowersPresenter: React.SFC<IProps> = ({
               {users &&
                 users.map((user, index) => {
                   return (
-                    <UserRow key={user.index}>
+                    <UserRow key={index}>
                       <Link to={`/${user.username}`}>
                         <AvatarContainer>
                           <Avatar size={"sm"} url={user.profile.avatar} />

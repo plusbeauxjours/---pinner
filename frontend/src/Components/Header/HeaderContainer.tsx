@@ -47,7 +47,7 @@ class HeaderContainer extends React.Component<any, IState> {
       currentCountryCode: null,
       modalOpen: false,
       search: "",
-      activeId: null
+      activeId: 0
     };
     console.log(this.state);
   }
@@ -82,7 +82,8 @@ class HeaderContainer extends React.Component<any, IState> {
       currentCity,
       currentCountryCode,
       modalOpen,
-      search
+      search,
+      activeId
     } = this.state;
     return (
       <ReportLocationMutation mutation={REPORT_LOCATION}>
@@ -115,8 +116,10 @@ class HeaderContainer extends React.Component<any, IState> {
                           currentCountryCode={currentCountryCode}
                           modalOpen={modalOpen}
                           search={search}
+                          activeId={activeId}
                           toggleModal={this.toggleModal}
                           onChange={this.onChange}
+                          onKeyDown={this.onKeyDown}
                         />
                       );
                     }}
@@ -189,7 +192,6 @@ class HeaderContainer extends React.Component<any, IState> {
     const {
       target: { value }
     } = event;
-    console.log(value);
     this.setState({
       search: value
     } as any);
@@ -198,40 +200,41 @@ class HeaderContainer extends React.Component<any, IState> {
     const { keyCode } = event;
     const { activeId } = this.state;
     const { history } = this.props;
-    const {
-      searchUsers: { users = null } = {},
-      searchCities: { cities = null } = {},
-      searchCountries: { countries = null } = {},
-      searchContinents: { continents = null } = {}
-    } = this.searchData;
-    const length =
-      users.length + cities.length + countries.length + continents.length;
-    console.log(length);
+    console.log(this.state.activeId);
+    if (this.searchData) {
+      const {
+        searchUsers: { users = null } = {},
+        searchCities: { cities = null } = {},
+        searchCountries: { countries = null } = {},
+        searchContinents: { continents = null } = {}
+      } = this.searchData;
+      // const length =
+      //   users.length + cities.length + countries.length + continents.length;
+      // console.log(length);
 
-    if (keyCode === 13 && (users || cities || countries || continents)) {
-      history.push({
-        pathname: `/${users[activeId].username}`
-      });
-      this.setState({
-        activeId: 0
-      });
-    } else if (keyCode === 38) {
-      if (activeId === 0) {
-        console.log(activeId);
-        return;
+      if (keyCode === 13 && (users || cities || countries || continents)) {
+        history.push({
+          pathname: `/${users[activeId].username}`
+        });
+        this.setState({
+          activeId: 0
+        });
+      } else if (keyCode === 38) {
+        if (activeId === 0) {
+          return;
+        }
+        this.setState({
+          activeId: activeId - 1
+        });
+      } else if (keyCode === 40) {
+        if (activeId === users.length - 1) {
+          return;
+        }
       }
       this.setState({
-        activeId: activeId - 1
+        activeId: activeId + 1
       });
-    } else if (keyCode === 40) {
-      if (activeId === length - 1) {
-        console.log(activeId);
-        return;
-      }
     }
-    this.setState({
-      activeId: activeId + 1
-    });
   };
 }
 

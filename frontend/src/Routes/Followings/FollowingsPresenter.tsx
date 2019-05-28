@@ -245,7 +245,7 @@ const FollowingsPresenter: React.SFC<IProps> = ({
                     active = "active";
                   }
                   return (
-                    <UserRow key={user.index} active={active}>
+                    <UserRow key={index} active={active}>
                       <Link to={`/${user.username}`}>
                         <UserHeader
                           username={user.username}
@@ -274,7 +274,7 @@ const FollowingsPresenter: React.SFC<IProps> = ({
                     active = "active";
                   }
                   return (
-                    <UserRow key={profile.index} active={active}>
+                    <UserRow key={index} active={active}>
                       <Link to={`/${profile.username}`}>
                         <UserHeader
                           username={profile.username}
