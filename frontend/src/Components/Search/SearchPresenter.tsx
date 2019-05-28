@@ -60,22 +60,22 @@ const Location = styled.span`
 `;
 
 interface IProps {
-  data?: any;
-  loading: boolean;
+  searchData?: any;
+  searchLoading: boolean;
 }
 
 const SearchPresenter: React.SFC<IProps> = ({
-  data: {
+  searchData: {
     searchUsers: { users = null } = {},
     searchCities: { cities = null } = {},
     searchCountries: { countries = null } = {},
     searchContinents: { continents = null } = {}
   } = {},
-  loading
+  searchLoading
 }) => {
-  if (loading) {
+  if (searchLoading) {
     return <Loader />;
-  } else if (!loading) {
+  } else if (!searchLoading) {
     return (
       <SWrapper>
         {users &&

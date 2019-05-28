@@ -6,17 +6,20 @@ import {
   Feed,
   FeedVariables,
   ReportLocation,
-  ReportLocationVariables
+  ReportLocationVariables,
+  SearchTerms,
+  SearchTermsVariables
 } from "../../types/api";
 import { Mutation, MutationFn, Query } from "react-apollo";
 import { REPORT_LOCATION } from "../../Routes/Home/HomeQueries";
-import { GET_FEED } from "./HeaderQueries";
+import { GET_FEED, SEARCH } from "./HeaderQueries";
 
 class FeedQuery extends Query<Feed, FeedVariables> {}
 class ReportLocationMutation extends Mutation<
   ReportLocation,
   ReportLocationVariables
 > {}
+class SearchQuery extends Query<SearchTerms, SearchTermsVariables> {}
 
 interface IState {
   currentLat: number;
@@ -25,10 +28,12 @@ interface IState {
   currentCountryCode: string;
   modalOpen: boolean;
   search: string;
+  activeId: number;
 }
 
 class HeaderContainer extends React.Component<any, IState> {
   public ReportLocationFn: MutationFn;
+  public searchData;
   constructor(props) {
     super(props);
     navigator.geolocation.getCurrentPosition(
@@ -41,7 +46,8 @@ class HeaderContainer extends React.Component<any, IState> {
       currentCity: null,
       currentCountryCode: null,
       modalOpen: false,
-      search: ""
+      search: "",
+      activeId: null
     };
     console.log(this.state);
   }
@@ -91,17 +97,30 @@ class HeaderContainer extends React.Component<any, IState> {
             >
               {({ data }) => {
                 return (
-                  <HeaderPresenter
-                    data={data}
-                    currentLat={currentLat}
-                    currentLng={currentLng}
-                    currentCity={currentCity}
-                    currentCountryCode={currentCountryCode}
-                    modalOpen={modalOpen}
-                    search={search}
-                    toggleModal={this.toggleModal}
-                    onChange={this.onChange}
-                  />
+                  <SearchQuery
+                    query={SEARCH}
+                    variables={{ search }}
+                    skip={search.length === 0}
+                  >
+                    {({ data: searchData, loading: searchLoading }) => {
+                      this.searchData = searchData;
+                      return (
+                        <HeaderPresenter
+                          data={data}
+                          searchData={searchData}
+                          searchLoading={searchLoading}
+                          currentLat={currentLat}
+                          currentLng={currentLng}
+                          currentCity={currentCity}
+                          currentCountryCode={currentCountryCode}
+                          modalOpen={modalOpen}
+                          search={search}
+                          toggleModal={this.toggleModal}
+                          onChange={this.onChange}
+                        />
+                      );
+                    }}
+                  </SearchQuery>
                 );
               }}
             </FeedQuery>
@@ -174,6 +193,45 @@ class HeaderContainer extends React.Component<any, IState> {
     this.setState({
       search: value
     } as any);
+  };
+  public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const { keyCode } = event;
+    const { activeId } = this.state;
+    const { history } = this.props;
+    const {
+      searchUsers: { users = null } = {},
+      searchCities: { cities = null } = {},
+      searchCountries: { countries = null } = {},
+      searchContinents: { continents = null } = {}
+    } = this.searchData;
+    const length =
+      users.length + cities.length + countries.length + continents.length;
+    console.log(length);
+
+    if (keyCode === 13 && (users || cities || countries || continents)) {
+      history.push({
+        pathname: `/${users[activeId].username}`
+      });
+      this.setState({
+        activeId: 0
+      });
+    } else if (keyCode === 38) {
+      if (activeId === 0) {
+        console.log(activeId);
+        return;
+      }
+      this.setState({
+        activeId: activeId - 1
+      });
+    } else if (keyCode === 40) {
+      if (activeId === length - 1) {
+        console.log(activeId);
+        return;
+      }
+    }
+    this.setState({
+      activeId: activeId + 1
+    });
   };
 }
 

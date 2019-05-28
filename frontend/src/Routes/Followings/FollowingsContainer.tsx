@@ -1,11 +1,14 @@
 import React from "react";
 import { Query } from "react-apollo";
-import { GetFollowingsVariables, GetFollowings } from "src/types/api";
+import {
+  GetFollowingsVariables,
+  GetFollowings,
+  RecommandUsers
+} from "src/types/api";
 import FollowingsPresenter from "./FollowingsPresenter";
 import { GET_FOLLOWINGS } from "./FollowingsQueries";
 import { RouteComponentProps } from "react-router";
 import { RECOMMAND_USERS } from "../PeoplePage/PeoplePageQueries";
-import { RecommandUsers } from "../../types/api";
 
 class GetFollowingsQuery extends Query<GetFollowings, GetFollowingsVariables> {}
 class RecommandUsersQuery extends Query<RecommandUsers> {}
@@ -15,14 +18,19 @@ interface IState {
   username: string;
   search: string;
   usersList: any;
+  activeId: number;
 }
 
 class FollowingsContainer extends React.Component<IProps, IState> {
   public data;
-
   constructor(props) {
     super(props);
-    this.state = { username: props.username, search: "", usersList: [] };
+    this.state = {
+      username: null,
+      search: "",
+      usersList: [],
+      activeId: null
+    };
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
@@ -37,7 +45,7 @@ class FollowingsContainer extends React.Component<IProps, IState> {
         params: { username }
       }
     } = this.props;
-    const { search, usersList } = this.state;
+    const { search, usersList, activeId } = this.state;
     return (
       <RecommandUsersQuery query={RECOMMAND_USERS}>
         {({ data: recommandUsersData, loading: recommandUsersLoading }) => {
@@ -55,9 +63,13 @@ class FollowingsContainer extends React.Component<IProps, IState> {
                     recommandUsersData={recommandUsersData}
                     recommandUsersLoading={recommandUsersLoading}
                     userName={username}
-                    onChange={this.onChange}
                     search={search}
+                    activeId={activeId}
+                    onChange={this.onChange}
                     usersList={usersList}
+                    onKeyDown={this.onKeyDown}
+                    onClick={this.onClick}
+                    onBlur={this.onBlur}
                   />
                 );
               }}
@@ -87,8 +99,65 @@ class FollowingsContainer extends React.Component<IProps, IState> {
     const usersList = nowSearch(profiles, value);
     this.setState({
       search: value,
-      usersList
+      usersList,
+      activeId: 0
     } as any);
+  };
+  public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const { keyCode } = event;
+    const { activeId, usersList } = this.state;
+    const { history } = this.props;
+
+    const {
+      getFollowings: { profiles = null }
+    } = this.data;
+
+    if (keyCode === 13 && (usersList.length || profiles)) {
+      {
+        usersList.length
+          ? history.push({
+              pathname: `/${usersList[activeId].username}`
+            })
+          : history.push({
+              pathname: `/${profiles[activeId].username}`
+            });
+      }
+      this.setState({
+        activeId: 0
+      });
+    } else if (keyCode === 38) {
+      if (activeId === 0) {
+        return;
+      }
+      this.setState({
+        activeId: activeId - 1
+      });
+    } else if (keyCode === 40) {
+      if (usersList.length) {
+        if (activeId === usersList.length - 1) {
+          console.log(activeId);
+          return;
+        }
+      } else {
+        if (activeId === profiles.length - 1) {
+          console.log(activeId);
+          return;
+        }
+      }
+      this.setState({
+        activeId: activeId + 1
+      });
+    }
+  };
+  public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
+    this.setState({
+      activeId: 0
+    });
+  };
+  public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
+    this.setState({
+      activeId: null
+    });
   };
 }
 

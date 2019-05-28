@@ -86,7 +86,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.8);
 `;
 
 const Modal = styled.div`
@@ -170,6 +170,8 @@ const HeaderRow = styled.div`
 
 interface IProps extends RouteComponentProps<any> {
   data?: any;
+  searchData?: any;
+  searchLoading: boolean;
   currentLat: number;
   currentLng: number;
   currentCity: string;
@@ -182,6 +184,8 @@ interface IProps extends RouteComponentProps<any> {
 
 const HeaderPresenter: React.SFC<IProps> = ({
   data: { feed: { city = {} } = {} } = {},
+  searchData,
+  searchLoading,
   currentLat,
   currentLng,
   currentCity,
@@ -202,7 +206,11 @@ const HeaderPresenter: React.SFC<IProps> = ({
           onChange={onChange}
         />
         <Modal>
-          <Search search={search} />
+          <Search
+            search={search}
+            searchData={searchData}
+            searchLoading={searchLoading}
+          />
         </Modal>
       </ModalContainer>
     )}

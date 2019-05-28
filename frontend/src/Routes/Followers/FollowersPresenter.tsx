@@ -302,45 +302,39 @@ const FollowersPresenter: React.SFC<IProps> = ({
             </UserContainer>
           </PHeader>
           <GreyLine />
-          {recommandUsersLoading ? (
-            <>
-              <Title>
-                <SText text={"RECOMMAND USER"} />
-                <Link to={`/people`}>
-                  <SeeAll>SEE ALL</SeeAll>
-                </Link>
-              </Title>
-              <Container>
-                <Box>
-                  {users &&
-                    users.map((user, index) => {
-                      return (
-                        <UserRow key={user.index}>
-                          <Link to={`/${user.username}`}>
-                            <AvatarContainer>
-                              <Avatar size={"sm"} url={user.profile.avatar} />
-                              <HeaderColumn>
-                                <CText text={user.username} />
-                                <Explain>with same nationality</Explain>
-                              </HeaderColumn>
-                            </AvatarContainer>
-                          </Link>
-                          {!user.isSelf && (
-                            <FollowBtn
-                              isFollowing={user.profile.isFollowing}
-                              userId={user.id}
-                              username={user.username}
-                            />
-                          )}
-                        </UserRow>
-                      );
-                    })}
-                </Box>
-              </Container>
-            </>
-          ) : (
-            <Loader />
-          )}
+          <Title>
+            <SText text={"RECOMMAND USER"} />
+            <Link to={`/people`}>
+              <SeeAll>SEE ALL</SeeAll>
+            </Link>
+          </Title>
+          <Container>
+            <Box>
+              {users &&
+                users.map((user, index) => {
+                  return (
+                    <UserRow key={user.index}>
+                      <Link to={`/${user.username}`}>
+                        <AvatarContainer>
+                          <Avatar size={"sm"} url={user.profile.avatar} />
+                          <HeaderColumn>
+                            <CText text={user.username} />
+                            <Explain>with same nationality</Explain>
+                          </HeaderColumn>
+                        </AvatarContainer>
+                      </Link>
+                      {!user.isSelf && (
+                        <FollowBtn
+                          isFollowing={user.profile.isFollowing}
+                          userId={user.id}
+                          username={user.username}
+                        />
+                      )}
+                    </UserRow>
+                  );
+                })}
+            </Box>
+          </Container>
           {/* {coffees && coffees.length !== 0 ? (
             <>
               <SmallTitle>

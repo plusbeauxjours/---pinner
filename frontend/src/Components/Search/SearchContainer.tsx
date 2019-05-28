@@ -1,14 +1,11 @@
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import SearchPresenter from "./SearchPresenter";
-import { Query } from "react-apollo";
-import { SearchTerms, SearchTermsVariables } from "../../types/api";
-import { SEARCH } from "./SearchQueries";
-
-class SearchQuery extends Query<SearchTerms, SearchTermsVariables> {}
 
 interface IProps extends RouteComponentProps<any> {
   search: string;
+  searchData: any;
+  searchLoading: boolean;
 }
 
 interface IState {
@@ -29,29 +26,12 @@ class SearchContainer extends React.Component<IProps, IState> {
     }
   }
   public render() {
-    const { search } = this.props;
+    const { search, searchData, searchLoading } = this.props;
     console.log(search);
     return (
-      <SearchQuery
-        query={SEARCH}
-        variables={{ search }}
-        skip={search.length === 0}
-      >
-        {({ data, loading }) => (
-          <SearchPresenter loading={loading} data={data} />
-        )}
-      </SearchQuery>
+      <SearchPresenter searchData={searchData} searchLoading={searchLoading} />
     );
   }
-  public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
-    const {
-      target: { value }
-    } = event;
-    console.log(value);
-    this.setState({
-      search: value
-    } as any);
-  };
 }
 
 export default withRouter(SearchContainer);
