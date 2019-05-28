@@ -60,7 +60,7 @@ interface IProps extends RouteComponentProps {
   isSelf?: boolean;
   currentCity?: string;
   editCardCaption: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  editCardOnKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  editCardonKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onCompletedEditCard: (data: any) => void;
   toggleEditCardMode: () => void;
   editMode: boolean;
@@ -216,8 +216,8 @@ class PhotoContainer extends React.Component<IProps, IState> {
                                             this.toggleCommentClick
                                           }
                                           openedComment={openedComment}
-                                          addCommentOnKeyUp={
-                                            this.addCommentOnKeyUp
+                                          addCommentonKeyDown={
+                                            this.addCommentonKeyDown
                                           }
                                           onSubmit={this.onSubmit}
                                           deleteCommentModalOpen={
@@ -240,7 +240,9 @@ class PhotoContainer extends React.Component<IProps, IState> {
                                           cardId={cardId}
                                           editCardLink={this.editCardLink}
                                           editCardCaption={this.editCardCaption}
-                                          editCardOnKeyUp={this.editCardOnKeyUp}
+                                          editCardonKeyDown={
+                                            this.editCardonKeyDown
+                                          }
                                           toggleEditCardMode={
                                             this.toggleEditCardMode
                                           }
@@ -276,7 +278,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
       newComment: value
     } as any);
   };
-  public addCommentOnKeyUp = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  public addCommentonKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { keyCode } = event;
     if (keyCode === 13) {
       this.addCommentFn();
@@ -509,7 +511,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
       [name]: value
     } as any);
   };
-  public editCardOnKeyUp = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  public editCardonKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { keyCode } = event;
     if (keyCode === 13) {
       this.editCardFn();

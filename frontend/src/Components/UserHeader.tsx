@@ -46,7 +46,7 @@ interface IProps {
   size?: string;
   editMode?: boolean;
   cardEditMode?: boolean;
-  editCardOnKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  editCardonKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   cityName?: string;
   type?: string;
@@ -62,7 +62,7 @@ const UserHeader: React.SFC<IProps> = ({
   editMode,
   cardEditMode,
   onInputChange,
-  editCardOnKeyUp,
+  editCardonKeyDown,
   cityName,
   type,
   target
@@ -116,7 +116,7 @@ const UserHeader: React.SFC<IProps> = ({
                           type={"text"}
                           placeholder={currentCity}
                           name={"cityName"}
-                          onKeyUp={editCardOnKeyUp}
+                          onKeyDown={editCardonKeyDown}
                         />
                         , {currentCountry}
                       </>

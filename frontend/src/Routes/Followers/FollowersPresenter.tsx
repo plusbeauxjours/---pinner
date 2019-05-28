@@ -187,6 +187,8 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
   usersList: any;
+  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onClick: (event: any) => void;
 }
 
 const FollowersPresenter: React.SFC<IProps> = ({
@@ -197,7 +199,9 @@ const FollowersPresenter: React.SFC<IProps> = ({
   userName,
   onChange,
   search,
-  usersList
+  usersList,
+  onKeyDown,
+  onClick
 }) => {
   if (loading) {
     return <Loader />;
@@ -223,6 +227,8 @@ const FollowersPresenter: React.SFC<IProps> = ({
                   placeholder="Search"
                   value={search}
                   onChange={onChange}
+                  onKeyDown={onKeyDown}
+                  onClick={onClick}
                 />
               </UserNameRow>
               {usersList.length !== 0 &&

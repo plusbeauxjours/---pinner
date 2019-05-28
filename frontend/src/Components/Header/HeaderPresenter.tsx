@@ -206,7 +206,6 @@ const HeaderPresenter: React.SFC<IProps> = ({
         </Modal>
       </ModalContainer>
     )}
-    {console.log(city)}
     <SWrapper>
       <Column>
         <Link
@@ -246,7 +245,6 @@ const HeaderPresenter: React.SFC<IProps> = ({
         <Link to={`/city/${currentCity}`}>
           <LocationHeader>
             <SAvatar url={city.cityPhoto} size={"sm"} />
-            {console.log(city)}
             <HeaderColumn>
               <HeaderRow>
                 <CText text={city.cityName} />

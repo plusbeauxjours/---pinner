@@ -46,7 +46,6 @@ class HeaderContainer extends React.Component<any, IState> {
     console.log(this.state);
   }
   public componentDidUpdate(prevProps) {
-    console.log(this.state);
     console.log("update");
     const newProps = this.props;
     if (
@@ -63,7 +62,6 @@ class HeaderContainer extends React.Component<any, IState> {
     const location = localStorage.getItem("cityName");
     console.log("mount");
     console.log(location);
-    console.log(this.state);
     if (!location) {
       navigator.geolocation.getCurrentPosition(
         this.handleGeoSuccess,
@@ -92,7 +90,6 @@ class HeaderContainer extends React.Component<any, IState> {
               }}
             >
               {({ data }) => {
-                console.log(data);
                 return (
                   <HeaderPresenter
                     data={data}

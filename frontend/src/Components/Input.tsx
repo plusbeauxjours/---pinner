@@ -30,7 +30,7 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   required?: boolean;
-  onKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   autoFocus?: boolean;
 }
 
@@ -42,7 +42,7 @@ const Input: React.SFC<IProps> = ({
   onChange,
   className,
   required = true,
-  onKeyUp,
+  onKeyDown,
   autoFocus
 }) => (
   <Container
@@ -54,7 +54,7 @@ const Input: React.SFC<IProps> = ({
     name={name}
     className={className}
     required={required}
-    onKeyUp={onKeyUp}
+    onKeyDown={onKeyDown}
   />
 );
 

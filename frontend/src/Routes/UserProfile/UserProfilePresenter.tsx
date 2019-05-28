@@ -574,7 +574,7 @@ interface IProps {
   onSelectChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
-  onKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 
   deleteCoffee: () => void;
   getCoffeeId: any;
@@ -644,7 +644,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   gotoTrip,
   onInputChange,
   onSelectChange,
-  onKeyUp,
+  onKeyDown,
   userName,
   bio,
   gender,
@@ -693,7 +693,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     value={username}
                     placeholder={user.username}
                     name={"userName"}
-                    onKeyUp={onKeyUp}
+                    onKeyDown={onKeyDown}
                     autoComplete={"off"}
                   />
                 </ModalLink>
@@ -704,7 +704,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     value={avatar}
                     placeholder={user.profile.avatar}
                     name={"avatar"}
-                    onKeyUp={onKeyUp}
+                    onKeyDown={onKeyDown}
                     autoComplete={"off"}
                   />
                 </ModalLink>
@@ -715,7 +715,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     value={bio}
                     placeholder={"bio"}
                     name={"bio"}
-                    onKeyUp={onKeyUp}
+                    onKeyDown={onKeyDown}
                     autoComplete={"off"}
                   />
                 </ModalLink>
@@ -756,7 +756,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                       value={email}
                       placeholder={"email"}
                       name={"email"}
-                      onKeyUp={onKeyUp}
+                      onKeyDown={onKeyDown}
                     />
                   </ModalLink>
                 ) : null}
@@ -988,7 +988,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 value={userName}
                 placeholder={user.username}
                 name={"userName"}
-                onKeyUp={onKeyUp}
+                onKeyDown={onKeyDown}
               />
             ) : (
               <Username>{user.username}</Username>
@@ -1022,7 +1022,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     value={firstName}
                     placeholder={user.firstName || "First Name"}
                     name={"firstName"}
-                    onKeyUp={onKeyUp}
+                    onKeyDown={onKeyDown}
                   />
                   <Input
                     onChange={onInputChange}
@@ -1030,7 +1030,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     value={lastName}
                     placeholder={user.lastName || "Last Name"}
                     name={"lastName"}
-                    onKeyUp={onKeyUp}
+                    onKeyDown={onKeyDown}
                   />
                 </>
               ) : (
@@ -1045,7 +1045,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   value={bio}
                   placeholder={user.profile.bio || "Bio"}
                   name={"bio"}
-                  onKeyUp={onKeyUp}
+                  onKeyDown={onKeyDown}
                 />
               ) : (
                 <Bio>{`${user.profile.bio}`}</Bio>

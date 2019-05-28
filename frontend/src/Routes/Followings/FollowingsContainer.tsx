@@ -5,6 +5,7 @@ import FollowingsPresenter from "./FollowingsPresenter";
 import { GET_FOLLOWINGS } from "./FollowingsQueries";
 import { RouteComponentProps } from "react-router";
 import { RECOMMAND_USERS } from "../PeoplePage/PeoplePageQueries";
+import { RecommandUsers } from "../../types/api";
 
 class GetFollowingsQuery extends Query<GetFollowings, GetFollowingsVariables> {}
 class RecommandUsersQuery extends Query<RecommandUsers> {}
@@ -38,24 +39,32 @@ class FollowingsContainer extends React.Component<IProps, IState> {
     } = this.props;
     const { search, usersList } = this.state;
     return (
-      <GetFollowingsQuery
-        query={GET_FOLLOWINGS}
-        variables={{ userName: username }}
-      >
-        {({ data, loading }) => {
-          this.data = data;
+      <RecommandUsersQuery query={RECOMMAND_USERS}>
+        {({ data: recommandUsersData, loading: recommandUsersLoading }) => {
           return (
-            <FollowingsPresenter
-              data={data}
-              loading={loading}
-              userName={username}
-              onChange={this.onChange}
-              search={search}
-              usersList={usersList}
-            />
+            <GetFollowingsQuery
+              query={GET_FOLLOWINGS}
+              variables={{ userName: username }}
+            >
+              {({ data, loading }) => {
+                this.data = data;
+                return (
+                  <FollowingsPresenter
+                    data={data}
+                    loading={loading}
+                    recommandUsersData={recommandUsersData}
+                    recommandUsersLoading={recommandUsersLoading}
+                    userName={username}
+                    onChange={this.onChange}
+                    search={search}
+                    usersList={usersList}
+                  />
+                );
+              }}
+            </GetFollowingsQuery>
           );
         }}
-      </GetFollowingsQuery>
+      </RecommandUsersQuery>
     );
   };
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {

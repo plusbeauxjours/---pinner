@@ -54,7 +54,7 @@ interface IProps {
   deleteCommentGetId?: (commentId: string) => void;
   editCommentGetId: (commentId: string) => void;
   editCommentMessage: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  editCommentOnKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  editCommentonKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   message: string;
   cardId: string;
   commentId: string;
@@ -68,7 +68,7 @@ const CommentsPresenter: React.SFC<IProps> = ({
   deleteCommentGetId,
   editCommentGetId,
   editCommentMessage,
-  editCommentOnKeyUp,
+  editCommentonKeyDown,
   message,
   cardId,
   commentId
@@ -91,7 +91,7 @@ const CommentsPresenter: React.SFC<IProps> = ({
                       value={message}
                       placeholder={comment.message}
                       name={"message"}
-                      onKeyUp={editCommentOnKeyUp}
+                      onKeyDown={editCommentonKeyDown}
                     />
                   ) : (
                     <>

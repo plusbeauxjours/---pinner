@@ -69,7 +69,7 @@ class CommentsContainer extends React.Component<IProps, IState> {
                   deleteCommentGetId={deleteCommentGetId}
                   editCommentGetId={this.editCommentGetId}
                   editCommentMessage={this.editCommentMessage}
-                  editCommentOnKeyUp={this.editCommentOnKeyUp}
+                  editCommentonKeyDown={this.editCommentonKeyDown}
                   message={message}
                   cardId={cardId}
                   commentId={commentId}
@@ -96,7 +96,9 @@ class CommentsContainer extends React.Component<IProps, IState> {
       commentId
     } as any);
   };
-  public editCommentOnKeyUp = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  public editCommentonKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>
+  ) => {
     const { keyCode } = event;
     if (keyCode === 13) {
       this.editCommentFn();

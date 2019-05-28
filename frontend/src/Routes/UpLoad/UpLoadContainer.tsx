@@ -47,7 +47,7 @@ class UpLoadContainer extends React.Component<IProps, IState> {
               back={this.back}
               uploadNewCard={this.uploadNewCard}
               caption={caption}
-              onKeyUp={this.onKeyUp}
+              onKeyDown={this.onKeyDown}
               modalOpen={modalOpen}
               upload={upload}
               toggleUploadModal={this.toggleUploadModal}
@@ -127,7 +127,7 @@ class UpLoadContainer extends React.Component<IProps, IState> {
       caption: value
     } as any);
   };
-  public onKeyUp = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { keyCode } = event;
     if (keyCode === 13) {
       this.setState({

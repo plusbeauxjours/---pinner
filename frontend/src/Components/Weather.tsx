@@ -14,7 +14,7 @@ const WeatherInfo = styled.div<ITheme>`
   justify-content: center;
   height: ${props => {
     if (props.type === "feed") {
-      return "25px";
+      return "20px";
     } else {
       return "100%";
     }
@@ -27,7 +27,7 @@ const WeatherImage = styled.img<ITheme>`
     if (props.size === "md") {
       return "60px";
     } else if (props.size === "sm") {
-      return "25px";
+      return "22px";
     } else {
       return "60px";
     }
@@ -36,12 +36,12 @@ const WeatherImage = styled.img<ITheme>`
     if (props.size === "md") {
       return "60px";
     } else if (props.size === "sm") {
-      return "25px";
+      return "22px";
     } else {
       return "60px";
     }
   }};
-  margin-right: 2px;
+  margin-right: 3px;
 `;
 
 const WeatherNumber = styled.div<ITheme>`

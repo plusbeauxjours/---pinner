@@ -194,7 +194,7 @@ interface IProps {
   onLikeClick: () => void;
   openedComment: boolean;
   toggleCommentClick: () => void;
-  addCommentOnKeyUp?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  addCommentonKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onSubmit: any;
   deleteCommentModalOpen: boolean;
   cardMenuModalOpen: boolean;
@@ -209,7 +209,7 @@ interface IProps {
   cardId: string;
   editCardLink: () => void;
   editCardCaption: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  editCardOnKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  editCardonKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   toggleEditCardMode: () => void;
   editMode: boolean;
   cardEditMode: boolean;
@@ -234,7 +234,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
   onLikeClick,
   openedComment,
   toggleCommentClick,
-  addCommentOnKeyUp,
+  addCommentonKeyDown,
   onSubmit,
   deleteCommentModalOpen,
   cardMenuModalOpen,
@@ -248,7 +248,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
   cardId,
   editCardLink,
   editCardCaption,
-  editCardOnKeyUp,
+  editCardonKeyDown,
   toggleEditCardMode,
   editMode,
   cardEditMode,
@@ -339,7 +339,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                     placeholder="Add a comment..."
                     onChange={updateNewComment}
                     value={newComment}
-                    onKeyUp={addCommentOnKeyUp}
+                    onKeyDown={addCommentonKeyDown}
                   />
                 </AddComment>
               </>
@@ -398,7 +398,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                   currentCountry={country}
                   editMode={editMode}
                   cardEditMode={cardEditMode}
-                  editCardOnKeyUp={editCardOnKeyUp}
+                  editCardonKeyDown={editCardonKeyDown}
                   onInputChange={onInputChange}
                   cityName={cityName}
                 />
@@ -416,7 +416,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                       value={caption}
                       placeholder={caption}
                       name={"caption"}
-                      onKeyUp={editCardOnKeyUp}
+                      onKeyDown={editCardonKeyDown}
                     />
                   ) : (
                     <>{caption}</>
@@ -446,7 +446,7 @@ const PhotoPresenter: React.SFC<IProps> = ({
                   placeholder="Add a comment..."
                   onChange={updateNewComment}
                   value={newComment}
-                  onKeyUp={addCommentOnKeyUp}
+                  onKeyDown={addCommentonKeyDown}
                 />
               </AddComment>
             </Back>

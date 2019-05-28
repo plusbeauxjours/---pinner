@@ -72,7 +72,7 @@ interface IProps {
   back: any;
   caption: string;
   uploadNewCard: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyUp: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   modalOpen: boolean;
   upload: boolean;
   toggleUploadModal: () => void;
@@ -82,7 +82,7 @@ const UpLoadPresenter: React.SFC<IProps> = ({
   back,
   caption,
   uploadNewCard,
-  onKeyUp,
+  onKeyDown,
   modalOpen,
   upload,
   toggleUploadModal
@@ -98,7 +98,7 @@ const UpLoadPresenter: React.SFC<IProps> = ({
                 placeholder="Add a caption..."
                 onChange={uploadNewCard}
                 value={caption}
-                onKeyUp={onKeyUp}
+                onKeyDown={onKeyDown}
               />
             </Wrapper>
           </Modal>

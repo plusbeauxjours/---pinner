@@ -93,6 +93,10 @@ const UserNameRow = styled.div`
 
 const AvatarContainer = styled.div`
   display: flex;
+  position: relative;
+`;
+
+const LocationAvatarContainer = styled(AvatarContainer)`
   flex-direction: column;
 `;
 
@@ -110,9 +114,75 @@ const Input = styled.input`
   }
 `;
 
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  @media screen and (max-width: 935px) {
+    margin-left: 10px;
+  }
+`;
+const SeeAll = styled.p`
+  font-size: 12px;
+  font-weight: 100;
+  cursor: pointer;
+`;
+
+const Container = styled.div`
+  -webkit-box-flex: 0;
+  padding: 15px;
+`;
+
+const Box = styled.div`
+  max-width: 905px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(3, 50px);
+  grid-auto-columns: 400px;
+  column-gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 15px;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  ::-webkit-scrollbar {
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: ${props => props.theme.bgColor};
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    background-color: ${props => props.theme.greyColor};
+  }
+`;
+
+const HeaderColumn = styled.div`
+  margin-left: 15px;
+`;
+
+const CText = styled(Bold)`
+  display: flex;
+`;
+
+const Location = styled.span`
+  display: flex;
+  margin-top: 5px;
+  position: block;
+  font-size: 12px;
+  font-weight: 200;
+`;
+
+const Explain = styled(Location)`
+  color: grey;
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
+  recommandUsersData: any;
+  recommandUsersLoading: boolean;
   userName: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
@@ -122,6 +192,8 @@ interface IProps {
 const FollowingsPresenter: React.SFC<IProps> = ({
   data: { getFollowings: { profiles = null } = {} } = {},
   loading,
+  recommandUsersData: { recommandUsers: { users = null } = {} } = {},
+  recommandUsersLoading,
   userName,
   onChange,
   search,
@@ -134,13 +206,13 @@ const FollowingsPresenter: React.SFC<IProps> = ({
       <>
         <SWrapper>
           <PHeader>
-            <AvatarContainer>
+            <LocationAvatarContainer>
               <CAvatar size="lg" url={"http://localhost:8000/media/281.jpg"} />
               <InfoRow>
                 <SText text={String("undefined")} />
                 Count
               </InfoRow>
-            </AvatarContainer>
+            </LocationAvatarContainer>
             <UserContainer>
               <UserNameRow>
                 <Username>{userName} Followings</Username>
@@ -196,7 +268,40 @@ const FollowingsPresenter: React.SFC<IProps> = ({
                 ))}
             </UserContainer>
           </PHeader>
-          recommand Users
+          <GreyLine />
+          <Title>
+            <SText text={"RECOMMAND USER"} />
+            <Link to={`/people`}>
+              <SeeAll>SEE ALL</SeeAll>
+            </Link>
+          </Title>
+          <Container>
+            <Box>
+              {users &&
+                users.map(user => {
+                  return (
+                    <UserRow key={user.id}>
+                      <Link to={`/${user.username}`}>
+                        <AvatarContainer>
+                          <Avatar size={"sm"} url={user.profile.avatar} />
+                          <HeaderColumn>
+                            <CText text={user.username} />
+                            <Explain>with same nationality</Explain>
+                          </HeaderColumn>
+                        </AvatarContainer>
+                      </Link>
+                      {!user.isSelf && (
+                        <FollowBtn
+                          isFollowing={user.profile.isFollowing}
+                          userId={user.id}
+                          username={user.username}
+                        />
+                      )}
+                    </UserRow>
+                  );
+                })}
+            </Box>
+          </Container>
           {/* {coffees && coffees.length !== 0 ? (
             <>
               <SmallTitle>
@@ -206,7 +311,6 @@ const FollowingsPresenter: React.SFC<IProps> = ({
               <AvatarGrid coffees={coffees} />
             </>
           ) : null} */}
-          <GreyLine />
           <GetCards location={"followings"} userName={userName} />
         </SWrapper>
       </>

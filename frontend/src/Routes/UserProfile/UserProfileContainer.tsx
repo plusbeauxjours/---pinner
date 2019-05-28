@@ -539,9 +539,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                     this
                                                                                       .onSelectChange
                                                                                   }
-                                                                                  onKeyUp={
+                                                                                  onKeyDown={
                                                                                     this
-                                                                                      .onKeyUp
+                                                                                      .onKeyDown
                                                                                   }
                                                                                   userName={
                                                                                     userName
@@ -723,7 +723,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     this.deleteProfileFn();
     this.logUserOutFn();
   };
-  public onKeyUp = event => {
+  public onKeyDown = event => {
     const {
       userName,
       bio,

@@ -18,13 +18,21 @@ interface IState {
   username: string;
   search: string;
   usersList: any;
+  activeOption: number;
+  showOptions: boolean;
 }
 
 class FollowersContainer extends React.Component<IProps, IState> {
   public data;
   constructor(props) {
     super(props);
-    this.state = { username: props.username, search: "", usersList: [] };
+    this.state = {
+      username: null,
+      search: "",
+      usersList: [],
+      activeOption: 0,
+      showOptions: false
+    };
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
@@ -60,6 +68,8 @@ class FollowersContainer extends React.Component<IProps, IState> {
                     onChange={this.onChange}
                     search={search}
                     usersList={usersList}
+                    onKeyDown={this.onKeyDown}
+                    onClick={this.onClick}
                   />
                 );
               }}
@@ -89,8 +99,59 @@ class FollowersContainer extends React.Component<IProps, IState> {
     const usersList = nowSearch(profiles, value);
     this.setState({
       search: value,
-      usersList
+      usersList,
+      activeOption: 0,
+      showOptions: true
     } as any);
+  };
+  public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const { keyCode } = event;
+    const { activeOption, usersList } = this.state;
+    const { history } = this.props;
+
+    const {
+      getFollowers: { profiles = null }
+    } = this.data;
+
+    if (usersList) {
+      if (keyCode === 13 && usersList) {
+        history.push({
+          pathname: `/${usersList[activeOption].username}`
+        });
+        this.setState({
+          activeOption: 0,
+          showOptions: false,
+          search: usersList[activeOption].username
+        });
+      } else if (keyCode === 38) {
+        if (activeOption === 0) {
+          return;
+        }
+        this.setState({
+          activeOption: activeOption - 1
+        });
+      } else if (keyCode === 40) {
+        if (activeOption === usersList.length - 1) {
+          console.log(activeOption);
+          return;
+        }
+        this.setState({
+          activeOption: activeOption + 1
+        });
+      }
+    } else {
+      console.log(profiles);
+    }
+  };
+  public onClick = event => {
+    const {
+      target: { value }
+    } = event;
+    this.setState({
+      activeOption: 0,
+      showOptions: false,
+      search: value
+    });
   };
 }
 

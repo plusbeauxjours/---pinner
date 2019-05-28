@@ -108,7 +108,7 @@ class ProfileForm extends React.Component<IProps, IState> {
                     value={username}
                     placeholder={username}
                     name={"username"}
-                    onKeyUp={this.onKeyUp}
+                    onKeyDown={this.onKeyDown}
                   />
                 </ModalLink>
               )}
@@ -120,7 +120,7 @@ class ProfileForm extends React.Component<IProps, IState> {
                     value={avatar}
                     placeholder={avatar}
                     name={"avatar"}
-                    onKeyUp={this.onKeyUp}
+                    onKeyDown={this.onKeyDown}
                   />
                 </ModalLink>
               ) : null}
@@ -132,7 +132,7 @@ class ProfileForm extends React.Component<IProps, IState> {
                     value={nationality}
                     placeholder={nationality || "nationality"}
                     name={"nationality"}
-                    onKeyUp={this.onKeyUp}
+                    onKeyDown={this.onKeyDown}
                   />
                 </ModalLink>
               ) : null}
@@ -144,7 +144,7 @@ class ProfileForm extends React.Component<IProps, IState> {
                     value={gender}
                     placeholder={gender || "gender"}
                     name={"gender"}
-                    onKeyUp={this.onKeyUp}
+                    onKeyDown={this.onKeyDown}
                   />
                 </ModalLink>
               ) : null}
@@ -156,7 +156,7 @@ class ProfileForm extends React.Component<IProps, IState> {
                     value={email}
                     placeholder={email || "email"}
                     name={"email"}
-                    onKeyUp={this.onKeyUp}
+                    onKeyDown={this.onKeyDown}
                   />
                 </ModalLink>
               ) : null}
@@ -175,7 +175,7 @@ class ProfileForm extends React.Component<IProps, IState> {
     } as any);
     console.log(this.state);
   };
-  public onKeyUp = event => {
+  public onKeyDown = event => {
     const { username, nationality, gender, email, avatar } = this.state;
     const { keyCode } = event;
     if (keyCode === 13) {
