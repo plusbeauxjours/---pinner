@@ -193,7 +193,8 @@ class HeaderContainer extends React.Component<any, IState> {
       target: { value }
     } = event;
     this.setState({
-      search: value
+      search: value,
+      activeId: 0
     } as any);
   };
   public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -201,6 +202,7 @@ class HeaderContainer extends React.Component<any, IState> {
     const { activeId } = this.state;
     const { history } = this.props;
     console.log(this.state.activeId);
+    console.log(keyCode);
     if (this.searchData) {
       const {
         searchUsers: { users = null } = {},
@@ -217,7 +219,8 @@ class HeaderContainer extends React.Component<any, IState> {
           pathname: `/${users[activeId].username}`
         });
         this.setState({
-          activeId: 0
+          activeId: 0,
+          modalOpen: false
         });
       } else if (keyCode === 38) {
         if (activeId === 0) {
@@ -228,12 +231,13 @@ class HeaderContainer extends React.Component<any, IState> {
         });
       } else if (keyCode === 40) {
         if (activeId === users.length - 1) {
+          console.log("done!!!!!!!!!!", users.length, activeId);
           return;
         }
+        this.setState({
+          activeId: activeId + 1
+        });
       }
-      this.setState({
-        activeId: activeId + 1
-      });
     }
   };
 }
