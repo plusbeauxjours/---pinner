@@ -95,6 +95,7 @@ const UpLoadPresenter: React.SFC<IProps> = ({
           <Modal>
             <Wrapper>
               <STextArea
+                autoFocus={true}
                 placeholder="Add a caption..."
                 onChange={uploadNewCard}
                 value={caption}

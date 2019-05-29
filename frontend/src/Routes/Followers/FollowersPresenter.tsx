@@ -123,6 +123,7 @@ const Title = styled.div`
     margin-left: 10px;
   }
 `;
+
 const SeeAll = styled.p`
   font-size: 12px;
   font-weight: 100;

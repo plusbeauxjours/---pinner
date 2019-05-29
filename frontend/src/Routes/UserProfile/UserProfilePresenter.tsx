@@ -55,6 +55,10 @@ const PHeader = styled.header`
 
 const AvatarContainer = styled.div`
   display: flex;
+  position: relative;
+`;
+
+const LocationAvatarContainer = styled(AvatarContainer)`
   flex-direction: column;
 `;
 
@@ -73,13 +77,18 @@ const SText = styled(Bold)`
   font-weight: 100;
 `;
 
-const UserContainer = styled.div`
+const TripContainer = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
   @media screen and (max-width: 600px) {
     min-width: 300px;
   }
+`;
+
+const UserContainer = styled.div`
+  -webkit-box-flex: 0;
+  padding: 15px;
 `;
 
 const UserNameRow = styled.div`
@@ -112,7 +121,7 @@ const TripOverlay = styled.div`
   transition: opacity 0.3s ease-in-out;
 `;
 
-const UserRow = styled.div<ITheme>`
+const TripRow = styled.div<ITheme>`
   display: grid;
   flex-direction: row;
   height: 50px;
@@ -136,13 +145,32 @@ const UserRow = styled.div<ITheme>`
   }
 `;
 
-const TripRow = styled.div<ITheme>`
+const SearchRow = styled.div<ITheme>`
   display: flex;
   flex-direction: column;
   height: 50px;
   padding: 0 5px 0 5px;
   align-items: flex-start;
   justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  background-color: ${props => (props.active ? "grey" : null)};
+  &:hover {
+    background-color: grey;
+  }
+  &:not(:last-child) {
+    border-bottom: 1px solid grey;
+  }
+`;
+
+const UserRow = styled.div<ITheme>`
+  display: grid;
+  flex-direction: row;
+  height: 50px;
+  grid-template-columns: 4fr 1fr;
+  padding: 0 5px 0 5px;
+  grid-gap: 15px;
+  align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   background-color: ${props => (props.active ? "grey" : null)};
@@ -199,6 +227,9 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+  @media screen and (max-width: 935px) {
+    margin-left: 10px;
+  }
 `;
 
 const CityContainer = styled.div`
@@ -483,6 +514,41 @@ const Select = styled.select`
 `;
 
 const Option = styled.option``;
+
+const SeeAll = styled.p`
+  font-size: 12px;
+  font-weight: 100;
+  cursor: pointer;
+`;
+
+const Box = styled.div`
+  max-width: 905px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(3, 50px);
+  grid-auto-columns: 400px;
+  column-gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 15px;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  ::-webkit-scrollbar {
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: ${props => props.theme.bgColor};
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    background-color: ${props => props.theme.greyColor};
+  }
+`;
+
+const CText = styled(Bold)`
+  display: flex;
+`;
 
 interface ITheme {
   size?: string;
@@ -936,7 +1002,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                       active = "active";
                     }
                     return (
-                      <TripRow
+                      <SearchRow
                         key={index}
                         active={active}
                         onClick={onClickSearch}
@@ -948,7 +1014,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                             <Location>{city.country.countryName}</Location>
                           </HeaderColumn>
                         </TripHeader>
-                      </TripRow>
+                      </SearchRow>
                     );
                   })}
               </TripModal>
@@ -991,7 +1057,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                       active = "active";
                     }
                     return (
-                      <TripRow
+                      <SearchRow
                         key={index}
                         active={active}
                         onClick={onClickSearch}
@@ -1003,7 +1069,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                             <Location>{city.country.countryName}</Location>
                           </HeaderColumn>
                         </TripHeader>
-                      </TripRow>
+                      </SearchRow>
                     );
                   })}
               </TripModal>
@@ -1046,7 +1112,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
         */}
         <SWrapper>
           <PHeader>
-            <AvatarContainer>
+            <LocationAvatarContainer>
               <Link to={`/city/${user.profile.currentCity.cityName}`}>
                 <CAvatar size="lg" url={user.profile.currentCity.cityPhoto} />
               </Link>
@@ -1125,8 +1191,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 latitude={user.profile.currentCity.latitude}
                 longitude={user.profile.currentCity.longitude}
               />
-            </AvatarContainer>
-            <UserContainer>
+            </LocationAvatarContainer>
+            <TripContainer>
               <UserNameRow>
                 <Username>TRIPS</Username>
                 <TripInput
@@ -1150,7 +1216,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     active = "active";
                   }
                   return (
-                    <UserRow key={trip.id} active={active}>
+                    <TripRow key={trip.id} active={active}>
                       <THeader
                         onClick={() =>
                           gotoTrip(
@@ -1193,7 +1259,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                       >
                         <List />
                       </TripOverlay>
-                    </UserRow>
+                    </TripRow>
                   );
                 })}
               {tripList.length === 0 &&
@@ -1205,7 +1271,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     active = "active";
                   }
                   return (
-                    <UserRow key={trip.id} active={active}>
+                    <TripRow key={trip.id} active={active}>
                       <THeader
                         onClick={() =>
                           gotoTrip(
@@ -1248,22 +1314,11 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                       >
                         <List />
                       </TripOverlay>
-                    </UserRow>
+                    </TripRow>
                   );
                 })}
-            </UserContainer>
+            </TripContainer>
           </PHeader>
-          {!user.profile.isSelf &&
-          knowingFollowers &&
-          knowingFollowers.length !== 0 ? (
-            <>
-              <SmallTitle>
-                <SmallGreyLine />
-                <SSText text={"FOLLOWINGS TOGETHER"} />
-              </SmallTitle>
-              <AvatarGrid knowingFollowers={knowingFollowers} />
-            </>
-          ) : null}
           {!coffeeLoading && coffees.length !== 0 ? (
             <>
               <SmallTitle>
@@ -1280,6 +1335,48 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 <SSText text={"COFFEE NOW"} />
               </SmallTitle>
               <AvatarGrid toggleRequestModal={toggleRequestModal} />
+            </>
+          ) : null}
+          {!user.profile.isSelf &&
+          knowingFollowers &&
+          knowingFollowers.length !== 0 ? (
+            <>
+              <GreyLine />
+              <Title>
+                <SText text={"FOLLOWINGS TOGETHER"} />
+                <Link to={`/people`}>
+                  <SeeAll>SEE ALL</SeeAll>
+                </Link>
+              </Title>
+              <UserContainer>
+                <Box>
+                  {knowingFollowers.map((knowingFollower, index) => {
+                    return (
+                      <UserRow key={index}>
+                        <Link to={`/${knowingFollower.username}`}>
+                          <AvatarContainer>
+                            <Avatar size={"sm"} url={knowingFollower.avatar} />
+                            <HeaderColumn>
+                              <CText text={knowingFollower.username} />
+                              <Location>
+                                {knowingFollower.currentCity.cityName},{" "}
+                                {knowingFollower.currentCity.country.countryName}
+                              </Location>
+                            </HeaderColumn>
+                          </AvatarContainer>
+                        </Link>
+                        {!user.isSelf && (
+                          <FollowBtn
+                            isFollowing={knowingFollower.isFollowing}
+                            userId={knowingFollower.id}
+                            username={knowingFollower.username}
+                          />
+                        )}
+                      </UserRow>
+                    );
+                  })}
+                </Box>
+              </UserContainer>
             </>
           ) : null}
           <GreyLine />
