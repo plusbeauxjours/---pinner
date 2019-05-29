@@ -112,7 +112,7 @@ const TripOverlay = styled.div`
   transition: opacity 0.3s ease-in-out;
 `;
 
-const UserRow = styled.div`
+const UserRow = styled.div<ITheme>`
   display: grid;
   flex-direction: row;
   height: 50px;
@@ -122,6 +122,7 @@ const UserRow = styled.div`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -135,7 +136,7 @@ const UserRow = styled.div`
   }
 `;
 
-const TripRow = styled.div`
+const TripRow = styled.div<ITheme>`
   display: flex;
   flex-direction: column;
   height: 50px;
@@ -144,6 +145,7 @@ const TripRow = styled.div`
   justify-content: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -484,6 +486,7 @@ const Option = styled.option``;
 
 interface ITheme {
   size?: string;
+  active?: string;
 }
 
 interface IProps {
@@ -574,7 +577,7 @@ interface IProps {
   onSelectChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
-  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onKeyDownSubmit: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 
   deleteCoffee: () => void;
   getCoffeeId: any;
@@ -585,6 +588,12 @@ interface IProps {
   search: string;
   tripList: any;
   isDayBlocked: any;
+
+  onKeyDownSearch: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onClick: any;
+  onBlur: any;
+  tripActiveId: number;
+  searchActiveId: number;
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
@@ -644,7 +653,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   gotoTrip,
   onInputChange,
   onSelectChange,
-  onKeyDown,
+  onKeyDownSubmit,
   userName,
   bio,
   gender,
@@ -671,7 +680,13 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   search,
   onChange,
   tripList,
-  isDayBlocked
+  isDayBlocked,
+
+  onKeyDownSearch,
+  onClick,
+  onBlur,
+  tripActiveId,
+  searchActiveId
 }) => {
   if (userProfileLoading) {
     return <Loader />;
@@ -693,7 +708,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     value={username}
                     placeholder={user.username}
                     name={"userName"}
-                    onKeyDown={onKeyDown}
+                    onKeyDown={onKeyDownSubmit}
                     autoComplete={"off"}
                   />
                 </ModalLink>
@@ -704,7 +719,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     value={avatar}
                     placeholder={user.profile.avatar}
                     name={"avatar"}
-                    onKeyDown={onKeyDown}
+                    onKeyDown={onKeyDownSubmit}
                     autoComplete={"off"}
                   />
                 </ModalLink>
@@ -715,7 +730,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     value={bio}
                     placeholder={"bio"}
                     name={"bio"}
-                    onKeyDown={onKeyDown}
+                    onKeyDown={onKeyDownSubmit}
                     autoComplete={"off"}
                   />
                 </ModalLink>
@@ -756,7 +771,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                       value={email}
                       placeholder={"email"}
                       name={"email"}
-                      onKeyDown={onKeyDown}
+                      onKeyDown={onKeyDownSubmit}
                     />
                   </ModalLink>
                 ) : null}
@@ -904,25 +919,34 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 autoFocus={true}
                 placeholder={"Search a City"}
                 onChange={onInputChange}
-                name={"cityName"}
+                value={cityName}
                 autoComplete={"off"}
+                onKeyDown={onKeyDownSearch}
+                onClick={onClick}
+                onBlur={onBlur}
               />
               <TripModal>
                 {!searchTripCitiesLoading &&
                   cities &&
-                  cities.map(city => (
-                    <TripRow key={city.id}>
-                      <Link to={`/city/${city.cityName}`}>
-                        <TripHeader>
-                          <SAvatar size={"sm"} url={city.cityPhoto} />
-                          <HeaderColumn>
-                            <HeaderText text={city.cityName} />
-                            <Location>{city.country.countryName}</Location>
-                          </HeaderColumn>
-                        </TripHeader>
-                      </Link>
-                    </TripRow>
-                  ))}
+                  cities.map((city, index) => {
+                    let active;
+                    if (index === searchActiveId) {
+                      active = "active";
+                    }
+                    return (
+                      <TripRow key={index} active={active}>
+                        <Link to={`/city/${city.cityName}`}>
+                          <TripHeader>
+                            <SAvatar size={"sm"} url={city.cityPhoto} />
+                            <HeaderColumn>
+                              <HeaderText text={city.cityName} />
+                              <Location>{city.country.countryName}</Location>
+                            </HeaderColumn>
+                          </TripHeader>
+                        </Link>
+                      </TripRow>
+                    );
+                  })}
               </TripModal>
             </TripInputContainer>
           </TripModalContainer>
@@ -948,28 +972,36 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               </DateRangePickerContainer>
               <SearchCitiesInput
                 autoFocus={true}
-                placeholder={cityName || "cityName"}
-                value={cityName}
+                placeholder={cityName || "Search a City"}
                 onChange={onInputChange}
-                name={"cityName"}
+                value={cityName}
                 autoComplete={"off"}
+                onKeyDown={onKeyDownSearch}
+                onClick={onClick}
+                onBlur={onBlur}
               />
               <TripModal>
                 {!searchTripCitiesLoading &&
                   cities &&
-                  cities.map(city => (
-                    <TripRow key={city.id}>
-                      <Link to={`/city/${city.cityName}`}>
-                        <TripHeader>
-                          <SAvatar size={"sm"} url={city.cityPhoto} />
-                          <HeaderColumn>
-                            <HeaderText text={city.cityName} />
-                            <Location>{city.country.countryName}</Location>
-                          </HeaderColumn>
-                        </TripHeader>
-                      </Link>
-                    </TripRow>
-                  ))}
+                  cities.map((city, index) => {
+                    let active;
+                    if (index === searchActiveId) {
+                      active = "active";
+                    }
+                    return (
+                      <TripRow key={index} active={active}>
+                        <Link to={`/city/${city.cityName}`}>
+                          <TripHeader>
+                            <SAvatar size={"sm"} url={city.cityPhoto} />
+                            <HeaderColumn>
+                              <HeaderText text={city.cityName} />
+                              <Location>{city.country.countryName}</Location>
+                            </HeaderColumn>
+                          </TripHeader>
+                        </Link>
+                      </TripRow>
+                    );
+                  })}
               </TripModal>
             </TripInputContainer>
           </TripModalContainer>
@@ -988,7 +1020,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 value={userName}
                 placeholder={user.username}
                 name={"userName"}
-                onKeyDown={onKeyDown}
+                onKeyDown={onKeyDownSubmit}
               />
             ) : (
               <Username>{user.username}</Username>
@@ -1022,7 +1054,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     value={firstName}
                     placeholder={user.firstName || "First Name"}
                     name={"firstName"}
-                    onKeyDown={onKeyDown}
+                    onKeyDown={onKeyDownSubmit}
                   />
                   <Input
                     onChange={onInputChange}
@@ -1030,7 +1062,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     value={lastName}
                     placeholder={user.lastName || "Last Name"}
                     name={"lastName"}
-                    onKeyDown={onKeyDown}
+                    onKeyDown={onKeyDownSubmit}
                   />
                 </>
               ) : (
@@ -1045,7 +1077,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   value={bio}
                   placeholder={user.profile.bio || "Bio"}
                   name={"bio"}
-                  onKeyDown={onKeyDown}
+                  onKeyDown={onKeyDownSubmit}
                 />
               ) : (
                 <Bio>{`${user.profile.bio}`}</Bio>

@@ -135,12 +135,10 @@ class FollowersContainer extends React.Component<IProps, IState> {
     } else if (keyCode === 40) {
       if (usersList.length) {
         if (activeId === usersList.length - 1) {
-          console.log(activeId);
           return;
         }
       } else {
         if (activeId === profiles.length - 1) {
-          console.log(activeId);
           return;
         }
       }
