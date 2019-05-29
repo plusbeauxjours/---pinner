@@ -680,6 +680,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                       this
                                                                                         .onKeyDownSearch
                                                                                     }
+                                                                                    onKeyDownTrip={
+                                                                                      this
+                                                                                        .onKeyDownTrip
+                                                                                    }
                                                                                     onClick={
                                                                                       this
                                                                                         .onClick
@@ -687,6 +691,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                     onBlur={
                                                                                       this
                                                                                         .onBlur
+                                                                                    }
+                                                                                    onClickSearch={
+                                                                                      this
+                                                                                        .onClickSearch
                                                                                     }
                                                                                   />
                                                                                 );
@@ -943,16 +951,22 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     tripStartDate,
     tripEndDate
   ) => {
-    this.props.history.push({
-      pathname: `/city/${cityName}/${tripStartDate}${"-"}${tripEndDate}`,
-      state: {
-        cityName,
-        cityPhoto,
-        countryName,
-        tripStartDate,
-        tripEndDate
-      }
-    });
+    if (tripStartDate === null || tripEndDate === null) {
+      this.props.history.push({
+        pathname: `/city/${cityName}`
+      });
+    } else {
+      this.props.history.push({
+        pathname: `/city/${cityName}/${tripStartDate}${"-"}${tripEndDate}`,
+        state: {
+          cityName,
+          cityPhoto,
+          countryName,
+          tripStartDate,
+          tripEndDate
+        }
+      });
+    }
     this.setState({
       cityName: null,
       cityPhoto: null,
@@ -1214,7 +1228,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   public onKeyDownTrip = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { keyCode } = event;
     const { tripActiveId, tripList } = this.state;
-    const { history } = this.props;
 
     const {
       getTrips: { trip = null }
@@ -1223,12 +1236,20 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     if (keyCode === 13 && (tripList.length || trip)) {
       {
         tripList.length
-          ? history.push({
-              pathname: `/${tripList[tripActiveId].cityName}`
-            })
-          : history.push({
-              pathname: `/${trip[tripActiveId].cityName}`
-            });
+          ? this.gotoTrip(
+              tripList[tripActiveId].city.cityName,
+              tripList[tripActiveId].city.cityPhoto,
+              tripList[tripActiveId].city.country.countryName,
+              tripList[tripActiveId].startDate,
+              tripList[tripActiveId].endDate
+            )
+          : this.gotoTrip(
+              trip[tripActiveId].city.cityName,
+              trip[tripActiveId].city.cityPhoto,
+              trip[tripActiveId].city.country.countryName,
+              trip[tripActiveId].startDate,
+              trip[tripActiveId].endDate
+            );
       }
       this.setState({
         tripActiveId: 0
@@ -1255,6 +1276,19 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       });
     }
   };
+  public onClickSearch: React.MouseEventHandler<HTMLDivElement> = () => {
+    if (this.searchTripCitiesData) {
+      const { searchActiveId } = this.state;
+      const {
+        searchTripCities: { cities = null }
+      } = this.searchTripCitiesData;
+
+      this.setState({
+        searchActiveId: 0,
+        cityName: cities[searchActiveId].cityName
+      });
+    }
+  };
   public onKeyDownSearch = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { keyCode } = event;
     const { searchActiveId } = this.state;
@@ -1266,7 +1300,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       if (keyCode === 13 && cities) {
         this.setState({
           searchActiveId: 0,
-          cityName: cities[searchActiveId].cityName,
+          cityName: cities[searchActiveId].cityName
         });
         console.log(this.state);
       } else if (keyCode === 38) {
