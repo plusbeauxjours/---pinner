@@ -15,6 +15,7 @@ interface IProps extends RouteComponentProps<any> {}
 interface IState {
   search: string;
   countryList: any;
+  activeId: number;
 }
 class ContinentProfileContainer extends React.Component<IProps, IState> {
   public data;
@@ -22,7 +23,8 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       search: "",
-      countryList: []
+      countryList: [],
+      activeId: null
     };
   }
   public componentDidUpdate(prevProps) {
@@ -41,7 +43,7 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
         params: { continentName }
       }
     } = this.props;
-    const { search, countryList } = this.state;
+    const { search, countryList, activeId } = this.state;
     return (
       <ContinentProfileQuery
         query={CONTINENT_PROFILE}
@@ -56,7 +58,11 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
               continentName={continentName}
               onChange={this.onChange}
               search={search}
+              activeId={activeId}
               countryList={countryList}
+              onKeyDown={this.onKeyDown}
+              onClick={this.onClick}
+              onBlur={this.onBlur}
             />
           );
         }}
@@ -77,8 +83,63 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
     const countryList = search(countries, value);
     this.setState({
       search: value,
-      countryList
+      countryList,
+      activeId: 0
     } as any);
+  };
+  public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const { keyCode } = event;
+    const { activeId, countryList } = this.state;
+    const { history } = this.props;
+
+    const {
+      continentProfile: { countries = null }
+    } = this.data;
+
+    if (keyCode === 13 && (countryList.length || countries)) {
+      {
+        countryList.length
+          ? history.push({
+              pathname: `/country/${countryList[activeId].countryName}`
+            })
+          : history.push({
+              pathname: `/country/${countries[activeId].countryName}`
+            });
+      }
+      this.setState({
+        activeId: 0
+      });
+    } else if (keyCode === 38) {
+      if (activeId === 0) {
+        return;
+      }
+      this.setState({
+        activeId: activeId - 1
+      });
+    } else if (keyCode === 40) {
+      if (countryList.length) {
+        if (activeId === countryList.length - 1) {
+          return;
+        }
+      } else {
+        if (activeId === countries.length - 1) {
+          return;
+        }
+      }
+      this.setState({
+        activeId: activeId + 1
+      });
+    }
+  };
+  public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
+    this.setState({
+      activeId: 0
+    });
+  };
+  public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
+    this.setState({
+      activeId: null
+    });
   };
 }
 

@@ -128,7 +128,7 @@ const SmallGreyLine = styled(GreyLine)`
   width: 40%;
 `;
 
-const UserRow = styled.div`
+const UserRow = styled.div<ITheme>`
   display: grid;
   flex-direction: row;
   height: 50px;
@@ -138,6 +138,7 @@ const UserRow = styled.div`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -221,6 +222,10 @@ const Input = styled.input`
   }
 `;
 
+interface ITheme {
+  active?: string;
+}
+
 interface IProps {
   data?: any;
   loading: boolean;
@@ -228,6 +233,10 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
   countryList: any;
+  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onClick: any;
+  onBlur: any;
+  activeId: number;
 }
 
 const ContinentProfilePresenter: React.SFC<IProps> = ({
@@ -244,7 +253,11 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
   continentName,
   onChange,
   search,
-  countryList
+  countryList,
+  onKeyDown,
+  onClick,
+  onBlur,
+  activeId
 }) => {
   if (loading) {
     return <Loader />;
@@ -267,38 +280,57 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
                   placeholder="Search"
                   value={search}
                   onChange={onChange}
+                  onKeyDown={onKeyDown}
+                  onClick={onClick}
+                  onBlur={onBlur}
                 />
               </UserNameRow>
               {countryList.length !== 0 &&
-                countryList.map(country => (
-                  <UserRow key={country.id}>
-                    <Link to={`/country/${country.countryName}`}>
-                      <Header>
-                        <SAvatar size={"sm"} url={country.countryPhoto} />
-                        <HeaderColumn>
-                          <HeaderText text={country.countryName} />
-                          <Location>{country.continent.continentName}</Location>
-                        </HeaderColumn>
-                      </Header>
-                    </Link>
-                  </UserRow>
-                ))}
+                countryList.map((country, index) => {
+                  let active;
+                  if (index === activeId) {
+                    active = "active";
+                  }
+                  return (
+                    <UserRow key={index} active={active}>
+                      <Link to={`/country/${country.countryName}`}>
+                        <Header>
+                          <SAvatar size={"sm"} url={country.countryPhoto} />
+                          <HeaderColumn>
+                            <HeaderText text={country.countryName} />
+                            <Location>
+                              {country.continent.continentName}
+                            </Location>
+                          </HeaderColumn>
+                        </Header>
+                      </Link>
+                    </UserRow>
+                  );
+                })}
               {countryList.length === 0 &&
                 !search &&
                 countries &&
-                countries.map(country => (
-                  <UserRow key={country.id}>
-                    <Link to={`/country/${country.countryName}`}>
-                      <Header>
-                        <SAvatar size={"sm"} url={country.countryPhoto} />
-                        <HeaderColumn>
-                          <HeaderText text={country.countryName} />
-                          <Location>{country.continent.continentName}</Location>
-                        </HeaderColumn>
-                      </Header>
-                    </Link>
-                  </UserRow>
-                ))}
+                countries.map((country, index) => {
+                  let active;
+                  if (index === activeId) {
+                    active = "active";
+                  }
+                  return (
+                    <UserRow key={index} active={active}>
+                      <Link to={`/country/${country.countryName}`}>
+                        <Header>
+                          <SAvatar size={"sm"} url={country.countryPhoto} />
+                          <HeaderColumn>
+                            <HeaderText text={country.countryName} />
+                            <Location>
+                              {country.continent.continentName}
+                            </Location>
+                          </HeaderColumn>
+                        </Header>
+                      </Link>
+                    </UserRow>
+                  );
+                })}
             </UserContainer>
           </PHeader>
           {usersBefore && usersBefore.length !== 0 ? (
