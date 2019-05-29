@@ -29,14 +29,13 @@ class FollowingsContainer extends React.Component<IProps, IState> {
       username: null,
       search: "",
       usersList: [],
-      activeId: 0
+      activeId: null
     };
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
     if (prevProps.match.params.username !== newProps.match.params.username) {
       this.setState({ search: "", usersList: [] });
-      console.log(this.state);
     }
   }
   public render = () => {
@@ -83,7 +82,6 @@ class FollowingsContainer extends React.Component<IProps, IState> {
     const {
       target: { value }
     } = event;
-    console.log(this.data);
     const {
       getFollowings: { profiles = null }
     } = this.data;
@@ -135,12 +133,10 @@ class FollowingsContainer extends React.Component<IProps, IState> {
     } else if (keyCode === 40) {
       if (usersList.length) {
         if (activeId === usersList.length - 1) {
-          console.log(activeId);
           return;
         }
       } else {
         if (activeId === profiles.length - 1) {
-          console.log(activeId);
           return;
         }
       }
@@ -156,7 +152,7 @@ class FollowingsContainer extends React.Component<IProps, IState> {
   };
   public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
     this.setState({
-      activeId: 0
+      activeId: null
     });
   };
 }

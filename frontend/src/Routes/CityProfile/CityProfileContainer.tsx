@@ -34,21 +34,14 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       nowUsersList: [],
       beforeUsersList: [],
       coffeeReportModalOpen: false,
-      nowUsersActiveId: 0,
+      nowUsersActiveId: null,
       beforeUsersActiveId: null
     };
   }
-  public componentDidMount() {
-    console.log(this.state);
-  }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
-    console.log(prevProps);
-    console.log(newProps);
-
     if (prevProps.match.params.cityName !== newProps.match.params.cityName) {
       this.setState({ search: "", nowUsersList: [], beforeUsersList: [] });
-      console.log(this.state);
     }
   }
   public render() {
@@ -119,9 +112,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     const nowUsersList = nowSearch(usersNow, value);
     this.setState({
       search: value,
-      nowUsersList,
-      nowUsersActiveId: 0,
-      beforeUsersActiveId: null
+      nowUsersList
     } as any);
     if (usersBefore) {
       const beforeSearch = (list, text) =>
@@ -132,9 +123,18 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       console.log(beforeUsersList);
       this.setState({
         search: value,
-        beforeUsersList,
+        beforeUsersList
+      });
+    }
+    if (nowUsersList.length !== 0) {
+      this.setState({
         nowUsersActiveId: 0,
         beforeUsersActiveId: null
+      } as any);
+    } else if (nowUsersList.length === 0) {
+      this.setState({
+        nowUsersActiveId: null,
+        beforeUsersActiveId: 0
       } as any);
     }
   };
@@ -180,11 +180,13 @@ class CityProfileContainer extends React.Component<IProps, IState> {
             nowUsersActiveId: nowUsersList.length - 1,
             beforeUsersActiveId: null
           });
-        } else if (nowUsersList.length === 0) {
+        } else if (nowUsersList.length === 0 && usersNow) {
           this.setState({
             nowUsersActiveId: usersNow.length - 1,
             beforeUsersActiveId: null
           });
+        } else if (nowUsersList.length === 0 && !usersNow) {
+          return;
         }
       }
       if (nowUsersActiveId !== null) {
@@ -244,14 +246,25 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     }
   };
   public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      nowUsersActiveId: 0,
-      beforeUsersActiveId: null
-    });
+    const {
+      cityProfile: { usersNow = null }
+    } = this.data;
+    const { nowUsersList } = this.state;
+    if (!usersNow || nowUsersList.length === 0) {
+      this.setState({
+        nowUsersActiveId: null,
+        beforeUsersActiveId: 0
+      });
+    } else {
+      this.setState({
+        nowUsersActiveId: 0,
+        beforeUsersActiveId: null
+      });
+    }
   };
   public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
     this.setState({
-      nowUsersActiveId: 0,
+      nowUsersActiveId: null,
       beforeUsersActiveId: null
     });
   };

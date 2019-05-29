@@ -29,7 +29,7 @@ class FollowersContainer extends React.Component<IProps, IState> {
       username: null,
       search: "",
       usersList: [],
-      activeId: 0
+      activeId: null
     };
   }
   public componentDidUpdate(prevProps) {
@@ -156,7 +156,7 @@ class FollowersContainer extends React.Component<IProps, IState> {
   };
   public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
     this.setState({
-      activeId: 0
+      activeId: null
     });
   };
 }

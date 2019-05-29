@@ -391,7 +391,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                   }
                   return (
                     <UserRow key={index} active={active}>
-                      {console.log("nanai")}
                       <Link to={`/${user.actor.profile.username}`}>
                         <UserHeader
                           username={user.actor.profile.username}
