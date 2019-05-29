@@ -12,6 +12,7 @@ interface IProps extends RouteComponentProps<any> {}
 interface IState {
   search: string;
   cityList: any;
+  activeId: number;
 }
 
 class CitiesContainerContainer extends React.Component<IProps, IState> {
@@ -20,7 +21,8 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       search: "",
-      cityList: []
+      cityList: [],
+      activeId: null
     };
   }
   public componentDidUpdate(prevProps) {
@@ -36,7 +38,7 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
         params: { username }
       }
     } = this.props;
-    const { search, cityList } = this.state;
+    const { search, cityList, activeId } = this.state;
     return (
       <GetCitiesQuery
         query={FREQUENT_VISITS}
@@ -52,6 +54,10 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
               onChange={this.onChange}
               search={search}
               cityList={cityList}
+              activeId={activeId}
+              onKeyDown={this.onKeyDown}
+              onClick={this.onClick}
+              onBlur={this.onBlur}
             />
           );
         }}
@@ -74,8 +80,63 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
     const cityList = search(cities, value);
     this.setState({
       search: value,
-      cityList
+      cityList,
+      activeId: 0
     } as any);
+  };
+  public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const { keyCode } = event;
+    const { activeId, cityList } = this.state;
+    const { history } = this.props;
+
+    const {
+      frequentVisits: { cities = null }
+    } = this.data;
+
+    if (keyCode === 13 && (cityList.length || cities)) {
+      {
+        cityList.length
+          ? history.push({
+              pathname: `/city/${cityList[activeId].cityName}`
+            })
+          : history.push({
+              pathname: `/city/${cities[activeId].cityName}`
+            });
+      }
+      this.setState({
+        activeId: 0
+      });
+    } else if (keyCode === 38) {
+      if (activeId === 0) {
+        return;
+      }
+      this.setState({
+        activeId: activeId - 1
+      });
+    } else if (keyCode === 40) {
+      if (cityList.length) {
+        if (activeId === cityList.length - 1) {
+          return;
+        }
+      } else {
+        if (activeId === cities.length - 1) {
+          return;
+        }
+      }
+      this.setState({
+        activeId: activeId + 1
+      });
+    }
+  };
+  public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
+    this.setState({
+      activeId: 0
+    });
+  };
+  public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
+    this.setState({
+      activeId: null
+    });
   };
 }
 

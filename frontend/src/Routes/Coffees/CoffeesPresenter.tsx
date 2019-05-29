@@ -63,7 +63,7 @@ const UserContainer = styled.div`
   }
 `;
 
-const UserRow = styled.div`
+const UserRow = styled.div<ITheme>`
   display: grid;
   flex-direction: row;
   height: 50px;
@@ -73,6 +73,7 @@ const UserRow = styled.div`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -113,6 +114,10 @@ const Input = styled.input`
   }
 `;
 
+interface ITheme {
+  active?: string;
+}
+
 interface IProps {
   data?: any;
   loading: boolean;
@@ -120,6 +125,10 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
   coffeesList: any;
+  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onClick: any;
+  onBlur: any;
+  activeId: number;
 }
 
 const CoffeesPresenter: React.SFC<IProps> = ({
@@ -128,7 +137,11 @@ const CoffeesPresenter: React.SFC<IProps> = ({
   userName,
   onChange,
   search,
-  coffeesList
+  coffeesList,
+  onKeyDown,
+  onClick,
+  onBlur,
+  activeId
 }) => {
   if (loading) {
     return <Loader />;
@@ -151,48 +164,67 @@ const CoffeesPresenter: React.SFC<IProps> = ({
           <UserContainer>
             <UserNameRow>
               <Username>{userName} Coffees</Username>
-              <Input placeholder="Search" value={search} onChange={onChange} />
+              <Input
+                placeholder="Search"
+                value={search}
+                onChange={onChange}
+                onKeyDown={onKeyDown}
+                onClick={onClick}
+                onBlur={onBlur}
+              />
             </UserNameRow>
             {coffeesList.length !== 0 &&
-              coffeesList.map(coffee => (
-                <React.Fragment key={coffee.id}>
-                  <Link to={`/c/${coffee.id}`}>
-                    <UserRow>
-                      <UserHeader
-                        username={coffee.city.cityName}
-                        currentCity={coffee.city.country.countryName}
-                        avatar={coffee.host.profile.avatar}
-                        size={"sm"}
-                        type={"coffee"}
-                        target={coffee.target}
-                      />
-                      <GreyText text={coffee.target} />
-                      <GreyText text={coffee.expires} />
-                    </UserRow>
-                  </Link>
-                </React.Fragment>
-              ))}
+              coffeesList.map((coffee, index) => {
+                let active;
+                if (index === activeId) {
+                  active = "active";
+                }
+                return (
+                  <React.Fragment key={index}>
+                    <Link to={`/c/${coffee.id}`}>
+                      <UserRow active={active}>
+                        <UserHeader
+                          username={coffee.city.cityName}
+                          currentCity={coffee.city.country.countryName}
+                          avatar={coffee.host.profile.avatar}
+                          size={"sm"}
+                          type={"coffee"}
+                          target={coffee.target}
+                        />
+                        <GreyText text={coffee.target} />
+                        <GreyText text={coffee.expires} />
+                      </UserRow>
+                    </Link>
+                  </React.Fragment>
+                );
+              })}
             {coffeesList.length === 0 &&
               !search &&
               coffees &&
-              coffees.map(coffee => (
-                <React.Fragment key={coffee.id}>
-                  <Link to={`/c/${coffee.id}`}>
-                    <UserRow>
-                      <UserHeader
-                        username={coffee.city.cityName}
-                        currentCity={coffee.city.country.countryName}
-                        avatar={coffee.host.profile.avatar}
-                        size={"sm"}
-                        type={"coffee"}
-                        target={coffee.target}
-                      />
-                      <GreyText text={coffee.target} />
-                      <GreyText text={coffee.expires} />
-                    </UserRow>
-                  </Link>
-                </React.Fragment>
-              ))}
+              coffees.map((coffee, index) => {
+                let active;
+                if (index === activeId) {
+                  active = "active";
+                }
+                return (
+                  <React.Fragment key={index}>
+                    <Link to={`/c/${coffee.id}`}>
+                      <UserRow active={active}>
+                        <UserHeader
+                          username={coffee.city.cityName}
+                          currentCity={coffee.city.country.countryName}
+                          avatar={coffee.host.profile.avatar}
+                          size={"sm"}
+                          type={"coffee"}
+                          target={coffee.target}
+                        />
+                        <GreyText text={coffee.target} />
+                        <GreyText text={coffee.expires} />
+                      </UserRow>
+                    </Link>
+                  </React.Fragment>
+                );
+              })}
           </UserContainer>
         </PHeader>
       </SWrapper>

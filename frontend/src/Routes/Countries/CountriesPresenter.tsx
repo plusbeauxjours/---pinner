@@ -35,7 +35,7 @@ const GreyLine = styled.div`
   }
 `;
 
-const UserRow = styled.div`
+const UserRow = styled.div<ITheme>`
   display: grid;
   flex-direction: row;
   height: 50px;
@@ -45,6 +45,7 @@ const UserRow = styled.div`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -132,6 +133,10 @@ const Input = styled.input`
   }
 `;
 
+interface ITheme {
+  active?: string;
+}
+
 interface IProps {
   data?: any;
   loading: boolean;
@@ -139,6 +144,10 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
   countryList: any;
+  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onClick: any;
+  onBlur: any;
+  activeId: number;
 }
 
 const CountriesPresenter: React.SFC<IProps> = ({
@@ -147,7 +156,11 @@ const CountriesPresenter: React.SFC<IProps> = ({
   userName,
   onChange,
   search,
-  countryList
+  countryList,
+  onKeyDown,
+  onClick,
+  onBlur,
+  activeId
 }) => {
   if (loading) {
     return <Loader />;
@@ -169,46 +182,65 @@ const CountriesPresenter: React.SFC<IProps> = ({
               <UserNameRow>
                 <Username>{userName} Countries</Username>
                 <Input
-                  placeholder="Search"
+                  placeholder="Seardddch"
                   value={search}
                   onChange={onChange}
+                  onKeyDown={onKeyDown}
+                  onClick={onClick}
+                  onBlur={onBlur}
                 />
               </UserNameRow>
               {countryList.length !== 0 &&
                 countryList &&
-                countryList.map(country => (
-                  <UserRow key={country.id}>
-                    <Link to={`/country/${country.countryName}`}>
-                      <Header>
-                        <SAvatar size={"sm"} url={country.countryPhoto} />
-                        <HeaderColumn>
-                          <HeaderText text={country.countryName} />
-                          <Location>{country.continent.continentName}</Location>
-                        </HeaderColumn>
-                      </Header>
-                    </Link>
-                    <GreyText text={`x ${country.count}`} />
-                    <GreyText text={`${country.diff} d`} />
-                  </UserRow>
-                ))}
+                countryList.map((country, index) => {
+                  let active;
+                  if (index === activeId) {
+                    active = "active";
+                  }
+                  return (
+                    <UserRow key={index} active={active}>
+                      <Link to={`/country/${country.countryName}`}>
+                        <Header>
+                          <SAvatar size={"sm"} url={country.countryPhoto} />
+                          <HeaderColumn>
+                            <HeaderText text={country.countryName} />
+                            <Location>
+                              {country.continent.continentName}
+                            </Location>
+                          </HeaderColumn>
+                        </Header>
+                      </Link>
+                      <GreyText text={`x ${country.count}`} />
+                      <GreyText text={`${country.diff} d`} />
+                    </UserRow>
+                  );
+                })}
               {countryList.length === 0 &&
                 !search &&
                 countries &&
-                countries.map(country => (
-                  <UserRow key={country.id}>
-                    <Link to={`/country/${country.countryName}`}>
-                      <Header>
-                        <SAvatar size={"sm"} url={country.countryPhoto} />
-                        <HeaderColumn>
-                          <HeaderText text={country.countryName} />
-                          <Location>{country.continent.continentName}</Location>
-                        </HeaderColumn>
-                      </Header>
-                    </Link>
-                    <GreyText text={`x ${country.count}`} />
-                    <GreyText text={`${country.diff} d`} />
-                  </UserRow>
-                ))}
+                countries.map((country, index) => {
+                  let active;
+                  if (index === activeId) {
+                    active = "active";
+                  }
+                  return (
+                    <UserRow key={index} active={active}>
+                      <Link to={`/country/${country.countryName}`}>
+                        <Header>
+                          <SAvatar size={"sm"} url={country.countryPhoto} />
+                          <HeaderColumn>
+                            <HeaderText text={country.countryName} />
+                            <Location>
+                              {country.continent.continentName}
+                            </Location>
+                          </HeaderColumn>
+                        </Header>
+                      </Link>
+                      <GreyText text={`x ${country.count}`} />
+                      <GreyText text={`${country.diff} d`} />
+                    </UserRow>
+                  );
+                })}
             </UserContainer>
           </PHeader>
           <GreyLine />

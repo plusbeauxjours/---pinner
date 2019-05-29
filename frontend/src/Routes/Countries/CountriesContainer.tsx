@@ -1,6 +1,6 @@
 import React from "react";
 import { Query } from "react-apollo";
-import ContinentProfilePresenter from "./CountriesPresenter";
+import CountriesPresenter from "./CountriesPresenter";
 import { TopCountries, TopCountriesVariables } from "../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
 import { TOP_COUNTRIES } from "./CountriesQueries";
@@ -12,6 +12,7 @@ interface IProps extends RouteComponentProps<any> {}
 interface IState {
   search: string;
   countryList: any;
+  activeId: number;
 }
 class CountriesContainer extends React.Component<IProps, IState> {
   public data;
@@ -19,7 +20,8 @@ class CountriesContainer extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       search: "",
-      countryList: []
+      countryList: [],
+      activeId: null
     };
   }
   public componentDidUpdate(prevProps) {
@@ -35,7 +37,7 @@ class CountriesContainer extends React.Component<IProps, IState> {
         params: { username }
       }
     } = this.props;
-    const { search, countryList } = this.state;
+    const { search, countryList, activeId } = this.state;
     return (
       <GetCountriesQuery
         query={TOP_COUNTRIES}
@@ -44,13 +46,17 @@ class CountriesContainer extends React.Component<IProps, IState> {
         {({ data, loading }) => {
           this.data = data;
           return (
-            <ContinentProfilePresenter
+            <CountriesPresenter
               data={data}
               loading={loading}
               userName={username}
               onChange={this.onChange}
               search={search}
+              activeId={activeId}
               countryList={countryList}
+              onKeyDown={this.onKeyDown}
+              onClick={this.onClick}
+              onBlur={this.onBlur}
             />
           );
         }}
@@ -73,8 +79,63 @@ class CountriesContainer extends React.Component<IProps, IState> {
     const countryList = search(countries, value);
     this.setState({
       search: value,
-      countryList
+      countryList,
+      activeId: 0
     } as any);
+  };
+  public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const { keyCode } = event;
+    const { activeId, countryList } = this.state;
+    const { history } = this.props;
+
+    const {
+      topCountries: { countries = null }
+    } = this.data;
+
+    if (keyCode === 13 && (countryList.length || countries)) {
+      {
+        countryList.length
+          ? history.push({
+              pathname: `/country/${countryList[activeId].countryName}`
+            })
+          : history.push({
+              pathname: `/country/${countries[activeId].countryName}`
+            });
+      }
+      this.setState({
+        activeId: 0
+      });
+    } else if (keyCode === 38) {
+      if (activeId === 0) {
+        return;
+      }
+      this.setState({
+        activeId: activeId - 1
+      });
+    } else if (keyCode === 40) {
+      if (countryList.length) {
+        if (activeId === countryList.length - 1) {
+          return;
+        }
+      } else {
+        if (activeId === countries.length - 1) {
+          return;
+        }
+      }
+      this.setState({
+        activeId: activeId + 1
+      });
+    }
+  };
+  public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
+    this.setState({
+      activeId: 0
+    });
+  };
+  public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
+    this.setState({
+      activeId: null
+    });
   };
 }
 
