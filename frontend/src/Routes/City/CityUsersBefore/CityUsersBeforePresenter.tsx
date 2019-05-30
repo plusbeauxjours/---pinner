@@ -20,7 +20,7 @@ const UserContainer = styled.div`
   flex-direction: column;
 `;
 
-const UserRow = styled.div`
+const UserRow = styled.div<ITheme>`
   display: grid;
   flex-direction: row;
   height: 50px;
@@ -30,6 +30,7 @@ const UserRow = styled.div`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -91,6 +92,10 @@ const Explain = styled(Location)`
   color: grey;
 `;
 
+interface ITheme {
+  active?: string;
+}
+
 interface IProps {
   data: any;
   loading: boolean;
@@ -101,6 +106,10 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   loadMore: any;
   cityName: string;
+  beforeUsersActiveId: number;
+  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onClick: any;
+  onBlur: any;
 }
 
 const CityUsersBeforePresenter: React.SFC<IProps> = ({
@@ -114,7 +123,11 @@ const CityUsersBeforePresenter: React.SFC<IProps> = ({
   usersBeforeList,
   onChange,
   loadMore,
-  cityName
+  cityName,
+  beforeUsersActiveId,
+  onKeyDown,
+  onClick,
+  onBlur
 }) => {
   return (
     <>
@@ -122,7 +135,14 @@ const CityUsersBeforePresenter: React.SFC<IProps> = ({
         <UserContainer>
           <UserNameRow>
             <Username>USERS BEFORE</Username>
-            <Input placeholder="Search" value={search} onChange={onChange} />
+            <Input
+              placeholder="Search"
+              value={search}
+              onChange={onChange}
+              onKeyDown={onKeyDown}
+              onClick={onClick}
+              onBlur={onBlur}
+            />
           </UserNameRow>
           {loading && <Loader />}
           {!loading && (
@@ -134,8 +154,12 @@ const CityUsersBeforePresenter: React.SFC<IProps> = ({
             >
               {usersBeforeList.length !== 0 &&
                 usersBeforeList.map((user, index) => {
+                  let active;
+                  if (index === beforeUsersActiveId) {
+                    active = "active";
+                  }
                   return (
-                    <UserRow key={index}>
+                    <UserRow key={index} active={active}>
                       <Link to={`/${user.actor.profile.username}`}>
                         <AvatarContainer>
                           <Avatar size={"sm"} url={user.actor.profile.avatar} />
@@ -159,8 +183,12 @@ const CityUsersBeforePresenter: React.SFC<IProps> = ({
                 !search &&
                 usersBefore &&
                 usersBefore.map((user, index) => {
+                  let active;
+                  if (index === beforeUsersActiveId) {
+                    active = "active";
+                  }
                   return (
-                    <UserRow key={index}>
+                    <UserRow key={index} active={active}>
                       <Link to={`/${user.actor.profile.username}`}>
                         <AvatarContainer>
                           <Avatar size={"sm"} url={user.actor.profile.avatar} />

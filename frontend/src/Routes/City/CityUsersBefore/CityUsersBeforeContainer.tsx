@@ -12,6 +12,7 @@ interface IState {
   modalOpen: boolean;
   search: string;
   usersBeforeList: any;
+  beforeUsersActiveId: number;
 }
 
 class CityUsersBeforeContainer extends React.Component<IProps, IState> {
@@ -22,7 +23,8 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
     this.state = {
       modalOpen: false,
       search: "",
-      usersBeforeList: []
+      usersBeforeList: [],
+      beforeUsersActiveId: null
     };
   }
   public componentDidUpdate(prevProps) {
@@ -40,7 +42,12 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
         params: { cityName }
       }
     } = this.props;
-    const { modalOpen, search, usersBeforeList } = this.state;
+    const {
+      modalOpen,
+      search,
+      usersBeforeList,
+      beforeUsersActiveId
+    } = this.state;
     return (
       <RecommandUsersQuery
         query={CITY_USERS_BEFORE}
@@ -58,10 +65,14 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
               modalOpen={modalOpen}
               toggleModal={this.toggleModal}
               search={search}
+              beforeUsersActiveId={beforeUsersActiveId}
               usersBeforeList={usersBeforeList}
               onChange={this.onChange}
               loadMore={this.loadMore}
               cityName={cityName}
+              onKeyDown={this.onKeyDown}
+              onClick={this.onClick}
+              onBlur={this.onBlur}
             />
           );
         }}
@@ -89,7 +100,8 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
     console.log(usersBeforeList);
     this.setState({
       search: value,
-      usersBeforeList
+      usersBeforeList,
+      beforeUsersActiveId: 0
     } as any);
   };
   public loadMore = page => {
@@ -119,6 +131,64 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
         };
         return data;
       }
+    });
+  };
+  public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const { keyCode } = event;
+    const { beforeUsersActiveId, usersBeforeList } = this.state;
+    const { history } = this.props;
+
+    const {
+      cityUsersBefore: { usersBefore = null }
+    } = this.data;
+
+    if (keyCode === 13 && (usersBeforeList.length || usersBefore)) {
+      {
+        usersBeforeList.length
+          ? history.push({
+              pathname: `/${
+                usersBeforeList[beforeUsersActiveId].actor.profile.username
+              }`
+            })
+          : history.push({
+              pathname: `/${
+                usersBefore[beforeUsersActiveId].actor.profile.username
+              }`
+            });
+      }
+      this.setState({
+        beforeUsersActiveId: 0
+      });
+    } else if (keyCode === 38) {
+      if (beforeUsersActiveId === 0) {
+        return;
+      }
+      this.setState({
+        beforeUsersActiveId: beforeUsersActiveId - 1
+      });
+    } else if (keyCode === 40) {
+      if (usersBeforeList.length) {
+        if (beforeUsersActiveId === usersBeforeList.length - 1) {
+          return;
+        }
+      } else {
+        if (beforeUsersActiveId === usersBefore.length - 1) {
+          return;
+        }
+      }
+      this.setState({
+        beforeUsersActiveId: beforeUsersActiveId + 1
+      });
+    }
+  };
+  public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
+    this.setState({
+      beforeUsersActiveId: 0
+    });
+  };
+  public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
+    this.setState({
+      beforeUsersActiveId: null
     });
   };
 }
