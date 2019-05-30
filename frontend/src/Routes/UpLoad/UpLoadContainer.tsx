@@ -3,7 +3,7 @@ import UpLoadPresenter from "./UpLoadPresenter";
 import { MutationFn, Mutation } from "react-apollo";
 import { RouteComponentProps, withRouter } from "react-router";
 import { UploadCard, UploadCardVariables } from "../../types/api";
-import { GET_FEED_CARDS } from "../Feed/FeedQueries";
+import { GET_FEED_CARDS } from "../Feed/Feed/FeedQueries";
 import { toast } from "react-toastify";
 import { UPLOAD_CARD } from "./UpLoadQueries";
 import { GET_CARDS } from "../../Components/GetCards/GetCardsQueries";

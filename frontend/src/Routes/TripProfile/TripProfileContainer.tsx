@@ -12,7 +12,7 @@ import {
 import { RouteComponentProps, withRouter } from "react-router";
 import { GET_DURATION_CARDS, TRIP_PROFILE } from "./TripProfileQueries";
 import TripProfilePresenter from "./TripProfilePresenter";
-import { NEAR_CITIES } from "../CityProfile/CityProfileQueries";
+import { NEAR_CITIES } from "../City/CityProfile/CityProfileQueries";
 
 class GetDurationCardsQuery extends Query<
   GetDurationCards,

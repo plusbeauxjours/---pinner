@@ -5,12 +5,12 @@ import { FollowUser, FollowUserVariables } from "../../types/api";
 import { FOLLOW_USER } from "./FollowBtnQueries";
 // import { GET_FEED_CARDS } from "../../Routes/Feed/FeedQueries";
 import { withRouter, RouteComponentProps } from "react-router";
-import { GET_FOLLOWERS } from "../../Routes/Followers/FollowersQueries";
-import { GET_FOLLOWINGS } from "../../Routes/Followings/FollowingsQueries";
-import { GET_USER } from "../../Routes/UserProfile/UserProfileQueries";
-import { CITY_PROFILE } from "../../Routes/CityProfile/CityProfileQueries";
+import { GET_FOLLOWERS } from "../../Routes/User/Followers/FollowersQueries";
+import { GET_FOLLOWINGS } from "../../Routes/User/Followings/FollowingsQueries";
+import { GET_USER } from "../../Routes/User/UserProfile/UserProfileQueries";
+import { CITY_PROFILE } from "../../Routes/City/CityProfile/CityProfileQueries";
 import { GET_MATCHES } from "../../Routes/Match/MatchQueries";
-import { RECOMMAND_USERS } from "../../Routes/PeoplePage/PeoplePageQueries";
+import { RECOMMAND_USERS } from "../../Routes/Feed/PeoplePage/PeoplePageQueries";
 
 class FollowMutation extends Mutation<FollowUser, FollowUserVariables> {}
 

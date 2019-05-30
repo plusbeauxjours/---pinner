@@ -5,7 +5,7 @@ import {
   GetKnowingFollowers,
   GetKnowingFollowersVariables
 } from "src/types/api";
-import { GET_KNOWING_FOLLOWERS } from "src/Routes/UserProfile/UserProfileQueries";
+import { GET_KNOWING_FOLLOWERS } from "src/Routes/User/UserProfile/UserProfileQueries";
 import Loader from "./Loader";
 import UserRow from "./UserRow";
 

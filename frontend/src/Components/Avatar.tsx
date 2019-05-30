@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "src/Styles/typed-components";
 import ProgressiveImage from "react-progressive-image";
+import styled from "styled-components";
 
 const Container = styled.img<IProps>`
   height: ${props => {

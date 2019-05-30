@@ -4,9 +4,9 @@ import { RouteComponentProps, withRouter } from "react-router";
 import CityLikeBtnPresenter from "./CityLikeBtnPresenter";
 import { TOGGLE_LIKE_CITY } from "./CityLikeBtnQueries";
 import { ToggleLikeCity, ToggleLikeCityVariables } from "../../types/api";
-import { CITY_PROFILE } from "../../Routes/CityProfile/CityProfileQueries";
-import { FREQUENT_VISITS } from "../../Routes/Cities/CitiesQueries";
-import { COUNTRY_PROFILE } from "../../Routes/CountryProfile/CountryProfileQueries";
+import { CITY_PROFILE } from "../../Routes/City/CityProfile/CityProfileQueries";
+import { FREQUENT_VISITS } from "../../Routes/User/Cities/CitiesQueries";
+import { COUNTRY_PROFILE } from "../../Routes/Country/CountryProfile/CountryProfileQueries";
 
 class ToggleLikeMutation extends Mutation<
   ToggleLikeCity,

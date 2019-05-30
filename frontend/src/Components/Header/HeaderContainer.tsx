@@ -11,7 +11,7 @@ import {
   SearchTermsVariables
 } from "../../types/api";
 import { Mutation, MutationFn, Query } from "react-apollo";
-import { REPORT_LOCATION } from "../../Routes/Home/HomeQueries";
+import { REPORT_LOCATION } from "../../Routes/Login/Home/HomeQueries";
 import { GET_FEED, SEARCH } from "./HeaderQueries";
 
 class FeedQuery extends Query<Feed, FeedVariables> {}

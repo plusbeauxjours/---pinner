@@ -1,5 +1,5 @@
 import React from "react";
-import CardDetail from "../../Routes/CardDetail";
+import CardDetail from "../../Routes/Detail/CardDetail";
 import NotificationRow from "../../Components/NotificationRow";
 import styled from "src/Styles/typed-components";
 import Wrapper from "src/Components/Wrapper";

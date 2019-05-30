@@ -7,7 +7,7 @@ import { withRouter, RouteComponentProps } from "react-router";
 import {
   EDIT_PROFILE,
   GET_USER
-} from "../Routes/UserProfile/UserProfileQueries";
+} from "../Routes/User/UserProfile/UserProfileQueries";
 import { toast } from "react-toastify";
 
 class EditProfileMutation extends Mutation<EditProfile, EditProfileVariables> {}

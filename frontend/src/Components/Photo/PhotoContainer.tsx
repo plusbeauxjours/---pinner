@@ -27,8 +27,8 @@ import { withRouter, RouteComponentProps } from "react-router";
 import { GET_COMMENTS } from "../Comments/CommentsQueries";
 import { EDIT_CARD } from "../../../../frontend/src/Components/Photo/PhotoQueries";
 import { GET_CARDS } from "../GetCards/GetCardsQueries";
-import { GET_FEED_CARDS } from "../../Routes/Feed/FeedQueries";
-import { GET_CARD } from "../../Routes/CardDetail/CardDetailQueries";
+import { GET_FEED_CARDS } from "../../Routes/Feed/Feed/FeedQueries";
+import { GET_CARD } from "../../Routes/Detail/CardDetail/CardDetailQueries";
 
 class AddCommentMutation extends Mutation<AddComment, AddCommentVariables> {}
 class DeleteCommentMutation extends Mutation<

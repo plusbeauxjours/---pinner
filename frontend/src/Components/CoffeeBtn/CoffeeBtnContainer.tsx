@@ -8,7 +8,7 @@ import {
 } from "../../types/api";
 import { MATCH, UNMATCH } from "./CoffeeBtnQueries";
 import { GET_MATCHES } from "../../Routes/Match/MatchQueries";
-import { GET_COFFEES } from "../../Routes/Coffees/CoffeesQueries";
+import { GET_COFFEES } from "../../Routes/User/Coffees/CoffeesQueries";
 import CoffeeBtnPresenter from "./CoffeeBtnPresenter";
 import { toast } from "react-toastify";
 import { RouteComponentProps, withRouter } from "react-router";

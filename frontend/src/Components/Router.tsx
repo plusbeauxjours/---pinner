@@ -7,32 +7,31 @@ import {
 } from "react-router-dom";
 import styled from "styled-components";
 
-import Feed from "../Routes/Feed";
-import CardDetail from "../Routes/CardDetail";
+import Feed from "../Routes/Feed/Feed";
+import CardDetail from "../Routes/Detail/CardDetail";
 import UpLoad from "../Routes/UpLoad";
-import UserList from "../Routes/UserList";
 import Notification from "../Routes/Notification";
-import CityProfile from "../Routes/CityProfile";
-import CountryProfile from "../Routes/CountryProfile";
-import ContinentProfile from "../Routes/ContinentProfile";
+import CityProfile from "../Routes/City/CityProfile";
+import CountryProfile from "../Routes/Country/CountryProfile";
+import ContinentProfile from "../Routes/Continent/ContinentProfile";
 import TripProfile from "../Routes/TripProfile";
-import CoffeeDetail from "../Routes/CoffeeDetail";
+import CoffeeDetail from "../Routes/Detail/CoffeeDetail";
 import Match from "../Routes/Match";
 
-import UserProfile from "../Routes/UserProfile";
-import Followers from "../Routes/Followers";
-import Followings from "../Routes/Followings";
-import Coffees from "../Routes/Coffees";
-import Cities from "../Routes/Cities";
-import Countries from "../Routes/Countries";
-import PeoplePage from "../Routes/PeoplePage";
-import CoffeesPage from "../Routes/CoffeesPage";
-import UsersNow from "../Routes/UsersNow";
-import UsersBefore from "../Routes/UsersBefore";
+import UserProfile from "../Routes/User/UserProfile";
+import Followers from "../Routes/User/Followers";
+import Followings from "../Routes/User/Followings";
+import Coffees from "../Routes/User/Coffees";
+import Cities from "../Routes/User/Cities";
+import Countries from "../Routes/User/Countries";
+import PeoplePage from "../Routes/Feed/PeoplePage";
+import CoffeesPage from "../Routes/Feed/CoffeesPage";
+import CityUsersNow from "../Routes/City/CityUsersNow";
+import CityUsersBefore from "../Routes/City/CityUsersBefore";
 
-import Home from "../Routes/Home";
-import VerifyPhone from "../Routes/VerifyPhone";
-import PhoneLogin from "../Routes/PhoneLogin";
+import Home from "../Routes/Login/Home";
+import VerifyPhone from "../Routes/Login/VerifyPhone";
+import PhoneLogin from "../Routes/Login/PhoneLogin";
 
 import Header from "./Header";
 
@@ -51,13 +50,12 @@ const LoggedInPages = () => (
       <Route path="/coffees" exact={true} component={CoffeesPage} />
       <Route path="/p/:id" component={CardDetail} />
       <Route path="/match" exact={true} component={Match} />
-      <Route path="/explore/userlist" component={UserList} />
       <Route path="/notification" component={Notification} />
       <Route path="/continent/:continentName" component={ContinentProfile} />
       <Route path="/country/:countryName" component={CountryProfile} />
       <Route path="/city/:cityName/:duration" component={TripProfile} />
-      <Route path="/city/usersNow" component={UsersNow} />
-      <Route path="/city/usersBefore" component={UsersBefore} />
+      <Route path="/city/usersNow" component={CityUsersNow} />
+      <Route path="/city/usersBefore" component={CityUsersBefore} />
       <Route path="/city/:cityName" component={CityProfile} />
       <Route path="/c/:id" component={CoffeeDetail} />
       <Route path="/:username/upload" component={UpLoad} />
