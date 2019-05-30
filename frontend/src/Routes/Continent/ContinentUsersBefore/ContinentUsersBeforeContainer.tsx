@@ -1,13 +1,16 @@
 import React from "react";
 import { Query } from "react-apollo";
-import { CityUsersBefore, CityUsersBeforeVariables } from "../../../types/api";
-import CityUsersBeforePresenter from "./CityUsersBeforePresenter";
-import { CITY_USERS_BEFORE } from "./CityUsersBeforeQueries";
+import {
+  ContinentUsersBefore,
+  ContinentUsersBeforeVariables
+} from "../../../types/api";
+import ContinentUsersBeforePresenter from "./ContinentUsersBeforePresenter";
+import { CONTINENT_USERS_BEFORE } from "./ContinentUsersBeforeQueries";
 import { RouteComponentProps } from "react-router";
 
-class CityUsersBeforeQuery extends Query<
-  CityUsersBefore,
-  CityUsersBeforeVariables
+class ContinentUsersBeforeQuery extends Query<
+  ContinentUsersBefore,
+  ContinentUsersBeforeVariables
 > {}
 
 interface IProps extends RouteComponentProps<any> {}
@@ -18,7 +21,7 @@ interface IState {
   usersBeforeActiveId: number;
 }
 
-class CityUsersBeforeContainer extends React.Component<IProps, IState> {
+class ContinentUsersBeforeContainer extends React.Component<IProps, IState> {
   public data;
   public fetchMore;
   constructor(props) {
@@ -42,7 +45,7 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
   public render() {
     const {
       match: {
-        params: { cityName }
+        params: { continentName }
       }
     } = this.props;
     const {
@@ -52,17 +55,17 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
       usersBeforeActiveId
     } = this.state;
     return (
-      <CityUsersBeforeQuery
-        query={CITY_USERS_BEFORE}
+      <ContinentUsersBeforeQuery
+        query={CONTINENT_USERS_BEFORE}
         variables={{
-          cityName
+          continentName
         }}
       >
         {({ data, loading, fetchMore }) => {
           this.data = data;
           this.fetchMore = fetchMore;
           return (
-            <CityUsersBeforePresenter
+            <ContinentUsersBeforePresenter
               data={data}
               loading={loading}
               modalOpen={modalOpen}
@@ -72,14 +75,14 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
               usersBeforeList={usersBeforeList}
               onChange={this.onChange}
               loadMore={this.loadMore}
-              cityName={cityName}
+              continentName={continentName}
               onKeyDown={this.onKeyDown}
               onClick={this.onClick}
               onBlur={this.onBlur}
             />
           );
         }}
-      </CityUsersBeforeQuery>
+      </ContinentUsersBeforeQuery>
     );
   }
   public toggleModal = () => {
@@ -93,7 +96,7 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
       target: { value }
     } = event;
     const {
-      cityUsersBefore: { usersBefore = null }
+      continentUsersBefore: { usersBefore = null }
     } = this.data;
     const userSearch = (list, text) =>
       list.filter(i =>
@@ -110,13 +113,13 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
   public loadMore = page => {
     const {
       match: {
-        params: { cityName }
+        params: { continentName }
       }
     } = this.props;
     this.fetchMore({
-      query: CITY_USERS_BEFORE,
+      query: CONTINENT_USERS_BEFORE,
       variables: {
-        cityName,
+        continentName,
         page
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
@@ -124,11 +127,11 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
           return previousResult;
         }
         const data = {
-          cityUsersBefore: {
-            ...previousResult.cityUsersBefore,
+          continentUsersBefore: {
+            ...previousResult.continentUsersBefore,
             usersBefore: [
-              ...previousResult.cityUsersBefore.usersBefore,
-              ...fetchMoreResult.cityUsersBefore.usersBefore
+              ...previousResult.continentUsersBefore.usersBefore,
+              ...fetchMoreResult.continentUsersBefore.usersBefore
             ]
           }
         };
@@ -142,7 +145,7 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
     const { history } = this.props;
 
     const {
-      cityUsersBefore: { usersBefore = null }
+      continentUsersBefore: { usersBefore = null }
     } = this.data;
 
     if (keyCode === 13 && (usersBeforeList.length || usersBefore)) {
@@ -196,4 +199,4 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
   };
 }
 
-export default CityUsersBeforeContainer;
+export default ContinentUsersBeforeContainer;

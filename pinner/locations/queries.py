@@ -201,7 +201,8 @@ def resolve_country_users_before(self, info, **kwargs):
 
     nextPage = page+1
 
-    usersBefore = notification_models.MoveNotification.objects.filter(id=0)
+    usersBefore = notification_models.MoveNotification.objects.filter(
+        city__country__country_name=countryName).order_by('-actor_id').distinct('actor_id')
 
     hasNextPage = offset < usersBefore.count()
 
@@ -268,7 +269,8 @@ def resolve_continent_users_before(self, info, **kwargs):
 
     nextPage = page+1
 
-    usersBefore = notification_models.MoveNotification.objects.filter(id=0)
+    usersBefore = notification_models.MoveNotification.objects.filter(
+        city__country__continent__continent_name=continentName).order_by('-actor_id').distinct('actor_id')
 
     hasNextPage = offset < usersBefore.count()
 

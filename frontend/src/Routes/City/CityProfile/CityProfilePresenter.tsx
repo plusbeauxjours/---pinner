@@ -423,8 +423,12 @@ const CityProfilePresenter: React.SFC<IProps> = ({
             </>
           ) : null}
           <GreyLine />
-          <UserBox users={usersBefore} type={"usersBefore"} />
-          <GreyLine />
+          {usersBefore && usersBefore.length !== 0 ? (
+            <>
+              <UserBox users={usersBefore} type={"usersBefore"} />
+              <GreyLine />
+            </>
+          ) : null}
           <Title>
             <SText text={`WHERE ${city.cityName} IS`} />
           </Title>

@@ -1018,6 +1018,8 @@ export interface CityUsersBefore_cityUsersBefore_usersBefore {
 
 export interface CityUsersBefore_cityUsersBefore {
   __typename: "usersBeforeResponse";
+  page: number | null;
+  hasNextPage: boolean | null;
   usersBefore: (CityUsersBefore_cityUsersBefore_usersBefore | null)[] | null;
 }
 
@@ -1066,6 +1068,8 @@ export interface CityUsersNow_cityUsersNow_usersNow {
 
 export interface CityUsersNow_cityUsersNow {
   __typename: "UsersNowResponse";
+  page: number | null;
+  hasNextPage: boolean | null;
   usersNow: (CityUsersNow_cityUsersNow_usersNow | null)[] | null;
 }
 
@@ -1206,6 +1210,161 @@ export interface ContinentProfileVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: ContinentUsersBefore
+// ====================================================
+
+export interface ContinentUsersBefore_continentUsersBefore_usersBefore_actor_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface ContinentUsersBefore_continentUsersBefore_usersBefore_actor_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: ContinentUsersBefore_continentUsersBefore_usersBefore_actor_profile_currentCity_country;
+}
+
+export interface ContinentUsersBefore_continentUsersBefore_usersBefore_actor_profile {
+  __typename: "ProfileType";
+  id: string;
+  username: string | null;
+  avatar: string;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
+  currentCity: ContinentUsersBefore_continentUsersBefore_usersBefore_actor_profile_currentCity | null;
+}
+
+export interface ContinentUsersBefore_continentUsersBefore_usersBefore_actor {
+  __typename: "UserType";
+  profile: ContinentUsersBefore_continentUsersBefore_usersBefore_actor_profile | null;
+}
+
+export interface ContinentUsersBefore_continentUsersBefore_usersBefore {
+  __typename: "MoveNotificationType";
+  actor: ContinentUsersBefore_continentUsersBefore_usersBefore_actor;
+}
+
+export interface ContinentUsersBefore_continentUsersBefore {
+  __typename: "usersBeforeResponse";
+  page: number | null;
+  hasNextPage: boolean | null;
+  usersBefore: (ContinentUsersBefore_continentUsersBefore_usersBefore | null)[] | null;
+}
+
+export interface ContinentUsersBefore {
+  continentUsersBefore: ContinentUsersBefore_continentUsersBefore;
+}
+
+export interface ContinentUsersBeforeVariables {
+  page?: number | null;
+  continentName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: ContinentUsersNow
+// ====================================================
+
+export interface ContinentUsersNow_continentUsersNow_usersNow_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface ContinentUsersNow_continentUsersNow_usersNow_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: ContinentUsersNow_continentUsersNow_usersNow_profile_currentCity_country;
+}
+
+export interface ContinentUsersNow_continentUsersNow_usersNow_profile {
+  __typename: "ProfileType";
+  id: string;
+  username: string | null;
+  avatar: string;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
+  currentCity: ContinentUsersNow_continentUsersNow_usersNow_profile_currentCity | null;
+}
+
+export interface ContinentUsersNow_continentUsersNow_usersNow {
+  __typename: "UserType";
+  profile: ContinentUsersNow_continentUsersNow_usersNow_profile | null;
+}
+
+export interface ContinentUsersNow_continentUsersNow {
+  __typename: "UsersNowResponse";
+  page: number | null;
+  hasNextPage: boolean | null;
+  usersNow: (ContinentUsersNow_continentUsersNow_usersNow | null)[] | null;
+}
+
+export interface ContinentUsersNow {
+  continentUsersNow: ContinentUsersNow_continentUsersNow;
+}
+
+export interface ContinentUsersNowVariables {
+  page?: number | null;
+  continentName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: CountryUsersNow
+// ====================================================
+
+export interface CountryUsersNow_countryUsersNow_usersNow_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface CountryUsersNow_countryUsersNow_usersNow_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: CountryUsersNow_countryUsersNow_usersNow_profile_currentCity_country;
+}
+
+export interface CountryUsersNow_countryUsersNow_usersNow_profile {
+  __typename: "ProfileType";
+  id: string;
+  username: string | null;
+  avatar: string;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
+  currentCity: CountryUsersNow_countryUsersNow_usersNow_profile_currentCity | null;
+}
+
+export interface CountryUsersNow_countryUsersNow_usersNow {
+  __typename: "UserType";
+  profile: CountryUsersNow_countryUsersNow_usersNow_profile | null;
+}
+
+export interface CountryUsersNow_countryUsersNow {
+  __typename: "UsersNowResponse";
+  page: number | null;
+  hasNextPage: boolean | null;
+  usersNow: (CountryUsersNow_countryUsersNow_usersNow | null)[] | null;
+}
+
+export interface CountryUsersNow {
+  countryUsersNow: CountryUsersNow_countryUsersNow;
+}
+
+export interface CountryUsersNowVariables {
+  page?: number | null;
+  countryName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: CountryProfile
 // ====================================================
 
@@ -1334,6 +1493,61 @@ export interface CountryProfile {
 }
 
 export interface CountryProfileVariables {
+  page?: number | null;
+  countryName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: CountryUsersBefore
+// ====================================================
+
+export interface CountryUsersBefore_countryUsersBefore_usersBefore_actor_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface CountryUsersBefore_countryUsersBefore_usersBefore_actor_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: CountryUsersBefore_countryUsersBefore_usersBefore_actor_profile_currentCity_country;
+}
+
+export interface CountryUsersBefore_countryUsersBefore_usersBefore_actor_profile {
+  __typename: "ProfileType";
+  id: string;
+  username: string | null;
+  avatar: string;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
+  currentCity: CountryUsersBefore_countryUsersBefore_usersBefore_actor_profile_currentCity | null;
+}
+
+export interface CountryUsersBefore_countryUsersBefore_usersBefore_actor {
+  __typename: "UserType";
+  profile: CountryUsersBefore_countryUsersBefore_usersBefore_actor_profile | null;
+}
+
+export interface CountryUsersBefore_countryUsersBefore_usersBefore {
+  __typename: "MoveNotificationType";
+  actor: CountryUsersBefore_countryUsersBefore_usersBefore_actor;
+}
+
+export interface CountryUsersBefore_countryUsersBefore {
+  __typename: "usersBeforeResponse";
+  page: number | null;
+  hasNextPage: boolean | null;
+  usersBefore: (CountryUsersBefore_countryUsersBefore_usersBefore | null)[] | null;
+}
+
+export interface CountryUsersBefore {
+  countryUsersBefore: CountryUsersBefore_countryUsersBefore;
+}
+
+export interface CountryUsersBeforeVariables {
   page?: number | null;
   countryName: string;
 }
@@ -1723,6 +1937,50 @@ export interface ReportLocationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: StartPhoneVerification
+// ====================================================
+
+export interface StartPhoneVerification_startPhoneVerification {
+  __typename: "StartPhoneVerificationResponse";
+  ok: boolean | null;
+}
+
+export interface StartPhoneVerification {
+  startPhoneVerification: StartPhoneVerification_startPhoneVerification;
+}
+
+export interface StartPhoneVerificationVariables {
+  phoneNumber: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: CompletePhoneVerification
+// ====================================================
+
+export interface CompletePhoneVerification_completePhoneVerification {
+  __typename: "CompletePhoneVerificationResponse";
+  ok: boolean | null;
+  token: string | null;
+}
+
+export interface CompletePhoneVerification {
+  completePhoneVerification: CompletePhoneVerification_completePhoneVerification;
+}
+
+export interface CompletePhoneVerificationVariables {
+  key: string;
+  phoneNumber: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetMatches
 // ====================================================
 
@@ -1918,27 +2176,6 @@ export interface MarkAsRead {
 
 export interface MarkAsReadVariables {
   notificationId: number;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: StartPhoneVerification
-// ====================================================
-
-export interface StartPhoneVerification_startPhoneVerification {
-  __typename: "StartPhoneVerificationResponse";
-  ok: boolean | null;
-}
-
-export interface StartPhoneVerification {
-  startPhoneVerification: StartPhoneVerification_startPhoneVerification;
-}
-
-export interface StartPhoneVerificationVariables {
-  phoneNumber: string;
 }
 
 
@@ -2802,29 +3039,6 @@ export interface SearchTripCities {
 
 export interface SearchTripCitiesVariables {
   search: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: CompletePhoneVerification
-// ====================================================
-
-export interface CompletePhoneVerification_completePhoneVerification {
-  __typename: "CompletePhoneVerificationResponse";
-  ok: boolean | null;
-  token: string | null;
-}
-
-export interface CompletePhoneVerification {
-  completePhoneVerification: CompletePhoneVerification_completePhoneVerification;
-}
-
-export interface CompletePhoneVerificationVariables {
-  key: string;
-  phoneNumber: string;
 }
 
 

@@ -1,24 +1,24 @@
 import React from "react";
 import { Query } from "react-apollo";
-import { CityUsersBefore, CityUsersBeforeVariables } from "../../../types/api";
-import CityUsersBeforePresenter from "./CityUsersBeforePresenter";
-import { CITY_USERS_BEFORE } from "./CityUsersBeforeQueries";
+import { CountryUsersNow, CountryUsersNowVariables } from "../../../types/api";
+import CountryUsersNowPresenter from "./CountryUsersNowPresenter";
+import { COUNTRY_USERS_NOW } from "./CountryUsersNowQueries";
 import { RouteComponentProps } from "react-router";
 
-class CityUsersBeforeQuery extends Query<
-  CityUsersBefore,
-  CityUsersBeforeVariables
+class CountryUsersNowQuery extends Query<
+  CountryUsersNow,
+  CountryUsersNowVariables
 > {}
 
 interface IProps extends RouteComponentProps<any> {}
 interface IState {
   modalOpen: boolean;
   search: string;
-  usersBeforeList: any;
-  usersBeforeActiveId: number;
+  usersNowList: any;
+  usersNowActiveId: number;
 }
 
-class CityUsersBeforeContainer extends React.Component<IProps, IState> {
+class CountryUsersNowContainer extends React.Component<IProps, IState> {
   public data;
   public fetchMore;
   constructor(props) {
@@ -26,8 +26,8 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
     this.state = {
       modalOpen: false,
       search: "",
-      usersBeforeList: [],
-      usersBeforeActiveId: null
+      usersNowList: [],
+      usersNowActiveId: null
     };
   }
   public componentDidUpdate(prevProps) {
@@ -35,51 +35,47 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
     console.log(prevProps);
     console.log(newProps);
     if (prevProps.match !== newProps.match) {
-      this.setState({ search: "", usersBeforeList: [] });
+      this.setState({ search: "", usersNowList: [] });
       console.log(this.state);
     }
   }
   public render() {
     const {
       match: {
-        params: { cityName }
+        params: { countryName }
       }
     } = this.props;
-    const {
-      modalOpen,
-      search,
-      usersBeforeList,
-      usersBeforeActiveId
-    } = this.state;
+    console.log(this.props);
+    const { modalOpen, search, usersNowList, usersNowActiveId } = this.state;
     return (
-      <CityUsersBeforeQuery
-        query={CITY_USERS_BEFORE}
+      <CountryUsersNowQuery
+        query={COUNTRY_USERS_NOW}
         variables={{
-          cityName
+          countryName
         }}
       >
         {({ data, loading, fetchMore }) => {
           this.data = data;
           this.fetchMore = fetchMore;
           return (
-            <CityUsersBeforePresenter
+            <CountryUsersNowPresenter
               data={data}
               loading={loading}
               modalOpen={modalOpen}
               toggleModal={this.toggleModal}
               search={search}
-              usersBeforeActiveId={usersBeforeActiveId}
-              usersBeforeList={usersBeforeList}
+              usersNowActiveId={usersNowActiveId}
+              usersNowList={usersNowList}
               onChange={this.onChange}
               loadMore={this.loadMore}
-              cityName={cityName}
+              countryName={countryName}
               onKeyDown={this.onKeyDown}
               onClick={this.onClick}
               onBlur={this.onBlur}
             />
           );
         }}
-      </CityUsersBeforeQuery>
+      </CountryUsersNowQuery>
     );
   }
   public toggleModal = () => {
@@ -93,30 +89,30 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
       target: { value }
     } = event;
     const {
-      cityUsersBefore: { usersBefore = null }
+      countryUsersNow: { usersNow = null }
     } = this.data;
     const userSearch = (list, text) =>
       list.filter(i =>
-        i.actor.profile.username.toLowerCase().includes(text.toLowerCase())
+        i.profile.username.toLowerCase().includes(text.toLowerCase())
       );
-    const usersBeforeList = userSearch(usersBefore, value);
-    console.log(usersBeforeList);
+    const usersNowList = userSearch(usersNow, value);
+    console.log(usersNowList);
     this.setState({
       search: value,
-      usersBeforeList,
-      usersBeforeActiveId: 0
+      usersNowList,
+      usersNowActiveId: 0
     } as any);
   };
   public loadMore = page => {
     const {
       match: {
-        params: { cityName }
+        params: { countryName }
       }
     } = this.props;
     this.fetchMore({
-      query: CITY_USERS_BEFORE,
+      query: COUNTRY_USERS_NOW,
       variables: {
-        cityName,
+        countryName,
         page
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
@@ -124,11 +120,11 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
           return previousResult;
         }
         const data = {
-          cityUsersBefore: {
-            ...previousResult.cityUsersBefore,
-            usersBefore: [
-              ...previousResult.cityUsersBefore.usersBefore,
-              ...fetchMoreResult.cityUsersBefore.usersBefore
+          countryUsersNow: {
+            ...previousResult.countryUsersNow,
+            usersNow: [
+              ...previousResult.countryUsersNow.usersNow,
+              ...fetchMoreResult.countryUsersNow.usersNow
             ]
           }
         };
@@ -138,62 +134,58 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
   };
   public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { keyCode } = event;
-    const { usersBeforeActiveId, usersBeforeList } = this.state;
+    const { usersNowActiveId, usersNowList } = this.state;
     const { history } = this.props;
 
     const {
-      cityUsersBefore: { usersBefore = null }
+      countryUsersNow: { usersNow = null }
     } = this.data;
 
-    if (keyCode === 13 && (usersBeforeList.length || usersBefore)) {
+    if (keyCode === 13 && (usersNowList.length || usersNow)) {
       {
-        usersBeforeList.length
+        usersNowList.length
           ? history.push({
-              pathname: `/${
-                usersBeforeList[usersBeforeActiveId].actor.profile.username
-              }`
+              pathname: `/${usersNowList[usersNowActiveId].profile.username}`
             })
           : history.push({
-              pathname: `/${
-                usersBefore[usersBeforeActiveId].actor.profile.username
-              }`
+              pathname: `/${usersNow[usersNowActiveId].profile.username}`
             });
       }
       this.setState({
-        usersBeforeActiveId: 0
+        usersNowActiveId: 0
       });
     } else if (keyCode === 38) {
-      if (usersBeforeActiveId === 0) {
+      if (usersNowActiveId === 0) {
         return;
       }
       this.setState({
-        usersBeforeActiveId: usersBeforeActiveId - 1
+        usersNowActiveId: usersNowActiveId - 1
       });
     } else if (keyCode === 40) {
-      if (usersBeforeList.length) {
-        if (usersBeforeActiveId === usersBeforeList.length - 1) {
+      if (usersNowList.length) {
+        if (usersNowActiveId === usersNowList.length - 1) {
           return;
         }
       } else {
-        if (usersBeforeActiveId === usersBefore.length - 1) {
+        if (usersNowActiveId === usersNow.length - 1) {
           return;
         }
       }
       this.setState({
-        usersBeforeActiveId: usersBeforeActiveId + 1
+        usersNowActiveId: usersNowActiveId + 1
       });
     }
   };
   public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
     this.setState({
-      usersBeforeActiveId: 0
+      usersNowActiveId: 0
     });
   };
   public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
     this.setState({
-      usersBeforeActiveId: null
+      usersNowActiveId: null
     });
   };
 }
 
-export default CityUsersBeforeContainer;
+export default CountryUsersNowContainer;

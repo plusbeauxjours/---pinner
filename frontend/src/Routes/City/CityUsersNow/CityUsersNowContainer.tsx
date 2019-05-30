@@ -1,11 +1,11 @@
 import React from "react";
 import { Query } from "react-apollo";
-import { RecommandUsers } from "../../../types/api";
+import { CityUsersNow, CityUsersNowVariables } from "../../../types/api";
 import CityUsersNowPresenter from "./CityUsersNowPresenter";
 import { CITY_USERS_NOW } from "./CityUsersNowQueries";
 import { RouteComponentProps } from "react-router";
 
-class RecommandUsersQuery extends Query<RecommandUsers> {}
+class CityUsersNowQuery extends Query<CityUsersNow, CityUsersNowVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
 interface IState {
@@ -45,7 +45,7 @@ class CityUsersNowContainer extends React.Component<IProps, IState> {
     console.log(this.props);
     const { modalOpen, search, usersNowList, usersNowActiveId } = this.state;
     return (
-      <RecommandUsersQuery
+      <CityUsersNowQuery
         query={CITY_USERS_NOW}
         variables={{
           cityName
@@ -72,7 +72,7 @@ class CityUsersNowContainer extends React.Component<IProps, IState> {
             />
           );
         }}
-      </RecommandUsersQuery>
+      </CityUsersNowQuery>
     );
   }
   public toggleModal = () => {

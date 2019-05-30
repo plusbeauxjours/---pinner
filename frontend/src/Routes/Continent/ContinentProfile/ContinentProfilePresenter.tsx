@@ -9,6 +9,7 @@ import Bold from "../../../Components/Bold";
 import LocationGrid from "../../../Components/LocationGrid";
 import AvatarGrid from "../../../Components/AvatarGrid";
 import GetCards from "../../../Components/GetCards";
+import UserBox from "src/Components/UserBox";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -333,24 +334,6 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
                 })}
             </UserContainer>
           </PHeader>
-          {usersBefore && usersBefore.length !== 0 ? (
-            <>
-              <SmallTitle>
-                <SmallGreyLine />
-                <SSText text={"USERS WHO HAVE BEEN HERE"} />
-              </SmallTitle>
-              <AvatarGrid usersBefore={usersBefore} />
-            </>
-          ) : null}
-          {usersNow && usersNow.length !== 0 ? (
-            <>
-              <SmallTitle>
-                <SmallGreyLine />
-                <SSText text={"USERS NOW"} />
-              </SmallTitle>
-              <AvatarGrid usersNow={usersNow} />
-            </>
-          ) : null}
           {coffees && coffees.length !== 0 ? (
             <>
               <SmallTitle>
@@ -361,6 +344,18 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
             </>
           ) : null}
           <GreyLine />
+          {usersNow && usersNow.length !== 0 ? (
+            <>
+              <UserBox users={usersNow} type={"usersNow"} />
+              <GreyLine />
+            </>
+          ) : null}
+          {usersBefore && usersBefore.length !== 0 ? (
+            <>
+              <UserBox users={usersBefore} type={"usersBefore"} />
+              <GreyLine />
+            </>
+          ) : null}
           <Title>
             <SText text={`WHERE ${continent.continentName} IS`} />
           </Title>
