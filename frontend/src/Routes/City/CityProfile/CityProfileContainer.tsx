@@ -17,9 +17,9 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   search: string;
-  nowUsersList: any;
+  usersNowList: any;
   coffeeReportModalOpen: boolean;
-  nowUsersActiveId: number;
+  usersNowActiveId: number;
 }
 
 class CityProfileContainer extends React.Component<IProps, IState> {
@@ -29,15 +29,15 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       search: "",
-      nowUsersList: [],
+      usersNowList: [],
       coffeeReportModalOpen: false,
-      nowUsersActiveId: null
+      usersNowActiveId: null
     };
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
     if (prevProps.match.params.cityName !== newProps.match.params.cityName) {
-      this.setState({ search: "", nowUsersList: [] });
+      this.setState({ search: "", usersNowList: [] });
     }
   }
   public render() {
@@ -48,9 +48,9 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     } = this.props;
     const {
       search,
-      nowUsersList,
+      usersNowList,
       coffeeReportModalOpen,
-      nowUsersActiveId
+      usersNowActiveId
     } = this.state;
     return (
       <NearCitiesQuery query={NEAR_CITIES} variables={{ cityName }}>
@@ -70,8 +70,8 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                     cityName={cityName}
                     onChange={this.onChange}
                     search={search}
-                    nowUsersList={nowUsersList}
-                    nowUsersActiveId={nowUsersActiveId}
+                    usersNowList={usersNowList}
+                    usersNowActiveId={usersNowActiveId}
                     onKeyDown={this.onKeyDown}
                     onClick={this.onClick}
                     onBlur={this.onBlur}
@@ -101,65 +101,65 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       list.filter(i =>
         i.profile.username.toLowerCase().includes(text.toLowerCase())
       );
-    const nowUsersList = nowSearch(usersNow, value);
+    const usersNowList = nowSearch(usersNow, value);
     this.setState({
       search: value,
-      nowUsersList,
+      usersNowList,
       activeId: 0
     } as any);
   };
   public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { keyCode } = event;
-    const { nowUsersActiveId, nowUsersList } = this.state;
+    const { usersNowActiveId, usersNowList } = this.state;
     const { history } = this.props;
 
     const {
       cityProfile: { usersNow = null }
     } = this.data;
 
-    if (keyCode === 13 && (nowUsersList.length || usersNow)) {
+    if (keyCode === 13 && (usersNowList.length || usersNow)) {
       {
-        nowUsersList.length
+        usersNowList.length
           ? history.push({
-              pathname: `/${nowUsersList[nowUsersActiveId].profile.username}`
+              pathname: `/${usersNowList[usersNowActiveId].profile.username}`
             })
           : history.push({
-              pathname: `/${usersNow[nowUsersActiveId].profile.username}`
+              pathname: `/${usersNow[usersNowActiveId].profile.username}`
             });
       }
       this.setState({
-        nowUsersActiveId: 0
+        usersNowActiveId: 0
       });
     } else if (keyCode === 38) {
-      if (nowUsersActiveId === 0) {
+      if (usersNowActiveId === 0) {
         return;
       }
       this.setState({
-        nowUsersActiveId: nowUsersActiveId - 1
+        usersNowActiveId: usersNowActiveId - 1
       });
     } else if (keyCode === 40) {
-      if (nowUsersList.length) {
-        if (nowUsersActiveId === nowUsersList.length - 1) {
+      if (usersNowList.length) {
+        if (usersNowActiveId === usersNowList.length - 1) {
           return;
         }
       } else {
-        if (nowUsersActiveId === usersNow.length - 1) {
+        if (usersNowActiveId === usersNow.length - 1) {
           return;
         }
       }
       this.setState({
-        nowUsersActiveId: nowUsersActiveId + 1
+        usersNowActiveId: usersNowActiveId + 1
       });
     }
   };
   public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
     this.setState({
-      nowUsersActiveId: 0
+      usersNowActiveId: 0
     });
   };
   public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
     this.setState({
-      nowUsersActiveId: null
+      usersNowActiveId: null
     });
   };
 }

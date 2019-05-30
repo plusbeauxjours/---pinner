@@ -266,11 +266,11 @@ interface IProps {
 
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
-  nowUsersList: any;
+  usersNowList: any;
   onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onClick: any;
   onBlur: any;
-  nowUsersActiveId: number;
+  usersNowActiveId: number;
 }
 
 const CityProfilePresenter: React.SFC<IProps> = ({
@@ -291,11 +291,11 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   cityName,
   search,
   onChange,
-  nowUsersList,
+  usersNowList,
   onKeyDown,
   onClick,
   onBlur,
-  nowUsersActiveId
+  usersNowActiveId
 }) => {
   if (cityLoading) {
     return <Loader />;
@@ -351,10 +351,10 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                   onBlur={onBlur}
                 />
               </UserNameRow>
-              {nowUsersList.length !== 0 &&
-                nowUsersList.map((user, index) => {
+              {usersNowList.length !== 0 &&
+                usersNowList.map((user, index) => {
                   let active;
-                  if (index === nowUsersActiveId) {
+                  if (index === usersNowActiveId) {
                     active = "active";
                   }
                   return (
@@ -380,12 +380,12 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                     </UserRow>
                   );
                 })}
-              {nowUsersList.length === 0 &&
+              {usersNowList.length === 0 &&
                 !search &&
                 usersNow &&
                 usersNow.map((user, index) => {
                   let active;
-                  if (index === nowUsersActiveId) {
+                  if (index === usersNowActiveId) {
                     active = "active";
                   }
                   return (

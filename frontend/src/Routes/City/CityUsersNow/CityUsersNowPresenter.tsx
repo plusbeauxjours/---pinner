@@ -20,7 +20,7 @@ const UserContainer = styled.div`
   flex-direction: column;
 `;
 
-const UserRow = styled.div`
+const UserRow = styled.div<ITheme>`
   display: grid;
   flex-direction: row;
   height: 50px;
@@ -30,6 +30,7 @@ const UserRow = styled.div`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -91,6 +92,10 @@ const Explain = styled(Location)`
   color: grey;
 `;
 
+interface ITheme {
+  active?: string;
+}
+
 interface IProps {
   data: any;
   loading: boolean;
@@ -101,6 +106,10 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   loadMore: any;
   cityName: string;
+  usersNowActiveId: number;
+  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onClick: any;
+  onBlur: any;
 }
 
 const CityUsersNowPresenter: React.SFC<IProps> = ({
@@ -112,7 +121,11 @@ const CityUsersNowPresenter: React.SFC<IProps> = ({
   usersNowList,
   onChange,
   loadMore,
-  cityName
+  cityName,
+  usersNowActiveId,
+  onKeyDown,
+  onClick,
+  onBlur
 }) => {
   return (
     <>
@@ -120,7 +133,14 @@ const CityUsersNowPresenter: React.SFC<IProps> = ({
         <UserContainer>
           <UserNameRow>
             <Username>USERS NOW</Username>
-            <Input placeholder="Search" value={search} onChange={onChange} />
+            <Input
+              placeholder="Search"
+              value={search}
+              onChange={onChange}
+              onKeyDown={onKeyDown}
+              onClick={onClick}
+              onBlur={onBlur}
+            />
           </UserNameRow>
           {loading && <Loader />}
           {!loading && (
@@ -131,9 +151,13 @@ const CityUsersNowPresenter: React.SFC<IProps> = ({
               initialLoad={false}
             >
               {usersNowList.length !== 0 &&
-                usersNowList.map(user => {
+                usersNowList.map((user, index) => {
+                  let active;
+                  if (index === usersNowActiveId) {
+                    active = "active";
+                  }
                   return (
-                    <UserRow key={user.id}>
+                    <UserRow key={user.id} active={active}>
                       <Link to={`/${user.profile.username}`}>
                         <AvatarContainer>
                           <Avatar size={"sm"} url={user.profile.avatar} />
@@ -157,9 +181,13 @@ const CityUsersNowPresenter: React.SFC<IProps> = ({
               {usersNowList.length === 0 &&
                 !search &&
                 usersNow &&
-                usersNow.map(user => {
+                usersNow.map((user, index) => {
+                  let active;
+                  if (index === usersNowActiveId) {
+                    active = "active";
+                  }
                   return (
-                    <UserRow key={user.id}>
+                    <UserRow key={user.id} active={active}>
                       <Link to={`/${user.profile.username}`}>
                         <AvatarContainer>
                           <Avatar size={"sm"} url={user.profile.avatar} />

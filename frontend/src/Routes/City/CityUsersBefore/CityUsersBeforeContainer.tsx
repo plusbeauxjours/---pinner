@@ -12,7 +12,7 @@ interface IState {
   modalOpen: boolean;
   search: string;
   usersBeforeList: any;
-  beforeUsersActiveId: number;
+  usersBeforeActiveId: number;
 }
 
 class CityUsersBeforeContainer extends React.Component<IProps, IState> {
@@ -24,7 +24,7 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
       modalOpen: false,
       search: "",
       usersBeforeList: [],
-      beforeUsersActiveId: null
+      usersBeforeActiveId: null
     };
   }
   public componentDidUpdate(prevProps) {
@@ -46,7 +46,7 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
       modalOpen,
       search,
       usersBeforeList,
-      beforeUsersActiveId
+      usersBeforeActiveId
     } = this.state;
     return (
       <RecommandUsersQuery
@@ -65,7 +65,7 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
               modalOpen={modalOpen}
               toggleModal={this.toggleModal}
               search={search}
-              beforeUsersActiveId={beforeUsersActiveId}
+              usersBeforeActiveId={usersBeforeActiveId}
               usersBeforeList={usersBeforeList}
               onChange={this.onChange}
               loadMore={this.loadMore}
@@ -101,7 +101,7 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
     this.setState({
       search: value,
       usersBeforeList,
-      beforeUsersActiveId: 0
+      usersBeforeActiveId: 0
     } as any);
   };
   public loadMore = page => {
@@ -135,7 +135,7 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
   };
   public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { keyCode } = event;
-    const { beforeUsersActiveId, usersBeforeList } = this.state;
+    const { usersBeforeActiveId, usersBeforeList } = this.state;
     const { history } = this.props;
 
     const {
@@ -147,48 +147,48 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
         usersBeforeList.length
           ? history.push({
               pathname: `/${
-                usersBeforeList[beforeUsersActiveId].actor.profile.username
+                usersBeforeList[usersBeforeActiveId].actor.profile.username
               }`
             })
           : history.push({
               pathname: `/${
-                usersBefore[beforeUsersActiveId].actor.profile.username
+                usersBefore[usersBeforeActiveId].actor.profile.username
               }`
             });
       }
       this.setState({
-        beforeUsersActiveId: 0
+        usersBeforeActiveId: 0
       });
     } else if (keyCode === 38) {
-      if (beforeUsersActiveId === 0) {
+      if (usersBeforeActiveId === 0) {
         return;
       }
       this.setState({
-        beforeUsersActiveId: beforeUsersActiveId - 1
+        usersBeforeActiveId: usersBeforeActiveId - 1
       });
     } else if (keyCode === 40) {
       if (usersBeforeList.length) {
-        if (beforeUsersActiveId === usersBeforeList.length - 1) {
+        if (usersBeforeActiveId === usersBeforeList.length - 1) {
           return;
         }
       } else {
-        if (beforeUsersActiveId === usersBefore.length - 1) {
+        if (usersBeforeActiveId === usersBefore.length - 1) {
           return;
         }
       }
       this.setState({
-        beforeUsersActiveId: beforeUsersActiveId + 1
+        usersBeforeActiveId: usersBeforeActiveId + 1
       });
     }
   };
   public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
     this.setState({
-      beforeUsersActiveId: 0
+      usersBeforeActiveId: 0
     });
   };
   public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
     this.setState({
-      beforeUsersActiveId: null
+      usersBeforeActiveId: null
     });
   };
 }
