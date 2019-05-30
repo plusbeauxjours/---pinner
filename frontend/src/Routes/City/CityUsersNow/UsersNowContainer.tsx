@@ -1,26 +1,26 @@
 import React from "react";
 import { Query } from "react-apollo";
 import { RecommandUsers } from "../../../types/api";
-import PeoplePagePresenter from "./UsersNowPresenter";
-import { RECOMMAND_USERS } from "./PeoplePageQueries";
+import UsersNowPresenter from "./UsersNowPresenter";
+import { CITY_USERS_NOW } from "./UsersNowQueries";
 
 class RecommandUsersQuery extends Query<RecommandUsers> {}
 
 interface IState {
   modalOpen: boolean;
   search: string;
-  recommandUserList: any;
+  usersNowList: any;
 }
 
 class UsersNowContainer extends React.Component<any, IState> {
-  public recommandUsersFetchMore;
-  public recommandUsersData;
+  public data;
+  public fetchMore;
   constructor(props) {
     super(props);
     this.state = {
       modalOpen: false,
       search: "",
-      recommandUserList: []
+      usersNowList: []
     };
   }
   public componentDidUpdate(prevProps) {
@@ -28,31 +28,38 @@ class UsersNowContainer extends React.Component<any, IState> {
     console.log(prevProps);
     console.log(newProps);
     if (prevProps.match !== newProps.match) {
-      this.setState({ search: "", recommandUserList: [] });
+      this.setState({ search: "", usersNowList: [] });
       console.log(this.state);
     }
   }
   public render() {
-    const { modalOpen, search, recommandUserList } = this.state;
+    const {
+      match: {
+        params: { cityName }
+      }
+    } = this.props;
+    const { modalOpen, search, usersNowList } = this.state;
     return (
-      <RecommandUsersQuery query={RECOMMAND_USERS}>
-        {({
-          data: recommandUsersData,
-          loading: recommandUsersLoading,
-          fetchMore: recommandUsersFetchMore
-        }) => {
-          this.recommandUsersData = recommandUsersData;
-          this.recommandUsersFetchMore = recommandUsersFetchMore;
+      <RecommandUsersQuery
+        query={CITY_USERS_NOW}
+        variables={{
+          cityName
+        }}
+      >
+        {({ data, loading, fetchMore }) => {
+          this.data = data;
+          this.fetchMore = fetchMore;
           return (
-            <PeoplePagePresenter
-              recommandUsersData={recommandUsersData}
-              recommandUsersLoading={recommandUsersLoading}
+            <UsersNowPresenter
+              data={data}
+              loading={loading}
               modalOpen={modalOpen}
               toggleModal={this.toggleModal}
               search={search}
-              recommandUserList={recommandUserList}
+              usersNowList={usersNowList}
               onChange={this.onChange}
               loadMore={this.loadMore}
+              cityName={cityName}
             />
           );
         }}
@@ -71,20 +78,28 @@ class UsersNowContainer extends React.Component<any, IState> {
     } = event;
     const {
       recommandUsers: { users = null }
-    } = this.recommandUsersData;
+    } = this.data;
     const userSearch = (list, text) =>
-      list.filter(i => i.username.toLowerCase().includes(text.toLowerCase()));
-    const recommandUserList = userSearch(users, value);
-    console.log(recommandUserList);
+      list.filter(i =>
+        i.profile.username.toLowerCase().includes(text.toLowerCase())
+      );
+    const usersNowList = userSearch(users, value);
+    console.log(usersNowList);
     this.setState({
       search: value,
-      recommandUserList
+      usersNowList
     } as any);
   };
   public loadMore = page => {
-    this.recommandUsersFetchMore({
-      query: RECOMMAND_USERS,
+    const {
+      match: {
+        params: { cityName }
+      }
+    } = this.props;
+    this.fetchMore({
+      query: CITY_USERS_NOW,
       variables: {
+        cityName,
         page
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
@@ -92,12 +107,11 @@ class UsersNowContainer extends React.Component<any, IState> {
           return previousResult;
         }
         const data = {
-          getNotifications: {
-            ...previousResult.getNotifications,
-            hasNextPage: fetchMoreResult.getNotifications.hasNextPage,
-            notifications: [
-              ...previousResult.getNotifications.notifications,
-              ...fetchMoreResult.getNotifications.notifications
+          cityUsersNow: {
+            ...previousResult.cityUsersNow,
+            usersNow: [
+              ...previousResult.cityUsersNow.usersNow,
+              ...fetchMoreResult.cityUsersNow.usersNow
             ]
           }
         };

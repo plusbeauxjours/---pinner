@@ -1,9 +1,7 @@
 import React from "react";
-import CardDetail from "../../Detail/CardDetail";
 import styled from "src/Styles/typed-components";
 import Wrapper from "src/Components/Wrapper";
 import Loader from "src/Components/Loader";
-import { Route } from "react-router";
 
 import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
@@ -94,88 +92,90 @@ const Explain = styled(Location)`
 `;
 
 interface IProps {
-  recommandUsersData: any;
-  recommandUsersLoading: boolean;
+  data: any;
+  loading: boolean;
   modalOpen: boolean;
   toggleModal: () => void;
   search: string;
-  recommandUserList: any;
+  usersBeforeList: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   loadMore: any;
+  cityName: string;
 }
 
 const PeoplePagePresenter: React.SFC<IProps> = ({
-  recommandUsersData: {
-    recommandUsers: { users = null, hasNextPage = null } = {}
+  data: {
+    cityUsersBefore: { usersBefore = null, hasNextPage = null } = {}
   } = {},
-  recommandUsersLoading,
+  loading,
   modalOpen,
+  toggleModal,
   search,
-  recommandUserList,
+  usersBeforeList,
   onChange,
-  loadMore
+  loadMore,
+  cityName
 }) => {
   return (
     <>
-      {modalOpen && <Route path="/p/:id" component={CardDetail} />}
       <SWrapper>
         <UserContainer>
           <UserNameRow>
-            <Username>RECOMMAND USERS</Username>
+            <Username>USERS BEFORE</Username>
             <Input placeholder="Search" value={search} onChange={onChange} />
           </UserNameRow>
-          {recommandUsersLoading && <Loader />}
-          {!recommandUsersLoading && (
+          {loading && <Loader />}
+          {!loading && (
             <InfiniteScroll
               hasMore={hasNextPage}
               loadMore={loadMore}
               pageStart={0}
               initialLoad={false}
             >
-              {recommandUserList.length !== 0 &&
-                recommandUserList.map(user => {
+              {usersBeforeList.length !== 0 &&
+                usersBeforeList.map(user => {
                   return (
                     <UserRow key={user.id}>
-                      <Link to={`/${user.username}`}>
+                      <Link to={`/${user.actor.profile.username}`}>
                         <AvatarContainer>
-                          <Avatar size={"sm"} url={user.profile.avatar} />
+                          <Avatar size={"sm"} url={user.actor.profile.avatar} />
                           <HeaderColumn>
-                            <CText text={user.username} />
+                            <CText text={user.actor.profile.username} />
                             <Explain>with same nationality</Explain>
                           </HeaderColumn>
                         </AvatarContainer>
                       </Link>
-                      {!user.isSelf && (
+                      {!user.actor.isSelf && (
                         <FollowBtn
-                          isFollowing={user.profile.isFollowing}
+                          isFollowing={user.actor.profile.isFollowing}
                           userId={user.id}
-                          username={user.username}
+                          username={user.actor.profile.username}
                         />
                       )}
                     </UserRow>
                   );
                 })}
               {console.log("hasNextPage:  ", hasNextPage)}
-              {recommandUserList.length === 0 &&
+              {usersBeforeList.length === 0 &&
                 !search &&
-                users &&
-                users.map(user => {
+                usersBefore &&
+                usersBefore.map(user => {
                   return (
                     <UserRow key={user.id}>
-                      <Link to={`/${user.username}`}>
+                      <Link to={`/${user.actor.profile.username}`}>
                         <AvatarContainer>
-                          <Avatar size={"sm"} url={user.profile.avatar} />
+                          <Avatar size={"sm"} url={user.actor.profile.avatar} />
                           <HeaderColumn>
-                            <CText text={user.username} />
+                            <CText text={user.actor.profile.username} />
                             <Explain>with same nationality</Explain>
                           </HeaderColumn>
                         </AvatarContainer>
                       </Link>
                       {!user.isSelf && (
                         <FollowBtn
-                          isFollowing={user.profile.isFollowing}
+                          isFollowing={user.actor.profile.isFollowing}
                           userId={user.id}
-                          username={user.username}
+                          username={user.actor.profile.username}
                         />
                       )}
                     </UserRow>

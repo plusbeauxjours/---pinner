@@ -1,9 +1,7 @@
 import React from "react";
-import CardDetail from "../../Detail/CardDetail";
 import styled from "src/Styles/typed-components";
 import Wrapper from "src/Components/Wrapper";
 import Loader from "src/Components/Loader";
-import { Route } from "react-router";
 
 import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
@@ -94,53 +92,53 @@ const Explain = styled(Location)`
 `;
 
 interface IProps {
-  recommandUsersData: any;
-  recommandUsersLoading: boolean;
+  data: any;
+  loading: boolean;
   modalOpen: boolean;
   toggleModal: () => void;
   search: string;
-  recommandUserList: any;
+  usersNowList: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   loadMore: any;
+  cityName: string;
 }
 
 const UsersNowPresenter: React.SFC<IProps> = ({
-  recommandUsersData: {
-    recommandUsers: { users = null, hasNextPage = null } = {}
-  } = {},
-  recommandUsersLoading,
+  data: { cityUsersNow: { usersNow = null, hasNextPage = null } = {} } = {},
+  loading,
   modalOpen,
+  toggleModal,
   search,
-  recommandUserList,
+  usersNowList,
   onChange,
-  loadMore
+  loadMore,
+  cityName
 }) => {
   return (
     <>
-      {modalOpen && <Route path="/p/:id" component={CardDetail} />}
       <SWrapper>
         <UserContainer>
           <UserNameRow>
-            <Username>RECOMMAND USERS</Username>
+            <Username>USERS NOW</Username>
             <Input placeholder="Search" value={search} onChange={onChange} />
           </UserNameRow>
-          {recommandUsersLoading && <Loader />}
-          {!recommandUsersLoading && (
+          {loading && <Loader />}
+          {!loading && (
             <InfiniteScroll
               hasMore={hasNextPage}
               loadMore={loadMore}
               pageStart={0}
               initialLoad={false}
             >
-              {recommandUserList.length !== 0 &&
-                recommandUserList.map(user => {
+              {usersNowList.length !== 0 &&
+                usersNowList.map(user => {
                   return (
                     <UserRow key={user.id}>
-                      <Link to={`/${user.username}`}>
+                      <Link to={`/${user.profile.username}`}>
                         <AvatarContainer>
                           <Avatar size={"sm"} url={user.profile.avatar} />
                           <HeaderColumn>
-                            <CText text={user.username} />
+                            <CText text={user.profile.username} />
                             <Explain>with same nationality</Explain>
                           </HeaderColumn>
                         </AvatarContainer>
@@ -149,24 +147,24 @@ const UsersNowPresenter: React.SFC<IProps> = ({
                         <FollowBtn
                           isFollowing={user.profile.isFollowing}
                           userId={user.id}
-                          username={user.username}
+                          username={user.profile.username}
                         />
                       )}
                     </UserRow>
                   );
                 })}
               {console.log("hasNextPage:  ", hasNextPage)}
-              {recommandUserList.length === 0 &&
+              {usersNowList.length === 0 &&
                 !search &&
-                users &&
-                users.map(user => {
+                usersNow &&
+                usersNow.map(user => {
                   return (
                     <UserRow key={user.id}>
-                      <Link to={`/${user.username}`}>
+                      <Link to={`/${user.profile.username}`}>
                         <AvatarContainer>
                           <Avatar size={"sm"} url={user.profile.avatar} />
                           <HeaderColumn>
-                            <CText text={user.username} />
+                            <CText text={user.profile.username} />
                             <Explain>with same nationality</Explain>
                           </HeaderColumn>
                         </AvatarContainer>
@@ -175,7 +173,7 @@ const UsersNowPresenter: React.SFC<IProps> = ({
                         <FollowBtn
                           isFollowing={user.profile.isFollowing}
                           userId={user.id}
-                          username={user.username}
+                          username={user.profile.username}
                         />
                       )}
                     </UserRow>

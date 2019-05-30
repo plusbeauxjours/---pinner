@@ -1,2 +1,2 @@
-import PeoplePageContainer from "./UsersBeforeContainer";
-export default PeoplePageContainer;
+import UsersBeforeContainer from "./UsersBeforeContainer";
+export default UsersBeforeContainer;

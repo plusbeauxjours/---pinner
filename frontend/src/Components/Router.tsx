@@ -53,9 +53,9 @@ const LoggedInPages = () => (
       <Route path="/notification" component={Notification} />
       <Route path="/continent/:continentName" component={ContinentProfile} />
       <Route path="/country/:countryName" component={CountryProfile} />
+      <Route path="/city/:cityName/usersNow" component={CityUsersNow} />
+      <Route path="/city/:cityName/usersBefore" component={CityUsersBefore} />
       <Route path="/city/:cityName/:duration" component={TripProfile} />
-      <Route path="/city/usersNow" component={CityUsersNow} />
-      <Route path="/city/usersBefore" component={CityUsersBefore} />
       <Route path="/city/:cityName" component={CityProfile} />
       <Route path="/c/:id" component={CoffeeDetail} />
       <Route path="/:username/upload" component={UpLoad} />

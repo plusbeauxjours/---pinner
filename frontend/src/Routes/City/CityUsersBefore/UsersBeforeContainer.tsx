@@ -1,28 +1,26 @@
 import React from "react";
 import { Query } from "react-apollo";
 import { RecommandUsers } from "../../../types/api";
-import PeoplePagePresenter from "./UsersBeforePresenter";
-import { RouteComponentProps } from "react-router";
+import UsersBeforePresenter from "./UsersBeforePresenter";
 import { CITY_USERS_BEFORE } from "./UsersBeforeQueries";
 
 class RecommandUsersQuery extends Query<RecommandUsers> {}
 
-interface IProps extends RouteComponentProps<any> {}
 interface IState {
   modalOpen: boolean;
   search: string;
-  recommandUserList: any;
+  usersBeforeList: any;
 }
 
-class PeoplePageContainer extends React.Component<IProps, IState> {
-  public recommandUsersFetchMore;
-  public recommandUsersData;
+class UsersNowContainer extends React.Component<any, IState> {
+  public data;
+  public fetchMore;
   constructor(props) {
     super(props);
     this.state = {
       modalOpen: false,
       search: "",
-      recommandUserList: []
+      usersBeforeList: []
     };
   }
   public componentDidUpdate(prevProps) {
@@ -30,7 +28,7 @@ class PeoplePageContainer extends React.Component<IProps, IState> {
     console.log(prevProps);
     console.log(newProps);
     if (prevProps.match !== newProps.match) {
-      this.setState({ search: "", recommandUserList: [] });
+      this.setState({ search: "", usersBeforeList: [] });
       console.log(this.state);
     }
   }
@@ -40,26 +38,28 @@ class PeoplePageContainer extends React.Component<IProps, IState> {
         params: { cityName }
       }
     } = this.props;
-    const { modalOpen, search, recommandUserList } = this.state;
+    const { modalOpen, search, usersBeforeList } = this.state;
     return (
-      <RecommandUsersQuery query={CITY_USERS_BEFORE}>
-        {({
-          data: recommandUsersData,
-          loading: recommandUsersLoading,
-          fetchMore: recommandUsersFetchMore
-        }) => {
-          this.recommandUsersData = recommandUsersData;
-          this.recommandUsersFetchMore = recommandUsersFetchMore;
+      <RecommandUsersQuery
+        query={CITY_USERS_BEFORE}
+        variables={{
+          cityName
+        }}
+      >
+        {({ data, loading, fetchMore }) => {
+          this.data = data;
+          this.fetchMore = fetchMore;
           return (
-            <PeoplePagePresenter
-              recommandUsersData={recommandUsersData}
-              recommandUsersLoading={recommandUsersLoading}
+            <UsersBeforePresenter
+              data={data}
+              loading={loading}
               modalOpen={modalOpen}
               toggleModal={this.toggleModal}
               search={search}
-              recommandUserList={recommandUserList}
+              usersBeforeList={usersBeforeList}
               onChange={this.onChange}
               loadMore={this.loadMore}
+              cityName={cityName}
             />
           );
         }}
@@ -77,21 +77,29 @@ class PeoplePageContainer extends React.Component<IProps, IState> {
       target: { value }
     } = event;
     const {
-      recommandUsers: { users = null }
-    } = this.recommandUsersData;
+      cityUsersBefore: { usersBefore = null }
+    } = this.data;
     const userSearch = (list, text) =>
-      list.filter(i => i.username.toLowerCase().includes(text.toLowerCase()));
-    const recommandUserList = userSearch(users, value);
-    console.log(recommandUserList);
+      list.filter(i =>
+        i.actor.profile.username.toLowerCase().includes(text.toLowerCase())
+      );
+    const usersBeforeList = userSearch(usersBefore, value);
+    console.log(usersBeforeList);
     this.setState({
       search: value,
-      recommandUserList
+      usersBeforeList
     } as any);
   };
   public loadMore = page => {
-    this.recommandUsersFetchMore({
+    const {
+      match: {
+        params: { cityName }
+      }
+    } = this.props;
+    this.fetchMore({
       query: CITY_USERS_BEFORE,
       variables: {
+        cityName,
         page
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
@@ -99,12 +107,11 @@ class PeoplePageContainer extends React.Component<IProps, IState> {
           return previousResult;
         }
         const data = {
-          getNotifications: {
-            ...previousResult.getNotifications,
-            hasNextPage: fetchMoreResult.getNotifications.hasNextPage,
-            notifications: [
-              ...previousResult.getNotifications.notifications,
-              ...fetchMoreResult.getNotifications.notifications
+          cityUsersBefore: {
+            ...previousResult.cityUsersBefore,
+            usersBefore: [
+              ...previousResult.cityUsersBefore.usersBefore,
+              ...fetchMoreResult.cityUsersBefore.usersBefore
             ]
           }
         };
@@ -114,4 +121,4 @@ class PeoplePageContainer extends React.Component<IProps, IState> {
   };
 }
 
-export default PeoplePageContainer;
+export default UsersNowContainer;

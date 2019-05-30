@@ -1,2 +1,2 @@
-import PeoplePageContainer from "./UsersNowContainer";
-export default PeoplePageContainer;
+import UsersNowContainer from "./UsersNowContainer";
+export default UsersNowContainer;
