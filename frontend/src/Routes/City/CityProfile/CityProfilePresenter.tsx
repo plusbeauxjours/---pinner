@@ -14,6 +14,7 @@ import GetCards from "../../../Components/GetCards";
 import FollowBtn from "../../../Components/FollowBtn";
 import UserHeader from "../../../Components/UserHeader";
 import CityLikeBtn from "../../../Components/CityLikeBtn";
+import UserBox from "src/Components/UserBox";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -266,12 +267,10 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
   nowUsersList: any;
-  beforeUsersList: any;
   onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onClick: any;
   onBlur: any;
   nowUsersActiveId: number;
-  beforeUsersActiveId: number;
 }
 
 const CityProfilePresenter: React.SFC<IProps> = ({
@@ -293,12 +292,10 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   search,
   onChange,
   nowUsersList,
-  beforeUsersList,
   onKeyDown,
   onClick,
   onBlur,
-  nowUsersActiveId,
-  beforeUsersActiveId
+  nowUsersActiveId
 }) => {
   if (cityLoading) {
     return <Loader />;
@@ -383,38 +380,8 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                     </UserRow>
                   );
                 })}
-              {beforeUsersList.length !== 0 &&
-                beforeUsersList.map((user, index) => {
-                  let active;
-                  if (index === beforeUsersActiveId) {
-                    active = "active";
-                  }
-                  return (
-                    <UserRow key={index} active={active}>
-                      <Link to={`/${user.actor.profile.username}`}>
-                        <UserHeader
-                          username={user.actor.profile.username}
-                          currentCity={user.actor.profile.currentCity.cityName}
-                          currentCountry={
-                            user.actor.profile.currentCity.country.countryName
-                          }
-                          avatar={user.actor.profile.avatar}
-                          size={"sm"}
-                        />
-                      </Link>
-                      {!user.actor.profile.isSelf && (
-                        <FollowBtn
-                          isFollowing={user.actor.profile.isFollowing}
-                          userId={user.actor.profile.id}
-                          username={user.actor.profile.username}
-                        />
-                      )}
-                    </UserRow>
-                  );
-                })}
               {nowUsersList.length === 0 &&
                 !search &&
-                beforeUsersList.length === 0 &&
                 usersNow &&
                 usersNow.map((user, index) => {
                   let active;
@@ -444,38 +411,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                     </UserRow>
                   );
                 })}
-              {nowUsersList.length === 0 &&
-                !search &&
-                beforeUsersList.length === 0 &&
-                usersBefore &&
-                usersBefore.map((user, index) => {
-                  let active;
-                  if (index === beforeUsersActiveId) {
-                    active = "active";
-                  }
-                  return (
-                    <UserRow key={index} active={active}>
-                      <Link to={`/${user.actor.profile.username}`}>
-                        <UserHeader
-                          username={user.actor.profile.username}
-                          currentCity={user.actor.profile.currentCity.cityName}
-                          currentCountry={
-                            user.actor.profile.currentCity.country.countryName
-                          }
-                          avatar={user.actor.profile.avatar}
-                          size={"sm"}
-                        />
-                      </Link>
-                      {!user.actor.profile.isSelf && (
-                        <FollowBtn
-                          isFollowing={user.actor.profile.isFollowing}
-                          userId={user.actor.profile.id}
-                          username={user.actor.profile.username}
-                        />
-                      )}
-                    </UserRow>
-                  );
-                })}
             </UserContainer>
           </PHeader>
           {coffees && coffees.length !== 0 ? (
@@ -487,6 +422,8 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid coffees={coffees} />
             </>
           ) : null}
+          <GreyLine />
+          <UserBox users={usersBefore} type={"usersBefore"} />
           <GreyLine />
           <Title>
             <SText text={`WHERE ${city.cityName} IS`} />

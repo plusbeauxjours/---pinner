@@ -97,19 +97,21 @@ interface IProps {
   modalOpen: boolean;
   toggleModal: () => void;
   search: string;
-  usersNowList: any;
+  usersBeforeList: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   loadMore: any;
   cityName: string;
 }
 
-const UsersNowPresenter: React.SFC<IProps> = ({
-  data: { cityUsersNow: { usersNow = null, hasNextPage = null } = {} } = {},
+const CityUsersBeforePresenter: React.SFC<IProps> = ({
+  data: {
+    cityUsersBefore: { usersBefore = null, hasNextPage = null } = {}
+  } = {},
   loading,
   modalOpen,
   toggleModal,
   search,
-  usersNowList,
+  usersBeforeList,
   onChange,
   loadMore,
   cityName
@@ -119,7 +121,7 @@ const UsersNowPresenter: React.SFC<IProps> = ({
       <SWrapper>
         <UserContainer>
           <UserNameRow>
-            <Username>USERS NOW</Username>
+            <Username>USERS BEFORE</Username>
             <Input placeholder="Search" value={search} onChange={onChange} />
           </UserNameRow>
           {loading && <Loader />}
@@ -130,50 +132,49 @@ const UsersNowPresenter: React.SFC<IProps> = ({
               pageStart={0}
               initialLoad={false}
             >
-              {usersNowList.length !== 0 &&
-                usersNowList.map(user => {
+              {usersBeforeList.length !== 0 &&
+                usersBeforeList.map((user, index) => {
                   return (
-                    <UserRow key={user.id}>
-                      <Link to={`/${user.profile.username}`}>
+                    <UserRow key={index}>
+                      <Link to={`/${user.actor.profile.username}`}>
                         <AvatarContainer>
-                          <Avatar size={"sm"} url={user.profile.avatar} />
+                          <Avatar size={"sm"} url={user.actor.profile.avatar} />
                           <HeaderColumn>
-                            <CText text={user.profile.username} />
+                            <CText text={user.actor.profile.username} />
                             <Explain>with same nationality</Explain>
                           </HeaderColumn>
                         </AvatarContainer>
                       </Link>
-                      {!user.isSelf && (
+                      {!user.actor.isSelf && (
                         <FollowBtn
-                          isFollowing={user.profile.isFollowing}
+                          isFollowing={user.actor.profile.isFollowing}
                           userId={user.id}
-                          username={user.profile.username}
+                          username={user.actor.profile.username}
                         />
                       )}
                     </UserRow>
                   );
                 })}
-              {console.log("hasNextPage:  ", hasNextPage)}
-              {usersNowList.length === 0 &&
+              {usersBeforeList.length === 0 &&
                 !search &&
-                usersNow &&
-                usersNow.map(user => {
+                usersBefore &&
+                usersBefore.map((user, index) => {
                   return (
-                    <UserRow key={user.id}>
-                      <Link to={`/${user.profile.username}`}>
+                    <UserRow key={index}>
+                      <Link to={`/${user.actor.profile.username}`}>
                         <AvatarContainer>
-                          <Avatar size={"sm"} url={user.profile.avatar} />
+                          <Avatar size={"sm"} url={user.actor.profile.avatar} />
                           <HeaderColumn>
-                            <CText text={user.profile.username} />
+                            <CText text={user.actor.profile.username} />
                             <Explain>with same nationality</Explain>
                           </HeaderColumn>
                         </AvatarContainer>
                       </Link>
                       {!user.isSelf && (
                         <FollowBtn
-                          isFollowing={user.profile.isFollowing}
+                          isFollowing={user.actor.profile.isFollowing}
                           userId={user.id}
-                          username={user.profile.username}
+                          username={user.actor.profile.username}
                         />
                       )}
                     </UserRow>
@@ -187,4 +188,4 @@ const UsersNowPresenter: React.SFC<IProps> = ({
   );
 };
 
-export default UsersNowPresenter;
+export default CityUsersBeforePresenter;

@@ -97,21 +97,19 @@ interface IProps {
   modalOpen: boolean;
   toggleModal: () => void;
   search: string;
-  usersBeforeList: any;
+  usersNowList: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   loadMore: any;
   cityName: string;
 }
 
-const PeoplePagePresenter: React.SFC<IProps> = ({
-  data: {
-    cityUsersBefore: { usersBefore = null, hasNextPage = null } = {}
-  } = {},
+const CityUsersNowPresenter: React.SFC<IProps> = ({
+  data: { cityUsersNow: { usersNow = null, hasNextPage = null } = {} } = {},
   loading,
   modalOpen,
   toggleModal,
   search,
-  usersBeforeList,
+  usersNowList,
   onChange,
   loadMore,
   cityName
@@ -121,7 +119,7 @@ const PeoplePagePresenter: React.SFC<IProps> = ({
       <SWrapper>
         <UserContainer>
           <UserNameRow>
-            <Username>USERS BEFORE</Username>
+            <Username>USERS NOW</Username>
             <Input placeholder="Search" value={search} onChange={onChange} />
           </UserNameRow>
           {loading && <Loader />}
@@ -132,50 +130,50 @@ const PeoplePagePresenter: React.SFC<IProps> = ({
               pageStart={0}
               initialLoad={false}
             >
-              {usersBeforeList.length !== 0 &&
-                usersBeforeList.map(user => {
+              {usersNowList.length !== 0 &&
+                usersNowList.map(user => {
                   return (
                     <UserRow key={user.id}>
-                      <Link to={`/${user.actor.profile.username}`}>
+                      <Link to={`/${user.profile.username}`}>
                         <AvatarContainer>
-                          <Avatar size={"sm"} url={user.actor.profile.avatar} />
+                          <Avatar size={"sm"} url={user.profile.avatar} />
                           <HeaderColumn>
-                            <CText text={user.actor.profile.username} />
-                            <Explain>with same nationality</Explain>
-                          </HeaderColumn>
-                        </AvatarContainer>
-                      </Link>
-                      {!user.actor.isSelf && (
-                        <FollowBtn
-                          isFollowing={user.actor.profile.isFollowing}
-                          userId={user.id}
-                          username={user.actor.profile.username}
-                        />
-                      )}
-                    </UserRow>
-                  );
-                })}
-              {console.log("hasNextPage:  ", hasNextPage)}
-              {usersBeforeList.length === 0 &&
-                !search &&
-                usersBefore &&
-                usersBefore.map(user => {
-                  return (
-                    <UserRow key={user.id}>
-                      <Link to={`/${user.actor.profile.username}`}>
-                        <AvatarContainer>
-                          <Avatar size={"sm"} url={user.actor.profile.avatar} />
-                          <HeaderColumn>
-                            <CText text={user.actor.profile.username} />
+                            <CText text={user.profile.username} />
                             <Explain>with same nationality</Explain>
                           </HeaderColumn>
                         </AvatarContainer>
                       </Link>
                       {!user.isSelf && (
                         <FollowBtn
-                          isFollowing={user.actor.profile.isFollowing}
+                          isFollowing={user.profile.isFollowing}
                           userId={user.id}
-                          username={user.actor.profile.username}
+                          username={user.profile.username}
+                        />
+                      )}
+                    </UserRow>
+                  );
+                })}
+              {console.log("hasNextPage:  ", hasNextPage)}
+              {usersNowList.length === 0 &&
+                !search &&
+                usersNow &&
+                usersNow.map(user => {
+                  return (
+                    <UserRow key={user.id}>
+                      <Link to={`/${user.profile.username}`}>
+                        <AvatarContainer>
+                          <Avatar size={"sm"} url={user.profile.avatar} />
+                          <HeaderColumn>
+                            <CText text={user.profile.username} />
+                            <Explain>with same nationality</Explain>
+                          </HeaderColumn>
+                        </AvatarContainer>
+                      </Link>
+                      {!user.isSelf && (
+                        <FollowBtn
+                          isFollowing={user.profile.isFollowing}
+                          userId={user.id}
+                          username={user.profile.username}
                         />
                       )}
                     </UserRow>
@@ -189,4 +187,4 @@ const PeoplePagePresenter: React.SFC<IProps> = ({
   );
 };
 
-export default PeoplePagePresenter;
+export default CityUsersNowPresenter;

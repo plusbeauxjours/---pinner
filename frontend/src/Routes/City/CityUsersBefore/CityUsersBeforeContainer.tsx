@@ -1,18 +1,20 @@
 import React from "react";
 import { Query } from "react-apollo";
 import { RecommandUsers } from "../../../types/api";
-import UsersBeforePresenter from "./UsersBeforePresenter";
+import CityUsersBeforePresenter from "./CityUsersBeforePresenter";
 import { CITY_USERS_BEFORE } from "./UsersBeforeQueries";
+import { RouteComponentProps } from "react-router";
 
 class RecommandUsersQuery extends Query<RecommandUsers> {}
 
+interface IProps extends RouteComponentProps<any> {}
 interface IState {
   modalOpen: boolean;
   search: string;
   usersBeforeList: any;
 }
 
-class UsersNowContainer extends React.Component<any, IState> {
+class CityUsersBeforeContainer extends React.Component<IProps, IState> {
   public data;
   public fetchMore;
   constructor(props) {
@@ -50,7 +52,7 @@ class UsersNowContainer extends React.Component<any, IState> {
           this.data = data;
           this.fetchMore = fetchMore;
           return (
-            <UsersBeforePresenter
+            <CityUsersBeforePresenter
               data={data}
               loading={loading}
               modalOpen={modalOpen}
@@ -121,4 +123,4 @@ class UsersNowContainer extends React.Component<any, IState> {
   };
 }
 
-export default UsersNowContainer;
+export default CityUsersBeforeContainer;
