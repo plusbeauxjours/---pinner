@@ -4,6 +4,7 @@ from . import models
 from django.contrib.auth.models import User
 from config import types as config_types
 from locations import types as location_types
+from coffees import types as coffee_types
 
 
 class ProfileType(DjangoObjectType):
@@ -38,9 +39,8 @@ class ProfileType(DjangoObjectType):
         model = models.Profile
 
 
-
 class UserProfileResponse(graphene.ObjectType):
-    user = graphene.Field(config_types.UserType)
+    user = graphene.Field(coffee_types.UserType)
 
 
 class ProfileListResponse(graphene.ObjectType):
@@ -49,13 +49,13 @@ class ProfileListResponse(graphene.ObjectType):
 
 class FollowUnfollowResponse(graphene.ObjectType):
     ok = graphene.Boolean()
-    user = graphene.Field(config_types.UserType)
+    user = graphene.Field(coffee_types.UserType)
     follow = graphene.Boolean()
 
 
 class EditProfileResponse(graphene.ObjectType):
     ok = graphene.Boolean()
-    user = graphene.Field(config_types.UserType)
+    user = graphene.Field(coffee_types.UserType)
 
 
 class DeleteProfileResponse(graphene.ObjectType):
@@ -67,7 +67,7 @@ class ChangePasswordResponse(graphene.ObjectType, config_types.ResponseFields):
 
 
 class SearchUsersResponse(graphene.ObjectType):
-    users = graphene.List(config_types.UserType)
+    users = graphene.List(coffee_types.UserType)
 
 
 class CheckUsernameResponse(graphene.ObjectType):
@@ -86,7 +86,7 @@ class FacebookConnectResponse(graphene.ObjectType):
 class RecommandUsersResponse(graphene.ObjectType):
     page = graphene.Int()
     hasNextPage = graphene.Boolean()
-    users = graphene.List(config_types.UserType)
+    users = graphene.List(coffee_types.UserType)
 
 
 class ReportLocationResponse(graphene.ObjectType):
@@ -94,7 +94,7 @@ class ReportLocationResponse(graphene.ObjectType):
 
 
 class UserListResponse(graphene.ObjectType):
-    users = graphene.List(config_types.UserType)
+    users = graphene.List(coffee_types.UserType)
 
 
 class KnowingFollowersResponse(graphene.ObjectType):

@@ -15,9 +15,7 @@ import { Upload } from "src/Icons";
 import Avatar from "../../Components/Avatar";
 import CoffeeBtn from "src/Components/CoffeeBtn";
 
-const SWrapper = styled(Wrapper)`
-  z-index: 1;
-`;
+const SWrapper = styled(Wrapper)``;
 
 const Location = styled.span`
   display: flex;

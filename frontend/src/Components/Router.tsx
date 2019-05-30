@@ -27,6 +27,8 @@ import Cities from "../Routes/Cities";
 import Countries from "../Routes/Countries";
 import PeoplePage from "../Routes/PeoplePage";
 import CoffeesPage from "../Routes/CoffeesPage";
+import UsersNow from "../Routes/UsersNow";
+import UsersBefore from "../Routes/UsersBefore";
 
 import Home from "../Routes/Home";
 import VerifyPhone from "../Routes/VerifyPhone";
@@ -54,6 +56,8 @@ const LoggedInPages = () => (
       <Route path="/continent/:continentName" component={ContinentProfile} />
       <Route path="/country/:countryName" component={CountryProfile} />
       <Route path="/city/:cityName/:duration" component={TripProfile} />
+      <Route path="/city/usersNow" component={UsersNow} />
+      <Route path="/city/usersBefore" component={UsersBefore} />
       <Route path="/city/:cityName" component={CityProfile} />
       <Route path="/c/:id" component={CoffeeDetail} />
       <Route path="/:username/upload" component={UpLoad} />

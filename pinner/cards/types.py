@@ -45,7 +45,7 @@ class CommentType(DjangoObjectType):
             return True
         except models.LikeComment.DoesNotExist:
             return False
-            
+
     class Meta:
         model = models.Comment
 
@@ -65,7 +65,7 @@ class ToggleLikeCommentResponse(graphene.ObjectType):
 
 
 class CardLikeResponse(graphene.ObjectType):
-    users = graphene.List(config_types.UserType)
+    users = graphene.List(coffee_types.UserType)
 
 
 class UploadCardResponse(graphene.ObjectType):
@@ -109,27 +109,39 @@ class FileInputType(graphene.InputObjectType):
     is_video = graphene.Boolean()
 
 
-class FirstAnnotateRespose(graphene.ObjectType):
+class FirstAnnotateResponse(graphene.ObjectType):
     city = graphene.Field(location_types.CityType)
-    usersNow = graphene.List(config_types.UserType)
+    usersNow = graphene.List(coffee_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
     coffees = graphene.List(coffee_types.CoffeeType)
 
 
-class SecondAnnotateRespose(graphene.ObjectType):
+class SecondAnnotateResponse(graphene.ObjectType):
     country = graphene.Field(location_types.CountryType)
     cities = graphene.List(location_types.CityType)
-    usersNow = graphene.List(config_types.UserType)
+    usersNow = graphene.List(coffee_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
     coffees = graphene.List(coffee_types.CoffeeType)
 
 
-class ThirdAnnotateRespose(graphene.ObjectType):
+class ThirdAnnotateResponse(graphene.ObjectType):
     continent = graphene.Field(location_types.ContinentType)
     countries = graphene.List(location_types.CountryType)
-    usersNow = graphene.List(config_types.UserType)
+    usersNow = graphene.List(coffee_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
     coffees = graphene.List(coffee_types.CoffeeType)
+
+
+class UsersNowResponse(graphene.ObjectType):
+    page = graphene.Int()
+    hasNextPage = graphene.Boolean()
+    usersNow = graphene.List(coffee_types.UserType)
+
+
+class usersBeforeResponse(graphene.ObjectType):
+    page = graphene.Int()
+    hasNextPage = graphene.Boolean()
+    usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 
 class GetCommentsResponse(graphene.ObjectType):

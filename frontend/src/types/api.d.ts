@@ -1,5 +1,3 @@
-
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -33,7 +31,6 @@ export interface ToggleLikeCity {
 export interface ToggleLikeCityVariables {
   cityId: number;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -139,7 +136,6 @@ export interface MatchVariables {
   coffeeId: number;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -212,7 +208,6 @@ export interface UnMatchVariables {
   matchId: number;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -255,7 +250,6 @@ export interface GetComments {
 export interface GetCommentsVariables {
   cardId: number;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -302,7 +296,6 @@ export interface EditCommentVariables {
   message: string;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -329,7 +322,6 @@ export interface ToggleLikeCommentVariables {
   cardId: number;
   commentId: number;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -379,7 +371,6 @@ export interface FollowUserVariables {
   userId: number;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -415,7 +406,6 @@ export interface GetCardsVariables {
   continentName?: string | null;
   userName?: string | null;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -453,7 +443,6 @@ export interface FeedVariables {
   cityName: string;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -474,7 +463,6 @@ export interface logInVariables {
   username: string;
   password: string;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -502,7 +490,6 @@ export interface ToggleLikeCard {
 export interface ToggleLikeCardVariables {
   cardId: number;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -567,7 +554,6 @@ export interface EditCardVariables {
   caption?: string | null;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -588,7 +574,6 @@ export interface DeleteCard {
 export interface DeleteCardVariables {
   cardId: number;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -634,7 +619,6 @@ export interface AddCommentVariables {
   message: string;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -657,7 +641,6 @@ export interface DeleteCommentVariables {
   cardId: number;
   commentId: number;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -765,7 +748,6 @@ export interface SearchTermsVariables {
   search: string;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -791,7 +773,6 @@ export interface signUpVariables {
   avatar?: string | null;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -816,7 +797,6 @@ export interface FacebookConnectVariables {
   gender?: string | null;
   fbId: string;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -879,7 +859,6 @@ export interface CardDetailVariables {
   cardId: number;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -919,7 +898,6 @@ export interface FrequentVisits {
 export interface FrequentVisitsVariables {
   userName: string;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -1025,7 +1003,7 @@ export interface CityProfile_cityProfile_city {
 }
 
 export interface CityProfile_cityProfile {
-  __typename: "FirstAnnotateRespose";
+  __typename: "FirstAnnotateResponse";
   usersNow: (CityProfile_cityProfile_usersNow | null)[] | null;
   usersBefore: (CityProfile_cityProfile_usersBefore | null)[] | null;
   coffees: (CityProfile_cityProfile_coffees | null)[] | null;
@@ -1040,7 +1018,6 @@ export interface CityProfileVariables {
   page?: number | null;
   cityName: string;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -1079,7 +1056,6 @@ export interface NearCities {
 export interface NearCitiesVariables {
   cityName: string;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -1144,7 +1120,6 @@ export interface CoffeeDetail {
 export interface CoffeeDetailVariables {
   coffeeId: number;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -1217,7 +1192,6 @@ export interface GetCoffeesVariables {
   userName?: string | null;
   location: string;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -1324,7 +1298,7 @@ export interface ContinentProfile_continentProfile_countries {
 }
 
 export interface ContinentProfile_continentProfile {
-  __typename: "ThirdAnnotateRespose";
+  __typename: "ThirdAnnotateResponse";
   usersNow: (ContinentProfile_continentProfile_usersNow | null)[] | null;
   usersBefore: (ContinentProfile_continentProfile_usersBefore | null)[] | null;
   coffees: (ContinentProfile_continentProfile_coffees | null)[] | null;
@@ -1340,7 +1314,6 @@ export interface ContinentProfileVariables {
   page?: number | null;
   continentName: string;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -1377,7 +1350,6 @@ export interface TopCountries {
 export interface TopCountriesVariables {
   userName: string;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -1498,7 +1470,7 @@ export interface CountryProfile_countryProfile_cities {
 }
 
 export interface CountryProfile_countryProfile {
-  __typename: "SecondAnnotateRespose";
+  __typename: "SecondAnnotateResponse";
   country: CountryProfile_countryProfile_country | null;
   usersNow: (CountryProfile_countryProfile_usersNow | null)[] | null;
   usersBefore: (CountryProfile_countryProfile_usersBefore | null)[] | null;
@@ -1514,7 +1486,6 @@ export interface CountryProfileVariables {
   page?: number | null;
   countryName: string;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -1553,7 +1524,6 @@ export interface LatestCities {
 export interface LatestCitiesVariables {
   latestCityPage?: number | null;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -1618,7 +1588,6 @@ export interface GetFeedCardsVariables {
   page?: number | null;
   cityName: string;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -1692,7 +1661,6 @@ export interface RequestCoffeeVariables {
   target?: string | null;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -1733,7 +1701,6 @@ export interface GetFollowers {
 export interface GetFollowersVariables {
   userName: string;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -1776,7 +1743,6 @@ export interface GetFollowingsVariables {
   userName: string;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -1799,7 +1765,6 @@ export interface ReportLocationVariables {
   currentCity: string;
   currentCountryCode: string;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -1903,7 +1868,6 @@ export interface GetMatchesVariables {
   matchPage?: number | null;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -1969,7 +1933,9 @@ export interface GetNotifications_getNotifications {
   __typename: "GetNotificationsResponse";
   page: number | null;
   hasNextPage: boolean | null;
-  notifications: (GetNotifications_getNotifications_notifications | null)[] | null;
+  notifications:
+    | (GetNotifications_getNotifications_notifications | null)[]
+    | null;
 }
 
 export interface GetNotifications {
@@ -1979,7 +1945,6 @@ export interface GetNotifications {
 export interface GetNotificationsVariables {
   page?: number | null;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -2001,7 +1966,6 @@ export interface MarkAsRead {
 export interface MarkAsReadVariables {
   notificationId: number;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -2054,7 +2018,6 @@ export interface RecommandUsersVariables {
   page?: number | null;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -2074,7 +2037,6 @@ export interface StartPhoneVerification {
 export interface StartPhoneVerificationVariables {
   phoneNumber: string;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -2168,7 +2130,6 @@ export interface TripProfileVariables {
   endDate: any;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -2201,7 +2162,6 @@ export interface GetDurationCardsVariables {
   startDate: any;
   endDate: any;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -2264,7 +2224,6 @@ export interface UploadCardVariables {
   caption: string;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -2309,7 +2268,6 @@ export interface UserList_userList {
 export interface UserList {
   userList: UserList_userList;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -2420,7 +2378,6 @@ export interface UserProfileVariables {
   username: string;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -2470,7 +2427,6 @@ export interface EditProfileVariables {
   email?: string | null;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -2486,7 +2442,6 @@ export interface DeleteProfile_deleteProfile {
 export interface DeleteProfile {
   deleteProfile: DeleteProfile_deleteProfile;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -2532,7 +2487,6 @@ export interface GetTripsVariables {
   tripPage?: number | null;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -2575,7 +2529,6 @@ export interface AddTripVariables {
   startDate: any;
   endDate: any;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -2623,7 +2576,6 @@ export interface EditTripVariables {
   endDate?: any | null;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -2644,7 +2596,6 @@ export interface DeleteTrip {
 export interface DeleteTripVariables {
   moveNotificationId: number;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -2687,7 +2638,6 @@ export interface GetKnowingFollowersVariables {
   username: string;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -2709,7 +2659,6 @@ export interface DeleteCoffee {
 export interface DeleteCoffeeVariables {
   coffeeId: number;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -2749,7 +2698,6 @@ export interface SearchTripCitiesVariables {
   search: string;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -2771,7 +2719,6 @@ export interface CompletePhoneVerificationVariables {
   key: string;
   phoneNumber: string;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -2807,7 +2754,6 @@ export interface Me_me {
 export interface Me {
   me: Me_me;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -2845,7 +2791,6 @@ export interface UserParts {
   profile: UserParts_profile | null;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -2874,7 +2819,6 @@ export interface ProfileParts {
   currentCity: ProfileParts_currentCity | null;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -2890,7 +2834,6 @@ export interface CardParts {
   likeCount: number | null;
   commentCount: number | null;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -2917,7 +2860,6 @@ export interface CityParts {
   isLiked: boolean | null;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -2939,7 +2881,6 @@ export interface CountryParts {
   continent: CountryParts_continent | null;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -2953,7 +2894,6 @@ export interface ContinentParts {
   continentName: string | null;
   continentPhoto: string | null;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -3002,7 +2942,6 @@ export interface DetailParts {
   naturalTime: string | null;
   creator: DetailParts_creator;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -3065,7 +3004,6 @@ export interface NotificationParts {
   naturalTime: string | null;
 }
 
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -3122,7 +3060,6 @@ export interface CoffeeParts {
   target: CoffeeTarget;
   createdAt: any;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
@@ -3227,7 +3164,7 @@ export enum CoffeeTarget {
   EVERYONE = "EVERYONE",
   FOLLOWERS = "FOLLOWERS",
   GENDER = "GENDER",
-  NATIONALITY = "NATIONALITY",
+  NATIONALITY = "NATIONALITY"
 }
 
 /**
@@ -3236,7 +3173,7 @@ export enum CoffeeTarget {
 export enum ProfileGender {
   F = "F",
   GQ = "GQ",
-  M = "M",
+  M = "M"
 }
 
 /**
@@ -3248,7 +3185,7 @@ export enum NotificationVerb {
   LIKE = "LIKE",
   LIKE_COMMENT = "LIKE_COMMENT",
   MATCH = "MATCH",
-  UPLOAD = "UPLOAD",
+  UPLOAD = "UPLOAD"
 }
 
 //==============================================================

@@ -40,9 +40,7 @@ const GearContainer = styled.span`
   cursor: pointer;
 `;
 
-const SWrapper = styled(Wrapper)`
-  z-index: 1;
-`;
+const SWrapper = styled(Wrapper)``;
 
 const PHeader = styled.header`
   display: flex;
@@ -1360,7 +1358,10 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                               <CText text={knowingFollower.username} />
                               <Location>
                                 {knowingFollower.currentCity.cityName},{" "}
-                                {knowingFollower.currentCity.country.countryName}
+                                {
+                                  knowingFollower.currentCity.country
+                                    .countryName
+                                }
                               </Location>
                             </HeaderColumn>
                           </AvatarContainer>

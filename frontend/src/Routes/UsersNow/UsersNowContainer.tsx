@@ -1,7 +1,7 @@
 import React from "react";
 import { Query } from "react-apollo";
 import { RecommandUsers } from "../../types/api";
-import PeoplePagePresenter from "./PeoplePagePresenter";
+import PeoplePagePresenter from "./UsersNowPresenter";
 import { RECOMMAND_USERS } from "./PeoplePageQueries";
 
 class RecommandUsersQuery extends Query<RecommandUsers> {}
@@ -12,7 +12,7 @@ interface IState {
   recommandUserList: any;
 }
 
-class PeoplePageContainer extends React.Component<any, IState> {
+class UsersNowContainer extends React.Component<any, IState> {
   public recommandUsersFetchMore;
   public recommandUsersData;
   constructor(props) {
@@ -92,12 +92,12 @@ class PeoplePageContainer extends React.Component<any, IState> {
           return previousResult;
         }
         const data = {
-          recommandUsers: {
-            ...previousResult.recommandUsers,
-            hasNextPage: fetchMoreResult.recommandUsers.hasNextPage,
-            users: [
-              ...previousResult.recommandUsers.users,
-              ...fetchMoreResult.recommandUsers.users
+          getNotifications: {
+            ...previousResult.getNotifications,
+            hasNextPage: fetchMoreResult.getNotifications.hasNextPage,
+            notifications: [
+              ...previousResult.getNotifications.notifications,
+              ...fetchMoreResult.getNotifications.notifications
             ]
           }
         };
@@ -107,4 +107,4 @@ class PeoplePageContainer extends React.Component<any, IState> {
   };
 }
 
-export default PeoplePageContainer;
+export default UsersNowContainer;

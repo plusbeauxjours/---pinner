@@ -16,7 +16,7 @@ class Query(object):
         }
     )
     city_profile = graphene.Field(
-        card_types.FirstAnnotateRespose,
+        card_types.FirstAnnotateResponse,
         resolver=queries.resolve_city_profile,
         required=True,
         args={
@@ -24,8 +24,26 @@ class Query(object):
             'page': graphene.Int()
         }
     )
+    city_users_now = graphene.Field(
+        card_types.UsersNowResponse,
+        resolver=queries.resolve_city_users_now,
+        required=True,
+        args={
+            'cityName': graphene.String(required=True),
+            'page': graphene.Int()
+        }
+    )
+    city_users_before = graphene.Field(
+        card_types.usersBeforeResponse,
+        resolver=queries.resolve_city_users_before,
+        required=True,
+        args={
+            'cityName': graphene.String(required=True),
+            'page': graphene.Int()
+        }
+    )
     country_profile = graphene.Field(
-        card_types.SecondAnnotateRespose,
+        card_types.SecondAnnotateResponse,
         resolver=queries.resolve_country_profile,
         required=True,
         args={
@@ -33,9 +51,45 @@ class Query(object):
             'page': graphene.Int()
         }
     )
+    country_users_now = graphene.Field(
+        card_types.UsersNowResponse,
+        resolver=queries.resolve_country_users_now,
+        required=True,
+        args={
+            'countryName': graphene.String(required=True),
+            'page': graphene.Int()
+        }
+    )
+    country_users_before = graphene.Field(
+        card_types.usersBeforeResponse,
+        resolver=queries.resolve_country_users_before,
+        required=True,
+        args={
+            'countryName': graphene.String(required=True),
+            'page': graphene.Int()
+        }
+    )
     continent_profile = graphene.Field(
-        card_types.ThirdAnnotateRespose,
+        card_types.ThirdAnnotateResponse,
         resolver=queries.resolve_continent_profile,
+        required=True,
+        args={
+            'continentName': graphene.String(required=True),
+            'page': graphene.Int()
+        }
+    )
+    continent_users_now = graphene.Field(
+        card_types.UsersNowResponse,
+        resolver=queries.resolve_continent_users_now,
+        required=True,
+        args={
+            'continentName': graphene.String(required=True),
+            'page': graphene.Int()
+        }
+    )
+    continent_users_before = graphene.Field(
+        card_types.usersBeforeResponse,
+        resolver=queries.resolve_continent_users_before,
         required=True,
         args={
             'continentName': graphene.String(required=True),
@@ -95,7 +149,6 @@ class Query(object):
         required=True,
         args={'search': graphene.String(required=True)}
     )
-    
 
 
 class Mutation(object):
