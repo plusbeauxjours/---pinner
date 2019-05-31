@@ -3,6 +3,10 @@ import styled from "src/Styles/typed-components";
 import { getAqi, getWeather } from "../weatherHelper";
 import LoaderData from "./LoaderData";
 
+const colorMidium = "#FFA500";
+const colorHigh = "#FF4500";
+const colorVeryHigh = "#FF0000";
+
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -44,7 +48,7 @@ const WeatherImage = styled.img<ITheme>`
   margin-right: 3px;
 `;
 
-const WeatherNumber = styled.div<ITheme>`
+const TempNumber = styled.div<ITheme>`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 3px;
@@ -56,11 +60,56 @@ const WeatherNumber = styled.div<ITheme>`
       return "12px";
     }
   }};
+  color: ${props => {
+    if (-10 <= props.chill && props.aqi <= -5) {
+      return "#1E90FF";
+    } else if (-20 <= props.chill && props.aqi < -10) {
+      return "#0000FF";
+    } else if (props.aqi < -20) {
+      return "#00008B";
+    } else if (25 <= props.temp && props.temp < 30) {
+      return colorMidium;
+    } else if (30 <= props.temp && props.temp < 35) {
+      return colorHigh;
+    } else if (35 <= props.temp) {
+      return colorVeryHigh;
+    } else {
+      return "white";
+    }
+  }};
+`;
+
+const AqiNumber = styled(TempNumber)`
+  color: ${props => {
+    if (50 <= props.aqi && props.aqi < 100) {
+      return colorMidium;
+    } else if (100 <= props.aqi && props.aqi < 150) {
+      return colorHigh;
+    } else if (150 <= props.aqi) {
+      return colorVeryHigh;
+    } else {
+      return "white";
+    }
+  }};
+`;
+
+const HumidityNumber = styled(TempNumber)`
+  color: ${props => {
+    if (50 <= props.humidity && props.humidity < 60) {
+      return "#008d62";
+    } else {
+      return "white";
+    }
+  }};
 `;
 
 interface ITheme {
   size?: string;
   type?: string;
+  temp?: number;
+  chill?: number;
+  aqi?: number;
+  humidity?: number;
 }
 
 interface IProps {
@@ -68,6 +117,7 @@ interface IProps {
   longitude: number;
   size?: string;
   type?: string;
+  aqi?: number;
 }
 
 interface IState {
@@ -113,22 +163,30 @@ class Weather extends React.Component<IProps, IState> {
           <LoaderData />
         )}
         <WeatherInfo type={type}>
-          <WeatherNumber size={size}>
+          <TempNumber
+            size={size}
+            temp={Math.round(temp)}
+            chill={Math.round(chill)}
+          >
             <p>Temp</p>
-            <p> {temp.toFixed(1)} °C</p>
-          </WeatherNumber>
-          <WeatherNumber size={size}>
+            <p> {Math.round(temp)} °C</p>
+          </TempNumber>
+          <TempNumber
+            size={size}
+            temp={Math.round(temp)}
+            chill={Math.round(chill)}
+          >
             <p>Feels</p>
-            <p> {chill.toFixed(1)} °C</p>
-          </WeatherNumber>
-          <WeatherNumber size={size}>
+            <p> {Math.round(chill)} °C</p>
+          </TempNumber>
+          <AqiNumber size={size} aqi={aqi}>
             <p>AQI</p>
             <p> {aqi}</p>
-          </WeatherNumber>
-          <WeatherNumber size={size}>
+          </AqiNumber>
+          <HumidityNumber size={size} humidity={humidity}>
             <p>Humidity</p>
-            <p> {humidity}</p>
-          </WeatherNumber>
+            <p> {humidity} %</p>
+          </HumidityNumber>
         </WeatherInfo>
       </Container>
     );
