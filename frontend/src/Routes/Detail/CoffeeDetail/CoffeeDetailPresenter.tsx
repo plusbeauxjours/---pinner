@@ -6,8 +6,8 @@ import Loader from "../../../Components/Loader";
 import Wrapper from "../../../Components/Wrapper";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
-import FollowBtn from "../../../Components/FollowBtn";
 import CoffeeBtn from "src/Components/CoffeeBtn";
+import { List } from "../../../Icons";
 
 const SWrapper = styled(Wrapper)`
   display: flex;
@@ -51,8 +51,31 @@ const Modal = styled.div`
   background-color: #2d3a41;
   width: 30%;
   border-radius: 12px;
-  z-index: 10;
+  z-index: 4;
   animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const MenuModalLink = styled.div`
+  text-align: center;
+  min-height: 50px;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  :not(:last-child) {
+    border-bottom: 1px solid #efefef;
+  }
+`;
+
+const MenuModalContainer = styled(ModalContainer)`
+  z-index: 5;
+`;
+const MenuModalOverlay = styled(ModalOverlay)`
+  z-index: 5;
+`;
+const MenuModal = styled(Modal)`
+  z-index: 5;
 `;
 
 const FormModal = styled(Modal)`
@@ -68,6 +91,7 @@ const SAvatar = styled(Avatar)`
 `;
 
 const SText = styled(Bold)`
+  font-size: 22px;
   margin-bottom: 3px;
   display: block;
 `;
@@ -80,72 +104,129 @@ const Location = styled.span`
   font-weight: 200;
 `;
 
+const Text = styled.p`
+  margin-bottom: 10px;
+  display: flex;
+  font-size: 12px;
+  font-weight: 100;
+`;
+
+const Icon = styled.span`
+  margin-right: 15px;
+  cursor: pointer;
+`;
+
 interface IProps {
   data: any;
   loading: boolean;
   modalOpen: boolean;
   back: any;
+  toggleModal: () => void;
+  followUser: (userId: string) => void;
+  isFollowing: boolean;
 }
 
 const CoffeeDetailPresenter: React.SFC<IProps> = ({
   data: { coffeeDetail: { coffee = null } = {} } = {},
   loading,
   modalOpen,
+  toggleModal,
+  followUser,
+  isFollowing,
   back
 }) => {
   if (loading) {
     return <Loader />;
   } else if (!loading && coffee) {
     return (
-      <ModalContainer>
-        <ModalOverlay onClick={back} />
-        <FormModal>
-          <SWrapper>
-            <SAvatar url={coffee.host.profile.avatar} size="md" />
-            <SText text={coffee.host.username} />
-            <Location>
-              {coffee.host.profile.currentCity.cityName},
-              {coffee.host.profile.currentCity.country.countryName}
-            </Location>
+      <>
+        {modalOpen && (
+          <MenuModalContainer>
+            {console.log("fuck")}
+            {console.log(coffee.host.profile.isSelf)}
+            <MenuModalOverlay onClick={toggleModal} />
+            <MenuModal>
+              {coffee.host.profile.isSelf ? (
+                <>
+                  {/* <ModalLink onClick={() => editCoffeeFn()}>
+                    EDIT COFFEE
+                  </ModalLink>
+                  <ModalLink onClick={() => deleteCoffeeFn()}>
+                    DELETE COFFEE
+                  </ModalLink> */}
+                  <MenuModalLink>EDIT COFFEE</MenuModalLink>
+                  <MenuModalLink>DELETE COFFEE</MenuModalLink>
+                </>
+              ) : (
+                <>
+                  <MenuModalLink onClick={() => console.log("REPORT CARD")}>
+                    REPORT CARD
+                  </MenuModalLink>
+                  <MenuModalLink onClick={() => followUser(coffee.host.id)}>
+                    {isFollowing ? "UNFOLLOW" : "FOLLOW"}
+                  </MenuModalLink>
+                </>
+              )}
 
-            <FollowBtn
-              isFollowing={coffee.host.profile.isFollowing}
-              userId={coffee.host.id}
-            />
-            <Location />
+              <MenuModalLink onClick={toggleModal}>CANCEL</MenuModalLink>
+            </MenuModal>
+          </MenuModalContainer>
+        )}
+        <ModalContainer>
+          <ModalOverlay onClick={back} />
+          <FormModal>
+            <SWrapper>
+              <SAvatar url={coffee.host.profile.avatar} size="lg" />
+              <SText text={coffee.host.username} />
+              <Location>
+                {coffee.host.profile.currentCity.cityName},
+                {coffee.host.profile.currentCity.country.countryName}
+              </Location>
+              <Icon onClick={toggleModal}>
+                <List />
+              </Icon>
+              <Text>{coffee.target}</Text>
+              <Text>
+                FOLLOWERS
+                {coffee.host.profile.followersCount}
+              </Text>
+              <Text>
+                FOLLOWINGS
+                {coffee.host.profile.followingCount}
+              </Text>
+              <Text>
+                TRIPS
+                {coffee.host.profile.tripCount}
+              </Text>
+              <Text>
+                NATIONALITY
+                {coffee.host.profile.nationality.countryName}
+                {coffee.host.profile.nationality.countryEmoji}
+              </Text>
+              <Text>
+                RESIDENCE
+                {coffee.host.profile.residence.countryName}
+                {coffee.host.profile.residence.countryEmoji}
+              </Text>
+              <Text>
+                GENDER
+                {coffee.host.profile.gender}
+              </Text>
+              <Text>{coffee.naturalTime}</Text>
 
-            <Location>
-              <SText text={"FOLLOWERS "} />
-              {coffee.host.profile.followersCount}
-            </Location>
-            <Location>
-              <SText text={"FOLLOWINGS "} />
-              {coffee.host.profile.followingCount}
-            </Location>
-            <Location>
-              <SText text={"TRIPS "} />
-              {coffee.host.profile.tripCount}
-            </Location>
+              {coffee.status !== "expired" && (
+                <CoffeeBtn
+                  coffeeId={coffee.id}
+                  isMatching={coffee.isMatching}
+                  isSelf={coffee.host.profile.isSelf}
+                />
+              )}
 
-            <SText text={coffee.naturalTime} />
-            <Location>
-              <SText text={coffee.target} />
-            </Location>
-            <Location>
-              <SText text={coffee.status} />
-            </Location>
-            {coffee.status !== "expired" && (
-              <CoffeeBtn
-                coffeeId={coffee.id}
-                isMatching={coffee.isMatching}
-                isSelf={coffee.host.profile.isSelf}
-              />
-            )}
-
-            {/* {coffee.host.profile.nationality.countryName} */}
-          </SWrapper>
-        </FormModal>
-      </ModalContainer>
+              {/* {coffee.host.profile.nationality.countryName} */}
+            </SWrapper>
+          </FormModal>
+        </ModalContainer>
+      </>
     );
   }
   return null;

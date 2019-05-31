@@ -44,7 +44,7 @@ class ReportLocation(graphene.Mutation):
             )
             qs = models.City.objects.all().annotate(distance=distance_raw_sql).order_by('distance')
             if max_distance is not None:
-                qs = qs.filter(Q(distance__lt=max_distance) | Q(distance__gt=0))
+                qs = qs.filter(Q(distance__lt=max_distance) | Q(distance__gt=10))
             return qs
 
         try:

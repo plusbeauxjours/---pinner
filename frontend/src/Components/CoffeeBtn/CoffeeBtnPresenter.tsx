@@ -4,7 +4,7 @@ import Button from "../Button";
 
 const SButton = styled(Button)`
   z-index: 1;
-  width: 100%;
+  width: 75px;
 `;
 
 interface IProps {

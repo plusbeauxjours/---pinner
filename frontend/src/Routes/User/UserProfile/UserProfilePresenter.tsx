@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { Gear, List } from "../../../Icons";
+import { List } from "../../../Icons";
 import styled, { keyframes } from "../../../Styles/typed-components";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
@@ -21,26 +21,30 @@ import Weather from "../../../Components/Weather";
 const Header = styled.header`
   display: flex;
   flex-direction: column;
-  text-align: center;
-  height: 300px;
-  align-items: center;
+  height: 365px;
   background: ${props => props.theme.headerColor};
 `;
 
 const PAvatar = styled(Avatar)`
-  margin: 40px 0 20px 0;
+display: flex;
+justify-self: center;
+align-self: center;
+margin-top: 70px; 
 `;
 
 const NameContainer = styled.span`
-  margin-bottom: 20px;
+  width: 100%;
+  margin: 0px auto;
+  padding: 60px 15px 0 15px;
+  max-width: 935px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content:center;
 `;
 
-const GearContainer = styled.span`
-  margin-left: 15px;
-  cursor: pointer;
+const SWrapper = styled(Wrapper)`
 `;
-
-const SWrapper = styled(Wrapper)``;
 
 const PHeader = styled.header`
   display: flex;
@@ -58,6 +62,21 @@ const AvatarContainer = styled.div`
 
 const LocationAvatarContainer = styled(AvatarContainer)`
   flex-direction: column;
+`;
+
+const ListIcon = styled.span`
+  display: flex;
+  flex-direction: row
+  display: flex;
+  cursor: pointer;
+  margin-top: 5px;
+  svg {
+    fill: white;
+    transition: fill 0.2s ease-in-out;
+    &:hover {
+      fill: grey;
+    }
+  }
 `;
 
 const CAvatar = styled(Avatar)`
@@ -98,9 +117,9 @@ const UserNameRow = styled.div`
 `;
 
 const Username = styled.span`
-  text-align: center;
-  font-size: 22px;
-  font-weight: 100;
+  font-size: 30px;
+  font-weight: 300;
+  margin-right: 10px;
 `;
 
 const TripOverlay = styled.div`
@@ -275,6 +294,8 @@ const Icon = styled.span`
     }
   }
 `;
+
+
 
 const TripIcon = styled(Icon)`
   align-self: center;
@@ -1096,7 +1117,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
         {/* 
         ////////////// HEADER //////////////
         */}
-        <Header>
+        <Header>          
           <PAvatar size="lg" url={user.profile.avatar} />
           <NameContainer>
             {editMode ? (
@@ -1109,18 +1130,20 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 onKeyDown={onKeyDownSubmit}
               />
             ) : (
-              <Username>{user.username}</Username>
-            )}
-            {user.profile.isSelf ? (
-              <GearContainer onClick={toggleModal}>
-                <Gear />
-              </GearContainer>
-            ) : (
+              <Username>{user.username}{"       "}
+            {!user.profile.isSelf ? (
               <FollowBtn
                 isFollowing={user.profile.isFollowing}
                 userId={user.id}
               />
+            ) : null}
+            </Username>
             )}
+            {user.profile.isSelf ? (
+              <ListIcon onClick={toggleModal}>
+                <List />
+              </ListIcon>
+            ) : null}
           </NameContainer>
         </Header>
         {/* 
@@ -1168,8 +1191,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               ) : (
                 <Bio>{`${user.profile.bio}`}</Bio>
               )}
-              <SText text={String(user.profile.countryCount.userCount)} />
-              <SText text={String(user.profile.cityCount.cardCount)} />
               <Row>
                 <UBold text={String(user.profile.postCount)} />
                 <UBold text={" how many POSTS - done"} />
@@ -1194,10 +1215,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 <UBold text={String(user.profile.continentCount)} />
                 <UBold text={" how many  CONTINENT - done"} />
               </Row>
-              <Row>
-                <UBold text={String(user.profile.gender)} />
-                <UBold text={" gender - done"} />
-              </Row>
+              {user.profile.gender ? (
+                <Row>
+                  <UBold text={String(user.profile.gender)} />
+                  <UBold text={" gender - done"} />
+                </Row>
+              ) : null}
               {user.profile.nationality ? (
                 <Row>
                   <UBold text={String(user.profile.nationality.countryEmoji)} />
@@ -1217,7 +1240,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </LocationAvatarContainer>
             <TripContainer>
               <UserNameRow>
-                <Username>TRIPS</Username>
+              <SText text={"TRIPS"} />
                 <TripInput
                   placeholder="Search"
                   value={search}
