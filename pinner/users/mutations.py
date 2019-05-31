@@ -6,6 +6,7 @@ from graphql_jwt.decorators import login_required
 from graphql_jwt.shortcuts import get_token
 
 from locations import locationThumbnail
+from locations import models as location_models
 from . import models, types
 
 from cards import models as card_models
@@ -95,8 +96,8 @@ class EditProfile(graphene.Mutation):
             email = kwargs.get('email', user.profile.email)
 
             try:
-                nationality = models.Country.objects.get(country_code=nationality_code)
-            except models.Country.DoesNotExist:
+                nationality = location_models.Country.objects.get(country_code=nationality_code)
+            except location_models.Country.DoesNotExist:
                 with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
                     countryData = json.load(file)
                     currentCountry = countryData[nationality_code]
@@ -110,7 +111,7 @@ class EditProfile(graphene.Mutation):
                     continentCode = currentCountry['continent']
 
                     try:
-                        continent = models.Continent.objects.get(continent_code=continentCode)
+                        continent = location_models.Continent.objects.get(continent_code=continentCode)
                     except:
                         with open('pinner/locations/continentData.json', mode='rt', encoding='utf-8') as file:
                             continentData = json.load(file)
@@ -128,39 +129,39 @@ class EditProfile(graphene.Mutation):
                             # #     print('Downloading...' + str(i) + '/' + str(gp.num))
                             # #     gp.download(i)
 
-                            continent = models.Continent.objects.create(
+                            continent = location_models.Continent.objects.create(
                                 continent_name=continentName,
                                 continent_photo=continentPhotoURL,
                                 continent_code=continentCode
                             )
 
+                try:
+                    gp = locationThumbnail.get_photos(term=countryName)
+                    countryPhotoURL = gp.get_urls()
+                except:
+                    countryPhotoURL = None
+
+                # DOWNLOAD IMAGE
+                # for i in range(gp.num):
+                #     print('Downloading...' + str(i) + '/' + str(gp.num))
+                #     gp.download(i)
+
+                nationality = location_models.Country.objects.create(
+                    country_code=nationality_code,
+                    country_name=countryName,
+                    country_name_native=countryNameNative,
+                    country_capital=countryCapital,
+                    country_currency=countryCurrency,
+                    country_phone=countryPhone,
+                    country_emoji=countryEmoji,
+                    country_emojiU=countryEmojiU,
+                    country_photo=countryPhotoURL,
+                    continent=continent,
+                )
+
             try:
-                gp = locationThumbnail.get_photos(term=countryName)
-                countryPhotoURL = gp.get_urls()
-            except:
-                countryPhotoURL = None
-
-            # DOWNLOAD IMAGE
-            # for i in range(gp.num):
-            #     print('Downloading...' + str(i) + '/' + str(gp.num))
-            #     gp.download(i)
-
-            nationality = models.Country.objects.create(
-                country_code=nationality_code,
-                country_name=countryName,
-                country_name_native=countryNameNative,
-                country_capital=countryCapital,
-                country_currency=countryCurrency,
-                country_phone=countryPhone,
-                country_emoji=countryEmoji,
-                country_emojiU=countryEmojiU,
-                country_photo=countryPhotoURL,
-                continent=continent,
-            )
-
-            try:
-                residence = models.Country.objects.get(country_code=residence_code)
-            except models.Country.DoesNotExist:
+                residence = location_models.Country.objects.get(country_code=residence_code)
+            except location_models.Country.DoesNotExist:
                 with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
                     countryData = json.load(file)
                     currentCountry = countryData[residence_code]
@@ -174,7 +175,7 @@ class EditProfile(graphene.Mutation):
                     continentCode = currentCountry['continent']
 
                     try:
-                        continent = models.Continent.objects.get(continent_code=continentCode)
+                        continent = location_models.Continent.objects.get(continent_code=continentCode)
                     except:
                         with open('pinner/locations/continentData.json', mode='rt', encoding='utf-8') as file:
                             continentData = json.load(file)
@@ -192,35 +193,35 @@ class EditProfile(graphene.Mutation):
                             # #     print('Downloading...' + str(i) + '/' + str(gp.num))
                             # #     gp.download(i)
 
-                            continent = models.Continent.objects.create(
+                            continent = location_models.Continent.objects.create(
                                 continent_name=continentName,
                                 continent_photo=continentPhotoURL,
                                 continent_code=continentCode
                             )
 
-            try:
-                gp = locationThumbnail.get_photos(term=countryName)
-                countryPhotoURL = gp.get_urls()
-            except:
-                countryPhotoURL = None
+                try:
+                    gp = locationThumbnail.get_photos(term=countryName)
+                    countryPhotoURL = gp.get_urls()
+                except:
+                    countryPhotoURL = None
 
-            # DOWNLOAD IMAGE
-            # for i in range(gp.num):
-            #     print('Downloading...' + str(i) + '/' + str(gp.num))
-            #     gp.download(i)
+                # DOWNLOAD IMAGE
+                # for i in range(gp.num):
+                #     print('Downloading...' + str(i) + '/' + str(gp.num))
+                #     gp.download(i)
 
-            residence = models.Country.objects.create(
-                country_code=residence_code,
-                country_name=countryName,
-                country_name_native=countryNameNative,
-                country_capital=countryCapital,
-                country_currency=countryCurrency,
-                country_phone=countryPhone,
-                country_emoji=countryEmoji,
-                country_emojiU=countryEmojiU,
-                country_photo=countryPhotoURL,
-                continent=continent,
-            )
+                residence = location_models.Country.objects.create(
+                    country_code=residence_code,
+                    country_name=countryName,
+                    country_name_native=countryNameNative,
+                    country_capital=countryCapital,
+                    country_currency=countryCurrency,
+                    country_phone=countryPhone,
+                    country_emoji=countryEmoji,
+                    country_emojiU=countryEmojiU,
+                    country_photo=countryPhotoURL,
+                    continent=continent,
+                )
 
             try:
                 profile.bio = bio

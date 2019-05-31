@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import { COUNTRY_FRAGMENT } from "src/sharedQueries";
 
 export const COFFEE_DETAIL = gql`
   query CoffeeDetail($coffeeId: Int!) {
@@ -39,4 +40,5 @@ export const COFFEE_DETAIL = gql`
       }
     }
   }
+  ${COUNTRY_FRAGMENT}
 `;

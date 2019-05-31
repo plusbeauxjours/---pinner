@@ -769,6 +769,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       firstName,
       lastName,
       nationality,
+      residence,
       email
     } = this.state;
     const { keyCode } = event;
@@ -782,6 +783,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
           firstName,
           lastName,
           nationality,
+          residence,
           email
         }
       });
