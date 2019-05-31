@@ -307,7 +307,7 @@ const UBold = styled(Bold)`
   display: flex;
   align-self: flex-end;
   font-weight: 100;
-  font-size: 7px;
+  font-size: 12px;
 `;
 
 const SAvatar = styled(Avatar)`
@@ -368,7 +368,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.85);
 `;
 
 const ModalLink = styled.div`
