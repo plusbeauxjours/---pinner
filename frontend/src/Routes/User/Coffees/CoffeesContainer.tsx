@@ -92,9 +92,7 @@ class CoffeesContainer extends React.Component<IProps, IState> {
     const { activeId, coffeesList } = this.state;
     const { history } = this.props;
 
-    const {
-      getCoffees: { coffees = null }
-    } = this.data;
+    const { getCoffees: { coffees = null } = {} } = this.data;
 
     if (keyCode === 13 && (coffeesList.length || coffees)) {
       {

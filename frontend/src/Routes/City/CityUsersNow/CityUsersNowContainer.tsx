@@ -134,9 +134,7 @@ class CityUsersNowContainer extends React.Component<IProps, IState> {
     const { usersNowActiveId, usersNowList } = this.state;
     const { history } = this.props;
 
-    const {
-      cityUsersNow: { usersNow = null }
-    } = this.data;
+    const { cityUsersNow: { usersNow = null } = {} } = this.data;
 
     if (keyCode === 13 && (usersNowList.length || usersNow)) {
       {

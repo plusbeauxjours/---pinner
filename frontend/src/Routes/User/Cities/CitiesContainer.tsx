@@ -89,9 +89,7 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
     const { activeId, cityList } = this.state;
     const { history } = this.props;
 
-    const {
-      frequentVisits: { cities = null }
-    } = this.data;
+    const { frequentVisits: { cities = null } = {} } = this.data;
 
     if (keyCode === 13 && (cityList.length || cities)) {
       {

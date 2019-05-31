@@ -106,9 +106,7 @@ class FollowingsContainer extends React.Component<IProps, IState> {
     const { activeId, usersList } = this.state;
     const { history } = this.props;
 
-    const {
-      getFollowings: { profiles = null }
-    } = this.data;
+    const { getFollowings: { profiles = null } = {} } = this.data;
 
     if (keyCode === 13 && (usersList.length || profiles)) {
       {

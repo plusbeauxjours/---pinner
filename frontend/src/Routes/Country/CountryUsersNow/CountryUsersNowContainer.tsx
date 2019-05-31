@@ -137,9 +137,7 @@ class CountryUsersNowContainer extends React.Component<IProps, IState> {
     const { usersNowActiveId, usersNowList } = this.state;
     const { history } = this.props;
 
-    const {
-      countryUsersNow: { usersNow = null }
-    } = this.data;
+    const { countryUsersNow: { usersNow = null } = {} } = this.data;
 
     if (keyCode === 13 && (usersNowList.length || usersNow)) {
       {

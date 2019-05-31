@@ -144,9 +144,7 @@ class CountryUsersBeforeContainer extends React.Component<IProps, IState> {
     const { usersBeforeActiveId, usersBeforeList } = this.state;
     const { history } = this.props;
 
-    const {
-      countryUsersBefore: { usersBefore = null }
-    } = this.data;
+    const { countryUsersBefore: { usersBefore = null } = {} } = this.data;
 
     if (keyCode === 13 && (usersBeforeList.length || usersBefore)) {
       {

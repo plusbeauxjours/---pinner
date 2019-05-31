@@ -87,9 +87,7 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
     const { activeId, cityList } = this.state;
     const { history } = this.props;
 
-    const {
-      countryProfile: { cities = null }
-    } = this.data;
+    const { countryProfile: { cities = null } = {} } = this.data;
 
     if (keyCode === 13 && (cityList.length || cities)) {
       {

@@ -88,9 +88,7 @@ class CountriesContainer extends React.Component<IProps, IState> {
     const { activeId, countryList } = this.state;
     const { history } = this.props;
 
-    const {
-      topCountries: { countries = null }
-    } = this.data;
+    const { topCountries: { countries = null } = {} } = this.data;
 
     if (keyCode === 13 && (countryList.length || countries)) {
       {

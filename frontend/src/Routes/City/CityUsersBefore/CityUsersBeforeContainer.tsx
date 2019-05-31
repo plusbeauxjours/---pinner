@@ -141,9 +141,7 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
     const { usersBeforeActiveId, usersBeforeList } = this.state;
     const { history } = this.props;
 
-    const {
-      cityUsersBefore: { usersBefore = null }
-    } = this.data;
+    const { cityUsersBefore: { usersBefore = null } = {} } = this.data;
 
     if (keyCode === 13 && (usersBeforeList.length || usersBefore)) {
       {

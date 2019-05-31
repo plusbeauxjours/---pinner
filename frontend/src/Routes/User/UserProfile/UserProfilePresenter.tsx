@@ -994,6 +994,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <TripModal>
                 {!searchTripCitiesLoading &&
                   cities &&
+                  cities.length !== 0 &&
                   cities.map((city, index) => {
                     let active;
                     if (index === searchActiveId) {

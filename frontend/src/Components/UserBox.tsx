@@ -66,7 +66,7 @@ const UserRow = styled.div`
     background-color: grey;
   }
   border-bottom: 1px solid grey;
-  &:last-child {
+  &:not([:3]) {
     margin-bottom: 15px;
   }
 `;

@@ -1229,9 +1229,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     const { keyCode } = event;
     const { tripActiveId, tripList } = this.state;
 
-    const {
-      getTrips: { trip = null }
-    } = this.getTripsData;
+    const { getTrips: { trip = null } = {} } = this.getTripsData;
 
     if (keyCode === 13 && (tripList.length || trip)) {
       {
@@ -1292,9 +1290,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   public onKeyDownSearch = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { keyCode } = event;
     const { searchActiveId } = this.state;
-    if (this.searchTripCitiesData) {
+    if (this.searchTripCitiesData && this.searchTripCitiesData.length !== 0) {
       const {
-        searchTripCities: { cities = null }
+        searchTripCities: { cities = null } = {}
       } = this.searchTripCitiesData;
 
       if (keyCode === 13 && cities) {
