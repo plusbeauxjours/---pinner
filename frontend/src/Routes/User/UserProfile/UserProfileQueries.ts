@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { CITY_FRAGMENT } from "src/sharedQueries";
+import { CITY_FRAGMENT, COUNTRY_FRAGMENT } from "src/sharedQueries";
 
 export const GET_USER = gql`
   query UserProfile($username: String!) {
@@ -15,7 +15,14 @@ export const GET_USER = gql`
           avatar
           website
           email
-          nationality
+          nationality {
+            countryEmoji
+            ...CountryParts
+          }
+          residence {
+            countryEmoji
+            ...CountryParts
+          }
           postCount
           followersCount
           followingCount
@@ -57,6 +64,7 @@ export const GET_USER = gql`
       }
     }
   }
+  ${COUNTRY_FRAGMENT}
 `;
 
 export const EDIT_PROFILE = gql`
@@ -90,7 +98,14 @@ export const EDIT_PROFILE = gql`
           bio
           gender
           avatar
-          nationality
+          nationality {
+            countryEmoji
+            ...CountryParts
+          }
+          residence {
+            countryEmoji
+            ...CountryParts
+          }
           email
         }
       }

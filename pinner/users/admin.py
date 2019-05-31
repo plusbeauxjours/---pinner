@@ -11,5 +11,7 @@ class ProfileAdmin(admin.ModelAdmin):
         'city_count',
         'trip_count',
         'country_count',
-        'continent_count'
+        'continent_count',
+        'nationality',
+        'residence'
     )

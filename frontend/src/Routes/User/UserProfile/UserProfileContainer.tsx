@@ -94,6 +94,7 @@ interface IState {
   bio: string;
   gender: string;
   nationality: string;
+  residence: string;
   email: string;
   avatar: string;
   firstName: string;
@@ -155,6 +156,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       gender: props.gender,
       avatar: props.avatar,
       nationality: state.currentCountryCode,
+      residence: state.currentCountryCode,
       email: props.email,
       firstName: props.FirstName,
       lastName: props.lastName,
@@ -218,6 +220,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       gender,
       avatar,
       nationality,
+      residence,
       email,
       firstName,
       lastName,
@@ -566,6 +569,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                     }
                                                                                     nationality={
                                                                                       nationality
+                                                                                    }
+                                                                                    residence={
+                                                                                      residence
                                                                                     }
                                                                                     email={
                                                                                       email

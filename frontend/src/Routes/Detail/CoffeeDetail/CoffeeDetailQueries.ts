@@ -23,7 +23,14 @@ export const COFFEE_DETAIL = gql`
               }
             }
             isFollowing
-            nationality
+            nationality {
+              countryEmoji
+              ...CountryParts
+            }
+            residence {
+              countryEmoji
+              ...CountryParts
+            }
             followersCount
             followingCount
             tripCount

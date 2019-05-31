@@ -1,9 +1,11 @@
 import graphene
+import json
 from django.db import IntegrityError
 from django.contrib.auth.models import User
 from graphql_jwt.decorators import login_required
 from graphql_jwt.shortcuts import get_token
 
+from locations import locationThumbnail
 from . import models, types
 
 from cards import models as card_models
@@ -57,8 +59,6 @@ class FollowUser(graphene.Mutation):
                 print(e)
                 pass
 
-        
-
 
 class EditProfile(graphene.Mutation):
 
@@ -70,7 +70,8 @@ class EditProfile(graphene.Mutation):
         last_name = graphene.String()
         username = graphene.String()
         nationality = graphene.String()
-        email=graphene.String()
+        residence = graphene.String()
+        email = graphene.String()
 
     Output = types.EditProfileResponse
 
@@ -89,14 +90,144 @@ class EditProfile(graphene.Mutation):
             first_name = kwargs.get('first_name', user.first_name)
             last_name = kwargs.get('last_name', user.last_name)
             username = kwargs.get('username', user.username)
-            nationality=kwargs.get('nationality', user.profile.nationality)
-            email=kwargs.get('email', user.profile.email)
+            nationality_code = kwargs.get('nationality', user.profile.nationality)
+            residence_code = kwargs.get('residence', user.profile.residence)
+            email = kwargs.get('email', user.profile.email)
+
+            try:
+                nationality = models.Country.objects.get(country_code=nationality_code)
+            except models.Country.DoesNotExist:
+                with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
+                    countryData = json.load(file)
+                    currentCountry = countryData[nationality_code]
+                    countryName = currentCountry['name']
+                    countryNameNative = currentCountry['native']
+                    countryCapital = currentCountry['capital']
+                    countryCurrency = currentCountry['currency']
+                    countryPhone = currentCountry['phone']
+                    countryEmoji = currentCountry['emoji']
+                    countryEmojiU = currentCountry['emojiU']
+                    continentCode = currentCountry['continent']
+
+                    try:
+                        continent = models.Continent.objects.get(continent_code=continentCode)
+                    except:
+                        with open('pinner/locations/continentData.json', mode='rt', encoding='utf-8') as file:
+                            continentData = json.load(file)
+                            continentName = continentData[continentCode]
+
+                            try:
+                                gp = locationThumbnail.get_photos(term=continentName)
+                                continentPhotoURL = gp.get_urls()
+                            except:
+                                continentPhotoURL = None
+
+                            # DOWNLOAD IMAGE
+                            # continentPhotoURL = gp.get_urls()
+                            # # for i in range(gp.num):
+                            # #     print('Downloading...' + str(i) + '/' + str(gp.num))
+                            # #     gp.download(i)
+
+                            continent = models.Continent.objects.create(
+                                continent_name=continentName,
+                                continent_photo=continentPhotoURL,
+                                continent_code=continentCode
+                            )
+
+            try:
+                gp = locationThumbnail.get_photos(term=countryName)
+                countryPhotoURL = gp.get_urls()
+            except:
+                countryPhotoURL = None
+
+            # DOWNLOAD IMAGE
+            # for i in range(gp.num):
+            #     print('Downloading...' + str(i) + '/' + str(gp.num))
+            #     gp.download(i)
+
+            nationality = models.Country.objects.create(
+                country_code=nationality_code,
+                country_name=countryName,
+                country_name_native=countryNameNative,
+                country_capital=countryCapital,
+                country_currency=countryCurrency,
+                country_phone=countryPhone,
+                country_emoji=countryEmoji,
+                country_emojiU=countryEmojiU,
+                country_photo=countryPhotoURL,
+                continent=continent,
+            )
+
+            try:
+                residence = models.Country.objects.get(country_code=residence_code)
+            except models.Country.DoesNotExist:
+                with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
+                    countryData = json.load(file)
+                    currentCountry = countryData[residence_code]
+                    countryName = currentCountry['name']
+                    countryNameNative = currentCountry['native']
+                    countryCapital = currentCountry['capital']
+                    countryCurrency = currentCountry['currency']
+                    countryPhone = currentCountry['phone']
+                    countryEmoji = currentCountry['emoji']
+                    countryEmojiU = currentCountry['emojiU']
+                    continentCode = currentCountry['continent']
+
+                    try:
+                        continent = models.Continent.objects.get(continent_code=continentCode)
+                    except:
+                        with open('pinner/locations/continentData.json', mode='rt', encoding='utf-8') as file:
+                            continentData = json.load(file)
+                            continentName = continentData[continentCode]
+
+                            try:
+                                gp = locationThumbnail.get_photos(term=continentName)
+                                continentPhotoURL = gp.get_urls()
+                            except:
+                                continentPhotoURL = None
+
+                            # DOWNLOAD IMAGE
+                            # continentPhotoURL = gp.get_urls()
+                            # # for i in range(gp.num):
+                            # #     print('Downloading...' + str(i) + '/' + str(gp.num))
+                            # #     gp.download(i)
+
+                            continent = models.Continent.objects.create(
+                                continent_name=continentName,
+                                continent_photo=continentPhotoURL,
+                                continent_code=continentCode
+                            )
+
+            try:
+                gp = locationThumbnail.get_photos(term=countryName)
+                countryPhotoURL = gp.get_urls()
+            except:
+                countryPhotoURL = None
+
+            # DOWNLOAD IMAGE
+            # for i in range(gp.num):
+            #     print('Downloading...' + str(i) + '/' + str(gp.num))
+            #     gp.download(i)
+
+            residence = models.Country.objects.create(
+                country_code=residence_code,
+                country_name=countryName,
+                country_name_native=countryNameNative,
+                country_capital=countryCapital,
+                country_currency=countryCurrency,
+                country_phone=countryPhone,
+                country_emoji=countryEmoji,
+                country_emojiU=countryEmojiU,
+                country_photo=countryPhotoURL,
+                continent=continent,
+            )
 
             try:
                 profile.bio = bio
                 profile.gender = gender
                 profile.avatar = avatar
                 profile.nationality = nationality
+                profile.residence = residence
                 profile.email = email
 
                 user.first_name = first_name
@@ -157,7 +288,6 @@ class ChangePassword(graphene.Mutation):
 
         ok = True
         error = None
-
 
         if user.check_password(oldPassword):
 

@@ -590,6 +590,7 @@ interface IProps {
   gender: string;
   avatar: string;
   nationality: string;
+  residence: string;
   email: string;
   firstName: string;
   lastName: string;
@@ -727,6 +728,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   lastName,
   avatar,
   nationality,
+  residence,
   email,
   cityName,
   cityPhoto,
@@ -807,6 +809,21 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                     <Select
                       value={nationality}
                       name={"nationality"}
+                      onChange={onSelectChange}
+                    >
+                      {countries.map((country, index) => (
+                        <Option key={index} value={country.code}>
+                          {country.emoji} {country.name}
+                        </Option>
+                      ))}
+                    </Select>
+                  </ModalLink>
+                ) : null}
+                {!user.profile.residence ? (
+                  <ModalLink>
+                    <Select
+                      value={residence}
+                      name={"residence"}
                       onChange={onSelectChange}
                     >
                       {countries.map((country, index) => (
@@ -1181,11 +1198,18 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 <UBold text={String(user.profile.gender)} />
                 <UBold text={" gender - done"} />
               </Row>
-              <Row>
-                <UBold text={String(user.profile.nationality)} />
-                <UBold text={" nationality - done"} />
-              </Row>
-
+              {user.profile.nationality ? (
+                <Row>
+                  <UBold text={String(user.profile.nationality.countryEmoji)} />
+                  <UBold text={" nationality - done"} />
+                </Row>
+              ) : null}
+              {user.profile.residence ? (
+                <Row>
+                  <UBold text={String(user.profile.residence.countryEmoji)} />
+                  <UBold text={" residence - done"} />
+                </Row>
+              ) : null}
               <Weather
                 latitude={user.profile.currentCity.latitude}
                 longitude={user.profile.currentCity.longitude}

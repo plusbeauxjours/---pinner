@@ -12,7 +12,7 @@ import UserHeader from "../../../Components/UserHeader";
 import GetCards from "../../../Components/GetCards";
 
 const SWrapper = styled(Wrapper)`
-  z-index: 1;
+  z-index: 0;
 `;
 
 const PHeader = styled.header`

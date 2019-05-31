@@ -1315,56 +1315,6 @@ export interface ContinentUsersNowVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: CountryUsersNow
-// ====================================================
-
-export interface CountryUsersNow_countryUsersNow_usersNow_profile_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface CountryUsersNow_countryUsersNow_usersNow_profile_currentCity {
-  __typename: "CityType";
-  cityName: string | null;
-  country: CountryUsersNow_countryUsersNow_usersNow_profile_currentCity_country;
-}
-
-export interface CountryUsersNow_countryUsersNow_usersNow_profile {
-  __typename: "ProfileType";
-  id: string;
-  username: string | null;
-  avatar: string;
-  isFollowing: boolean | null;
-  isSelf: boolean | null;
-  currentCity: CountryUsersNow_countryUsersNow_usersNow_profile_currentCity | null;
-}
-
-export interface CountryUsersNow_countryUsersNow_usersNow {
-  __typename: "UserType";
-  profile: CountryUsersNow_countryUsersNow_usersNow_profile | null;
-}
-
-export interface CountryUsersNow_countryUsersNow {
-  __typename: "UsersNowResponse";
-  page: number | null;
-  hasNextPage: boolean | null;
-  usersNow: (CountryUsersNow_countryUsersNow_usersNow | null)[] | null;
-}
-
-export interface CountryUsersNow {
-  countryUsersNow: CountryUsersNow_countryUsersNow;
-}
-
-export interface CountryUsersNowVariables {
-  page?: number | null;
-  countryName: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: CountryProfile
 // ====================================================
 
@@ -1557,6 +1507,56 @@ export interface CountryUsersBeforeVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: CountryUsersNow
+// ====================================================
+
+export interface CountryUsersNow_countryUsersNow_usersNow_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface CountryUsersNow_countryUsersNow_usersNow_profile_currentCity {
+  __typename: "CityType";
+  cityName: string | null;
+  country: CountryUsersNow_countryUsersNow_usersNow_profile_currentCity_country;
+}
+
+export interface CountryUsersNow_countryUsersNow_usersNow_profile {
+  __typename: "ProfileType";
+  id: string;
+  username: string | null;
+  avatar: string;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
+  currentCity: CountryUsersNow_countryUsersNow_usersNow_profile_currentCity | null;
+}
+
+export interface CountryUsersNow_countryUsersNow_usersNow {
+  __typename: "UserType";
+  profile: CountryUsersNow_countryUsersNow_usersNow_profile | null;
+}
+
+export interface CountryUsersNow_countryUsersNow {
+  __typename: "UsersNowResponse";
+  page: number | null;
+  hasNextPage: boolean | null;
+  usersNow: (CountryUsersNow_countryUsersNow_usersNow | null)[] | null;
+}
+
+export interface CountryUsersNow {
+  countryUsersNow: CountryUsersNow_countryUsersNow;
+}
+
+export interface CountryUsersNowVariables {
+  page?: number | null;
+  countryName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: CardDetail
 // ====================================================
 
@@ -1633,6 +1633,36 @@ export interface CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity {
   country: CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity_country;
 }
 
+export interface CoffeeDetail_coffeeDetail_coffee_host_profile_nationality_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
+export interface CoffeeDetail_coffeeDetail_coffee_host_profile_nationality {
+  __typename: "CountryType";
+  countryEmoji: string | null;
+  id: string;
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+  continent: CoffeeDetail_coffeeDetail_coffee_host_profile_nationality_continent | null;
+}
+
+export interface CoffeeDetail_coffeeDetail_coffee_host_profile_residence_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
+export interface CoffeeDetail_coffeeDetail_coffee_host_profile_residence {
+  __typename: "CountryType";
+  countryEmoji: string | null;
+  id: string;
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+  continent: CoffeeDetail_coffeeDetail_coffee_host_profile_residence_continent | null;
+}
+
 export interface CoffeeDetail_coffeeDetail_coffee_host_profile {
   __typename: "ProfileType";
   isSelf: boolean | null;
@@ -1640,7 +1670,8 @@ export interface CoffeeDetail_coffeeDetail_coffee_host_profile {
   gender: ProfileGender | null;
   currentCity: CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity | null;
   isFollowing: boolean | null;
-  nationality: string | null;
+  nationality: CoffeeDetail_coffeeDetail_coffee_host_profile_nationality | null;
+  residence: CoffeeDetail_coffeeDetail_coffee_host_profile_residence | null;
   followersCount: number | null;
   followingCount: number | null;
   tripCount: number | null;
@@ -2610,6 +2641,36 @@ export interface GetFollowingsVariables {
 // GraphQL query operation: UserProfile
 // ====================================================
 
+export interface UserProfile_userProfile_user_profile_nationality_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
+export interface UserProfile_userProfile_user_profile_nationality {
+  __typename: "CountryType";
+  countryEmoji: string | null;
+  id: string;
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+  continent: UserProfile_userProfile_user_profile_nationality_continent | null;
+}
+
+export interface UserProfile_userProfile_user_profile_residence_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
+export interface UserProfile_userProfile_user_profile_residence {
+  __typename: "CountryType";
+  countryEmoji: string | null;
+  id: string;
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+  continent: UserProfile_userProfile_user_profile_residence_continent | null;
+}
+
 export interface UserProfile_userProfile_user_profile_followings_user_profile {
   __typename: "ProfileType";
   avatar: string;
@@ -2672,7 +2733,8 @@ export interface UserProfile_userProfile_user_profile {
   avatar: string;
   website: string | null;
   email: string | null;
-  nationality: string | null;
+  nationality: UserProfile_userProfile_user_profile_nationality | null;
+  residence: UserProfile_userProfile_user_profile_residence | null;
   postCount: number | null;
   followersCount: number | null;
   followingCount: number | null;
@@ -2720,12 +2782,43 @@ export interface UserProfileVariables {
 // GraphQL mutation operation: EditProfile
 // ====================================================
 
+export interface EditProfile_editProfile_user_profile_nationality_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
+export interface EditProfile_editProfile_user_profile_nationality {
+  __typename: "CountryType";
+  countryEmoji: string | null;
+  id: string;
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+  continent: EditProfile_editProfile_user_profile_nationality_continent | null;
+}
+
+export interface EditProfile_editProfile_user_profile_residence_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
+export interface EditProfile_editProfile_user_profile_residence {
+  __typename: "CountryType";
+  countryEmoji: string | null;
+  id: string;
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+  continent: EditProfile_editProfile_user_profile_residence_continent | null;
+}
+
 export interface EditProfile_editProfile_user_profile {
   __typename: "ProfileType";
   bio: string | null;
   gender: ProfileGender | null;
   avatar: string;
-  nationality: string | null;
+  nationality: EditProfile_editProfile_user_profile_nationality | null;
+  residence: EditProfile_editProfile_user_profile_residence | null;
   email: string | null;
 }
 

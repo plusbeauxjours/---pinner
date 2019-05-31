@@ -26,7 +26,10 @@ class Profile(config_models.TimeStampedModel):
     bio = models.TextField(default='', blank=True, null=True)
     website = models.URLField(blank=True, null=True)
     gender = models.CharField(max_length=15, blank=True, null=True, choices=GENDERS)
-    nationality = models.CharField(max_length=15, blank=True, null=True)
+    residence = models.ForeignKey(
+        location_models.Country, blank=True, null=True, on_delete=models.CASCADE, related_name='residence')
+    nationality = models.ForeignKey(
+        location_models.Country, blank=True, null=True, on_delete=models.CASCADE, related_name='nationality')
     avatar = models.URLField(
         blank=True,
         default="http://basmed.unilag.edu.ng/wp-content/uploads/2018/10/avatar__181424.png")
