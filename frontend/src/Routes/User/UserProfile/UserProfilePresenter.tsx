@@ -26,25 +26,24 @@ const Header = styled.header`
 `;
 
 const PAvatar = styled(Avatar)`
-display: flex;
-justify-self: center;
-align-self: center;
-margin-top: 70px; 
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  margin-top: 70px;
 `;
 
 const NameContainer = styled.span`
   width: 100%;
   margin: 0px auto;
-  padding: 60px 15px 0 15px;
+  padding: 55px 15px 0 15px;
   max-width: 935px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content:center;
+  justify-content: flex-start;
 `;
 
-const SWrapper = styled(Wrapper)`
-`;
+const SWrapper = styled(Wrapper)``;
 
 const PHeader = styled.header`
   display: flex;
@@ -66,10 +65,10 @@ const LocationAvatarContainer = styled(AvatarContainer)`
 
 const ListIcon = styled.span`
   display: flex;
-  flex-direction: row
+  flex-direction: row;
   display: flex;
   cursor: pointer;
-  margin-top: 5px;
+  margin-top: 7px;
   svg {
     fill: white;
     transition: fill 0.2s ease-in-out;
@@ -117,7 +116,7 @@ const UserNameRow = styled.div`
 `;
 
 const Username = styled.span`
-  font-size: 30px;
+  font-size: 35px;
   font-weight: 300;
   margin-right: 10px;
 `;
@@ -294,8 +293,6 @@ const Icon = styled.span`
     }
   }
 `;
-
-
 
 const TripIcon = styled(Icon)`
   align-self: center;
@@ -660,6 +657,7 @@ interface IProps {
 
   submitCoffee: any;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onSearchInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSelectChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
@@ -740,6 +738,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   deleteTrip,
   gotoTrip,
   onInputChange,
+  onSearchInputChange,
   onSelectChange,
   onKeyDownSubmit,
   userName,
@@ -785,6 +784,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
     return (
       <>
         {(!user.profile.nationality ||
+          !user.profile.residence ||
           !user.profile.gender ||
           !user.profile.email) &&
           profilFormModalOpen &&
@@ -863,9 +863,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                       onChange={onSelectChange}
                     >
                       <Option value={""}>-</Option>
-                      <Option value={"M"}>Masculine</Option>
-                      <Option value={"F"}>Feminine</Option>
-                      <Option value={"GQ"}>Genderqueer</Option>
+                      <Option value={"Masculine"}>Masculine</Option>
+                      <Option value={"Feminine"}>Feminine</Option>
+                      <Option value={"Genderqueer"}>Genderqueer</Option>
                     </Select>
                   </ModalLink>
                 ) : null}
@@ -1024,7 +1024,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <SearchCitiesInput
                 autoFocus={true}
                 placeholder={"Search a City"}
-                onChange={onInputChange}
+                onChange={onSearchInputChange}
                 value={cityName}
                 autoComplete={"off"}
                 onKeyDown={onKeyDownSearch}
@@ -1117,7 +1117,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
         {/* 
         ////////////// HEADER //////////////
         */}
-        <Header>          
+        <Header>
           <PAvatar size="lg" url={user.profile.avatar} />
           <NameContainer>
             {editMode ? (
@@ -1130,14 +1130,16 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 onKeyDown={onKeyDownSubmit}
               />
             ) : (
-              <Username>{user.username}{"       "}
-            {!user.profile.isSelf ? (
-              <FollowBtn
-                isFollowing={user.profile.isFollowing}
-                userId={user.id}
-              />
-            ) : null}
-            </Username>
+              <Username>
+                {user.username}
+                {"       "}
+                {!user.profile.isSelf ? (
+                  <FollowBtn
+                    isFollowing={user.profile.isFollowing}
+                    userId={user.id}
+                  />
+                ) : null}
+              </Username>
             )}
             {user.profile.isSelf ? (
               <ListIcon onClick={toggleModal}>
@@ -1240,7 +1242,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
             </LocationAvatarContainer>
             <TripContainer>
               <UserNameRow>
-              <SText text={"TRIPS"} />
+                <SText text={"TRIPS"} />
                 <TripInput
                   placeholder="Search"
                   value={search}

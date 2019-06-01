@@ -15,8 +15,9 @@ const SWrapper = styled(Wrapper)`
 
 const PHeader = styled.header`
   display: flex;
-  padding: 40px 15px 40px 15px;
+  margin-top: 30px;
   @media screen and (max-width: 600px) {
+    padding: 0 15px 0 15px;
     justify-content: center;
     flex-wrap: wrap;
   }

@@ -34,11 +34,11 @@ class RequestCoffee(graphene.Mutation):
                     target=target,
                 )
                 return types.RequestCoffeeResponse(ok=True, coffee=coffee)
-                
+
             except IntegrityError as e:
                 print(e)
                 raise Exception("Can't create a coffee")
-                
+
         else:
             raise Exception("You can't request more than one coffee")
 
@@ -69,7 +69,6 @@ class DeleteCoffee(graphene.Mutation):
         else:
             return types.DeleteCoffeeResponse(ok=False, coffeeId=None, username=user.username)
 
-    
 
 class Match(graphene.Mutation):
 

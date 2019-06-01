@@ -100,6 +100,8 @@ export const EDIT_PROFILE = gql`
           bio
           gender
           avatar
+          website
+          email
           nationality {
             countryEmoji
             ...CountryParts
@@ -108,7 +110,43 @@ export const EDIT_PROFILE = gql`
             countryEmoji
             ...CountryParts
           }
-          email
+          postCount
+          followersCount
+          followingCount
+          tripCount
+          cityCount
+          countryCount
+          continentCount
+          followings {
+            id
+            user {
+              username
+              profile {
+                avatar
+              }
+            }
+          }
+          followers {
+            id
+            user {
+              username
+              profile {
+                avatar
+              }
+            }
+          }
+          isFollowing
+          isSelf
+          currentCity {
+            latitude
+            longitude
+            cityName
+            cityPhoto
+            country {
+              countryName
+              countryCode
+            }
+          }
         }
       }
     }
@@ -227,16 +265,6 @@ export const GET_KNOWING_FOLLOWERS = gql`
           }
         }
       }
-    }
-  }
-`;
-
-export const DELETE_COFFEE = gql`
-  mutation DeleteCoffee($coffeeId: Int!) {
-    deleteCoffee(coffeeId: $coffeeId) {
-      ok
-      coffeeId
-      username
     }
   }
 `;

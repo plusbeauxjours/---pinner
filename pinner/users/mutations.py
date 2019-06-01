@@ -94,6 +94,7 @@ class EditProfile(graphene.Mutation):
             nationality_code = kwargs.get('nationality', user.profile.nationality)
             residence_code = kwargs.get('residence', user.profile.residence)
             email = kwargs.get('email', user.profile.email)
+            print(email)
 
             try:
                 nationality = location_models.Country.objects.get(country_code=nationality_code)
@@ -230,6 +231,7 @@ class EditProfile(graphene.Mutation):
                 profile.nationality = nationality
                 profile.residence = residence
                 profile.email = email
+                print(profile.email)
 
                 user.first_name = first_name
                 user.last_name = last_name

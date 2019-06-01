@@ -36,7 +36,6 @@ import {
   EDIT_TRIP,
   DELETE_TRIP,
   GET_KNOWING_FOLLOWERS,
-  DELETE_COFFEE,
   SEARCH_TRIP_CITIES
 } from "./UserProfileQueries";
 import { REQUEST_COFFEE } from "../../Feed/Feed/FeedQueries";
@@ -44,6 +43,7 @@ import { GET_COFFEES } from "../Coffees/CoffeesQueries";
 import { withRouter, RouteComponentProps } from "react-router";
 import { LOG_USER_OUT } from "src/sharedQueries.local";
 import { toast } from "react-toastify";
+import { DELETE_COFFEE } from "../../Detail/CoffeeDetail/CoffeeDetailQueries";
 
 class SearchCitiesQuery extends Query<
   SearchTripCities,
@@ -547,6 +547,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                       this
                                                                                         .onInputChange
                                                                                     }
+                                                                                    onSearchInputChange={
+                                                                                      this
+                                                                                        .onSearchInputChange
+                                                                                    }
                                                                                     onSelectChange={
                                                                                       this
                                                                                         .onSelectChange
@@ -772,6 +776,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       residence,
       email
     } = this.state;
+    console.log(email);
     const { keyCode } = event;
     if (keyCode === 13) {
       this.editProfileFn({
@@ -932,6 +937,16 @@ class UserProfileContainer extends React.Component<IProps, IState> {
 
   public onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
+      target: { name, value }
+    } = event;
+    this.setState({
+      [name]: value
+    } as any);
+    console.log(this.state);
+  };
+
+  public onSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {
       target: { value }
     } = event;
     this.setState({
@@ -1054,8 +1069,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         variables: { username }
       });
       if (data) {
-        data.user = editProfile.user;
-        data.getCoffees.cache.writeQuery({
+        console.log(data);
+        data.userProfile.user = editProfile.user;
+        cache.writeQuery({
           query: GET_USER,
           variables: { username },
           data

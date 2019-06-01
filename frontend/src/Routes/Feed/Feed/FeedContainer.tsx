@@ -17,7 +17,7 @@ import { REQUEST_COFFEE, GET_FEED_CARDS } from "./FeedQueries";
 import { RECOMMAND_USERS } from "../PeoplePage/PeoplePageQueries";
 import { GET_COFFEES } from "../../User/Coffees/CoffeesQueries";
 import { toast } from "react-toastify";
-import { DELETE_COFFEE } from "../../User/UserProfile/UserProfileQueries";
+import { DELETE_COFFEE } from "../../Detail/CoffeeDetail/CoffeeDetailQueries";
 
 class RequestCoffeeMutation extends Mutation<
   RequestCoffee,

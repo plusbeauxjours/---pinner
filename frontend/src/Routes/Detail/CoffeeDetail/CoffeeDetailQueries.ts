@@ -42,3 +42,13 @@ export const COFFEE_DETAIL = gql`
     }
   }
 `;
+
+export const DELETE_COFFEE = gql`
+  mutation DeleteCoffee($coffeeId: Int!) {
+    deleteCoffee(coffeeId: $coffeeId) {
+      ok
+      coffeeId
+      username
+    }
+  }
+`;

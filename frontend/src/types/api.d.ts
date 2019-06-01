@@ -3581,9 +3581,9 @@ export enum CoffeeTarget {
  * An enumeration.
  */
 export enum ProfileGender {
-  F = "F",
-  GQ = "GQ",
-  M = "M",
+  FEMININE = "FEMININE",
+  GENDERQUEER = "GENDERQUEER",
+  MASCULINE = "MASCULINE",
 }
 
 /**

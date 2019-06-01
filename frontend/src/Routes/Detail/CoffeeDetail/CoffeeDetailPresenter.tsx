@@ -11,11 +11,11 @@ import { List } from "../../../Icons";
 
 const SWrapper = styled(Wrapper)`
   display: flex;
-  position: fixed;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  top: 280px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 150px;
 `;
 
 const ModalContainer = styled.div`
@@ -82,8 +82,15 @@ const FormModal = styled(Modal)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40%;
-  height: 30%;
+  width: 600px;
+  height: 400px;
+  margin-top: 45px;
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
+  @media screen and (max-height: 400px) {
+    height: 100%;
+  }
 `;
 
 const SAvatar = styled(Avatar)`
@@ -124,6 +131,7 @@ interface IProps {
   toggleModal: () => void;
   followUser: (userId: string) => void;
   isFollowing: boolean;
+  deleteCoffee: () => void;
 }
 
 const CoffeeDetailPresenter: React.SFC<IProps> = ({
@@ -133,7 +141,8 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
   toggleModal,
   followUser,
   isFollowing,
-  back
+  back,
+  deleteCoffee
 }) => {
   if (loading) {
     return <Loader />;
@@ -148,14 +157,12 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
             <MenuModal>
               {coffee.host.profile.isSelf ? (
                 <>
-                  {/* <ModalLink onClick={() => editCoffeeFn()}>
+                  <MenuModalLink onClick={() => console.log("Edit Coffee")}>
                     EDIT COFFEE
-                  </ModalLink>
-                  <ModalLink onClick={() => deleteCoffeeFn()}>
+                  </MenuModalLink>
+                  <MenuModalLink onClick={() => deleteCoffee()}>
                     DELETE COFFEE
-                  </ModalLink> */}
-                  <MenuModalLink>EDIT COFFEE</MenuModalLink>
-                  <MenuModalLink>DELETE COFFEE</MenuModalLink>
+                  </MenuModalLink>
                 </>
               ) : (
                 <>
@@ -167,7 +174,6 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
                   </MenuModalLink>
                 </>
               )}
-
               <MenuModalLink onClick={toggleModal}>CANCEL</MenuModalLink>
             </MenuModal>
           </MenuModalContainer>
@@ -198,22 +204,26 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
                 TRIPS
                 {coffee.host.profile.tripCount}
               </Text>
-              <Text>
-                NATIONALITY
-                {coffee.host.profile.nationality.countryName}
-                {coffee.host.profile.nationality.countryEmoji}
-              </Text>
-              <Text>
-                RESIDENCE
-                {coffee.host.profile.residence.countryName}
-                {coffee.host.profile.residence.countryEmoji}
-              </Text>
+              {coffee.host.profile.nationality ? (
+                <Text>
+                  NATIONALITY
+                  {coffee.host.profile.nationality.countryName}
+                  {coffee.host.profile.nationality.countryEmoji}
+                </Text>
+              ) : null}
+              {coffee.host.profile.residence ? (
+                <Text>
+                  RESIDENCE
+                  {coffee.host.profile.residence.countryName}
+                  {coffee.host.profile.residence.countryEmoji}
+                </Text>
+              ) : null}
+
               <Text>
                 GENDER
                 {coffee.host.profile.gender}
               </Text>
               <Text>{coffee.naturalTime}</Text>
-
               {coffee.status !== "expired" && (
                 <CoffeeBtn
                   coffeeId={coffee.id}
@@ -221,7 +231,6 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
                   isSelf={coffee.host.profile.isSelf}
                 />
               )}
-
               {/* {coffee.host.profile.nationality.countryName} */}
             </SWrapper>
           </FormModal>

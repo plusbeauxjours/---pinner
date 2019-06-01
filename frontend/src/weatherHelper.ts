@@ -28,6 +28,7 @@ export const getWeather = async (latitude, longitude) => {
     const icon = weather[0].icon;
     const humidity = main.humidity;
     const temp = main.temp - 273.15;
+    console.log(latitude, longitude);
     const chill =
       (await 13.12) +
       0.6215 * temp -
