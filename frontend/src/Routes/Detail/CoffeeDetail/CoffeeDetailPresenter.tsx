@@ -80,13 +80,16 @@ const MenuModal = styled(Modal)`
 
 const FormModal = styled(Modal)`
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
   width: 600px;
   height: 400px;
   margin-top: 45px;
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 630px) {
     width: 100%;
+    margin-right: 15px;
+    margin-left: 15px;
   }
   @media screen and (max-height: 400px) {
     height: 100%;
@@ -115,12 +118,68 @@ const Text = styled.p`
   margin-bottom: 10px;
   display: flex;
   font-size: 12px;
+  font-weight: 200;
+`;
+
+const NText = styled.p`
+  margin-bottom: 10px;
+  display: flex;
+  font-size: 30px;
+  font-weight: 400;
+`;
+
+const CText = styled.p`
+  text-align: center;
+  margin-bottom: 10px;
+  display: flex;
+  font-size: 18px;
+  font-weight: 400;
+`;
+
+const GreyText = styled.p`
+  color: #999;
   font-weight: 100;
+  font-size: 12px;
+`;
+
+const NumberContainer = styled.div`
+  width: 250px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 2fr 1fr;
+  grid-gap: 5px;
+  justify-items: center;
+  align-items: flex-end;
+  margin: 10px 0 10px 0;
+`;
+
+const InfoContainer = styled.div`
+  width: 250px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 0.5fr;
+  grid-auto-flow: column;
+  grid-gap: 5px;
+  justify-items: center;
+  align-items: flex-end;
+  margin: 5px 0 5px 0;
 `;
 
 const Icon = styled.span`
-  margin-right: 15px;
+  display: flex;
+  align-self: flex-end;
+  position: absolute;
+  justify-items: center;
+  padding-right: 18px;
   cursor: pointer;
+  top: 20px;
+  svg {
+    fill: white;
+    transition: fill 0.2s ease-in-out;
+    &:hover {
+      /* fill: grey; */
+    }
+  }
 `;
 
 interface IProps {
@@ -182,48 +241,50 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
           <ModalOverlay onClick={back} />
           <FormModal>
             <SWrapper>
+              <Icon onClick={toggleModal}>
+                <List />
+              </Icon>
               <SAvatar url={coffee.host.profile.avatar} size="lg" />
+
               <SText text={coffee.host.username} />
               <Location>
                 {coffee.host.profile.currentCity.cityName},
                 {coffee.host.profile.currentCity.country.countryName}
               </Location>
-              <Icon onClick={toggleModal}>
-                <List />
-              </Icon>
-              <Text>{coffee.target}</Text>
-              <Text>
-                FOLLOWERS
-                {coffee.host.profile.followersCount}
-              </Text>
-              <Text>
-                FOLLOWINGS
-                {coffee.host.profile.followingCount}
-              </Text>
-              <Text>
-                TRIPS
-                {coffee.host.profile.tripCount}
-              </Text>
-              {coffee.host.profile.nationality ? (
-                <Text>
-                  NATIONALITY
-                  {coffee.host.profile.nationality.countryName}
-                  {coffee.host.profile.nationality.countryEmoji}
-                </Text>
-              ) : null}
-              {coffee.host.profile.residence ? (
-                <Text>
-                  RESIDENCE
-                  {coffee.host.profile.residence.countryName}
-                  {coffee.host.profile.residence.countryEmoji}
-                </Text>
-              ) : null}
-
-              <Text>
-                GENDER
-                {coffee.host.profile.gender}
-              </Text>
-              <Text>{coffee.naturalTime}</Text>
+              {coffee.target === "GENDER" ? (
+                <Text>{coffee.host.profile.gender}</Text>
+              ) : (
+                <Text>{coffee.target}</Text>
+              )}
+              <NumberContainer>
+                <NText>{coffee.host.profile.followersCount}</NText>
+                <NText>{coffee.host.profile.followingCount} </NText>
+                <NText> {coffee.host.profile.tripCount} </NText>
+                <Text>FOLLOWERS</Text>
+                <Text>FOLLOWINGS</Text>
+                <Text>TRIPS</Text>
+              </NumberContainer>
+              <InfoContainer>
+                {coffee.host.profile.nationality ? (
+                  <>
+                    <CText>
+                      {coffee.host.profile.nationality.countryName}
+                      {coffee.host.profile.nationality.countryEmoji}
+                    </CText>
+                    <Text>NATIONALITY</Text>
+                  </>
+                ) : null}
+                {coffee.host.profile.residence ? (
+                  <>
+                    <CText>
+                      {coffee.host.profile.residence.countryName}
+                      {coffee.host.profile.residence.countryEmoji}
+                    </CText>
+                    <Text>RESIDENCE</Text>
+                  </>
+                ) : null}
+              </InfoContainer>
+              <GreyText>{coffee.naturalTime}</GreyText>
               {coffee.status !== "expired" && (
                 <CoffeeBtn
                   coffeeId={coffee.id}

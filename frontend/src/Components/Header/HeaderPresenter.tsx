@@ -92,8 +92,10 @@ const ModalOverlay = styled.div`
 const Modal = styled.div`
   top: 30%;
   width: 935px;
-  @media screen and (max-width: 935px) {
+  @media screen and (max-width: 965px) {
     width: 100%;
+    margin-right: 15px;
+    margin-left: 15px;
   }
   z-index: 10;
   position: absolute;
