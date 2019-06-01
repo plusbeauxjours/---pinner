@@ -134,12 +134,14 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
   };
   public updateDeleteCoffee = (cache, { data: { deleteCoffee } }) => {
     const { username } = deleteCoffee;
+    console.log(username);
     const currentCity = localStorage.getItem("cityName");
     try {
       const profileData = cache.readQuery({
         query: GET_COFFEES,
-        variables: { username, location: "profile" }
+        variables: { userName: username, location: "profile" }
       });
+      console.log(profileData);
       if (profileData) {
         profileData.getCoffees.coffees = profileData.getCoffees.coffees.filter(
           i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
@@ -149,7 +151,7 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
         );
         cache.writeQuery({
           query: GET_COFFEES,
-          variables: { username, location: "profile" },
+          variables: { userName: username, location: "profile" },
           data: profileData
         });
       }

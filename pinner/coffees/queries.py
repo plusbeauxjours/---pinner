@@ -45,12 +45,14 @@ def resolve_get_coffees(self, info, **kwargs):
     elif location == "profile":
         try:
             user = User.objects.prefetch_related('coffee').get(username=userName)
+            print(user)
         except User.DoesNotExist:
             return types.GetCoffeesResponse(coffees=None)
 
         try:
             coffees = models.Coffee.objects.filter(host=user, expires__gt=timezone.now()).order_by(
                 '-created_at')
+            print(coffees)
             return types.GetCoffeesResponse(coffees=coffees)
 
         except models.Coffee.DoesNotExist:
