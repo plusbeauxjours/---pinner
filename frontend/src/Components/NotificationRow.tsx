@@ -23,6 +23,7 @@ const UserRow = styled.div`
 
 const GreyText = styled(Bold)`
   color: #999;
+  margin-top: 5px;
 `;
 
 const ICon = styled.div`

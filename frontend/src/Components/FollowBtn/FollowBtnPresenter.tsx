@@ -17,7 +17,7 @@ const FollowBtnPresenter: React.SFC<IProps> = ({ isFollowing, toggleBtn }) => (
     <SButton
       active={isFollowing}
       size={"xs"}
-      text={isFollowing ? "Unfollow" : "Follow"}
+      text={isFollowing ? "UNFOLLOW" : "FOLLOW"}
       onClick={toggleBtn}
     />
   </>

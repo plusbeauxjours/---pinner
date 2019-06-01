@@ -21,13 +21,15 @@ const UserContainer = styled.div`
 
 const GreyText = styled(Bold)`
   color: #999;
+  font-weight: 100;
+  margin-top: 5px;
 `;
 
 const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   height: 50px;
-  grid-template-columns: 2fr 1fr 1fr 0.5fr 0.5fr;
+  grid-template-columns: 2fr 1fr 0.5fr 0.5fr;
   padding: 0 5px 0 5px;
   grid-gap: 15px;
   align-items: center;
@@ -67,6 +69,11 @@ const Input = styled.input`
   &::placeholder {
     color: ${props => props.theme.greyColor};
   }
+`;
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 interface IProps {
@@ -110,8 +117,10 @@ const MatchPresenter: React.SFC<IProps> = ({
                         size={"sm"}
                       />
                     </Link>
+                    <Column>
                     <GreyText text={match.coffee.target} />
                     <GreyText text={match.naturalTime} />
+                    </Column>
                     <FollowBtn
                       isFollowing={match.host.profile.isFollowing}
                       userId={match.host.profile.id}
@@ -137,8 +146,10 @@ const MatchPresenter: React.SFC<IProps> = ({
                         size={"sm"}
                       />
                     </Link>
+                    <Column>
                     <GreyText text={match.coffee.target} />
                     <GreyText text={match.naturalTime} />
+                    </Column>
                     <FollowBtn
                       isFollowing={match.guest.profile.isFollowing}
                       userId={match.guest.profile.id}
@@ -172,8 +183,10 @@ const MatchPresenter: React.SFC<IProps> = ({
                         size={"sm"}
                       />
                     </Link>
+                    <Column>
                     <GreyText text={match.coffee.target} />
                     <GreyText text={match.naturalTime} />
+                    </Column>
                     <FollowBtn
                       isFollowing={match.host.profile.isFollowing}
                       userId={match.host.profile.id}
@@ -199,8 +212,10 @@ const MatchPresenter: React.SFC<IProps> = ({
                         size={"sm"}
                       />
                     </Link>
+                    <Column>
                     <GreyText text={match.coffee.target} />
                     <GreyText text={match.naturalTime} />
+                    </Column>
                     <FollowBtn
                       isFollowing={match.guest.profile.isFollowing}
                       userId={match.guest.profile.id}

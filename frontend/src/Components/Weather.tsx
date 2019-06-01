@@ -160,7 +160,7 @@ class Weather extends React.Component<IProps, IState> {
             size={size}
           />
         ) : (
-          <LoaderData />
+          <LoaderData type={type} />
         )}
         <WeatherInfo type={type}>
           <TempNumber

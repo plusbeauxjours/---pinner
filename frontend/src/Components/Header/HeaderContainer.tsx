@@ -65,10 +65,8 @@ class HeaderContainer extends React.Component<any, IState> {
     }
   }
   public componentDidMount() {
-    const location = localStorage.getItem("cityName");
     console.log("mount");
-    console.log(location);
-    if (!location) {
+    if (!localStorage.getItem("cityName")) {
       navigator.geolocation.getCurrentPosition(
         this.handleGeoSuccess,
         this.handleGeoError
@@ -96,7 +94,7 @@ class HeaderContainer extends React.Component<any, IState> {
                 cityName: currentCity || localStorage.getItem("cityName")
               }}
             >
-              {({ data }) => {
+              {({ data, loading }) => {
                 return (
                   <SearchQuery
                     query={SEARCH}
@@ -108,6 +106,7 @@ class HeaderContainer extends React.Component<any, IState> {
                       return (
                         <HeaderPresenter
                           data={data}
+                          loading={loading}
                           searchData={searchData}
                           searchLoading={searchLoading}
                           currentLat={currentLat}

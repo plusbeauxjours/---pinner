@@ -15,8 +15,20 @@ const DotWrapper = styled.div`
 const Dot = styled.div<ITheme>`
   background-color: white;
   border-radius: 50%;
-  width: 6px;
-  height: 6px;
+  width: ${props => {
+    if (props.type === "feed") {
+      return "2px";
+    } else {
+      return "6px";
+    }
+  }};
+  height: ${props => {
+    if (props.type === "feed") {
+      return "2px";
+    } else {
+      return "6px";
+    }
+  }};
   margin: 0 5px;
   /* Animation */
   animation: ${BounceAnimation} 0.5s linear infinite;
@@ -25,15 +37,21 @@ const Dot = styled.div<ITheme>`
 
 interface ITheme {
   delay: string;
+  type?: string;
 }
 
-class LoaderData extends Component {
+interface IProps {
+  type?: string;
+}
+
+class LoaderData extends Component<IProps> {
   public render() {
+    const { type } = this.props;
     return (
       <DotWrapper>
-        <Dot delay="0s" />
-        <Dot delay=".1s" />
-        <Dot delay=".2s" />
+        <Dot delay="0s" type={type} />
+        <Dot delay=".1s" type={type} />
+        <Dot delay=".2s" type={type} />
       </DotWrapper>
     );
   }

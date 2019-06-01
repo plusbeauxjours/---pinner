@@ -166,10 +166,12 @@ const CText = styled(Bold)`
 const HeaderRow = styled.div`
   display: flex;
   flex-direction: row;
+  margin-top: 5px;
 `;
 
 interface IProps extends RouteComponentProps<any> {
   data?: any;
+  loading: boolean
   searchData?: any;
   searchLoading: boolean;
   currentLat: number;
@@ -185,7 +187,8 @@ interface IProps extends RouteComponentProps<any> {
 }
 
 const HeaderPresenter: React.SFC<IProps> = ({
-  data: { feed: { city = {} } = {} } = {},
+  data: { feed: { city = null } = {} } = {},
+  loading,
   searchData,
   searchLoading,
   currentLat,
@@ -198,7 +201,11 @@ const HeaderPresenter: React.SFC<IProps> = ({
   toggleModal,
   onChange,
   onKeyDown
-}) => (
+}) => {
+  if (loading){
+    return null
+  } else if (!loading && city){
+    return (
   <Header>
     {modalOpen && (
       <ModalContainer>
@@ -262,7 +269,8 @@ const HeaderPresenter: React.SFC<IProps> = ({
             <HeaderColumn>
               <HeaderRow>
                 <CText text={city.cityName} />
-                <CText text={","} />
+                <CText text={", "} />
+                <CText text={city.country.countryName}/>
                 {/* <CText text={city.country.countryName} /> */}
               </HeaderRow>
               <Weather
@@ -302,7 +310,7 @@ const HeaderPresenter: React.SFC<IProps> = ({
         </Icon>
       </Column>
     </SWrapper>
-  </Header>
-);
+  </Header>)}return null
+}
 
 export default withRouter(HeaderPresenter);

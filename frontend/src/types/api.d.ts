@@ -1633,34 +1633,18 @@ export interface CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity {
   country: CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity_country;
 }
 
-export interface CoffeeDetail_coffeeDetail_coffee_host_profile_nationality_continent {
-  __typename: "ContinentType";
-  continentName: string | null;
-}
-
 export interface CoffeeDetail_coffeeDetail_coffee_host_profile_nationality {
   __typename: "CountryType";
-  countryEmoji: string | null;
-  id: string;
   countryName: string | null;
   countryCode: string | null;
-  countryPhoto: string | null;
-  continent: CoffeeDetail_coffeeDetail_coffee_host_profile_nationality_continent | null;
-}
-
-export interface CoffeeDetail_coffeeDetail_coffee_host_profile_residence_continent {
-  __typename: "ContinentType";
-  continentName: string | null;
+  countryEmoji: string | null;
 }
 
 export interface CoffeeDetail_coffeeDetail_coffee_host_profile_residence {
   __typename: "CountryType";
-  countryEmoji: string | null;
-  id: string;
   countryName: string | null;
   countryCode: string | null;
-  countryPhoto: string | null;
-  continent: CoffeeDetail_coffeeDetail_coffee_host_profile_residence_continent | null;
+  countryEmoji: string | null;
 }
 
 export interface CoffeeDetail_coffeeDetail_coffee_host_profile {
@@ -2852,6 +2836,7 @@ export interface EditProfileVariables {
   firstName?: string | null;
   lastName?: string | null;
   nationality?: string | null;
+  residence?: string | null;
   email?: string | null;
 }
 
