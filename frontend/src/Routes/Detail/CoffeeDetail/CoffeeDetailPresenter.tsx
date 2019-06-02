@@ -140,6 +140,7 @@ const GreyText = styled.p`
   color: #999;
   font-weight: 100;
   font-size: 12px;
+  margin-bottom: 20px;
 `;
 
 const NumberContainer = styled.div`
