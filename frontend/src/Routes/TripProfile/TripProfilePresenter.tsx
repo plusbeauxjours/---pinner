@@ -7,13 +7,11 @@ import Loader from "../../Components/Loader";
 import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import moment = require("moment");
-import CardGrid from "src/Components/CardGrid";
 import LocationGrid from "src/Components/LocationGrid";
 import Weather from "src/Components/Weather";
 import AvatarGrid from "../../Components/AvatarGrid";
 import FollowBtn from "../../Components/FollowBtn";
 import UserHeader from "../../Components/UserHeader";
-import InfiniteScroll from "react-infinite-scroller";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -178,13 +176,11 @@ interface IProps {
   countryName: string;
   startDate: moment.Moment | null;
   endDate: moment.Moment | null;
-  cardsData: any;
-  cardsLoading: boolean;
+
   profileDate: any;
   profileLoading: boolean;
   nearCitiesData?: any;
   nearCitiesLoading: boolean;
-  loadMore: any;
 }
 
 const TripProfilePresenter: React.SFC<IProps> = ({
@@ -193,17 +189,13 @@ const TripProfilePresenter: React.SFC<IProps> = ({
   countryName,
   startDate,
   endDate,
-  cardsData: {
-    getDurationCards: { cards = null, hasNextPage = false } = {}
-  } = {},
-  cardsLoading,
+
   profileDate: {
     tripProfile: { coffees = null, city = null, usersBefore = null } = {}
   } = {},
   profileLoading,
   nearCitiesData: { nearCities: { cities: nearCities = null } = {} } = {},
-  nearCitiesLoading,
-  loadMore
+  nearCitiesLoading
 }) => {
   if (profileLoading) {
     return <Loader />;
@@ -217,10 +209,6 @@ const TripProfilePresenter: React.SFC<IProps> = ({
               <InfoRow>
                 <SText text={String(city.userLogCount)} />
                 DISTANCE
-              </InfoRow>
-              <InfoRow>
-                <SText text={String(city.cardCount)} />
-                cards
               </InfoRow>
               <SText text={String(city.distance)} />
               <InfoRow>
@@ -307,22 +295,6 @@ const TripProfilePresenter: React.SFC<IProps> = ({
             </Box>
           </Container>
           <GreyLine />
-          {!cardsLoading && cards && cards.length !== 0 ? (
-            <>
-              <GreyLine />
-              <Title>
-                <SText text={"POSTS"} />
-              </Title>
-              <InfiniteScroll
-                hasMore={hasNextPage}
-                pageStart={0}
-                loadMore={loadMore}
-                initialLoad={false}
-              >
-                <CardGrid cards={cards} />
-              </InfiniteScroll>
-            </>
-          ) : null}
         </SWrapper>
       </>
     );

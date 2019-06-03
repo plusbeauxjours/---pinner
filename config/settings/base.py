@@ -78,7 +78,6 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     'users.apps.UsersConfig',
-    'cards.apps.CardsConfig',
     'notifications.apps.NotificationsConfig',
     'verifications.apps.VerificationsConfig',
     'locations.apps.LocationsConfig',

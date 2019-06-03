@@ -38,7 +38,6 @@ export const CITY_PROFILE = gql`
         }
         likeCount
         isLiked
-        cardCount
         userCount
         userLogCount
       }

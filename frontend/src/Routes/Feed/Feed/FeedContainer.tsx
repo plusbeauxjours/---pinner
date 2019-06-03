@@ -8,12 +8,10 @@ import {
   GetCoffeesVariables,
   GetCoffees,
   DeleteCoffee,
-  DeleteCoffeeVariables,
-  GetFeedCards,
-  GetFeedCardsVariables
+  DeleteCoffeeVariables
 } from "../../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
-import { REQUEST_COFFEE, GET_FEED_CARDS } from "./FeedQueries";
+import { REQUEST_COFFEE } from "./FeedQueries";
 import { RECOMMAND_USERS } from "../PeoplePage/PeoplePageQueries";
 import { GET_COFFEES } from "../../User/Coffees/CoffeesQueries";
 import { toast } from "react-toastify";
@@ -30,7 +28,6 @@ class DeleteCoffeeMutation extends Mutation<
 
 class RecommandUsersQuery extends Query<RecommandUsers> {}
 
-class GetCardsQuery extends Query<GetFeedCards, GetFeedCardsVariables> {}
 class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
@@ -46,7 +43,6 @@ interface IState {
 }
 
 class FeedContainer extends React.Component<IProps, IState> {
-  public cardsFetchMore;
   public requestCoffeeFn: MutationFn;
   public ReportLocationFn: MutationFn;
   public deleteCoffeeFn: MutationFn;
@@ -75,103 +71,78 @@ class FeedContainer extends React.Component<IProps, IState> {
       coffeeId
     } = this.state;
     return (
-      <GetCardsQuery
-        query={GET_FEED_CARDS}
+      <DeleteCoffeeMutation
+        mutation={DELETE_COFFEE}
         variables={{
-          cityName: currentCity
+          coffeeId: parseInt(coffeeId, 10)
         }}
+        onCompleted={this.onCompletedDeleteCoffee}
+        update={this.updateDeleteCoffee}
       >
-        {({
-          data: cardsData,
-          loading: cardsLoading,
-          fetchMore: cardsFetchMore
-        }) => {
-          this.cardsFetchMore = cardsFetchMore;
+        {deleteCoffeeFn => {
+          this.deleteCoffeeFn = deleteCoffeeFn;
           return (
-            <DeleteCoffeeMutation
-              mutation={DELETE_COFFEE}
-              variables={{
-                coffeeId: parseInt(coffeeId, 10)
-              }}
-              onCompleted={this.onCompletedDeleteCoffee}
-              update={this.updateDeleteCoffee}
-            >
-              {deleteCoffeeFn => {
-                this.deleteCoffeeFn = deleteCoffeeFn;
+            <RecommandUsersQuery query={RECOMMAND_USERS}>
+              {({
+                data: recommandUsersData,
+                loading: recommandUsersLoading
+              }) => {
                 return (
-                  <RecommandUsersQuery query={RECOMMAND_USERS}>
-                    {({
-                      data: recommandUsersData,
-                      loading: recommandUsersLoading
-                    }) => {
+                  <GetCoffeesQuery
+                    query={GET_COFFEES}
+                    variables={{
+                      cityName: currentCity,
+                      location: "feed"
+                    }}
+                  >
+                    {({ data: coffeeData, loading: coffeeLoading }) => {
                       return (
-                        <GetCoffeesQuery
-                          query={GET_COFFEES}
+                        <RequestCoffeeMutation
+                          mutation={REQUEST_COFFEE}
                           variables={{
-                            cityName: currentCity,
-                            location: "feed"
+                            currentCity
                           }}
+                          onCompleted={this.onCompletedRequestCoffee}
+                          update={this.updateRequestCoffee}
                         >
-                          {({ data: coffeeData, loading: coffeeLoading }) => {
+                          {requestCoffeeFn => {
+                            this.requestCoffeeFn = requestCoffeeFn;
                             return (
-                              <RequestCoffeeMutation
-                                mutation={REQUEST_COFFEE}
-                                variables={{
-                                  currentCity
-                                }}
-                                onCompleted={this.onCompletedRequestCoffee}
-                                update={this.updateRequestCoffee}
-                              >
-                                {requestCoffeeFn => {
-                                  this.requestCoffeeFn = requestCoffeeFn;
-                                  return (
-                                    <FeedPresenter
-                                      coffeeData={coffeeData}
-                                      coffeeLoading={coffeeLoading}
-                                      currentCity={currentCity}
-                                      toggleRequestingCoffeeModal={
-                                        this.toggleRequestingCoffeeModal
-                                      }
-                                      toggleCoffeeReportModal={
-                                        this.toggleCoffeeReportModal
-                                      }
-                                      recommandUsersData={recommandUsersData}
-                                      recommandUsersLoading={
-                                        recommandUsersLoading
-                                      }
-                                      requestModalOpen={requestModalOpen}
-                                      requestingCoffeeModalOpen={
-                                        requestingCoffeeModalOpen
-                                      }
-                                      coffeeReportModalOpen={
-                                        coffeeReportModalOpen
-                                      }
-                                      toggleRequestModal={
-                                        this.toggleRequestModal
-                                      }
-                                      submitCoffee={this.submitCoffee}
-                                      currentLat={currentLat}
-                                      currentLng={currentLng}
-                                      deleteCoffee={this.deleteCoffee}
-                                      loadMore={this.loadMore}
-                                      cardsData={cardsData}
-                                      cardsLoading={cardsLoading}
-                                    />
-                                  );
-                                }}
-                              </RequestCoffeeMutation>
+                              <FeedPresenter
+                                coffeeData={coffeeData}
+                                coffeeLoading={coffeeLoading}
+                                currentCity={currentCity}
+                                toggleRequestingCoffeeModal={
+                                  this.toggleRequestingCoffeeModal
+                                }
+                                toggleCoffeeReportModal={
+                                  this.toggleCoffeeReportModal
+                                }
+                                recommandUsersData={recommandUsersData}
+                                recommandUsersLoading={recommandUsersLoading}
+                                requestModalOpen={requestModalOpen}
+                                requestingCoffeeModalOpen={
+                                  requestingCoffeeModalOpen
+                                }
+                                coffeeReportModalOpen={coffeeReportModalOpen}
+                                toggleRequestModal={this.toggleRequestModal}
+                                submitCoffee={this.submitCoffee}
+                                currentLat={currentLat}
+                                currentLng={currentLng}
+                                deleteCoffee={this.deleteCoffee}
+                              />
                             );
                           }}
-                        </GetCoffeesQuery>
+                        </RequestCoffeeMutation>
                       );
                     }}
-                  </RecommandUsersQuery>
+                  </GetCoffeesQuery>
                 );
               }}
-            </DeleteCoffeeMutation>
+            </RecommandUsersQuery>
           );
         }}
-      </GetCardsQuery>
+      </DeleteCoffeeMutation>
     );
   }
   public toggleRequestingCoffeeModal = () => {
@@ -308,32 +279,6 @@ class FeedContainer extends React.Component<IProps, IState> {
   public deleteCoffee = () => {
     const { coffeeId } = this.state;
     this.deleteCoffeeFn({ variables: { coffeeId: parseInt(coffeeId, 10) } });
-  };
-  public loadMore = page => {
-    const { currentCity } = this.state;
-    this.cardsFetchMore({
-      query: GET_FEED_CARDS,
-      variables: {
-        page,
-        cityName: currentCity
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult) {
-          return previousResult;
-        }
-        const newData = {
-          getFeedCards: {
-            ...previousResult.getFeedCards,
-            cards: [
-              ...previousResult.getFeedCards.cards,
-              ...fetchMoreResult.getFeedCards.cards
-            ]
-          }
-        };
-        return newData;
-      }
-    });
-    console.log(this.state);
   };
 }
 

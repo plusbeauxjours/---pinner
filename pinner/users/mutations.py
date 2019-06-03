@@ -9,7 +9,6 @@ from locations import locationThumbnail
 from locations import models as location_models
 from . import models, types
 
-from cards import models as card_models
 from notifications import models as notification_models
 
 

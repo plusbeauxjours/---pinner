@@ -2,7 +2,6 @@ import graphene
 from graphene_django.types import DjangoObjectType
 from config import types as config_types
 from . import models
-from cards import types as card_types
 from graphene.types.union import Union
 
 

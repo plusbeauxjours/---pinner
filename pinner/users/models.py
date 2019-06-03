@@ -67,10 +67,6 @@ class Profile(config_models.TimeStampedModel):
         return self.user.movenotification.all().order_by('city__country__continent').distinct('city__country__continent').count()
 
     @cached_property
-    def post_count(self):
-        return self.user.cards.all().count()
-
-    @cached_property
     def followers_count(self):
         return self.followed_by.all().count()
 

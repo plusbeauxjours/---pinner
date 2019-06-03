@@ -12,7 +12,6 @@ export const COUNTRY_PROFILE = gql`
         countryCurrency
         countryEmoji
         cityCount
-        cardCount
         continent {
           continentPhoto
           continentName

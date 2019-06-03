@@ -5,6 +5,15 @@ from cards import types as card_types
 
 class Query(object):
 
+    header = graphene.Field(
+        types.HeaderResponse,
+        resolver=queries.resolve_header,
+        required=True,
+        args={
+            'cityName': graphene.String(required=True),
+            'page': graphene.Int(),
+        }
+    )
     trip_profile = graphene.Field(
         types.TripProfileResponse,
         resolver=queries.resolve_trip_profile,

@@ -1,6 +1,5 @@
 import graphene
 
-from cards import schema as card_schema
 from users import schema as user_schema
 from notifications import schema as notification_schema
 from verifications import schema as verification_schema
@@ -9,7 +8,6 @@ from coffees import schema as coffee_schema
 
 
 class Query(
-    card_schema.Query,
     user_schema.Query,
     notification_schema.Query,
     verification_schema.Query,
@@ -21,7 +19,6 @@ class Query(
 
 
 class Mutation(
-    card_schema.Mutation,
     user_schema.Mutation,
     notification_schema.Mutation,
     verification_schema.Mutation,

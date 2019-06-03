@@ -1,10 +1,8 @@
 import React from "react";
-import CardDetail from "../../Routes/Detail/CardDetail";
 import NotificationRow from "../../Components/NotificationRow";
 import styled from "src/Styles/typed-components";
 import Wrapper from "src/Components/Wrapper";
 import Loader from "src/Components/Loader";
-import { Route } from "react-router";
 
 import InfiniteScroll from "react-infinite-scroller";
 
@@ -74,7 +72,6 @@ const NotificationPresenter: React.SFC<IProps> = ({
 }) => {
   return (
     <>
-      {modalOpen && <Route path="/p/:id" component={CardDetail} />}
       <SWrapper>
         <UserContainer>
           <UserNameRow>

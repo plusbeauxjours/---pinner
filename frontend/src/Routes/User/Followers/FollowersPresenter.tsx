@@ -9,7 +9,6 @@ import Bold from "../../../Components/Bold";
 // import AvatarGrid from "../../Components/AvatarGrid";
 import FollowBtn from "../../../Components/FollowBtn";
 import UserHeader from "../../../Components/UserHeader";
-import GetCards from "../../../Components/GetCards";
 
 const SWrapper = styled(Wrapper)`
   z-index: 0;
@@ -345,7 +344,6 @@ const FollowersPresenter: React.SFC<IProps> = ({
               <AvatarGrid coffees={coffees} />
             </>
           ) : null} */}
-          <GetCards location={"followers"} userName={userName} />
         </SWrapper>
       </>
     );

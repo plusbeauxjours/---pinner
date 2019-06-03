@@ -1,18 +1,5 @@
 import { gql } from "apollo-boost";
-import { DETAIL_CARD_FRAGMENT, COFFEE_FRAGMENT } from "../../../sharedQueries";
-
-export const GET_FEED_CARDS = gql`
-  query GetFeedCards($page: Int, $cityName: String!) {
-    getFeedCards(page: $page, cityName: $cityName) {
-      cards {
-        ...DetailParts
-      }
-      hasNextPage
-      page
-    }
-  }
-  ${DETAIL_CARD_FRAGMENT}
-`;
+import { COFFEE_FRAGMENT } from "../../../sharedQueries";
 
 export const REQUEST_COFFEE = gql`
   mutation RequestCoffee($currentCity: String!, $target: String) {

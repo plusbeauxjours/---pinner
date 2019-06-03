@@ -3,8 +3,6 @@ import { Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 
 import Feed from "../Routes/Feed/Feed";
-import CardDetail from "../Routes/Detail/CardDetail";
-import UpLoad from "../Routes/UpLoad";
 import Notification from "../Routes/Notification";
 import CityProfile from "../Routes/City/CityProfile";
 import CountryProfile from "../Routes/Country/CountryProfile";
@@ -68,7 +66,7 @@ class LoggedInPages extends React.Component<IProps> {
         <Header />
         {modalOpen ? (
           <>
-            <p>hjiihih</p>
+            <Route path="/" exact={true} component={Feed} />
             <Route path="/c/:id" exact={true} component={CoffeeDetail} />
           </>
         ) : null}
@@ -76,7 +74,6 @@ class LoggedInPages extends React.Component<IProps> {
           <Route path="/" exact={true} component={Feed} />
           <Route path="/people" exact={true} component={PeoplePage} />
           <Route path="/coffees" exact={true} component={CoffeesPage} />
-          <Route path="/p/:id" component={CardDetail} />
           <Route path="/match" exact={true} component={Match} />
           <Route path="/notification" component={Notification} />
           <Route
@@ -107,7 +104,6 @@ class LoggedInPages extends React.Component<IProps> {
           />
           <Route path="/city/:cityName/:duration" component={TripProfile} />
           <Route path="/city/:cityName" component={CityProfile} />
-          <Route path="/:username/upload" component={UpLoad} />
           <Route path="/:username/countries" component={Countries} />
           <Route path="/:username/cities" component={Cities} />
           <Route path="/:username/coffees" component={Coffees} />

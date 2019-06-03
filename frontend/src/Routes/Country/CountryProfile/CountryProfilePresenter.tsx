@@ -8,7 +8,6 @@ import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
 import LocationGrid from "src/Components/LocationGrid";
 import AvatarGrid from "../../../Components/AvatarGrid";
-import GetCards from "../../../Components/GetCards";
 import CityLikeBtn from "../../../Components/CityLikeBtn";
 import UserBox from "src/Components/UserBox";
 
@@ -275,10 +274,6 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
                 cities
               </InfoRow>
               <InfoRow>
-                <SText text={String(country.cardCount)} />
-                cards
-              </InfoRow>
-              <InfoRow>
                 <SText text={String(country.distance)} />
                 TIME DIFFERENCE
               </InfoRow>
@@ -403,7 +398,6 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
               {cities && <LocationGrid cities={cities} type={"city"} />}
             </Box>
           </Container>
-          <GetCards location={"country"} countryName={countryName} />
         </SWrapper>
       </>
     );

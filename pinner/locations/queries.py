@@ -7,10 +7,22 @@ from django.db.models import Q
 from django.db.models.expressions import RawSQL
 
 from django.contrib.auth.models import User
-from cards import models as card_models
 from cards import types as card_types
 from notifications import models as notification_models
 from coffees import models as coffee_models
+
+
+@login_required
+def resolve_header(self, info, **kwargs):
+
+    user = info.context.user
+    cityName = kwargs.get('cityName')
+
+    print(cityName)
+    city = location_models.City.objects.get(city_name=cityName)
+    print('header')
+
+    return types.HeaderResponse(city=city)
 
 
 @login_required

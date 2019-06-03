@@ -1,7 +1,6 @@
 import graphene
 from . import types, queries, mutations
 from locations import types as location_types
-from cards import types as card_types
 
 
 class Query(object):
@@ -41,6 +40,7 @@ class Query(object):
             'endDate': graphene.Date(required=True)
         }
     )
+
 
 class Mutation(object):
 

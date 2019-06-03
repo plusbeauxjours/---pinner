@@ -10,7 +10,6 @@ import { keyframes } from "styled-components";
 import LocationGrid from "src/Components/LocationGrid";
 import Weather from "src/Components/Weather";
 import AvatarGrid from "../../../Components/AvatarGrid";
-import GetCards from "../../../Components/GetCards";
 import FollowBtn from "../../../Components/FollowBtn";
 import UserHeader from "../../../Components/UserHeader";
 import CityLikeBtn from "../../../Components/CityLikeBtn";
@@ -325,10 +324,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                 TIME DIFFERENCE
                 <SText text={String(city.userCount)} />
               </InfoRow>
-              <InfoRow>
-                <SText text={String(city.cardCount)} />
-                cards
-              </InfoRow>
+
               <InfoRow>
                 <CityLikeBtn
                   isLiked={city.isLiked}
@@ -454,7 +450,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
-          <GetCards location={"city"} cityName={cityName} />
         </SWrapper>
       </>
     );

@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { CARD_FRAGMENT } from "src/sharedQueries";
+import {} from "src/sharedQueries";
 
 export const TRIP_PROFILE = gql`
   query TripProfile($cityName: String!, $startDate: Date!, $endDate: Date!) {
@@ -41,32 +41,9 @@ export const TRIP_PROFILE = gql`
           countryPhoto
           countryCode
         }
-        cardCount
         userCount
         userLogCount
       }
     }
   }
-`;
-
-export const GET_DURATION_CARDS = gql`
-  query GetDurationCards(
-    $page: Int
-    $cityName: String!
-    $startDate: Date!
-    $endDate: Date!
-  ) {
-    getDurationCards(
-      page: $page
-      cityName: $cityName
-      startDate: $startDate
-      endDate: $endDate
-    ) {
-      hasNextPage
-      cards {
-        ...CardParts
-      }
-    }
-  }
-  ${CARD_FRAGMENT}
 `;

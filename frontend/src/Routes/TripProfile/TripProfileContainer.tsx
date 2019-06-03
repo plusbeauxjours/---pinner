@@ -2,22 +2,15 @@ import React from "react";
 import moment from "moment";
 import { Query } from "react-apollo";
 import {
-  GetDurationCards,
-  GetDurationCardsVariables,
   TripProfile,
   TripProfileVariables,
   NearCities,
   NearCitiesVariables
 } from "../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
-import { GET_DURATION_CARDS, TRIP_PROFILE } from "./TripProfileQueries";
+import { TRIP_PROFILE } from "./TripProfileQueries";
 import TripProfilePresenter from "./TripProfilePresenter";
 import { NEAR_CITIES } from "../City/CityProfile/CityProfileQueries";
-
-class GetDurationCardsQuery extends Query<
-  GetDurationCards,
-  GetDurationCardsVariables
-> {}
 
 class TripProfileQuery extends Query<TripProfile, TripProfileVariables> {}
 
@@ -63,30 +56,17 @@ class TripProfileContainer extends React.Component<IProps, IState> {
               variables={{ cityName, startDate, endDate }}
             >
               {({ data: profileDate, loading: profileLoading }) => (
-                <GetDurationCardsQuery
-                  query={GET_DURATION_CARDS}
-                  variables={{ cityName, startDate, endDate }}
-                >
-                  {({ data: cardsData, loading: cardsLoading, fetchMore }) => {
-                    this.fetchMore = fetchMore;
-                    return (
-                      <TripProfilePresenter
-                        cityName={cityName}
-                        cityPhoto={cityPhoto}
-                        countryName={countryName}
-                        startDate={startDate}
-                        endDate={endDate}
-                        cardsData={cardsData}
-                        cardsLoading={cardsLoading}
-                        profileDate={profileDate}
-                        profileLoading={profileLoading}
-                        nearCitiesData={nearCitiesData}
-                        nearCitiesLoading={nearCitiesLoading}
-                        loadMore={this.loadMore}
-                      />
-                    );
-                  }}
-                </GetDurationCardsQuery>
+                <TripProfilePresenter
+                  cityName={cityName}
+                  cityPhoto={cityPhoto}
+                  countryName={countryName}
+                  startDate={startDate}
+                  endDate={endDate}
+                  profileDate={profileDate}
+                  profileLoading={profileLoading}
+                  nearCitiesData={nearCitiesData}
+                  nearCitiesLoading={nearCitiesLoading}
+                />
               )}
             </TripProfileQuery>
           );
@@ -94,35 +74,6 @@ class TripProfileContainer extends React.Component<IProps, IState> {
       </NearCitiesQuery>
     );
   }
-  public loadMore = page => {
-    const { cityName, startDate, endDate } = this.state;
-
-    this.fetchMore({
-      query: GET_DURATION_CARDS,
-      variables: {
-        page,
-        cityName,
-        startDate,
-        endDate
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult) {
-          return previousResult;
-        }
-        const newData = {
-          getDurationCards: {
-            ...previousResult.getDurationCards,
-            cards: [
-              ...previousResult.getDurationCards.cards,
-              ...fetchMoreResult.getDurationCards.cards
-            ]
-          }
-        };
-        return newData;
-      }
-    });
-    console.log(this.state);
-  };
 }
 
 export default withRouter(TripProfileContainer);

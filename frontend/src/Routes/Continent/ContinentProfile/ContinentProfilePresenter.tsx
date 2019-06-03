@@ -8,7 +8,6 @@ import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
 import LocationGrid from "../../../Components/LocationGrid";
 import AvatarGrid from "../../../Components/AvatarGrid";
-import GetCards from "../../../Components/GetCards";
 import UserBox from "src/Components/UserBox";
 
 const SWrapper = styled(Wrapper)`
@@ -372,7 +371,6 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
               )}
             </Box>
           </Container>
-          <GetCards location={"continent"} continentName={continentName} />
         </SWrapper>
       </>
     );

@@ -36,7 +36,7 @@ const GlobalStyle = createGlobalStyle`
     }
     .pac-container {
         border-radius: 0 0 5px 5px;
-        z-index: 1000000000;
+        z-index: 10;
         background-image: none;
         font-size: 1px;
         color: red;

@@ -1,9 +1,7 @@
 import React from "react";
-import CardDetail from "../../Detail/CardDetail";
 import styled from "src/Styles/typed-components";
 import Wrapper from "src/Components/Wrapper";
 import Loader from "src/Components/Loader";
-import { Route } from "react-router";
 
 import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
@@ -117,7 +115,6 @@ const PeoplePagePresenter: React.SFC<IProps> = ({
 }) => {
   return (
     <>
-      {modalOpen && <Route path="/p/:id" component={CardDetail} />}
       <SWrapper>
         <UserContainer>
           <UserNameRow>

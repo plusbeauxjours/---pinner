@@ -49,16 +49,6 @@ export const PROFILE_FRAGMENT = gql`
   }
 `;
 
-export const CARD_FRAGMENT = gql`
-  fragment CardParts on CardType {
-    id
-    file
-    caption
-    likeCount
-    commentCount
-  }
-`;
-
 export const CITY_FRAGMENT = gql`
   fragment CityParts on CityType {
     id
@@ -95,33 +85,6 @@ export const CONTINENT_FRAGMENT = gql`
   }
 `;
 
-export const DETAIL_CARD_FRAGMENT = gql`
-  fragment DetailParts on CardType {
-    id
-    file
-    caption
-    city {
-      cityName
-      country {
-        countryName
-      }
-    }
-    likeCount
-    commentCount
-    isLiked
-    naturalTime
-    creator {
-      id
-      username
-      profile {
-        avatar
-        isFollowing
-        isSelf
-      }
-    }
-  }
-`;
-
 export const NOTIFICATION_FRAGMENT = gql`
   fragment NotificationParts on NotificationType {
     id
@@ -138,13 +101,6 @@ export const NOTIFICATION_FRAGMENT = gql`
       }
     }
     verb
-    card {
-      id
-    }
-    comment {
-      id
-      message
-    }
     match {
       id
     }

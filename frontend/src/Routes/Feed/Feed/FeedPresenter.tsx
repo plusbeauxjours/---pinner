@@ -5,10 +5,8 @@ import { keyframes } from "styled-components";
 import styled from "../../../Styles/typed-components";
 
 import Loader from "../../../Components/Loader";
-import Photo from "../../../Components/Photo";
 import Wrapper from "../../../Components/Wrapper";
 import Bold from "../../../Components/Bold";
-import InfiniteScroll from "react-infinite-scroller";
 // import CitySearch from "src/Components/CitySearch";
 import FollowBtn from "src/Components/FollowBtn";
 import { Upload } from "src/Icons";
@@ -200,8 +198,6 @@ const Explain = styled(Location)`
 interface IProps {
   coffeeData: any;
   coffeeLoading: boolean;
-  cardsData: any;
-  cardsLoading: boolean;
   currentCity: string;
   recommandUsersData: any;
   recommandUsersLoading: boolean;
@@ -215,12 +211,9 @@ interface IProps {
   currentLat: number;
   currentLng: number;
   deleteCoffee: () => void;
-  loadMore: any;
 }
 
 const FeedPresenter: React.SFC<IProps> = ({
-  cardsData: { getFeedCards: { cards = null, hasNextPage = true } = {} } = {},
-  cardsLoading,
   coffeeData: { getCoffees: { coffees = null } = {} } = {},
   coffeeLoading,
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},
@@ -235,12 +228,11 @@ const FeedPresenter: React.SFC<IProps> = ({
   currentLat,
   currentLng,
   currentCity,
-  deleteCoffee,
-  loadMore
+  deleteCoffee
 }) => {
-  if (cardsLoading) {
+  if (recommandUsersLoading) {
     return <Loader />;
-  } else if (!cardsLoading) {
+  } else if (!recommandUsersLoading) {
     return (
       <>
         {requestingCoffeeModalOpen && (
@@ -432,37 +424,6 @@ const FeedPresenter: React.SFC<IProps> = ({
             </Box>
           </Container>
           <GreyLine />
-          {!cardsLoading && cards && cards.length !== 0 ? (
-            <InfiniteScroll
-              pageStart={0}
-              hasMore={hasNextPage}
-              loadMore={loadMore}
-              initialLoad={false}
-            >
-              {cards &&
-                cards.map(card => (
-                  <Photo
-                    key={card.id}
-                    cardId={card.id}
-                    inline={true}
-                    creatorId={card.creator.id}
-                    creatorAvatar={card.creator.profile.avatar}
-                    creatorUsername={card.creator.username}
-                    isFollowing={card.creator.profile.isFollowing}
-                    isSelf={card.creator.profile.isSelf}
-                    country={card.city.country.countryName}
-                    city={card.city.cityName}
-                    photoUrl={card.file}
-                    likeCount={card.likeCount}
-                    commentCount={card.commentCount}
-                    caption={card.caption}
-                    naturalTime={card.naturalTime}
-                    isLiked={card.isLiked}
-                    currentCity={currentCity}
-                  />
-                ))}
-            </InfiniteScroll>
-          ) : null}
         </SWrapper>
       </>
     );

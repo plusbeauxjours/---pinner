@@ -11,8 +11,7 @@ import Wrapper from "../../../Components/Wrapper";
 import LogIn from "../../../Components/LogIn";
 import SignUp from "../../../Components/SignUp";
 import SocialLogin from "../../../Components/SocialLogin";
-
-import PhoneLogin from "../../Detail/CardDetail";
+import PhoneLogin from "../PhoneLogin";
 
 const Container = styled(Wrapper)`
   display: flex;

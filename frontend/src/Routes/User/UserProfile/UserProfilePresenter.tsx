@@ -15,7 +15,6 @@ import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
 import FollowBtn from "../../../Components/FollowBtn";
 import AvatarGrid from "../../../Components/AvatarGrid";
-import GetCards from "../../../Components/GetCards";
 import Weather from "../../../Components/Weather";
 
 const Header = styled.header`
@@ -252,6 +251,7 @@ const CityContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 `;
 
 const CityPhoto = styled.img<ITheme>`
@@ -473,6 +473,7 @@ const ScrollContainer = styled.div`
   height: 200px;
   display: flex;
   margin: 0 10px 25px 0;
+  z-index: 2;
 `;
 
 const Square = styled.div`
@@ -1509,11 +1510,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               )}
             </TripBox>
           </Container>
-          <GetCards
-            upload={user.profile.isSelf ? true : false}
-            location={"user"}
-            userName={username}
-          />
         </SWrapper>
       </>
     );

@@ -10,7 +10,7 @@ class Continent (config_models.TimeStampedModel):
 
     continent_name = models.CharField(max_length=20, null=True, blank=True)
     continent_photo = models.URLField(null=True, blank=True)
-    continent_code =  models.CharField(max_length=20, null=True, blank=True)
+    continent_code = models.CharField(max_length=20, null=True, blank=True)
 
     @cached_property
     def country_count(self):
@@ -22,9 +22,9 @@ class Continent (config_models.TimeStampedModel):
 
 class Language(config_models.TimeStampedModel):
 
-    language_name =models.CharField(max_length=20, null=True, blank=True)
+    language_name = models.CharField(max_length=20, null=True, blank=True)
     language_native = models.CharField(max_length=20, null=True, blank=True)
-    language_code =models.CharField(max_length=5, null=True, blank=True)
+    language_code = models.CharField(max_length=5, null=True, blank=True)
 
     def __str__(self):
         return self.language_name
@@ -37,16 +37,12 @@ class Country (config_models.TimeStampedModel):
     country_photo = models.URLField(null=True, blank=True)
     country_capital = models.CharField(max_length=50, null=True, blank=True)
     country_currency = models.CharField(max_length=20, null=True, blank=True)
-    country_name_native =  models.CharField(max_length=20, null=True, blank=True)
+    country_name_native = models.CharField(max_length=20, null=True, blank=True)
     country_phone = models.CharField(max_length=20, null=True, blank=True)
     country_emoji = models.CharField(max_length=20, null=True, blank=True)
     country_emojiU = models.CharField(max_length=20, null=True, blank=True)
     language = models.ForeignKey(Language, null=True, blank=True, on_delete=models.CASCADE, related_name='countries')
     continent = models.ForeignKey(Continent, null=True, blank=True, on_delete=models.CASCADE, related_name='countries')
-
-    @cached_property
-    def card_count(self):
-        return self.cards.all().count()
 
     @cached_property
     def city_count(self):
@@ -72,10 +68,6 @@ class City (config_models.TimeStampedModel):
     @cached_property
     def like_count(self):
         return self.likes.all().count()
-
-    @cached_property
-    def card_count(self):
-        return self.cards.all().count()
 
     @cached_property
     def user_count(self):
