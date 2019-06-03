@@ -7,9 +7,11 @@ from locations import types as location_types
 from locations import models as location_models
 from notifications import models as notification_models
 
+
 def resolve_profile(self, info, **kwargs):
 
     username = kwargs.get('username')
+    print('username', username)
 
     try:
         profile = User.objects.get(username=username)
@@ -30,7 +32,7 @@ def resolve_top_countries(self, info, **kwargs):
         cities__movenotification__actor__username=userName).annotate(
         count=Count('cities__movenotification', distinct=True)).annotate(
         diff=Sum('cities__movenotification__diff_days')).order_by('-count', '-diff')
-    
+
     return location_types.CountriesResponse(countries=countries)
 
 
@@ -60,9 +62,9 @@ def resolve_me(self, info):
 def resolve_search_users(self, info, **kwargs):
 
     user = info.context.user
-    
+
     search = kwargs.get('search')
-   
+
     users = User.objects.filter(username__icontains=search)
 
     return types.SearchUsersResponse(users=users)
@@ -92,7 +94,8 @@ def resolve_recommand_users(self, info, **kwargs):
 
     following_profiles = user.profile.followings.values('id')
 
-    users = models.User.objects.all().exclude(id=user.id).exclude(profile__id__in=following_profiles).order_by('-profile__created_at')
+    users = models.User.objects.all().exclude(id=user.id).exclude(
+        profile__id__in=following_profiles).order_by('-profile__created_at')
 
     hasNextPage = offset < users.count()
 

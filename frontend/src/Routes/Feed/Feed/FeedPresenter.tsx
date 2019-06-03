@@ -347,7 +347,12 @@ const FeedPresenter: React.SFC<IProps> = ({
                 coffees.map(coffee => {
                   return (
                     <UserRow key={coffee.id}>
-                      <Link to={`/c/${coffee.id}`}>
+                      <Link
+                        to={{
+                          pathname: `/c/${coffee.id}`,
+                          state: { modalOpen: true }
+                        }}
+                      >
                         <AvatarContainer>
                           {(() => {
                             switch (coffee.target) {

@@ -38,6 +38,7 @@ interface IState {
   isFollowing?: boolean;
   userId: string;
 }
+
 class CoffeeDetailContainer extends React.Component<IProps, IState> {
   public followUserFn: MutationFn;
   public deleteCoffeeFn: MutationFn;
@@ -48,6 +49,7 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
       isFollowing: props.isFollowing,
       userId: null
     };
+    console.log(this.state);
   }
   public render() {
     const {
@@ -56,7 +58,7 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
       }
     } = this.props;
     const { modalOpen, isFollowing } = this.state;
-
+    console.log(this.state);
     return (
       <DeleteCoffeeMutation
         mutation={DELETE_COFFEE}

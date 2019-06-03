@@ -780,7 +780,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 }) => {
   if (userProfileLoading) {
     return <Loader />;
-  } else if (user) {
+  } else if (user && coffees) {
     return (
       <>
         {(!user.profile.nationality ||
@@ -1367,7 +1367,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 })}
             </TripContainer>
           </PHeader>
-          {!coffeeLoading && coffees.length !== 0 ? (
+          {!coffeeLoading && coffees && coffees.length !== 0 ? (
             <>
               <SmallTitle>
                 <SmallGreyLine />
