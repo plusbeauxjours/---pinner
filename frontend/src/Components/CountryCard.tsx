@@ -57,15 +57,13 @@ interface IProps {
   countryCode: string;
   countryPhoto: string;
   cityCount: number;
-  cardCount: number;
 }
 
 const CountryCard: React.SFC<IProps> = ({
   countryName,
   countryCode,
   countryPhoto,
-  cityCount,
-  cardCount
+  cityCount
 }) => {
   return (
     <SLink to={`/country/${countryName}`}>
@@ -75,7 +73,7 @@ const CountryCard: React.SFC<IProps> = ({
       </Metric>
       <CityName text={countryName} />
       {/* <Counter>cityCount:{cityCount.toString()}</Counter>
-      <Counter>cardCount:{cardCount.toString()}</Counter> */}
+       */}
     </SLink>
   );
 };

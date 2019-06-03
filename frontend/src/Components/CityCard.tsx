@@ -63,7 +63,6 @@ interface IProps {
   cityName: string;
   userCount?: number;
   userLogCount?: number;
-  cardCount?: number;
   cityPhoto: string;
 }
 
@@ -73,7 +72,6 @@ const CityCard: React.SFC<IProps> = ({
   cityName,
   userCount,
   userLogCount,
-  cardCount,
   cityPhoto
 }) => {
   return (
@@ -86,7 +84,7 @@ const CityCard: React.SFC<IProps> = ({
       <CountryName text={countryName} />
       {/* <Counter>userCount:{userCount.toString()}</Counter>
       <Counter>userLogCoun:{userLogCount.toString()}</Counter>
-      <Counter>cardCount:{cardCount.toString()}</Counter> */}
+       */}
     </SLink>
   );
 };

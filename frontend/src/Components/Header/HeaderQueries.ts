@@ -6,9 +6,9 @@ import {
   CONTINENT_FRAGMENT
 } from "src/sharedQueries";
 
-export const GET_FEED = gql`
-  query Feed($cityName: String!) {
-    feed(cityName: $cityName) {
+export const GET_HEADER = gql`
+  query Header($cityName: String!) {
+    header(cityName: $cityName) {
       city {
         cityName
         cityPhoto

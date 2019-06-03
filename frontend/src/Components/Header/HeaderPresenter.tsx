@@ -190,7 +190,7 @@ interface IProps extends RouteComponentProps<any> {
 }
 
 const HeaderPresenter: React.SFC<IProps> = ({
-  data: { feed: { city = null } = {} } = {},
+  data: { header: { city = null } = {} } = {},
   loading,
   searchData,
   searchLoading,

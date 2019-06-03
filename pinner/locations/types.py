@@ -29,10 +29,6 @@ class CityType(DjangoObjectType):
         model = models.City
 
 
-class HeaderResponse(DjangoObjectType):
-    city = graphene.Field(CityType)
-
-
 class CountryType(DjangoObjectType):
     city_count = graphene.Int(source='city_count')
     count = graphene.Int()
@@ -47,6 +43,10 @@ class ContinentType(DjangoObjectType):
 
     class Meta:
         model = models.Continent
+
+
+class HeaderResponse(graphene.ObjectType):
+    city = graphene.Field(CityType)
 
 
 class CityProfileResponse(graphene.ObjectType):

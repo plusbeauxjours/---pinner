@@ -217,124 +217,6 @@ export interface UnMatchVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetComments
-// ====================================================
-
-export interface GetComments_getComments_comments_creator_profile {
-  __typename: "ProfileType";
-  isSelf: boolean | null;
-}
-
-export interface GetComments_getComments_comments_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: GetComments_getComments_comments_creator_profile | null;
-}
-
-export interface GetComments_getComments_comments {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-  edited: boolean;
-  creator: GetComments_getComments_comments_creator | null;
-  isLiked: boolean | null;
-}
-
-export interface GetComments_getComments {
-  __typename: "GetCommentsResponse";
-  comments: (GetComments_getComments_comments | null)[] | null;
-}
-
-export interface GetComments {
-  getComments: GetComments_getComments;
-}
-
-export interface GetCommentsVariables {
-  cardId: number;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: EditComment
-// ====================================================
-
-export interface EditComment_editComment_comment_creator_profile {
-  __typename: "ProfileType";
-  isSelf: boolean | null;
-}
-
-export interface EditComment_editComment_comment_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: EditComment_editComment_comment_creator_profile | null;
-}
-
-export interface EditComment_editComment_comment {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-  edited: boolean;
-  creator: EditComment_editComment_comment_creator | null;
-  isLiked: boolean | null;
-}
-
-export interface EditComment_editComment {
-  __typename: "EditCommentResponse";
-  comment: EditComment_editComment_comment | null;
-}
-
-export interface EditComment {
-  editComment: EditComment_editComment;
-}
-
-export interface EditCommentVariables {
-  cardId: number;
-  commentId: number;
-  message: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: ToggleLikeComment
-// ====================================================
-
-export interface ToggleLikeComment_toggleLikeComment_comment {
-  __typename: "CommentType";
-  isLiked: boolean | null;
-}
-
-export interface ToggleLikeComment_toggleLikeComment {
-  __typename: "ToggleLikeCommentResponse";
-  ok: boolean | null;
-  comment: ToggleLikeComment_toggleLikeComment_comment | null;
-}
-
-export interface ToggleLikeComment {
-  toggleLikeComment: ToggleLikeComment_toggleLikeComment;
-}
-
-export interface ToggleLikeCommentVariables {
-  cardId: number;
-  commentId: number;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL mutation operation: FollowUser
 // ====================================================
 
@@ -384,72 +266,35 @@ export interface FollowUserVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetCards
+// GraphQL query operation: Header
 // ====================================================
 
-export interface GetCards_getCards_cards {
-  __typename: "CardType";
-  id: string;
-  file: string | null;
-  caption: string;
-  likeCount: number | null;
-  commentCount: number | null;
-}
-
-export interface GetCards_getCards {
-  __typename: "GetCardsResponse";
-  page: number | null;
-  hasNextPage: boolean | null;
-  cards: (GetCards_getCards_cards | null)[] | null;
-}
-
-export interface GetCards {
-  getCards: GetCards_getCards;
-}
-
-export interface GetCardsVariables {
-  page?: number | null;
-  location: string;
-  cityName?: string | null;
-  countryName?: string | null;
-  continentName?: string | null;
-  userName?: string | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: Feed
-// ====================================================
-
-export interface Feed_feed_city_country {
+export interface Header_header_city_country {
   __typename: "CountryType";
   countryName: string | null;
   countryPhoto: string | null;
   countryCode: string | null;
 }
 
-export interface Feed_feed_city {
+export interface Header_header_city {
   __typename: "CityType";
   cityName: string | null;
   cityPhoto: string | null;
-  country: Feed_feed_city_country;
+  country: Header_header_city_country;
   userCount: number | null;
   userLogCount: number | null;
 }
 
-export interface Feed_feed {
-  __typename: "FeedResponse";
-  city: Feed_feed_city | null;
+export interface Header_header {
+  __typename: "HeaderResponse";
+  city: Header_header_city | null;
 }
 
-export interface Feed {
-  feed: Feed_feed;
+export interface Header {
+  header: Header_header;
 }
 
-export interface FeedVariables {
+export interface HeaderVariables {
   cityName: string;
 }
 
@@ -580,189 +425,6 @@ export interface logIn {
 export interface logInVariables {
   username: string;
   password: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: ToggleLikeCard
-// ====================================================
-
-export interface ToggleLikeCard_toggleLikeCard_card {
-  __typename: "CardType";
-  isLiked: boolean | null;
-  likeCount: number | null;
-}
-
-export interface ToggleLikeCard_toggleLikeCard {
-  __typename: "ToggleLikeCardResponse";
-  ok: boolean | null;
-  card: ToggleLikeCard_toggleLikeCard_card | null;
-}
-
-export interface ToggleLikeCard {
-  toggleLikeCard: ToggleLikeCard_toggleLikeCard;
-}
-
-export interface ToggleLikeCardVariables {
-  cardId: number;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: EditCard
-// ====================================================
-
-export interface EditCard_editCard_card_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface EditCard_editCard_card_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: EditCard_editCard_card_city_country;
-}
-
-export interface EditCard_editCard_card_creator_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  isFollowing: boolean | null;
-  isSelf: boolean | null;
-}
-
-export interface EditCard_editCard_card_creator {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: EditCard_editCard_card_creator_profile | null;
-}
-
-export interface EditCard_editCard_card {
-  __typename: "CardType";
-  id: string;
-  file: string | null;
-  caption: string;
-  city: EditCard_editCard_card_city | null;
-  likeCount: number | null;
-  commentCount: number | null;
-  isLiked: boolean | null;
-  naturalTime: string | null;
-  creator: EditCard_editCard_card_creator;
-}
-
-export interface EditCard_editCard {
-  __typename: "EditCardResponse";
-  card: EditCard_editCard_card | null;
-}
-
-export interface EditCard {
-  editCard: EditCard_editCard;
-}
-
-export interface EditCardVariables {
-  cardId: number;
-  cityName?: string | null;
-  caption?: string | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: DeleteCard
-// ====================================================
-
-export interface DeleteCard_deleteCard {
-  __typename: "DeleteCardResponse";
-  ok: boolean | null;
-  cardId: number | null;
-}
-
-export interface DeleteCard {
-  deleteCard: DeleteCard_deleteCard;
-}
-
-export interface DeleteCardVariables {
-  cardId: number;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: AddComment
-// ====================================================
-
-export interface AddComment_addComment_comment_creator_profile {
-  __typename: "ProfileType";
-  isSelf: boolean | null;
-}
-
-export interface AddComment_addComment_comment_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: AddComment_addComment_comment_creator_profile | null;
-}
-
-export interface AddComment_addComment_comment {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-  edited: boolean;
-  creator: AddComment_addComment_comment_creator | null;
-  isLiked: boolean | null;
-}
-
-export interface AddComment_addComment {
-  __typename: "AddCommentResponse";
-  comment: AddComment_addComment_comment | null;
-}
-
-export interface AddComment {
-  addComment: AddComment_addComment;
-}
-
-export interface AddCommentVariables {
-  cardId: number;
-  message: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: DeleteComment
-// ====================================================
-
-export interface DeleteComment_deleteComment {
-  __typename: "DeleteCommentResponse";
-  ok: boolean | null;
-  cardId: number | null;
-  commentId: number | null;
-}
-
-export interface DeleteComment {
-  deleteComment: DeleteComment_deleteComment;
-}
-
-export interface DeleteCommentVariables {
-  cardId: number;
-  commentId: number;
 }
 
 
@@ -916,7 +578,6 @@ export interface CityProfile_cityProfile_city {
   country: CityProfile_cityProfile_city_country;
   likeCount: number | null;
   isLiked: boolean | null;
-  cardCount: number | null;
   userCount: number | null;
   userLogCount: number | null;
 }
@@ -1184,7 +845,6 @@ export interface ContinentProfile_continentProfile_countries {
   countryPhoto: string | null;
   continent: ContinentProfile_continentProfile_countries_continent | null;
   cityCount: number | null;
-  cardCount: number | null;
 }
 
 export interface ContinentProfile_continentProfile {
@@ -1333,7 +993,6 @@ export interface CountryProfile_countryProfile_country {
   countryCurrency: string | null;
   countryEmoji: string | null;
   cityCount: number | null;
-  cardCount: number | null;
   continent: CountryProfile_countryProfile_country_continent | null;
 }
 
@@ -1557,68 +1216,6 @@ export interface CountryUsersNowVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: CardDetail
-// ====================================================
-
-export interface CardDetail_cardDetail_card_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface CardDetail_cardDetail_card_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: CardDetail_cardDetail_card_city_country;
-}
-
-export interface CardDetail_cardDetail_card_creator_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  isFollowing: boolean | null;
-  isSelf: boolean | null;
-}
-
-export interface CardDetail_cardDetail_card_creator {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: CardDetail_cardDetail_card_creator_profile | null;
-}
-
-export interface CardDetail_cardDetail_card {
-  __typename: "CardType";
-  id: string;
-  file: string | null;
-  caption: string;
-  city: CardDetail_cardDetail_card_city | null;
-  likeCount: number | null;
-  commentCount: number | null;
-  isLiked: boolean | null;
-  naturalTime: string | null;
-  creator: CardDetail_cardDetail_card_creator;
-}
-
-export interface CardDetail_cardDetail {
-  __typename: "CardDetailResponse";
-  card: CardDetail_cardDetail_card | null;
-}
-
-export interface CardDetail {
-  cardDetail: CardDetail_cardDetail;
-}
-
-export interface CardDetailVariables {
-  cardId: number;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: CoffeeDetail
 // ====================================================
 
@@ -1699,6 +1296,29 @@ export interface CoffeeDetailVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: DeleteCoffee
+// ====================================================
+
+export interface DeleteCoffee_deleteCoffee {
+  __typename: "DeleteCoffeeResponse";
+  ok: boolean | null;
+  coffeeId: number | null;
+  username: string | null;
+}
+
+export interface DeleteCoffee {
+  deleteCoffee: DeleteCoffee_deleteCoffee;
+}
+
+export interface DeleteCoffeeVariables {
+  coffeeId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: LatestCities
 // ====================================================
 
@@ -1731,71 +1351,6 @@ export interface LatestCities {
 
 export interface LatestCitiesVariables {
   latestCityPage?: number | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetFeedCards
-// ====================================================
-
-export interface GetFeedCards_getFeedCards_cards_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface GetFeedCards_getFeedCards_cards_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: GetFeedCards_getFeedCards_cards_city_country;
-}
-
-export interface GetFeedCards_getFeedCards_cards_creator_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  isFollowing: boolean | null;
-  isSelf: boolean | null;
-}
-
-export interface GetFeedCards_getFeedCards_cards_creator {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: GetFeedCards_getFeedCards_cards_creator_profile | null;
-}
-
-export interface GetFeedCards_getFeedCards_cards {
-  __typename: "CardType";
-  id: string;
-  file: string | null;
-  caption: string;
-  city: GetFeedCards_getFeedCards_cards_city | null;
-  likeCount: number | null;
-  commentCount: number | null;
-  isLiked: boolean | null;
-  naturalTime: string | null;
-  creator: GetFeedCards_getFeedCards_cards_creator;
-}
-
-export interface GetFeedCards_getFeedCards {
-  __typename: "GetCardsResponse";
-  cards: (GetFeedCards_getFeedCards_cards | null)[] | null;
-  hasNextPage: boolean | null;
-  page: number | null;
-}
-
-export interface GetFeedCards {
-  getFeedCards: GetFeedCards_getFeedCards;
-}
-
-export interface GetFeedCardsVariables {
-  page?: number | null;
-  cityName: string;
 }
 
 
@@ -2128,17 +1683,6 @@ export interface GetNotifications_getNotifications_notifications_actor {
   profile: GetNotifications_getNotifications_notifications_actor_profile | null;
 }
 
-export interface GetNotifications_getNotifications_notifications_card {
-  __typename: "CardType";
-  id: string;
-}
-
-export interface GetNotifications_getNotifications_notifications_comment {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-}
-
 export interface GetNotifications_getNotifications_notifications_match {
   __typename: "MatchType";
   id: string;
@@ -2149,8 +1693,6 @@ export interface GetNotifications_getNotifications_notifications {
   id: string;
   actor: GetNotifications_getNotifications_notifications_actor;
   verb: NotificationVerb;
-  card: GetNotifications_getNotifications_notifications_card | null;
-  comment: GetNotifications_getNotifications_notifications_comment | null;
   match: GetNotifications_getNotifications_notifications_match | null;
   read: boolean;
   naturalTime: string | null;
@@ -2263,7 +1805,6 @@ export interface TripProfile_tripProfile_city {
   cityName: string | null;
   cityPhoto: string | null;
   country: TripProfile_tripProfile_city_country;
-  cardCount: number | null;
   userCount: number | null;
   userLogCount: number | null;
 }
@@ -2284,102 +1825,6 @@ export interface TripProfileVariables {
   cityName: string;
   startDate: any;
   endDate: any;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetDurationCards
-// ====================================================
-
-export interface GetDurationCards_getDurationCards_cards {
-  __typename: "CardType";
-  id: string;
-  file: string | null;
-  caption: string;
-  likeCount: number | null;
-  commentCount: number | null;
-}
-
-export interface GetDurationCards_getDurationCards {
-  __typename: "DurationCardsResponse";
-  hasNextPage: boolean | null;
-  cards: (GetDurationCards_getDurationCards_cards | null)[] | null;
-}
-
-export interface GetDurationCards {
-  getDurationCards: GetDurationCards_getDurationCards;
-}
-
-export interface GetDurationCardsVariables {
-  page?: number | null;
-  cityName: string;
-  startDate: any;
-  endDate: any;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: UploadCard
-// ====================================================
-
-export interface UploadCard_uploadCard_card_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface UploadCard_uploadCard_card_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: UploadCard_uploadCard_card_city_country;
-}
-
-export interface UploadCard_uploadCard_card_creator_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  isFollowing: boolean | null;
-  isSelf: boolean | null;
-}
-
-export interface UploadCard_uploadCard_card_creator {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: UploadCard_uploadCard_card_creator_profile | null;
-}
-
-export interface UploadCard_uploadCard_card {
-  __typename: "CardType";
-  id: string;
-  file: string | null;
-  caption: string;
-  city: UploadCard_uploadCard_card_city | null;
-  likeCount: number | null;
-  commentCount: number | null;
-  isLiked: boolean | null;
-  naturalTime: string | null;
-  creator: UploadCard_uploadCard_card_creator;
-}
-
-export interface UploadCard_uploadCard {
-  __typename: "UploadCardResponse";
-  card: UploadCard_uploadCard_card | null;
-}
-
-export interface UploadCard {
-  uploadCard: UploadCard_uploadCard;
-}
-
-export interface UploadCardVariables {
-  caption: string;
 }
 
 
@@ -2796,14 +2241,82 @@ export interface EditProfile_editProfile_user_profile_residence {
   continent: EditProfile_editProfile_user_profile_residence_continent | null;
 }
 
+export interface EditProfile_editProfile_user_profile_followings_user_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface EditProfile_editProfile_user_profile_followings_user {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: EditProfile_editProfile_user_profile_followings_user_profile | null;
+}
+
+export interface EditProfile_editProfile_user_profile_followings {
+  __typename: "ProfileType";
+  id: string;
+  user: EditProfile_editProfile_user_profile_followings_user;
+}
+
+export interface EditProfile_editProfile_user_profile_followers_user_profile {
+  __typename: "ProfileType";
+  avatar: string;
+}
+
+export interface EditProfile_editProfile_user_profile_followers_user {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: EditProfile_editProfile_user_profile_followers_user_profile | null;
+}
+
+export interface EditProfile_editProfile_user_profile_followers {
+  __typename: "ProfileType";
+  id: string;
+  user: EditProfile_editProfile_user_profile_followers_user;
+}
+
+export interface EditProfile_editProfile_user_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryCode: string | null;
+}
+
+export interface EditProfile_editProfile_user_profile_currentCity {
+  __typename: "CityType";
+  latitude: number | null;
+  longitude: number | null;
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: EditProfile_editProfile_user_profile_currentCity_country;
+}
+
 export interface EditProfile_editProfile_user_profile {
   __typename: "ProfileType";
   bio: string | null;
   gender: ProfileGender | null;
   avatar: string;
+  website: string | null;
+  email: string | null;
   nationality: EditProfile_editProfile_user_profile_nationality | null;
   residence: EditProfile_editProfile_user_profile_residence | null;
-  email: string | null;
+  postCount: number | null;
+  followersCount: number | null;
+  followingCount: number | null;
+  tripCount: number | null;
+  cityCount: number | null;
+  countryCount: number | null;
+  continentCount: number | null;
+  followings: (EditProfile_editProfile_user_profile_followings | null)[] | null;
+  followers: (EditProfile_editProfile_user_profile_followers | null)[] | null;
+  isFollowing: boolean | null;
+  isSelf: boolean | null;
+  currentCity: EditProfile_editProfile_user_profile_currentCity | null;
 }
 
 export interface EditProfile_editProfile_user {
@@ -3062,29 +2575,6 @@ export interface GetKnowingFollowersVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: DeleteCoffee
-// ====================================================
-
-export interface DeleteCoffee_deleteCoffee {
-  __typename: "DeleteCoffeeResponse";
-  ok: boolean | null;
-  coffeeId: number | null;
-  username: string | null;
-}
-
-export interface DeleteCoffee {
-  deleteCoffee: DeleteCoffee_deleteCoffee;
-}
-
-export interface DeleteCoffeeVariables {
-  coffeeId: number;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: SearchTripCities
 // ====================================================
 
@@ -3226,23 +2716,6 @@ export interface ProfileParts {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: CardParts
-// ====================================================
-
-export interface CardParts {
-  __typename: "CardType";
-  id: string;
-  file: string | null;
-  caption: string;
-  likeCount: number | null;
-  commentCount: number | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL fragment: CityParts
 // ====================================================
 
@@ -3306,55 +2779,6 @@ export interface ContinentParts {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: DetailParts
-// ====================================================
-
-export interface DetailParts_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface DetailParts_city {
-  __typename: "CityType";
-  cityName: string | null;
-  country: DetailParts_city_country;
-}
-
-export interface DetailParts_creator_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  isFollowing: boolean | null;
-  isSelf: boolean | null;
-}
-
-export interface DetailParts_creator {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: DetailParts_creator_profile | null;
-}
-
-export interface DetailParts {
-  __typename: "CardType";
-  id: string;
-  file: string | null;
-  caption: string;
-  city: DetailParts_city | null;
-  likeCount: number | null;
-  commentCount: number | null;
-  isLiked: boolean | null;
-  naturalTime: string | null;
-  creator: DetailParts_creator;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL fragment: NotificationParts
 // ====================================================
 
@@ -3384,17 +2808,6 @@ export interface NotificationParts_actor {
   profile: NotificationParts_actor_profile | null;
 }
 
-export interface NotificationParts_card {
-  __typename: "CardType";
-  id: string;
-}
-
-export interface NotificationParts_comment {
-  __typename: "CommentType";
-  id: string;
-  message: string;
-}
-
 export interface NotificationParts_match {
   __typename: "MatchType";
   id: string;
@@ -3405,8 +2818,6 @@ export interface NotificationParts {
   id: string;
   actor: NotificationParts_actor;
   verb: NotificationVerb;
-  card: NotificationParts_card | null;
-  comment: NotificationParts_comment | null;
   match: NotificationParts_match | null;
   read: boolean;
   naturalTime: string | null;
@@ -3590,10 +3001,7 @@ export enum ProfileGender {
  * An enumeration.
  */
 export enum NotificationVerb {
-  COMMENT = "COMMENT",
   FOLLOW = "FOLLOW",
-  LIKE = "LIKE",
-  LIKE_COMMENT = "LIKE_COMMENT",
   MATCH = "MATCH",
   UPLOAD = "UPLOAD",
 }

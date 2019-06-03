@@ -3,8 +3,8 @@ import { withRouter } from "react-router-dom";
 import HeaderPresenter from "./HeaderPresenter";
 import { reverseGeoCode } from "../../mapHelpers";
 import {
-  Feed,
-  FeedVariables,
+  Header,
+  HeaderVariables,
   ReportLocation,
   ReportLocationVariables,
   SearchTerms,
@@ -12,9 +12,9 @@ import {
 } from "../../types/api";
 import { Mutation, MutationFn, Query } from "react-apollo";
 import { REPORT_LOCATION } from "../../Routes/Login/Home/HomeQueries";
-import { GET_FEED, SEARCH } from "./HeaderQueries";
+import { GET_HEADER, SEARCH } from "./HeaderQueries";
 
-class FeedQuery extends Query<Feed, FeedVariables> {}
+class HeaderQuery extends Query<Header, HeaderVariables> {}
 class ReportLocationMutation extends Mutation<
   ReportLocation,
   ReportLocationVariables
@@ -88,8 +88,8 @@ class HeaderContainer extends React.Component<any, IState> {
         {ReportLocationFn => {
           this.ReportLocationFn = ReportLocationFn;
           return (
-            <FeedQuery
-              query={GET_FEED}
+            <HeaderQuery
+              query={GET_HEADER}
               variables={{
                 cityName: currentCity || localStorage.getItem("cityName")
               }}
@@ -125,7 +125,7 @@ class HeaderContainer extends React.Component<any, IState> {
                   </SearchQuery>
                 );
               }}
-            </FeedQuery>
+            </HeaderQuery>
           );
         }}
       </ReportLocationMutation>

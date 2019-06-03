@@ -18,8 +18,6 @@ class ProfileType(DjangoObjectType):
     trip_count = graphene.Int(source='trip_count')
     is_following = graphene.Boolean()
     is_self = graphene.Boolean()
-    cities = graphene.List(location_types.CityType, source='cities')
-    countries = graphene.List(location_types.CountryType, source='countries')
 
     def resolve_is_following(self, info):
         user = info.context.user

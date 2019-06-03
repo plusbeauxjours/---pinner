@@ -25,7 +25,6 @@ const CountryGrid: React.SFC<IProps> = ({ countries, className }) => (
         countryCode={country.countryCode}
         countryPhoto={country.countryPhoto}
         cityCount={country.cityCount}
-        cardCount={country.cardCount}
       />
     ))}
   </Container>

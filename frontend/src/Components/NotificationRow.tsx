@@ -54,100 +54,6 @@ const NotificationRow: React.SFC<IProps> = ({
       <>
         {(() => {
           switch (notification.verb) {
-            case "COMMENT":
-              return (
-                <>
-                  <Link
-                    to={{
-                      pathname: `/p/${notification.card.id}`,
-                      state: { modalOpen: true }
-                    }}
-                    onClick={() => onMarkRead(notification.id)}
-                  >
-                    <UserRow>
-                      {!isRead ? (
-                        <ICon>
-                          <RedDot />
-                        </ICon>
-                      ) : null}
-                      <UserHeader
-                        username={notification.actor.username}
-                        currentCity={actor.currentCity.cityName}
-                        currentCountry={actor.currentCity.country.countryName}
-                        avatar={actor.avatar}
-                        size={"sm"}
-                      />
-                      <Column>
-                        <GreyText text={"Commented on card"} />
-                        <GreyText text={notification.naturalTime} />
-                      </Column>
-                    </UserRow>
-                  </Link>
-                </>
-              );
-            case "LIKE_COMMENT":
-              return (
-                <>
-                  <Link
-                    to={{
-                      pathname: `/p/${notification.card.id}`,
-                      state: { modalOpen: true }
-                    }}
-                    onClick={() => onMarkRead(notification.id)}
-                  >
-                    <UserRow>
-                      {!isRead ? (
-                        <ICon>
-                          <RedDot />
-                        </ICon>
-                      ) : null}
-                      <UserHeader
-                        username={notification.actor.username}
-                        currentCity={actor.currentCity.cityName}
-                        currentCountry={actor.currentCity.country.countryName}
-                        avatar={actor.avatar}
-                        size={"sm"}
-                      />
-                      <Column>
-                        <GreyText text={"Liked your comment"} />
-                        <GreyText text={notification.naturalTime} />
-                      </Column>
-                      {/* <GreyText text={notification.comment.message} /> */}
-                    </UserRow>
-                  </Link>
-                </>
-              );
-            case "LIKE":
-              return (
-                <>
-                  <Link
-                    to={{
-                      pathname: `/p/${notification.card.id}`,
-                      state: { modalOpen: true }
-                    }}
-                    onClick={() => onMarkRead(notification.id)}
-                  >
-                    <UserRow>
-                      {!isRead ? (
-                        <ICon>
-                          <RedDot />
-                        </ICon>
-                      ) : null}
-                      <UserHeader
-                        username={notification.actor.username}
-                        currentCity={actor.currentCity.cityName}
-                        currentCountry={actor.currentCity.country.countryName}
-                        avatar={actor.avatar}
-                        size={"sm"}
-                      />
-                      <Column>
-                        <GreyText text={"Liked card"} />
-                        <GreyText text={notification.naturalTime} />
-                      </Column>
-                    </UserRow>
-                  </Link>
-                </>
-              );
             case "FOLLOW":
               return (
                 <>
@@ -176,37 +82,7 @@ const NotificationRow: React.SFC<IProps> = ({
                   </Link>
                 </>
               );
-            case "UPLOAD":
-              return (
-                <>
-                  <Link
-                    to={{
-                      pathname: `/p/${notification.card.id}`,
-                      state: { modalOpen: true }
-                    }}
-                    onClick={() => onMarkRead(notification.id)}
-                  >
-                    <UserRow>
-                      {!isRead ? (
-                        <ICon>
-                          <RedDot />
-                        </ICon>
-                      ) : null}
-                      <UserHeader
-                        username={notification.actor.username}
-                        currentCity={actor.currentCity.cityName}
-                        currentCountry={actor.currentCity.country.countryName}
-                        avatar={actor.avatar}
-                        size={"sm"}
-                      />
-                      <Column>
-                        <GreyText text={"Uploaded card"} />
-                        <GreyText text={notification.naturalTime} />
-                      </Column>
-                    </UserRow>
-                  </Link>
-                </>
-              );
+
             case "MATCH":
               return (
                 <>

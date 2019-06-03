@@ -3,7 +3,6 @@ import FollowBtnPresenter from "./FollowBtnPresenter";
 import { Mutation, MutationFn } from "react-apollo";
 import { FollowUser, FollowUserVariables } from "../../types/api";
 import { FOLLOW_USER } from "./FollowBtnQueries";
-// import { GET_FEED_CARDS } from "../../Routes/Feed/FeedQueries";
 import { withRouter, RouteComponentProps } from "react-router";
 import { GET_FOLLOWERS } from "../../Routes/User/Followers/FollowersQueries";
 import { GET_FOLLOWINGS } from "../../Routes/User/Followings/FollowingsQueries";

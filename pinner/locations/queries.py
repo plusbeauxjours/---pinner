@@ -19,7 +19,7 @@ def resolve_header(self, info, **kwargs):
     cityName = kwargs.get('cityName')
 
     print(cityName)
-    city = location_models.City.objects.get(city_name=cityName)
+    city = models.City.objects.get(city_name=cityName)
     print('header')
 
     return types.HeaderResponse(city=city)
