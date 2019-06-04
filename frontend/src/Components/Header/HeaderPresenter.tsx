@@ -198,7 +198,6 @@ const HeaderPresenter: React.SFC<IProps> = ({
   onChange,
   onKeyDown
 }) => {
-  console.log(user);
   if (loading) {
     return null;
   } else if (!loading && city) {
