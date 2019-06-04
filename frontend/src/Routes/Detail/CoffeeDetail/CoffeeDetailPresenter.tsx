@@ -227,8 +227,8 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
                 </>
               ) : (
                 <>
-                  <MenuModalLink onClick={() => console.log("REPORT CARD")}>
-                    REPORT CARD
+                  <MenuModalLink onClick={() => console.log("REPORT COFFEE")}>
+                    REPORT COFFEE
                   </MenuModalLink>
                   <MenuModalLink onClick={() => followUser(coffee.host.id)}>
                     {isFollowing ? "UNFOLLOW" : "FOLLOW"}

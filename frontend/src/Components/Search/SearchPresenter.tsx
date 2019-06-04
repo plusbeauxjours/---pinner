@@ -5,7 +5,7 @@ import Bold from "../../Components/Bold";
 import Loader from "src/Components/Loader";
 import { Link } from "react-router-dom";
 import UserHeader from "../UserHeader";
-// import Avatar from "../Avatar";
+import Avatar from "../Avatar";
 import FollowBtnContainer from "../FollowBtn/index";
 
 const SWrapper = styled(Wrapper)`
@@ -31,34 +31,34 @@ const UserRow = styled.div<ITheme>`
   }
 `;
 
-// const Header = styled.header`
-//   display: flex;
-//   align-items: center;
-//   border-radius: 3px;
-//   cursor: pointer;
-// `;
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
+`;
 
-// const HeaderText = styled(Bold)`
-//   display: flex;
-// `;
+const HeaderText = styled(Bold)`
+  display: flex;
+`;
 
-// const HeaderColumn = styled.div`
-//   margin-left: 15px;
-// `;
+const HeaderColumn = styled.div`
+  margin-left: 15px;
+`;
 
-// const SAvatar = styled(Avatar)`
-//   border-radius: 3px;
-//   height: 45px;
-//   width: 45px;
-// `;
+const SAvatar = styled(Avatar)`
+  border-radius: 3px;
+  height: 45px;
+  width: 45px;
+`;
 
-// const Location = styled.span`
-//   display: flex;
-//   margin-top: 5px;
-//   display: block;
-//   font-size: 12px;
-//   font-weight: 200;
-// `;
+const Location = styled.span`
+  display: flex;
+  margin-top: 5px;
+  display: block;
+  font-size: 12px;
+  font-weight: 200;
+`;
 
 interface ITheme {
   active?: string;
@@ -116,7 +116,7 @@ const SearchPresenter: React.SFC<IProps> = ({
               </UserRow>
             );
           })}
-        {/* {cities &&
+        {cities &&
           cities.length > 0 &&
           cities.map(city => (
             <UserRow key={city.id}>
@@ -159,7 +159,7 @@ const SearchPresenter: React.SFC<IProps> = ({
                 </Header>
               </Link>
             </UserRow>
-          ))} */}
+          ))}
         {users &&
           users.length === 0 &&
           cities &&

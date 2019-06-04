@@ -158,14 +158,6 @@ const CText = styled(Bold)`
   display: flex;
 `;
 
-// const Location = styled.span`
-//   display: flex;
-//   margin-top: 5px;
-//   position: block;
-//   font-size: 12px;
-//   font-weight: 200;
-// `;
-
 const HeaderRow = styled.div`
   display: flex;
   flex-direction: row;
@@ -274,7 +266,6 @@ const HeaderPresenter: React.SFC<IProps> = ({
                     <CText text={city.cityName} />
                     <CText text={", "} />
                     <CText text={city.country.countryName} />
-                    {/* <CText text={city.country.countryName} /> */}
                   </HeaderRow>
                   <Weather
                     latitude={currentLat}

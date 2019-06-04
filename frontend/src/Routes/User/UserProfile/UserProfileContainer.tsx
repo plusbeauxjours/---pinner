@@ -180,17 +180,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       searchActiveId: null
     };
   }
-  public componentDidMount() {
-    console.log(this.state);
-    console.log(this.props);
-  }
+
   public componentDidUpdate(prevProps, prevState) {
     const newProps = this.props;
     if (prevProps.match.params.username !== newProps.match.params.username) {
       this.setState({ search: "", tripList: [] });
       console.log("updated");
-      console.log(prevState);
-      console.log(this.state);
     }
   }
   public render() {

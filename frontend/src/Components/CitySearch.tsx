@@ -1,21 +1,19 @@
-import React, { Component } from "react";
-// import Script from "react-load-script";
-// import styled from "styled-components";
-// import { GOOGLE_PLACE_KEY } from "../keys";
+import React from "react";
+import styled from "styled-components";
 
-// const Input = styled.input`
-//   width: 215px;
-//   border: 0;
-//   border: ${props => props.theme.boxBorder};
-//   background-color: ${props => props.theme.bgColor};
-//   border-radius: 3px;
-//   padding: 5px;
-//   color: white;
-//   font-size: 12px;
-//   &::placeholder {
-//     color: ${props => props.theme.greyColor};
-//   }
-// `;
+const Input = styled.input`
+  width: 215px;
+  border: 0;
+  border: ${props => props.theme.boxBorder};
+  background-color: ${props => props.theme.bgColor};
+  border-radius: 3px;
+  padding: 5px;
+  color: white;
+  font-size: 12px;
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+`;
 
 interface IState {
   city: string;
@@ -26,7 +24,7 @@ interface IState {
   lng: number;
 }
 
-class CitySearch extends Component<any, IState> {
+class CitySearch extends React.Component<any, IState> {
   public autocomplete;
   constructor(props) {
     super(props);
@@ -35,57 +33,25 @@ class CitySearch extends Component<any, IState> {
       query: "",
       country: "",
       countryCode: "",
-      lat: 0,
-      lng: 0
+      lng: 0,
+      lat: 0
     };
-    // this.handleScriptLoad = this.handleScriptLoad.bind(this);
-    // this.handlePlaceSelect = this.handlePlaceSelect.bind(this);
   }
 
   public render() {
-    // const { query } = this.state;
-
-    // const URL = `https://maps.googleapis.com/maps/api/js?language=en&key=${GOOGLE_PLACE_KEY}&libraries=places`;
+    const { query } = this.state;
     return (
       <>
-        {/* <Script url={URL} onLoad={this.handleScriptLoad} />
         <Input
           id="autocomplete"
           placeholder="Search"
           value={query}
           type="text"
           onChange={this.onChange}
-        /> */}
+        />
       </>
     );
   }
-  // public handleScriptLoad = async () => {
-  //   const options = {
-  //     types: ["(cities)"]
-  //   };
-  //   const input = document.getElementById("autocomplete");
-  //   this.autocomplete = await new google.maps.places.Autocomplete(
-  //     input as any,
-  //     options
-  //   );
-  //   this.autocomplete.addListener("place_changed", this.handlePlaceSelect);
-  // };
-  // public handlePlaceSelect = async () => {
-  //   const addressObject = await this.autocomplete.getPlace();
-  //   const address = addressObject.address_components;
-  //   console.log(addressObject);
-  //   if (address) {
-  //     console.log(address);
-  //     this.setState({
-  //       city: address[0].long_name,
-  //       query: addressObject.formatted_address,
-  //       country: address[2].long_name,
-  //       countryCode: address[2].short_name,
-  //       lat: addressObject.geometry.location.lat(),
-  //       lng: addressObject.geometry.location.lng()
-  //     });
-  //   }
-  // };
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
     const {
       target: { value }

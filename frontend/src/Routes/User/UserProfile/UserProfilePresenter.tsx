@@ -412,9 +412,6 @@ const Input = styled.input`
   font-size: 12px;
   font-weight: 100;
   transition: border-bottom 0.1s linear;
-  &:-webkit-autofill {
-    box-shadow: 0 0 0px 1000px white inset !important;
-  }
   &:focus {
     outline: none;
   }
@@ -435,7 +432,23 @@ const TripInputContainer = styled.div`
   align-self: center;
 `;
 
-const SearchCitiesInput = styled(Input)`
+const SearchCitiesInput = styled.input`
+  z-index: 10;
+  border: 0;
+  border-bottom: 1px solid ${props => props.theme.greyColor};
+  padding: 5px;
+  color: white;
+  background-color: transparent;
+  font-size: 12px;
+  font-weight: 100;
+  transition: border-bottom 0.1s linear;
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+  animation: ${ModalAnimation} 0.1s linear;
   margin-top: 20px;
   font-size: 34px;
 `;
@@ -769,7 +782,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   search,
   onChange,
   tripList,
-  isDayBlocked,
+  // isDayBlocked,
 
   onKeyDownSearch,
   onKeyDownTrip,
@@ -1019,7 +1032,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   focusedInput={focusedInput}
                   isOutsideRange={() => false}
                   withPortal={true}
-                  isDayBlocked={isDayBlocked()}
+                  // isDayBlocked={isDayBlocked()}
                 />
               </DateRangePickerContainer>
               <SearchCitiesInput
@@ -1075,13 +1088,13 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   focusedInput={focusedInput}
                   isOutsideRange={() => false}
                   withPortal={true}
-                  isDayBlocked={isDayBlocked()}
+                  // isDayBlocked={isDayBlocked()}
                 />
               </DateRangePickerContainer>
               <SearchCitiesInput
                 autoFocus={true}
                 placeholder={cityName || "Search a City"}
-                onChange={onInputChange}
+                onChange={onSearchInputChange}
                 value={cityName}
                 autoComplete={"off"}
                 onKeyDown={onKeyDownSearch}

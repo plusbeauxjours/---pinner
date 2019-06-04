@@ -1,5 +1,6 @@
 import axios from "axios";
 import { GOOGLE_MAPS_KEY } from "./keys";
+
 import { toast } from "react-toastify";
 
 export const reverseGeoCode = async (latitude: number, longitude: number) => {
@@ -13,7 +14,6 @@ export const reverseGeoCode = async (latitude: number, longitude: number) => {
       countryCode: ""
     };
     console.log("MAPHELPER IS WORKING");
-    console.log(results);
     for (const components of results) {
       for (const component of components.address_components) {
         if (

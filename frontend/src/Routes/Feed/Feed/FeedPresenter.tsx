@@ -7,11 +7,12 @@ import styled from "../../../Styles/typed-components";
 import Loader from "../../../Components/Loader";
 import Wrapper from "../../../Components/Wrapper";
 import Bold from "../../../Components/Bold";
-// import CitySearch from "src/Components/CitySearch";
+import CitySearch from "src/Components/CitySearch";
 import FollowBtn from "src/Components/FollowBtn";
 import { Upload } from "src/Icons";
 import Avatar from "../../../Components/Avatar";
 import CoffeeBtn from "src/Components/CoffeeBtn";
+import useGoogleAutocomplete from "../../../autocompleteHelpers";
 
 const SWrapper = styled(Wrapper)``;
 
@@ -230,6 +231,12 @@ const FeedPresenter: React.SFC<IProps> = ({
   currentCity,
   deleteCoffee
 }) => {
+  useGoogleAutocomplete({
+    query: "New York",
+    options: {
+      types: "(cities)"
+    }
+  });
   if (recommandUsersLoading) {
     return <Loader />;
   } else if (!recommandUsersLoading) {
@@ -286,7 +293,7 @@ const FeedPresenter: React.SFC<IProps> = ({
           </ModalContainer>
         )}
         <SWrapper>
-          {/* <CitySearch /> */}
+          <CitySearch />
           <Title>
             <SText text={"RECOMMAND USER"} />
             <Link to={`/people`}>

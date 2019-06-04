@@ -12,10 +12,6 @@ class FeedResponse(graphene.ObjectType):
     city = graphene.Field(location_types.CityType)
 
 
-class CardLikeResponse(graphene.ObjectType):
-    users = graphene.List(coffee_types.UserType)
-
-
 class DeleteCardResponse(graphene.ObjectType):
     ok = graphene.Boolean()
     cardId = graphene.Int()
