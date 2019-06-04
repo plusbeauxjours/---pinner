@@ -12,7 +12,7 @@ import FollowBtn from "src/Components/FollowBtn";
 import { Upload } from "src/Icons";
 import Avatar from "../../../Components/Avatar";
 import CoffeeBtn from "src/Components/CoffeeBtn";
-import useGoogleAutocomplete from "../../../autocompleteHelpers";
+// import useGoogleAutocomplete from "../../../autocompleteHelpers";
 
 const SWrapper = styled(Wrapper)``;
 
@@ -231,12 +231,12 @@ const FeedPresenter: React.SFC<IProps> = ({
   currentCity,
   deleteCoffee
 }) => {
-  useGoogleAutocomplete({
-    query: "New York",
-    options: {
-      types: "(cities)"
-    }
-  });
+  // useGoogleAutocomplete({
+  //   query: "New York",
+  //   options: {
+  //     types: "(cities)"
+  //   }
+  // });
   if (recommandUsersLoading) {
     return <Loader />;
   } else if (!recommandUsersLoading) {

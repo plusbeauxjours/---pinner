@@ -1,339 +1,316 @@
-import React from "react";
-import axios from "axios";
-import { GOOGLE_MAPS_KEY, GOOGLE_PLACE_KEY } from "./keys";
-import { IAutocompleteProps } from "../index.d";
+// import React from "react";
+// import { GOOGLE_PLACE_KEY } from "./keys";
 
-import * as uuid4 from "uuid/v4";
-import { toast } from "react-toastify";
+// import * as uuid4 from "uuid/v4";
 
-export const reverseGeoCode = async (latitude: number, longitude: number) => {
-  const URL = `https://maps.googleapis.com/maps/api/geocode/json?&language=en&latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_KEY}`;
-  const { data } = await axios(URL);
-  if (!data.error_message) {
-    const { results } = data;
+// const initialState = {
+//   results: {
+//     predictions: [],
+//     status: ""
+//   },
+//   isLoading: false,
+//   error: null
+// };
 
-    let storableLocation = {
-      city: "",
-      countryCode: ""
-    };
-    console.log("MAPHELPER IS WORKING");
-    for (const components of results) {
-      for (const component of components.address_components) {
-        if (
-          component.types[0] === "locality" ||
-          component.types[0] === "sublocality" ||
-          component.types[0] === "colloquial_area"
-        ) {
-          storableLocation.city = component.long_name;
-        } else if (
-          !storableLocation.city &&
-          component.types[0] === "administrative_area_level_1"
-        ) {
-          storableLocation.city = component.long_name;
-        } else if (component.types.includes("country")) {
-          storableLocation.countryCode = component.short_name;
-        }
-      }
-    }
-    return { storableLocation };
-  } else {
-    toast.error(data.error_message);
-    return false;
-  }
-};
+// interface IGoogleProps {
+//   types?: "(cities)" | "geocode" | "establishments" | "address";
+//   language?: string;
+//   location?: "";
+//   radius?: number;
+//   strictbounds?: boolean;
+//   offset?: number;
+// }
 
-const initialState = {
-  results: {
-    predictions: [],
-    status: ""
-  },
-  isLoading: false,
-  error: null
-};
+// export interface IAutocompleteProps {
+//   query: string;
+//   type?: "places" | "query";
+//   debounceMs?: number;
+//   options?: IGoogleProps;
+// }
 
-export default function useGoogleAutocomplete({
-  query,
-  type = "places",
-  debounceMs = 400,
-  options = {}
-}: IAutocompleteProps) {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+// export default function useGoogleAutocomplete({
+//   query,
+//   type = "places",
+//   debounceMs = 400,
+//   options = {}
+// }: IAutocompleteProps) {
+//   const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  // Refs for unique session_tokens, for billing purposes.
-  // Reference: https://developers.google.com/places/web-service/autocomplete
-  const sessionToken = React.useRef<string>(uuid4());
-  const sessionTokenTimeout = React.useRef<number>();
+//   // Refs for unique session_tokens, for billing purposes.
+//   // Reference: https://developers.google.com/places/web-service/autocomplete
+//   const sessionToken = React.useRef<string>(uuid4());
+//   const sessionTokenTimeout = React.useRef<number>();
 
-  // AbortController to cancel window.fetch requests if component unmounts.
-  const abortController = React.useRef<any>();
-  const abortSignal = React.useRef<any>();
+//   // AbortController to cancel window.fetch requests if component unmounts.
+//   const abortController = React.useRef<any>();
+//   const abortSignal = React.useRef<any>();
 
-  const placesAbortController = React.useRef<any>();
-  const placesAbortSignal = React.useRef<any>();
+//   const placesAbortController = React.useRef<any>();
+//   const placesAbortSignal = React.useRef<any>();
 
-  React.useEffect(() => {
-    // Setup a timer to reset our session_token every 3 minutes.
-    // Reference: (https://stackoverflow.com/questions/50398801/how-long-do-the-new-places-api-session-tokens-last/50452233#50452233)
-    sessionTokenTimeout.current = window.setInterval(resetSessionToken, 180000);
-    // Setup AbortControllers to cancel all http requests on unmount.
-    abortController.current = new AbortController();
-    abortSignal.current = abortController.current.signal;
-    placesAbortController.current = new AbortController();
-    placesAbortSignal.current = placesAbortController.current.signal;
-    // Setup an AbortController for our getPlacesDetails function
-    // tslint:disable-next-line:no-unused-expression
-    placesAbortController.current;
+//   React.useEffect(() => {
+//     // Setup a timer to reset our session_token every 3 minutes.
+//     // Reference: (https://stackoverflow.com/questions/50398801/how-long-do-the-new-places-api-session-tokens-last/50452233#50452233)
+//     sessionTokenTimeout.current = window.setInterval(resetSessionToken, 180000);
+//     // Setup AbortControllers to cancel all http requests on unmount.
+//     abortController.current = new AbortController();
+//     abortSignal.current = abortController.current.signal;
+//     placesAbortController.current = new AbortController();
+//     placesAbortSignal.current = placesAbortController.current.signal;
+//     // Setup an AbortController for our getPlacesDetails function
+//     // tslint:disable-next-line:no-unused-expression
+//     placesAbortController.current;
 
-    // Cleanup clearInterval and abort any http calls on unmount.
-    return () => {
-      clearInterval(sessionTokenTimeout.current);
-      abortController.current.abort();
-      placesAbortController.current.abort();
-    };
-  }, []);
+//     // Cleanup clearInterval and abort any http calls on unmount.
+//     return () => {
+//       clearInterval(sessionTokenTimeout.current);
+//       abortController.current.abort();
+//       placesAbortController.current.abort();
+//     };
+//   }, []);
 
-  // Flag to make sure our useEffect does not run on initial render.
-  const initialRender = React.useRef<boolean>(false);
-  // Debounce our search to only trigger an API call when user stops typing after (n)ms.
-  const debouncedFn = React.useRef<any>();
-  // Effect triggers on every query change.
-  React.useEffect(() => {
-    if (initialRender.current === false) {
-      initialRender.current = true;
-      return;
-    }
+//   // Flag to make sure our useEffect does not run on initial render.
+//   const initialRender = React.useRef<boolean>(false);
+//   // Debounce our search to only trigger an API call when user stops typing after (n)ms.
+//   const debouncedFn = React.useRef<any>();
+//   // Effect triggers on every query change.
+//   React.useEffect(() => {
+//     if (initialRender.current === false) {
+//       initialRender.current = true;
+//       return;
+//     }
 
-    // Cancel previous debounced call.
-    if (debouncedFn.current) {
-      debouncedFn.current.clear();
-    }
+//     // Cancel previous debounced call.
+//     if (debouncedFn.current) {
+//       debouncedFn.current.clear();
+//     }
 
-    // If search length is 0, skip sending an API call.
-    if (query.length === 0) {
-      dispatch({
-        type: "INVALID_REQUEST"
-      });
-      return;
-    }
+//     // If search length is 0, skip sending an API call.
+//     if (query.length === 0) {
+//       dispatch({
+//         type: "INVALID_REQUEST"
+//       });
+//       return;
+//     }
 
-    if (!state.isLoading && !abortController.current.signal.aborted) {
-      dispatch({
-        type: "LOADING"
-      });
-    }
+//     if (!state.isLoading && !abortController.current.signal.aborted) {
+//       dispatch({
+//         type: "LOADING"
+//       });
+//     }
 
-    debouncedFn.current = debounce(() => {
-      const types =
-        options.types && type === "places" ? `&types=${options.types}` : "";
-      const strictbounds =
-        options.strictbounds && types === "places" ? `&strictbounds` : "";
-      const offset =
-        options.offset && type === "query" ? `&offset=${options.offset}` : "";
-      const language = options.language ? `&language=${options.language}` : "";
-      const location = options.location ? `&location=${options.location}` : "";
-      const radius = options.radius ? `&radius=${options.radius}` : "";
+//     debouncedFn.current = debounce(() => {
+//       const types =
+//         options.types && type === "places" ? `&types=${options.types}` : "";
+//       const strictbounds =
+//         options.strictbounds && types === "places" ? `&strictbounds` : "";
+//       const offset =
+//         options.offset && type === "query" ? `&offset=${options.offset}` : "";
+//       const language = options.language ? `&language=${options.language}` : "";
+//       const location = options.location ? `&location=${options.location}` : "";
+//       const radius = options.radius ? `&radius=${options.radius}` : "";
 
-      const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}${types}${language}${location}${radius}${strictbounds}${offset}&key=${GOOGLE_PLACE_KEY}&sessiontoken=${
-        sessionToken.current
-      }`;
+//       const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}${types}${language}${location}${radius}${strictbounds}${offset}&key=${GOOGLE_PLACE_KEY}&sessiontoken=${
+//         sessionToken.current
+//       }`;
 
-      fetch(url, { signal: abortSignal.current })
-        .then(data => data.json())
-        .then(data => {
-          dispatch({
-            type: data.status,
-            payload: {
-              data
-            }
-          });
-        })
-        .catch(() => {
-          // Component unmounted and API call cancelled.
-          // Reset AbortController.
-          if (abortController.current.signal.aborted) {
-            abortController.current = new AbortController();
-            abortSignal.current = abortController.current.signal;
-          }
-        });
-    }, debounceMs);
+//       fetch(url, { signal: abortSignal.current })
+//         .then(data => data.json())
+//         .then(data => {
+//           dispatch({
+//             type: data.status,
+//             payload: {
+//               data
+//             }
+//           });
+//         })
+//         .catch(() => {
+//           // Component unmounted and API call cancelled.
+//           // Reset AbortController.
+//           if (abortController.current.signal.aborted) {
+//             abortController.current = new AbortController();
+//             abortSignal.current = abortController.current.signal;
+//           }
+//         });
+//     }, debounceMs);
 
-    debouncedFn.current();
-  }, [
-    query,
-    debounceMs,
-    GOOGLE_PLACE_KEY,
-    options.types,
-    options.language,
-    options.location,
-    options.radius,
-    options.strictbounds,
-    options.offset,
-    type
-  ]);
+//     debouncedFn.current();
+//   }, [
+//     query,
+//     debounceMs,
+//     GOOGLE_PLACE_KEY,
+//     options.types,
+//     options.language,
+//     options.location,
+//     options.radius,
+//     options.strictbounds,
+//     options.offset,
+//     type
+//   ]);
 
-  const getPlaceDetails = (
-    placeId: string,
-    placeDetailOptions: {
-      fields?: string[];
-      region?: string;
-      language?: string;
-    } = {}
-  ) => {
-    return new Promise(resolve => {
-      const fields = placeDetailOptions.fields
-        ? `&fields=${placeDetailOptions.fields.join(",")}`
-        : "";
-      const region = placeDetailOptions.region
-        ? `&region=${placeDetailOptions.region}`
-        : "";
-      // If no options are passed, we'll default to closured language option.
-      const language = placeDetailOptions.language
-        ? `&language=${placeDetailOptions.language}`
-        : options.language
-        ? `&language=${options.language}}`
-        : "";
+//   const getPlaceDetails = (
+//     placeId: string,
+//     placeDetailOptions: {
+//       fields?: string[];
+//       region?: string;
+//       language?: string;
+//     } = {}
+//   ) => {
+//     return new Promise(resolve => {
+//       const fields = placeDetailOptions.fields
+//         ? `&fields=${placeDetailOptions.fields.join(",")}`
+//         : "";
+//       const region = placeDetailOptions.region
+//         ? `&region=${placeDetailOptions.region}`
+//         : "";
+//       // If no options are passed, we'll default to closured language option.
+//       const language = placeDetailOptions.language
+//         ? `&language=${placeDetailOptions.language}`
+//         : options.language
+//         ? `&language=${options.language}}`
+//         : "";
 
-      const url = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}${fields}${region}${language}&key=${GOOGLE_PLACE_KEY}&sessiontoken=${
-        sessionToken.current
-      }`;
+//       const url = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}${fields}${region}${language}&key=${GOOGLE_PLACE_KEY}&sessiontoken=${
+//         sessionToken.current
+//       }`;
 
-      fetch(url, { signal: placesAbortSignal.current })
-        .then(data => data.json())
-        .then(data => {
-          // Reset session token after we make a Place Details query.
-          resetSessionToken();
-          resolve(data);
-        })
-        .catch(() => {
-          // Component unmounted and API call cancelled.
-        });
-    });
-  };
+//       fetch(url, { signal: placesAbortSignal.current })
+//         .then(data => data.json())
+//         .then(data => {
+//           // Reset session token after we make a Place Details query.
+//           resetSessionToken();
+//           resolve(data);
+//         })
+//         .catch(() => {
+//           // Component unmounted and API call cancelled.
+//         });
+//     });
+//   };
 
-  const resetSessionToken = () => {
-    sessionToken.current = uuid4();
-  };
+//   const resetSessionToken = () => {
+//     sessionToken.current = uuid4();
+//   };
 
-  // Exposes an additional method to cancel a query. Usage example would be
-  // when a user selects an option and you update the input field to reflect
-  // the change, calling 'cancelQuery' can cancel out the query that our hook
-  // will call again (since our input field changed).
-  //
-  // We can pass an addition predictions to just show the item we just selected.
-  const cancelQuery = (prediction: any) => {
-    if (abortController.current) {
-      abortController.current.abort();
-    }
+//   // Exposes an additional method to cancel a query. Usage example would be
+//   // when a user selects an option and you update the input field to reflect
+//   // the change, calling 'cancelQuery' can cancel out the query that our hook
+//   // will call again (since our input field changed).
+//   //
+//   // We can pass an addition predictions to just show the item we just selected.
+//   const cancelQuery = (prediction: any) => {
+//     if (abortController.current) {
+//       abortController.current.abort();
+//     }
 
-    dispatch({
-      type: "OK",
-      payload: {
-        data: {
-          predictions: [prediction]
-        }
-      }
-    });
-  };
+//     dispatch({
+//       type: "OK",
+//       payload: {
+//         data: {
+//           predictions: [prediction]
+//         }
+//       }
+//     });
+//   };
 
-  return {
-    results: state.results,
-    isLoading: state.isLoading,
-    error: state.error,
-    getPlaceDetails,
-    cancelQuery
-  };
-}
+//   return {
+//     results: state.results,
+//     isLoading: state.isLoading,
+//     error: state.error,
+//     getPlaceDetails,
+//     cancelQuery
+//   };
+// }
 
-const reducer = (
-  state: any,
-  action: {
-    type: string;
-    payload?: any;
-  }
-) => {
-  // All cases, beside 'LOADING', are status codes provided from Google Autocomplete API's response.
-  switch (action.type) {
-    case "LOADING":
-      return {
-        ...state,
-        isLoading: true
-      };
-    case "OK":
-      return {
-        ...state,
-        results: action.payload.data,
-        isLoading: false,
-        error: null
-      };
-    case "ZERO_RESULTS":
-      return {
-        ...state,
-        results: {
-          predictions: []
-        },
-        isLoading: false,
-        error: `No results — try another input.`
-      };
-    case "INVALID_REQUEST":
-      return {
-        ...state,
-        isLoading: false,
-        error: null
-      };
-    case "REQUEST_DENIED":
-      return {
-        ...state,
-        isLoading: false,
-        error: `Invalid 'key' parameter.`
-      };
-    case "UNKNOWN_ERROR":
-      return {
-        ...state,
-        isLoading: false,
-        error: `Unknown error, refresh and try again.`
-      };
-    default:
-      return state;
-  }
-};
+// const reducer = (
+//   state: any,
+//   action: {
+//     type: string;
+//     payload?: any;
+//   }
+// ) => {
+//   // All cases, beside 'LOADING', are status codes provided from Google Autocomplete API's response.
+//   switch (action.type) {
+//     case "LOADING":
+//       return {
+//         ...state,
+//         isLoading: true
+//       };
+//     case "OK":
+//       return {
+//         ...state,
+//         results: action.payload.data,
+//         isLoading: false,
+//         error: null
+//       };
+//     case "ZERO_RESULTS":
+//       return {
+//         ...state,
+//         results: {
+//           predictions: []
+//         },
+//         isLoading: false,
+//         error: `No results — try another input.`
+//       };
+//     case "INVALID_REQUEST":
+//       return {
+//         ...state,
+//         isLoading: false,
+//         error: null
+//       };
+//     case "REQUEST_DENIED":
+//       return {
+//         ...state,
+//         isLoading: false,
+//         error: `Invalid 'key' parameter.`
+//       };
+//     case "UNKNOWN_ERROR":
+//       return {
+//         ...state,
+//         isLoading: false,
+//         error: `Unknown error, refresh and try again.`
+//       };
+//     default:
+//       return state;
+//   }
+// };
 
-// Credit David Walsh (https://davidwalsh.name/javascript-debounce-function)
+// // Credit David Walsh (https://davidwalsh.name/javascript-debounce-function)
 
-// Returns a function, that, as long as it continues to be invoked, will not
-// be triggered. The function will be called after it stops being called for
-// N milliseconds. If `immediate` is passed, trigger the function on the
-// leading edge, instead of the trailing.
-function debounce(func: () => any, wait: number, immediate?: boolean) {
-  let timeout: any;
+// // Returns a function, that, as long as it continues to be invoked, will not
+// // be triggered. The function will be called after it stops being called for
+// // N milliseconds. If `immediate` is passed, trigger the function on the
+// // leading edge, instead of the trailing.
+// function debounce(func: () => any, wait: number, immediate?: boolean) {
+//   let timeout: any;
 
-  const executedFunction = function(this: any) {
-    let context = this;
-    let args: any = arguments;
+//   const executedFunction = function(this: any) {
+//     let context = this;
+//     let args: any = arguments;
 
-    // tslint:disable-next-line:only-arrow-functions
-    let later = function() {
-      timeout = null;
-      if (!immediate) {
-        func.apply(context, args);
-      }
-    };
+//     // tslint:disable-next-line:only-arrow-functions
+//     let later = function() {
+//       timeout = null;
+//       if (!immediate) {
+//         func.apply(context, args);
+//       }
+//     };
 
-    let callNow = immediate && !timeout;
+//     let callNow = immediate && !timeout;
 
-    clearTimeout(timeout);
+//     clearTimeout(timeout);
 
-    timeout = setTimeout(later, wait);
+//     timeout = setTimeout(later, wait);
 
-    if (callNow) {
-      func.apply(context, args);
-    }
-  };
+//     if (callNow) {
+//       func.apply(context, args);
+//     }
+//   };
 
-  // tslint:disable-next-line:only-arrow-functions
-  executedFunction.clear = function() {
-    clearTimeout(timeout);
-    timeout = null;
-  };
+//   // tslint:disable-next-line:only-arrow-functions
+//   executedFunction.clear = function() {
+//     clearTimeout(timeout);
+//     timeout = null;
+//   };
 
-  return executedFunction;
-}
+//   return executedFunction;
+// }

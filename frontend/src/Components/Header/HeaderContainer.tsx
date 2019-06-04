@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import HeaderPresenter from "./HeaderPresenter";
 import { reverseGeoCode } from "../../mapHelpers";
 import {
+  Me,
   Header,
   HeaderVariables,
   ReportLocation,
@@ -13,6 +14,7 @@ import {
 import { Mutation, MutationFn, Query } from "react-apollo";
 import { REPORT_LOCATION } from "../../Routes/Login/Home/HomeQueries";
 import { GET_HEADER, SEARCH } from "./HeaderQueries";
+import { ME } from "../../sharedQueries";
 
 class HeaderQuery extends Query<Header, HeaderVariables> {}
 class ReportLocationMutation extends Mutation<
@@ -20,6 +22,7 @@ class ReportLocationMutation extends Mutation<
   ReportLocationVariables
 > {}
 class SearchQuery extends Query<SearchTerms, SearchTermsVariables> {}
+class MeQuery extends Query<Me> {}
 
 interface IState {
   currentLat: number;
@@ -84,51 +87,58 @@ class HeaderContainer extends React.Component<any, IState> {
       activeId
     } = this.state;
     return (
-      <ReportLocationMutation mutation={REPORT_LOCATION}>
-        {ReportLocationFn => {
-          this.ReportLocationFn = ReportLocationFn;
+      <MeQuery query={ME}>
+        {({ data: me }) => {
           return (
-            <HeaderQuery
-              query={GET_HEADER}
-              variables={{
-                cityName: currentCity || localStorage.getItem("cityName")
-              }}
-            >
-              {({ data, loading }) => {
+            <ReportLocationMutation mutation={REPORT_LOCATION}>
+              {ReportLocationFn => {
+                this.ReportLocationFn = ReportLocationFn;
                 return (
-                  <SearchQuery
-                    query={SEARCH}
-                    variables={{ search }}
-                    skip={search.length === 0}
+                  <HeaderQuery
+                    query={GET_HEADER}
+                    variables={{
+                      cityName: currentCity || localStorage.getItem("cityName")
+                    }}
                   >
-                    {({ data: searchData, loading: searchLoading }) => {
-                      this.searchData = searchData;
+                    {({ data, loading }) => {
                       return (
-                        <HeaderPresenter
-                          data={data}
-                          loading={loading}
-                          searchData={searchData}
-                          searchLoading={searchLoading}
-                          currentLat={currentLat}
-                          currentLng={currentLng}
-                          currentCity={currentCity}
-                          currentCountryCode={currentCountryCode}
-                          modalOpen={modalOpen}
-                          search={search}
-                          activeId={activeId}
-                          toggleModal={this.toggleModal}
-                          onChange={this.onChange}
-                          onKeyDown={this.onKeyDown}
-                        />
+                        <SearchQuery
+                          query={SEARCH}
+                          variables={{ search }}
+                          skip={search.length === 0}
+                        >
+                          {({ data: searchData, loading: searchLoading }) => {
+                            this.searchData = searchData;
+                            return (
+                              <HeaderPresenter
+                                me={me}
+                                data={data}
+                                loading={loading}
+                                searchData={searchData}
+                                searchLoading={searchLoading}
+                                currentLat={currentLat}
+                                currentLng={currentLng}
+                                currentCity={currentCity}
+                                currentCountryCode={currentCountryCode}
+                                modalOpen={modalOpen}
+                                search={search}
+                                activeId={activeId}
+                                toggleModal={this.toggleModal}
+                                onChange={this.onChange}
+                                onKeyDown={this.onKeyDown}
+                              />
+                            );
+                          }}
+                        </SearchQuery>
                       );
                     }}
-                  </SearchQuery>
+                  </HeaderQuery>
                 );
               }}
-            </HeaderQuery>
+            </ReportLocationMutation>
           );
         }}
-      </ReportLocationMutation>
+      </MeQuery>
     );
   }
   public toggleModal = () => {

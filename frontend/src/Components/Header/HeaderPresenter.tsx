@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { Profile, HeartEmpty, Compass, SearchIcon } from "../../Icons";
 
 import Wrapper from "../Wrapper";
-import Me from "../Me";
 import { RouteComponentProps, withRouter } from "react-router";
 import Search from "../Search/";
 import { keyframes } from "styled-components";
@@ -165,6 +164,7 @@ const HeaderRow = styled.div`
 `;
 
 interface IProps extends RouteComponentProps<any> {
+  me?: any;
   data?: any;
   loading: boolean;
   searchData?: any;
@@ -182,6 +182,7 @@ interface IProps extends RouteComponentProps<any> {
 }
 
 const HeaderPresenter: React.SFC<IProps> = ({
+  me: { me: { user = null } = {} } = {},
   data: { header: { city = null } = {} } = {},
   loading,
   searchData,
@@ -197,6 +198,7 @@ const HeaderPresenter: React.SFC<IProps> = ({
   onChange,
   onKeyDown
 }) => {
+  console.log(user);
   if (loading) {
     return null;
   } else if (!loading && city) {
@@ -284,23 +286,19 @@ const HeaderPresenter: React.SFC<IProps> = ({
               </Link>
             </Icon>
             <Icon>
-              <Me>
-                {user => (
-                  <Link
-                    to={{
-                      pathname: `/${user ? user.username : ""}`,
-                      state: {
-                        currentCountryCode,
-                        currentLat,
-                        currentLng,
-                        currentCity
-                      }
-                    }}
-                  >
-                    <Profile />
-                  </Link>
-                )}
-              </Me>
+              <Link
+                to={{
+                  pathname: `/${user ? user.username : ""}`,
+                  state: {
+                    currentCountryCode,
+                    currentLat,
+                    currentLng,
+                    currentCity
+                  }
+                }}
+              >
+                <Profile />
+              </Link>
             </Icon>
           </Column>
         </SWrapper>
