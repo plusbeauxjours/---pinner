@@ -65,7 +65,7 @@ def resolve_search_users(self, info, **kwargs):
 
     search = kwargs.get('search')
 
-    users = User.objects.filter(username__icontains=search)
+    users = User.objects.filter(username__istartswith=search)
 
     return types.SearchUsersResponse(users=users)
 

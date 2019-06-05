@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import UserHeader from "../UserHeader";
 import Avatar from "../Avatar";
 import FollowBtnContainer from "../FollowBtn/index";
+import useGoogleAutocomplete from "../../autocompleteHelpers";
+import { GOOGLE_PLACE_KEY } from "src/keys";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -65,12 +67,14 @@ interface ITheme {
 }
 
 interface IProps {
+  search: string;
   activeId: number;
   searchData?: any;
   searchLoading: boolean;
 }
 
 const SearchPresenter: React.SFC<IProps> = ({
+  search,
   activeId,
   searchData: {
     searchUsers: { users = null } = {},
@@ -82,7 +86,47 @@ const SearchPresenter: React.SFC<IProps> = ({
 }) => {
   if (searchLoading) {
     return <Loader />;
-  } else if (!searchLoading) {
+  } else if (!searchLoading && cities && cities.length === 0) {
+    console.log("hihiauto");
+    console.log(search);
+    const { results, isLoading } = useGoogleAutocomplete({
+      apiKey: `${GOOGLE_PLACE_KEY}`,
+      query: search,
+      options: {
+        types: "(cities)",
+        language: "en"
+      }
+    });
+    return (
+      <>
+        {console.log(results)}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          results.predictions.map(prediction => (
+            <UserRow key={prediction.id}>
+              <Link to={`/city/${prediction.structured_formatting.main_text}`}>
+                <Header>
+                  <SAvatar
+                    size={"sm"}
+                    url={prediction.structured_formatting.main_text}
+                  />
+                  <HeaderColumn>
+                    <HeaderText
+                      text={prediction.structured_formatting.main_text}
+                    />
+                    <Location>
+                      {prediction.structured_formatting.secondary_text}
+                    </Location>
+                  </HeaderColumn>
+                </Header>
+              </Link>
+            </UserRow>
+          ))
+        )}
+      </>
+    );
+  } else {
     return (
       <SWrapper>
         {users &&
@@ -117,7 +161,7 @@ const SearchPresenter: React.SFC<IProps> = ({
             );
           })}
         {cities &&
-          cities.length > 0 &&
+          cities.length !== 0 &&
           cities.map(city => (
             <UserRow key={city.id}>
               <Link to={`/city/${city.cityName}`}>

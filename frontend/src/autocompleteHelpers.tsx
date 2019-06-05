@@ -46,8 +46,7 @@ export default function useGoogleAutocomplete({
   const placesAbortSignal = React.useRef<any>(null);
 
   React.useEffect(() => {
-    console.log("ko");
-
+    console.log("query:::", query);
     sessionTokenTimeout.current = window.setInterval(resetSessionToken, 180000);
     abortController.current = new AbortController();
     abortSignal.current = abortController.current.signal;
@@ -63,13 +62,11 @@ export default function useGoogleAutocomplete({
   }, []);
 
   const initialRender = React.useRef<boolean>(false);
-  console.log("ko");
 
   const debouncedFn = React.useRef<any>(null);
 
   React.useEffect(() => {
-    console.log("ko");
-
+    console.log("query:::", query);
     if (initialRender.current === false) {
       initialRender.current = true;
       return;
@@ -93,6 +90,7 @@ export default function useGoogleAutocomplete({
     }
 
     debouncedFn.current = debounce(() => {
+      console.log("query:::", query);
       const types =
         options.types && type === "places" ? `&types=${options.types}` : "";
       const strictbounds =
@@ -107,11 +105,9 @@ export default function useGoogleAutocomplete({
         sessionToken.current
       }`;
       console.log(url);
-
       fetch(url, { signal: abortSignal.current })
         .then(data => data.json())
         .then(data => {
-          console.log(data);
           dispatch({
             type: data.status,
             payload: {
@@ -141,43 +137,6 @@ export default function useGoogleAutocomplete({
     type
   ]);
 
-  const getPlaceDetails = (
-    placeId: string,
-    placeDetailOptions: {
-      fields?: string[];
-      region?: string;
-      language?: string;
-    } = {}
-  ) => {
-    console.log("ko");
-
-    return new Promise(resolve => {
-      const fields = placeDetailOptions.fields
-        ? `&fields=${placeDetailOptions.fields.join(",")}`
-        : "";
-      const region = placeDetailOptions.region
-        ? `&region=${placeDetailOptions.region}`
-        : "";
-      const language = placeDetailOptions.language
-        ? `&language=${placeDetailOptions.language}`
-        : options.language
-        ? `&language=${options.language}}`
-        : "";
-      const url = `${cors}https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}${fields}${region}${language}&key=${apiKey}&sessiontoken=${
-        sessionToken.current
-      }`;
-      fetch(url, { signal: placesAbortSignal.current })
-        .then(data => data.json())
-        .then(data => {
-          resetSessionToken();
-          resolve(data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    });
-  };
-
   const resetSessionToken = () => {
     sessionToken.current = id;
   };
@@ -195,12 +154,10 @@ export default function useGoogleAutocomplete({
       }
     });
   };
-  console.log(state.results);
   return {
     results: state.results,
     isLoading: state.isLoading,
     error: state.error,
-    getPlaceDetails,
     cancelQuery
   };
 }
@@ -212,22 +169,37 @@ const reducer = (
     payload?: any;
   }
 ) => {
-  console.log("ko");
-
   switch (action.type) {
     case "LOADING":
+      console.log("LOADING");
       return {
         ...state,
         isLoading: true
       };
     case "OK":
+      console.log("OK");
       return {
         ...state,
         results: action.payload.data,
         isLoading: false,
         error: null
       };
+    case "OVER_QUERY_LIMIT":
+      console.log("OVER_QUERY_LIMIT");
+      return {
+        ...state,
+        isLoading: false,
+        error: `Over query limit.`
+      };
+    case "OVER_DAILY_LIMIT":
+      console.log("OVER_DAILY_LIMIT");
+      return {
+        ...state,
+        isLoading: false,
+        error: `Over query limit.`
+      };
     case "ZERO_RESULTS":
+      console.log("ZERO_RESULTS");
       return {
         ...state,
         results: {
@@ -237,30 +209,33 @@ const reducer = (
         error: `No results — try another input.`
       };
     case "INVALID_REQUEST":
+      console.log("INVALID_REQUEST");
       return {
         ...state,
         isLoading: false,
         error: null
       };
     case "REQUEST_DENIED":
+      console.log("REQUEST_DENIED");
       return {
         ...state,
         isLoading: false,
         error: `Invalid 'key' parameter.`
       };
     case "UNKNOWN_ERROR":
+      console.log("UNKNOWN_ERROR");
       return {
         ...state,
         isLoading: false,
         error: `Unknown error, refresh and try again.`
       };
     default:
+      console.log("default");
       return state;
   }
 };
 
 function debounce(func: () => any, wait: number, immediate?: boolean) {
-  console.log("sex");
   let timeout: any;
   const executedFunction = function(this: any) {
     let context = this;

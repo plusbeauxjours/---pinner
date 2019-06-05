@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { keyframes } from "styled-components";
 
@@ -7,13 +7,10 @@ import styled from "../../../Styles/typed-components";
 import Loader from "../../../Components/Loader";
 import Wrapper from "../../../Components/Wrapper";
 import Bold from "../../../Components/Bold";
-import CitySearch from "src/Components/CitySearch";
 import FollowBtn from "src/Components/FollowBtn";
 import { Upload } from "src/Icons";
 import Avatar from "../../../Components/Avatar";
 import CoffeeBtn from "src/Components/CoffeeBtn";
-import useGoogleAutocomplete from "../../../autocompleteHelpers";
-import { GOOGLE_PLACE_KEY } from "src/keys";
 
 const SWrapper = styled(Wrapper)``;
 
@@ -197,25 +194,6 @@ const Explain = styled(Location)`
   color: grey;
 `;
 
-const Input = styled.input`
-  z-index: 10;
-  border: 0;
-  border-bottom: 1px solid ${props => props.theme.greyColor};
-  padding: 5px;
-  color: white;
-  background-color: transparent;
-  font-size: 12px;
-  font-weight: 100;
-  transition: border-bottom 0.1s linear;
-  &:focus {
-    outline: none;
-  }
-  &::placeholder {
-    color: ${props => props.theme.greyColor};
-  }
-  animation: ${ModalAnimation} 0.1s linear;
-`;
-
 interface IProps {
   coffeeData: any;
   coffeeLoading: boolean;
@@ -251,19 +229,6 @@ const FeedPresenter: React.SFC<IProps> = ({
   currentCity,
   deleteCoffee
 }) => {
-  const [search, setSearch] = useState("");
-  const onChange = e => {
-    setSearch(e.target.value);
-  };
-  const { results, isLoading, error, getPlaceDetails } = useGoogleAutocomplete({
-    apiKey: `${GOOGLE_PLACE_KEY}`,
-    query: search,
-    options: {
-      types: "(cities)"
-    }
-  });
-  console.log(results);
-  console.log(isLoading, error, getPlaceDetails);
   if (recommandUsersLoading) {
     return <Loader />;
   } else if (!recommandUsersLoading) {
@@ -320,20 +285,12 @@ const FeedPresenter: React.SFC<IProps> = ({
           </ModalContainer>
         )}
         <SWrapper>
-          <CitySearch />
           <Title>
             <SText text={"RECOMMAND USER"} />
             <Link to={`/people`}>
               <SeeAll>SEE ALL</SeeAll>
             </Link>
           </Title>
-          <Input
-            onChange={onChange}
-            type={"text"}
-            value={search}
-            name={"search"}
-            autoComplete={"off"}
-          />
           <Container>
             <Box>
               {users &&

@@ -32,7 +32,7 @@ def resolve_search_cities(self, info, **kwargs):
 
     search = kwargs.get('search')
 
-    cities = models.City.objects.filter(city_name__icontains=search)
+    cities = models.City.objects.filter(city_name__istartswith=search)
 
     return types.CitiesResponse(cities=cities)
 
@@ -56,7 +56,7 @@ def resolve_search_countries(self, info, **kwargs):
 
     search = kwargs.get('search')
 
-    countries = models.Country.objects.filter(country_name__icontains=search)
+    countries = models.Country.objects.filter(country_name__istartswith=search)
 
     return types.CountriesResponse(countries=countries)
 
@@ -68,7 +68,7 @@ def resolve_search_continents(self, info, **kwargs):
 
     search = kwargs.get('search')
 
-    continents = models.Continent.objects.filter(continent_name__icontains=search)
+    continents = models.Continent.objects.filter(continent_name__istartswith=search)
 
     return types.ContinentsResponse(continents=continents)
 

@@ -52,20 +52,7 @@ class HeaderContainer extends React.Component<any, IState> {
       search: "",
       activeId: 0
     };
-    console.log(this.state);
-  }
-  public componentDidUpdate(prevProps) {
-    console.log("update");
-    const newProps = this.props;
-    if (
-      prevProps.match !== newProps.match ||
-      !localStorage.getItem("cityName")
-    ) {
-      navigator.geolocation.getCurrentPosition(
-        this.handleGeoSuccess,
-        this.handleGeoError
-      );
-    }
+    console.log("what");
   }
   public componentDidMount() {
     console.log("mount");
@@ -198,6 +185,7 @@ class HeaderContainer extends React.Component<any, IState> {
     console.log("No location");
   };
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
+    console.log("onChange");
     const {
       target: { value }
     } = event;
@@ -207,11 +195,10 @@ class HeaderContainer extends React.Component<any, IState> {
     } as any);
   };
   public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    console.log("onKeyDown");
     const { keyCode } = event;
     const { activeId } = this.state;
     const { history } = this.props;
-    console.log(this.state.activeId);
-    console.log(keyCode);
     if (this.searchData) {
       const {
         searchUsers: { users = null } = {},
@@ -240,7 +227,6 @@ class HeaderContainer extends React.Component<any, IState> {
         });
       } else if (keyCode === 40) {
         if (activeId === users.length - 1) {
-          console.log("done!!!!!!!!!!", users.length, activeId);
           return;
         }
         this.setState({

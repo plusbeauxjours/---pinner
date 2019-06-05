@@ -27,9 +27,10 @@ class SearchContainer extends React.Component<IProps, IState> {
     }
   }
   public render() {
-    const { activeId, searchData, searchLoading } = this.props;
+    const { search, activeId, searchData, searchLoading } = this.props;
     return (
       <SearchPresenter
+        search={search}
         activeId={activeId}
         searchData={searchData}
         searchLoading={searchLoading}
