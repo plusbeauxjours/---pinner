@@ -54,6 +54,11 @@ django_coverage_plugin = "==1.6.0"
 googlemaps = "*"
 react-apollo-hooks = "*"
 cached-property = "*"
+gunicorn = "*"
+django-heroku = "*"
+psycopg2 = "*"
+install = "*"
+whitenoise = "*"
 
 [requires]
 python_version = "3.7"

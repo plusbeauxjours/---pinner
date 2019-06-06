@@ -280,11 +280,6 @@ const HeaderPresenter: React.SFC<IProps> = ({
           </UserContainer>
           <Column>
             <Icon>
-              <Link to="/notification">
-                <HeartEmpty />
-              </Link>
-            </Icon>
-            <Icon>
               <Link
                 to={{
                   pathname: `/${user ? user.username : ""}`,
