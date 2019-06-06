@@ -59,35 +59,10 @@ class Query(object):
             'userName': graphene.String(required=True),
         }
     )
-    get_followers = graphene.Field(
-        types.ProfileListResponse,
-        resolver=queries.resolve_get_followers,
-        required=True,
-        args={
-            'userName': graphene.String(required=True),
-        }
-    )
-    get_followings = graphene.Field(
-        types.ProfileListResponse,
-        resolver=queries.resolve_get_followings,
-        required=True,
-        args={
-            'userName': graphene.String(required=True),
-        }
-    )
-    get_knowing_followers = graphene.types.Field(
-        types.KnowingFollowersResponse,
-        resolver=queries.resolve_get_knowing_followers,
-        required=True,
-        args={
-            'username': graphene.String(required=True)
-        }
-    )
 
 
 class Mutation(object):
 
-    follow_user = mutations.FollowUser.Field(required=True)
     edit_profile = mutations.EditProfile.Field(required=True)
     delete_profile = mutations.DeleteProfile.Field(required=True)
     change_password = mutations.ChangePassword.Field(required=True)

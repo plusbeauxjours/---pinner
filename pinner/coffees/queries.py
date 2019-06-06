@@ -25,7 +25,6 @@ def resolve_get_coffees(self, info, **kwargs):
 
         try:
             profile = me.profile
-            followings = profile.followed_by.values('id').all()
             matches = me.guest.values('id').all()
 
             # matches = me.host.values('id').values('guest').all()
@@ -33,8 +32,7 @@ def resolve_get_coffees(self, info, **kwargs):
 
             coffees = city.coffee.filter((Q(target='everyone') |
                                           Q(target='nationality', host__profile__nationality=profile.nationality) |
-                                          Q(target='gender', host__profile__gender=profile.gender) |
-                                          Q(target='followers', host__profile__id__in=followings)) &
+                                          Q(target='gender', host__profile__gender=profile.gender)) &
                                          Q(expires__gt=timezone.now())).exclude(match__id__in=matches).order_by('-created_at')
 
             return types.GetCoffeesResponse(coffees=coffees)

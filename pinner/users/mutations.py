@@ -12,54 +12,6 @@ from . import models, types
 from notifications import models as notification_models
 
 
-class FollowUser(graphene.Mutation):
-
-    """ Follow User """
-
-    class Arguments:
-        userId = graphene.Int(required=True)
-
-    Output = types.FollowUnfollowResponse
-
-    @login_required
-    def mutate(self, info, **kwargs):
-
-        userId = kwargs.get('userId')
-        user = info.context.user
-
-        try:
-            target = User.objects.get(id=userId)
-        except User.DoesNotExist:
-            raise Exception('User Not Found')
-
-        if target.profile in user.profile.followings.all():
-
-            user.profile.followings.remove(target.profile)
-            target.profile.followers.remove(user.profile)
-
-            try:
-                notification = notification_models.Notification.objects.get(
-                    actor=user, target=target, verb="follow")
-                notification.delete()
-                return types.FollowUnfollowResponse(ok=True, user=target, follow=False)
-            except notification_models.Notification.DoesNotExist as e:
-                print(e)
-                pass
-
-        else:
-
-            user.profile.followings.add(target.profile)
-            target.profile.followers.add(user.profile)
-
-            try:
-                notification_models.Notification.objects.create(
-                    actor=user, target=target, verb="follow")
-                return types.FollowUnfollowResponse(ok=True, user=target, follow=True)
-            except IntegrityError as e:
-                print(e)
-                pass
-
-
 class EditProfile(graphene.Mutation):
 
     class Arguments:

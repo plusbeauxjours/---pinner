@@ -33,10 +33,6 @@ class Profile(config_models.TimeStampedModel):
     avatar = models.URLField(
         blank=True,
         default="http://basmed.unilag.edu.ng/wp-content/uploads/2018/10/avatar__181424.png")
-    followings = models.ManyToManyField(
-        'self', blank=True, symmetrical=False, related_name='following_users')
-    followers = models.ManyToManyField(
-        'self', blank=True, symmetrical=False, related_name='followed_by')
 
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     verified_phone_number = models.BooleanField(default=False)
@@ -65,14 +61,6 @@ class Profile(config_models.TimeStampedModel):
     @cached_property
     def continent_count(self):
         return self.user.movenotification.all().order_by('city__country__continent').distinct('city__country__continent').count()
-
-    @cached_property
-    def followers_count(self):
-        return self.followed_by.all().count()
-
-    @cached_property
-    def following_count(self):
-        return self.following_users.all().count()
 
     @cached_property
     def trip_count(self):

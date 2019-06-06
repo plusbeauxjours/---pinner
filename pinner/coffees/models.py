@@ -19,7 +19,6 @@ class Coffee (config_models.TimeStampedModel):
         ('everyone', 'EVERYONE'),
         ('gender', 'GENDER'),
         ('nationality', 'NATIONALITY'),
-        ('followers', 'FOLLOWERS'),
     )
 
     city = models.ForeignKey(location_models.City, on_delete=models.CASCADE, related_name='coffee')

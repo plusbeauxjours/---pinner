@@ -18,7 +18,6 @@ from django.dispatch import receiver
 class Notification(config_models.TimeStampedModel):
 
     VERBS = (
-        ('follow', 'FOLLOW'),
         ('upload', 'UPLOAD'),
         ('match', 'MATCH'),
     )

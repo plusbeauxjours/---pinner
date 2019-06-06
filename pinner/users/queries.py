@@ -92,10 +92,7 @@ def resolve_recommand_users(self, info, **kwargs):
 
     nextPage = page+1
 
-    following_profiles = user.profile.followings.values('id')
-
-    users = models.User.objects.all().exclude(id=user.id).exclude(
-        profile__id__in=following_profiles).order_by('-profile__created_at')
+    users = models.User.objects.all().exclude(id=user.id).order_by('-profile__created_at')
 
     hasNextPage = offset < users.count()
 
@@ -113,51 +110,3 @@ def resolve_user_list(self, info):
         '-date_joined')
 
     return types.UserListResponse(users=users)
-
-
-@login_required
-def resolve_get_followers(self, info, **kwargs):
-
-    userName = kwargs.get('userName')
-
-    try:
-        user = User.objects.select_related('profile').get(username=userName)
-        followers_profile = user.profile.followers.all()
-
-    except User.DoesNotExist:
-        raise Exception('User not found')
-
-    return types.ProfileListResponse(profiles=followers_profile)
-
-
-@login_required
-def resolve_get_followings(self, info, **kwargs):
-
-    userName = kwargs.get('userName')
-
-    try:
-        user = User.objects.select_related('profile').get(username=userName)
-        following_profile = user.profile.followings.all()
-
-    except User.DoesNotExist:
-        raise Exception('User not found')
-
-    return types.ProfileListResponse(profiles=following_profile)
-
-
-@login_required
-def resolve_get_knowing_followers(sel, info, **kwargs):
-
-    me = info.context.user
-    username = kwargs.get('username')
-
-    try:
-        user = User.objects.select_related('profile').get(username=username)
-        my_followings = me.profile.followings.all()
-        user_followers = user.profile.followers.all()
-        knowing_followers = my_followings.intersection(user_followers)
-        count = knowing_followers.count()
-        return types.KnowingFollowersResponse(profiles=knowing_followers, count=count)
-
-    except User.DoesNotExist:
-        raise Exception('User not found')
