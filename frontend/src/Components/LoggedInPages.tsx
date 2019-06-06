@@ -3,7 +3,6 @@ import { Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 
 import Feed from "../Routes/Feed/Feed";
-import Notification from "../Routes/Notification";
 import CityProfile from "../Routes/City/CityProfile";
 import CountryProfile from "../Routes/Country/CountryProfile";
 import ContinentProfile from "../Routes/Continent/ContinentProfile";
@@ -73,7 +72,6 @@ class LoggedInPages extends React.Component<IProps> {
           <Route path="/people" exact={true} component={PeoplePage} />
           <Route path="/coffees" exact={true} component={CoffeesPage} />
           <Route path="/match" exact={true} component={Match} />
-          <Route path="/notification" component={Notification} />
           <Route
             path="/continent/:continentName/usersNow"
             component={ContinentUsersNow}
