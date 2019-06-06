@@ -100,11 +100,6 @@ const TripContainer = styled.div`
   }
 `;
 
-const UserContainer = styled.div`
-  -webkit-box-flex: 0;
-  padding: 15px;
-`;
-
 const UserNameRow = styled.div`
   display: flex;
   flex-direction: row;
@@ -166,25 +161,6 @@ const SearchRow = styled.div<ITheme>`
   padding: 0 5px 0 5px;
   align-items: flex-start;
   justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-  background-color: ${props => (props.active ? "grey" : null)};
-  &:hover {
-    background-color: grey;
-  }
-  &:not(:last-child) {
-    border-bottom: 1px solid grey;
-  }
-`;
-
-const UserRow = styled.div<ITheme>`
-  display: grid;
-  flex-direction: row;
-  height: 50px;
-  grid-template-columns: 4fr 1fr;
-  padding: 0 5px 0 5px;
-  grid-gap: 15px;
-  align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   background-color: ${props => (props.active ? "grey" : null)};
@@ -543,41 +519,6 @@ const Select = styled.select`
 `;
 
 const Option = styled.option``;
-
-const SeeAll = styled.p`
-  font-size: 12px;
-  font-weight: 100;
-  cursor: pointer;
-`;
-
-const Box = styled.div`
-  max-width: 905px;
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-rows: repeat(3, 50px);
-  grid-auto-columns: 400px;
-  column-gap: 10px;
-  overflow-x: auto;
-  padding-bottom: 15px;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  ::-webkit-scrollbar {
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    background-color: ${props => props.theme.bgColor};
-  }
-  ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-    background-color: ${props => props.theme.greyColor};
-  }
-`;
-
-const CText = styled(Bold)`
-  display: flex;
-`;
 
 interface ITheme {
   size?: string;
