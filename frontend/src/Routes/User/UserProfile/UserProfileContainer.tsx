@@ -16,8 +16,6 @@ import {
   EditTripVariables,
   DeleteTrip,
   DeleteTripVariables,
-  GetKnowingFollowers,
-  GetKnowingFollowersVariables,
   DeleteCoffee,
   DeleteCoffeeVariables,
   RequestCoffee,
@@ -35,7 +33,6 @@ import {
   ADD_TRIP,
   EDIT_TRIP,
   DELETE_TRIP,
-  GET_KNOWING_FOLLOWERS,
   SEARCH_TRIP_CITIES
 } from "./UserProfileQueries";
 import { REQUEST_COFFEE } from "../../Feed/Feed/FeedQueries";
@@ -54,10 +51,7 @@ class GetTiprsQuery extends Query<GetTrips, GetTripsVariables> {}
 class AddTripMutation extends Mutation<AddTrip, AddTripVariables> {}
 class EditTripMutation extends Mutation<EditTrip, EditTripVariables> {}
 class DeleteTripMutation extends Mutation<DeleteTrip, DeleteTripVariables> {}
-class GetKnowingFollowersQuery extends Query<
-  GetKnowingFollowers,
-  GetKnowingFollowersVariables
-> {}
+
 
 class RequestCoffeeMutation extends Mutation<
   RequestCoffee,
@@ -275,15 +269,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                           {deleteCoffeeFn => {
                             this.deleteCoffeeFn = deleteCoffeeFn;
                             return (
-                              <GetKnowingFollowersQuery
-                                query={GET_KNOWING_FOLLOWERS}
-                                variables={{ username }}
-                              >
-                                {({
-                                  data: knowingFollowersData,
-                                  loading: knowingFollowersLoading
-                                }) => {
-                                  return (
                                     <LogOutMutation mutation={LOG_USER_OUT}>
                                       {logUserOutFn => {
                                         this.logUserOutFn = logUserOutFn;
@@ -529,12 +514,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                     getTripsData={
                                                                                       getTripsData
                                                                                     }
-                                                                                    knowingFollowersData={
-                                                                                      knowingFollowersData
-                                                                                    }
-                                                                                    knowingFollowersLoading={
-                                                                                      knowingFollowersLoading
-                                                                                    }
                                                                                     getTipsLoading={
                                                                                       getTipsLoading
                                                                                     }
@@ -725,9 +704,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                         );
                                       }}
                                     </LogOutMutation>
-                                  );
-                                }}
-                              </GetKnowingFollowersQuery>
                             );
                           }}
                         </DeleteCoffeeMutation>

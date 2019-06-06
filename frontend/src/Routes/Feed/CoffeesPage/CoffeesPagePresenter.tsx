@@ -186,16 +186,7 @@ const CoffeesPagePresenter: React.SFC<IProps> = ({
                                   />
                                 </>
                               );
-                            case "FOLLOWERS":
-                              return (
-                                <>
-                                  <Target>F</Target>
-                                  <SAvatar
-                                    size={"sm"}
-                                    url={coffee.host.profile.avatar}
-                                  />
-                                </>
-                              );
+                           
                             default:
                               return null;
                           }
@@ -210,8 +201,6 @@ const CoffeesPagePresenter: React.SFC<IProps> = ({
                                 return <Explain>with same gender</Explain>;
                               case "NATIONALITY":
                                 return <Explain>with same nationality</Explain>;
-                              case "FOLLOWERS":
-                                return <Explain>with followers</Explain>;
                               default:
                                 return null;
                             }
@@ -267,16 +256,7 @@ const CoffeesPagePresenter: React.SFC<IProps> = ({
                                   />
                                 </>
                               );
-                            case "FOLLOWERS":
-                              return (
-                                <>
-                                  <Target>F</Target>
-                                  <SAvatar
-                                    size={"sm"}
-                                    url={coffee.host.profile.avatar}
-                                  />
-                                </>
-                              );
+                          
                             default:
                               return null;
                           }
@@ -291,8 +271,6 @@ const CoffeesPagePresenter: React.SFC<IProps> = ({
                                 return <Explain>with same gender</Explain>;
                               case "NATIONALITY":
                                 return <Explain>with same nationality</Explain>;
-                              case "FOLLOWERS":
-                                return <Explain>with followers</Explain>;
                               default:
                                 return null;
                             }

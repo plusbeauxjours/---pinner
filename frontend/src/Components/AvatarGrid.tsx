@@ -39,8 +39,8 @@ const AvatarContainer = styled.div`
 `;
 
 const SAvatar = styled(Avatar)``;
+
 interface IProps {
-  knowingFollowers?: any;
   usersBefore?: any;
   usersNow?: any;
   coffees?: any;
@@ -48,7 +48,6 @@ interface IProps {
 }
 
 const AvatarGrid: React.SFC<IProps> = ({
-  knowingFollowers,
   usersBefore,
   usersNow,
   coffees,
@@ -61,14 +60,6 @@ const AvatarGrid: React.SFC<IProps> = ({
           <Upload />
         </Icon>
       )}
-      {knowingFollowers &&
-        knowingFollowers.map(knowingFollower => (
-          <AvatarContainer key={knowingFollower.id}>
-            <Link to={`/${knowingFollower.username}`}>
-              <SAvatar size={"md"} url={knowingFollower.avatar} />
-            </Link>
-          </AvatarContainer>
-        ))}
       {usersBefore &&
         usersBefore.map(user => (
           <AvatarContainer key={user.id}>
@@ -111,13 +102,6 @@ const AvatarGrid: React.SFC<IProps> = ({
                     return (
                       <>
                         <Target>N</Target>
-                        <SAvatar size={"md"} url={coffee.host.profile.avatar} />
-                      </>
-                    );
-                  case "FOLLOWERS":
-                    return (
-                      <>
-                        <Target>F</Target>
                         <SAvatar size={"md"} url={coffee.host.profile.avatar} />
                       </>
                     );

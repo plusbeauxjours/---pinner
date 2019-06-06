@@ -12,8 +12,6 @@ import CoffeeDetail from "../Routes/Detail/CoffeeDetail";
 import Match from "../Routes/Match";
 
 import UserProfile from "../Routes/User/UserProfile";
-import Followers from "../Routes/User/Followers";
-import Followings from "../Routes/User/Followings";
 import Coffees from "../Routes/User/Coffees";
 import Cities from "../Routes/User/Cities";
 import Countries from "../Routes/User/Countries";
@@ -107,8 +105,6 @@ class LoggedInPages extends React.Component<IProps> {
           <Route path="/:username/countries" component={Countries} />
           <Route path="/:username/cities" component={Cities} />
           <Route path="/:username/coffees" component={Coffees} />
-          <Route path="/:username/followings" component={Followings} />
-          <Route path="/:username/followers" component={Followers} />
           <Route path="/:username" exact={true} component={UserProfile} />
         </Switch>
       </Wrapper>

@@ -24,31 +24,10 @@ export const GET_USER = gql`
             ...CountryParts
           }
           postCount
-          followersCount
-          followingCount
           tripCount
           cityCount
           countryCount
           continentCount
-          followings {
-            id
-            user {
-              username
-              profile {
-                avatar
-              }
-            }
-          }
-          followers {
-            id
-            user {
-              username
-              profile {
-                avatar
-              }
-            }
-          }
-          isFollowing
           isSelf
           currentCity {
             latitude
@@ -111,31 +90,10 @@ export const EDIT_PROFILE = gql`
             ...CountryParts
           }
           postCount
-          followersCount
-          followingCount
           tripCount
           cityCount
           countryCount
           continentCount
-          followings {
-            id
-            user {
-              username
-              profile {
-                avatar
-              }
-            }
-          }
-          followers {
-            id
-            user {
-              username
-              profile {
-                avatar
-              }
-            }
-          }
-          isFollowing
           isSelf
           currentCity {
             latitude
@@ -245,26 +203,6 @@ export const DELETE_TRIP = gql`
     deleteTrip(moveNotificationId: $moveNotificationId) {
       ok
       tripId
-    }
-  }
-`;
-
-export const GET_KNOWING_FOLLOWERS = gql`
-  query GetKnowingFollowers($username: String!) {
-    getKnowingFollowers(username: $username) {
-      count
-      profiles {
-        id
-        username
-        avatar
-        isFollowing
-        currentCity {
-          cityName
-          country {
-            countryName
-          }
-        }
-      }
     }
   }
 `;

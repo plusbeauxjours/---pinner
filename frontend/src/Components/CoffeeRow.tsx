@@ -33,7 +33,6 @@ interface IProps {
   username: string;
   currentCity: string;
   currentCountry: string;
-  isFollowing?: boolean;
   isSelf?: boolean;
   size: string;
   target?: string;
@@ -46,7 +45,6 @@ const CoffeeRow: React.SFC<IProps> = ({
   currentCity,
   currentCountry,
   isSelf,
-  isFollowing,
   target
 }) => {
   return (

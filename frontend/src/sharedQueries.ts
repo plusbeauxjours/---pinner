@@ -21,7 +21,6 @@ export const USER_FRAGMENT = gql`
     username
     profile {
       avatar
-      isFollowing
       isSelf
       currentCity {
         cityName
@@ -38,7 +37,6 @@ export const PROFILE_FRAGMENT = gql`
     id
     username
     avatar
-    isFollowing
     isSelf
     currentCity {
       cityName
@@ -154,7 +152,6 @@ export const MATCH_FRAGMENT = gql`
         id
         username
         avatar
-        isFollowing
         isSelf
         currentCity {
           cityName
@@ -169,7 +166,6 @@ export const MATCH_FRAGMENT = gql`
         id
         username
         avatar
-        isFollowing
         isSelf
         currentCity {
           cityName

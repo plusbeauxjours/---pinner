@@ -22,7 +22,6 @@ export const COFFEE_DETAIL = gql`
                 countryName
               }
             }
-            isFollowing
             nationality {
               countryName
               countryCode
@@ -33,8 +32,6 @@ export const COFFEE_DETAIL = gql`
               countryCode
               countryEmoji
             }
-            followersCount
-            followingCount
             tripCount
           }
         }

@@ -190,8 +190,6 @@ interface IProps {
   modalOpen: boolean;
   back: any;
   toggleModal: () => void;
-  followUser: (userId: string) => void;
-  isFollowing: boolean;
   deleteCoffee: () => void;
 }
 
@@ -200,8 +198,6 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
   loading,
   modalOpen,
   toggleModal,
-  followUser,
-  isFollowing,
   back,
   deleteCoffee
 }) => {
@@ -230,9 +226,6 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
                   <MenuModalLink onClick={() => console.log("REPORT COFFEE")}>
                     REPORT COFFEE
                   </MenuModalLink>
-                  <MenuModalLink onClick={() => followUser(coffee.host.id)}>
-                    {isFollowing ? "UNFOLLOW" : "FOLLOW"}
-                  </MenuModalLink>
                 </>
               )}
               <MenuModalLink onClick={toggleModal}>CANCEL</MenuModalLink>
@@ -259,11 +252,7 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
                 <Text>{coffee.target}</Text>
               )}
               <NumberContainer>
-                <NText>{coffee.host.profile.followersCount}</NText>
-                <NText>{coffee.host.profile.followingCount} </NText>
                 <NText> {coffee.host.profile.tripCount} </NText>
-                <Text>FOLLOWERS</Text>
-                <Text>FOLLOWINGS</Text>
                 <Text>TRIPS</Text>
               </NumberContainer>
               <InfoContainer>

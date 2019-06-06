@@ -54,35 +54,6 @@ const NotificationRow: React.SFC<IProps> = ({
       <>
         {(() => {
           switch (notification.verb) {
-            case "FOLLOW":
-              return (
-                <>
-                  <Link
-                    to={`/${notification.actor.username}`}
-                    onClick={() => onMarkRead(notification.id)}
-                  >
-                    <UserRow>
-                      {!isRead ? (
-                        <ICon>
-                          <RedDot />
-                        </ICon>
-                      ) : null}
-                      <UserHeader
-                        username={notification.actor.username}
-                        currentCity={actor.currentCity.cityName}
-                        currentCountry={actor.currentCity.country.countryName}
-                        avatar={actor.avatar}
-                        size={"sm"}
-                      />
-                      <Column>
-                        <GreyText text={"Follow me"} />
-                        <GreyText text={notification.naturalTime} />
-                      </Column>
-                    </UserRow>
-                  </Link>
-                </>
-              );
-
             case "MATCH":
               return (
                 <>

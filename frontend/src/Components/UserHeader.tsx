@@ -85,12 +85,6 @@ const UserHeader: React.SFC<IProps> = ({
                 <Target>N</Target>
               </>
             );
-          case "FOLLOWERS":
-            return (
-              <>
-                <Target>F</Target>
-              </>
-            );
           default:
             return <Avatar size={size} url={avatar} />;
         }

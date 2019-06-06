@@ -10,7 +10,6 @@ export const TRIP_PROFILE = gql`
             id
             username
             avatar
-            isFollowing
             isSelf
             currentCity {
               cityName
