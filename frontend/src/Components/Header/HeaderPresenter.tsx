@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
-import { Profile, HeartEmpty, Compass, SearchIcon } from "../../Icons";
+import { Profile, Compass, SearchIcon } from "../../Icons";
 
 import Wrapper from "../Wrapper";
 import { RouteComponentProps, withRouter } from "react-router";
