@@ -13,7 +13,6 @@ import Wrapper from "../../../Components/Wrapper";
 import Loader from "../../../Components/Loader";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
-import FollowBtn from "../../../Components/FollowBtn";
 import AvatarGrid from "../../../Components/AvatarGrid";
 import Weather from "../../../Components/Weather";
 
@@ -592,9 +591,6 @@ interface IProps {
   getTripsData?: any;
   getTipsLoading: boolean;
 
-  knowingFollowersData: any;
-  knowingFollowersLoading: boolean;
-
   coffeeData?: any;
   coffeeLoading: boolean;
 
@@ -702,14 +698,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 
   getTripsData: { getTrips: { trip: getTrips = null } = {} } = {},
   getTipsLoading,
-
-  knowingFollowersData: {
-    getKnowingFollowers: {
-      count = null,
-      profiles: knowingFollowers = null
-    } = {}
-  } = {},
-  knowingFollowersLoading,
 
   coffeeData: { getCoffees: { coffees = null } = {} } = {},
   coffeeLoading,
@@ -955,9 +943,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <ModalLink onClick={() => submitCoffee("gender")}>
                 GENDER
               </ModalLink>
-              <ModalLink onClick={() => submitCoffee("followers")}>
-                FOLLOWERS
-              </ModalLink>
               <ModalLink onClick={toggleRequestModal}>CANCEL</ModalLink>
             </Modal>
           </ModalContainer>
@@ -1144,16 +1129,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 onKeyDown={onKeyDownSubmit}
               />
             ) : (
-              <Username>
-                {user.username}
-                {"       "}
-                {!user.profile.isSelf ? (
-                  <FollowBtn
-                    isFollowing={user.profile.isFollowing}
-                    userId={user.id}
-                  />
-                ) : null}
-              </Username>
+              <Username>{user.username}</Username>
             )}
             {user.profile.isSelf ? (
               <ListIcon onClick={toggleModal}>
@@ -1399,51 +1375,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid toggleRequestModal={toggleRequestModal} />
             </>
           ) : null}
-          {!user.profile.isSelf &&
-          knowingFollowers &&
-          knowingFollowers.length !== 0 ? (
-            <>
-              <GreyLine />
-              <Title>
-                <SText text={"FOLLOWINGS TOGETHER"} />
-                <Link to={`/people`}>
-                  <SeeAll>SEE ALL</SeeAll>
-                </Link>
-              </Title>
-              <UserContainer>
-                <Box>
-                  {knowingFollowers.map((knowingFollower, index) => {
-                    return (
-                      <UserRow key={index}>
-                        <Link to={`/${knowingFollower.username}`}>
-                          <AvatarContainer>
-                            <Avatar size={"sm"} url={knowingFollower.avatar} />
-                            <HeaderColumn>
-                              <CText text={knowingFollower.username} />
-                              <Location>
-                                {knowingFollower.currentCity.cityName},{" "}
-                                {
-                                  knowingFollower.currentCity.country
-                                    .countryName
-                                }
-                              </Location>
-                            </HeaderColumn>
-                          </AvatarContainer>
-                        </Link>
-                        {!user.isSelf && (
-                          <FollowBtn
-                            isFollowing={knowingFollower.isFollowing}
-                            userId={knowingFollower.id}
-                            username={knowingFollower.username}
-                          />
-                        )}
-                      </UserRow>
-                    );
-                  })}
-                </Box>
-              </UserContainer>
-            </>
-          ) : null}
           <GreyLine />
           {/* 
           ////////////// LOCATIONS //////////////
@@ -1453,30 +1384,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           </Title>
           <Container>
             <TripBox>
-              <ScrollContainer>
-                <Link to={`/${username}/followers`}>
-                  <CityContainer>
-                    <Square>
-                      <CityPhoto
-                        src={"http://localhost:8000/media/28_ix0X7LD.jpg "}
-                        size={"md"}
-                      />
-                    </Square>
-                  </CityContainer>
-                </Link>
-              </ScrollContainer>
-              <ScrollContainer>
-                <Link to={`/${username}/followings`}>
-                  <CityContainer>
-                    <Square>
-                      <CityPhoto
-                        src={"http://localhost:8000/media/281.jpg"}
-                        size={"md"}
-                      />
-                    </Square>
-                  </CityContainer>
-                </Link>
-              </ScrollContainer>
               <ScrollContainer>
                 <Link to={`/${username}/cities`}>
                   <CityContainer>

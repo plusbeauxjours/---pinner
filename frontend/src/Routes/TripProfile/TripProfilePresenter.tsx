@@ -10,7 +10,6 @@ import moment = require("moment");
 import LocationGrid from "src/Components/LocationGrid";
 import Weather from "src/Components/Weather";
 import AvatarGrid from "../../Components/AvatarGrid";
-import FollowBtn from "../../Components/FollowBtn";
 import UserHeader from "../../Components/UserHeader";
 
 const SWrapper = styled(Wrapper)`
@@ -239,13 +238,6 @@ const TripProfilePresenter: React.SFC<IProps> = ({
                           size={"sm"}
                         />
                       </Link>
-                      {!user.actor.profile.isSelf && (
-                        <FollowBtn
-                          isFollowing={user.actor.profile.isFollowing}
-                          userId={user.actor.profile.id}
-                          username={user.actor.profile.username}
-                        />
-                      )}
                     </UserRow>
                   </>
                 ))}

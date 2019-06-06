@@ -5,7 +5,6 @@ import Loader from "src/Components/Loader";
 
 import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
-import FollowBtn from "src/Components/FollowBtn";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
 
@@ -142,13 +141,6 @@ const PeoplePagePresenter: React.SFC<IProps> = ({
                           </HeaderColumn>
                         </AvatarContainer>
                       </Link>
-                      {!user.isSelf && (
-                        <FollowBtn
-                          isFollowing={user.profile.isFollowing}
-                          userId={user.id}
-                          username={user.username}
-                        />
-                      )}
                     </UserRow>
                   );
                 })}
@@ -168,13 +160,6 @@ const PeoplePagePresenter: React.SFC<IProps> = ({
                           </HeaderColumn>
                         </AvatarContainer>
                       </Link>
-                      {!user.isSelf && (
-                        <FollowBtn
-                          isFollowing={user.profile.isFollowing}
-                          userId={user.id}
-                          username={user.username}
-                        />
-                      )}
                     </UserRow>
                   );
                 })}

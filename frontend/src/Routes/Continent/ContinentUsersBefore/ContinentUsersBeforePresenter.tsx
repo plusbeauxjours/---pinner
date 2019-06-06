@@ -5,7 +5,6 @@ import Loader from "src/Components/Loader";
 
 import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
-import FollowBtn from "src/Components/FollowBtn";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
 
@@ -169,13 +168,6 @@ const ContinentUsersBeforePresenter: React.SFC<IProps> = ({
                           </HeaderColumn>
                         </AvatarContainer>
                       </Link>
-                      {!user.actor.isSelf && (
-                        <FollowBtn
-                          isFollowing={user.actor.profile.isFollowing}
-                          userId={user.id}
-                          username={user.actor.profile.username}
-                        />
-                      )}
                     </UserRow>
                   );
                 })}
@@ -198,13 +190,6 @@ const ContinentUsersBeforePresenter: React.SFC<IProps> = ({
                           </HeaderColumn>
                         </AvatarContainer>
                       </Link>
-                      {!user.isSelf && (
-                        <FollowBtn
-                          isFollowing={user.actor.profile.isFollowing}
-                          userId={user.id}
-                          username={user.actor.profile.username}
-                        />
-                      )}
                     </UserRow>
                   );
                 })}

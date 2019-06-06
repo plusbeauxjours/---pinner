@@ -10,7 +10,6 @@ import { keyframes } from "styled-components";
 import LocationGrid from "src/Components/LocationGrid";
 import Weather from "src/Components/Weather";
 import AvatarGrid from "../../../Components/AvatarGrid";
-import FollowBtn from "../../../Components/FollowBtn";
 import UserHeader from "../../../Components/UserHeader";
 import CityLikeBtn from "../../../Components/CityLikeBtn";
 import UserBox from "src/Components/UserBox";
@@ -366,13 +365,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                           size={"sm"}
                         />
                       </Link>
-                      {!user.profile.isSelf && (
-                        <FollowBtn
-                          isFollowing={user.profile.isFollowing}
-                          userId={user.profile.id}
-                          username={user.profile.username}
-                        />
-                      )}
                     </UserRow>
                   );
                 })}
@@ -397,13 +389,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                           size={"sm"}
                         />
                       </Link>
-                      {!user.profile.isSelf && (
-                        <FollowBtn
-                          isFollowing={user.profile.isFollowing}
-                          userId={user.profile.id}
-                          username={user.profile.username}
-                        />
-                      )}
                     </UserRow>
                   );
                 })}

@@ -3,7 +3,6 @@ import styled from "../../Styles/typed-components";
 import { Link } from "react-router-dom";
 import Loader from "../../Components/Loader";
 import UserHeader from "../../Components/UserHeader";
-import FollowBtn from "../../Components/FollowBtn";
 import CoffeeBtn from "src/Components/CoffeeBtn";
 import Wrapper from "src/Components/Wrapper";
 import Bold from "../../Components/Bold";
@@ -118,14 +117,9 @@ const MatchPresenter: React.SFC<IProps> = ({
                       />
                     </Link>
                     <Column>
-                    <GreyText text={match.coffee.target} />
-                    <GreyText text={match.naturalTime} />
+                      <GreyText text={match.coffee.target} />
+                      <GreyText text={match.naturalTime} />
                     </Column>
-                    <FollowBtn
-                      isFollowing={match.host.profile.isFollowing}
-                      userId={match.host.profile.id}
-                      username={match.host.profile.username}
-                    />
                     {match.isMatching ? (
                       <CoffeeBtn
                         isMatching={match.isMatching}
@@ -147,14 +141,9 @@ const MatchPresenter: React.SFC<IProps> = ({
                       />
                     </Link>
                     <Column>
-                    <GreyText text={match.coffee.target} />
-                    <GreyText text={match.naturalTime} />
+                      <GreyText text={match.coffee.target} />
+                      <GreyText text={match.naturalTime} />
                     </Column>
-                    <FollowBtn
-                      isFollowing={match.guest.profile.isFollowing}
-                      userId={match.guest.profile.id}
-                      username={match.guest.profile.username}
-                    />
                     {match.isMatching ? (
                       <CoffeeBtn
                         isMatching={match.isMatching}
@@ -184,14 +173,9 @@ const MatchPresenter: React.SFC<IProps> = ({
                       />
                     </Link>
                     <Column>
-                    <GreyText text={match.coffee.target} />
-                    <GreyText text={match.naturalTime} />
+                      <GreyText text={match.coffee.target} />
+                      <GreyText text={match.naturalTime} />
                     </Column>
-                    <FollowBtn
-                      isFollowing={match.host.profile.isFollowing}
-                      userId={match.host.profile.id}
-                      username={match.host.profile.username}
-                    />
                     {match.isMatching ? (
                       <CoffeeBtn
                         isMatching={match.isMatching}
@@ -213,14 +197,9 @@ const MatchPresenter: React.SFC<IProps> = ({
                       />
                     </Link>
                     <Column>
-                    <GreyText text={match.coffee.target} />
-                    <GreyText text={match.naturalTime} />
+                      <GreyText text={match.coffee.target} />
+                      <GreyText text={match.naturalTime} />
                     </Column>
-                    <FollowBtn
-                      isFollowing={match.guest.profile.isFollowing}
-                      userId={match.guest.profile.id}
-                      username={match.guest.profile.username}
-                    />
                     {match.isMatching ? (
                       <CoffeeBtn
                         isMatching={match.isMatching}

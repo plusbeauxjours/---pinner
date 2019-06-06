@@ -6,7 +6,6 @@ import Loader from "src/Components/Loader";
 import { Link } from "react-router-dom";
 import UserHeader from "../UserHeader";
 import Avatar from "../Avatar";
-import FollowBtnContainer from "../FollowBtn/index";
 import useGoogleAutocomplete from "../../autocompleteHelpers";
 import { GOOGLE_PLACE_KEY } from "src/keys";
 
@@ -150,13 +149,6 @@ const SearchPresenter: React.SFC<IProps> = ({
                     size={"sm"}
                   />
                 </Link>
-                {!user.isSelf && (
-                  <FollowBtnContainer
-                    isFollowing={user.profile.isFollowing}
-                    userId={user.id}
-                    username={user.profile.username}
-                  />
-                )}
               </UserRow>
             );
           })}

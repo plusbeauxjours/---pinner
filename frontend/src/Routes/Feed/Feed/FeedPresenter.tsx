@@ -7,7 +7,6 @@ import styled from "../../../Styles/typed-components";
 import Loader from "../../../Components/Loader";
 import Wrapper from "../../../Components/Wrapper";
 import Bold from "../../../Components/Bold";
-import FollowBtn from "src/Components/FollowBtn";
 import { Upload } from "src/Icons";
 import Avatar from "../../../Components/Avatar";
 import CoffeeBtn from "src/Components/CoffeeBtn";
@@ -277,9 +276,6 @@ const FeedPresenter: React.SFC<IProps> = ({
               <ModalLink onClick={() => submitCoffee("gender")}>
                 GENDER
               </ModalLink>
-              <ModalLink onClick={() => submitCoffee("followers")}>
-                FOLLOWERS
-              </ModalLink>
               <ModalLink onClick={toggleRequestModal}>CANCEL</ModalLink>
             </Modal>
           </ModalContainer>
@@ -306,13 +302,6 @@ const FeedPresenter: React.SFC<IProps> = ({
                           </HeaderColumn>
                         </AvatarContainer>
                       </Link>
-                      {!user.isSelf && (
-                        <FollowBtn
-                          isFollowing={user.profile.isFollowing}
-                          userId={user.id}
-                          username={user.username}
-                        />
-                      )}
                     </UserRow>
                   );
                 })}
@@ -376,16 +365,6 @@ const FeedPresenter: React.SFC<IProps> = ({
                                     />
                                   </>
                                 );
-                              case "FOLLOWERS":
-                                return (
-                                  <>
-                                    <Target>F</Target>
-                                    <Avatar
-                                      size={"sm"}
-                                      url={coffee.host.profile.avatar}
-                                    />
-                                  </>
-                                );
                               default:
                                 return null;
                             }
@@ -402,8 +381,6 @@ const FeedPresenter: React.SFC<IProps> = ({
                                   return (
                                     <Explain>with same nationality</Explain>
                                   );
-                                case "FOLLOWERS":
-                                  return <Explain>with followers</Explain>;
                                 default:
                                   return null;
                               }

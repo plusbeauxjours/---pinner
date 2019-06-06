@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
-import FollowBtn from "./FollowBtn";
 import UserHeader from "./UserHeader";
 import Bold from "../Components/Bold";
 
@@ -62,13 +61,6 @@ const CoffeeRow: React.SFC<IProps> = ({
             size={"sm"}
           />
           <UBold text={target} />
-          {!isSelf && (
-            <FollowBtn
-              isFollowing={isFollowing}
-              userId={id}
-              username={username}
-            />
-          )}
         </Container>
       </Link>
     </>

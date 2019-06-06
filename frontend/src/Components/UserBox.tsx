@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
-import FollowBtn from "./FollowBtn";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import Avatar from "./Avatar";
 import Bold from "./Bold";
@@ -134,13 +133,6 @@ const UserBox: React.SFC<IProps> = ({ history, users, type }) => (
                               </HeaderColumn>
                             </AvatarContainer>
                           </Link>
-                          {!user.isSelf && (
-                            <FollowBtn
-                              isFollowing={user.profile.isFollowing}
-                              userId={user.id}
-                              username={user.profile.username}
-                            />
-                          )}
                         </UserRow>
                       );
                     })}
@@ -175,13 +167,6 @@ const UserBox: React.SFC<IProps> = ({ history, users, type }) => (
                               </HeaderColumn>
                             </AvatarContainer>
                           </Link>
-                          {!user.isSelf && (
-                            <FollowBtn
-                              isFollowing={user.actor.profile.isFollowing}
-                              userId={user.id}
-                              username={user.actor.profile.username}
-                            />
-                          )}
                         </UserRow>
                       );
                     })}
