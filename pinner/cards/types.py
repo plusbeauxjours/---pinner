@@ -12,11 +12,6 @@ class FeedResponse(graphene.ObjectType):
     city = graphene.Field(location_types.CityType)
 
 
-class DeleteCardResponse(graphene.ObjectType):
-    ok = graphene.Boolean()
-    cardId = graphene.Int()
-
-
 class FileInputType(graphene.InputObjectType):
     url = graphene.String()
     is_video = graphene.Boolean()
