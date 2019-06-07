@@ -203,16 +203,6 @@ const THeader = styled.header`
   transition: background-color 0.2s ease-in-out;
 `;
 
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  -webkit-box-flex: 0;
-  flex: 0 0 auto;
-  height: 280px;
-  padding: 15px;
-`;
-
 const Title = styled.div`
   display: flex;
   justify-content: space-between;
@@ -220,38 +210,6 @@ const Title = styled.div`
   @media screen and (max-width: 935px) {
     margin-left: 10px;
   }
-`;
-
-const CityContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
-`;
-
-const CityPhoto = styled.img<ITheme>`
-  display: flex;
-  width: ${props => {
-    if (props.size === "md") {
-      return "200px";
-    } else if (props.size === "sm") {
-      return "50px";
-    } else {
-      return "200px";
-    }
-  }};
-  height: ${props => {
-    if (props.size === "md") {
-      return "200px";
-    } else if (props.size === "sm") {
-      return "50px";
-    } else {
-      return "200px";
-    }
-  }};
-  background-size: cover;
-  border-radius: 3px;
-  object-fit: cover;
 `;
 
 const Icon = styled.span`
@@ -434,46 +392,6 @@ const GreyLine = styled.div`
   border-bottom: 1px solid grey;
 `;
 
-const TripBox = styled.div`
-  width: 905px;
-  display: flex;
-  overflow-x: auto;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  ::-webkit-scrollbar {
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0 0, 0, 0.3);
-    border-radius: 10px;
-    background-color: ${props => props.theme.bgColor};
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-    background-color: ${props => props.theme.greyColor};
-  }
-`;
-
-const ScrollContainer = styled.div`
-  position: relative;
-  width: 200px;
-  height: 200px;
-  display: flex;
-  margin: 0 10px 25px 0;
-  z-index: 2;
-`;
-
-const Square = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  background-position: cover;
-  background-size: 100%;
-`;
-
 const SSText = styled(Bold)`
   font-size: 12px;
   font-weight: 100;
@@ -546,9 +464,6 @@ interface IProps {
   tripAddModalOpen: boolean;
   tripEditModalOpen: boolean;
   requestModalOpen: boolean;
-  coffeeModalOpen: boolean;
-  requestingCoffeeModalOpen: boolean;
-  coffeeReportModalOpen: boolean;
   profilFormModalOpen: boolean;
 
   editMode: boolean;
@@ -587,9 +502,6 @@ interface IProps {
   toggleEditTripModal: () => void;
 
   toggleRequestModal: () => void;
-  toggleCoffeeModal: () => void;
-  toggleRequestingCoffeeModal: () => void;
-  toggleCoffeeReportModal: () => void;
   toggleProfileFormModal: () => void;
 
   logUserOutFn: () => void;
@@ -614,9 +526,6 @@ interface IProps {
   ) => void;
   onKeyDownSubmit: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 
-  deleteCoffee: () => void;
-  getCoffeeId: any;
-  getRequestingCoffeeId: any;
   username: string;
 
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -654,9 +563,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   tripEditModalOpen,
 
   requestModalOpen,
-  coffeeModalOpen,
-  requestingCoffeeModalOpen,
-  coffeeReportModalOpen,
+
   profilFormModalOpen,
 
   editMode,
@@ -669,9 +576,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleEditTripModal,
 
   toggleRequestModal,
-  toggleCoffeeModal,
-  toggleRequestingCoffeeModal,
-  toggleCoffeeReportModal,
+
   toggleProfileFormModal,
   openEditMode,
   logUserOutFn,
@@ -704,9 +609,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   onDatesChange,
   onFocusChange,
   submitCoffee,
-  deleteCoffee,
-  getCoffeeId,
-  getRequestingCoffeeId,
+
   username,
   search,
   onChange,
@@ -827,50 +730,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               </Modal>
             </ModalContainer>
           )}
-        {requestingCoffeeModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleRequestingCoffeeModal} />
-            <Modal>
-              <ModalLink onClick={() => console.log("COFFEE DETAIL")}>
-                COFFEE DETAIL
-              </ModalLink>
-              <ModalLink onClick={() => console.log("EDIT COFFEE")}>
-                EDIT COFFEE
-              </ModalLink>
-              <ModalLink onClick={() => deleteCoffee()}>
-                CANCEL COFFEE
-              </ModalLink>
-              <ModalLink onClick={toggleRequestingCoffeeModal}>
-                CANCEL
-              </ModalLink>
-            </Modal>
-          </ModalContainer>
-        )}
-        {coffeeModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleCoffeeModal} />
-            <Modal>
-              <ModalLink onClick={() => console.log("COFFEE DETAIL")}>
-                COFFEE DETAIL
-              </ModalLink>
-              <ModalLink onClick={() => deleteCoffee()}>
-                DELETE COFFEE
-              </ModalLink>
-              <ModalLink onClick={toggleCoffeeModal}>CANCEL</ModalLink>
-            </Modal>
-          </ModalContainer>
-        )}
-        {coffeeReportModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleCoffeeReportModal} />
-            <Modal>
-              <ModalLink onClick={() => console.log("REPORT COFFEE")}>
-                REPORT COFFEE
-              </ModalLink>
-              <ModalLink onClick={toggleCoffeeReportModal}>CANCEL</ModalLink>
-            </Modal>
-          </ModalContainer>
-        )}
         {requestModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleRequestModal} />
@@ -1137,12 +996,23 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 <UBold text={" how many TRIPS - done"} />
               </Row>
               <Row>
-                <UBold text={String(user.profile.cityCount)} />
-                <UBold text={" how many CITIES - done"} />
+                <Link to={`/${username}/coffees`}>
+                  <UBold text={String(user.profile.tripCount)} />
+                  <UBold text={" how many COFFEES - done"} />
+                </Link>
+              </Row>
+
+              <Row>
+                <Link to={`/${username}/cities`}>
+                  <UBold text={String(user.profile.cityCount)} />
+                  <UBold text={" how many CITIES - done"} />
+                </Link>
               </Row>
               <Row>
-                <UBold text={String(user.profile.countryCount)} />
-                <UBold text={" how many COUNTRIES - done"} />
+                <Link to={`/${username}/countries`}>
+                  <UBold text={String(user.profile.countryCount)} />
+                  <UBold text={" how many COUNTRIES - done"} />
+                </Link>
               </Row>
               <Row>
                 <UBold text={String(user.profile.continentCount)} />
@@ -1316,61 +1186,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid toggleRequestModal={toggleRequestModal} />
             </>
           ) : null}
-          <GreyLine />
-          {/* 
-          ////////////// LOCATIONS //////////////
-          */}
-          <Title>
-            <SText text={`ABOUT ${username}`} />
-          </Title>
-          <Container>
-            <TripBox>
-              <ScrollContainer>
-                <Link to={`/${username}/cities`}>
-                  <CityContainer>
-                    <Square>
-                      <CityPhoto
-                        src={
-                          "https://image.fmkorea.com/files/attach/images/3842645/451/442/046/5b8bcef55357387016a4a5d5343249ea.jpg"
-                        }
-                        size={"md"}
-                      />
-                    </Square>
-                  </CityContainer>
-                </Link>
-              </ScrollContainer>
-              <ScrollContainer>
-                <Link to={`/${username}/countries`}>
-                  <CityContainer>
-                    <Square>
-                      <CityPhoto
-                        src={
-                          "http://playwares.com/files/attach/images/23503529/733/482/043/c64e3f04515122d1aee2879590ee250c.jpg"
-                        }
-                        size={"md"}
-                      />
-                    </Square>
-                  </CityContainer>
-                </Link>
-              </ScrollContainer>
-              {user.profile.isSelf && (
-                <ScrollContainer>
-                  <Link to={`/${username}/coffees`}>
-                    <CityContainer>
-                      <Square>
-                        <CityPhoto
-                          src={
-                            "https://media.hojunara.com/wp-content/uploads/2015/01/%EC%BD%94%EC%95%8C%EB%9D%BC.jpg"
-                          }
-                          size={"md"}
-                        />
-                      </Square>
-                    </CityContainer>
-                  </Link>
-                </ScrollContainer>
-              )}
-            </TripBox>
-          </Container>
         </SWrapper>
       </>
     );

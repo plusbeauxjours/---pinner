@@ -80,6 +80,7 @@ const MenuModal = styled(Modal)`
 `;
 
 const FormModal = styled(Modal)`
+  z-index: 10;
   display: flex;
   position: relative;
   justify-content: center;

@@ -16,8 +16,6 @@ import {
   EditTripVariables,
   DeleteTrip,
   DeleteTripVariables,
-  DeleteCoffee,
-  DeleteCoffeeVariables,
   RequestCoffee,
   RequestCoffeeVariables,
   GetCoffeesVariables,
@@ -40,7 +38,6 @@ import { GET_COFFEES } from "../Coffees/CoffeesQueries";
 import { withRouter, RouteComponentProps } from "react-router";
 import { LOG_USER_OUT } from "src/sharedQueries.local";
 import { toast } from "react-toastify";
-import { DELETE_COFFEE } from "../../Detail/CoffeeDetail/CoffeeDetailQueries";
 
 class SearchCitiesQuery extends Query<
   SearchTripCities,
@@ -58,10 +55,6 @@ class RequestCoffeeMutation extends Mutation<
   RequestCoffeeVariables
 > {}
 class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
-class DeleteCoffeeMutation extends Mutation<
-  DeleteCoffee,
-  DeleteCoffeeVariables
-> {}
 
 class EditProfileMutation extends Mutation<EditProfile, EditProfileVariables> {}
 class DeleteProfileMutation extends Mutation<DeleteProfile> {}
@@ -79,9 +72,8 @@ interface IState {
   profilFormModalOpen: boolean;
 
   requestModalOpen: boolean;
-  coffeeModalOpen: boolean;
-  requestingCoffeeModalOpen: boolean;
-  coffeeReportModalOpen: boolean;
+
+
   editMode: boolean;
   id: string;
   userName: string;
@@ -140,9 +132,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       profilFormModalOpen: true,
 
       requestModalOpen: false,
-      coffeeModalOpen: false,
-      requestingCoffeeModalOpen: false,
-      coffeeReportModalOpen: false,
+
+
       editMode: false,
       id: props.id,
       userName: props.username,
@@ -200,9 +191,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
 
       currentCity,
       requestModalOpen,
-      coffeeModalOpen,
-      requestingCoffeeModalOpen,
-      coffeeReportModalOpen,
+
+
+
       editMode,
       userName,
       bio,
@@ -222,7 +213,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripEndDate,
       focusedInput,
       moveNotificationId,
-      coffeeId,
       tripPage,
       search,
       tripList,
@@ -258,17 +248,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                   >
                     {({ data: coffeeData, loading: coffeeLoading }) => {
                       return (
-                        <DeleteCoffeeMutation
-                          mutation={DELETE_COFFEE}
-                          variables={{
-                            coffeeId: parseInt(coffeeId, 10)
-                          }}
-                          onCompleted={this.onCompletedDeleteCoffee}
-                          update={this.updateDeleteCoffee}
-                        >
-                          {deleteCoffeeFn => {
-                            this.deleteCoffeeFn = deleteCoffeeFn;
-                            return (
                                     <LogOutMutation mutation={LOG_USER_OUT}>
                                       {logUserOutFn => {
                                         this.logUserOutFn = logUserOutFn;
@@ -439,15 +418,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                     tripEditModalOpen={
                                                                                       tripEditModalOpen
                                                                                     }
-                                                                                    coffeeModalOpen={
-                                                                                      coffeeModalOpen
-                                                                                    }
-                                                                                    requestingCoffeeModalOpen={
-                                                                                      requestingCoffeeModalOpen
-                                                                                    }
-                                                                                    coffeeReportModalOpen={
-                                                                                      coffeeReportModalOpen
-                                                                                    }
+                                                                      
                                                                                     profilFormModalOpen={
                                                                                       profilFormModalOpen
                                                                                     }
@@ -485,18 +456,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                       this
                                                                                         .toggleEditTripModal
                                                                                     }
-                                                                                    toggleCoffeeModal={
-                                                                                      this
-                                                                                        .toggleCoffeeModal
-                                                                                    }
-                                                                                    toggleRequestingCoffeeModal={
-                                                                                      this
-                                                                                        .toggleRequestingCoffeeModal
-                                                                                    }
-                                                                                    toggleCoffeeReportModal={
-                                                                                      this
-                                                                                        .toggleCoffeeReportModal
-                                                                                    }
+                                                                                
                                                                                     toggleProfileFormModal={
                                                                                       this
                                                                                         .toggleProfileFormModal
@@ -625,18 +585,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                       this
                                                                                         .submitCoffee
                                                                                     }
-                                                                                    deleteCoffee={
-                                                                                      this
-                                                                                        .deleteCoffee
-                                                                                    }
-                                                                                    getCoffeeId={
-                                                                                      this
-                                                                                        .getCoffeeId
-                                                                                    }
-                                                                                    getRequestingCoffeeId={
-                                                                                      this
-                                                                                        .getRequestingCoffeeId
-                                                                                    }
+                                                                        
                                                                                     username={
                                                                                       username
                                                                                     }
@@ -704,9 +653,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                         );
                                       }}
                                     </LogOutMutation>
-                            );
-                          }}
-                        </DeleteCoffeeMutation>
                       );
                     }}
                   </GetCoffeesQuery>
@@ -821,12 +767,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripModalOpen: false
     });
   };
-  public toggleCoffeeReportModal = () => {
-    const { coffeeReportModalOpen } = this.state;
-    this.setState({
-      coffeeReportModalOpen: !coffeeReportModalOpen
-    } as any);
-  };
+ 
   public toggleProfileFormModal = () => {
     this.setState({
       profilFormModalOpen: false
@@ -1017,17 +958,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       console.log(e);
     }
   };
-  public onCompletedDeleteCoffee = data => {
-    if (data.deleteCoffee.ok) {
-      toast.success("Coffee deleted");
-    } else {
-      toast.error("error");
-    }
-    this.setState({
-      coffeeModalOpen: false,
-      requestingCoffeeModalOpen: false
-    } as any);
-  };
   public updatEditProfile = (cache, { data: { editProfile } }) => {
     const {
       match: {
@@ -1051,85 +981,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } catch (e) {
       console.log(e);
     }
-  };
-  public updateDeleteCoffee = (cache, { data: { deleteCoffee } }) => {
-    const {
-      match: {
-        params: { username }
-      }
-    } = this.props;
-    try {
-      const data = cache.readQuery({
-        query: GET_COFFEES,
-        variables: { userName: username, location: "profile" }
-      });
-      if (data) {
-        data.getCoffees.coffees = data.getCoffees.coffees.filter(
-          i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
-        );
-        data.getCoffees.cache.writeQuery({
-          query: GET_COFFEES,
-          variables: { userName: username, location: "profile" },
-          data
-        });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-    try {
-      const feedData = cache.readQuery({
-        query: GET_COFFEES,
-        variables: {
-          cityName: localStorage.getItem("cityName"),
-          location: "feed"
-        }
-      });
-      if (feedData) {
-        feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
-          i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
-        );
-        cache.writeQuery({
-          query: GET_COFFEES,
-          variables: {
-            cityName: localStorage.getItem("cityName"),
-            location: "feed"
-          },
-          data: feedData
-        });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  public getRequestingCoffeeId = coffeeId => {
-    const { requestingCoffeeModalOpen } = this.state;
-    this.setState({
-      requestingCoffeeModalOpen: !requestingCoffeeModalOpen,
-      coffeeId
-    } as any);
-  };
-  public getCoffeeId = coffeeId => {
-    const { coffeeModalOpen } = this.state;
-    this.setState({
-      coffeeModalOpen: !coffeeModalOpen,
-      coffeeId
-    } as any);
-  };
-  public deleteCoffee = () => {
-    const { coffeeId } = this.state;
-    this.deleteCoffeeFn({ variables: { coffeeId: parseInt(coffeeId, 10) } });
-  };
-  public toggleCoffeeModal = () => {
-    const { coffeeModalOpen } = this.state;
-    this.setState({
-      coffeeModalOpen: !coffeeModalOpen
-    } as any);
-  };
-  public toggleRequestingCoffeeModal = () => {
-    const { requestingCoffeeModalOpen } = this.state;
-    this.setState({
-      requestingCoffeeModalOpen: !requestingCoffeeModalOpen
-    } as any);
   };
   public toggleRequestModal = () => {
     const { requestModalOpen } = this.state;
