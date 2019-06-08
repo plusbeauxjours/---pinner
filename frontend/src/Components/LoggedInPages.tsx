@@ -2,7 +2,6 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 
-import Feed from "../Routes/Feed/Feed";
 import CityProfile from "../Routes/City/CityProfile";
 import CountryProfile from "../Routes/Country/CountryProfile";
 import ContinentProfile from "../Routes/Continent/ContinentProfile";
@@ -63,12 +62,11 @@ class LoggedInPages extends React.Component<IProps> {
         <Header />
         {modalOpen ? (
           <>
-            <Route path="/" exact={true} component={Feed} />
+            <Route path="/match" exact={true} component={Match} />
             <Route path="/c/:id" exact={true} component={CoffeeDetail} />
           </>
         ) : null}
         <Switch location={modalOpen ? this.previousLocation : location}>
-          <Route path="/" exact={true} component={Feed} />
           <Route path="/people" exact={true} component={PeoplePage} />
           <Route path="/coffees" exact={true} component={CoffeesPage} />
           <Route path="/match" exact={true} component={Match} />

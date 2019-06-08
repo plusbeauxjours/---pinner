@@ -33,11 +33,12 @@ import {
   DELETE_TRIP,
   SEARCH_TRIP_CITIES
 } from "./UserProfileQueries";
-import { REQUEST_COFFEE } from "../../Feed/Feed/FeedQueries";
+
 import { GET_COFFEES } from "../Coffees/CoffeesQueries";
 import { withRouter, RouteComponentProps } from "react-router";
 import { LOG_USER_OUT } from "src/sharedQueries.local";
 import { toast } from "react-toastify";
+import { REQUEST_COFFEE } from '../../Match/MatchQueries';
 
 class SearchCitiesQuery extends Query<
   SearchTripCities,
