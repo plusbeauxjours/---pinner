@@ -7,7 +7,6 @@ import Loader from "../../../Components/Loader";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
 import { keyframes } from "styled-components";
-import LocationGrid from "src/Components/LocationGrid";
 import Weather from "src/Components/Weather";
 import AvatarGrid from "../../../Components/AvatarGrid";
 import UserHeader from "../../../Components/UserHeader";
@@ -16,17 +15,6 @@ import UserBox from "src/Components/UserBox";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
-`;
-
-const Container = styled.div`
-  border-bottom: 4px;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  -webkit-box-flex: 0;
-  flex: 0 0 auto;
-  height: 280px;
-  padding: 15px;
 `;
 
 const PHeader = styled.header`
@@ -42,35 +30,6 @@ const Username = styled.span`
   text-align: center;
   font-size: 22px;
   font-weight: 100;
-`;
-
-const CityPhoto = styled.img`
-  margin-bottom: 10px;
-  display: flex;
-  width: 200px;
-  height: 200px;
-  background-size: cover;
-  border-radius: 3px;
-  z-index: 1;
-  object-fit: cover;
-`;
-
-const CountryName = styled(Bold)`
-  position: absolute;
-  display: flex;
-  z-index: 5;
-  font-size: 40px;
-  font-family: "Qwigley";
-  font-weight: 200;
-  pointer-events: none;
-`;
-
-const CountryContainer = styled.div`
-  margin-right: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
 `;
 
 const InfoRow = styled.span``;
@@ -96,27 +55,6 @@ const Title = styled.div`
 const SmallTitle = styled(Title)`
   flex-direction: column;
   align-items: center;
-`;
-
-const Box = styled.div`
-  width: 905px;
-  display: flex;
-  overflow-x: auto;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  ::-webkit-scrollbar {
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    background-color: ${props => props.theme.bgColor};
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-    background-color: ${props => props.theme.greyColor};
-  }
 `;
 
 const ModalAnimation = keyframes`
@@ -221,6 +159,13 @@ const UserRow = styled.div<ITheme>`
   }
 `;
 
+const LocationRow = styled(UserRow)`
+  width: 300px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-top: 1px solid grey;
+`;
+
 const UserNameRow = styled.div`
   display: flex;
   flex-direction: row;
@@ -246,6 +191,35 @@ const Input = styled.input`
   &::placeholder {
     color: ${props => props.theme.greyColor};
   }
+`;
+
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
+`;
+
+const HeaderText = styled(Bold)`
+  display: flex;
+`;
+
+const HeaderColumn = styled.div`
+  margin-left: 15px;
+`;
+
+const SAvatar = styled(Avatar)`
+  border-radius: 3px;
+  height: 45px;
+  width: 45px;
+`;
+
+const Location = styled.span`
+  display: flex;
+  margin-top: 5px;
+  display: block;
+  font-size: 12px;
+  font-weight: 200;
 `;
 
 interface ITheme {
@@ -315,6 +289,19 @@ const CityProfilePresenter: React.SFC<IProps> = ({
           <PHeader>
             <AvatarContainer>
               <CAvatar size="lg" url={city.cityPhoto} />
+              <LocationRow>
+                <Link to={`/country/${city.country.countryName}`}>
+                  <Header>
+                    <SAvatar size={"sm"} url={city.country.countryPhoto} />
+                    <HeaderColumn>
+                      <HeaderText text={city.country.countryName} />
+                      <Location>
+                        {city.country.continent.continentName}
+                      </Location>
+                    </HeaderColumn>
+                  </Header>
+                </Link>
+              </LocationRow>
               <InfoRow>
                 <SText text={String(city.userLogCount)} />
                 DISTANCE
@@ -323,7 +310,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                 TIME DIFFERENCE
                 <SText text={String(city.userCount)} />
               </InfoRow>
-
               <InfoRow>
                 <CityLikeBtn
                   isLiked={city.isLiked}
@@ -403,38 +389,12 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid coffees={coffees} />
             </>
           ) : null}
-          <GreyLine />
           {usersBefore && usersBefore.length !== 0 ? (
             <>
-              <UserBox users={usersBefore} type={"usersBefore"} />
               <GreyLine />
+              <UserBox users={usersBefore} type={"usersBefore"} />
             </>
           ) : null}
-          <Title>
-            <SText text={`WHERE ${city.cityName} IS`} />
-          </Title>
-          <Container>
-            <CountryContainer>
-              <Link to={`/country/${city.country.countryName}`}>
-                <CityPhoto src={city.country.countryPhoto} />
-              </Link>
-              <CountryName text={city.country.countryName} />
-            </CountryContainer>
-            <Box />
-          </Container>
-          <GreyLine />
-          <Title>
-            <SText text={"NEAR CITIES"} />
-          </Title>
-          <Container>
-            <Box>
-              {!nearCitiesLoading && nearCities && nearCities.length !== 0 ? (
-                <LocationGrid cities={nearCities} type={"city"} />
-              ) : (
-                <Loader />
-              )}
-            </Box>
-          </Container>
         </SWrapper>
       </>
     );

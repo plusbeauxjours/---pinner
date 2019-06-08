@@ -35,6 +35,9 @@ export const CITY_PROFILE = gql`
           countryName
           countryPhoto
           countryCode
+          continent {
+            continentName
+          }
         }
         likeCount
         isLiked

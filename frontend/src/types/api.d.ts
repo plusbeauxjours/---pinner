@@ -507,11 +507,17 @@ export interface CityProfile_cityProfile_coffees {
   host: CityProfile_cityProfile_coffees_host;
 }
 
+export interface CityProfile_cityProfile_city_country_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
 export interface CityProfile_cityProfile_city_country {
   __typename: "CountryType";
   countryName: string | null;
   countryPhoto: string | null;
   countryCode: string | null;
+  continent: CityProfile_cityProfile_city_country_continent | null;
 }
 
 export interface CityProfile_cityProfile_city {
