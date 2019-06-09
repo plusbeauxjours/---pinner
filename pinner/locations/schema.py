@@ -111,11 +111,12 @@ class Query(object):
         required=True
     )
     near_cities = graphene.Field(
-        types.CitiesResponse,
+        types.NearCitiesResponse,
         resolver=queries.resolve_near_cities,
         required=True,
         args={
             'cityName': graphene.String(required=True),
+            'page': graphene.Int()
         }
     )
     near_countries = graphene.Field(

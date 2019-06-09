@@ -46,6 +46,7 @@ const SSText = styled(Bold)`
 
 const Title = styled.div`
   display: flex;
+  justify-content: space-between;
   margin-top: 10px;
   @media screen and (max-width: 935px) {
     margin-left: 10px;
@@ -161,6 +162,7 @@ const UserRow = styled.div<ITheme>`
 
 const LocationRow = styled(UserRow)`
   width: 300px;
+  height: 50px;
   margin-top: 15px;
   margin-bottom: 15px;
   border-top: 1px solid grey;
@@ -220,6 +222,42 @@ const Location = styled.span`
   display: block;
   font-size: 12px;
   font-weight: 200;
+`;
+
+const Container = styled.div`
+  -webkit-box-flex: 0;
+  padding: 15px;
+`;
+
+const Box = styled.div`
+  max-width: 905px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(3, 50px);
+  grid-auto-columns: 400px;
+  column-gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 15px;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  ::-webkit-scrollbar {
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: ${props => props.theme.bgColor};
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    background-color: ${props => props.theme.greyColor};
+  }
+`;
+
+const SeeAll = styled.p`
+  font-size: 12px;
+  font-weight: 100;
+  cursor: pointer;
 `;
 
 interface ITheme {
@@ -395,6 +433,33 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               <UserBox users={usersBefore} type={"usersBefore"} />
             </>
           ) : null}
+
+          <GreyLine />
+          <Title>
+            <SText text={"NEAR CITIES"} />
+            {/* <Link to={`${history.location.pathname}/usersbefore`}> */}
+            <SeeAll>SEE ALL</SeeAll>
+            {/* </Link> */}
+          </Title>
+          <Container>
+            <Box>
+              {nearCities &&
+                nearCities.length !== 0 &&
+                nearCities.map(nearCity => (
+                  <UserRow key={nearCity.id}>
+                    <Link to={`/city/${nearCity.cityName}`}>
+                      <Header>
+                        <SAvatar size={"sm"} url={nearCity.cityPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={nearCity.cityName} />
+                          <Location>{nearCity.country.countryName}</Location>
+                        </HeaderColumn>
+                      </Header>
+                    </Link>
+                  </UserRow>
+                ))}
+            </Box>
+          </Container>
         </SWrapper>
       </>
     );

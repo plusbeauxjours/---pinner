@@ -314,6 +314,10 @@ def resolve_near_cities(self, info, **kwargs):
 
     user = info.context.user
     cityName = kwargs.get('cityName')
+    page = kwargs.get('page', 0)
+    offset = 12 * page
+
+    nextPage = page+1
 
     city = models.City.objects.prefetch_related('near_city').prefetch_related('near_cities').get(city_name=cityName)
 
@@ -327,15 +331,19 @@ def resolve_near_cities(self, info, **kwargs):
             gcd_formula,
             (latitude, longitude, latitude)
         )
-        near_cities_from_here = city.near_city.all().annotate(distance=distance_raw_sql)[:6]
-        near_cities_from_there = city.near_cities.all().annotate(distance=distance_raw_sql)[:6]
+        near_cities_from_here = city.near_city.all().exclude(city_name=cityName).annotate(distance=distance_raw_sql)
+        near_cities_from_there = city.near_cities.all().exclude(city_name=cityName).annotate(distance=distance_raw_sql)
 
-        qs = near_cities_from_here.union(near_cities_from_there).order_by('distance')[:6]
+        qs = near_cities_from_here.union(near_cities_from_there).order_by('distance')
         return qs
 
     combined = get_locations_nearby_coords(city.latitude, city.longitude)
 
-    return types.CitiesResponse(cities=combined)
+    hasNextPage = offset < combined.count()
+
+    combined = combined[offset:12 + offset]
+
+    return types.NearCitiesResponse(cities=combined)
 
 
 @login_required

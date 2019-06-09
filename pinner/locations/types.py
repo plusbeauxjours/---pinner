@@ -78,6 +78,12 @@ class CitiesResponse(graphene.ObjectType):
     cities = graphene.List(CityType)
 
 
+class NearCitiesResponse(graphene.ObjectType):
+    page = graphene.Int()
+    hasNextPage = graphene.Boolean()
+    cities = graphene.List(CityType)
+
+
 class CountriesResponse(graphene.ObjectType):
     countries = graphene.List(CountryType)
 
