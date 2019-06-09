@@ -532,6 +532,8 @@ export interface CityProfile_cityProfile_city {
   isLiked: boolean | null;
   userCount: number | null;
   userLogCount: number | null;
+  count: number | null;
+  diff: number | null;
 }
 
 export interface CityProfile_cityProfile {
@@ -578,7 +580,7 @@ export interface NearCities_nearCities_cities {
 }
 
 export interface NearCities_nearCities {
-  __typename: "CitiesResponse";
+  __typename: "NearCitiesResponse";
   cities: (NearCities_nearCities_cities | null)[] | null;
 }
 
@@ -1617,6 +1619,8 @@ export interface TripProfile_tripProfile_city {
   country: TripProfile_tripProfile_city_country;
   userCount: number | null;
   userLogCount: number | null;
+  count: number | null;
+  diff: number | null;
 }
 
 export interface TripProfile_tripProfile {

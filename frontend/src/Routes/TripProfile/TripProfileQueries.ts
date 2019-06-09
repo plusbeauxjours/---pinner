@@ -42,6 +42,8 @@ export const TRIP_PROFILE = gql`
         }
         userCount
         userLogCount
+        count
+        diff
       }
     }
   }

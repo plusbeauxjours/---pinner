@@ -145,7 +145,7 @@ const UserContainer = styled.div`
 const UserRow = styled.div<ITheme>`
   display: grid;
   flex-direction: row;
-  grid-template-columns: 4fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
   padding: 0 5px 0 5px;
   grid-gap: 15px;
   align-items: center;
@@ -443,8 +443,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
           </Title>
           <Container>
             <Box>
-              {nearCities &&
-                nearCities.length !== 0 &&
+              {nearCities && !nearCitiesLoading && nearCities.length !== 0 ? (
                 nearCities.map(nearCity => (
                   <UserRow key={nearCity.id}>
                     <Link to={`/city/${nearCity.cityName}`}>
@@ -456,8 +455,17 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                         </HeaderColumn>
                       </Header>
                     </Link>
+                    <CityLikeBtn
+                      isLiked={city.isLiked}
+                      cityId={city.id}
+                      likeCount={city.likeCount}
+                      type={"row"}
+                    />
                   </UserRow>
-                ))}
+                ))
+              ) : (
+                <Loader />
+              )}
             </Box>
           </Container>
         </SWrapper>
