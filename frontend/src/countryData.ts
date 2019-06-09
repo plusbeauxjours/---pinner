@@ -22,9 +22,9 @@ export const countries = [
     emojiU: "U+1F1E6 U+1F1EB"
   },
   {
-    name: "Åland",
+    name: "Åland Islands",
     code: "AX",
-    native: "Åland",
+    native: "Åland Islands",
     phone: "+358",
     continent: "EU",
     capital: "Mariehamn",
@@ -202,9 +202,9 @@ export const countries = [
     emojiU: "U+1F1E6 U+1F1FF"
   },
   {
-    name: "Bahamas",
+    name: "The Bahamas",
     code: "BS",
-    native: "Bahamas",
+    native: "The Bahamas",
     phone: "+1",
     continent: "NA",
     capital: "Nassau",
@@ -334,9 +334,9 @@ export const countries = [
     emojiU: "U+1F1E7 U+1F1F4"
   },
   {
-    name: "Bonaire",
+    name: "Caribbean Netherlands",
     code: "BQ",
-    native: "Bonaire",
+    native: "Caribbean Netherlands",
     phone: "+5997",
     continent: "NA",
     capital: "Kralendijk",
@@ -574,9 +574,9 @@ export const countries = [
     emojiU: "U+1F1E8 U+1F1FD"
   },
   {
-    name: "Cocos [Keeling] Islands",
+    name: "Cocos (Keeling) Islands",
     code: "CC",
-    native: "Cocos (Keeling) Islands",
+    native: "Cocos (Keeling) Islabnds",
     phone: "+61",
     continent: "AS",
     capital: "West Island",
@@ -658,7 +658,7 @@ export const countries = [
     emojiU: "U+1F1E8 U+1F1F7"
   },
   {
-    name: "Ivory Coast",
+    name: "Côte d'Ivoire",
     code: "CI",
     native: "Côte d'Ivoire",
     phone: "+225",
@@ -946,7 +946,7 @@ export const countries = [
     emojiU: "U+1F1F5 U+1F1EB"
   },
   {
-    name: "French Southern Territories",
+    name: "French Southern and Antarctic Lands",
     code: "TF",
     native: "Territoire des Terres australes et antarctiques fr",
     phone: "+262",
@@ -970,9 +970,9 @@ export const countries = [
     emojiU: "U+1F1EC U+1F1E6"
   },
   {
-    name: "Gambia",
+    name: "The Gambia",
     code: "GM",
-    native: "Gambia",
+    native: "The Gambia",
     phone: "+220",
     continent: "AF",
     capital: "Banjul",
@@ -1582,7 +1582,7 @@ export const countries = [
     emojiU: "U+1F1F1 U+1F1FA"
   },
   {
-    name: "Macao",
+    name: "Macau",
     code: "MO",
     native: "澳門",
     phone: "+853",
@@ -1594,7 +1594,7 @@ export const countries = [
     emojiU: "U+1F1F2 U+1F1F4"
   },
   {
-    name: "Macedonia",
+    name: "North Macedonia",
     code: "MK",
     native: "Македонија",
     phone: "+389",
@@ -1750,9 +1750,9 @@ export const countries = [
     emojiU: "U+1F1F2 U+1F1FD"
   },
   {
-    name: "Micronesia",
+    name: "Federated States of Micronesia",
     code: "FM",
-    native: "Micronesia",
+    native: "Federated States of Micronesia",
     phone: "+691",
     continent: "OC",
     capital: "Palikir",
@@ -1779,7 +1779,7 @@ export const countries = [
     native: "Monaco",
     phone: "+377",
     continent: "EU",
-    capital: "Monaco",
+    capital: "Monaco-Ville",
     currency: "EUR",
     languages: ["fr"],
     emoji: "🇲🇨",
@@ -1846,7 +1846,7 @@ export const countries = [
     emojiU: "U+1F1F2 U+1F1FF"
   },
   {
-    name: "Myanmar [Burma]",
+    name: "Myanmar (Burma)",
     code: "MM",
     native: "မြန်မာ",
     phone: "+95",
@@ -2217,6 +2217,11 @@ export const countries = [
     emoji: "🇷🇼",
     emojiU: "U+1F1F7 U+1F1FC"
   },
+
+  /////////////////////////////
+  // 0609
+  /////////////////////////////
+
   {
     name: "Réunion",
     code: "RE",

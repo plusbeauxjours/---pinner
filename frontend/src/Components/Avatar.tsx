@@ -7,22 +7,22 @@ const Container = styled.img<IProps>`
     if (props.size === "md") {
       return "50px";
     } else if (props.size === "sm") {
-      return "30px";
+      return "45px";
     } else if (props.size === "lg") {
       return "200px";
     } else {
-      return "30px";
+      return "45px";
     }
   }};
   width: ${props => {
     if (props.size === "md") {
       return "50px";
     } else if (props.size === "sm") {
-      return "30px";
+      return "45px";
     } else if (props.size === "lg") {
       return "200px";
     } else {
-      return "30px";
+      return "45px";
     }
   }};
   background-position: center center;
@@ -37,22 +37,22 @@ const Placeholder = styled.div<IProps>`
     if (props.size === "md") {
       return "50px";
     } else if (props.size === "sm") {
-      return "30px";
+      return "45px";
     } else if (props.size === "lg") {
       return "200px";
     } else {
-      return "30px";
+      return "45px";
     }
   }};
   width: ${props => {
     if (props.size === "md") {
       return "50px";
     } else if (props.size === "sm") {
-      return "30px";
+      return "45px";
     } else if (props.size === "lg") {
       return "200px";
     } else {
-      return "30px";
+      return "45px";
     }
   }};
   border-radius: 50%;

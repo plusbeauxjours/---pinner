@@ -8,6 +8,7 @@ from locations import models as location_models
 from django.contrib.auth.models import User
 from locations import types as location_types
 
+
 @login_required
 def resolve_get_notifications(self, info, **kwargs):
 
@@ -26,17 +27,17 @@ def resolve_get_notifications(self, info, **kwargs):
     print(hasNextPage)
 
     return types.GetNotificationsResponse(
-        notifications=notifications, 
-        page=nextPage, 
+        notifications=notifications,
+        page=nextPage,
         hasNextPage=hasNextPage
-        )
+    )
 
 
 @login_required
 def resolve_search_get_notifications(self, info, **kwargs):
 
     user = info.context.user
-    search = kwargs.get('search',"")
+    search = kwargs.get('search', "")
     page = kwargs.get('page', 0)
     offset = 20 * page
 
@@ -56,21 +57,21 @@ def resolve_search_get_notifications(self, info, **kwargs):
         print("search")
 
         return types.GetNotificationsResponse(
-            notifications=notifications, 
-            page=nextPage, 
+            notifications=notifications,
+            page=nextPage,
             hasNextPage=hasNextPage
-            )
-    else: 
+        )
+    else:
 
         hasNextPage = offset < notifications.count()
 
         notifications = notifications[offset:20 + offset]
 
         return types.GetNotificationsResponse(
-            notifications=notifications, 
-            page=nextPage, 
+            notifications=notifications,
+            page=nextPage,
             hasNextPage=hasNextPage
-            )
+        )
 
 
 @login_required
@@ -80,7 +81,7 @@ def resolve_get_trips(self, info, **kwargs):
     user = User.objects.prefetch_related('movenotification').get(username=username)
     tripPage = kwargs.get('tripPage', 0)
 
-    trip = user.movenotification.all().order_by('-start_date')
+    trip = user.movenotification.all().order_by('-start_date', '-created_at')
 
     return location_types.TripResponse(trip=trip)
 
@@ -96,13 +97,12 @@ def resolve_get_duration_my_trip(self, info, **kwargs):
     try:
         my_trip = user.movenotification.filter(
             city__city_name=cityName, start_date__range=(
-            startDate, endDate)) | user.movenotification.filter(
-                city__city_name=cityName, 
-                end_date__range=(startDate, endDate)
-            )
+                startDate, endDate)) | user.movenotification.filter(
+            city__city_name=cityName,
+            end_date__range=(startDate, endDate)
+        )
 
         return types.DurationTripsResponse(moveNotifications=my_trip)
 
     except models.MoveNotification.DoesNotExist:
         raise Exception("You've never been there at the same time")
-

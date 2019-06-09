@@ -154,6 +154,7 @@ export default function useGoogleAutocomplete({
       }
     });
   };
+  console.log(state.results);
   return {
     results: state.results,
     isLoading: state.isLoading,

@@ -115,7 +115,9 @@ const SearchPresenter: React.SFC<IProps> = ({
                       text={prediction.structured_formatting.main_text}
                     />
                     <Location>
-                      {prediction.structured_formatting.secondary_text}
+                      {prediction.structured_formatting.secondary_text
+                        ? prediction.structured_formatting.secondary_text
+                        : prediction.structured_formatting.main_text}
                     </Location>
                   </HeaderColumn>
                 </Header>
