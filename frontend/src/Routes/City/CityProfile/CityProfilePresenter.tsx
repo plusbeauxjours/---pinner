@@ -456,9 +456,9 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                       </Header>
                     </Link>
                     <CityLikeBtn
-                      isLiked={city.isLiked}
-                      cityId={city.id}
-                      likeCount={city.likeCount}
+                      isLiked={nearCity.isLiked}
+                      cityId={nearCity.id}
+                      likeCount={nearCity.likeCount}
                       type={"row"}
                     />
                   </UserRow>

@@ -206,10 +206,9 @@ class HeaderContainer extends React.Component<any, IState> {
         searchCountries: { countries = null } = {},
         searchContinents: { continents = null } = {}
       } = this.searchData;
-      // const length =
-      //   users.length + cities.length + countries.length + continents.length;
-      // console.log(length);
-
+      const length =
+        users.length + cities.length + countries.length + continents.length;
+      console.log(length);
       if (keyCode === 13 && (users || cities || countries || continents)) {
         history.push({
           pathname: `/${users[activeId].username}`
@@ -226,7 +225,7 @@ class HeaderContainer extends React.Component<any, IState> {
           activeId: activeId - 1
         });
       } else if (keyCode === 40) {
-        if (activeId === users.length - 1) {
+        if (activeId === length - 1) {
           return;
         }
         this.setState({

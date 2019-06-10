@@ -139,7 +139,6 @@ const SearchPresenter: React.SFC<IProps> = ({
             }
             return (
               <UserRow key={index} active={active}>
-                {console.log(user)}
                 <Link to={`/${user.username}`}>
                   <UserHeader
                     username={user.username}
