@@ -2,27 +2,27 @@ import React from "react";
 import ProgressiveImage from "react-progressive-image";
 import styled from "styled-components";
 
-const Container = styled.img<IProps>`
+const Container = styled.img<ITheme>`
   height: ${props => {
     if (props.size === "md") {
       return "50px";
     } else if (props.size === "sm") {
-      return "45px";
+      return "30px";
     } else if (props.size === "lg") {
       return "200px";
     } else {
-      return "45px";
+      return "30px";
     }
   }};
   width: ${props => {
     if (props.size === "md") {
       return "50px";
     } else if (props.size === "sm") {
-      return "45px";
+      return "30px";
     } else if (props.size === "lg") {
       return "200px";
     } else {
-      return "45px";
+      return "30px";
     }
   }};
   background-position: center center;
@@ -31,32 +31,56 @@ const Container = styled.img<IProps>`
   object-fit: cover;
 `;
 
-const Placeholder = styled.div<IProps>`
+const Placeholder = styled.div<ITheme>`
   background-color: ${props => props.color};
   height: ${props => {
     if (props.size === "md") {
       return "50px";
     } else if (props.size === "sm") {
-      return "45px";
+      return "30px";
     } else if (props.size === "lg") {
       return "200px";
     } else {
-      return "45px";
+      return "30px";
     }
   }};
   width: ${props => {
     if (props.size === "md") {
       return "50px";
     } else if (props.size === "sm") {
-      return "45px";
+      return "30px";
     } else if (props.size === "lg") {
       return "200px";
     } else {
-      return "45px";
+      return "30px";
     }
   }};
   border-radius: 50%;
 `;
+
+const AvatarContainer = styled.div<ITheme>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: ${props => {
+    if (props.size === "sm") {
+      return "45px";
+    } else {
+      return null;
+    }
+  }};
+  width: ${props => {
+    if (props.size === "sm") {
+      return "45px";
+    } else {
+      return null;
+    }
+  }};
+`;
+
+interface ITheme {
+  size: string;
+}
 
 interface IProps {
   url?: string;
@@ -71,9 +95,17 @@ const Avatar: React.SFC<IProps> = ({ className, url, size }) => {
       <ProgressiveImage delay={0} src={url} placeholder="">
         {(src, loading) => {
           return loading ? (
-            <Placeholder className={className} color={"#141313"} size={size} />
+            <AvatarContainer size={size}>
+              <Placeholder
+                className={className}
+                color={"#141313"}
+                size={size}
+              />
+            </AvatarContainer>
           ) : (
-            <Container className={className} src={src} size={size} />
+            <AvatarContainer size={size}>
+              <Container className={className} src={src} size={size} />
+            </AvatarContainer>
           );
         }}
       </ProgressiveImage>
