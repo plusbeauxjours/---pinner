@@ -1326,6 +1326,7 @@ export interface ReportLocation {
 export interface ReportLocationVariables {
   currentLat: number;
   currentLng: number;
+  cityId?: string | null;
   currentCity: string;
   currentCountryCode: string;
 }

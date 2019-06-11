@@ -10,14 +10,6 @@ class ContinentAdmin(admin.ModelAdmin):
         'country_count',
     )
 
-@admin.register(models.Language)
-class LanguageAdmin(admin.ModelAdmin):
-    list_display = (
-        'language_name',
-        'language_code',
-        'language_native',
-    )
-
 
 @admin.register(models.Country)
 class CountryAdmin(admin.ModelAdmin):
@@ -27,7 +19,6 @@ class CountryAdmin(admin.ModelAdmin):
         'country_photo',
         'city_count',
         'country_capital',
-        'language',
         'country_name_native',
         'country_phone',
         'country_emoji',
@@ -39,6 +30,7 @@ class CountryAdmin(admin.ModelAdmin):
 class CityAdmin(admin.ModelAdmin):
     list_display = (
         'city_name',
+        'city_id',
         'id',
         'latitude',
         'longitude',

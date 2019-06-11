@@ -20,16 +20,6 @@ class Continent (config_models.TimeStampedModel):
         return self.continent_name
 
 
-class Language(config_models.TimeStampedModel):
-
-    language_name = models.CharField(max_length=20, null=True, blank=True)
-    language_native = models.CharField(max_length=20, null=True, blank=True)
-    language_code = models.CharField(max_length=5, null=True, blank=True)
-
-    def __str__(self):
-        return self.language_name
-
-
 class Country (config_models.TimeStampedModel):
 
     country_name = models.CharField(max_length=50, null=True, blank=True)
@@ -41,7 +31,6 @@ class Country (config_models.TimeStampedModel):
     country_phone = models.CharField(max_length=20, null=True, blank=True)
     country_emoji = models.CharField(max_length=20, null=True, blank=True)
     country_emojiU = models.CharField(max_length=20, null=True, blank=True)
-    language = models.ForeignKey(Language, null=True, blank=True, on_delete=models.CASCADE, related_name='countries')
     continent = models.ForeignKey(Continent, null=True, blank=True, on_delete=models.CASCADE, related_name='countries')
 
     @cached_property
@@ -58,6 +47,7 @@ class City (config_models.TimeStampedModel):
     longitude = models.FloatField(blank=True, null=True)
     country = models.ForeignKey(
         Country, on_delete=models.CASCADE, related_name='cities')
+    city_id = models.CharField(max_length=30, null=True, blank=True)
     city_name = models.CharField(max_length=50, null=True, blank=True)
     city_photo = models.URLField(null=True, blank=True)
     population = models.IntegerField(null=True, blank=True)

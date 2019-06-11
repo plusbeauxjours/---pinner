@@ -11,18 +11,21 @@ export const reverseGeoCode = async (latitude: number, longitude: number) => {
 
     let storableLocation = {
       city: "",
+      cityId: "",
       countryCode: ""
     };
     console.log("MAPHELPER IS WORKING");
     console.log(results);
     for (const components of results) {
       for (const component of components.address_components) {
+        console.log(component);
         if (
           component.types[0] === "locality" ||
           component.types[0] === "sublocality" ||
           component.types[0] === "colloquial_area"
         ) {
           storableLocation.city = component.long_name;
+          storableLocation.cityId = components.place_id;
         } else if (
           !storableLocation.city &&
           component.types[0] === "administrative_area_level_1"

@@ -157,6 +157,7 @@ class HeaderContainer extends React.Component<any, IState> {
       this.reportLocation(
         latitude,
         longitude,
+        address.storableLocation.cityId,
         address.storableLocation.city,
         address.storableLocation.countryCode
       );
@@ -165,6 +166,7 @@ class HeaderContainer extends React.Component<any, IState> {
   public reportLocation = async (
     latitude: number,
     longitude: number,
+    cityId: string,
     currentCity: string,
     currentCountryCode: string
   ) => {
@@ -173,6 +175,7 @@ class HeaderContainer extends React.Component<any, IState> {
         variables: {
           currentLat: latitude,
           currentLng: longitude,
+          cityId,
           currentCity,
           currentCountryCode
         }

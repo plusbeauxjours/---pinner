@@ -207,6 +207,7 @@ const SeeAll = styled.p`
 const AvatarContainer = styled.div`
   display: flex;
   position: relative;
+  align-items: center;
 `;
 
 const HeaderColumn = styled.div`

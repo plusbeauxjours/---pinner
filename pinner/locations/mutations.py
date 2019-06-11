@@ -16,6 +16,7 @@ class ReportLocation(graphene.Mutation):
     class Arguments:
         currentLat = graphene.Float(required=True)
         currentLng = graphene.Float(required=True)
+        cityId = graphene.String()
         currentCity = graphene.String(required=True)
         currentCountryCode = graphene.String(required=True)
 
@@ -28,6 +29,7 @@ class ReportLocation(graphene.Mutation):
 
         currentLat = kwargs.get('currentLat')
         currentLng = kwargs.get('currentLng')
+        cityId = kwargs.get('cityId')
         currentCity = kwargs.get('currentCity')
         currentCountryCode = kwargs.get('currentCountryCode')
 
@@ -62,7 +64,7 @@ class ReportLocation(graphene.Mutation):
                 countryEmojiU = currentCountry['emojiU']
                 continentCode = currentCountry['continent']
 
-                try: 
+                try:
                     continent = models.Continent.objects.get(continent_code=continentCode)
                 except:
                     with open('pinner/locations/continentData.json', mode='rt', encoding='utf-8') as file:
@@ -80,12 +82,12 @@ class ReportLocation(graphene.Mutation):
                         # # for i in range(gp.num):
                         # #     print('Downloading...' + str(i) + '/' + str(gp.num))
                         # #     gp.download(i)
-            
+
                         continent = models.Continent.objects.create(
-                            continent_name=continentName, 
+                            continent_name=continentName,
                             continent_photo=continentPhotoURL,
                             continent_code=continentCode
-                            )
+                        )
             try:
                 gp = locationThumbnail.get_photos(term=countryName)
                 countryPhotoURL = gp.get_urls()
@@ -98,30 +100,30 @@ class ReportLocation(graphene.Mutation):
             #     gp.download(i)
 
             country = models.Country.objects.create(
-                country_code=currentCountryCode, 
-                country_name=countryName, 
+                country_code=currentCountryCode,
+                country_name=countryName,
                 country_name_native=countryNameNative,
                 country_capital=countryCapital,
                 country_currency=countryCurrency,
                 country_phone=countryPhone,
                 country_emoji=countryEmoji,
                 country_emojiU=countryEmojiU,
-                country_photo=countryPhotoURL, 
+                country_photo=countryPhotoURL,
                 continent=continent,
-                )
+            )
 
         try:
             city = models.City.objects.get(city_name=currentCity)
             profile.current_city = city
             profile.save()
-            if city.near_city.count() < 6 :
-                nearCities = get_locations_nearby_coords(currentLat, currentLng, 3000)[:6]
+            if city.near_city.count() < 6:
+                nearCities = get_locations_nearby_coords(currentLat, currentLng, 3000)
                 for i in nearCities:
                     city.near_city.add(i)
                     city.save()
 
         except models.City.DoesNotExist:
-            nearCities = get_locations_nearby_coords(currentLat, currentLng, 3000)[:6]
+            nearCities = get_locations_nearby_coords(currentLat, currentLng, 3000)
 
             try:
                 gp = locationThumbnail.get_photos(term=currentCity)
@@ -136,19 +138,20 @@ class ReportLocation(graphene.Mutation):
             # #     gp.download(i)
 
             city = models.City.objects.create(
-                city_name=currentCity, 
-                country=country, 
-                city_photo=cityPhotoURL, 
-                latitude=currentLat, 
+                city_id=cityId,
+                city_name=currentCity,
+                country=country,
+                city_photo=cityPhotoURL,
+                latitude=currentLat,
                 longitude=currentLng
-                )
+            )
             for i in nearCities:
                 city.near_city.add(i)
                 city.save()
             profile.current_city = city
             profile.save()
             return city
-        
+
         try:
             print(city)
             latest = user.movenotification.latest('created_at')
@@ -158,7 +161,6 @@ class ReportLocation(graphene.Mutation):
             notification_models.MoveNotification.objects.create(actor=user, city=city)
 
         return types.ReportLocationResponse(ok=True)
-
 
 
 class ToggleLikeCity(graphene.Mutation):
