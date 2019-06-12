@@ -2217,11 +2217,6 @@ export const countries = [
     emoji: "🇷🇼",
     emojiU: "U+1F1F7 U+1F1FC"
   },
-
-  /////////////////////////////
-  // 0609
-  /////////////////////////////
-
   {
     name: "Réunion",
     code: "RE",
@@ -2247,9 +2242,9 @@ export const countries = [
     emojiU: "U+1F1E7 U+1F1F1"
   },
   {
-    name: "Saint Helena",
+    name: "Ascension and Tristan da Cunha",
     code: "SH",
-    native: "Saint Helena",
+    native: "Ascension and Tristan da Cunha",
     phone: "+290",
     continent: "AF",
     capital: "Jamestown",
@@ -2583,9 +2578,9 @@ export const countries = [
     emojiU: "U+1F1F8 U+1F1EF"
   },
   {
-    name: "Swaziland",
+    name: "Eswatini",
     code: "SZ",
-    native: "Swaziland",
+    native: "Eswatini",
     phone: "+268",
     continent: "AF",
     capital: "Lobamba",
@@ -2679,7 +2674,7 @@ export const countries = [
     emojiU: "U+1F1F9 U+1F1ED"
   },
   {
-    name: "East Timor",
+    name: "Timor-Leste",
     code: "TL",
     native: "Timor-Leste",
     phone: "+670",
@@ -2871,7 +2866,7 @@ export const countries = [
     emojiU: "U+1F1FA U+1F1FE"
   },
   {
-    name: "U.S. Minor Outlying Islands",
+    name: "United States Minor Outlying Islands",
     code: "UM",
     native: "United States Minor Outlying Islands",
     phone: "+1",
@@ -2943,7 +2938,7 @@ export const countries = [
     emojiU: "U+1F1FB U+1F1EC"
   },
   {
-    name: "U.S. Virgin Islands",
+    name: "United States Virgin Islands",
     code: "VI",
     native: "United States Virgin Islands",
     phone: "+1",

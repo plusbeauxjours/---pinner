@@ -2232,9 +2232,9 @@
     "emojiU": "U+1F1E7 U+1F1F1"
   },
   "SH": {
-    "name": "Saint Helena",
+    "name": "Ascension and Tristan da Cunha",
     "code": "SH",
-    "native": "Saint Helena",
+    "native": "Ascension and Tristan da Cunha",
     "phone": "+290",
     "continent": "AF",
     "capital": "Jamestown",
@@ -2568,9 +2568,9 @@
     "emojiU": "U+1F1F8 U+1F1EF"
   },
   "SZ": {
-    "name": "Swaziland",
+    "name": "Eswatini",
     "code": "SZ",
-    "native": "Swaziland",
+    "native": "Eswatini",
     "phone": "+268",
     "continent": "AF",
     "capital": "Lobamba",
@@ -2664,7 +2664,7 @@
     "emojiU": "U+1F1F9 U+1F1ED"
   },
   "TL": {
-    "name": "East Timor",
+    "name": "Timor-Leste",
     "code": "TL",
     "native": "Timor-Leste",
     "phone": "+670",
