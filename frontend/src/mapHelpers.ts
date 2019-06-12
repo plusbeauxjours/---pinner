@@ -18,7 +18,6 @@ export const reverseGeoCode = async (latitude: number, longitude: number) => {
     console.log(results);
     for (const components of results) {
       for (const component of components.address_components) {
-        console.log(component);
         if (
           component.types[0] === "locality" ||
           component.types[0] === "sublocality" ||

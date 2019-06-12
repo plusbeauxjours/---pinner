@@ -272,8 +272,7 @@ interface IProps {
 
   coffeeReportModalOpen: boolean;
   toggleCoffeeReportModal: () => void;
-  cityName: string;
-
+  cityId: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
   usersNowList: any;
@@ -298,7 +297,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
 
   coffeeReportModalOpen,
   toggleCoffeeReportModal,
-  cityName,
+  cityId,
   search,
   onChange,
   usersNowList,
@@ -446,7 +445,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               {nearCities && !nearCitiesLoading && nearCities.length !== 0 ? (
                 nearCities.map(nearCity => (
                   <UserRow key={nearCity.id}>
-                    <Link to={`/city/${nearCity.cityName}`}>
+                    <Link to={`/city/${nearCity.cityId}`}>
                       <Header>
                         <SAvatar size={"sm"} url={nearCity.cityPhoto} />
                         <HeaderColumn>

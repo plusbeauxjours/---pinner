@@ -104,7 +104,7 @@ const SearchPresenter: React.SFC<IProps> = ({
         ) : (
           results.predictions.map(prediction => (
             <UserRow key={prediction.id}>
-              <Link to={`/city/${prediction.structured_formatting.main_text}`}>
+              <Link to={`/city/${prediction.place_id}`}>
                 <Header>
                   <SAvatar
                     size={"sm"}
@@ -157,7 +157,7 @@ const SearchPresenter: React.SFC<IProps> = ({
           cities.length !== 0 &&
           cities.map(city => (
             <UserRow key={city.id}>
-              <Link to={`/city/${city.cityName}`}>
+              <Link to={`/city/${city.cityId}`}>
                 <Header>
                   <SAvatar size={"sm"} url={city.cityPhoto} />
                   <HeaderColumn>

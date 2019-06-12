@@ -42,7 +42,7 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
   public render() {
     const {
       match: {
-        params: { cityName }
+        params: { cityId }
       }
     } = this.props;
     const {
@@ -55,7 +55,7 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
       <CityUsersBeforeQuery
         query={CITY_USERS_BEFORE}
         variables={{
-          cityName
+          cityId
         }}
       >
         {({ data, loading, fetchMore }) => {
@@ -72,7 +72,7 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
               usersBeforeList={usersBeforeList}
               onChange={this.onChange}
               loadMore={this.loadMore}
-              cityName={cityName}
+              cityId={cityId}
               onKeyDown={this.onKeyDown}
               onClick={this.onClick}
               onBlur={this.onBlur}

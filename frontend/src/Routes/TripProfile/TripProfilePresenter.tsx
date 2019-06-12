@@ -359,7 +359,7 @@ const TripProfilePresenter: React.SFC<IProps> = ({
               {nearCities && !nearCitiesLoading && nearCities.length !== 0 ? (
                 nearCities.map(nearCity => (
                   <UserRow key={nearCity.id}>
-                    <Link to={`/city/${nearCity.cityName}`}>
+                    <Link to={`/city/${nearCity.cityId}`}>
                       <Header>
                         <SAvatar size={"sm"} url={nearCity.cityPhoto} />
                         <HeaderColumn>

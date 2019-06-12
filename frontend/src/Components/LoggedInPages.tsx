@@ -91,13 +91,10 @@ class LoggedInPages extends React.Component<IProps> {
             component={CountryUsersBefore}
           />
           <Route path="/country/:countryName" component={CountryProfile} />
-          <Route path="/city/:cityName/usersNow" component={CityUsersNow} />
-          <Route
-            path="/city/:cityName/usersBefore"
-            component={CityUsersBefore}
-          />
-          <Route path="/city/:cityName/:duration" component={TripProfile} />
-          <Route path="/city/:cityName" component={CityProfile} />
+          <Route path="/city/:cityId/usersNow" component={CityUsersNow} />
+          <Route path="/city/:cityId/usersBefore" component={CityUsersBefore} />
+          <Route path="/city/:cityId/:duration" component={TripProfile} />
+          <Route path="/city/:cityId" component={CityProfile} />
           <Route path="/:username/countries" component={Countries} />
           <Route path="/:username/cities" component={Cities} />
           <Route path="/:username/coffees" component={Coffees} />

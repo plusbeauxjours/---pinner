@@ -95,10 +95,10 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
       {
         cityList.length
           ? history.push({
-              pathname: `/city/${cityList[activeId].cityName}`
+              pathname: `/city/${cityList[activeId].cityId}`
             })
           : history.push({
-              pathname: `/city/${cities[activeId].cityName}`
+              pathname: `/city/${cities[activeId].cityId}`
             });
       }
       this.setState({

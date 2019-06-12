@@ -53,6 +53,7 @@ export const CITY_FRAGMENT = gql`
     latitude
     longitude
     cityName
+    cityId
     cityPhoto
     distance
     country {

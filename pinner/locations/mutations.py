@@ -114,6 +114,9 @@ class ReportLocation(graphene.Mutation):
 
         try:
             city = models.City.objects.get(city_name=currentCity)
+            if not city.city_id:
+                city.city_id = cityId
+                city.save()
             profile.current_city = city
             profile.save()
             if city.near_city.count() < 6:

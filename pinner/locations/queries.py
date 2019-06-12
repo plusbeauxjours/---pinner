@@ -77,11 +77,11 @@ def resolve_search_continents(self, info, **kwargs):
 def resolve_trip_profile(self, info, **kwargs):
 
     user = info.context.user
-    cityName = kwargs.get('cityName')
+    cityId = kwargs.get('cityId')
     startDate = kwargs.get('startDate')
     endDate = kwargs.get('endDate')
 
-    city = models.City.objects.prefetch_related('movenotification').prefetch_related('coffee').get(city_name=cityName)
+    city = models.City.objects.prefetch_related('movenotification').prefetch_related('coffee').get(city_id=cityId)
 
     usersBefore = city.movenotification.filter(Q(start_date__lte=(endDate)) |
                                                Q(end_date__gte=(startDate))).order_by('actor_id').distinct('actor_id')
@@ -97,19 +97,19 @@ def resolve_trip_profile(self, info, **kwargs):
 def resolve_city_profile(self, info, **kwargs):
 
     user = info.context.user
-    cityName = kwargs.get('cityName')
+    cityId = kwargs.get('cityId')
     page = kwargs.get('page', 0)
 
-    city = models.City.objects.prefetch_related('coffee').get(city_name=cityName)
+    city = models.City.objects.prefetch_related('coffee').get(city_id=cityId)
 
     usersNow = User.objects.filter(
-        profile__current_city__city_name=cityName).order_by('-id').distinct('id')[:12]
+        profile__current_city__city_id=cityId).order_by('-id').distinct('id')[:12]
 
     coffees = city.coffee.filter(expires__gt=timezone.now())
 
     if usersNow.count() < 5:
         usersBefore = notification_models.MoveNotification.objects.filter(
-            city__city_name=cityName).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
+            city__city_id=cityId).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
     else:
         usersBefore = notification_models.MoveNotification.objects.filter(
             id=0)
@@ -125,14 +125,14 @@ def resolve_city_profile(self, info, **kwargs):
 def resolve_city_users_now(self, info, **kwargs):
 
     user = info.context.user
-    cityName = kwargs.get('cityName')
+    cityId = kwargs.get('cityId')
     page = kwargs.get('page', 0)
     offset = 20 * page
 
     nextPage = page+1
 
     usersNow = User.objects.filter(
-        profile__current_city__city_name=cityName).order_by('-id').distinct('id')
+        profile__current_city__city_id=cityId).order_by('-id').distinct('id')
 
     hasNextPage = offset < usersNow.count()
 
@@ -152,7 +152,7 @@ def resolve_city_users_before(self, info, **kwargs):
     nextPage = page+1
 
     usersBefore = notification_models.MoveNotification.objects.filter(
-        city__city_name=cityName).order_by('-actor_id').distinct('actor_id')
+        city__city_id=cityId).order_by('-actor_id').distinct('actor_id')
 
     hasNextPage = offset < usersBefore.count()
 
@@ -313,13 +313,13 @@ def resolve_get_footprints(self, info, **kwargs):
 def resolve_near_cities(self, info, **kwargs):
 
     user = info.context.user
-    cityName = kwargs.get('cityName')
+    cityId = kwargs.get('cityId')
     page = kwargs.get('page', 0)
     offset = 12 * page
 
     nextPage = page+1
 
-    city = models.City.objects.prefetch_related('near_city').prefetch_related('near_cities').get(city_name=cityName)
+    city = models.City.objects.prefetch_related('near_city').prefetch_related('near_cities').get(city_id=cityId)
 
     def get_locations_nearby_coords(latitude, longitude, max_distance=None):
 
@@ -331,8 +331,8 @@ def resolve_near_cities(self, info, **kwargs):
             gcd_formula,
             (latitude, longitude, latitude)
         )
-        near_cities_from_here = city.near_city.all().exclude(city_name=cityName).annotate(distance=distance_raw_sql)
-        near_cities_from_there = city.near_cities.all().exclude(city_name=cityName).annotate(distance=distance_raw_sql)
+        near_cities_from_here = city.near_city.all().exclude(city_id=cityId).annotate(distance=distance_raw_sql)
+        near_cities_from_there = city.near_cities.all().exclude(city_id=cityId).annotate(distance=distance_raw_sql)
 
         qs = near_cities_from_here.union(near_cities_from_there).order_by('distance')
         return qs
@@ -344,18 +344,6 @@ def resolve_near_cities(self, info, **kwargs):
     combined = combined[offset:12 + offset]
 
     return types.NearCitiesResponse(cities=combined)
-
-
-@login_required
-def resolve_near_countries(self, info, **kwargs):
-
-    user = info.context.user
-    cityName = kwargs.get('cityName')
-
-    city = models.City.objects.prefetch_related('near_country').get(city_name=cityName)
-    countries = city.near_country.all()[:6]
-
-    return types.CountriesResponse(countries=countries)
 
 
 @login_required

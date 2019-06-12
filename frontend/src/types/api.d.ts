@@ -299,6 +299,7 @@ export interface SearchTerms_searchCities_cities {
   latitude: number | null;
   longitude: number | null;
   cityName: string | null;
+  cityId: string | null;
   cityPhoto: string | null;
   distance: number | null;
   country: SearchTerms_searchCities_cities_country;
@@ -550,7 +551,7 @@ export interface CityProfile {
 
 export interface CityProfileVariables {
   page?: number | null;
-  cityName: string;
+  cityId: string;
 }
 
 
@@ -572,6 +573,7 @@ export interface NearCities_nearCities_cities {
   latitude: number | null;
   longitude: number | null;
   cityName: string | null;
+  cityId: string | null;
   cityPhoto: string | null;
   distance: number | null;
   country: NearCities_nearCities_cities_country;
@@ -589,7 +591,7 @@ export interface NearCities {
 }
 
 export interface NearCitiesVariables {
-  cityName: string;
+  cityId: string;
 }
 
 
@@ -643,7 +645,7 @@ export interface CityUsersBefore {
 
 export interface CityUsersBeforeVariables {
   page?: number | null;
-  cityName: string;
+  cityId: string;
 }
 
 
@@ -692,7 +694,7 @@ export interface CityUsersNow {
 
 export interface CityUsersNowVariables {
   page?: number | null;
-  cityName: string;
+  cityId: string;
 }
 
 
@@ -1027,6 +1029,7 @@ export interface CountryProfile_countryProfile_cities {
   latitude: number | null;
   longitude: number | null;
   cityName: string | null;
+  cityId: string | null;
   cityPhoto: string | null;
   distance: number | null;
   country: CountryProfile_countryProfile_cities_country;
@@ -1637,7 +1640,7 @@ export interface TripProfile {
 }
 
 export interface TripProfileVariables {
-  cityName: string;
+  cityId: string;
   startDate: any;
   endDate: any;
 }
@@ -1663,6 +1666,7 @@ export interface FrequentVisits_frequentVisits_cities {
   latitude: number | null;
   longitude: number | null;
   cityName: string | null;
+  cityId: string | null;
   cityPhoto: string | null;
   distance: number | null;
   country: FrequentVisits_frequentVisits_cities_country;
@@ -1842,6 +1846,7 @@ export interface UserProfile_userProfile_user_profile_currentCity {
   latitude: number | null;
   longitude: number | null;
   cityName: string | null;
+  cityId: string | null;
   cityPhoto: string | null;
   country: UserProfile_userProfile_user_profile_currentCity_country;
 }
@@ -1938,6 +1943,7 @@ export interface EditProfile_editProfile_user_profile_currentCity {
   latitude: number | null;
   longitude: number | null;
   cityName: string | null;
+  cityId: string | null;
   cityPhoto: string | null;
   country: EditProfile_editProfile_user_profile_currentCity_country;
 }
@@ -2028,6 +2034,7 @@ export interface GetTrips_getTrips_trip_city_country {
 export interface GetTrips_getTrips_trip_city {
   __typename: "CityType";
   cityName: string | null;
+  cityId: string | null;
   cityPhoto: string | null;
   country: GetTrips_getTrips_trip_city_country;
 }
@@ -2073,6 +2080,7 @@ export interface AddTrip_addTrip_moveNotification_city_country {
 export interface AddTrip_addTrip_moveNotification_city {
   __typename: "CityType";
   cityName: string | null;
+  cityId: string | null;
   cityPhoto: string | null;
   country: AddTrip_addTrip_moveNotification_city_country;
 }
@@ -2117,6 +2125,7 @@ export interface EditTrip_editTrip_moveNotification_city_country {
 export interface EditTrip_editTrip_moveNotification_city {
   __typename: "CityType";
   cityName: string | null;
+  cityId: string | null;
   cityPhoto: string | null;
   country: EditTrip_editTrip_moveNotification_city_country;
 }
@@ -2188,6 +2197,7 @@ export interface SearchTripCities_searchTripCities_cities {
   latitude: number | null;
   longitude: number | null;
   cityName: string | null;
+  cityId: string | null;
   cityPhoto: string | null;
   distance: number | null;
   country: SearchTripCities_searchTripCities_cities_country;
@@ -2327,6 +2337,7 @@ export interface CityParts {
   latitude: number | null;
   longitude: number | null;
   cityName: string | null;
+  cityId: string | null;
   cityPhoto: string | null;
   distance: number | null;
   country: CityParts_country;

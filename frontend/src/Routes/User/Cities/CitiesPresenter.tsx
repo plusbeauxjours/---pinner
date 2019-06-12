@@ -200,7 +200,7 @@ const CitiesPresenter: React.SFC<IProps> = ({
                   }
                   return (
                     <UserRow key={index} active={active}>
-                      <Link to={`/city/${city.cityName}`}>
+                      <Link to={`/city/${city.cityId}`}>
                         <Header>
                           <SAvatar size={"sm"} url={city.cityPhoto} />
                           <HeaderColumn>
@@ -230,7 +230,7 @@ const CitiesPresenter: React.SFC<IProps> = ({
                   }
                   return (
                     <UserRow key={index} active={active}>
-                      <Link to={`/city/${city.cityName}`}>
+                      <Link to={`/city/${city.cityId}`}>
                         <Header>
                           <SAvatar size={"sm"} url={city.cityPhoto} />
                           <HeaderColumn>

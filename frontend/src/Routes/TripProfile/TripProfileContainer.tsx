@@ -21,6 +21,7 @@ interface IProps extends RouteComponentProps<any> {}
 interface IState {
   search: string;
   cityName: string;
+  cityId: string;
   cityPhoto: string;
   countryName: string;
   startDate: moment.Moment | null;
@@ -41,6 +42,7 @@ class TripProfileContainer extends React.Component<IProps, IState> {
     this.state = {
       search: "",
       cityName: state.cityName,
+      cityId: state.cityId,
       cityPhoto: state.cityPhoto,
       countryName: state.countryName,
       startDate: state.tripStartDate,
@@ -59,6 +61,7 @@ class TripProfileContainer extends React.Component<IProps, IState> {
     const {
       search,
       cityName,
+      cityId,
       cityPhoto,
       countryName,
       startDate,
@@ -67,12 +70,12 @@ class TripProfileContainer extends React.Component<IProps, IState> {
       usersBeforeActiveId
     } = this.state;
     return (
-      <NearCitiesQuery query={NEAR_CITIES} variables={{ cityName }}>
+      <NearCitiesQuery query={NEAR_CITIES} variables={{ cityId }}>
         {({ data: nearCitiesData, loading: nearCitiesLoading }) => {
           return (
             <TripProfileQuery
               query={TRIP_PROFILE}
-              variables={{ cityName, startDate, endDate }}
+              variables={{ cityId, startDate, endDate }}
             >
               {({ data: profileDate, loading: profileLoading }) => {
                 this.data = profileDate;

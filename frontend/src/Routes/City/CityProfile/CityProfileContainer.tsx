@@ -36,14 +36,15 @@ class CityProfileContainer extends React.Component<IProps, IState> {
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
-    if (prevProps.match.params.cityName !== newProps.match.params.cityName) {
+    if (prevProps.match.params.cityId !== newProps.match.params.cityId) {
       this.setState({ search: "", usersNowList: [] });
     }
   }
   public render() {
+    console.log(this.props);
     const {
       match: {
-        params: { cityName }
+        params: { cityId }
       }
     } = this.props;
     const {
@@ -53,10 +54,10 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       usersNowActiveId
     } = this.state;
     return (
-      <NearCitiesQuery query={NEAR_CITIES} variables={{ cityName }}>
+      <NearCitiesQuery query={NEAR_CITIES} variables={{ cityId }}>
         {({ data: nearCitiesData, loading: nearCitiesLoading }) => {
           return (
-            <CityProfileQuery query={CITY_PROFILE} variables={{ cityName }}>
+            <CityProfileQuery query={CITY_PROFILE} variables={{ cityId }}>
               {({ data: cityData, loading: cityLoading }) => {
                 this.data = cityData;
                 return (
@@ -67,7 +68,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                     nearCitiesLoading={nearCitiesLoading}
                     coffeeReportModalOpen={coffeeReportModalOpen}
                     toggleCoffeeReportModal={this.toggleCoffeeReportModal}
-                    cityName={cityName}
+                    cityId={cityId}
                     onChange={this.onChange}
                     search={search}
                     usersNowList={usersNowList}

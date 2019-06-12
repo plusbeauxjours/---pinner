@@ -33,6 +33,7 @@ export const GET_USER = gql`
             latitude
             longitude
             cityName
+            cityId
             cityPhoto
             country {
               countryName
@@ -99,6 +100,7 @@ export const EDIT_PROFILE = gql`
             latitude
             longitude
             cityName
+            cityId
             cityPhoto
             country {
               countryName
@@ -127,6 +129,7 @@ export const GET_TRIPS = gql`
         id
         city {
           cityName
+          cityId
           cityPhoto
           country {
             countryName
@@ -155,6 +158,7 @@ export const ADD_TRIP = gql`
         endDate
         city {
           cityName
+          cityId
           cityPhoto
           country {
             countryName
@@ -183,6 +187,7 @@ export const EDIT_TRIP = gql`
         id
         city {
           cityName
+          cityId
           cityPhoto
           country {
             countryName

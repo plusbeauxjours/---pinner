@@ -2,8 +2,8 @@ import gql from "graphql-tag";
 import { CITY_FRAGMENT, PROFILE_FRAGMENT } from "src/sharedQueries";
 
 export const CITY_PROFILE = gql`
-  query CityProfile($page: Int, $cityName: String!) {
-    cityProfile(page: $page, cityName: $cityName) {
+  query CityProfile($page: Int, $cityId: String!) {
+    cityProfile(page: $page, cityId: $cityId) {
       usersNow {
         profile {
           ...ProfileParts
@@ -52,8 +52,8 @@ export const CITY_PROFILE = gql`
 `;
 
 export const NEAR_CITIES = gql`
-  query NearCities($cityName: String!) {
-    nearCities(cityName: $cityName) {
+  query NearCities($cityId: String!) {
+    nearCities(cityId: $cityId) {
       cities {
         ...CityParts
       }

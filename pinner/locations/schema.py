@@ -19,7 +19,7 @@ class Query(object):
         resolver=queries.resolve_trip_profile,
         required=True,
         args={
-            'cityName': graphene.String(required=True),
+            'cityId': graphene.String(required=True),
             'startDate': graphene.Date(required=True),
             'endDate': graphene.Date(required=True)
         }
@@ -29,7 +29,7 @@ class Query(object):
         resolver=queries.resolve_city_profile,
         required=True,
         args={
-            'cityName': graphene.String(required=True),
+            'cityId': graphene.String(required=True),
             'page': graphene.Int()
         }
     )
@@ -38,7 +38,7 @@ class Query(object):
         resolver=queries.resolve_city_users_now,
         required=True,
         args={
-            'cityName': graphene.String(required=True),
+            'cityId': graphene.String(required=True),
             'page': graphene.Int()
         }
     )
@@ -47,7 +47,7 @@ class Query(object):
         resolver=queries.resolve_city_users_before,
         required=True,
         args={
-            'cityName': graphene.String(required=True),
+            'cityId': graphene.String(required=True),
             'page': graphene.Int()
         }
     )
@@ -115,16 +115,8 @@ class Query(object):
         resolver=queries.resolve_near_cities,
         required=True,
         args={
-            'cityName': graphene.String(required=True),
+            'cityId': graphene.String(required=True),
             'page': graphene.Int()
-        }
-    )
-    near_countries = graphene.Field(
-        types.CountriesResponse,
-        resolver=queries.resolve_near_countries,
-        required=True,
-        args={
-            'cityName': graphene.String(required=True),
         }
     )
     latest_cities = graphene.Field(

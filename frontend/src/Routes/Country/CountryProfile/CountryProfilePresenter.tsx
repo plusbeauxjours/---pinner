@@ -6,24 +6,12 @@ import Wrapper from "../../../Components/Wrapper";
 import Loader from "../../../Components/Loader";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
-import LocationGrid from "src/Components/LocationGrid";
 import AvatarGrid from "../../../Components/AvatarGrid";
 import CityLikeBtn from "../../../Components/CityLikeBtn";
 import UserBox from "src/Components/UserBox";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
-`;
-
-const Container = styled.div`
-  border-bottom: 4px;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  -webkit-box-flex: 0;
-  flex: 0 0 auto;
-  height: 280px;
-  padding: 15px;
 `;
 
 const PHeader = styled.header`
@@ -39,35 +27,6 @@ const Username = styled.span`
   text-align: center;
   font-size: 22px;
   font-weight: 100;
-`;
-
-const CountryPhoto = styled.img`
-  margin-bottom: 10px;
-  display: flex;
-  width: 200px;
-  height: 200px;
-  background-size: cover;
-  border-radius: 3px;
-  z-index: 1;
-  object-fit: cover;
-`;
-
-const ContinentName = styled(Bold)`
-  position: absolute;
-  display: flex;
-  z-index: 5;
-  font-size: 40px;
-  font-family: "Qwigley";
-  font-weight: 200;
-  pointer-events: none;
-`;
-
-const ContinentContainer = styled.div`
-  margin-right: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
 `;
 
 const InfoRow = styled.span``;
@@ -93,27 +52,6 @@ const Title = styled.div`
 const SmallTitle = styled(Title)`
   flex-direction: column;
   align-items: center;
-`;
-
-const Box = styled.div`
-  width: 905px;
-  display: flex;
-  overflow-x: auto;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  ::-webkit-scrollbar {
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    background-color: ${props => props.theme.bgColor};
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-    background-color: ${props => props.theme.greyColor};
-  }
 `;
 
 const GreyLine = styled.div`
@@ -314,7 +252,7 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
                   }
                   return (
                     <UserRow key={index} active={active}>
-                      <Link to={`/city/${city.cityName}`}>
+                      <Link to={`/city/${city.cityId}`}>
                         <Header>
                           <SAvatar size={"sm"} url={city.cityPhoto} />
                           <HeaderColumn>
@@ -342,7 +280,7 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
                   }
                   return (
                     <UserRow key={index} active={active}>
-                      <Link to={`/city/${city.cityName}`}>
+                      <Link to={`/city/${city.cityId}`}>
                         <Header>
                           <SAvatar size={"sm"} url={city.cityPhoto} />
                           <HeaderColumn>
@@ -384,20 +322,6 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
               <GreyLine />
             </>
           ) : null}
-          <Title>
-            <SText text={`WHERE ${country.countryName} IS`} />
-          </Title>
-          <Container>
-            <ContinentContainer>
-              <Link to={`/continent/${country.continent.continentName}`}>
-                <CountryPhoto src={country.continent.continentPhoto} />
-              </Link>
-              <ContinentName text={country.continent.continentName} />
-            </ContinentContainer>
-            <Box>
-              {cities && <LocationGrid cities={cities} type={"city"} />}
-            </Box>
-          </Container>
         </SWrapper>
       </>
     );

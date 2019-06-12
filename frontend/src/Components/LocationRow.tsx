@@ -54,6 +54,7 @@ const SText = styled(Bold)`
 interface IProps {
   id: string;
   avatar: string;
+  cityId?: string;
   cityName?: string;
   countryName?: string;
   continentName?: string;
@@ -63,6 +64,7 @@ interface IProps {
 const LocationRow: React.SFC<IProps> = ({
   id,
   avatar,
+  cityId,
   cityName,
   countryName,
   continentName,
@@ -74,7 +76,7 @@ const LocationRow: React.SFC<IProps> = ({
         case "nearCity":
           return (
             <>
-              <Link to={`/city/${cityName}`}>
+              <Link to={`/city/${cityId}`}>
                 <Container>
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />
@@ -91,7 +93,7 @@ const LocationRow: React.SFC<IProps> = ({
           return (
             <>
               <Container>
-                <Link to={`/city/${cityName}`}>
+                <Link to={`/city/${cityId}`}>
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />
                     <HeaderColumn>
@@ -122,7 +124,7 @@ const LocationRow: React.SFC<IProps> = ({
         case "frequentVisits":
           return (
             <>
-              <Link to={`/city/${cityName}`}>
+              <Link to={`/city/${cityId}`}>
                 <Container>
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />
@@ -138,7 +140,7 @@ const LocationRow: React.SFC<IProps> = ({
         case "getCities":
           return (
             <>
-              <Link to={`/city/${cityName}`}>
+              <Link to={`/city/${cityId}`}>
                 <Container>
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />

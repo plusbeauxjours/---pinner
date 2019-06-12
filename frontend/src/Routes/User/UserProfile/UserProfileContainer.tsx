@@ -71,10 +71,7 @@ interface IState {
   tripAddModalOpen: boolean;
   tripEditModalOpen: boolean;
   profilFormModalOpen: boolean;
-
   requestModalOpen: boolean;
-
-
   editMode: boolean;
   id: string;
   userName: string;
@@ -87,6 +84,7 @@ interface IState {
   firstName: string;
   lastName: string;
   cityName: string;
+  cityId: string;
   cityPhoto: string;
   countryName: string;
   startDate: moment.Moment | null;
@@ -131,10 +129,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripAddModalOpen: false,
       tripEditModalOpen: false,
       profilFormModalOpen: true,
-
       requestModalOpen: false,
-
-
       editMode: false,
       id: props.id,
       userName: props.username,
@@ -147,6 +142,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       firstName: props.FirstName,
       lastName: props.lastName,
       cityName: props.cityName,
+      cityId: props.cityId,
       cityPhoto: props.cityPhoto,
       countryName: props.countryName,
       startDate: props.startDate,
@@ -189,12 +185,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripAddModalOpen,
       tripEditModalOpen,
       profilFormModalOpen,
-
       currentCity,
       requestModalOpen,
-
-
-
       editMode,
       userName,
       bio,
@@ -206,6 +198,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       firstName,
       lastName,
       cityName,
+      cityId,
       cityPhoto,
       countryName,
       startDate,
@@ -524,6 +517,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                     cityName={
                                                                                       cityName
                                                                                     }
+                                                                                    cityId={cityId}
                                                                                     cityPhoto={
                                                                                       cityPhoto
                                                                                     }
@@ -717,6 +711,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   public toggleTripModal = (
     moveNotificationId,
     cityName,
+    cityId,
     cityPhoto,
     countryName,
     tripStartDate,
@@ -727,6 +722,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripModalOpen: !tripModalOpen,
       moveNotificationId,
       cityName,
+      cityId,
       cityPhoto,
       countryName,
       tripStartDate,
@@ -882,6 +878,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
 
   public gotoTrip = (
     cityName,
+    cityId,
     cityPhoto,
     countryName,
     tripStartDate,
@@ -889,13 +886,14 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   ) => {
     if (tripStartDate === null || tripEndDate === null) {
       this.props.history.push({
-        pathname: `/city/${cityName}`
+        pathname: `/city/${cityId}`
       });
     } else {
       this.props.history.push({
-        pathname: `/city/${cityName}/${tripStartDate}${"-"}${tripEndDate}`,
+        pathname: `/city/${cityId}/${tripStartDate}${"-"}${tripEndDate}`,
         state: {
           cityName,
+          cityId,
           cityPhoto,
           countryName,
           tripStartDate,
@@ -905,6 +903,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     }
     this.setState({
       cityName: null,
+      cityId: null,
       cityPhoto: null,
       countryName: null,
       tripStartDate: null,
@@ -1083,6 +1082,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         tripList.length
           ? this.gotoTrip(
               tripList[tripActiveId].city.cityName,
+              tripList[tripActiveId].city.cityId,
               tripList[tripActiveId].city.cityPhoto,
               tripList[tripActiveId].city.country.countryName,
               tripList[tripActiveId].startDate,
@@ -1090,6 +1090,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
             )
           : this.gotoTrip(
               trip[tripActiveId].city.cityName,
+              trip[tripActiveId].city.cityId,
               trip[tripActiveId].city.cityPhoto,
               trip[tripActiveId].city.country.countryName,
               trip[tripActiveId].startDate,

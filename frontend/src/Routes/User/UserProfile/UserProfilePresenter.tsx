@@ -479,6 +479,7 @@ interface IProps {
   firstName: string;
   lastName: string;
   cityName: string;
+  cityId: string;
   cityPhoto: string;
   countryName: string;
 
@@ -512,6 +513,7 @@ interface IProps {
   deleteTrip: () => void;
   gotoTrip: (
     cityName: string,
+    cityId: string,
     cityPhoto: string,
     countryName: string,
     tripStartDate: moment.Moment | null,
@@ -599,6 +601,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   residence,
   email,
   cityName,
+  cityId,
   cityPhoto,
   countryName,
   startDate,
@@ -775,6 +778,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 onClick={() =>
                   gotoTrip(
                     cityName,
+                    cityId,
                     cityPhoto,
                     countryName,
                     tripStartDate,
@@ -944,7 +948,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
         <SWrapper>
           <PHeader>
             <LocationAvatarContainer>
-              <Link to={`/city/${user.profile.currentCity.cityName}`}>
+              <Link to={`/city/${user.profile.currentCity.cityId}`}>
                 <CAvatar size="lg" url={user.profile.currentCity.cityPhoto} />
               </Link>
               {editMode ? (
@@ -1026,18 +1030,19 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               ) : null}
               {user.profile.nationality ? (
                 <Row>
-                <Link to={`/country/${user.profile.nationality.countryName}`}>
-
-                  <UBold text={String(user.profile.nationality.countryEmoji)} />
-                  <UBold text={" nationality - done"} />
+                  <Link to={`/country/${user.profile.nationality.countryName}`}>
+                    <UBold
+                      text={String(user.profile.nationality.countryEmoji)}
+                    />
+                    <UBold text={" nationality - done"} />
                   </Link>
                 </Row>
               ) : null}
               {user.profile.residence ? (
                 <Row>
-                <Link to={`/country/${user.profile.residence.countryName}`}>
-                  <UBold text={String(user.profile.residence.countryEmoji)} />
-                  <UBold text={" residence - done"} />
+                  <Link to={`/country/${user.profile.residence.countryName}`}>
+                    <UBold text={String(user.profile.residence.countryEmoji)} />
+                    <UBold text={" residence - done"} />
                   </Link>
                 </Row>
               ) : null}
@@ -1075,6 +1080,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                         onClick={() =>
                           gotoTrip(
                             trip.city.cityName,
+                            trip.city.cityId,
                             trip.city.cityPhoto,
                             trip.city.country.countryName,
                             trip.startDate,
@@ -1097,6 +1103,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                             ? toggleTripModal(
                                 trip.id,
                                 trip.city.cityName,
+                                trip.city.cityId,
                                 trip.city.cityPhoto,
                                 trip.city.country.countryName,
                                 trip.startDate,
@@ -1104,6 +1111,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                               )
                             : gotoTrip(
                                 trip.city.cityName,
+                                trip.city.cityId,
                                 trip.city.cityPhoto,
                                 trip.city.country.countryName,
                                 trip.startDate,
@@ -1130,6 +1138,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                         onClick={() =>
                           gotoTrip(
                             trip.city.cityName,
+                            trip.city.cityId,
                             trip.city.cityPhoto,
                             trip.city.country.countryName,
                             trip.startDate,
@@ -1152,6 +1161,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                             ? toggleTripModal(
                                 trip.id,
                                 trip.city.cityName,
+                                trip.city.cityId,
                                 trip.city.cityPhoto,
                                 trip.city.country.countryName,
                                 trip.startDate,
@@ -1159,6 +1169,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                               )
                             : gotoTrip(
                                 trip.city.cityName,
+                                trip.city.cityId,
                                 trip.city.cityPhoto,
                                 trip.city.country.countryName,
                                 trip.startDate,

@@ -39,7 +39,7 @@ class CityUsersNowContainer extends React.Component<IProps, IState> {
   public render() {
     const {
       match: {
-        params: { cityName }
+        params: { cityId }
       }
     } = this.props;
     console.log(this.props);
@@ -48,7 +48,7 @@ class CityUsersNowContainer extends React.Component<IProps, IState> {
       <CityUsersNowQuery
         query={CITY_USERS_NOW}
         variables={{
-          cityName
+          cityId
         }}
       >
         {({ data, loading, fetchMore }) => {
@@ -65,7 +65,7 @@ class CityUsersNowContainer extends React.Component<IProps, IState> {
               usersNowList={usersNowList}
               onChange={this.onChange}
               loadMore={this.loadMore}
-              cityName={cityName}
+              cityId={cityId}
               onKeyDown={this.onKeyDown}
               onClick={this.onClick}
               onBlur={this.onBlur}
