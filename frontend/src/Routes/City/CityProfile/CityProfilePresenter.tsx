@@ -224,6 +224,12 @@ const Location = styled.span`
   font-weight: 200;
 `;
 
+const Text = styled.p`
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+`;
+
 const Container = styled.div`
   -webkit-box-flex: 0;
   padding: 15px;
@@ -460,6 +466,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                       likeCount={nearCity.likeCount}
                       type={"row"}
                     />
+                    <Text>{nearCity.distance}km</Text>
                   </UserRow>
                 ))
               ) : (

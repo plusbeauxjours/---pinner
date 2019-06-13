@@ -21,6 +21,12 @@ const Button = styled.span<ITheme>`
   }
 `;
 
+const Text = styled(Bold)`
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+`;
+
 interface ITheme {
   isLiked: boolean;
 }
@@ -44,7 +50,7 @@ const CityLikeBtnPresenter: React.SFC<IProps> = ({
         case "row":
           return (
             <ButtonContainer>
-              <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
+              <Text text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
               <Button isLiked={isLiked} onClick={onLikeClick}>
                 {isLiked ? <SmallHeartFilled /> : <SmallHeartEmpty />}
               </Button>
@@ -56,7 +62,7 @@ const CityLikeBtnPresenter: React.SFC<IProps> = ({
               <Button isLiked={isLiked} onClick={onLikeClick}>
                 {isLiked ? <SmallHeartFilled /> : <SmallHeartEmpty />}
               </Button>
-              <Bold text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
+              <Text text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
             </>
           );
         default:

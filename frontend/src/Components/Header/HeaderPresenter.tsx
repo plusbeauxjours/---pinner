@@ -155,7 +155,6 @@ const HeaderColumn = styled.div`
 
 const CText = styled(Bold)`
   display: flex;
-  color: #999;
 `;
 
 const HeaderRow = styled.div`

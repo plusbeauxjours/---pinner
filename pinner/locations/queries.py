@@ -145,7 +145,7 @@ def resolve_city_users_now(self, info, **kwargs):
 def resolve_city_users_before(self, info, **kwargs):
 
     user = info.context.user
-    cityName = kwargs.get('cityName')
+    cityId = kwargs.get('cityId')
     page = kwargs.get('page', 0)
     offset = 20 * page
 

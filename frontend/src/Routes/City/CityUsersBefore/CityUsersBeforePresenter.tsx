@@ -5,8 +5,7 @@ import Loader from "src/Components/Loader";
 
 import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
-import Avatar from "../../../Components/Avatar";
-import Bold from "../../../Components/Bold";
+import UserHeader from "../../../Components/UserHeader";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -32,9 +31,6 @@ const UserRow = styled.div<ITheme>`
   background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
-  }
-  &:not(:last-child) {
-    border-bottom: 1px solid grey;
   }
 `;
 
@@ -74,21 +70,14 @@ const Location = styled.span`
   font-weight: 200;
 `;
 
-const AvatarContainer = styled.div`
-  display: flex;
-  position: relative;
-`;
-
-const HeaderColumn = styled.div`
-  margin-left: 15px;
-`;
-
-const CText = styled(Bold)`
-  display: flex;
-`;
-
 const Explain = styled(Location)`
   color: grey;
+`;
+
+const Container = styled.div`
+  &:not(:last-child) {
+    border-bottom: 1px solid grey;
+  }
 `;
 
 interface ITheme {
@@ -158,17 +147,24 @@ const CityUsersBeforePresenter: React.SFC<IProps> = ({
                     active = "active";
                   }
                   return (
-                    <UserRow key={index} active={active}>
+                    <Container key={index}>
                       <Link to={`/${user.actor.profile.username}`}>
-                        <AvatarContainer>
-                          <Avatar size={"sm"} url={user.actor.profile.avatar} />
-                          <HeaderColumn>
-                            <CText text={user.actor.profile.username} />
-                            <Explain>with same nationality</Explain>
-                          </HeaderColumn>
-                        </AvatarContainer>
+                        <UserRow active={active}>
+                          <UserHeader
+                            username={user.actor.profile.username}
+                            currentCity={
+                              user.actor.profile.currentCity.cityName
+                            }
+                            currentCountry={
+                              user.actor.profile.currentCity.country.countryName
+                            }
+                            avatar={user.actor.profile.avatar}
+                            size={"sm"}
+                          />
+                          <Explain>{user.naturalTime}</Explain>
+                        </UserRow>
                       </Link>
-                    </UserRow>
+                    </Container>
                   );
                 })}
               {usersBeforeList.length === 0 &&
@@ -180,17 +176,24 @@ const CityUsersBeforePresenter: React.SFC<IProps> = ({
                     active = "active";
                   }
                   return (
-                    <UserRow key={index} active={active}>
+                    <Container key={index}>
                       <Link to={`/${user.actor.profile.username}`}>
-                        <AvatarContainer>
-                          <Avatar size={"sm"} url={user.actor.profile.avatar} />
-                          <HeaderColumn>
-                            <CText text={user.actor.profile.username} />
-                            <Explain>with same nationality</Explain>
-                          </HeaderColumn>
-                        </AvatarContainer>
+                        <UserRow active={active}>
+                          <UserHeader
+                            username={user.actor.profile.username}
+                            currentCity={
+                              user.actor.profile.currentCity.cityName
+                            }
+                            currentCountry={
+                              user.actor.profile.currentCity.country.countryName
+                            }
+                            avatar={user.actor.profile.avatar}
+                            size={"sm"}
+                          />
+                          <Explain>{user.naturalTime}</Explain>
+                        </UserRow>
                       </Link>
-                    </UserRow>
+                    </Container>
                   );
                 })}
             </InfiniteScroll>

@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
-import Avatar from "./Avatar";
 import Bold from "./Bold";
 import { History } from "history";
+import UserHeader from "./UserHeader";
 
 const Title = styled.div`
   display: flex;
@@ -70,19 +70,6 @@ const UserRow = styled.div`
   }
 `;
 
-const AvatarContainer = styled.div`
-  display: flex;
-  position: relative;
-`;
-
-const HeaderColumn = styled.div`
-  margin-left: 15px;
-`;
-
-const CText = styled(Bold)`
-  display: flex;
-`;
-
 const Location = styled.span`
   display: flex;
   margin-top: 5px;
@@ -125,13 +112,19 @@ const UserBox: React.SFC<IProps> = ({ history, users, type }) => (
                       return (
                         <UserRow key={user.profile.id}>
                           <Link to={`/${user.profile.username}`}>
-                            <AvatarContainer>
-                              <Avatar size={"sm"} url={user.profile.avatar} />
-                              <HeaderColumn>
-                                <CText text={user.profile.username} />
-                                <Explain>with same nationality</Explain>
-                              </HeaderColumn>
-                            </AvatarContainer>
+                            <UserHeader
+                              username={user.actor.profile.username}
+                              currentCity={
+                                user.actor.profile.currentCity.cityName
+                              }
+                              currentCountry={
+                                user.actor.profile.currentCity.country
+                                  .countryName
+                              }
+                              avatar={user.actor.profile.avatar}
+                              size={"sm"}
+                            />
+                            <Explain>{user.createdAt}</Explain>
                           </Link>
                         </UserRow>
                       );
@@ -156,16 +149,19 @@ const UserBox: React.SFC<IProps> = ({ history, users, type }) => (
                       return (
                         <UserRow key={user.actor.profile.id}>
                           <Link to={`/${user.actor.profile.username}`}>
-                            <AvatarContainer>
-                              <Avatar
-                                size={"sm"}
-                                url={user.actor.profile.avatar}
-                              />
-                              <HeaderColumn>
-                                <CText text={user.actor.profile.username} />
-                                <Explain>with same nationality</Explain>
-                              </HeaderColumn>
-                            </AvatarContainer>
+                            <UserHeader
+                              username={user.actor.profile.username}
+                              currentCity={
+                                user.actor.profile.currentCity.cityName
+                              }
+                              currentCountry={
+                                user.actor.profile.currentCity.country
+                                  .countryName
+                              }
+                              avatar={user.actor.profile.avatar}
+                              size={"sm"}
+                            />
+                            <Explain>{user.naturalTime}</Explain>
                           </Link>
                         </UserRow>
                       );

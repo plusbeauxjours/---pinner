@@ -40,6 +40,8 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
     }
   }
   public render() {
+    console.log(this.props);
+
     const {
       match: {
         params: { cityId }
