@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import HeaderPresenter from "./HeaderPresenter";
 import { reverseGeoCode } from "../../mapHelpers";
 import {
@@ -24,6 +24,8 @@ class ReportLocationMutation extends Mutation<
 class SearchQuery extends Query<SearchTerms, SearchTermsVariables> {}
 class MeQuery extends Query<Me> {}
 
+interface IProps extends RouteComponentProps<any> {}
+
 interface IState {
   currentLat: number;
   currentLng: number;
@@ -35,7 +37,7 @@ interface IState {
   activeId: number;
 }
 
-class HeaderContainer extends React.Component<any, IState> {
+class HeaderContainer extends React.Component<IProps, IState> {
   public ReportLocationFn: MutationFn;
   public searchData;
   constructor(props) {
@@ -56,13 +58,24 @@ class HeaderContainer extends React.Component<any, IState> {
     };
   }
   public componentDidMount() {
-    console.log("mount");
+    console.log("header mount");
     if (!localStorage.getItem("cityId")) {
       navigator.geolocation.getCurrentPosition(
         this.handleGeoSuccess,
         this.handleGeoError
       );
     }
+  }
+  public componentWillUpdate(nextProps) {
+    const { location } = this.props;
+    if (location !== nextProps.location) {
+      this.setState({
+        modalOpen: false
+      });
+    }
+    console.log("header update");
+    console.log(this.props);
+    console.log(nextProps);
   }
   public render() {
     const {

@@ -41,7 +41,6 @@ class LoggedInPages extends React.Component<IProps> {
 
   public componentWillUpdate(nextProps) {
     const { location } = this.props;
-    console.log(location);
     if (
       nextProps.history.action !== "POP" &&
       (!location.state || !location.state.modalOpen)
