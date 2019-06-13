@@ -49,6 +49,10 @@ class HeaderResponse(graphene.ObjectType):
     city = graphene.Field(CityType)
 
 
+class CreateCityResponse(graphene.ObjectType):
+    city = graphene.Field(CityType)
+
+
 class CityProfileResponse(graphene.ObjectType):
     city = graphene.Field(CityType)
     usersNow = graphene.List(coffee_types.UserType)

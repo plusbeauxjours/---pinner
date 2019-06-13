@@ -39,19 +39,19 @@ export const reverseGeoCode = async (latitude: number, longitude: number) => {
     return { storableLocation };
   } else {
     toast.error(data.error_message);
-    return false;
+    return null;
   }
 };
 
 export const reversePlaceId = async (placeId: string) => {
-  const URL = `https://maps.googleapis.com/maps/api/geocode/json?place_id=${placeId}&key=${GOOGLE_MAPS_KEY}`;
+  const URL = `https://maps.googleapis.com/maps/api/geocode/json?&language=en&place_id=${placeId}&key=${GOOGLE_MAPS_KEY}`;
   const { data } = await axios(URL);
   if (!data.error_message) {
     const { results } = data;
 
     let storableLocation = {
-      latitude: "",
-      longitude: "",
+      latitude: 0,
+      longitude: 0,
       countryCode: ""
     };
     console.log(results);
@@ -66,6 +66,6 @@ export const reversePlaceId = async (placeId: string) => {
     return { storableLocation };
   } else {
     toast.error(data.error_message);
-    return false;
+    return null;
   }
 };

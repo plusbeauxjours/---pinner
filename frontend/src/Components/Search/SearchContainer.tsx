@@ -2,9 +2,17 @@ import React from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import SearchPresenter from "./SearchPresenter";
 import { MutationFn, Mutation } from "react-apollo";
-import { ReportLocation, ReportLocationVariables } from "../../types/api";
+import {
+  ReportLocation,
+  ReportLocationVariables,
+  CreateCity,
+  CreateCityVariables
+} from "../../types/api";
 import { REPORT_LOCATION } from "../../Routes/Login/Home/HomeQueries";
 import { reversePlaceId } from "../../mapHelpers";
+import { CREATE_CITY } from "./SearchQueries";
+
+class CreateCityQuery extends Mutation<CreateCity, CreateCityVariables> {}
 
 class ReportLocationMutation extends Mutation<
   ReportLocation,
@@ -24,6 +32,7 @@ interface IState {
 
 class SearchContainer extends React.Component<IProps, IState> {
   public ReportLocationFn: MutationFn;
+  public createCityFn: MutationFn;
   constructor(props) {
     super(props);
     this.state = {
@@ -39,46 +48,52 @@ class SearchContainer extends React.Component<IProps, IState> {
   public render() {
     const { search, activeId, searchData, searchLoading } = this.props;
     return (
-      <ReportLocationMutation mutation={REPORT_LOCATION}>
-        {ReportLocationFn => {
-          this.ReportLocationFn = ReportLocationFn;
+      <CreateCityQuery mutation={CREATE_CITY}>
+        {(createCityFn, { loading: createCityLoading }) => {
+          this.createCityFn = createCityFn;
           return (
-            <SearchPresenter
-              search={search}
-              activeId={activeId}
-              searchData={searchData}
-              searchLoading={searchLoading}
-              onClick={this.onClick}
-            />
+            <ReportLocationMutation mutation={REPORT_LOCATION}>
+              {ReportLocationFn => {
+                this.ReportLocationFn = ReportLocationFn;
+                return (
+                  <SearchPresenter
+                    search={search}
+                    activeId={activeId}
+                    searchData={searchData}
+                    searchLoading={searchLoading}
+                    onClick={this.onClick}
+                    createCityLoading={createCityLoading}
+                  />
+                );
+              }}
+            </ReportLocationMutation>
           );
         }}
-      </ReportLocationMutation>
+      </CreateCityQuery>
     );
   }
-  public onClick = (placeId: string) => {
-    console.log(this.props);
+  public onClick = async (placeId: string, cityName: string) => {
     const { history } = this.props;
-    reversePlaceId(placeId);
-    history.push({
-      pathname: `/city/${placeId}`
-      // state: {
+    const city = await reversePlaceId(placeId);
+    console.log("now");
+    console.log(city);
 
-      // }
+    await this.createCityFn({
+      variables: {
+        cityId: placeId,
+        cityName,
+        cityLatitude: city.storableLocation.latitude,
+        cityLongitude: city.storableLocation.longitude,
+        countryCode: city.storableLocation.countryCode
+      }
     });
-    console.log(placeId);
-    // try {
-    //   this.ReportLocationFn({
-    //     variables: {
-    //       currentLat: latitude,
-    //       currentLng: longitude,
-    //       currentCityId,
-    //       currentCityName,
-    //       currentCountryCode
-    //     }
-    //   });
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    try {
+      await history.push({
+        pathname: `/city/${placeId}`
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 }
 

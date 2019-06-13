@@ -350,10 +350,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                 DISTANCE
               </InfoRow>
               <InfoRow>
-                TIME DIFFERENCE
-                <SText text={String(city.userCount)} />
-              </InfoRow>
-              <InfoRow>
                 <CityLikeBtn
                   isLiked={city.isLiked}
                   cityId={city.id}

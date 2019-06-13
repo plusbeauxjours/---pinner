@@ -70,7 +70,8 @@ interface IProps {
   activeId: number;
   searchData?: any;
   searchLoading: boolean;
-  onClick: (placeId: string) => void;
+  onClick: (placeId: string, cityName: string) => void;
+  createCityLoading: boolean;
 }
 
 const SearchPresenter: React.SFC<IProps> = ({
@@ -83,7 +84,8 @@ const SearchPresenter: React.SFC<IProps> = ({
     searchContinents: { continents = null } = {}
   } = {},
   searchLoading,
-  onClick
+  onClick,
+  createCityLoading
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
     apiKey: `${GOOGLE_PLACE_KEY}`,
@@ -93,7 +95,7 @@ const SearchPresenter: React.SFC<IProps> = ({
       language: "en"
     }
   });
-  if (searchLoading || isLoading) {
+  if (searchLoading || isLoading || createCityLoading) {
     return <Loader />;
   } else {
     return (
@@ -126,7 +128,12 @@ const SearchPresenter: React.SFC<IProps> = ({
           results.predictions.map(prediction => (
             <UserRow
               key={prediction.id}
-              onClick={() => onClick(prediction.place_id)}
+              onClick={() =>
+                onClick(
+                  prediction.place_id,
+                  prediction.structured_formatting.main_text
+                )
+              }
             >
               <Header>
                 <SAvatar

@@ -11,6 +11,144 @@ from . import locationThumbnail
 from notifications import models as notification_models
 
 
+class CreateCity(graphene.Mutation):
+
+    class Arguments:
+        cityId = graphene.String(required=True)
+        cityName = graphene.String(required=True)
+        cityLatitude = graphene.Float(required=True)
+        cityLongitude = graphene.Float(required=True)
+        countryCode = graphene.String(required=True)
+
+    Output = types.CreateCityResponse
+
+    @login_required
+    def mutate(self, info, **kwargs):
+        user = info.context.user
+
+        cityId = kwargs.get('cityId')
+        cityName = kwargs.get('cityName')
+        cityLatitude = kwargs.get('cityLatitude')
+        cityLongitude = kwargs.get('cityLongitude')
+        countryCode = kwargs.get('countryCode')
+
+        print('createCity')
+
+        def get_locations_nearby_coords(latitude, longitude, max_distance=3000):
+            gcd_formula = "6371 * acos(cos(radians(%s)) * \
+            cos(radians(latitude)) \
+            * cos(radians(longitude) - radians(%s)) + \
+            sin(radians(%s)) * sin(radians(latitude)))"
+            distance_raw_sql = RawSQL(
+                gcd_formula,
+                (latitude, longitude, latitude)
+            )
+            qs = models.City.objects.all().annotate(distance=distance_raw_sql).order_by('distance')
+            if max_distance is not None:
+                qs = qs.filter(Q(distance__lt=max_distance))
+            return qs
+
+        try:
+            country = models.Country.objects.get(country_code=countryCode)
+        except models.Country.DoesNotExist:
+            with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
+                countryData = json.load(file)
+                currentCountry = countryData[countryCode]
+                countryName = currentCountry['name']
+                countryNameNative = currentCountry['native']
+                countryCapital = currentCountry['capital']
+                countryCurrency = currentCountry['currency']
+                countryPhone = currentCountry['phone']
+                countryEmoji = currentCountry['emoji']
+                countryEmojiU = currentCountry['emojiU']
+                continentCode = currentCountry['continent']
+
+                try:
+                    continent = models.Continent.objects.get(continent_code=continentCode)
+                except:
+                    with open('pinner/locations/continentData.json', mode='rt', encoding='utf-8') as file:
+                        continentData = json.load(file)
+                        continentName = continentData[continentCode]
+
+                        try:
+                            gp = locationThumbnail.get_photos(term=continentName)
+                            continentPhotoURL = gp.get_urls()
+                        except:
+                            continentPhotoURL = None
+
+                        # DOWNLOAD IMAGE
+                        # continentPhotoURL = gp.get_urls()
+                        # # for i in range(gp.num):
+                        # #     print('Downloading...' + str(i) + '/' + str(gp.num))
+                        # #     gp.download(i)
+
+                        continent = models.Continent.objects.create(
+                            continent_name=continentName,
+                            continent_photo=continentPhotoURL,
+                            continent_code=continentCode
+                        )
+            try:
+                gp = locationThumbnail.get_photos(term=countryName)
+                countryPhotoURL = gp.get_urls()
+            except:
+                countryPhotoURL = None
+
+            # DOWNLOAD IMAGE
+            # for i in range(gp.num):
+            #     print('Downloading...' + str(i) + '/' + str(gp.num))
+            #     gp.download(i)
+
+            country = models.Country.objects.create(
+                country_code=countryCode,
+                country_name=countryName,
+                country_name_native=countryNameNative,
+                country_capital=countryCapital,
+                country_currency=countryCurrency,
+                country_phone=countryPhone,
+                country_emoji=countryEmoji,
+                country_emojiU=countryEmojiU,
+                country_photo=countryPhotoURL,
+                continent=continent,
+            )
+        try:
+            city = models.City.objects.get(city_name=cityName)
+            if city.near_city.count() < 12:
+                nearCities = get_locations_nearby_coords(cityLatitude, cityLongitude, 3000)[:12]
+                for i in nearCities:
+                    city.near_city.add(i)
+                    city.save()
+
+        except models.City.DoesNotExist:
+            nearCities = get_locations_nearby_coords(cityLatitude, cityLongitude, 3000)[:12]
+
+            try:
+                gp = locationThumbnail.get_photos(term=cityName)
+                cityPhotoURL = gp.get_urls()
+            except:
+                cityPhotoURL = None
+
+            # DOWNLOAD IMAGE
+            # countryPhotoURL = gp.get_urls()
+            # # for i in range(gp.num):
+            # #     print('Downloading...' + str(i) + '/' + str(gp.num))
+            # #     gp.download(i)
+            city = models.City.objects.create(
+                city_id=cityId,
+                city_name=cityName,
+                country=country,
+                city_photo=cityPhotoURL,
+                latitude=cityLatitude,
+                longitude=cityLongitude
+            )
+            for i in nearCities:
+                city.near_city.add(i)
+                city.save()
+            print("nani")
+            return city
+        print('cityDone')
+        return types.CreateCityResponse(city=city)
+
+
 class ReportLocation(graphene.Mutation):
 
     class Arguments:
@@ -35,7 +173,7 @@ class ReportLocation(graphene.Mutation):
 
         print('reportlocation')
 
-        def get_locations_nearby_coords(latitude, longitude, max_distance=5000):
+        def get_locations_nearby_coords(latitude, longitude, max_distance=3000):
             gcd_formula = "6371 * acos(cos(radians(%s)) * \
             cos(radians(latitude)) \
             * cos(radians(longitude) - radians(%s)) + \
@@ -46,7 +184,7 @@ class ReportLocation(graphene.Mutation):
             )
             qs = models.City.objects.all().annotate(distance=distance_raw_sql).order_by('distance')
             if max_distance is not None:
-                qs = qs.filter(Q(distance__lt=max_distance) | Q(distance__gt=10))
+                qs = qs.filter(Q(distance__lt=max_distance))
             return qs
 
         try:
@@ -114,9 +252,6 @@ class ReportLocation(graphene.Mutation):
 
         try:
             city = models.City.objects.get(city_name=currentCityName)
-            if not city.city_id:
-                city.city_id = currentCityId
-                city.save()
             profile.current_city = city
             profile.save()
             if city.near_city.count() < 6:

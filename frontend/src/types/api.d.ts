@@ -600,6 +600,60 @@ export interface NearCitiesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CreateCity
+// ====================================================
+
+export interface CreateCity_createCity_city_country_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
+export interface CreateCity_createCity_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryPhoto: string | null;
+  countryCode: string | null;
+  continent: CreateCity_createCity_city_country_continent | null;
+}
+
+export interface CreateCity_createCity_city {
+  __typename: "CityType";
+  id: string;
+  latitude: number | null;
+  longitude: number | null;
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: CreateCity_createCity_city_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
+  userCount: number | null;
+  userLogCount: number | null;
+  count: number | null;
+  diff: number | null;
+}
+
+export interface CreateCity_createCity {
+  __typename: "CreateCityResponse";
+  city: CreateCity_createCity_city | null;
+}
+
+export interface CreateCity {
+  createCity: CreateCity_createCity;
+}
+
+export interface CreateCityVariables {
+  cityId: string;
+  cityName: string;
+  latitude: number;
+  longitude: number;
+  countryCode: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: CityUsersBefore
 // ====================================================
 
@@ -1331,8 +1385,8 @@ export interface ReportLocation {
 export interface ReportLocationVariables {
   currentLat: number;
   currentLng: number;
-  cityId?: string | null;
-  currentCity: string;
+  currentCityId?: string | null;
+  currentCityName: string;
   currentCountryCode: string;
 }
 
