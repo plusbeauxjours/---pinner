@@ -70,6 +70,7 @@ interface IProps {
   activeId: number;
   searchData?: any;
   searchLoading: boolean;
+  onClick: (placeId: string) => void;
 }
 
 const SearchPresenter: React.SFC<IProps> = ({
@@ -81,7 +82,8 @@ const SearchPresenter: React.SFC<IProps> = ({
     searchCountries: { countries = null } = {},
     searchContinents: { continents = null } = {}
   } = {},
-  searchLoading
+  searchLoading,
+  onClick
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
     apiKey: `${GOOGLE_PLACE_KEY}`,
@@ -122,25 +124,26 @@ const SearchPresenter: React.SFC<IProps> = ({
         {results.predictions &&
           results.predictions.length > 0 &&
           results.predictions.map(prediction => (
-            <UserRow key={prediction.id}>
-              <Link to={`/city/${prediction.place_id}`}>
-                <Header>
-                  <SAvatar
-                    size={"sm"}
-                    url={prediction.structured_formatting.main_text}
+            <UserRow
+              key={prediction.id}
+              onClick={() => onClick(prediction.place_id)}
+            >
+              <Header>
+                <SAvatar
+                  size={"sm"}
+                  url={prediction.structured_formatting.main_text}
+                />
+                <HeaderColumn>
+                  <HeaderText
+                    text={prediction.structured_formatting.main_text}
                   />
-                  <HeaderColumn>
-                    <HeaderText
-                      text={prediction.structured_formatting.main_text}
-                    />
-                    <Location>
-                      {prediction.structured_formatting.secondary_text
-                        ? prediction.structured_formatting.secondary_text
-                        : prediction.structured_formatting.main_text}
-                    </Location>
-                  </HeaderColumn>
-                </Header>
-              </Link>
+                  <Location>
+                    {prediction.structured_formatting.secondary_text
+                      ? prediction.structured_formatting.secondary_text
+                      : prediction.structured_formatting.main_text}
+                  </Location>
+                </HeaderColumn>
+              </Header>
             </UserRow>
           ))}
         {/* {cities &&

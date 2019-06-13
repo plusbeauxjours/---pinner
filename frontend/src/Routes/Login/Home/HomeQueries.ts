@@ -4,15 +4,15 @@ export const REPORT_LOCATION = gql`
   mutation ReportLocation(
     $currentLat: Float!
     $currentLng: Float!
-    $cityId: String
-    $currentCity: String!
+    $currentCityId: String
+    $currentCityName: String!
     $currentCountryCode: String!
   ) {
     reportLocation(
       currentLat: $currentLat
       currentLng: $currentLng
-      cityId: $cityId
-      currentCity: $currentCity
+      currentCityId: $currentCityId
+      currentCityName: $currentCityName
       currentCountryCode: $currentCountryCode
     ) {
       ok

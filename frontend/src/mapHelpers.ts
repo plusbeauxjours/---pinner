@@ -42,3 +42,30 @@ export const reverseGeoCode = async (latitude: number, longitude: number) => {
     return false;
   }
 };
+
+export const reversePlaceId = async (placeId: string) => {
+  const URL = `https://maps.googleapis.com/maps/api/geocode/json?place_id=${placeId}&key=${GOOGLE_MAPS_KEY}`;
+  const { data } = await axios(URL);
+  if (!data.error_message) {
+    const { results } = data;
+
+    let storableLocation = {
+      latitude: "",
+      longitude: "",
+      countryCode: ""
+    };
+    console.log(results);
+    for (const component of results[0].address_components) {
+      if (component.types[0] === "country") {
+        storableLocation.countryCode = component.short_name;
+      }
+    }
+    storableLocation.latitude = results[0].geometry.location.lat;
+    storableLocation.longitude = results[0].geometry.location.lng;
+    console.log(storableLocation);
+    return { storableLocation };
+  } else {
+    toast.error(data.error_message);
+    return false;
+  }
+};
