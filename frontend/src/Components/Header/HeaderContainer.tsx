@@ -209,31 +209,32 @@ class HeaderContainer extends React.Component<any, IState> {
         searchCountries: { countries = null } = {},
         searchContinents: { continents = null } = {}
       } = this.searchData;
-      const length =
-        users.length + cities.length + countries.length + continents.length;
-      console.log(length);
-      if (keyCode === 13 && (users || cities || countries || continents)) {
-        history.push({
-          pathname: `/${users[activeId].username}`
-        });
-        this.setState({
-          activeId: 0,
-          modalOpen: false
-        });
-      } else if (keyCode === 38) {
-        if (activeId === 0) {
-          return;
+      // const length =
+      // users.length + cities.length + countries.length + continents.length;
+      if (users && cities && countries && continents) {
+        if (keyCode === 13 && (users || cities || countries || continents)) {
+          history.push({
+            pathname: `/${users[activeId].username}`
+          });
+          this.setState({
+            activeId: 0,
+            modalOpen: false
+          });
+        } else if (keyCode === 38) {
+          if (activeId === 0) {
+            return;
+          }
+          this.setState({
+            activeId: activeId - 1
+          });
+        } else if (keyCode === 40) {
+          if (activeId === users.length - 1) {
+            return;
+          }
+          this.setState({
+            activeId: activeId + 1
+          });
         }
-        this.setState({
-          activeId: activeId - 1
-        });
-      } else if (keyCode === 40) {
-        if (activeId === length - 1) {
-          return;
-        }
-        this.setState({
-          activeId: activeId + 1
-        });
       }
     }
   };

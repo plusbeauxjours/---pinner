@@ -83,50 +83,16 @@ const SearchPresenter: React.SFC<IProps> = ({
   } = {},
   searchLoading
 }) => {
-  if (searchLoading) {
+  const { results, isLoading } = useGoogleAutocomplete({
+    apiKey: `${GOOGLE_PLACE_KEY}`,
+    query: search,
+    options: {
+      types: "(cities)",
+      language: "en"
+    }
+  });
+  if (searchLoading || isLoading) {
     return <Loader />;
-  } else if (!searchLoading && cities && cities.length === 0) {
-    console.log("hihiauto");
-    console.log(search);
-    const { results, isLoading } = useGoogleAutocomplete({
-      apiKey: `${GOOGLE_PLACE_KEY}`,
-      query: search,
-      options: {
-        types: "(cities)",
-        language: "en"
-      }
-    });
-    return (
-      <>
-        {console.log(results)}
-        {isLoading ? (
-          <Loader />
-        ) : (
-          results.predictions.map(prediction => (
-            <UserRow key={prediction.id}>
-              <Link to={`/city/${prediction.place_id}`}>
-                <Header>
-                  <SAvatar
-                    size={"sm"}
-                    url={prediction.structured_formatting.main_text}
-                  />
-                  <HeaderColumn>
-                    <HeaderText
-                      text={prediction.structured_formatting.main_text}
-                    />
-                    <Location>
-                      {prediction.structured_formatting.secondary_text
-                        ? prediction.structured_formatting.secondary_text
-                        : prediction.structured_formatting.main_text}
-                    </Location>
-                  </HeaderColumn>
-                </Header>
-              </Link>
-            </UserRow>
-          ))
-        )}
-      </>
-    );
   } else {
     return (
       <SWrapper>
@@ -153,7 +119,31 @@ const SearchPresenter: React.SFC<IProps> = ({
               </UserRow>
             );
           })}
-        {cities &&
+        {results.predictions &&
+          results.predictions.length > 0 &&
+          results.predictions.map(prediction => (
+            <UserRow key={prediction.id}>
+              <Link to={`/city/${prediction.place_id}`}>
+                <Header>
+                  <SAvatar
+                    size={"sm"}
+                    url={prediction.structured_formatting.main_text}
+                  />
+                  <HeaderColumn>
+                    <HeaderText
+                      text={prediction.structured_formatting.main_text}
+                    />
+                    <Location>
+                      {prediction.structured_formatting.secondary_text
+                        ? prediction.structured_formatting.secondary_text
+                        : prediction.structured_formatting.main_text}
+                    </Location>
+                  </HeaderColumn>
+                </Header>
+              </Link>
+            </UserRow>
+          ))}
+        {/* {cities &&
           cities.length !== 0 &&
           cities.map(city => (
             <UserRow key={city.id}>
@@ -167,7 +157,7 @@ const SearchPresenter: React.SFC<IProps> = ({
                 </Header>
               </Link>
             </UserRow>
-          ))}
+          ))} */}
         {countries &&
           countries.length > 0 &&
           countries.map(country => (
@@ -199,6 +189,8 @@ const SearchPresenter: React.SFC<IProps> = ({
           ))}
         {users &&
           users.length === 0 &&
+          results &&
+          results.length === 0 &&
           cities &&
           cities.length === 0 &&
           countries &&
