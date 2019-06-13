@@ -10,7 +10,7 @@ export const reverseGeoCode = async (latitude: number, longitude: number) => {
     const { results } = data;
 
     let storableLocation = {
-      city: "",
+      cityName: "",
       cityId: "",
       countryCode: ""
     };
@@ -23,13 +23,13 @@ export const reverseGeoCode = async (latitude: number, longitude: number) => {
           component.types[0] === "sublocality" ||
           component.types[0] === "colloquial_area"
         ) {
-          storableLocation.city = component.long_name;
+          storableLocation.cityName = component.long_name;
           storableLocation.cityId = components.place_id;
         } else if (
-          !storableLocation.city &&
+          !storableLocation.cityName &&
           component.types[0] === "administrative_area_level_1"
         ) {
-          storableLocation.city = component.long_name;
+          storableLocation.cityName = component.long_name;
         } else if (component.types.includes("country")) {
           storableLocation.countryCode = component.short_name;
         }

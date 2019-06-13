@@ -16,10 +16,10 @@ from coffees import models as coffee_models
 def resolve_header(self, info, **kwargs):
 
     user = info.context.user
-    cityName = kwargs.get('cityName')
+    cityId = kwargs.get('cityId')
 
-    print(cityName)
-    city = models.City.objects.get(city_name=cityName)
+    print('header')
+    city = models.City.objects.get(city_id=cityId)
     print('header')
 
     return types.HeaderResponse(city=city)

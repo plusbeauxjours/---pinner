@@ -171,7 +171,8 @@ interface IProps extends RouteComponentProps<any> {
   searchLoading: boolean;
   currentLat: number;
   currentLng: number;
-  currentCity: string;
+  currentCityId: string;
+  currentCityName: string;
   currentCountryCode: string;
   modalOpen: boolean;
   search: string;
@@ -189,7 +190,8 @@ const HeaderPresenter: React.SFC<IProps> = ({
   searchLoading,
   currentLat,
   currentLng,
-  currentCity,
+  currentCityId,
+  currentCityName,
   currentCountryCode,
   modalOpen,
   search,
@@ -236,7 +238,7 @@ const HeaderPresenter: React.SFC<IProps> = ({
             </Icon>
           </Column>
           <UserContainer>
-            <Link to={`/city/${currentCity}`}>
+            <Link to={`/city/${currentCityId}`}>
               <LocationHeader>
                 <SAvatar url={city.cityPhoto} size={"sm"} />
                 <HeaderColumn>
@@ -264,7 +266,7 @@ const HeaderPresenter: React.SFC<IProps> = ({
                     currentCountryCode,
                     currentLat,
                     currentLng,
-                    currentCity
+                    currentCityName
                   }
                 }}
               >

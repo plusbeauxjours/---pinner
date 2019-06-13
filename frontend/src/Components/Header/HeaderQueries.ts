@@ -7,10 +7,11 @@ import {
 } from "src/sharedQueries";
 
 export const GET_HEADER = gql`
-  query Header($cityName: String!) {
-    header(cityName: $cityName) {
+  query Header($cityId: String!) {
+    header(cityId: $cityId) {
       city {
         cityName
+        cityId
         cityPhoto
         country {
           countryName

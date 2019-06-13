@@ -27,7 +27,8 @@ class MeQuery extends Query<Me> {}
 interface IState {
   currentLat: number;
   currentLng: number;
-  currentCity: string;
+  currentCityId: string;
+  currentCityName: string;
   currentCountryCode: string;
   modalOpen: boolean;
   search: string;
@@ -46,17 +47,17 @@ class HeaderContainer extends React.Component<any, IState> {
     this.state = {
       currentLat: 0,
       currentLng: 0,
-      currentCity: null,
+      currentCityId: null,
+      currentCityName: null,
       currentCountryCode: null,
       modalOpen: false,
       search: "",
       activeId: 0
     };
-    console.log("what");
   }
   public componentDidMount() {
     console.log("mount");
-    if (!localStorage.getItem("cityName")) {
+    if (!localStorage.getItem("cityId")) {
       navigator.geolocation.getCurrentPosition(
         this.handleGeoSuccess,
         this.handleGeoError
@@ -67,7 +68,8 @@ class HeaderContainer extends React.Component<any, IState> {
     const {
       currentLat,
       currentLng,
-      currentCity,
+      currentCityId,
+      currentCityName,
       currentCountryCode,
       modalOpen,
       search,
@@ -84,7 +86,7 @@ class HeaderContainer extends React.Component<any, IState> {
                   <HeaderQuery
                     query={GET_HEADER}
                     variables={{
-                      cityName: currentCity || localStorage.getItem("cityName")
+                      cityId: currentCityId || localStorage.getItem("cityId")
                     }}
                   >
                     {({ data, loading }) => {
@@ -105,7 +107,8 @@ class HeaderContainer extends React.Component<any, IState> {
                                 searchLoading={searchLoading}
                                 currentLat={currentLat}
                                 currentLng={currentLng}
-                                currentCity={currentCity}
+                                currentCityId={currentCityId}
+                                currentCityName={currentCityName}
                                 currentCountryCode={currentCountryCode}
                                 modalOpen={modalOpen}
                                 search={search}
@@ -150,15 +153,16 @@ class HeaderContainer extends React.Component<any, IState> {
     const address = await reverseGeoCode(latitude, longitude);
     if (address) {
       this.setState({
-        currentCity: address.storableLocation.city,
+        currentCityId: address.storableLocation.cityId,
+        currentCityName: address.storableLocation.cityName,
         currentCountryCode: address.storableLocation.countryCode
       });
-      localStorage.setItem("cityName", address.storableLocation.city);
+      localStorage.setItem("cityId", address.storableLocation.cityId);
       this.reportLocation(
         latitude,
         longitude,
         address.storableLocation.cityId,
-        address.storableLocation.city,
+        address.storableLocation.cityName,
         address.storableLocation.countryCode
       );
     }

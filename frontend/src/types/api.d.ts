@@ -228,6 +228,7 @@ export interface Header_header_city_country {
 export interface Header_header_city {
   __typename: "CityType";
   cityName: string | null;
+  cityId: string | null;
   cityPhoto: string | null;
   country: Header_header_city_country;
   userCount: number | null;
@@ -244,7 +245,7 @@ export interface Header {
 }
 
 export interface HeaderVariables {
-  cityName: string;
+  cityId: string;
 }
 
 
@@ -629,6 +630,7 @@ export interface CityUsersBefore_cityUsersBefore_usersBefore_actor {
 
 export interface CityUsersBefore_cityUsersBefore_usersBefore {
   __typename: "MoveNotificationType";
+  naturalTime: string | null;
   actor: CityUsersBefore_cityUsersBefore_usersBefore_actor;
 }
 

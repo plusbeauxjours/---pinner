@@ -10,7 +10,7 @@ class Query(object):
         resolver=queries.resolve_header,
         required=True,
         args={
-            'cityName': graphene.String(required=True),
+            'cityId': graphene.String(required=True),
             'page': graphene.Int(),
         }
     )
