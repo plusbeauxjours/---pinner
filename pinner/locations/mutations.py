@@ -16,8 +16,8 @@ class ReportLocation(graphene.Mutation):
     class Arguments:
         currentLat = graphene.Float(required=True)
         currentLng = graphene.Float(required=True)
-        cityId = graphene.String()
-        currentCity = graphene.String(required=True)
+        currentCityId = graphene.String()
+        currentCityName = graphene.String(required=True)
         currentCountryCode = graphene.String(required=True)
 
     Output = types.ReportLocationResponse
@@ -29,8 +29,8 @@ class ReportLocation(graphene.Mutation):
 
         currentLat = kwargs.get('currentLat')
         currentLng = kwargs.get('currentLng')
-        cityId = kwargs.get('cityId')
-        currentCity = kwargs.get('currentCity')
+        currentCityId = kwargs.get('currentCityId')
+        currentCityName = kwargs.get('currentCityName')
         currentCountryCode = kwargs.get('currentCountryCode')
 
         print('reportlocation')
@@ -113,9 +113,9 @@ class ReportLocation(graphene.Mutation):
             )
 
         try:
-            city = models.City.objects.get(city_name=currentCity)
+            city = models.City.objects.get(city_name=currentCityName)
             if not city.city_id:
-                city.city_id = cityId
+                city.city_id = currentCityId
                 city.save()
             profile.current_city = city
             profile.save()
@@ -129,7 +129,7 @@ class ReportLocation(graphene.Mutation):
             nearCities = get_locations_nearby_coords(currentLat, currentLng, 3000)
 
             try:
-                gp = locationThumbnail.get_photos(term=currentCity)
+                gp = locationThumbnail.get_photos(term=currentCityName)
                 cityPhotoURL = gp.get_urls()
             except:
                 cityPhotoURL = None
@@ -141,8 +141,8 @@ class ReportLocation(graphene.Mutation):
             # #     gp.download(i)
 
             city = models.City.objects.create(
-                city_id=cityId,
-                city_name=currentCity,
+                city_id=currentCityId,
+                city_name=currentCityName,
                 country=country,
                 city_photo=cityPhotoURL,
                 latitude=currentLat,
