@@ -350,9 +350,9 @@ const TripProfilePresenter: React.SFC<IProps> = ({
           <GreyLine />
           <Title>
             <SText text={"NEAR CITIES"} />
-            {/* <Link to={`${history.location.pathname}/usersbefore`}> */}
-            <SeeAll>SEE ALL</SeeAll>
-            {/* </Link> */}
+            <Link to={`/city/${city.cityId}/nearCities`}>
+              <SeeAll>SEE ALL</SeeAll>
+            </Link>
           </Title>
           <Container>
             <Box>

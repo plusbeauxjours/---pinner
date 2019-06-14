@@ -18,6 +18,7 @@ import CoffeesPage from "../Routes/Feed/CoffeesPage";
 
 import CityUsersNow from "../Routes/City/CityUsersNow";
 import CityUsersBefore from "../Routes/City/CityUsersBefore";
+import NearCities from "../Routes/City/NearCities";
 
 import ContinentUsersNow from "../Routes/Continent/ContinentUsersNow";
 import ContinentUsersBefore from "../Routes/Continent/ContinentUsersBefore";
@@ -90,6 +91,7 @@ class LoggedInPages extends React.Component<IProps> {
             component={CountryUsersBefore}
           />
           <Route path="/country/:countryName" component={CountryProfile} />
+          <Route path="/city/:cityId/nearCities" component={NearCities} />
           <Route path="/city/:cityId/usersNow" component={CityUsersNow} />
           <Route path="/city/:cityId/usersBefore" component={CityUsersBefore} />
           <Route path="/city/:cityId/:duration" component={TripProfile} />

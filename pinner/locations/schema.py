@@ -119,14 +119,6 @@ class Query(object):
             'page': graphene.Int()
         }
     )
-    latest_cities = graphene.Field(
-        types.CitiesResponse,
-        resolver=queries.resolve_latest_cities,
-        required=True,
-        args={
-            'latestCityPage': graphene.Int()
-        }
-    )
     search_cities = graphene.Field(
         types.CitiesResponse,
         resolver=queries.resolve_search_cities,

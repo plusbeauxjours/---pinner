@@ -19,6 +19,7 @@ export const CREATE_CITY = gql`
         id
         latitude
         longitude
+        cityId
         cityName
         cityPhoto
         country {

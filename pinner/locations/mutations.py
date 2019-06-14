@@ -112,14 +112,14 @@ class CreateCity(graphene.Mutation):
             )
         try:
             city = models.City.objects.get(city_name=cityName)
-            if city.near_city.count() < 12:
-                nearCities = get_locations_nearby_coords(cityLatitude, cityLongitude, 3000)[:12]
+            if city.near_city.count() < 20:
+                nearCities = get_locations_nearby_coords(cityLatitude, cityLongitude, 3000)[:20]
                 for i in nearCities:
                     city.near_city.add(i)
                     city.save()
 
         except models.City.DoesNotExist:
-            nearCities = get_locations_nearby_coords(cityLatitude, cityLongitude, 3000)[:12]
+            nearCities = get_locations_nearby_coords(cityLatitude, cityLongitude, 3000)[:20]
 
             try:
                 gp = locationThumbnail.get_photos(term=cityName)
@@ -254,14 +254,14 @@ class ReportLocation(graphene.Mutation):
             city = models.City.objects.get(city_name=currentCityName)
             profile.current_city = city
             profile.save()
-            if city.near_city.count() < 6:
-                nearCities = get_locations_nearby_coords(currentLat, currentLng, 3000)
+            if city.near_city.count() < 20:
+                nearCities = get_locations_nearby_coords(currentLat, currentLng, 3000)[:20]
                 for i in nearCities:
                     city.near_city.add(i)
                     city.save()
 
         except models.City.DoesNotExist:
-            nearCities = get_locations_nearby_coords(currentLat, currentLng, 3000)
+            nearCities = get_locations_nearby_coords(currentLat, currentLng, 3000)[:20]
 
             try:
                 gp = locationThumbnail.get_photos(term=currentCityName)

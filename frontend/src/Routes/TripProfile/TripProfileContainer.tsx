@@ -10,7 +10,7 @@ import {
 import { RouteComponentProps, withRouter } from "react-router";
 import { TRIP_PROFILE } from "./TripProfileQueries";
 import TripProfilePresenter from "./TripProfilePresenter";
-import { NEAR_CITIES } from "../City/CityProfile/CityProfileQueries";
+import { NEAR_CITIES } from "../City/NearCities/NearCitiesQueries";
 
 class TripProfileQuery extends Query<TripProfile, TripProfileVariables> {}
 

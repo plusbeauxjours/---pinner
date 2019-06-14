@@ -8,7 +8,8 @@ import {
   NearCitiesVariables
 } from "../../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
-import { CITY_PROFILE, NEAR_CITIES } from "./CityProfileQueries";
+import { CITY_PROFILE } from "./CityProfileQueries";
+import { NEAR_CITIES } from "../NearCities/NearCitiesQueries";
 
 class CityProfileQuery extends Query<CityProfile, CityProfileVariables> {}
 class NearCitiesQuery extends Query<NearCities, NearCitiesVariables> {}

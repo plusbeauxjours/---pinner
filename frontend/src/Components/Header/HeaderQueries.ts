@@ -10,8 +10,8 @@ export const GET_HEADER = gql`
   query Header($cityId: String!) {
     header(cityId: $cityId) {
       city {
-        cityName
         cityId
+        cityName
         cityPhoto
         country {
           countryName

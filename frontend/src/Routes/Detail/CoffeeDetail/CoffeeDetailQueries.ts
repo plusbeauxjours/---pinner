@@ -17,6 +17,7 @@ export const COFFEE_DETAIL = gql`
             avatar
             gender
             currentCity {
+              cityId
               cityName
               country {
                 countryName

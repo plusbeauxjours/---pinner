@@ -99,8 +99,8 @@ export const EDIT_PROFILE = gql`
           currentCity {
             latitude
             longitude
-            cityName
             cityId
+            cityName
             cityPhoto
             country {
               countryName
@@ -128,8 +128,8 @@ export const GET_TRIPS = gql`
       trip {
         id
         city {
-          cityName
           cityId
+          cityName
           cityPhoto
           country {
             countryName
@@ -157,8 +157,8 @@ export const ADD_TRIP = gql`
         startDate
         endDate
         city {
-          cityName
           cityId
+          cityName
           cityPhoto
           country {
             countryName
@@ -186,8 +186,8 @@ export const EDIT_TRIP = gql`
       moveNotification {
         id
         city {
-          cityName
           cityId
+          cityName
           cityPhoto
           country {
             countryName

@@ -315,7 +315,7 @@ def resolve_near_cities(self, info, **kwargs):
     user = info.context.user
     cityId = kwargs.get('cityId')
     page = kwargs.get('page', 0)
-    offset = 12 * page
+    offset = 20 * page
 
     nextPage = page+1
 
@@ -341,21 +341,6 @@ def resolve_near_cities(self, info, **kwargs):
 
     hasNextPage = offset < combined.count()
 
-    combined = combined[offset:12 + offset]
+    combined = combined[offset:20 + offset]
 
-    return types.NearCitiesResponse(cities=combined)
-
-
-@login_required
-def resolve_latest_cities(self, info, **kwargs):
-
-    latestCityPage = kwargs.get('latestCityPage', 0)
-
-    if (latestCityPage is 0):
-        cities = models.City.objects.all().order_by(
-            '-created_at')[:6]
-    else:
-        cities = models.City.objects.all().order_by(
-            '-created_at')[6:12]
-
-    return types.CitiesResponse(cities=cities)
+    return types.NearCitiesResponse(cities=combined, page=nextPage, hasNextPage=hasNextPage)

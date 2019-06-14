@@ -227,8 +227,8 @@ export interface Header_header_city_country {
 
 export interface Header_header_city {
   __typename: "CityType";
-  cityName: string | null;
   cityId: string | null;
+  cityName: string | null;
   cityPhoto: string | null;
   country: Header_header_city_country;
   userCount: number | null;
@@ -382,6 +382,61 @@ export interface logInVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CreateCity
+// ====================================================
+
+export interface CreateCity_createCity_city_country_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
+export interface CreateCity_createCity_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryPhoto: string | null;
+  countryCode: string | null;
+  continent: CreateCity_createCity_city_country_continent | null;
+}
+
+export interface CreateCity_createCity_city {
+  __typename: "CityType";
+  id: string;
+  latitude: number | null;
+  longitude: number | null;
+  cityId: string | null;
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: CreateCity_createCity_city_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
+  userCount: number | null;
+  userLogCount: number | null;
+  count: number | null;
+  diff: number | null;
+}
+
+export interface CreateCity_createCity {
+  __typename: "CreateCityResponse";
+  city: CreateCity_createCity_city | null;
+}
+
+export interface CreateCity {
+  createCity: CreateCity_createCity;
+}
+
+export interface CreateCityVariables {
+  cityId: string;
+  cityName: string;
+  cityLatitude: number;
+  cityLongitude: number;
+  countryCode: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: signUp
 // ====================================================
 
@@ -527,6 +582,7 @@ export interface CityProfile_cityProfile_city {
   id: string;
   latitude: number | null;
   longitude: number | null;
+  cityId: string | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: CityProfile_cityProfile_city_country;
@@ -553,100 +609,6 @@ export interface CityProfile {
 export interface CityProfileVariables {
   page?: number | null;
   cityId: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: NearCities
-// ====================================================
-
-export interface NearCities_nearCities_cities_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface NearCities_nearCities_cities {
-  __typename: "CityType";
-  id: string;
-  latitude: number | null;
-  longitude: number | null;
-  cityName: string | null;
-  cityId: string | null;
-  cityPhoto: string | null;
-  distance: number | null;
-  country: NearCities_nearCities_cities_country;
-  likeCount: number | null;
-  isLiked: boolean | null;
-}
-
-export interface NearCities_nearCities {
-  __typename: "NearCitiesResponse";
-  cities: (NearCities_nearCities_cities | null)[] | null;
-}
-
-export interface NearCities {
-  nearCities: NearCities_nearCities;
-}
-
-export interface NearCitiesVariables {
-  cityId: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: CreateCity
-// ====================================================
-
-export interface CreateCity_createCity_city_country_continent {
-  __typename: "ContinentType";
-  continentName: string | null;
-}
-
-export interface CreateCity_createCity_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-  countryPhoto: string | null;
-  countryCode: string | null;
-  continent: CreateCity_createCity_city_country_continent | null;
-}
-
-export interface CreateCity_createCity_city {
-  __typename: "CityType";
-  id: string;
-  latitude: number | null;
-  longitude: number | null;
-  cityName: string | null;
-  cityPhoto: string | null;
-  country: CreateCity_createCity_city_country;
-  likeCount: number | null;
-  isLiked: boolean | null;
-  userCount: number | null;
-  userLogCount: number | null;
-  count: number | null;
-  diff: number | null;
-}
-
-export interface CreateCity_createCity {
-  __typename: "CreateCityResponse";
-  city: CreateCity_createCity_city | null;
-}
-
-export interface CreateCity {
-  createCity: CreateCity_createCity;
-}
-
-export interface CreateCityVariables {
-  cityId: string;
-  cityName: string;
-  latitude: number;
-  longitude: number;
-  countryCode: string;
 }
 
 
@@ -750,6 +712,46 @@ export interface CityUsersNow {
 
 export interface CityUsersNowVariables {
   page?: number | null;
+  cityId: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: NearCities
+// ====================================================
+
+export interface NearCities_nearCities_cities_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface NearCities_nearCities_cities {
+  __typename: "CityType";
+  id: string;
+  latitude: number | null;
+  longitude: number | null;
+  cityName: string | null;
+  cityId: string | null;
+  cityPhoto: string | null;
+  distance: number | null;
+  country: NearCities_nearCities_cities_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
+}
+
+export interface NearCities_nearCities {
+  __typename: "NearCitiesResponse";
+  cities: (NearCities_nearCities_cities | null)[] | null;
+}
+
+export interface NearCities {
+  nearCities: NearCities_nearCities;
+}
+
+export interface NearCitiesVariables {
   cityId: string;
 }
 
@@ -1229,6 +1231,7 @@ export interface CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity_count
 
 export interface CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity {
   __typename: "CityType";
+  cityId: string | null;
   cityName: string | null;
   country: CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity_country;
 }
@@ -1623,6 +1626,7 @@ export interface TripProfile_tripProfile_usersBefore_actor_profile_currentCity_c
 
 export interface TripProfile_tripProfile_usersBefore_actor_profile_currentCity {
   __typename: "CityType";
+  cityId: string | null;
   cityName: string | null;
   country: TripProfile_tripProfile_usersBefore_actor_profile_currentCity_country;
 }
@@ -1674,6 +1678,7 @@ export interface TripProfile_tripProfile_city {
   __typename: "CityType";
   latitude: number | null;
   longitude: number | null;
+  cityId: string | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: TripProfile_tripProfile_city_country;
@@ -1998,8 +2003,8 @@ export interface EditProfile_editProfile_user_profile_currentCity {
   __typename: "CityType";
   latitude: number | null;
   longitude: number | null;
-  cityName: string | null;
   cityId: string | null;
+  cityName: string | null;
   cityPhoto: string | null;
   country: EditProfile_editProfile_user_profile_currentCity_country;
 }
@@ -2089,8 +2094,8 @@ export interface GetTrips_getTrips_trip_city_country {
 
 export interface GetTrips_getTrips_trip_city {
   __typename: "CityType";
-  cityName: string | null;
   cityId: string | null;
+  cityName: string | null;
   cityPhoto: string | null;
   country: GetTrips_getTrips_trip_city_country;
 }
@@ -2135,8 +2140,8 @@ export interface AddTrip_addTrip_moveNotification_city_country {
 
 export interface AddTrip_addTrip_moveNotification_city {
   __typename: "CityType";
-  cityName: string | null;
   cityId: string | null;
+  cityName: string | null;
   cityPhoto: string | null;
   country: AddTrip_addTrip_moveNotification_city_country;
 }
@@ -2180,8 +2185,8 @@ export interface EditTrip_editTrip_moveNotification_city_country {
 
 export interface EditTrip_editTrip_moveNotification_city {
   __typename: "CityType";
-  cityName: string | null;
   cityId: string | null;
+  cityName: string | null;
   cityPhoto: string | null;
   country: EditTrip_editTrip_moveNotification_city_country;
 }
@@ -2443,55 +2448,6 @@ export interface ContinentParts {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: NotificationParts
-// ====================================================
-
-export interface NotificationParts_actor_profile_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface NotificationParts_actor_profile_currentCity {
-  __typename: "CityType";
-  cityName: string | null;
-  country: NotificationParts_actor_profile_currentCity_country;
-}
-
-export interface NotificationParts_actor_profile {
-  __typename: "ProfileType";
-  avatar: string;
-  currentCity: NotificationParts_actor_profile_currentCity | null;
-}
-
-export interface NotificationParts_actor {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: NotificationParts_actor_profile | null;
-}
-
-export interface NotificationParts_match {
-  __typename: "MatchType";
-  id: string;
-}
-
-export interface NotificationParts {
-  __typename: "NotificationType";
-  id: string;
-  actor: NotificationParts_actor;
-  verb: NotificationVerb;
-  match: NotificationParts_match | null;
-  read: boolean;
-  naturalTime: string | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL fragment: CoffeeParts
 // ====================================================
 
@@ -2656,14 +2612,6 @@ export enum ProfileGender {
   FEMININE = "FEMININE",
   GENDERQUEER = "GENDERQUEER",
   MASCULINE = "MASCULINE",
-}
-
-/**
- * An enumeration.
- */
-export enum NotificationVerb {
-  MATCH = "MATCH",
-  UPLOAD = "UPLOAD",
 }
 
 //==============================================================

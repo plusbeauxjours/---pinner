@@ -12,6 +12,7 @@ export const TRIP_PROFILE = gql`
             avatar
             isSelf
             currentCity {
+              cityId
               cityName
               country {
                 countryName
@@ -33,6 +34,7 @@ export const TRIP_PROFILE = gql`
       city {
         latitude
         longitude
+        cityId
         cityName
         cityPhoto
         country {
