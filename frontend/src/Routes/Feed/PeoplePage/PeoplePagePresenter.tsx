@@ -76,6 +76,7 @@ const Location = styled.span`
 const AvatarContainer = styled.div`
   display: flex;
   position: relative;
+  align-items: center;
 `;
 
 const HeaderColumn = styled.div`

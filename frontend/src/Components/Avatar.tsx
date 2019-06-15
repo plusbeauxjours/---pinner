@@ -1,6 +1,8 @@
 import React from "react";
 import ProgressiveImage from "react-progressive-image";
 import styled from "styled-components";
+import { useQuery } from "react-apollo-hooks";
+import { GET_CITY_PHOTO, GET_COUNTRY_PHOTO } from "./Search/SearchQueries";
 
 const Container = styled.img<ITheme>`
   height: ${props => {
@@ -87,11 +89,86 @@ interface IProps {
   size: string;
   bg?: string;
   className?: string;
+  cityId?: string;
+  countryCode?: string;
 }
 
-const Avatar: React.SFC<IProps> = ({ className, url, size }) => {
-  return (
-    <>
+const Avatar: React.SFC<IProps> = ({
+  className,
+  url,
+  size,
+  cityId,
+  countryCode
+}) => {
+  if (cityId) {
+    console.log(cityId);
+    const { data: cityPhotoData } = useQuery(GET_CITY_PHOTO, {
+      variables: { cityId }
+    });
+    const { getCityPhoto: { photo = null } = {} } = cityPhotoData;
+    console.log(photo);
+    return (
+      <ProgressiveImage delay={0} src={photo} placeholder="">
+        {(src, loading) => {
+          return loading ? (
+            <AvatarContainer size={size}>
+              <Placeholder
+                className={className}
+                color={
+                  "rgb(" +
+                  Math.floor(Math.random() * 256) +
+                  "," +
+                  Math.floor(Math.random() * 256) +
+                  "," +
+                  Math.floor(Math.random() * 256) +
+                  ")"
+                }
+                size={size}
+              />
+            </AvatarContainer>
+          ) : (
+            <AvatarContainer size={size}>
+              <Container className={className} src={src} size={size} />
+            </AvatarContainer>
+          );
+        }}
+      </ProgressiveImage>
+    );
+  } else if (countryCode) {
+    const { data: countryPhotoData } = useQuery(GET_COUNTRY_PHOTO, {
+      variables: { countryCode }
+    });
+    const { getCountryPhoto: { photo = null } = {} } = countryPhotoData;
+
+    return (
+      <ProgressiveImage delay={0} src={photo} placeholder="">
+        {(src, loading) => {
+          return loading ? (
+            <AvatarContainer size={size}>
+              <Placeholder
+                className={className}
+                color={
+                  "rgb(" +
+                  Math.floor(Math.random() * 256) +
+                  "," +
+                  Math.floor(Math.random() * 256) +
+                  "," +
+                  Math.floor(Math.random() * 256) +
+                  ")"
+                }
+                size={size}
+              />
+            </AvatarContainer>
+          ) : (
+            <AvatarContainer size={size}>
+              <Container className={className} src={src} size={size} />
+            </AvatarContainer>
+          );
+        }}
+      </ProgressiveImage>
+    );
+  } else {
+    return (
       <ProgressiveImage delay={0} src={url} placeholder="">
         {(src, loading) => {
           return loading ? (
@@ -117,8 +194,8 @@ const Avatar: React.SFC<IProps> = ({ className, url, size }) => {
           );
         }}
       </ProgressiveImage>
-    </>
-  );
+    );
+  }
 };
 
 export default Avatar;

@@ -133,10 +133,7 @@ const SearchPresenter: React.SFC<IProps> = ({
               onClick={() => onClick(prediction.place_id)}
             >
               <Header>
-                <SAvatar
-                  size={"sm"}
-                  url={prediction.structured_formatting.main_text}
-                />
+                <SAvatar size={"sm"} cityId={prediction.place_id} />
                 <HeaderColumn>
                   <HeaderText
                     text={prediction.structured_formatting.main_text}

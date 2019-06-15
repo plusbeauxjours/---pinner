@@ -298,18 +298,6 @@ def resolve_continent_users_before(self, info, **kwargs):
 
 
 @login_required
-def resolve_get_footprints(self, info, **kwargs):
-
-    user = info.context.user
-    page = kwargs.get('page', 0)
-    offset = 10 * page
-
-    trip = user.movenotification.all().order_by('-start_date')[offset:10 + offset]
-
-    return types.TripResponse(trip=trip)
-
-
-@login_required
 def resolve_near_cities(self, info, **kwargs):
 
     user = info.context.user
@@ -344,3 +332,33 @@ def resolve_near_cities(self, info, **kwargs):
     combined = combined[offset:20 + offset]
 
     return types.NearCitiesResponse(cities=combined, page=nextPage, hasNextPage=hasNextPage)
+
+
+@login_required
+def resolve_get_city_photo(self, info, **kwargs):
+
+    user = info.context.user
+    cityId = kwargs.get('cityId')
+    try:
+        city = models.City.objects.get(city_id=cityId)
+        photo = city.city_photo
+        print(photo)
+        return types.PhotoResponse(photo=photo)
+
+    except models.City.DoesNotExist:
+        return types.PhotoResponse(photo=None)
+
+
+@login_required
+def resolve_get_country_photo(self, info, **kwargs):
+
+    user = info.context.user
+    countryCode = kwargs.get('countryCode')
+    try:
+        country = models.Country.objects.get(country_code=countryCode)
+        photo = country.country_photo
+        print(countryCode)
+        return types.PhotoResponse(photo=photo)
+
+    except models.Country.DoesNotExist:
+        return types.PhotoResponse(photo=None)

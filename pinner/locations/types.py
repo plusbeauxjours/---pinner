@@ -53,6 +53,10 @@ class CreateCityResponse(graphene.ObjectType):
     city = graphene.Field(CityType)
 
 
+class PhotoResponse(graphene.ObjectType):
+    photo = graphene.String()
+
+
 class CityProfileResponse(graphene.ObjectType):
     city = graphene.Field(CityType)
     usersNow = graphene.List(coffee_types.UserType)

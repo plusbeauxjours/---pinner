@@ -105,11 +105,6 @@ class Query(object):
             'page': graphene.Int()
         }
     )
-    get_footprints = graphene.Field(
-        types.TripResponse,
-        resolver=queries.resolve_get_footprints,
-        required=True
-    )
     near_cities = graphene.Field(
         types.NearCitiesResponse,
         resolver=queries.resolve_near_cities,
@@ -142,6 +137,18 @@ class Query(object):
         resolver=queries.resolve_search_continents,
         required=True,
         args={'search': graphene.String(required=True)}
+    )
+    get_city_photo = graphene.Field(
+        types.PhotoResponse,
+        resolver=queries.resolve_get_city_photo,
+        required=True,
+        args={'cityId': graphene.String()}
+    )
+    get_country_photo = graphene.Field(
+        types.PhotoResponse,
+        resolver=queries.resolve_get_country_photo,
+        required=True,
+        args={'countryCode': graphene.String()}
     )
 
 

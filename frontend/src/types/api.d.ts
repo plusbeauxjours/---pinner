@@ -437,6 +437,48 @@ export interface CreateCityVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetCityPhoto
+// ====================================================
+
+export interface GetCityPhoto_getCityPhoto {
+  __typename: "PhotoResponse";
+  photo: string | null;
+}
+
+export interface GetCityPhoto {
+  getCityPhoto: GetCityPhoto_getCityPhoto;
+}
+
+export interface GetCityPhotoVariables {
+  cityId?: string | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetCountryPhoto
+// ====================================================
+
+export interface GetCountryPhoto_getCountryPhoto {
+  __typename: "PhotoResponse";
+  photo: string | null;
+}
+
+export interface GetCountryPhoto {
+  getCountryPhoto: GetCountryPhoto_getCountryPhoto;
+}
+
+export interface GetCountryPhotoVariables {
+  countryCode?: string | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: signUp
 // ====================================================
 
