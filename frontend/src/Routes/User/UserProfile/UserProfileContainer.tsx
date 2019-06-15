@@ -324,7 +324,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                           <AddTripMutation
                                                             mutation={ADD_TRIP}
                                                             variables={{
-                                                              cityName,
+                                                              cityId,
                                                               startDate,
                                                               endDate
                                                             }}
@@ -354,7 +354,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                       moveNotificationId,
                                                                       10
                                                                     ),
-                                                                    cityName,
+                                                                    cityId,
                                                                     startDate,
                                                                     endDate
                                                                   }}
@@ -788,26 +788,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       profilFormModalOpen: false
     } as any);
   };
-  public addTrip = () => {
-    const { cityName, startDate, endDate, tripAddModalOpen } = this.state;
-    this.setState({
+  public addTrip = async () => {
+    const { tripAddModalOpen, cityId } = this.state;
+    await this.setState({
+      tripAddModalOpen: !tripAddModalOpen,
       tripModalOpen: false
     });
-    this.addTripFn({
-      variables: { cityName, startDate, endDate }
-    });
-    this.setState({
-      tripAddModalOpen: !tripAddModalOpen,
-      moveNotificationId: null,
-      cityName: null,
-      startDate: null,
-      endDate: null
-    });
-  };
-  public editTrip = async () => {
-    const { tripEditModalOpen, cityId } = this.state;
-
-    await this.editTripFn();
     const city = await reversePlaceId(cityId);
     await this.createCityFn({
       variables: {
@@ -818,10 +804,32 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         countryCode: city.storableLocation.countryCode
       }
     });
-    console.log(this.state);
+    await this.addTripFn();
     this.setState({
+      moveNotificationId: "",
+      cityName: "",
+      startDate: null,
+      endDate: null
+    });
+  };
+  public editTrip = async () => {
+    const { tripEditModalOpen, cityId } = this.state;
+    await this.setState({
       tripEditModalOpen: !tripEditModalOpen,
-      tripModalOpen: false,
+      tripModalOpen: false
+    });
+    const city = await reversePlaceId(cityId);
+    await this.createCityFn({
+      variables: {
+        cityId,
+        cityName: city.storableLocation.cityName,
+        cityLatitude: city.storableLocation.latitude,
+        cityLongitude: city.storableLocation.longitude,
+        countryCode: city.storableLocation.countryCode
+      }
+    });
+    await this.editTripFn();
+    this.setState({
       moveNotificationId: "",
       cityName: "",
       startDate: null,

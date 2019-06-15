@@ -2164,7 +2164,7 @@ export interface AddTrip {
 }
 
 export interface AddTripVariables {
-  cityName: string;
+  cityId: string;
   startDate: any;
   endDate: any;
 }
@@ -2212,7 +2212,7 @@ export interface EditTrip {
 
 export interface EditTripVariables {
   moveNotificationId: number;
-  cityName?: string | null;
+  cityId?: string | null;
   startDate?: any | null;
   endDate?: any | null;
 }

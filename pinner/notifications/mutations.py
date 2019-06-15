@@ -25,7 +25,7 @@ class MarkAsRead(graphene.Mutation):
             )
             notification.read = True
             notification.save()
-            return types.MarkAsReadResponse(ok=True,notificationId=notificationId)
+            return types.MarkAsReadResponse(ok=True, notificationId=notificationId)
 
         except models.Notification.DoesNotExist:
             raise Exception('Notification Not Found')
@@ -34,7 +34,7 @@ class MarkAsRead(graphene.Mutation):
 class AddTrip(graphene.Mutation):
 
     class Arguments:
-        cityName = graphene.String(required=True)
+        cityId = graphene.String(required=True)
         startDate = graphene.types.datetime.DateTime(required=True)
         endDate = graphene.types.datetime.DateTime(required=True)
 
@@ -43,7 +43,7 @@ class AddTrip(graphene.Mutation):
     @login_required
     def mutate(self, info, **kwargs):
 
-        cityName = kwargs.get('cityName')
+        cityId = kwargs.get('cityId')
         startDate = kwargs.get('startDate')
         endDate = kwargs.get('endDate')
         user = info.context.user
@@ -51,7 +51,7 @@ class AddTrip(graphene.Mutation):
         try:
             moveNotification = models.MoveNotification.objects.create(
                 actor=user,
-                city=location_models.City.objects.get(city_name=cityName),
+                city=location_models.City.objects.get(city_id=cityId),
                 start_date=startDate,
                 end_date=endDate
             )
@@ -65,7 +65,7 @@ class EditTrip(graphene.Mutation):
 
     class Arguments:
         moveNotificationId = graphene.Int(required=True)
-        cityName = graphene.String()
+        cityId = graphene.String()
         startDate = graphene.types.datetime.DateTime()
         endDate = graphene.types.datetime.DateTime()
 
@@ -88,11 +88,11 @@ class EditTrip(graphene.Mutation):
         else:
 
             try:
-                cityName = kwargs.get('cityName', moveNotification.city.city_name)
+                cityId = kwargs.get('cityId', moveNotification.city.city_id)
                 startDate = kwargs.get('startDate', moveNotification.start_date)
                 endDate = kwargs.get('endDate', moveNotification.end_date)
 
-                moveNotification.city = location_models.City.objects.get(city_name=cityName)
+                moveNotification.city = location_models.City.objects.get(city_id=cityId)
                 moveNotification.start_date = startDate
                 moveNotification.end_date = endDate
 

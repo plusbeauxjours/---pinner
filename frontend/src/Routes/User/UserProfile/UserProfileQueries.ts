@@ -147,11 +147,11 @@ export const GET_TRIPS = gql`
 
 export const ADD_TRIP = gql`
   mutation AddTrip(
-    $cityName: String!
+    $cityId: String!
     $startDate: DateTime!
     $endDate: DateTime!
   ) {
-    addTrip(cityName: $cityName, startDate: $startDate, endDate: $endDate) {
+    addTrip(cityId: $cityId, startDate: $startDate, endDate: $endDate) {
       ok
       moveNotification {
         startDate
@@ -173,13 +173,13 @@ export const ADD_TRIP = gql`
 export const EDIT_TRIP = gql`
   mutation EditTrip(
     $moveNotificationId: Int!
-    $cityName: String
+    $cityId: String
     $startDate: DateTime
     $endDate: DateTime
   ) {
     editTrip(
       moveNotificationId: $moveNotificationId
-      cityName: $cityName
+      cityId: $cityId
       startDate: $startDate
       endDate: $endDate
     ) {
