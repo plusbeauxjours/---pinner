@@ -13,8 +13,8 @@ export const GET_MATCHES = gql`
 `;
 
 export const REQUEST_COFFEE = gql`
-  mutation RequestCoffee($currentCity: String!, $target: String) {
-    requestCoffee(currentCity: $currentCity, target: $target) {
+  mutation RequestCoffee($currentCityId: String!, $target: String) {
+    requestCoffee(currentCityId: $currentCityId, target: $target) {
       ok
       coffee {
         ...CoffeeParts

@@ -11,7 +11,7 @@ from django.utils import timezone
 class RequestCoffee(graphene.Mutation):
 
     class Arguments:
-        currentCity = graphene.String(required=True)
+        currentCityId = graphene.String(required=True)
         target = graphene.String()
 
     Output = types.RequestCoffeeResponse
@@ -20,13 +20,13 @@ class RequestCoffee(graphene.Mutation):
     def mutate(self, info, **kwargs):
 
         user = info.context.user
-        currentCity = kwargs.get('currentCity')
+        currentCityId = kwargs.get('currentCityId')
         target = kwargs.get('target', 'everyone')
 
         if not user.coffee.filter(expires__gt=timezone.now()):
 
             try:
-                currentCity = location_models.City.objects.get(city_name=currentCity)
+                currentCity = location_models.City.objects.get(city_id=currentCityId)
 
                 coffee = models.Coffee.objects.create(
                     city=currentCity,

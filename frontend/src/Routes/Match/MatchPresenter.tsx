@@ -268,7 +268,7 @@ interface IProps {
   matchList: any;
   currentLat: number;
   currentLng: number;
-  currentCity: string;
+  currentCityId: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   requestModalOpen: boolean;
   requestingCoffeeModalOpen: boolean;
@@ -290,7 +290,7 @@ const MatchPresenter: React.SFC<IProps> = ({
   matchList,
   currentLat,
   currentLng,
-  currentCity,
+  currentCityId,
   onChange,
   requestModalOpen,
   requestingCoffeeModalOpen,
@@ -373,7 +373,7 @@ const MatchPresenter: React.SFC<IProps> = ({
             <>
               <Title>
                 <SText text={"NEED SOME COFFEE NOW"} />
-                <Link to={{ pathname: `/coffees`, state: { currentCity } }}>
+                <Link to={{ pathname: `/coffees`, state: { currentCityId } }}>
                   <SeeAll>SEE ALL</SeeAll>
                 </Link>
               </Title>

@@ -1607,7 +1607,7 @@ export interface RequestCoffee {
 }
 
 export interface RequestCoffeeVariables {
-  currentCity: string;
+  currentCityId: string;
   target?: string | null;
 }
 
@@ -1816,7 +1816,7 @@ export interface GetCoffees {
 }
 
 export interface GetCoffeesVariables {
-  cityName?: string | null;
+  cityId?: string | null;
   userName?: string | null;
   location: string;
 }

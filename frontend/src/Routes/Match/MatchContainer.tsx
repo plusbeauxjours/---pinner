@@ -38,7 +38,7 @@ interface IState {
   matchList: any;
   currentLat: number;
   currentLng: number;
-  currentCity: string;
+  currentCityId: string;
   requestModalOpen: boolean;
   requestingCoffeeModalOpen: boolean;
   coffeeReportModalOpen: boolean;
@@ -56,7 +56,7 @@ class MatchContainer extends React.Component<IProps, IState> {
       matchList: [],
       currentLat: state.currentLat,
       currentLng: state.currentLng,
-      currentCity: state.currentCity || localStorage.getItem("cityName"),
+      currentCityId: state.currentCityId || localStorage.getItem("cityId"),
       requestModalOpen: false,
       requestingCoffeeModalOpen: false,
       coffeeReportModalOpen: false
@@ -66,7 +66,7 @@ class MatchContainer extends React.Component<IProps, IState> {
     const {
       search,
       matchList,
-      currentCity,
+      currentCityId,
       currentLat,
       requestModalOpen,
       requestingCoffeeModalOpen,
@@ -91,7 +91,7 @@ class MatchContainer extends React.Component<IProps, IState> {
                   <GetCoffeesQuery
                     query={GET_COFFEES}
                     variables={{
-                      cityName: currentCity,
+                      cityId: currentCityId,
                       location: "feed"
                     }}
                   >
@@ -100,7 +100,7 @@ class MatchContainer extends React.Component<IProps, IState> {
                         <RequestCoffeeMutation
                           mutation={REQUEST_COFFEE}
                           variables={{
-                            currentCity
+                            currentCityId
                           }}
                           onCompleted={this.onCompletedRequestCoffee}
                           update={this.updateRequestCoffee}
@@ -128,7 +128,7 @@ class MatchContainer extends React.Component<IProps, IState> {
                                       matchList={matchList}
                                       currentLat={currentLat}
                                       currentLng={currentLng}
-                                      currentCity={currentCity}
+                                      currentCityId={currentCityId}
                                       onChange={this.onChange}
                                       requestModalOpen={requestModalOpen}
                                       requestingCoffeeModalOpen={
@@ -232,17 +232,17 @@ class MatchContainer extends React.Component<IProps, IState> {
     }
   };
   public updateRequestCoffee = (cache, { data: { requestCoffee } }) => {
-    const { currentCity } = this.state;
+    const { currentCityId } = this.state;
     try {
       const feedData = cache.readQuery({
         query: GET_COFFEES,
-        variables: { cityName: currentCity, location: "feed" }
+        variables: { cityId: currentCityId, location: "feed" }
       });
       if (feedData) {
         feedData.getCoffees.coffees.unshift(requestCoffee.coffee);
         cache.writeQuery({
           query: GET_COFFEES,
-          variables: { cityName: currentCity, location: "feed" },
+          variables: { cityId: currentCityId, location: "feed" },
           data: feedData
         });
       }
@@ -284,7 +284,7 @@ class MatchContainer extends React.Component<IProps, IState> {
   };
   public updateDeleteCoffee = (cache, { data: { deleteCoffee } }) => {
     const { username } = deleteCoffee;
-    const { currentCity } = this.state;
+    const { currentCityId } = this.state;
     console.log(deleteCoffee);
 
     try {
@@ -311,7 +311,7 @@ class MatchContainer extends React.Component<IProps, IState> {
     try {
       const feedData = cache.readQuery({
         query: GET_COFFEES,
-        variables: { cityName: currentCity, location: "feed" }
+        variables: { cityId: currentCityId, location: "feed" }
       });
       if (feedData) {
         feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
@@ -320,7 +320,7 @@ class MatchContainer extends React.Component<IProps, IState> {
         cache.writeQuery({
           query: GET_COFFEES,
           variables: {
-            cityName: currentCity,
+            cityId: currentCityId,
             location: "feed"
           },
           data: feedData

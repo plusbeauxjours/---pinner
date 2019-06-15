@@ -10,7 +10,7 @@ class Query(object):
         required=True,
         args={
             'location': graphene.String(required=True),
-            'cityName': graphene.String(),
+            'cityId': graphene.String(),
             'userName': graphene.String(),
         }
     )

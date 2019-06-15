@@ -161,6 +161,7 @@ const UserRow = styled.div<ITheme>`
 `;
 
 const LocationRow = styled(UserRow)`
+  grid-template-columns: 1fr;
   width: 300px;
   height: 50px;
   margin-top: 15px;

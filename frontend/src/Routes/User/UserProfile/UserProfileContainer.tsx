@@ -97,7 +97,7 @@ interface IState {
   tripPage: number;
   search: string;
   tripList: any;
-  currentCity: string;
+  currentCityId: string;
   lat: number;
   lng: number;
   tripActiveId: number;
@@ -157,7 +157,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripList: [],
       lat: state.currentLat,
       lng: state.currentLng,
-      currentCity: state.currentCity || localStorage.getItem("cityName"),
+      currentCityId: state.currentCityId || localStorage.getItem("cityId"),
       tripActiveId: null,
       searchActiveId: null
     };
@@ -185,7 +185,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripAddModalOpen,
       tripEditModalOpen,
       profilFormModalOpen,
-      currentCity,
+      currentCityId,
       requestModalOpen,
       editMode,
       userName,
@@ -225,7 +225,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
             <RequestCoffeeMutation
               mutation={REQUEST_COFFEE}
               variables={{
-                currentCity
+                currentCityId
               }}
               onCompleted={this.onCompletedRequestCoffee}
               update={this.updateRequestCoffee}
