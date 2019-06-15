@@ -92,13 +92,21 @@ interface IProps {
 const Avatar: React.SFC<IProps> = ({ className, url, size }) => {
   return (
     <>
-      <ProgressiveImage delay={0} src={url} placeholder="">
+      <ProgressiveImage delay={1000} src={url} placeholder="">
         {(src, loading) => {
           return loading ? (
             <AvatarContainer size={size}>
               <Placeholder
                 className={className}
-                color={"#141313"}
+                color={
+                  "rgb(" +
+                  Math.floor(Math.random() * 256) +
+                  "," +
+                  Math.floor(Math.random() * 256) +
+                  "," +
+                  Math.floor(Math.random() * 256) +
+                  ")"
+                }
                 size={size}
               />
             </AvatarContainer>

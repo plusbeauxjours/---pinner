@@ -100,7 +100,8 @@ const SearchPresenter: React.SFC<IProps> = ({
   } else {
     return (
       <SWrapper>
-        {users &&
+        {search.length > 0 &&
+          users &&
           users.length > 0 &&
           users.map((user, index) => {
             let active;
@@ -123,7 +124,8 @@ const SearchPresenter: React.SFC<IProps> = ({
               </UserRow>
             );
           })}
-        {results.predictions &&
+        {search.length > 0 &&
+          results.predictions &&
           results.predictions.length > 0 &&
           results.predictions.map(prediction => (
             <UserRow
@@ -168,7 +170,8 @@ const SearchPresenter: React.SFC<IProps> = ({
               </Link>
             </UserRow>
           ))} */}
-        {countries &&
+        {search.length > 0 &&
+          countries &&
           countries.length > 0 &&
           countries.map(country => (
             <UserRow key={country.id}>
@@ -183,7 +186,8 @@ const SearchPresenter: React.SFC<IProps> = ({
               </Link>
             </UserRow>
           ))}
-        {continents &&
+        {search.length > 0 &&
+          continents &&
           continents.length > 0 &&
           continents.map(continent => (
             <UserRow key={continent.id}>
