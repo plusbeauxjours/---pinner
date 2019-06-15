@@ -14,12 +14,12 @@ def resolve_get_coffees(self, info, **kwargs):
     me = info.context.user
 
     location = kwargs.get('location')
-    cityName = kwargs.get('cityName')
+    cityId = kwargs.get('cityId')
     userName = kwargs.get('userName')
 
     if location == "feed":
         try:
-            city = location_models.City.objects.prefetch_related('coffee').get(city_name=cityName)
+            city = location_models.City.objects.prefetch_related('coffee').get(city_id=cityId)
         except location_models.City.DoesNotExist:
             return types.GetCoffeesResponse(coffees=None)
 

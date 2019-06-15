@@ -111,7 +111,7 @@ class CreateCity(graphene.Mutation):
                 continent=continent,
             )
         try:
-            city = models.City.objects.get(city_name=cityName)
+            city = models.City.objects.get(city_id=cityId)
             if city.near_city.count() < 20:
                 nearCities = get_locations_nearby_coords(cityLatitude, cityLongitude, 3000)[:20]
                 for i in nearCities:
@@ -251,7 +251,7 @@ class ReportLocation(graphene.Mutation):
             )
 
         try:
-            city = models.City.objects.get(city_name=currentCityName)
+            city = models.City.objects.get(city_id=currentCityId)
             profile.current_city = city
             profile.save()
             if city.near_city.count() < 20:

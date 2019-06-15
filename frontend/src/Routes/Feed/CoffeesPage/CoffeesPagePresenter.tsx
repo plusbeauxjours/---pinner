@@ -84,6 +84,7 @@ const Explain = styled(Location)`
 const AvatarContainer = styled.div`
   display: flex;
   position: relative;
+  align-items: center;
 `;
 
 const Target = styled.div`
@@ -186,7 +187,7 @@ const CoffeesPagePresenter: React.SFC<IProps> = ({
                                   />
                                 </>
                               );
-                           
+
                             default:
                               return null;
                           }
@@ -256,7 +257,7 @@ const CoffeesPagePresenter: React.SFC<IProps> = ({
                                   />
                                 </>
                               );
-                          
+
                             default:
                               return null;
                           }

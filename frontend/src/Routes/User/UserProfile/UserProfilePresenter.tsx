@@ -15,12 +15,21 @@ import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
 import AvatarGrid from "../../../Components/AvatarGrid";
 import Weather from "../../../Components/Weather";
+import { GOOGLE_PLACE_KEY } from "src/keys";
+import useGoogleAutocomplete from "../../../autocompleteHelpers";
 
 const Header = styled.header`
   display: flex;
   flex-direction: column;
   height: 365px;
   background: ${props => props.theme.headerColor};
+`;
+
+const TripSearchHeader = styled.header`
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
 `;
 
 const PAvatar = styled(Avatar)`
@@ -152,31 +161,6 @@ const TripRow = styled.div<ITheme>`
   &:not(:last-child) {
     border-bottom: 1px solid grey;
   }
-`;
-
-const SearchRow = styled.div<ITheme>`
-  display: flex;
-  flex-direction: column;
-  height: 50px;
-  padding: 0 5px 0 5px;
-  align-items: flex-start;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-  background-color: ${props => (props.active ? "grey" : null)};
-  &:hover {
-    background-color: grey;
-  }
-  &:not(:last-child) {
-    border-bottom: 1px solid grey;
-  }
-`;
-
-const TripHeader = styled.div`
-  display: flex;
-  align-items: center;
-  border-radius: 3px;
-  cursor: pointer;
 `;
 
 const HeaderColumn = styled.div`
@@ -438,6 +422,25 @@ const Select = styled.select`
 
 const Option = styled.option``;
 
+const UserRow = styled.div<ITheme>`
+  display: grid;
+  flex-direction: row;
+  height: 50px;
+  grid-template-columns: 5fr 0.5fr;
+  padding: 0 5px 0 5px;
+  grid-gap: 15px;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  background-color: ${props => (props.active ? "grey" : null)};
+  &:hover {
+    background-color: grey;
+  }
+  &:not(:last-child) {
+    border-bottom: 1px solid grey;
+  }
+`;
+
 interface ITheme {
   size?: string;
   active?: string;
@@ -478,6 +481,7 @@ interface IProps {
   email: string;
   firstName: string;
   lastName: string;
+  tripCitySearch: string;
   cityName: string;
   cityId: string;
   cityPhoto: string;
@@ -537,11 +541,12 @@ interface IProps {
 
   onKeyDownSearch: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onKeyDownTrip: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  onClickSearch: any;
+  onClickSearch: (cityId: string, cityName: string) => void;
   onClick: any;
   onBlur: any;
   tripActiveId: number;
   searchActiveId: number;
+  createCityLoading: boolean;
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
@@ -596,6 +601,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   gender,
   firstName,
   lastName,
+  tripCitySearch,
   avatar,
   nationality,
   residence,
@@ -625,8 +631,17 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   onClick,
   onBlur,
   tripActiveId,
-  searchActiveId
+  searchActiveId,
+  createCityLoading
 }) => {
+  const { results, isLoading } = useGoogleAutocomplete({
+    apiKey: `${GOOGLE_PLACE_KEY}`,
+    query: tripCitySearch,
+    options: {
+      types: "(cities)",
+      language: "en"
+    }
+  });
   if (userProfileLoading) {
     return <Loader />;
   } else if (user && coffees) {
@@ -828,33 +843,51 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 autoFocus={true}
                 placeholder={"Search a City"}
                 onChange={onSearchInputChange}
-                value={cityName}
+                value={tripCitySearch}
                 autoComplete={"off"}
                 onKeyDown={onKeyDownSearch}
               />
               <TripModal>
-                {!searchTripCitiesLoading &&
-                  cities &&
-                  cities.length !== 0 &&
-                  cities.map((city, index) => {
+                {createCityLoading || (isLoading && <Loader />)}
+                {tripCitySearch.length > 0 &&
+                  results.predictions &&
+                  !createCityLoading &&
+                  !isLoading &&
+                  results.predictions.length > 0 &&
+                  results.predictions.map((prediction, index) => {
                     let active;
                     if (index === searchActiveId) {
                       active = "active";
                     }
                     return (
-                      <SearchRow
+                      <UserRow
                         key={index}
+                        onClick={() =>
+                          onClickSearch(
+                            prediction.place_id,
+                            prediction.structured_formatting.main_text
+                          )
+                        }
                         active={active}
-                        onClick={onClickSearch}
                       >
-                        <TripHeader>
-                          <SAvatar size={"sm"} url={city.cityPhoto} />
+                        <TripSearchHeader>
+                          <SAvatar
+                            size={"sm"}
+                            url={prediction.structured_formatting.main_text}
+                          />
                           <HeaderColumn>
-                            <HeaderText text={city.cityName} />
-                            <Location>{city.country.countryName}</Location>
+                            <HeaderText
+                              text={prediction.structured_formatting.main_text}
+                            />
+                            <Location>
+                              {prediction.structured_formatting.secondary_text
+                                ? prediction.structured_formatting
+                                    .secondary_text
+                                : prediction.structured_formatting.main_text}
+                            </Location>
                           </HeaderColumn>
-                        </TripHeader>
-                      </SearchRow>
+                        </TripSearchHeader>
+                      </UserRow>
                     );
                   })}
               </TripModal>
@@ -884,32 +917,51 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 autoFocus={true}
                 placeholder={cityName || "Search a City"}
                 onChange={onSearchInputChange}
-                value={cityName}
+                value={tripCitySearch}
                 autoComplete={"off"}
                 onKeyDown={onKeyDownSearch}
               />
               <TripModal>
-                {!searchTripCitiesLoading &&
-                  cities &&
-                  cities.map((city, index) => {
+                {createCityLoading || (isLoading && <Loader />)}
+                {tripCitySearch.length > 0 &&
+                  results.predictions &&
+                  !createCityLoading &&
+                  !isLoading &&
+                  results.predictions.length > 0 &&
+                  results.predictions.map((prediction, index) => {
                     let active;
                     if (index === searchActiveId) {
                       active = "active";
                     }
                     return (
-                      <SearchRow
+                      <UserRow
                         key={index}
+                        onClick={() =>
+                          onClickSearch(
+                            prediction.place_id,
+                            prediction.structured_formatting.main_text
+                          )
+                        }
                         active={active}
-                        onClick={onClickSearch}
                       >
-                        <TripHeader>
-                          <SAvatar size={"sm"} url={city.cityPhoto} />
+                        <TripSearchHeader>
+                          <SAvatar
+                            size={"sm"}
+                            url={prediction.structured_formatting.main_text}
+                          />
                           <HeaderColumn>
-                            <HeaderText text={city.cityName} />
-                            <Location>{city.country.countryName}</Location>
+                            <HeaderText
+                              text={prediction.structured_formatting.main_text}
+                            />
+                            <Location>
+                              {prediction.structured_formatting.secondary_text
+                                ? prediction.structured_formatting
+                                    .secondary_text
+                                : prediction.structured_formatting.main_text}
+                            </Location>
                           </HeaderColumn>
-                        </TripHeader>
-                      </SearchRow>
+                        </TripSearchHeader>
+                      </UserRow>
                     );
                   })}
               </TripModal>

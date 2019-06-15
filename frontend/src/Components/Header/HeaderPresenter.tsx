@@ -215,6 +215,7 @@ const HeaderPresenter: React.SFC<IProps> = ({
                 value={search}
                 onChange={onChange}
                 onKeyDown={onKeyDown}
+                autoComplete={"off"}
               />
               <Search
                 activeId={activeId}

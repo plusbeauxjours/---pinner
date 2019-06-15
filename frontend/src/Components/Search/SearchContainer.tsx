@@ -72,7 +72,7 @@ class SearchContainer extends React.Component<IProps, IState> {
       </CreateCityQuery>
     );
   }
-  public onClick = async (placeId: string, cityName: string) => {
+  public onClick = async (placeId: string) => {
     const { history } = this.props;
     const city = await reversePlaceId(placeId);
     console.log("now");
@@ -81,7 +81,7 @@ class SearchContainer extends React.Component<IProps, IState> {
     await this.createCityFn({
       variables: {
         cityId: placeId,
-        cityName,
+        cityName: city.storableLocation.cityName,
         cityLatitude: city.storableLocation.latitude,
         cityLongitude: city.storableLocation.longitude,
         countryCode: city.storableLocation.countryCode

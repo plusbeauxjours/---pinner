@@ -52,6 +52,7 @@ export const reversePlaceId = async (placeId: string) => {
     let storableLocation = {
       latitude: 0,
       longitude: 0,
+      cityName: "",
       countryCode: ""
     };
     console.log(results);
@@ -60,9 +61,20 @@ export const reversePlaceId = async (placeId: string) => {
         storableLocation.countryCode = component.short_name;
       }
     }
+    for (const components of results) {
+      for (const component of components.address_components) {
+        if (
+          component.types[0] === "locality" ||
+          component.types[0] === "sublocality" ||
+          component.types[0] === "colloquial_area"
+        ) {
+          storableLocation.cityName = component.long_name;
+        }
+      }
+    }
     storableLocation.latitude = results[0].geometry.location.lat;
     storableLocation.longitude = results[0].geometry.location.lng;
-    console.log(storableLocation);
+    console.log("storableLocation: ", storableLocation);
     return { storableLocation };
   } else {
     toast.error(data.error_message);

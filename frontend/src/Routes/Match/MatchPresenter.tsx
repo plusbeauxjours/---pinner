@@ -128,17 +128,6 @@ const ModalLink = styled.div`
   }
 `;
 
-const Title = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-`;
-
-const SText = styled(Bold)`
-  font-size: 18px;
-  font-weight: 100;
-`;
-
 const CText = styled(Bold)`
   display: flex;
 `;
@@ -337,13 +326,13 @@ const MatchPresenter: React.SFC<IProps> = ({
           {recommandUsersLoading ? (
             <Loader />
           ) : (
-            <>
-              <Title>
-                <SText text={"RECOMMAND USER"} />
+            <UserContainer>
+              <UserNameRow>
+                <Username>RECOMMAND USER</Username>
                 <Link to={`/people`}>
                   <SeeAll>SEE ALL</SeeAll>
                 </Link>
-              </Title>
+              </UserNameRow>
               <Container>
                 <Box>
                   {users &&
@@ -365,18 +354,18 @@ const MatchPresenter: React.SFC<IProps> = ({
                 </Box>
               </Container>
               <GreyLine />
-            </>
+            </UserContainer>
           )}
           {coffeeLoading ? (
             <Loader />
           ) : (
-            <>
-              <Title>
-                <SText text={"NEED SOME COFFEE NOW"} />
+            <UserContainer>
+              <UserNameRow>
+                <Username>NEED SOME COFFEE NOW</Username>
                 <Link to={{ pathname: `/coffees`, state: { currentCityId } }}>
                   <SeeAll>SEE ALL</SeeAll>
                 </Link>
-              </Title>
+              </UserNameRow>
               <Container>
                 <Box>
                   <IconRow>
@@ -464,7 +453,7 @@ const MatchPresenter: React.SFC<IProps> = ({
                 </Box>
               </Container>
               <GreyLine />
-            </>
+            </UserContainer>
           )}
           <UserContainer>
             <UserNameRow>

@@ -113,15 +113,12 @@ const UserBox: React.SFC<IProps> = ({ history, users, type }) => (
                         <UserRow key={user.profile.id}>
                           <Link to={`/${user.profile.username}`}>
                             <UserHeader
-                              username={user.actor.profile.username}
-                              currentCity={
-                                user.actor.profile.currentCity.cityName
-                              }
+                              username={user.profile.username}
+                              currentCity={user.profile.currentCity.cityName}
                               currentCountry={
-                                user.actor.profile.currentCity.country
-                                  .countryName
+                                user.profile.currentCity.country.countryName
                               }
-                              avatar={user.actor.profile.avatar}
+                              avatar={user.profile.avatar}
                               size={"sm"}
                             />
                             <Explain>{user.createdAt}</Explain>

@@ -70,7 +70,7 @@ interface IProps {
   activeId: number;
   searchData?: any;
   searchLoading: boolean;
-  onClick: (placeId: string, cityName: string) => void;
+  onClick: (placeId: string) => void;
   createCityLoading: boolean;
 }
 
@@ -130,12 +130,7 @@ const SearchPresenter: React.SFC<IProps> = ({
           results.predictions.map(prediction => (
             <UserRow
               key={prediction.id}
-              onClick={() =>
-                onClick(
-                  prediction.place_id,
-                  prediction.structured_formatting.main_text
-                )
-              }
+              onClick={() => onClick(prediction.place_id)}
             >
               <Header>
                 <SAvatar
