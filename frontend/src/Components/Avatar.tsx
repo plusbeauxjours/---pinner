@@ -100,6 +100,9 @@ const Avatar: React.SFC<IProps> = ({
   cityId,
   countryCode
 }) => {
+  const hue = Math.floor(Math.random() * 360);
+  const pastel = "hsl(" + hue + ", 100%, 80%)";
+  console.log(pastel);
   if (cityId) {
     console.log(cityId);
     const { data: cityPhotoData } = useQuery(GET_CITY_PHOTO, {
@@ -108,21 +111,13 @@ const Avatar: React.SFC<IProps> = ({
     const { getCityPhoto: { photo = null } = {} } = cityPhotoData;
     console.log(photo);
     return (
-      <ProgressiveImage delay={0} src={photo} placeholder="">
+      <ProgressiveImage delay={1000} src={photo} placeholder="">
         {(src, loading) => {
           return loading ? (
             <AvatarContainer size={size}>
               <Placeholder
                 className={className}
-                color={
-                  "rgb(" +
-                  Math.floor(Math.random() * 256) +
-                  "," +
-                  Math.floor(Math.random() * 256) +
-                  "," +
-                  Math.floor(Math.random() * 256) +
-                  ")"
-                }
+                color={"rgba(9, 1, 107, 0.6482447960879654)"}
                 size={size}
               />
             </AvatarContainer>
@@ -141,21 +136,13 @@ const Avatar: React.SFC<IProps> = ({
     const { getCountryPhoto: { photo = null } = {} } = countryPhotoData;
 
     return (
-      <ProgressiveImage delay={0} src={photo} placeholder="">
+      <ProgressiveImage delay={1000} src={photo} placeholder="">
         {(src, loading) => {
           return loading ? (
             <AvatarContainer size={size}>
               <Placeholder
                 className={className}
-                color={
-                  "rgb(" +
-                  Math.floor(Math.random() * 256) +
-                  "," +
-                  Math.floor(Math.random() * 256) +
-                  "," +
-                  Math.floor(Math.random() * 256) +
-                  ")"
-                }
+                color={"rgba(9, 1, 107, 0.6482447960879654)"}
                 size={size}
               />
             </AvatarContainer>
@@ -169,21 +156,13 @@ const Avatar: React.SFC<IProps> = ({
     );
   } else {
     return (
-      <ProgressiveImage delay={0} src={url} placeholder="">
+      <ProgressiveImage delay={1000} src={url} placeholder="">
         {(src, loading) => {
           return loading ? (
             <AvatarContainer size={size}>
               <Placeholder
                 className={className}
-                color={
-                  "rgb(" +
-                  Math.floor(Math.random() * 256) +
-                  "," +
-                  Math.floor(Math.random() * 256) +
-                  "," +
-                  Math.floor(Math.random() * 256) +
-                  ")"
-                }
+                color={"rgba(9, 1, 107, 0.6482447960879654)"}
                 size={size}
               />
             </AvatarContainer>
