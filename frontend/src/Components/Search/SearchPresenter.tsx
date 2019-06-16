@@ -79,7 +79,6 @@ const SearchPresenter: React.SFC<IProps> = ({
   activeId,
   searchData: {
     searchUsers: { users = null } = {},
-    searchCities: { cities = null } = {},
     searchCountries: { countries = null } = {},
     searchContinents: { continents = null } = {}
   } = {},
@@ -147,21 +146,6 @@ const SearchPresenter: React.SFC<IProps> = ({
               </Header>
             </UserRow>
           ))}
-        {/* {cities &&
-          cities.length !== 0 &&
-          cities.map(city => (
-            <UserRow key={city.id}>
-              <Link to={`/city/${city.cityId}`}>
-                <Header>
-                  <SAvatar size={"sm"} url={city.cityPhoto} />
-                  <HeaderColumn>
-                    <HeaderText text={city.cityName} />
-                    <Location>{city.country.countryName}</Location>
-                  </HeaderColumn>
-                </Header>
-              </Link>
-            </UserRow>
-          ))} */}
         {search.length > 0 &&
           countries &&
           countries.length > 0 &&
@@ -197,8 +181,6 @@ const SearchPresenter: React.SFC<IProps> = ({
           users.length === 0 &&
           results &&
           results.length === 0 &&
-          cities &&
-          cities.length === 0 &&
           countries &&
           countries.length === 0 &&
           continents &&
@@ -206,7 +188,6 @@ const SearchPresenter: React.SFC<IProps> = ({
       </SWrapper>
     );
   }
-  return null;
 };
 
 export default SearchPresenter;

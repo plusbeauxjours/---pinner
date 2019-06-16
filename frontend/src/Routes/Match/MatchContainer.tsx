@@ -173,7 +173,7 @@ class MatchContainer extends React.Component<IProps, IState> {
     const {
       getMatches: { matches = null }
     } = this.matchData;
-    const nowSearch = (list, text) =>
+    const matchSearch = (list, text) =>
       list.filter(
         i =>
           i.host.profile.username.toLowerCase().includes(text.toLowerCase()) ||
@@ -193,7 +193,7 @@ class MatchContainer extends React.Component<IProps, IState> {
           i.city.cityName.toLowerCase().includes(text.toLowerCase()) ||
           i.city.country.countryName.toLowerCase().includes(text.toLowerCase())
       );
-    const matchList = nowSearch(matches, value);
+    const matchList = matchSearch(matches, value);
     this.setState({
       search: value,
       matchList

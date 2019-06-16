@@ -1,7 +1,6 @@
 import { gql } from "apollo-boost";
 import {
   USER_FRAGMENT,
-  CITY_FRAGMENT,
   COUNTRY_FRAGMENT,
   CONTINENT_FRAGMENT
 } from "src/sharedQueries";
@@ -32,11 +31,6 @@ export const SEARCH = gql`
         ...UserParts
       }
     }
-    searchCities(search: $search) {
-      cities {
-        ...CityParts
-      }
-    }
     searchCountries(search: $search) {
       countries {
         ...CountryParts
@@ -49,7 +43,6 @@ export const SEARCH = gql`
     }
   }
   ${USER_FRAGMENT}
-  ${CITY_FRAGMENT}
   ${COUNTRY_FRAGMENT}
   ${CONTINENT_FRAGMENT}
 `;

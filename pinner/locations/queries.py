@@ -26,18 +26,6 @@ def resolve_header(self, info, **kwargs):
 
 
 @login_required
-def resolve_search_cities(self, info, **kwargs):
-
-    user = info.context.user
-
-    search = kwargs.get('search')
-
-    cities = models.City.objects.filter(city_name__istartswith=search)
-
-    return types.CitiesResponse(cities=cities)
-
-
-@login_required
 def resolve_search_trip_cities(self, info, **kwargs):
 
     user = info.context.user

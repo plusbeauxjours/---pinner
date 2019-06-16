@@ -6,13 +6,12 @@ import { SmallHeartEmpty, SmallHeartFilled } from "../../Icons";
 const ButtonContainer = styled.div`
   display: flex;
   flex-wrap: nowrap;
-  justify-content: space-between;
 `;
 
 const Button = styled.span<ITheme>`
   cursor: pointer;
   &:first-child {
-    margin-left: 10px;
+    margin-right: 10px;
   }
   transition: all 0.3s ease-in-out;
   svg {
@@ -25,6 +24,7 @@ const Text = styled(Bold)`
   font-weight: 300;
   display: flex;
   align-items: center;
+  color: grey;
 `;
 
 interface ITheme {
@@ -50,10 +50,10 @@ const CityLikeBtnPresenter: React.SFC<IProps> = ({
         case "row":
           return (
             <ButtonContainer>
-              <Text text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
               <Button isLiked={isLiked} onClick={onLikeClick}>
                 {isLiked ? <SmallHeartFilled /> : <SmallHeartEmpty />}
               </Button>
+              <Text text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
             </ButtonContainer>
           );
         case "profile":

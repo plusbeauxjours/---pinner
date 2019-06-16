@@ -370,12 +370,6 @@ const SearchCitiesInput = styled.input`
   font-size: 34px;
 `;
 
-const GreyLine = styled.div`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid grey;
-`;
-
 const SSText = styled(Bold)`
   font-size: 12px;
   font-weight: 100;
@@ -384,10 +378,6 @@ const SSText = styled(Bold)`
 const SmallTitle = styled(Title)`
   flex-direction: column;
   align-items: center;
-`;
-
-const SmallGreyLine = styled(GreyLine)`
-  width: 40%;
 `;
 
 const GreyText = styled(Bold)`
@@ -1057,7 +1047,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                   <UBold text={" how many COFFEES - done"} />
                 </Link>
               </Row>
-
               <Row>
                 <Link to={`/${username}/cities`}>
                   <UBold text={String(user.profile.cityCount)} />
@@ -1102,6 +1091,22 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 latitude={user.profile.currentCity.latitude}
                 longitude={user.profile.currentCity.longitude}
               />
+              {!coffeeLoading && coffees && coffees.length !== 0 ? (
+                <>
+                  <SmallTitle>
+                    <SSText text={"COFFEE NOW"} />
+                  </SmallTitle>
+                  <AvatarGrid coffees={coffees} />
+                </>
+              ) : null}
+              {user.profile.isSelf && !coffeeLoading && coffees.length === 0 ? (
+                <>
+                  <SmallTitle>
+                    <SSText text={"COFFEE NOW"} />
+                  </SmallTitle>
+                  <AvatarGrid toggleRequestModal={toggleRequestModal} />
+                </>
+              ) : null}
             </LocationAvatarContainer>
             <TripContainer>
               <UserNameRow>
@@ -1236,24 +1241,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 })}
             </TripContainer>
           </PHeader>
-          {!coffeeLoading && coffees && coffees.length !== 0 ? (
-            <>
-              <SmallTitle>
-                <SmallGreyLine />
-                <SSText text={"COFFEE NOW"} />
-              </SmallTitle>
-              <AvatarGrid coffees={coffees} />
-            </>
-          ) : null}
-          {user.profile.isSelf && !coffeeLoading && coffees.length === 0 ? (
-            <>
-              <SmallTitle>
-                <SmallGreyLine />
-                <SSText text={"COFFEE NOW"} />
-              </SmallTitle>
-              <AvatarGrid toggleRequestModal={toggleRequestModal} />
-            </>
-          ) : null}
         </SWrapper>
       </>
     );
