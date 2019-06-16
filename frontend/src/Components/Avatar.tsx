@@ -100,9 +100,11 @@ const Avatar: React.SFC<IProps> = ({
   cityId,
   countryCode
 }) => {
-  const hue = Math.floor(Math.random() * 360);
-  const pastel = "hsl(" + hue + ", 100%, 80%)";
-  console.log(pastel);
+  const randomColor = require("randomcolor");
+  const color = randomColor({
+    luminosity: "dark",
+    format: "rgba"
+  });
   if (cityId) {
     console.log(cityId);
     const { data: cityPhotoData } = useQuery(GET_CITY_PHOTO, {
@@ -115,11 +117,7 @@ const Avatar: React.SFC<IProps> = ({
         {(src, loading) => {
           return loading ? (
             <AvatarContainer size={size}>
-              <Placeholder
-                className={className}
-                color={"rgba(9, 1, 107, 0.6482447960879654)"}
-                size={size}
-              />
+              <Placeholder className={className} color={color} size={size} />
             </AvatarContainer>
           ) : (
             <AvatarContainer size={size}>
@@ -140,11 +138,7 @@ const Avatar: React.SFC<IProps> = ({
         {(src, loading) => {
           return loading ? (
             <AvatarContainer size={size}>
-              <Placeholder
-                className={className}
-                color={"rgba(9, 1, 107, 0.6482447960879654)"}
-                size={size}
-              />
+              <Placeholder className={className} color={color} size={size} />
             </AvatarContainer>
           ) : (
             <AvatarContainer size={size}>
@@ -160,11 +154,7 @@ const Avatar: React.SFC<IProps> = ({
         {(src, loading) => {
           return loading ? (
             <AvatarContainer size={size}>
-              <Placeholder
-                className={className}
-                color={"rgba(9, 1, 107, 0.6482447960879654)"}
-                size={size}
-              />
+              <Placeholder className={className} color={color} size={size} />
             </AvatarContainer>
           ) : (
             <AvatarContainer size={size}>
