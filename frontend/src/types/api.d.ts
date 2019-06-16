@@ -1152,7 +1152,7 @@ export interface CountryProfile {
 
 export interface CountryProfileVariables {
   page?: number | null;
-  countryName: string;
+  countryCode: string;
 }
 
 
@@ -1206,7 +1206,7 @@ export interface CountryUsersBefore {
 
 export interface CountryUsersBeforeVariables {
   page?: number | null;
-  countryName: string;
+  countryCode: string;
 }
 
 
@@ -1255,7 +1255,7 @@ export interface CountryUsersNow {
 
 export interface CountryUsersNowVariables {
   page?: number | null;
-  countryName: string;
+  countryCode: string;
 }
 
 

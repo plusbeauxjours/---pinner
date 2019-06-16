@@ -2,8 +2,8 @@ import gql from "graphql-tag";
 import { PROFILE_FRAGMENT } from "src/sharedQueries";
 
 export const COUNTRY_USERS_BEFORE = gql`
-  query CountryUsersBefore($page: Int, $countryName: String!) {
-    countryUsersBefore(page: $page, countryName: $countryName) {
+  query CountryUsersBefore($page: Int, $countryCode: String!) {
+    countryUsersBefore(page: $page, countryCode: $countryCode) {
       page
       hasNextPage
       usersBefore {

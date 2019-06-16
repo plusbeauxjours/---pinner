@@ -165,24 +165,24 @@ def resolve_city_users_before(self, info, **kwargs):
 def resolve_country_profile(self, info, **kwargs):
 
     user = info.context.user
-    countryName = kwargs.get('countryName')
+    countryCode = kwargs.get('countryCode')
     page = kwargs.get('page', 0)
 
-    country = models.Country.objects.get(country_name=countryName)
+    country = models.Country.objects.get(country_code=countryCode)
 
-    allCities = models.City.objects.values('id').filter(country__country_name=countryName)
+    allCities = models.City.objects.values('id').filter(country__country_code=countryCode)
 
     usersNow = User.objects.filter(
-        profile__current_city__country__country_name=countryName).order_by('-id').distinct('id')[:12]
+        profile__current_city__country__country_code=countryCode).order_by('-id').distinct('id')[:12]
 
     if usersNow.count() < 5:
         usersBefore = notification_models.MoveNotification.objects.filter(
-            city__country__country_name=countryName).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
+            city__country__country_code=countryCode).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
     else:
         usersBefore = notification_models.MoveNotification.objects.filter(
             id=0)
 
-    cities = models.City.objects.filter(country__country_name=countryName)
+    cities = models.City.objects.filter(country__country_code=countryCode)
 
     coffees = coffee_models.Coffee.objects.filter(Q(city__id__in=allCities) & Q(expires__gt=timezone.now()))
 
@@ -193,14 +193,14 @@ def resolve_country_profile(self, info, **kwargs):
 def resolve_country_users_now(self, info, **kwargs):
 
     user = info.context.user
-    countryName = kwargs.get('countryName')
+    countryCode = kwargs.get('countryCode')
     page = kwargs.get('page', 0)
     offset = 20 * page
 
     nextPage = page+1
 
     usersNow = User.objects.filter(
-        profile__current_city__country__country_name=countryName).order_by('-id').distinct('id')
+        profile__current_city__country__country_code=countryCode).order_by('-id').distinct('id')
 
     hasNextPage = offset < usersNow.count()
 
@@ -213,14 +213,14 @@ def resolve_country_users_now(self, info, **kwargs):
 def resolve_country_users_before(self, info, **kwargs):
 
     user = info.context.user
-    countryName = kwargs.get('countryName')
+    countryCode = kwargs.get('countryCode')
     page = kwargs.get('page', 0)
     offset = 20 * page
 
     nextPage = page+1
 
     usersBefore = notification_models.MoveNotification.objects.filter(
-        city__country__country_name=countryName).order_by('-actor_id').distinct('actor_id')
+        city__country__country_code=countryCode).order_by('-actor_id').distinct('actor_id')
 
     hasNextPage = offset < usersBefore.count()
 

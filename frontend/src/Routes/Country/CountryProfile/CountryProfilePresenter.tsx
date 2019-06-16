@@ -234,7 +234,7 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>
-                <Username>{country.countryName}</Username>
+                <Username>{countryName}</Username>
                 <Input
                   placeholder="Search"
                   value={search}

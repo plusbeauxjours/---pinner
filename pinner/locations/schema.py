@@ -56,7 +56,7 @@ class Query(object):
         resolver=queries.resolve_country_profile,
         required=True,
         args={
-            'countryName': graphene.String(required=True),
+            'countryCode': graphene.String(required=True),
             'page': graphene.Int()
         }
     )
@@ -65,7 +65,7 @@ class Query(object):
         resolver=queries.resolve_country_users_now,
         required=True,
         args={
-            'countryName': graphene.String(required=True),
+            'countryCode': graphene.String(required=True),
             'page': graphene.Int()
         }
     )
@@ -74,7 +74,7 @@ class Query(object):
         resolver=queries.resolve_country_users_before,
         required=True,
         args={
-            'countryName': graphene.String(required=True),
+            'countryCode': graphene.String(required=True),
             'page': graphene.Int()
         }
     )

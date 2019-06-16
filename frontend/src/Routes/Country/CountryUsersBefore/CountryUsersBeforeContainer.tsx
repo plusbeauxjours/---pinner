@@ -45,7 +45,7 @@ class CountryUsersBeforeContainer extends React.Component<IProps, IState> {
   public render() {
     const {
       match: {
-        params: { countryName }
+        params: { countryCode }
       }
     } = this.props;
     const {
@@ -58,7 +58,7 @@ class CountryUsersBeforeContainer extends React.Component<IProps, IState> {
       <CountryUsersBeforeQuery
         query={COUNTRY_USERS_BEFORE}
         variables={{
-          countryName
+          countryCode
         }}
       >
         {({ data, loading, fetchMore }) => {
@@ -75,7 +75,6 @@ class CountryUsersBeforeContainer extends React.Component<IProps, IState> {
               usersBeforeList={usersBeforeList}
               onChange={this.onChange}
               loadMore={this.loadMore}
-              countryName={countryName}
               onKeyDown={this.onKeyDown}
               onClick={this.onClick}
               onBlur={this.onBlur}

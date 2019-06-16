@@ -334,7 +334,12 @@ const CityProfilePresenter: React.SFC<IProps> = ({
             <AvatarContainer>
               <CAvatar size="lg" url={city.cityPhoto} />
               <LocationRow>
-                <Link to={`/country/${city.country.countryName}`}>
+                <Link
+                  to={{
+                    pathname: `/country/${city.country.countryCode}`,
+                    state: { countryName: city.country.countryName }
+                  }}
+                >
                   <Header>
                     <SAvatar size={"sm"} url={city.country.countryPhoto} />
                     <HeaderColumn>

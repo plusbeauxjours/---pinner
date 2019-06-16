@@ -2,8 +2,8 @@ import gql from "graphql-tag";
 import { CITY_FRAGMENT, PROFILE_FRAGMENT } from "src/sharedQueries";
 
 export const COUNTRY_PROFILE = gql`
-  query CountryProfile($page: Int, $countryName: String!) {
-    countryProfile(page: $page, countryName: $countryName) {
+  query CountryProfile($page: Int, $countryCode: String!) {
+    countryProfile(page: $page, countryCode: $countryCode) {
       country {
         countryName
         countryCode

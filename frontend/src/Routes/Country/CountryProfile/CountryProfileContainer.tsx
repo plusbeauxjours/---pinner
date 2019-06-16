@@ -16,22 +16,25 @@ interface IState {
   search: string;
   cityList: any;
   activeId: number;
+  countryName: string;
 }
 
 class CountryProfileContainer extends React.Component<IProps, IState> {
   public data;
   constructor(props) {
     super(props);
+    const { location: { state = {} } = {} } = ({} = props);
     this.state = {
       search: "",
       cityList: [],
-      activeId: null
+      activeId: null,
+      countryName: state.countryName
     };
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
     if (
-      prevProps.match.params.countryName !== newProps.match.params.countryName
+      prevProps.match.params.countryCode !== newProps.match.params.countryCode
     ) {
       this.setState({ search: "", cityList: [] });
       console.log(this.state);
@@ -40,12 +43,12 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
   public render() {
     const {
       match: {
-        params: { countryName }
+        params: { countryCode }
       }
     } = this.props;
-    const { search, cityList, activeId } = this.state;
+    const { search, cityList, activeId, countryName } = this.state;
     return (
-      <CountryProfileQuery query={COUNTRY_PROFILE} variables={{ countryName }}>
+      <CountryProfileQuery query={COUNTRY_PROFILE} variables={{ countryCode }}>
         {({ data, loading }) => {
           this.data = data;
           return (

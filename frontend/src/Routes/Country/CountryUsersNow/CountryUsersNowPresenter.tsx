@@ -104,7 +104,6 @@ interface IProps {
   usersNowList: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   loadMore: any;
-  countryName: string;
   usersNowActiveId: number;
   onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onClick: any;
@@ -120,7 +119,6 @@ const CountryUsersNowPresenter: React.SFC<IProps> = ({
   usersNowList,
   onChange,
   loadMore,
-  countryName,
   usersNowActiveId,
   onKeyDown,
   onClick,

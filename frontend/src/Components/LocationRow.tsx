@@ -56,6 +56,7 @@ interface IProps {
   avatar: string;
   cityId?: string;
   cityName?: string;
+  countryCode?: string;
   countryName?: string;
   continentName?: string;
   type: string;
@@ -66,6 +67,7 @@ const LocationRow: React.SFC<IProps> = ({
   avatar,
   cityId,
   cityName,
+  countryCode,
   countryName,
   continentName,
   type
@@ -108,7 +110,12 @@ const LocationRow: React.SFC<IProps> = ({
         case "topCountries":
           return (
             <>
-              <Link to={`/country/${countryName}`}>
+              <Link
+                to={{
+                  pathname: `/country/${countryCode}`,
+                  state: { countryName }
+                }}
+              >
                 <Container>
                   <Header>
                     <SAvatar size={"sm"} url={avatar} />
