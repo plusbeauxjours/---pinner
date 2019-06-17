@@ -46,7 +46,6 @@ export default function useGoogleAutocomplete({
   const placesAbortSignal = React.useRef<any>(null);
 
   React.useEffect(() => {
-    console.log("query:::", query);
     sessionTokenTimeout.current = window.setInterval(resetSessionToken, 180000);
     abortController.current = new AbortController();
     abortSignal.current = abortController.current.signal;
@@ -66,7 +65,6 @@ export default function useGoogleAutocomplete({
   const debouncedFn = React.useRef<any>(null);
 
   React.useEffect(() => {
-    console.log("query:::", query);
     if (initialRender.current === false) {
       initialRender.current = true;
       return;
@@ -90,7 +88,6 @@ export default function useGoogleAutocomplete({
     }
 
     debouncedFn.current = debounce(() => {
-      console.log("query:::", query);
       const types =
         options.types && type === "places" ? `&types=${options.types}` : "";
       const strictbounds =
@@ -104,7 +101,6 @@ export default function useGoogleAutocomplete({
       const url = `${cors}https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}${types}${language}${location}${radius}${strictbounds}${offset}&key=${apiKey}&sessiontoken=${
         sessionToken.current
       }`;
-      console.log(url);
       fetch(url, { signal: abortSignal.current })
         .then(data => data.json())
         .then(data => {
