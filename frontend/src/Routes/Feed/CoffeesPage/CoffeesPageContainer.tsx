@@ -35,7 +35,7 @@ class CoffeesPageContainer extends React.Component<IProps, IState> {
         query={GET_COFFEES}
         variables={{
           cityId: cityId || localStorage.getItem("cityId"),
-          location: "feed"
+          location: "city"
         }}
       >
         {({ data: coffeeData, loading: coffeeLoading }) => {

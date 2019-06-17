@@ -1016,7 +1016,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         query: GET_COFFEES,
         variables: {
           cityName: localStorage.getItem("cityName"),
-          location: "feed"
+          location: "city"
         }
       });
       if (feedData) {
@@ -1025,7 +1025,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
           query: GET_COFFEES,
           variables: {
             cityName: localStorage.getItem("cityName"),
-            location: "feed"
+            location: "city"
           },
           data: feedData
         });

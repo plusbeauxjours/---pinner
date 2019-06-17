@@ -121,7 +121,7 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
     try {
       const feedData = cache.readQuery({
         query: GET_COFFEES,
-        variables: { cityName: currentCity, location: "feed" }
+        variables: { cityName: currentCity, location: "city" }
       });
       if (feedData) {
         feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
@@ -131,7 +131,7 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
           query: GET_COFFEES,
           variables: {
             cityName: currentCity,
-            location: "feed"
+            location: "city"
           },
           data: feedData
         });

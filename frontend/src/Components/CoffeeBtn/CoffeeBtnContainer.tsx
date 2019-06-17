@@ -80,7 +80,6 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
     } else {
       toast.error("error");
     }
-    this.props.history.goBack();
   };
   public updateMatch = (cache, { data: { match } }) => {
     try {
@@ -101,8 +100,8 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
       const feedData = cache.readQuery({
         query: GET_COFFEES,
         variables: {
-          cityName: localStorage.getItem("cityName"),
-          location: "feed"
+          cityId: localStorage.getItem("cityId"),
+          location: "city"
         }
       });
       if (feedData) {
@@ -112,8 +111,8 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
         cache.writeQuery({
           query: GET_COFFEES,
           variables: {
-            cityName: localStorage.getItem("cityName"),
-            location: "feed"
+            cityId: localStorage.getItem("cityId"),
+            location: "city"
           },
           data: feedData
         });
@@ -154,8 +153,8 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
         const feedData = cache.readQuery({
           query: GET_COFFEES,
           variables: {
-            cityName: localStorage.getItem("cityName"),
-            location: "feed"
+            cityId: localStorage.getItem("cityId"),
+            location: "city"
           }
         });
         if (feedData) {
@@ -163,8 +162,8 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
           cache.writeQuery({
             query: GET_COFFEES,
             variables: {
-              cityName: localStorage.getItem("cityName"),
-              location: "feed"
+              cityId: localStorage.getItem("cityId"),
+              location: "city"
             },
             data: feedData
           });

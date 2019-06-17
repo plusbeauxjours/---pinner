@@ -1,18 +1,30 @@
 import React from "react";
-import { Query } from "react-apollo";
+import { Query, MutationFn, Mutation } from "react-apollo";
 import CityProfilePresenter from "./CityProfilePresenter";
 import {
   CityProfile,
   CityProfileVariables,
   NearCities,
-  NearCitiesVariables
+  NearCitiesVariables,
+  RequestCoffee,
+  RequestCoffeeVariables,
+  GetCoffees,
+  GetCoffeesVariables
 } from "../../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
 import { CITY_PROFILE } from "./CityProfileQueries";
 import { NEAR_CITIES } from "../NearCities/NearCitiesQueries";
+import { GET_COFFEES } from "../../User/Coffees/CoffeesQueries";
+import { toast } from "react-toastify";
+import { REQUEST_COFFEE } from "../../Match/MatchQueries";
 
 class CityProfileQuery extends Query<CityProfile, CityProfileVariables> {}
+class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
 class NearCitiesQuery extends Query<NearCities, NearCitiesVariables> {}
+class RequestCoffeeMutation extends Mutation<
+  RequestCoffee,
+  RequestCoffeeVariables
+> {}
 
 interface IProps extends RouteComponentProps<any> {}
 
@@ -28,6 +40,7 @@ interface IState {
 class CityProfileContainer extends React.Component<IProps, IState> {
   public data;
   public coffeeFetchMore;
+  public requestCoffeeFn: MutationFn;
   constructor(props) {
     super(props);
     this.state = {
@@ -53,6 +66,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       }
     } = this.props;
     const isStaying = this.state.currentCityId === cityId;
+    console.log("isStaying::::", isStaying);
     const {
       search,
       usersNowList,
@@ -61,38 +75,72 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       usersNowActiveId
     } = this.state;
     return (
-      <NearCitiesQuery query={NEAR_CITIES} variables={{ cityId }}>
-        {({ data: nearCitiesData, loading: nearCitiesLoading }) => {
+      <GetCoffeesQuery
+        query={GET_COFFEES}
+        variables={{
+          cityId,
+          location: "city"
+        }}
+      >
+        {({ data: coffeeData, loading: coffeeLoading }) => {
           return (
-            <CityProfileQuery query={CITY_PROFILE} variables={{ cityId }}>
-              {({ data: cityData, loading: cityLoading }) => {
-                this.data = cityData;
+            <RequestCoffeeMutation
+              mutation={REQUEST_COFFEE}
+              variables={{
+                currentCityId: cityId
+              }}
+              onCompleted={this.onCompletedRequestCoffee}
+              update={this.updateRequestCoffee}
+            >
+              {requestCoffeeFn => {
+                this.requestCoffeeFn = requestCoffeeFn;
                 return (
-                  <CityProfilePresenter
-                    cityData={cityData}
-                    cityLoading={cityLoading}
-                    nearCitiesData={nearCitiesData}
-                    nearCitiesLoading={nearCitiesLoading}
-                    coffeeReportModalOpen={coffeeReportModalOpen}
-                    coffeeRequestModalOpen={coffeeRequestModalOpen}
-                    toggleCoffeeReportModal={this.toggleCoffeeReportModal}
-                    toggleCoffeeRequestModal={this.toggleCoffeeRequestModal}
-                    cityId={cityId}
-                    isStaying={isStaying}
-                    onChange={this.onChange}
-                    search={search}
-                    usersNowList={usersNowList}
-                    usersNowActiveId={usersNowActiveId}
-                    onKeyDown={this.onKeyDown}
-                    onClick={this.onClick}
-                    onBlur={this.onBlur}
-                  />
+                  <NearCitiesQuery query={NEAR_CITIES} variables={{ cityId }}>
+                    {({ data: nearCitiesData, loading: nearCitiesLoading }) => {
+                      return (
+                        <CityProfileQuery
+                          query={CITY_PROFILE}
+                          variables={{ cityId }}
+                        >
+                          {({ data: cityData, loading: cityLoading }) => {
+                            this.data = cityData;
+                            return (
+                              <CityProfilePresenter
+                                cityData={cityData}
+                                cityLoading={cityLoading}
+                                nearCitiesData={nearCitiesData}
+                                nearCitiesLoading={nearCitiesLoading}
+                                coffeeReportModalOpen={coffeeReportModalOpen}
+                                coffeeRequestModalOpen={coffeeRequestModalOpen}
+                                toggleCoffeeReportModal={
+                                  this.toggleCoffeeReportModal
+                                }
+                                toggleCoffeeRequestModal={
+                                  this.toggleCoffeeRequestModal
+                                }
+                                cityId={cityId}
+                                isStaying={isStaying}
+                                onChange={this.onChange}
+                                search={search}
+                                usersNowList={usersNowList}
+                                usersNowActiveId={usersNowActiveId}
+                                onKeyDown={this.onKeyDown}
+                                onClick={this.onClick}
+                                onBlur={this.onBlur}
+                                submitCoffee={this.submitCoffee}
+                              />
+                            );
+                          }}
+                        </CityProfileQuery>
+                      );
+                    }}
+                  </NearCitiesQuery>
                 );
               }}
-            </CityProfileQuery>
+            </RequestCoffeeMutation>
           );
         }}
-      </NearCitiesQuery>
+      </GetCoffeesQuery>
     );
   }
   public toggleCoffeeRequestModal = () => {
@@ -176,6 +224,60 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     this.setState({
       usersNowActiveId: null
     });
+  };
+  public submitCoffee = target => {
+    const { coffeeRequestModalOpen } = this.state;
+    this.requestCoffeeFn({ variables: { target } });
+    this.setState({
+      coffeeRequestModalOpen: !coffeeRequestModalOpen
+    } as any);
+  };
+  public onCompletedRequestCoffee = data => {
+    if (data.requestCoffee.coffee) {
+      toast.success("Coffee requested, finding a guest");
+    } else {
+      toast.error("error");
+    }
+  };
+  public updateRequestCoffee = (cache, { data: { requestCoffee } }) => {
+    const { currentCityId } = this.state;
+    try {
+      const feedData = cache.readQuery({
+        query: GET_COFFEES,
+        variables: { cityId: currentCityId, location: "city" }
+      });
+      if (feedData) {
+        feedData.getCoffees.coffees.unshift(requestCoffee.coffee);
+        cache.writeQuery({
+          query: GET_COFFEES,
+          variables: { cityId: currentCityId, location: "city" },
+          data: feedData
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    const {
+      coffee: {
+        host: { username }
+      }
+    } = requestCoffee;
+    try {
+      const profileData = cache.readQuery({
+        query: GET_COFFEES,
+        variables: { userName: username, location: "profile" }
+      });
+      if (profileData) {
+        profileData.getCoffees.coffees.push(requestCoffee.coffee);
+        cache.writeQuery({
+          query: GET_COFFEES,
+          variables: { userName: username, location: "profile" },
+          data: profileData
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 }
 

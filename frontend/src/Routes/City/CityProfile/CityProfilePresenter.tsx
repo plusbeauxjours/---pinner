@@ -276,6 +276,7 @@ interface IProps {
   onClick: any;
   onBlur: any;
   usersNowActiveId: number;
+  submitCoffee: any;
 }
 
 const CityProfilePresenter: React.SFC<IProps> = ({
@@ -303,7 +304,8 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   onKeyDown,
   onClick,
   onBlur,
-  usersNowActiveId
+  usersNowActiveId,
+  submitCoffee
 }) => {
   if (cityLoading) {
     return <Loader />;
@@ -311,6 +313,17 @@ const CityProfilePresenter: React.SFC<IProps> = ({
     console.log(usersBefore);
     return (
       <>
+        {coffeeReportModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleCoffeeReportModal} />
+            <Modal>
+              <ModalLink onClick={() => console.log("REPORT COFFEE")}>
+                REPORT COFFEE
+              </ModalLink>
+              <ModalLink onClick={toggleCoffeeReportModal}>CANCEL</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
         {coffeeRequestModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleCoffeeRequestModal} />
@@ -325,17 +338,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                 GENDER
               </ModalLink>
               <ModalLink onClick={toggleCoffeeRequestModal}>CANCEL</ModalLink>
-            </Modal>
-          </ModalContainer>
-        )}
-        {coffeeReportModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleCoffeeReportModal} />
-            <Modal>
-              <ModalLink onClick={() => console.log("REPORT COFFEE")}>
-                REPORT COFFEE
-              </ModalLink>
-              <ModalLink onClick={toggleCoffeeReportModal}>CANCEL</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -435,21 +437,20 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                 })}
             </UserContainer>
           </PHeader>
-          {coffees && coffees.length !== 0 ? (
-            <CoffeeBox
-              currentCityId={cityId}
-              usertoggleCoffeeRequestModal={toggleCoffeeRequestModal}
-              coffees={coffees}
-              isStaying={isStaying}
-            />
-          ) : null}
           {usersBefore && usersBefore.length !== 0 ? (
             <>
               <GreyLine />
               <UserBox users={usersBefore} type={"usersBefore"} />
             </>
           ) : null}
-
+          {coffees && coffees.length !== 0 ? (
+            <CoffeeBox
+              currentCityId={cityId}
+              toggleCoffeeRequestModal={toggleCoffeeRequestModal}
+              coffees={coffees}
+              isStaying={isStaying}
+            />
+          ) : null}
           <GreyLine />
           <Title>
             <SText text={"NEAR CITIES"} />

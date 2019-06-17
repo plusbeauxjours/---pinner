@@ -21,6 +21,8 @@ export const CITY_PROFILE = gql`
         uuid
         target
         host {
+          id
+          username
           profile {
             avatar
           }

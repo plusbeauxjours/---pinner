@@ -26,6 +26,8 @@ export const TRIP_PROFILE = gql`
         id
         target
         host {
+          id
+          username
           profile {
             avatar
           }

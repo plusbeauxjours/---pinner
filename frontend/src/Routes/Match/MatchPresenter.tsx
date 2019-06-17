@@ -195,7 +195,6 @@ const SeeAll = styled.p`
 
 const AvatarContainer = styled.div`
   display: flex;
-  position: relative;
   align-items: center;
 `;
 
@@ -260,9 +259,7 @@ interface IProps {
   currentCityId: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   requestModalOpen: boolean;
-  requestingCoffeeModalOpen: boolean;
   coffeeReportModalOpen: boolean;
-  toggleRequestingCoffeeModal: () => void;
   toggleCoffeeReportModal: () => void;
   toggleRequestModal: () => void;
   submitCoffee: any;
@@ -282,9 +279,7 @@ const MatchPresenter: React.SFC<IProps> = ({
   currentCityId,
   onChange,
   requestModalOpen,
-  requestingCoffeeModalOpen,
   coffeeReportModalOpen,
-  toggleRequestingCoffeeModal,
   toggleCoffeeReportModal,
   toggleRequestModal,
   submitCoffee
