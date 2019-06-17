@@ -258,6 +258,8 @@ interface ITheme {
 }
 
 interface IProps {
+  coffeeData: any;
+  coffeeLoading: boolean;
   cityData?: any;
   cityLoading: boolean;
   nearCitiesData?: any;
@@ -280,13 +282,10 @@ interface IProps {
 }
 
 const CityProfilePresenter: React.SFC<IProps> = ({
+  coffeeData: { getCoffees: { coffees = null } = {} } = {},
+  coffeeLoading,
   cityData: {
-    cityProfile: {
-      usersNow = null,
-      usersBefore = null,
-      city = null,
-      coffees = null
-    } = {}
+    cityProfile: { usersNow = null, usersBefore = null, city = null } = {}
   } = {},
   cityLoading,
   nearCitiesData: { nearCities: { cities: nearCities = null } = {} } = {},

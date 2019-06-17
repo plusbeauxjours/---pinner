@@ -106,6 +106,8 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                             this.data = cityData;
                             return (
                               <CityProfilePresenter
+                                coffeeData={coffeeData}
+                                coffeeLoading={coffeeLoading}
                                 cityData={cityData}
                                 cityLoading={cityLoading}
                                 nearCitiesData={nearCitiesData}

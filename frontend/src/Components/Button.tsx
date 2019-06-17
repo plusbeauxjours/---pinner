@@ -2,6 +2,9 @@ import React from "react";
 import styled from "src/Styles/typed-components";
 
 const SButton = styled.button<IProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 0;
   padding: ${props => (props.size === "md" ? "1px" : "2px")};
   color: ${props => (props.inverted ? props.theme.blackColor : "white")};

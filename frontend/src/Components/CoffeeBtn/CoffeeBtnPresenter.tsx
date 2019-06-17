@@ -3,7 +3,8 @@ import styled from "src/Styles/typed-components";
 import Button from "../Button";
 
 const SButton = styled(Button)`
-  z-index: 1;
+  display: flex;
+  z-index: 5;
   width: 75px;
 `;
 

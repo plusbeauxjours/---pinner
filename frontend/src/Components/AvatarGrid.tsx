@@ -25,14 +25,6 @@ const Icon = styled.span`
   }
 `;
 
-const Target = styled.div`
-  display: flex;
-  position: absolute;
-  bottom: 0;
-  font-size: 30px;
-  font-weight: 200;
-`;
-
 const AvatarContainer = styled.div`
   display: flex;
   position: relative;
@@ -81,35 +73,7 @@ const AvatarGrid: React.SFC<IProps> = ({
           <AvatarContainer key={coffee.uuid}>
             <Link
               to={{ pathname: `/c/${coffee.uuid}`, state: { modalOpen: true } }}
-            >
-              {(() => {
-                switch (coffee.target) {
-                  case "EVERYONE":
-                    return (
-                      <>
-                        <Target>E</Target>
-                        <SAvatar size={"md"} url={coffee.host.profile.avatar} />
-                      </>
-                    );
-                  case "GENDER":
-                    return (
-                      <>
-                        <Target>G</Target>
-                        <SAvatar size={"md"} url={coffee.host.profile.avatar} />
-                      </>
-                    );
-                  case "NATIONALITY":
-                    return (
-                      <>
-                        <Target>N</Target>
-                        <SAvatar size={"md"} url={coffee.host.profile.avatar} />
-                      </>
-                    );
-                  default:
-                    return null;
-                }
-              })()}
-            </Link>
+            />
           </AvatarContainer>
         ))}
     </Grid>

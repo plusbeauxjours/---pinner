@@ -77,14 +77,6 @@ const AvatarContainer = styled.div`
   align-items: center;
 `;
 
-const Target = styled.div`
-  display: flex;
-  position: absolute;
-  bottom: 0;
-  font-size: 20px;
-  font-weight: 200;
-`;
-
 const HeaderColumn = styled.div`
   margin-left: 15px;
 `;
@@ -145,43 +137,6 @@ const CoffeesPagePresenter: React.SFC<IProps> = ({
                   <UserRow key={coffee.uuid}>
                     <Link to={`/c/${coffee.uuid}`}>
                       <AvatarContainer>
-                        {(() => {
-                          switch (coffee.target) {
-                            case "EVERYONE":
-                              return (
-                                <>
-                                  <Target>E</Target>
-                                  <SAvatar
-                                    size={"sm"}
-                                    url={coffee.host.profile.avatar}
-                                  />
-                                </>
-                              );
-                            case "GENDER":
-                              return (
-                                <>
-                                  <Target>G</Target>
-                                  <SAvatar
-                                    size={"sm"}
-                                    url={coffee.host.profile.avatar}
-                                  />
-                                </>
-                              );
-                            case "NATIONALITY":
-                              return (
-                                <>
-                                  <Target>N</Target>
-                                  <SAvatar
-                                    size={"sm"}
-                                    url={coffee.host.profile.avatar}
-                                  />
-                                </>
-                              );
-
-                            default:
-                              return null;
-                          }
-                        })()}
                         <HeaderColumn>
                           <CText text={coffee.host.username} />
                           {(() => {
@@ -215,43 +170,7 @@ const CoffeesPagePresenter: React.SFC<IProps> = ({
                   <UserRow key={coffee.uuid}>
                     <Link to={`/c/${coffee.uuid}`}>
                       <AvatarContainer>
-                        {(() => {
-                          switch (coffee.target) {
-                            case "EVERYONE":
-                              return (
-                                <>
-                                  <Target>E</Target>
-                                  <SAvatar
-                                    size={"sm"}
-                                    url={coffee.host.profile.avatar}
-                                  />
-                                </>
-                              );
-                            case "GENDER":
-                              return (
-                                <>
-                                  <Target>G</Target>
-                                  <SAvatar
-                                    size={"sm"}
-                                    url={coffee.host.profile.avatar}
-                                  />
-                                </>
-                              );
-                            case "NATIONALITY":
-                              return (
-                                <>
-                                  <Target>N</Target>
-                                  <SAvatar
-                                    size={"sm"}
-                                    url={coffee.host.profile.avatar}
-                                  />
-                                </>
-                              );
-
-                            default:
-                              return null;
-                          }
-                        })()}
+                        <SAvatar size={"sm"} url={coffee.host.profile.avatar} />
                         <HeaderColumn>
                           <CText text={coffee.host.username} />
                           {(() => {

@@ -16,18 +16,6 @@ export const CITY_PROFILE = gql`
           }
         }
       }
-      coffees {
-        id
-        uuid
-        target
-        host {
-          id
-          username
-          profile {
-            avatar
-          }
-        }
-      }
       city {
         id
         latitude

@@ -31,13 +31,6 @@ const ExtendedInput = styled(Input)`
   height: 48px;
 `;
 
-const Target = styled.div`
-  display: flex;
-  bottom: 0;
-  font-size: 30px;
-  font-weight: 200;
-`;
-
 interface IProps {
   username: string;
   avatar: string;
@@ -65,30 +58,7 @@ const UserHeader: React.SFC<IProps> = ({
 }) => {
   return (
     <Header>
-      {(() => {
-        switch (target) {
-          case "EVERYONE":
-            return (
-              <>
-                <Target>E</Target>
-              </>
-            );
-          case "GENDER":
-            return (
-              <>
-                <Target>G</Target>
-              </>
-            );
-          case "NATIONALITY":
-            return (
-              <>
-                <Target>N</Target>
-              </>
-            );
-          default:
-            return <Avatar size={size} url={avatar} />;
-        }
-      })()}
+      <Avatar size={size} url={avatar} />
       <HeaderColumn>
         <SText text={username} />
         <Location>

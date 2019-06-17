@@ -21,7 +21,6 @@ class FirstAnnotateResponse(graphene.ObjectType):
     city = graphene.Field(location_types.CityType)
     usersNow = graphene.List(coffee_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
-    coffees = graphene.List(coffee_types.CoffeeType)
 
 
 class SecondAnnotateResponse(graphene.ObjectType):

@@ -89,12 +89,8 @@ def resolve_city_profile(self, info, **kwargs):
     else:
         usersBefore = notification_models.MoveNotification.objects.filter(
             id=0)
-    print(usersNow,
-          usersBefore,
-          city,
-          coffees)
 
-    return card_types.FirstAnnotateResponse(usersNow=usersNow, usersBefore=usersBefore, city=city, coffees=coffees)
+    return card_types.FirstAnnotateResponse(usersNow=usersNow, usersBefore=usersBefore, city=city)
 
 
 @login_required

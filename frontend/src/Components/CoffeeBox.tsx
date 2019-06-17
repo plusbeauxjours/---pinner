@@ -110,14 +110,6 @@ const AvatarContainer = styled.div`
   align-items: center;
 `;
 
-const Target = styled.div`
-  display: flex;
-  position: absolute;
-  bottom: 0;
-  font-size: 20px;
-  font-weight: 200;
-`;
-
 const Location = styled.span`
   display: flex;
   margin-top: 5px;
@@ -187,42 +179,7 @@ const UserBox: React.SFC<IProps> = ({
                     }}
                   >
                     <AvatarContainer>
-                      {(() => {
-                        switch (coffee.target) {
-                          case "EVERYONE":
-                            return (
-                              <>
-                                <Target>E</Target>
-                                <Avatar
-                                  size={"sm"}
-                                  url={coffee.host.profile.avatar}
-                                />
-                              </>
-                            );
-                          case "GENDER":
-                            return (
-                              <>
-                                <Target>G</Target>
-                                <Avatar
-                                  size={"sm"}
-                                  url={coffee.host.profile.avatar}
-                                />
-                              </>
-                            );
-                          case "NATIONALITY":
-                            return (
-                              <>
-                                <Target>N</Target>
-                                <Avatar
-                                  size={"sm"}
-                                  url={coffee.host.profile.avatar}
-                                />
-                              </>
-                            );
-                          default:
-                            return null;
-                        }
-                      })()}
+                      <Avatar size={"sm"} url={coffee.host.profile.avatar} />
                       <HeaderColumn>
                         <CText text={coffee.host.username} />
                         {(() => {
