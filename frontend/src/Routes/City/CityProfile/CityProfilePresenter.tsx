@@ -309,7 +309,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   if (cityLoading) {
     return <Loader />;
   } else if (!cityLoading && city) {
-    console.log(usersBefore);
     return (
       <>
         {coffeeReportModalOpen && (

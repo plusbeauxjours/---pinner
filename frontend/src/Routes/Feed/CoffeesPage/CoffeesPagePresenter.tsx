@@ -49,9 +49,8 @@ const UserRow = styled.div`
   &:hover {
     background-color: grey;
   }
-  border-bottom: 1px solid grey;
-  &:last-child {
-    margin-bottom: 15px;
+  &:not(:last-child) {
+    border-bottom: 1px solid grey;
   }
 `;
 
@@ -136,6 +135,7 @@ const CoffeesPagePresenter: React.SFC<IProps> = ({
                 return (
                   <UserRow key={coffee.uuid}>
                     <Link to={`/c/${coffee.uuid}`}>
+                      <SAvatar size={"sm"} url={coffee.host.profile.avatar} />
                       <AvatarContainer>
                         <HeaderColumn>
                           <CText text={coffee.host.username} />

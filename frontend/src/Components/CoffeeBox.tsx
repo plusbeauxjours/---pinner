@@ -154,7 +154,7 @@ const UserBox: React.SFC<IProps> = ({
     <UserContainer>
       <UserNameRow>
         <Username>NEED SOME COFFEE NOW</Username>
-        <Link to={{ pathname: `/coffees`, state: { currentCityId } }}>
+        <Link to={{ pathname: `/city/${currentCityId}/coffees` }}>
           <SeeAll>SEE ALL</SeeAll>
         </Link>
       </UserNameRow>

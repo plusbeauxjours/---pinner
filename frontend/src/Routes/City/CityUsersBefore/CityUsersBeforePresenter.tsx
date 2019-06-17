@@ -32,6 +32,7 @@ const UserRow = styled.div<ITheme>`
   &:hover {
     background-color: grey;
   }
+  border-bottom: 1px solid grey;
 `;
 
 const UserNameRow = styled.div`
@@ -74,11 +75,7 @@ const Explain = styled(Location)`
   color: grey;
 `;
 
-const Container = styled.div`
-  &:not(:last-child) {
-    border-bottom: 1px solid grey;
-  }
-`;
+const Container = styled.div``;
 
 interface ITheme {
   active?: string;
@@ -147,24 +144,20 @@ const CityUsersBeforePresenter: React.SFC<IProps> = ({
                     active = "active";
                   }
                   return (
-                    <Container key={index}>
+                    <UserRow active={active} key={index}>
                       <Link to={`/${user.actor.profile.username}`}>
-                        <UserRow active={active}>
-                          <UserHeader
-                            username={user.actor.profile.username}
-                            currentCity={
-                              user.actor.profile.currentCity.cityName
-                            }
-                            currentCountry={
-                              user.actor.profile.currentCity.country.countryName
-                            }
-                            avatar={user.actor.profile.avatar}
-                            size={"sm"}
-                          />
-                          <Explain>{user.naturalTime}</Explain>
-                        </UserRow>
+                        <UserHeader
+                          username={user.actor.profile.username}
+                          currentCity={user.actor.profile.currentCity.cityName}
+                          currentCountry={
+                            user.actor.profile.currentCity.country.countryName
+                          }
+                          avatar={user.actor.profile.avatar}
+                          size={"sm"}
+                        />
+                        <Explain>{user.naturalTime}</Explain>
                       </Link>
-                    </Container>
+                    </UserRow>
                   );
                 })}
               {usersBeforeList.length === 0 &&

@@ -61,6 +61,7 @@ class MatchContainer extends React.Component<IProps, IState> {
       coffeeReportModalOpen,
       currentLng
     } = this.state;
+    const isStaying = this.state.currentCityId === currentCityId;
     return (
       <RecommandUsersQuery query={RECOMMAND_USERS}>
         {({ data: recommandUsersData, loading: recommandUsersLoading }) => {
@@ -109,6 +110,7 @@ class MatchContainer extends React.Component<IProps, IState> {
                                 }
                                 toggleRequestModal={this.toggleRequestModal}
                                 submitCoffee={this.submitCoffee}
+                                isStaying={isStaying}
                               />
                             );
                           }}

@@ -8,7 +8,7 @@ import Wrapper from "src/Components/Wrapper";
 import Bold from "../../Components/Bold";
 import { keyframes } from "styled-components";
 import Avatar from "../../Components/Avatar";
-import { Upload } from "../../Icons";
+import CoffeeBox from "src/Components/CoffeeBox";
 
 const SWrapper = styled(Wrapper)``;
 
@@ -214,29 +214,6 @@ const Explain = styled(Location)`
   color: grey;
 `;
 
-const IconRow = styled.div`
-  height: 50px;
-  width: 400px;
-  padding: 0 5px 0 5px;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid grey;
-`;
-
-const Icon = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  svg {
-    fill: white;
-    transition: fill 0.2s ease-in-out;
-    &:hover {
-      fill: grey;
-    }
-  }
-`;
-
 interface IProps {
   matchData: any;
   matchLoading: boolean;
@@ -255,6 +232,7 @@ interface IProps {
   toggleCoffeeReportModal: () => void;
   toggleRequestModal: () => void;
   submitCoffee: any;
+  isStaying: boolean;
 }
 
 const MatchPresenter: React.SFC<IProps> = ({
@@ -274,7 +252,8 @@ const MatchPresenter: React.SFC<IProps> = ({
   coffeeReportModalOpen,
   toggleCoffeeReportModal,
   toggleRequestModal,
-  submitCoffee
+  submitCoffee,
+  isStaying
 }) => {
   if (matchLoading) {
     return <Loader />;
@@ -340,76 +319,19 @@ const MatchPresenter: React.SFC<IProps> = ({
                     })}
                 </Box>
               </Container>
-              <GreyLine />
             </UserContainer>
           )}
-          {coffeeLoading ? (
-            <Loader />
+          {!coffeeLoading ? (
+            <CoffeeBox
+              currentCityId={currentCityId}
+              toggleCoffeeRequestModal={toggleRequestModal}
+              coffees={coffees}
+              isStaying={isStaying}
+            />
           ) : (
-            <UserContainer>
-              <UserNameRow>
-                <Username>NEED SOME COFFEE NOW</Username>
-                <Link to={{ pathname: `/coffees`, state: { currentCityId } }}>
-                  <SeeAll>SEE ALL</SeeAll>
-                </Link>
-              </UserNameRow>
-              <Container>
-                <Box>
-                  <IconRow>
-                    <Icon onClick={toggleRequestModal}>
-                      <Upload />
-                    </Icon>
-                  </IconRow>
-                  {!coffeeLoading &&
-                    coffees &&
-                    coffees.map(coffee => {
-                      return (
-                        <UserRow key={coffee.uuid}>
-                          <Link
-                            to={{
-                              pathname: `/c/${coffee.uuid}`,
-                              state: { modalOpen: true }
-                            }}
-                          >
-                            <AvatarContainer>
-                              <Avatar
-                                size={"sm"}
-                                url={coffee.host.profile.avatar}
-                              />
-                              <HeaderColumn>
-                                <CText text={coffee.host.username} />
-                                {(() => {
-                                  switch (coffee.target) {
-                                    case "EVERYONE":
-                                      return <Explain>with Someone</Explain>;
-                                    case "GENDER":
-                                      return (
-                                        <Explain>with same gender</Explain>
-                                      );
-                                    case "NATIONALITY":
-                                      return (
-                                        <Explain>with same nationality</Explain>
-                                      );
-                                    default:
-                                      return null;
-                                  }
-                                })()}
-                              </HeaderColumn>
-                            </AvatarContainer>
-                          </Link>
-                          <CoffeeBtn
-                            coffeeId={coffee.uuid}
-                            isMatching={coffee.isMatching}
-                            isSelf={coffee.host.profile.isSelf}
-                          />
-                        </UserRow>
-                      );
-                    })}
-                </Box>
-              </Container>
-              <GreyLine />
-            </UserContainer>
+            <Loader />
           )}
+          <GreyLine />
           <UserContainer>
             <UserNameRow>
               <Username>MATCHES</Username>
