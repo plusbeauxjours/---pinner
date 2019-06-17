@@ -82,12 +82,13 @@ class LoggedInPages extends React.Component<IProps> {
             path="/continent/:continentName"
             component={ContinentProfile}
           />
+          <Route path="/country/:countryCode/coffees" component={CoffeesPage} />
           <Route
-            path="/country/:countryName/usersNow"
+            path="/country/:countryCode/usersNow"
             component={CountryUsersNow}
           />
           <Route
-            path="/country/:countryName/usersBefore"
+            path="/country/:countryCode/usersBefore"
             component={CountryUsersBefore}
           />
           <Route path="/country/:countryCode" component={CountryProfile} />

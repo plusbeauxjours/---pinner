@@ -49,8 +49,9 @@ const UserRow = styled.div`
   &:hover {
     background-color: grey;
   }
-  &:not(:last-child) {
-    border-bottom: 1px solid grey;
+  border-bottom: 1px solid grey;
+  &:last-child {
+    margin-bottom: 15px;
   }
 `;
 

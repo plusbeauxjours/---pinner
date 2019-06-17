@@ -188,6 +188,7 @@ export interface UnMatch_unMatch_coffee_host {
 export interface UnMatch_unMatch_coffee {
   __typename: "CoffeeType";
   id: string;
+  uuid: any | null;
   city: UnMatch_unMatch_coffee_city;
   host: UnMatch_unMatch_coffee_host;
   status: string | null;
@@ -565,23 +566,6 @@ export interface CityProfile_cityProfile_usersBefore {
   actor: CityProfile_cityProfile_usersBefore_actor;
 }
 
-export interface CityProfile_cityProfile_coffees_host_profile {
-  __typename: "ProfileType";
-  avatar: string;
-}
-
-export interface CityProfile_cityProfile_coffees_host {
-  __typename: "UserType";
-  profile: CityProfile_cityProfile_coffees_host_profile | null;
-}
-
-export interface CityProfile_cityProfile_coffees {
-  __typename: "CoffeeType";
-  id: string;
-  target: CoffeeTarget;
-  host: CityProfile_cityProfile_coffees_host;
-}
-
 export interface CityProfile_cityProfile_city_country_continent {
   __typename: "ContinentType";
   continentName: string | null;
@@ -616,7 +600,6 @@ export interface CityProfile_cityProfile {
   __typename: "FirstAnnotateResponse";
   usersNow: (CityProfile_cityProfile_usersNow | null)[] | null;
   usersBefore: (CityProfile_cityProfile_usersBefore | null)[] | null;
-  coffees: (CityProfile_cityProfile_coffees | null)[] | null;
   city: CityProfile_cityProfile_city | null;
 }
 
@@ -1077,23 +1060,6 @@ export interface CountryProfile_countryProfile_usersBefore {
   actor: CountryProfile_countryProfile_usersBefore_actor;
 }
 
-export interface CountryProfile_countryProfile_coffees_host_profile {
-  __typename: "ProfileType";
-  avatar: string;
-}
-
-export interface CountryProfile_countryProfile_coffees_host {
-  __typename: "UserType";
-  profile: CountryProfile_countryProfile_coffees_host_profile | null;
-}
-
-export interface CountryProfile_countryProfile_coffees {
-  __typename: "CoffeeType";
-  id: string;
-  target: CoffeeTarget;
-  host: CountryProfile_countryProfile_coffees_host;
-}
-
 export interface CountryProfile_countryProfile_cities_country {
   __typename: "CountryType";
   countryName: string | null;
@@ -1118,7 +1084,6 @@ export interface CountryProfile_countryProfile {
   country: CountryProfile_countryProfile_country | null;
   usersNow: (CountryProfile_countryProfile_usersNow | null)[] | null;
   usersBefore: (CountryProfile_countryProfile_usersBefore | null)[] | null;
-  coffees: (CountryProfile_countryProfile_coffees | null)[] | null;
   cities: (CountryProfile_countryProfile_cities | null)[] | null;
 }
 
@@ -1128,6 +1093,41 @@ export interface CountryProfile {
 
 export interface CountryProfileVariables {
   page?: number | null;
+  countryCode: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetCountries
+// ====================================================
+
+export interface GetCountries_getCountries_countries_continent {
+  __typename: "ContinentType";
+  continentName: string | null;
+}
+
+export interface GetCountries_getCountries_countries {
+  __typename: "CountryType";
+  id: string;
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+  continent: GetCountries_getCountries_countries_continent | null;
+}
+
+export interface GetCountries_getCountries {
+  __typename: "CountriesResponse";
+  countries: (GetCountries_getCountries_countries | null)[] | null;
+}
+
+export interface GetCountries {
+  getCountries: GetCountries_getCountries;
+}
+
+export interface GetCountriesVariables {
   countryCode: string;
 }
 
@@ -1608,6 +1608,7 @@ export interface RequestCoffee_requestCoffee_coffee_host {
 export interface RequestCoffee_requestCoffee_coffee {
   __typename: "CoffeeType";
   id: string;
+  uuid: any | null;
   city: RequestCoffee_requestCoffee_coffee_city;
   host: RequestCoffee_requestCoffee_coffee_host;
   status: string | null;
@@ -1677,6 +1678,11 @@ export interface TripProfile_tripProfile_coffees_host_profile {
 
 export interface TripProfile_tripProfile_coffees_host {
   __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
   profile: TripProfile_tripProfile_coffees_host_profile | null;
 }
 
@@ -1818,6 +1824,7 @@ export interface GetCoffees_getCoffees_coffees_host {
 export interface GetCoffees_getCoffees_coffees {
   __typename: "CoffeeType";
   id: string;
+  uuid: any | null;
   city: GetCoffees_getCoffees_coffees_city;
   host: GetCoffees_getCoffees_coffees_host;
   status: string | null;
@@ -1837,6 +1844,7 @@ export interface GetCoffees {
 
 export interface GetCoffeesVariables {
   cityId?: string | null;
+  countryCode?: string | null;
   userName?: string | null;
   location: string;
 }
@@ -2473,6 +2481,7 @@ export interface CoffeeParts_host {
 export interface CoffeeParts {
   __typename: "CoffeeType";
   id: string;
+  uuid: any | null;
   city: CoffeeParts_city;
   host: CoffeeParts_host;
   status: string | null;

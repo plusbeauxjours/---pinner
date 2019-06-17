@@ -142,8 +142,6 @@ def resolve_country_profile(self, info, **kwargs):
 
     country = models.Country.objects.get(country_code=countryCode)
 
-    allCities = models.City.objects.values('id').filter(country__country_code=countryCode)
-
     usersNow = User.objects.filter(
         profile__current_city__country__country_code=countryCode).order_by('-id').distinct('id')[:12]
 
@@ -156,9 +154,7 @@ def resolve_country_profile(self, info, **kwargs):
 
     cities = models.City.objects.filter(country__country_code=countryCode)
 
-    coffees = coffee_models.Coffee.objects.filter(Q(city__id__in=allCities) & Q(expires__gt=timezone.now()))
-
-    return card_types.SecondAnnotateResponse(cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country, coffees=coffees)
+    return card_types.SecondAnnotateResponse(cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country)
 
 
 @login_required
@@ -199,6 +195,23 @@ def resolve_country_users_before(self, info, **kwargs):
     usersBefore = usersBefore[offset:20 + offset]
 
     return card_types.usersBeforeResponse(usersBefore=usersBefore,  page=nextPage, hasNextPage=hasNextPage)
+
+
+@login_required
+def resolve_get_countries(self, info, **kwargs):
+
+    user = info.context.user
+    countryCode = kwargs.get('countryCode')
+    page = kwargs.get('page', 0)
+    offset = 20*page
+
+    nextPage = page + 1
+
+    country = models.Country.objects.get(country_code=countryCode)
+
+    countries = country.continent.countries.all()
+
+    return types.CountriesResponse(countries=countries)
 
 
 @login_required

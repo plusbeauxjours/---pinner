@@ -138,6 +138,12 @@ class Query(object):
         required=True,
         args={'countryCode': graphene.String()}
     )
+    get_countries = graphene.Field(
+        types.CountriesResponse,
+        resolver=queries.resolve_get_countries,
+        required=True,
+        args={'countryCode': graphene.String()}
+    )
 
 
 class Mutation(object):

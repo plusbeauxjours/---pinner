@@ -3,6 +3,7 @@ from . import types, models
 from django.contrib.auth.models import User
 from graphql_jwt.decorators import login_required
 from locations import models as location_models
+from coffees import models as coffee_models
 from django.utils import timezone
 from django.db.models import Q
 
@@ -15,8 +16,9 @@ def resolve_get_coffees(self, info, **kwargs):
 
     location = kwargs.get('location')
     cityId = kwargs.get('cityId')
+    countryCode = kwargs.get('countryCode')
     userName = kwargs.get('userName')
-
+    print(location, cityId)
     if location == "city":
         try:
             city = location_models.City.objects.prefetch_related('coffee').get(city_id=cityId)
@@ -69,6 +71,27 @@ def resolve_get_coffees(self, info, **kwargs):
             except models.Coffee.DoesNotExist:
                 return types.GetCoffeesResponse(coffees=None)
         else:
+            return types.GetCoffeesResponse(coffees=None)
+
+    elif location == "country":
+
+        try:
+            allCities = location_models.City.objects.values('id').filter(country__country_code=countryCode)
+        except location_models.City.DoesNotExist:
+            return types.GetCoffeesResponse(coffees=None)
+
+        try:
+            profile = me.profile
+            matches = me.guest.values('id').all()
+
+            coffees = coffee_models.Coffee.objects.filter((Q(target='everyone') |
+                                                           Q(target='nationality', host__profile__nationality=profile.nationality) |
+                                                           Q(target='gender', host__profile__gender=profile.gender)) &
+                                                          Q(expires__gt=timezone.now()) & Q(city__id__in=allCities)).exclude(match__id__in=matches).order_by('-created_at')
+
+            return types.GetCoffeesResponse(coffees=coffees)
+
+        except models.Coffee.DoesNotExist:
             return types.GetCoffeesResponse(coffees=None)
 
 

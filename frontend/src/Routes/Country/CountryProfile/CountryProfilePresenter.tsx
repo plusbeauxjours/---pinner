@@ -6,9 +6,9 @@ import Wrapper from "../../../Components/Wrapper";
 import Loader from "../../../Components/Loader";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
-import AvatarGrid from "../../../Components/AvatarGrid";
 import CityLikeBtn from "../../../Components/CityLikeBtn";
 import UserBox from "src/Components/UserBox";
+import CoffeeBox from "src/Components/CoffeeBox";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -36,24 +36,6 @@ const SText = styled(Bold)`
   font-weight: 100;
 `;
 
-const SSText = styled(Bold)`
-  font-size: 12px;
-  font-weight: 100;
-`;
-
-const Title = styled.div`
-  display: flex;
-  margin-top: 10px;
-  @media screen and (max-width: 935px) {
-    margin-left: 10px;
-  }
-`;
-
-const SmallTitle = styled(Title)`
-  flex-direction: column;
-  align-items: center;
-`;
-
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
@@ -61,10 +43,6 @@ const GreyLine = styled.div`
   @media screen and (max-width: 935px) {
     margin: 0 10px 0 10px;
   }
-`;
-
-const SmallGreyLine = styled(GreyLine)`
-  width: 40%;
 `;
 
 const UserRow = styled.div<ITheme>`
@@ -161,6 +139,15 @@ const Input = styled.input`
   }
 `;
 
+const LocationRow = styled(UserRow)`
+  grid-template-columns: 1fr;
+  width: 300px;
+  height: 50px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-top: 1px solid grey;
+`;
+
 interface ITheme {
   active?: string;
 }
@@ -168,6 +155,10 @@ interface ITheme {
 interface IProps {
   data?: any;
   loading: boolean;
+  coffeeData?: any;
+  coffeeLoading: boolean;
+  countriesData: any;
+  countriesLoading: boolean;
   countryName: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
@@ -176,6 +167,7 @@ interface IProps {
   onClick: any;
   onBlur: any;
   activeId: number;
+  countryCode: string;
 }
 
 const CountryProfilePresenter: React.SFC<IProps> = ({
@@ -184,11 +176,14 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
       cities = null,
       usersNow = null,
       usersBefore = null,
-      country = null,
-      coffees = null
+      country = null
     } = {}
   } = {},
   loading,
+  coffeeData: { getCoffees: { coffees = null } = {} } = {},
+  coffeeLoading,
+  countriesData: { getCountries: { countries = null } = {} } = {},
+  countriesLoading,
   countryName,
   cityList,
   search,
@@ -196,7 +191,8 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
   onKeyDown,
   onClick,
   onBlur,
-  activeId
+  activeId,
+  countryCode
 }) => {
   if (loading) {
     return <Loader />;
@@ -207,6 +203,24 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
           <PHeader>
             <AvatarContainer>
               <CAvatar size="lg" url={country.countryPhoto} />
+              <LocationRow>
+                <Link
+                  to={{
+                    pathname: `/continent/${country.continent.continentName}`,
+                    state: { continentName: country.continent.continentName }
+                  }}
+                >
+                  <Header>
+                    <SAvatar
+                      size={"sm"}
+                      url={country.continent.continentPhoto}
+                    />
+                    <HeaderColumn>
+                      <HeaderText text={country.continent.continentName} />
+                    </HeaderColumn>
+                  </Header>
+                </Link>
+              </LocationRow>
               <InfoRow>
                 <SText text={String(country.cityCount)} />
                 cities
@@ -300,28 +314,21 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
                 })}
             </UserContainer>
           </PHeader>
-          {coffees && coffees.length !== 0 ? (
-            <>
-              <SmallTitle>
-                <SmallGreyLine />
-                <SSText text={"COFFEES NOW"} />
-              </SmallTitle>
-              <AvatarGrid coffees={coffees} />
-            </>
-          ) : null}
           <GreyLine />
           {usersNow && usersNow.length !== 0 ? (
             <>
               <UserBox users={usersNow} type={"usersNow"} />
-              <GreyLine />
             </>
           ) : null}
           {usersBefore && usersBefore.length !== 0 ? (
             <>
-              <UserBox users={usersBefore} type={"usersBefore"} />
               <GreyLine />
+              <UserBox users={usersBefore} type={"usersBefore"} />
             </>
           ) : null}
+          {!coffeeLoading && (
+            <CoffeeBox coffees={coffees} currentCountryCode={countryCode} />
+          )}
         </SWrapper>
       </>
     );

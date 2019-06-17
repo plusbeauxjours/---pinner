@@ -1,5 +1,9 @@
 import gql from "graphql-tag";
-import { CITY_FRAGMENT, PROFILE_FRAGMENT } from "src/sharedQueries";
+import {
+  CITY_FRAGMENT,
+  COUNTRY_FRAGMENT,
+  PROFILE_FRAGMENT
+} from "src/sharedQueries";
 
 export const COUNTRY_PROFILE = gql`
   query CountryProfile($page: Int, $countryCode: String!) {
@@ -29,15 +33,6 @@ export const COUNTRY_PROFILE = gql`
           }
         }
       }
-      coffees {
-        id
-        target
-        host {
-          profile {
-            avatar
-          }
-        }
-      }
       cities {
         ...CityParts
       }
@@ -45,4 +40,15 @@ export const COUNTRY_PROFILE = gql`
   }
   ${CITY_FRAGMENT}
   ${PROFILE_FRAGMENT}
+`;
+
+export const GET_COUNTRIES = gql`
+  query GetCountries($countryCode: String!) {
+    getCountries(countryCode: $countryCode) {
+      countries {
+        ...CountryParts
+      }
+    }
+  }
+  ${COUNTRY_FRAGMENT}
 `;

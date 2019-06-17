@@ -231,7 +231,7 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
                   }
                   return (
                     <UserRow key={index} active={active}>
-                      <Link to={`/country/${country.countryName}`}>
+                      <Link to={`/country/${country.countryCode}`}>
                         <Header>
                           <SAvatar size={"sm"} url={country.countryPhoto} />
                           <HeaderColumn>
@@ -255,7 +255,7 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
                   }
                   return (
                     <UserRow key={index} active={active}>
-                      <Link to={`/country/${country.countryName}`}>
+                      <Link to={`/country/${country.countryCode}`}>
                         <Header>
                           <SAvatar size={"sm"} url={country.countryPhoto} />
                           <HeaderColumn>

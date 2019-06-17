@@ -137,78 +137,109 @@ const GreyLine = styled.div`
 `;
 
 interface IProps extends RouteComponentProps<any> {
-  currentCityId: string;
-  toggleCoffeeRequestModal: () => void;
+  currentCityId?: string;
+  currentCountryCode?: string;
+  toggleCoffeeRequestModal?: () => void;
   coffees: any;
-  isStaying: boolean;
+  isStaying?: boolean;
 }
 
 const UserBox: React.SFC<IProps> = ({
   currentCityId,
+  currentCountryCode,
   toggleCoffeeRequestModal,
   coffees,
   isStaying
-}) => (
-  <>
-    <GreyLine />
-    <UserContainer>
-      <UserNameRow>
-        <Username>NEED SOME COFFEE NOW</Username>
-        <Link to={{ pathname: `/city/${currentCityId}/coffees` }}>
-          <SeeAll>SEE ALL</SeeAll>
-        </Link>
-      </UserNameRow>
-      <Container>
-        <Box>
-          {isStaying && (
-            <IconRow>
-              <Icon onClick={toggleCoffeeRequestModal}>
-                <Upload />
-              </Icon>
-            </IconRow>
-          )}
-          {coffees &&
-            coffees.map(coffee => {
-              console.log(coffee);
-              return (
-                <UserRow key={coffee.uuid}>
-                  <Link
-                    to={{
-                      pathname: `/c/${coffee.uuid}`,
-                      state: { modalOpen: true }
-                    }}
-                  >
-                    <AvatarContainer>
-                      <Avatar size={"sm"} url={coffee.host.profile.avatar} />
-                      <HeaderColumn>
-                        <CText text={coffee.host.username} />
-                        {(() => {
-                          switch (coffee.target) {
-                            case "EVERYONE":
-                              return <Explain>with Someone</Explain>;
-                            case "GENDER":
-                              return <Explain>with same gender</Explain>;
-                            case "NATIONALITY":
-                              return <Explain>with same nationality</Explain>;
-                            default:
-                              return null;
-                          }
-                        })()}
-                      </HeaderColumn>
-                    </AvatarContainer>
-                  </Link>
-                  <CoffeeBtn
-                    coffeeId={coffee.uuid}
-                    isMatching={coffee.isMatching}
-                    isSelf={coffee.host.profile.isSelf}
-                  />
-                </UserRow>
-              );
-            })}
-        </Box>
-      </Container>
-    </UserContainer>
-  </>
-);
+}) => {
+  console.log(currentCityId, currentCountryCode);
+  return (
+    <>
+      {coffees && coffees.length !== 0 && (
+        <>
+          <GreyLine />
+          <UserContainer>
+            <UserNameRow>
+              <Username>NEED SOME COFFEE NOW</Username>
+              {currentCountryCode && (
+                <Link
+                  to={{
+                    pathname: `/country/${currentCountryCode}/coffees`,
+                    state: { location: "country", currentCountryCode }
+                  }}
+                >
+                  <SeeAll>SEE ALL</SeeAll>
+                </Link>
+              )}
+              {currentCityId && (
+                <Link
+                  to={{
+                    pathname: `/city/${currentCityId}/coffees`,
+                    state: { location: "city", currentCityId }
+                  }}
+                >
+                  <SeeAll>SEE ALL</SeeAll>
+                </Link>
+              )}
+            </UserNameRow>
+            <Container>
+              <Box>
+                {isStaying && (
+                  <IconRow>
+                    <Icon onClick={toggleCoffeeRequestModal}>
+                      <Upload />
+                    </Icon>
+                  </IconRow>
+                )}
+                {coffees.map(coffee => {
+                  return (
+                    <UserRow key={coffee.uuid}>
+                      <Link
+                        to={{
+                          pathname: `/c/${coffee.uuid}`,
+                          state: { modalOpen: true }
+                        }}
+                      >
+                        <AvatarContainer>
+                          <Avatar
+                            size={"sm"}
+                            url={coffee.host.profile.avatar}
+                          />
+                          <HeaderColumn>
+                            <CText text={coffee.host.username} />
+                            {(() => {
+                              switch (coffee.target) {
+                                case "EVERYONE":
+                                  return <Explain>with Someone</Explain>;
+                                case "GENDER":
+                                  return <Explain>with same gender</Explain>;
+                                case "NATIONALITY":
+                                  return (
+                                    <Explain>with same nationality</Explain>
+                                  );
+                                default:
+                                  return null;
+                              }
+                            })()}
+                          </HeaderColumn>
+                        </AvatarContainer>
+                      </Link>
+                      {isStaying && (
+                        <CoffeeBtn
+                          coffeeId={coffee.uuid}
+                          isMatching={coffee.isMatching}
+                          isSelf={coffee.host.profile.isSelf}
+                        />
+                      )}
+                    </UserRow>
+                  );
+                })}
+              </Box>
+            </Container>
+          </UserContainer>
+        </>
+      )}
+    </>
+  );
+};
 
 export default withRouter(UserBox);

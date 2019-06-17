@@ -9,6 +9,9 @@ class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
 interface IState {
+  location: string;
+  cityId: string;
+  countryCode: string;
   search: string;
   coffeesList: any;
 }
@@ -17,7 +20,15 @@ class CoffeesPageContainer extends React.Component<IProps, IState> {
   public coffeeData;
   constructor(props) {
     super(props);
-    this.state = { search: "", coffeesList: [] };
+    const { location: { state = {} } = {} } = ({} = props);
+    this.state = {
+      location: state.location,
+      cityId: state.currentCityId,
+      countryCode: state.currentCountryCode,
+      search: "",
+      coffeesList: []
+    };
+    console.log(this.state.location);
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
@@ -27,18 +38,14 @@ class CoffeesPageContainer extends React.Component<IProps, IState> {
     }
   }
   public render = () => {
-    const { search, coffeesList } = this.state;
-    const {
-      match: {
-        params: { cityId }
-      }
-    } = this.props;
+    const { location, cityId, countryCode, search, coffeesList } = this.state;
     return (
       <GetCoffeesQuery
         query={GET_COFFEES}
         variables={{
           cityId,
-          location: "city"
+          countryCode,
+          location
         }}
       >
         {({ data: coffeeData, loading: coffeeLoading }) => {

@@ -90,10 +90,6 @@ interface IProps extends RouteComponentProps<any> {
 
 const UserBox: React.SFC<IProps> = ({ history, users, type }) => (
   <>
-    {console.log(history.location.pathname)}
-    {console.log(history)}
-    {console.log(location)}
-
     {(() => {
       switch (type) {
         case "usersNow":

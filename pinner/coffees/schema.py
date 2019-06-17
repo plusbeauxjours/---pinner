@@ -11,6 +11,7 @@ class Query(object):
         args={
             'location': graphene.String(required=True),
             'cityId': graphene.String(),
+            'countryCode': graphene.String(),
             'userName': graphene.String(),
         }
     )

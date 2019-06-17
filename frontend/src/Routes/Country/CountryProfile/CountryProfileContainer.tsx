@@ -1,14 +1,23 @@
 import React from "react";
 import { Query } from "react-apollo";
 import CountryProfilePresenter from "./CountryProfilePresenter";
-import { CountryProfile, CountryProfileVariables } from "../../../types/api";
+import {
+  CountryProfile,
+  CountryProfileVariables,
+  GetCoffees,
+  GetCoffeesVariables
+} from "../../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
-import { COUNTRY_PROFILE } from "./CountryProfileQueries";
+import { COUNTRY_PROFILE, GET_COUNTRIES } from "./CountryProfileQueries";
+import { GET_COFFEES } from "../../User/Coffees/CoffeesQueries";
+import { GetCountries, GetCountriesVariables } from "../../../types/api";
 
+class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
 class CountryProfileQuery extends Query<
   CountryProfile,
   CountryProfileVariables
 > {}
+class GetCountriesQuery extends Query<GetCountries, GetCountriesVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
 
@@ -21,6 +30,8 @@ interface IState {
 
 class CountryProfileContainer extends React.Component<IProps, IState> {
   public data;
+  public coffeeData;
+  public countriesData;
   constructor(props) {
     super(props);
     const { location: { state = {} } = {} } = ({} = props);
@@ -48,25 +59,58 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
     } = this.props;
     const { search, cityList, activeId, countryName } = this.state;
     return (
-      <CountryProfileQuery query={COUNTRY_PROFILE} variables={{ countryCode }}>
-        {({ data, loading }) => {
-          this.data = data;
+      <GetCountriesQuery
+        query={GET_COUNTRIES}
+        variables={{
+          countryCode
+        }}
+      >
+        {({ data: countriesData, loading: countriesLoading }) => {
+          this.countriesData = countriesData;
           return (
-            <CountryProfilePresenter
-              loading={loading}
-              data={data}
-              countryName={countryName}
-              onChange={this.onChange}
-              search={search}
-              activeId={activeId}
-              cityList={cityList}
-              onKeyDown={this.onKeyDown}
-              onClick={this.onClick}
-              onBlur={this.onBlur}
-            />
+            <GetCoffeesQuery
+              query={GET_COFFEES}
+              variables={{
+                countryCode,
+                location: "country"
+              }}
+            >
+              {({ data: coffeeData, loading: coffeeLoading }) => {
+                this.coffeeData = coffeeData;
+                return (
+                  <CountryProfileQuery
+                    query={COUNTRY_PROFILE}
+                    variables={{ countryCode }}
+                  >
+                    {({ data, loading }) => {
+                      this.data = data;
+                      return (
+                        <CountryProfilePresenter
+                          loading={loading}
+                          data={data}
+                          countriesData={countriesData}
+                          countriesLoading={countriesLoading}
+                          coffeeData={coffeeData}
+                          coffeeLoading={coffeeLoading}
+                          countryName={countryName}
+                          onChange={this.onChange}
+                          search={search}
+                          activeId={activeId}
+                          cityList={cityList}
+                          onKeyDown={this.onKeyDown}
+                          onClick={this.onClick}
+                          onBlur={this.onBlur}
+                          countryCode={countryCode}
+                        />
+                      );
+                    }}
+                  </CountryProfileQuery>
+                );
+              }}
+            </GetCoffeesQuery>
           );
         }}
-      </CountryProfileQuery>
+      </GetCountriesQuery>
     );
   }
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
