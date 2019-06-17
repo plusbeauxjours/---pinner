@@ -6,7 +6,6 @@ import Wrapper from "../../../Components/Wrapper";
 import Loader from "../../../Components/Loader";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
-// import AvatarGrid from "../../Components/AvatarGrid";
 import UserHeader from "../../../Components/UserHeader";
 
 const SWrapper = styled(Wrapper)`
@@ -34,15 +33,6 @@ const SText = styled(Bold)`
   font-size: 18px;
   font-weight: 100;
 `;
-
-// const GreyLine = styled.div`
-//   margin-top: 10px;
-//   margin-bottom: 10px;
-//   border-bottom: 1px solid grey;
-//   @media screen and (max-width: 935px) {
-//     margin: 0 10px 0 10px;
-//   }
-// `;
 
 const CAvatar = styled(Avatar)`
   border-radius: 3px;

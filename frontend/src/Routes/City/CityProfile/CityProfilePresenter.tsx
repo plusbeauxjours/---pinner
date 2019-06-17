@@ -8,10 +8,10 @@ import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
 import { keyframes } from "styled-components";
 import Weather from "src/Components/Weather";
-import AvatarGrid from "../../../Components/AvatarGrid";
 import UserHeader from "../../../Components/UserHeader";
 import CityLikeBtn from "../../../Components/CityLikeBtn";
 import UserBox from "src/Components/UserBox";
+import CoffeeBox from "src/Components/CoffeeBox";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -39,11 +39,6 @@ const SText = styled(Bold)`
   font-weight: 100;
 `;
 
-const SSText = styled(Bold)`
-  font-size: 12px;
-  font-weight: 100;
-`;
-
 const Title = styled.div`
   display: flex;
   justify-content: space-between;
@@ -51,11 +46,6 @@ const Title = styled.div`
   @media screen and (max-width: 935px) {
     margin-left: 10px;
   }
-`;
-
-const SmallTitle = styled(Title)`
-  flex-direction: column;
-  align-items: center;
 `;
 
 const ModalAnimation = keyframes`
@@ -87,10 +77,6 @@ const GreyLine = styled.div`
   @media screen and (max-width: 935px) {
     margin: 0 10px 0 10px;
   }
-`;
-
-const SmallGreyLine = styled(GreyLine)`
-  width: 40%;
 `;
 
 const ModalOverlay = styled.div`
@@ -278,7 +264,10 @@ interface IProps {
   nearCitiesLoading: boolean;
 
   coffeeReportModalOpen: boolean;
+  coffeeRequestModalOpen: boolean;
+  toggleCoffeeRequestModal: () => void;
   toggleCoffeeReportModal: () => void;
+  isStaying: boolean;
   cityId: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
@@ -303,7 +292,10 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   nearCitiesLoading,
 
   coffeeReportModalOpen,
+  coffeeRequestModalOpen,
+  toggleCoffeeRequestModal,
   toggleCoffeeReportModal,
+  isStaying,
   cityId,
   search,
   onChange,
@@ -319,6 +311,23 @@ const CityProfilePresenter: React.SFC<IProps> = ({
     console.log(usersBefore);
     return (
       <>
+        {coffeeRequestModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleCoffeeRequestModal} />
+            <Modal>
+              <ModalLink onClick={() => submitCoffee("everyone")}>
+                EVERYONE
+              </ModalLink>
+              <ModalLink onClick={() => submitCoffee("nationality")}>
+                NATIONALITY
+              </ModalLink>
+              <ModalLink onClick={() => submitCoffee("gender")}>
+                GENDER
+              </ModalLink>
+              <ModalLink onClick={toggleCoffeeRequestModal}>CANCEL</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
         {coffeeReportModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleCoffeeReportModal} />
@@ -427,13 +436,12 @@ const CityProfilePresenter: React.SFC<IProps> = ({
             </UserContainer>
           </PHeader>
           {coffees && coffees.length !== 0 ? (
-            <>
-              <SmallTitle>
-                <SmallGreyLine />
-                <SSText text={"COFFEES NOW"} />
-              </SmallTitle>
-              <AvatarGrid coffees={coffees} />
-            </>
+            <CoffeeBox
+              currentCityId={cityId}
+              usertoggleCoffeeRequestModal={toggleCoffeeRequestModal}
+              coffees={coffees}
+              isStaying={isStaying}
+            />
           ) : null}
           {usersBefore && usersBefore.length !== 0 ? (
             <>

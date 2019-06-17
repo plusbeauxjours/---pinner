@@ -103,7 +103,8 @@ const Avatar: React.SFC<IProps> = ({
   const randomColor = require("randomcolor");
   const color = randomColor({
     luminosity: "dark",
-    format: "rgba"
+    format: "rgba",
+    alpha: 0.9
   });
   if (cityId) {
     console.log(cityId);

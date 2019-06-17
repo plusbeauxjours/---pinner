@@ -5,7 +5,6 @@ import styled from "../../../Styles/typed-components";
 import Wrapper from "../../../Components/Wrapper";
 import Loader from "../../../Components/Loader";
 import Bold from "../../../Components/Bold";
-// import AvatarGrid from "../../Components/AvatarGrid";
 import CoffeeBtn from "src/Components/CoffeeBtn";
 import Avatar from "../../../Components/Avatar";
 
@@ -28,15 +27,6 @@ const Username = styled.span`
   font-size: 22px;
   font-weight: 100;
 `;
-
-// const GreyLine = styled.div`
-//   margin-top: 10px;
-//   margin-bottom: 10px;
-//   border-bottom: 1px solid grey;
-//   @media screen and (max-width: 935px) {
-//     margin: 0 10px 0 10px;
-//   }
-// `;
 
 const UserContainer = styled.div`
   display: flex;

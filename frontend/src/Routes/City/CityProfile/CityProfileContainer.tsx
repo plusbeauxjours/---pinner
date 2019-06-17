@@ -19,7 +19,9 @@ interface IProps extends RouteComponentProps<any> {}
 interface IState {
   search: string;
   usersNowList: any;
+  currentCityId: string;
   coffeeReportModalOpen: boolean;
+  coffeeRequestModalOpen: boolean;
   usersNowActiveId: number;
 }
 
@@ -31,7 +33,9 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     this.state = {
       search: "",
       usersNowList: [],
+      currentCityId: localStorage.getItem("cityId"),
       coffeeReportModalOpen: false,
+      coffeeRequestModalOpen: false,
       usersNowActiveId: null
     };
   }
@@ -48,10 +52,12 @@ class CityProfileContainer extends React.Component<IProps, IState> {
         params: { cityId }
       }
     } = this.props;
+    const isStaying = this.state.currentCityId === cityId;
     const {
       search,
       usersNowList,
       coffeeReportModalOpen,
+      coffeeRequestModalOpen,
       usersNowActiveId
     } = this.state;
     return (
@@ -68,8 +74,11 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                     nearCitiesData={nearCitiesData}
                     nearCitiesLoading={nearCitiesLoading}
                     coffeeReportModalOpen={coffeeReportModalOpen}
+                    coffeeRequestModalOpen={coffeeRequestModalOpen}
                     toggleCoffeeReportModal={this.toggleCoffeeReportModal}
+                    toggleCoffeeRequestModal={this.toggleCoffeeRequestModal}
                     cityId={cityId}
+                    isStaying={isStaying}
                     onChange={this.onChange}
                     search={search}
                     usersNowList={usersNowList}
@@ -86,6 +95,12 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       </NearCitiesQuery>
     );
   }
+  public toggleCoffeeRequestModal = () => {
+    const { coffeeRequestModalOpen } = this.state;
+    this.setState({
+      coffeeRequestModalOpen: !coffeeRequestModalOpen
+    } as any);
+  };
   public toggleCoffeeReportModal = () => {
     const { coffeeReportModalOpen } = this.state;
     this.setState({

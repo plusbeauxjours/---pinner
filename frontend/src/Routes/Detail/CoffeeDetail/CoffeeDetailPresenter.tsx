@@ -52,11 +52,12 @@ const Modal = styled.div`
   background-color: #2d3a41;
   width: 30%;
   border-radius: 12px;
-  z-index: 4;
+  z-index: 101;
   animation: ${ModalAnimation} 0.1s linear;
 `;
 
 const MenuModalLink = styled.div`
+  z-index: 101;
   text-align: center;
   min-height: 50px;
   width: 100%;
@@ -70,17 +71,17 @@ const MenuModalLink = styled.div`
 `;
 
 const MenuModalContainer = styled(ModalContainer)`
-  z-index: 5;
+  z-index: 101;
 `;
 const MenuModalOverlay = styled(ModalOverlay)`
-  z-index: 5;
+  z-index: 101;
 `;
 const MenuModal = styled(Modal)`
-  z-index: 5;
+  z-index: 101;
 `;
 
 const FormModal = styled(Modal)`
-  z-index: 10;
+  z-index: 101;
   display: flex;
   position: relative;
   justify-content: center;
@@ -209,8 +210,6 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
       <>
         {modalOpen && (
           <MenuModalContainer>
-            {console.log("fuck")}
-            {console.log(coffee.host.profile.isSelf)}
             <MenuModalOverlay onClick={toggleModal} />
             <MenuModal>
               {coffee.host.profile.isSelf ? (
