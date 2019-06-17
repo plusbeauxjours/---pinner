@@ -150,9 +150,6 @@ const LocationRow = styled(UserRow)`
   grid-template-columns: 1fr;
   width: 300px;
   height: 50px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border-top: 1px solid grey;
 `;
 
 const UserNameRow = styled.div`
@@ -343,6 +340,19 @@ const CityProfilePresenter: React.SFC<IProps> = ({
           <PHeader>
             <AvatarContainer>
               <CAvatar size="lg" url={city.cityPhoto} />
+              <InfoRow>
+                <SText text={String(city.userLogCount)} />
+                DISTANCE
+              </InfoRow>
+              <InfoRow>
+                <CityLikeBtn
+                  isLiked={city.isLiked}
+                  cityId={city.id}
+                  likeCount={city.likeCount}
+                  type={"profile"}
+                />
+              </InfoRow>
+              <Weather latitude={city.latitude} longitude={city.longitude} />
               <LocationRow>
                 <Link
                   to={{
@@ -361,19 +371,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                   </Header>
                 </Link>
               </LocationRow>
-              <InfoRow>
-                <SText text={String(city.userLogCount)} />
-                DISTANCE
-              </InfoRow>
-              <InfoRow>
-                <CityLikeBtn
-                  isLiked={city.isLiked}
-                  cityId={city.id}
-                  likeCount={city.likeCount}
-                  type={"profile"}
-                />
-              </InfoRow>
-              <Weather latitude={city.latitude} longitude={city.longitude} />
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>
@@ -443,6 +440,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
           ) : null}
           {coffees && coffees.length !== 0 ? (
             <CoffeeBox
+              coffeeLoading={coffeeLoading}
               currentCityId={cityId}
               toggleCoffeeRequestModal={toggleCoffeeRequestModal}
               coffees={coffees}

@@ -24,6 +24,7 @@ export const TRIP_PROFILE = gql`
       userCount
       coffees {
         id
+        uuid
         target
         host {
           id

@@ -26,6 +26,7 @@ interface IState {
   cityList: any;
   activeId: number;
   countryName: string;
+  currentCityId: string;
 }
 
 class CountryProfileContainer extends React.Component<IProps, IState> {
@@ -39,7 +40,8 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
       search: "",
       cityList: [],
       activeId: null,
-      countryName: state.countryName
+      countryName: state.countryName,
+      currentCityId: localStorage.getItem("cityId")
     };
   }
   public componentDidUpdate(prevProps) {
@@ -57,7 +59,13 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
         params: { countryCode }
       }
     } = this.props;
-    const { search, cityList, activeId, countryName } = this.state;
+    const {
+      search,
+      cityList,
+      activeId,
+      countryName,
+      currentCityId
+    } = this.state;
     return (
       <GetCountriesQuery
         query={GET_COUNTRIES}
@@ -101,6 +109,7 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
                           onClick={this.onClick}
                           onBlur={this.onBlur}
                           countryCode={countryCode}
+                          currentCityId={currentCityId}
                         />
                       );
                     }}

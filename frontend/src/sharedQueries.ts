@@ -89,6 +89,7 @@ export const COFFEE_FRAGMENT = gql`
     id
     uuid
     city {
+      cityId
       cityName
       country {
         countryName

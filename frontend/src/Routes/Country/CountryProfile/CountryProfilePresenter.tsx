@@ -143,9 +143,10 @@ const LocationRow = styled(UserRow)`
   grid-template-columns: 1fr;
   width: 300px;
   height: 50px;
-  margin-top: 15px;
+  margin-top: 26px;
   margin-bottom: 15px;
   border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
 `;
 
 interface ITheme {
@@ -168,6 +169,7 @@ interface IProps {
   onBlur: any;
   activeId: number;
   countryCode: string;
+  currentCityId: string;
 }
 
 const CountryProfilePresenter: React.SFC<IProps> = ({
@@ -192,7 +194,8 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
   onClick,
   onBlur,
   activeId,
-  countryCode
+  countryCode,
+  currentCityId
 }) => {
   if (loading) {
     return <Loader />;
@@ -203,24 +206,6 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
           <PHeader>
             <AvatarContainer>
               <CAvatar size="lg" url={country.countryPhoto} />
-              <LocationRow>
-                <Link
-                  to={{
-                    pathname: `/continent/${country.continent.continentName}`,
-                    state: { continentName: country.continent.continentName }
-                  }}
-                >
-                  <Header>
-                    <SAvatar
-                      size={"sm"}
-                      url={country.continent.continentPhoto}
-                    />
-                    <HeaderColumn>
-                      <HeaderText text={country.continent.continentName} />
-                    </HeaderColumn>
-                  </Header>
-                </Link>
-              </LocationRow>
               <InfoRow>
                 <SText text={String(country.cityCount)} />
                 cities
@@ -245,6 +230,24 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
                 <SText text={String(country.language)} />
                 language
               </InfoRow>
+              <LocationRow>
+                <Link
+                  to={{
+                    pathname: `/continent/${country.continent.continentName}`,
+                    state: { continentName: country.continent.continentName }
+                  }}
+                >
+                  <Header>
+                    <SAvatar
+                      size={"sm"}
+                      url={country.continent.continentPhoto}
+                    />
+                    <HeaderColumn>
+                      <HeaderText text={country.continent.continentName} />
+                    </HeaderColumn>
+                  </Header>
+                </Link>
+              </LocationRow>
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>
@@ -314,9 +317,9 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
                 })}
             </UserContainer>
           </PHeader>
-          <GreyLine />
           {usersNow && usersNow.length !== 0 ? (
             <>
+              <GreyLine />
               <UserBox users={usersNow} type={"usersNow"} />
             </>
           ) : null}
@@ -327,7 +330,12 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
             </>
           ) : null}
           {!coffeeLoading && (
-            <CoffeeBox coffees={coffees} currentCountryCode={countryCode} />
+            <CoffeeBox
+              coffees={coffees}
+              coffeeLoading={coffeeLoading}
+              currentCityId={currentCityId}
+              currentCountryCode={countryCode}
+            />
           )}
         </SWrapper>
       </>

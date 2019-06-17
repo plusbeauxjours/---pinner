@@ -115,6 +115,7 @@ const UserNameRow = styled.div`
 const AvatarContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const Header = styled.header`
@@ -199,7 +200,7 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
 }) => {
   if (loading) {
     return <Loader />;
-  } else if (!loading && continent && countries) {
+  } else if (!loading && continent) {
     return (
       <>
         <SWrapper>
@@ -231,7 +232,12 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
                   }
                   return (
                     <UserRow key={index} active={active}>
-                      <Link to={`/country/${country.countryCode}`}>
+                      <Link
+                        to={{
+                          pathname: `/country/${country.countryCode}`,
+                          state: { countryName: country.countryName }
+                        }}
+                      >
                         <Header>
                           <SAvatar size={"sm"} url={country.countryPhoto} />
                           <HeaderColumn>
@@ -255,7 +261,12 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
                   }
                   return (
                     <UserRow key={index} active={active}>
-                      <Link to={`/country/${country.countryCode}`}>
+                      <Link
+                        to={{
+                          pathname: `/country/${country.countryCode}`,
+                          state: { countryName: country.countryName }
+                        }}
+                      >
                         <Header>
                           <SAvatar size={"sm"} url={country.countryPhoto} />
                           <HeaderColumn>
@@ -295,8 +306,9 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
         </SWrapper>
       </>
     );
+  } else {
+    return null;
   }
-  return null;
 };
 
 export default ContinentProfilePresenter;

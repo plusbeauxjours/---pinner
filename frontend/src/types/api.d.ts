@@ -153,6 +153,7 @@ export interface UnMatch_unMatch_coffee_city_country {
 
 export interface UnMatch_unMatch_coffee_city {
   __typename: "CityType";
+  cityId: string | null;
   cityName: string | null;
   country: UnMatch_unMatch_coffee_city_country;
 }
@@ -832,6 +833,7 @@ export interface ContinentProfile_continentProfile_coffees_host {
 export interface ContinentProfile_continentProfile_coffees {
   __typename: "CoffeeType";
   id: string;
+  uuid: any | null;
   target: CoffeeTarget;
   host: ContinentProfile_continentProfile_coffees_host;
 }
@@ -1573,6 +1575,7 @@ export interface RequestCoffee_requestCoffee_coffee_city_country {
 
 export interface RequestCoffee_requestCoffee_coffee_city {
   __typename: "CityType";
+  cityId: string | null;
   cityName: string | null;
   country: RequestCoffee_requestCoffee_coffee_city_country;
 }
@@ -1689,6 +1692,7 @@ export interface TripProfile_tripProfile_coffees_host {
 export interface TripProfile_tripProfile_coffees {
   __typename: "CoffeeType";
   id: string;
+  uuid: any | null;
   target: CoffeeTarget;
   host: TripProfile_tripProfile_coffees_host;
 }
@@ -1789,6 +1793,7 @@ export interface GetCoffees_getCoffees_coffees_city_country {
 
 export interface GetCoffees_getCoffees_coffees_city {
   __typename: "CityType";
+  cityId: string | null;
   cityName: string | null;
   country: GetCoffees_getCoffees_coffees_city_country;
 }
@@ -2446,6 +2451,7 @@ export interface CoffeeParts_city_country {
 
 export interface CoffeeParts_city {
   __typename: "CityType";
+  cityId: string | null;
   cityName: string | null;
   country: CoffeeParts_city_country;
 }

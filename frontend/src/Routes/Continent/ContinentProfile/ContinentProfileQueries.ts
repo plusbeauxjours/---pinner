@@ -18,6 +18,7 @@ export const CONTINENT_PROFILE = gql`
       }
       coffees {
         id
+        uuid
         target
         host {
           profile {
