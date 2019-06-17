@@ -152,8 +152,8 @@ const CoffeesPagePresenter: React.SFC<IProps> = ({
             {coffeesList.length !== 0 &&
               coffeesList.map(coffee => {
                 return (
-                  <UserRow key={coffee.id}>
-                    <Link to={`/c/${coffee.id}`}>
+                  <UserRow key={coffee.uuid}>
+                    <Link to={`/c/${coffee.uuid}`}>
                       <AvatarContainer>
                         {(() => {
                           switch (coffee.target) {
@@ -210,7 +210,7 @@ const CoffeesPagePresenter: React.SFC<IProps> = ({
                       </AvatarContainer>
                     </Link>
                     <CoffeeBtn
-                      coffeeId={coffee.id}
+                      coffeeId={coffee.uuid}
                       isMatching={coffee.isMatching}
                       isSelf={coffee.host.profile.isSelf}
                     />
@@ -222,8 +222,8 @@ const CoffeesPagePresenter: React.SFC<IProps> = ({
               coffees &&
               coffees.map(coffee => {
                 return (
-                  <UserRow key={coffee.id}>
-                    <Link to={`/c/${coffee.id}`}>
+                  <UserRow key={coffee.uuid}>
+                    <Link to={`/c/${coffee.uuid}`}>
                       <AvatarContainer>
                         {(() => {
                           switch (coffee.target) {
@@ -280,7 +280,7 @@ const CoffeesPagePresenter: React.SFC<IProps> = ({
                       </AvatarContainer>
                     </Link>
                     <CoffeeBtn
-                      coffeeId={coffee.id}
+                      coffeeId={coffee.uuid}
                       isMatching={coffee.isMatching}
                       isSelf={coffee.host.profile.isSelf}
                     />

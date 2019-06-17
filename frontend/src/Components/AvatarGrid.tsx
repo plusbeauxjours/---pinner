@@ -78,9 +78,9 @@ const AvatarGrid: React.SFC<IProps> = ({
         ))}
       {coffees &&
         coffees.map(coffee => (
-          <AvatarContainer key={coffee.id}>
+          <AvatarContainer key={coffee.uuid}>
             <Link
-              to={{ pathname: `/c/${coffee.id}`, state: { modalOpen: true } }}
+              to={{ pathname: `/c/${coffee.uuid}`, state: { modalOpen: true } }}
             >
               {(() => {
                 switch (coffee.target) {

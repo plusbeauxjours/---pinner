@@ -1,10 +1,11 @@
 import gql from "graphql-tag";
 
 export const COFFEE_DETAIL = gql`
-  query CoffeeDetail($coffeeId: Int!) {
+  query CoffeeDetail($coffeeId: String!) {
     coffeeDetail(coffeeId: $coffeeId) {
       coffee {
         id
+        uuid
         expires
         naturalTime
         status
@@ -42,7 +43,7 @@ export const COFFEE_DETAIL = gql`
 `;
 
 export const DELETE_COFFEE = gql`
-  mutation DeleteCoffee($coffeeId: Int!) {
+  mutation DeleteCoffee($coffeeId: String!) {
     deleteCoffee(coffeeId: $coffeeId) {
       ok
       coffeeId

@@ -2,7 +2,7 @@ import { gql } from "apollo-boost";
 import { COFFEE_FRAGMENT, MATCH_FRAGMENT } from "src/sharedQueries";
 
 export const MATCH = gql`
-  mutation Match($coffeeId: Int!) {
+  mutation Match($coffeeId: String!) {
     match(coffeeId: $coffeeId) {
       ok
       coffeeId

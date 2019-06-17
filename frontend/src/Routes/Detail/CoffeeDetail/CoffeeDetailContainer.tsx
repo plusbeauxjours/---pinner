@@ -37,9 +37,10 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
     console.log(this.state);
   }
   public render() {
+    console.log(this.props);
     const {
       match: {
-        params: { id }
+        params: { uuid }
       }
     } = this.props;
     const { modalOpen } = this.state;
@@ -55,7 +56,7 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
           return (
             <CoffeeDetailQuery
               query={COFFEE_DETAIL}
-              variables={{ coffeeId: id }}
+              variables={{ coffeeId: uuid }}
             >
               {({ data, loading }) => (
                 <CoffeeDetailPresenter

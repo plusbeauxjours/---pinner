@@ -19,7 +19,7 @@ class Query(object):
         resolver=queries.resolve_coffee_detail,
         required=True,
         args={
-            'coffeeId': graphene.Int(required=True),
+            'coffeeId': graphene.String(required=True),
         }
     )
     get_matches = graphene.Field(

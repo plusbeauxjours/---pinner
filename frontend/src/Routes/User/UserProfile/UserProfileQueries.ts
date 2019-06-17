@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { CITY_FRAGMENT, COUNTRY_FRAGMENT } from "src/sharedQueries";
+import { COUNTRY_FRAGMENT } from "src/sharedQueries";
 
 export const GET_USER = gql`
   query UserProfile($username: String!) {
@@ -210,15 +210,4 @@ export const DELETE_TRIP = gql`
       tripId
     }
   }
-`;
-
-export const SEARCH_TRIP_CITIES = gql`
-  query SearchTripCities($search: String!) {
-    searchTripCities(search: $search) {
-      cities {
-        ...CityParts
-      }
-    }
-  }
-  ${CITY_FRAGMENT}
 `;

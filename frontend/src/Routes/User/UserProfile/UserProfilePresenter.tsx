@@ -449,9 +449,6 @@ interface IProps {
   modalOpen: boolean;
   confirmModalOpen: boolean;
 
-  searchTripCitiesData: any;
-  searchTripCitiesLoading: boolean;
-
   tripModalOpen: boolean;
   tripConfirmModalOpen: boolean;
   tripAddModalOpen: boolean;
@@ -548,9 +545,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 
   coffeeData: { getCoffees: { coffees = null } = {} } = {},
   coffeeLoading,
-
-  searchTripCitiesData: { searchTripCities: { cities = null } = {} } = {},
-  searchTripCitiesLoading,
 
   modalOpen,
   tripModalOpen,

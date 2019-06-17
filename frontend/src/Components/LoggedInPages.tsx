@@ -63,7 +63,7 @@ class LoggedInPages extends React.Component<IProps> {
         {modalOpen ? (
           <>
             <Route path="/match" exact={true} component={Match} />
-            <Route path="/c/:id" exact={true} component={CoffeeDetail} />
+            <Route path="/c/:uuid" exact={true} component={CoffeeDetail} />
           </>
         ) : null}
         <Switch location={modalOpen ? this.previousLocation : location}>

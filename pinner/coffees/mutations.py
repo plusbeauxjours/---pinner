@@ -46,7 +46,7 @@ class RequestCoffee(graphene.Mutation):
 class DeleteCoffee(graphene.Mutation):
 
     class Arguments:
-        coffeeId = graphene.Int(required=True)
+        coffeeId = graphene.String(required=True)
 
     Output = types.DeleteCoffeeResponse
 
@@ -57,7 +57,7 @@ class DeleteCoffee(graphene.Mutation):
         coffeeId = kwargs.get('coffeeId')
 
         try:
-            coffee = models.Coffee.objects.get(id=coffeeId)
+            coffee = models.Coffee.objects.get(uuid=coffeeId)
         except models.Coffee.DoesNotExist:
             return types.DeleteCoffeeResponse(ok=False, coffeeId=None, username=user.username)
 
@@ -73,7 +73,7 @@ class DeleteCoffee(graphene.Mutation):
 class Match(graphene.Mutation):
 
     class Arguments:
-        coffeeId = graphene.Int(required=True)
+        coffeeId = graphene.String(required=True)
 
     Output = types.MatchResponse
 
@@ -84,7 +84,7 @@ class Match(graphene.Mutation):
         coffeeId = kwargs.get('coffeeId')
 
         try:
-            coffee = models.Coffee.objects.get(id=coffeeId)
+            coffee = models.Coffee.objects.get(uuid=coffeeId)
             match = models.Match.objects.create(
                 host=coffee.host,
                 city=coffee.city,

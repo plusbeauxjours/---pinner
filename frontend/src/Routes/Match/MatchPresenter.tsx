@@ -377,10 +377,10 @@ const MatchPresenter: React.SFC<IProps> = ({
                     coffees &&
                     coffees.map(coffee => {
                       return (
-                        <UserRow key={coffee.id}>
+                        <UserRow key={coffee.uuid}>
                           <Link
                             to={{
-                              pathname: `/c/${coffee.id}`,
+                              pathname: `/c/${coffee.uuid}`,
                               state: { modalOpen: true }
                             }}
                           >
@@ -443,7 +443,7 @@ const MatchPresenter: React.SFC<IProps> = ({
                             </AvatarContainer>
                           </Link>
                           <CoffeeBtn
-                            coffeeId={coffee.id}
+                            coffeeId={coffee.uuid}
                             isMatching={coffee.isMatching}
                             isSelf={coffee.host.profile.isSelf}
                           />

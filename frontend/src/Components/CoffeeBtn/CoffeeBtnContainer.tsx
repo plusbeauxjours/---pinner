@@ -52,7 +52,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
           return (
             <MatchMutation
               mutation={MATCH}
-              variables={{ coffeeId: parseInt(coffeeId, 10) }}
+              variables={{ coffeeId }}
               onCompleted={this.onCompletedMatch}
               update={this.updateMatch}
             >
@@ -107,7 +107,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
       });
       if (feedData) {
         feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
-          i => parseInt(i.id, 10) !== match.coffeeId
+          i => i.uuid !== match.coffeeId
         );
         cache.writeQuery({
           query: GET_COFFEES,

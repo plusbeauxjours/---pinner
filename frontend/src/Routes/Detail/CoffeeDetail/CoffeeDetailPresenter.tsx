@@ -279,7 +279,7 @@ const CoffeeDetailPresenter: React.SFC<IProps> = ({
               <GreyText>{coffee.naturalTime}</GreyText>
               {coffee.status !== "expired" && (
                 <CoffeeBtn
-                  coffeeId={coffee.id}
+                  coffeeId={coffee.uuid}
                   isMatching={coffee.isMatching}
                   isSelf={coffee.host.profile.isSelf}
                 />

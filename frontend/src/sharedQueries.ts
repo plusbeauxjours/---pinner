@@ -87,6 +87,7 @@ export const CONTINENT_FRAGMENT = gql`
 export const COFFEE_FRAGMENT = gql`
   fragment CoffeeParts on CoffeeType {
     id
+    uuid
     city {
       cityName
       country {
@@ -154,6 +155,7 @@ export const MATCH_FRAGMENT = gql`
     }
     coffee {
       id
+      uuid
       target
     }
     isHost

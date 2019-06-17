@@ -4,7 +4,6 @@ from . import models
 
 @admin.register(models.Coffee)
 class CoffeeAdmin(admin.ModelAdmin):
-
     list_display = (
         'id',
         'city',

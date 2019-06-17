@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from config import models as config_models
@@ -21,13 +22,12 @@ class Coffee (config_models.TimeStampedModel):
         ('nationality', 'NATIONALITY'),
     )
 
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, blank=True, null=True)
     city = models.ForeignKey(location_models.City, on_delete=models.CASCADE, related_name='coffee')
     host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='coffee')
     duration = models.DurationField(default=datetime.timedelta(days=1))
     expires = models.DateTimeField(blank=True, null=True)
     target = models.CharField(max_length=11, choices=TARGETS, default='everyone')
-
-    # caption = models.TextField(blank=True, null=True)
 
     @property
     def status(self):

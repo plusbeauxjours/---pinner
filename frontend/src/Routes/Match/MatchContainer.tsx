@@ -294,10 +294,10 @@ class MatchContainer extends React.Component<IProps, IState> {
       });
       if (profileData) {
         profileData.getCoffees.coffees = profileData.getCoffees.coffees.filter(
-          i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
+          i => parseInt(i.uuid, 10) !== deleteCoffee.coffeeId
         );
         profileData.getCoffees.coffees = profileData.getCoffees.coffees.filter(
-          i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
+          i => parseInt(i.uuid, 10) !== deleteCoffee.coffeeId
         );
         cache.writeQuery({
           query: GET_COFFEES,
@@ -315,7 +315,7 @@ class MatchContainer extends React.Component<IProps, IState> {
       });
       if (feedData) {
         feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
-          i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
+          i => parseInt(i.uuid, 10) !== deleteCoffee.coffeeId
         );
         cache.writeQuery({
           query: GET_COFFEES,

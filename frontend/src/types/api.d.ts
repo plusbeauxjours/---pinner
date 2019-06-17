@@ -106,6 +106,7 @@ export interface Match_match_match_guest {
 export interface Match_match_match_coffee {
   __typename: "CoffeeType";
   id: string;
+  uuid: any | null;
   target: CoffeeTarget;
 }
 
@@ -125,7 +126,7 @@ export interface Match_match_match {
 export interface Match_match {
   __typename: "MatchResponse";
   ok: boolean | null;
-  coffeeId: number | null;
+  coffeeId: string | null;
   match: Match_match_match | null;
 }
 
@@ -134,7 +135,7 @@ export interface Match {
 }
 
 export interface MatchVariables {
-  coffeeId: number;
+  coffeeId: string;
 }
 
 
@@ -289,30 +290,6 @@ export interface SearchTerms_searchUsers {
   users: (SearchTerms_searchUsers_users | null)[] | null;
 }
 
-export interface SearchTerms_searchCities_cities_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface SearchTerms_searchCities_cities {
-  __typename: "CityType";
-  id: string;
-  latitude: number | null;
-  longitude: number | null;
-  cityName: string | null;
-  cityId: string | null;
-  cityPhoto: string | null;
-  distance: number | null;
-  country: SearchTerms_searchCities_cities_country;
-  likeCount: number | null;
-  isLiked: boolean | null;
-}
-
-export interface SearchTerms_searchCities {
-  __typename: "CitiesResponse";
-  cities: (SearchTerms_searchCities_cities | null)[] | null;
-}
-
 export interface SearchTerms_searchCountries_countries_continent {
   __typename: "ContinentType";
   continentName: string | null;
@@ -346,7 +323,6 @@ export interface SearchTerms_searchContinents {
 
 export interface SearchTerms {
   searchUsers: SearchTerms_searchUsers;
-  searchCities: SearchTerms_searchCities;
   searchCountries: SearchTerms_searchCountries;
   searchContinents: SearchTerms_searchContinents;
 }
@@ -1316,6 +1292,7 @@ export interface CoffeeDetail_coffeeDetail_coffee_host {
 export interface CoffeeDetail_coffeeDetail_coffee {
   __typename: "CoffeeType";
   id: string;
+  uuid: any | null;
   expires: any | null;
   naturalTime: string | null;
   status: string | null;
@@ -1333,7 +1310,7 @@ export interface CoffeeDetail {
 }
 
 export interface CoffeeDetailVariables {
-  coffeeId: number;
+  coffeeId: string;
 }
 
 
@@ -1347,7 +1324,7 @@ export interface CoffeeDetailVariables {
 export interface DeleteCoffee_deleteCoffee {
   __typename: "DeleteCoffeeResponse";
   ok: boolean | null;
-  coffeeId: number | null;
+  coffeeId: string | null;
   username: string | null;
 }
 
@@ -1356,7 +1333,7 @@ export interface DeleteCoffee {
 }
 
 export interface DeleteCoffeeVariables {
-  coffeeId: number;
+  coffeeId: string;
 }
 
 
@@ -1551,6 +1528,7 @@ export interface GetMatches_getMatches_matches_guest {
 export interface GetMatches_getMatches_matches_coffee {
   __typename: "CoffeeType";
   id: string;
+  uuid: any | null;
   target: CoffeeTarget;
 }
 
@@ -2286,46 +2264,6 @@ export interface DeleteTripVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: SearchTripCities
-// ====================================================
-
-export interface SearchTripCities_searchTripCities_cities_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface SearchTripCities_searchTripCities_cities {
-  __typename: "CityType";
-  id: string;
-  latitude: number | null;
-  longitude: number | null;
-  cityName: string | null;
-  cityId: string | null;
-  cityPhoto: string | null;
-  distance: number | null;
-  country: SearchTripCities_searchTripCities_cities_country;
-  likeCount: number | null;
-  isLiked: boolean | null;
-}
-
-export interface SearchTripCities_searchTripCities {
-  __typename: "CitiesResponse";
-  cities: (SearchTripCities_searchTripCities_cities | null)[] | null;
-}
-
-export interface SearchTripCities {
-  searchTripCities: SearchTripCities_searchTripCities;
-}
-
-export interface SearchTripCitiesVariables {
-  search: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: Me
 // ====================================================
 
@@ -2615,6 +2553,7 @@ export interface MatchParts_guest {
 export interface MatchParts_coffee {
   __typename: "CoffeeType";
   id: string;
+  uuid: any | null;
   target: CoffeeTarget;
 }
 

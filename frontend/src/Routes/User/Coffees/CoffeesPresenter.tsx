@@ -181,7 +181,7 @@ const CoffeesPresenter: React.SFC<IProps> = ({
                 }
                 return (
                   <React.Fragment key={index}>
-                    <Link to={`/c/${coffee.id}`}>
+                    <Link to={`/c/${coffee.uuid}`}>
                       <UserRow active={active}>
                         <UserHeader
                           username={coffee.city.cityName}
@@ -208,7 +208,7 @@ const CoffeesPresenter: React.SFC<IProps> = ({
                 }
                 return (
                   <React.Fragment key={index}>
-                    <Link to={`/c/${coffee.id}`}>
+                    <Link to={`/c/${coffee.uuid}`}>
                       <UserRow active={active}>
                         <UserHeader
                           username={coffee.city.cityName}

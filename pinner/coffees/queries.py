@@ -80,7 +80,7 @@ def resolve_coffee_detail(self, info, **kwargs):
 
     if coffeeId:
         try:
-            coffee = models.Coffee.objects.get(id=coffeeId)
+            coffee = models.Coffee.objects.get(uuid=coffeeId)
         except models.Coffee.DoesNotExist:
             raise Exception('coffee not found')
 
