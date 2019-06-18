@@ -10,7 +10,7 @@ import moment = require("moment");
 import Weather from "src/Components/Weather";
 import AvatarGrid from "../../Components/AvatarGrid";
 import UserHeader from "../../Components/UserHeader";
-import CityLikeBtn from "../../Components/CityLikeBtn";
+import LocationBox from "src/Components/LocationBox";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -142,71 +142,6 @@ const Input = styled.input`
   }
 `;
 
-const Header = styled.header`
-  display: flex;
-  align-items: center;
-  border-radius: 3px;
-  cursor: pointer;
-`;
-
-const HeaderText = styled(Bold)`
-  display: flex;
-`;
-
-const HeaderColumn = styled.div`
-  margin-left: 15px;
-`;
-
-const SAvatar = styled(Avatar)`
-  border-radius: 3px;
-  height: 45px;
-  width: 45px;
-`;
-
-const Location = styled.span`
-  display: flex;
-  margin-top: 5px;
-  display: block;
-  font-size: 12px;
-  font-weight: 200;
-`;
-
-const Container = styled.div`
-  -webkit-box-flex: 0;
-  padding: 15px;
-`;
-
-const Box = styled.div`
-  max-width: 905px;
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-rows: repeat(3, 50px);
-  grid-auto-columns: 400px;
-  column-gap: 10px;
-  overflow-x: auto;
-  padding-bottom: 15px;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  ::-webkit-scrollbar {
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    background-color: ${props => props.theme.bgColor};
-  }
-  ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-    background-color: ${props => props.theme.greyColor};
-  }
-`;
-
-const SeeAll = styled.p`
-  font-size: 12px;
-  font-weight: 100;
-  cursor: pointer;
-`;
-
 interface ITheme {
   active?: string;
 }
@@ -222,6 +157,8 @@ interface IProps {
   profileLoading: boolean;
   nearCitiesData?: any;
   nearCitiesLoading: boolean;
+  samenameCitiesData: any;
+  samenameCitiesLoading: boolean;
 
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
@@ -230,6 +167,7 @@ interface IProps {
   onClick: any;
   onBlur: any;
   usersBeforeActiveId: number;
+  cityId: string;
 }
 
 const TripProfilePresenter: React.SFC<IProps> = ({
@@ -245,14 +183,18 @@ const TripProfilePresenter: React.SFC<IProps> = ({
   profileLoading,
   nearCitiesData: { nearCities: { cities: nearCities = null } = {} } = {},
   nearCitiesLoading,
-
+  samenameCitiesData: {
+    getSamenameCities: { cities: samenameCities = null } = {}
+  } = {},
+  samenameCitiesLoading,
   onChange,
   search,
   usersBeforeList,
   onKeyDown,
   onClick,
   onBlur,
-  usersBeforeActiveId
+  usersBeforeActiveId,
+  cityId
 }) => {
   if (profileLoading) {
     return <Loader />;
@@ -347,40 +289,18 @@ const TripProfilePresenter: React.SFC<IProps> = ({
               <AvatarGrid coffees={coffees} />
             </>
           ) : null}
-          <GreyLine />
-          <Title>
-            <SText text={"NEAR CITIES"} />
-            <Link to={`/city/${city.cityId}/nearCities`}>
-              <SeeAll>SEE ALL</SeeAll>
-            </Link>
-          </Title>
-          <Container>
-            <Box>
-              {nearCities && !nearCitiesLoading && nearCities.length !== 0 ? (
-                nearCities.map(nearCity => (
-                  <UserRow key={nearCity.id}>
-                    <Link to={`/city/${nearCity.cityId}`}>
-                      <Header>
-                        <SAvatar size={"sm"} url={nearCity.cityPhoto} />
-                        <HeaderColumn>
-                          <HeaderText text={nearCity.cityName} />
-                          <Location>{nearCity.country.countryName}</Location>
-                        </HeaderColumn>
-                      </Header>
-                    </Link>
-                    <CityLikeBtn
-                      isLiked={city.isLiked}
-                      cityId={city.id}
-                      likeCount={city.likeCount}
-                      type={"row"}
-                    />
-                  </UserRow>
-                ))
-              ) : (
-                <Loader />
-              )}
-            </Box>
-          </Container>
+          <LocationBox
+            nearCities={nearCities}
+            cityId={cityId}
+            title={"NEAR CITIES"}
+            loading={nearCitiesLoading}
+          />
+          <LocationBox
+            samenameCities={samenameCities}
+            cityId={cityId}
+            title={"SAMENAME CITIES"}
+            loading={samenameCitiesLoading}
+          />
         </SWrapper>
       </>
     );

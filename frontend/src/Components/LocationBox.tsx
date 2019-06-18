@@ -90,6 +90,7 @@ const GreyLine = styled.div`
 const SText = styled(Bold)`
   font-size: 18px;
   font-weight: 100;
+  text-transform: uppercase;
 `;
 
 const Title = styled.div`
@@ -227,7 +228,31 @@ const UserBox: React.SFC<IProps> = ({
   } else if (!loading && cities && cities.length !== 0) {
     return <GreyLine />;
   } else if (!loading && countries && countries.length !== 0) {
-    return <GreyLine />;
+    return (
+      <>
+        <GreyLine />
+        <Title>
+          <SText text={title} />
+        </Title>
+        <Container>
+          <Box>
+            {countries.map(country => (
+              <UserRow key={country.id} type={"countries"}>
+                <Link to={`/country/${country.countryCode}`}>
+                  <Header>
+                    <SAvatar size={"sm"} url={country.countryPhoto} />
+                    <HeaderColumn>
+                      <HeaderText text={country.countryName} />
+                      <Location>{country.continent.continentName}</Location>
+                    </HeaderColumn>
+                  </Header>
+                </Link>
+              </UserRow>
+            ))}
+          </Box>
+        </Container>
+      </>
+    );
   } else if (!loading && continents && continents.length !== 0) {
     return (
       <>

@@ -7,25 +7,16 @@ import Avatar from "./Avatar";
 import CoffeeBtn from "src/Components/CoffeeBtn";
 import Loader from "./Loader";
 
-const UserContainer = styled.div`
-  margin-top: 30px;
+const Title = styled.div`
   display: flex;
-  width: 100%;
-  flex-direction: column;
-`;
-
-const UserNameRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-top: 10px;
 `;
 
-const Username = styled.span`
-  text-align: center;
-  font-size: 22px;
+const SText = styled(Bold)`
+  font-size: 18px;
   font-weight: 100;
+  text-transform: uppercase;
 `;
 
 const SeeAll = styled.p`
@@ -164,90 +155,88 @@ const UserBox: React.SFC<IProps> = ({
     return (
       <>
         <GreyLine />
-        <UserContainer>
-          <UserNameRow>
-            <Username>NEED SOME COFFEE NOW</Username>
-            {currentContinentCode && (
-              <Link
-                to={{
-                  pathname: `/continent/${currentContinentCode}/coffees`,
-                  state: { location: "continent", currentContinentCode }
-                }}
-              >
-                <SeeAll>SEE ALL</SeeAll>
-              </Link>
+        <Title>
+          <SText text={"NEED SOME COFFEE NOW"} />
+          {currentContinentCode && (
+            <Link
+              to={{
+                pathname: `/continent/${currentContinentCode}/coffees`,
+                state: { location: "continent", currentContinentCode }
+              }}
+            >
+              <SeeAll>SEE ALL</SeeAll>
+            </Link>
+          )}
+          {currentCountryCode && (
+            <Link
+              to={{
+                pathname: `/country/${currentCountryCode}/coffees`,
+                state: { location: "country", currentCountryCode }
+              }}
+            >
+              <SeeAll>SEE ALL</SeeAll>
+            </Link>
+          )}
+          {currentCityId && (
+            <Link
+              to={{
+                pathname: `/city/${currentCityId}/coffees`,
+                state: { location: "city", currentCityId }
+              }}
+            >
+              <SeeAll>SEE ALL</SeeAll>
+            </Link>
+          )}
+        </Title>
+        <Container>
+          <Box>
+            {isStaying && (
+              <IconRow>
+                <Icon onClick={toggleCoffeeRequestModal}>
+                  <Upload />
+                </Icon>
+              </IconRow>
             )}
-            {currentCountryCode && (
-              <Link
-                to={{
-                  pathname: `/country/${currentCountryCode}/coffees`,
-                  state: { location: "country", currentCountryCode }
-                }}
-              >
-                <SeeAll>SEE ALL</SeeAll>
-              </Link>
-            )}
-            {currentCityId && (
-              <Link
-                to={{
-                  pathname: `/city/${currentCityId}/coffees`,
-                  state: { location: "city", currentCityId }
-                }}
-              >
-                <SeeAll>SEE ALL</SeeAll>
-              </Link>
-            )}
-          </UserNameRow>
-          <Container>
-            <Box>
-              {isStaying && (
-                <IconRow>
-                  <Icon onClick={toggleCoffeeRequestModal}>
-                    <Upload />
-                  </Icon>
-                </IconRow>
-              )}
-              {coffees.map(coffee => {
-                return (
-                  <UserRow key={coffee.uuid}>
-                    <Link
-                      to={{
-                        pathname: `/c/${coffee.uuid}`,
-                        state: { modalOpen: true }
-                      }}
-                    >
-                      <AvatarContainer>
-                        <Avatar size={"sm"} url={coffee.host.profile.avatar} />
-                        <HeaderColumn>
-                          <CText text={coffee.host.username} />
-                          {(() => {
-                            switch (coffee.target) {
-                              case "EVERYONE":
-                                return <Explain>with Someone</Explain>;
-                              case "GENDER":
-                                return <Explain>with same gender</Explain>;
-                              case "NATIONALITY":
-                                return <Explain>with same nationality</Explain>;
-                              default:
-                                return null;
-                            }
-                          })()}
-                        </HeaderColumn>
-                      </AvatarContainer>
-                    </Link>
-                    {(cityId === coffee.city.cityId || isStaying) && (
-                      <CoffeeBtn
-                        coffeeId={coffee.uuid}
-                        isMatching={coffee.isMatching}
-                        isSelf={coffee.host.profile.isSelf}
-                      />
-                    )}
-                  </UserRow>
-                );
-              })}
-            </Box>
-          </Container>
-        </UserContainer>
+            {coffees.map(coffee => {
+              return (
+                <UserRow key={coffee.uuid}>
+                  <Link
+                    to={{
+                      pathname: `/c/${coffee.uuid}`,
+                      state: { modalOpen: true }
+                    }}
+                  >
+                    <AvatarContainer>
+                      <Avatar size={"sm"} url={coffee.host.profile.avatar} />
+                      <HeaderColumn>
+                        <CText text={coffee.host.username} />
+                        {(() => {
+                          switch (coffee.target) {
+                            case "EVERYONE":
+                              return <Explain>with Someone</Explain>;
+                            case "GENDER":
+                              return <Explain>with same gender</Explain>;
+                            case "NATIONALITY":
+                              return <Explain>with same nationality</Explain>;
+                            default:
+                              return null;
+                          }
+                        })()}
+                      </HeaderColumn>
+                    </AvatarContainer>
+                  </Link>
+                  {(cityId === coffee.city.cityId || isStaying) && (
+                    <CoffeeBtn
+                      coffeeId={coffee.uuid}
+                      isMatching={coffee.isMatching}
+                      isSelf={coffee.host.profile.isSelf}
+                    />
+                  )}
+                </UserRow>
+              );
+            })}
+          </Box>
+        </Container>
       </>
     );
   } else {

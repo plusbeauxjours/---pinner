@@ -202,7 +202,7 @@ const HeaderPresenter: React.SFC<IProps> = ({
 }) => {
   if (loading) {
     return null;
-  } else if (!loading && city) {
+  } else if (!loading && city && user) {
     return (
       <Header>
         {modalOpen && (
@@ -271,7 +271,12 @@ const HeaderPresenter: React.SFC<IProps> = ({
                   }
                 }}
               >
-                <Profile />
+                {console.log(user)}
+                {user.profile.avatar ? (
+                  <Avatar size={"sm"} url={user.profile.avatar} />
+                ) : (
+                  <Profile />
+                )}
               </Link>
             </Icon>
           </Column>

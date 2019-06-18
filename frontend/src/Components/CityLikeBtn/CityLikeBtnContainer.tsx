@@ -36,7 +36,7 @@ class CityLikeBtnContainer extends React.Component<IProps, IState> {
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
-    if (prevProps.match.params.cityName !== newProps.match.params.cityName) {
+    if (prevProps.match.params.cityId !== newProps.match.params.cityId) {
       this.setState({
         isLiked: newProps.isLiked,
         likeCount: newProps.likeCount
@@ -94,20 +94,20 @@ class CityLikeBtnContainer extends React.Component<IProps, IState> {
   public updateToggleLike = (cache, { data: { toggleLikeCity } }) => {
     const {
       match: {
-        params: { cityName }
+        params: { cityId }
       }
     } = this.props;
     try {
       const data = cache.readQuery({
         query: CITY_PROFILE,
-        variables: { cityName }
+        variables: { cityId }
       });
       if (data) {
         data.cityProfile.city.isLiked = toggleLikeCity.city.isLiked;
         data.cityProfile.city.likeCount = toggleLikeCity.city.likeCount;
         cache.writeQuery({
           query: CITY_PROFILE,
-          variables: { cityName },
+          variables: { cityId },
           data
         });
       }
@@ -143,12 +143,12 @@ class CityLikeBtnContainer extends React.Component<IProps, IState> {
     try {
       const {
         city: {
-          country: { countryName }
+          country: { countryCode }
         }
       } = toggleLikeCity;
       const data = cache.readQuery({
         query: COUNTRY_PROFILE,
-        variables: { countryName }
+        variables: { countryCode }
       });
       if (data) {
         data.countryProfile.cities.find(
@@ -159,7 +159,7 @@ class CityLikeBtnContainer extends React.Component<IProps, IState> {
         ).likeCount = toggleLikeCity.city.likeCount;
         cache.writeQuery({
           query: COUNTRY_PROFILE,
-          variables: { countryName },
+          variables: { countryCode },
           data
         });
       }

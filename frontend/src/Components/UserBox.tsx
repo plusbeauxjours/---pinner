@@ -14,6 +14,7 @@ const Title = styled.div`
 const SText = styled(Bold)`
   font-size: 18px;
   font-weight: 100;
+  text-transform: uppercase;
 `;
 
 const SeeAll = styled.p`
@@ -26,6 +27,7 @@ const Container = styled.div`
   -webkit-box-flex: 0;
   padding: 15px;
 `;
+
 const Box = styled.div`
   max-width: 905px;
   display: grid;

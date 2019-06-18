@@ -5,15 +5,21 @@ import {
   TripProfile,
   TripProfileVariables,
   NearCities,
-  NearCitiesVariables
+  NearCitiesVariables,
+  GetSamenameCities,
+  GetSamenameCitiesVariables
 } from "../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
 import { TRIP_PROFILE } from "./TripProfileQueries";
 import TripProfilePresenter from "./TripProfilePresenter";
 import { NEAR_CITIES } from "../City/NearCities/NearCitiesQueries";
+import { GET_SAMENAME_CITIES } from "../City/CityProfile/CityProfileQueries";
 
 class TripProfileQuery extends Query<TripProfile, TripProfileVariables> {}
-
+class GetSamenameCitiesQuery extends Query<
+  GetSamenameCities,
+  GetSamenameCitiesVariables
+> {}
 class NearCitiesQuery extends Query<NearCities, NearCitiesVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
@@ -61,7 +67,6 @@ class TripProfileContainer extends React.Component<IProps, IState> {
     const {
       search,
       cityName,
-      cityId,
       cityPhoto,
       countryName,
       startDate,
@@ -69,41 +74,58 @@ class TripProfileContainer extends React.Component<IProps, IState> {
       usersBeforeList,
       usersBeforeActiveId
     } = this.state;
+    const {
+      match: {
+        params: { cityId }
+      }
+    } = this.props;
     return (
-      <NearCitiesQuery query={NEAR_CITIES} variables={{ cityId }}>
-        {({ data: nearCitiesData, loading: nearCitiesLoading }) => {
+      <GetSamenameCitiesQuery
+        query={GET_SAMENAME_CITIES}
+        variables={{ cityId }}
+      >
+        {({ data: samenameCitiesData, loading: samenameCitiesLoading }) => {
           return (
-            <TripProfileQuery
-              query={TRIP_PROFILE}
-              variables={{ cityId, startDate, endDate }}
-            >
-              {({ data: profileDate, loading: profileLoading }) => {
-                this.data = profileDate;
+            <NearCitiesQuery query={NEAR_CITIES} variables={{ cityId }}>
+              {({ data: nearCitiesData, loading: nearCitiesLoading }) => {
                 return (
-                  <TripProfilePresenter
-                    cityName={cityName}
-                    cityPhoto={cityPhoto}
-                    countryName={countryName}
-                    startDate={startDate}
-                    endDate={endDate}
-                    profileDate={profileDate}
-                    profileLoading={profileLoading}
-                    nearCitiesData={nearCitiesData}
-                    nearCitiesLoading={nearCitiesLoading}
-                    search={search}
-                    usersBeforeList={usersBeforeList}
-                    usersBeforeActiveId={usersBeforeActiveId}
-                    onKeyDown={this.onKeyDown}
-                    onClick={this.onClick}
-                    onBlur={this.onBlur}
-                    onChange={this.onChange}
-                  />
+                  <TripProfileQuery
+                    query={TRIP_PROFILE}
+                    variables={{ cityId, startDate, endDate }}
+                  >
+                    {({ data: profileDate, loading: profileLoading }) => {
+                      this.data = profileDate;
+                      return (
+                        <TripProfilePresenter
+                          cityName={cityName}
+                          cityPhoto={cityPhoto}
+                          countryName={countryName}
+                          startDate={startDate}
+                          endDate={endDate}
+                          profileDate={profileDate}
+                          profileLoading={profileLoading}
+                          nearCitiesData={nearCitiesData}
+                          nearCitiesLoading={nearCitiesLoading}
+                          samenameCitiesData={samenameCitiesData}
+                          samenameCitiesLoading={samenameCitiesLoading}
+                          search={search}
+                          usersBeforeList={usersBeforeList}
+                          usersBeforeActiveId={usersBeforeActiveId}
+                          onKeyDown={this.onKeyDown}
+                          onClick={this.onClick}
+                          onBlur={this.onBlur}
+                          onChange={this.onChange}
+                          cityId={cityId}
+                        />
+                      );
+                    }}
+                  </TripProfileQuery>
                 );
               }}
-            </TripProfileQuery>
+            </NearCitiesQuery>
           );
         }}
-      </NearCitiesQuery>
+      </GetSamenameCitiesQuery>
     );
   }
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {

@@ -109,7 +109,7 @@ def resolve_get_samename_cities(self, info, **kwargs):
             gcd_formula,
             (latitude, longitude, latitude)
         )
-        qs = cities.annotate(distance=distance_raw_sql).order_by('distance')
+        qs = cities.exclude(city_id=cityId).annotate(distance=distance_raw_sql).order_by('distance')
         return qs
 
     cities = get_locations_nearby_coords(city.latitude, city.longitude)

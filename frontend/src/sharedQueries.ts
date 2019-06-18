@@ -6,7 +6,9 @@ export const ME = gql`
       user {
         username
         profile {
+          avatar
           currentCity {
+            cityId
             cityName
           }
         }

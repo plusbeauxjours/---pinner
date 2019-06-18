@@ -9,6 +9,7 @@ import Bold from "../../../Components/Bold";
 import CityLikeBtn from "../../../Components/CityLikeBtn";
 import UserBox from "src/Components/UserBox";
 import CoffeeBox from "src/Components/CoffeeBox";
+import LocationBox from "src/Components/LocationBox";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -345,6 +346,11 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
             coffeeLoading={coffeeLoading}
             cityId={currentCityId}
             currentCountryCode={countryCode}
+          />
+          <LocationBox
+            countries={countries}
+            loading={countriesLoading}
+            title={`${country.continent.continentName}`}
           />
         </SWrapper>
       </>
