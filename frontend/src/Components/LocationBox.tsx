@@ -47,7 +47,7 @@ const UserRow = styled.div<ITheme>`
   height: 50px;
   width: 400px;
   grid-template-columns: ${props => {
-    if (props.type === "nearCities") {
+    if (props.type === "nearCities" || "samenameCities") {
       return "2fr 1fr 1fr";
     } else if (props.type === "continents") {
       return "2fr 1fr";
@@ -132,6 +132,7 @@ interface IProps extends RouteComponentProps<any> {
   cityId?: string;
   countryCode?: string;
   continentCode?: string;
+  samenameCities?: any;
   nearCities?: any;
   cities?: any;
   countries?: any;
@@ -144,6 +145,7 @@ const UserBox: React.SFC<IProps> = ({
   cityId,
   countryCode,
   continentCode,
+  samenameCities,
   nearCities,
   cities,
   countries,
@@ -183,6 +185,39 @@ const UserBox: React.SFC<IProps> = ({
                   type={"row"}
                 />
                 <Text>{nearCity.distance}km</Text>
+              </UserRow>
+            ))}
+          </Box>
+        </Container>
+      </>
+    );
+  } else if (!loading && samenameCities && samenameCities.length !== 0) {
+    return (
+      <>
+        <GreyLine />
+        <Title>
+          <SText text={title} />
+        </Title>
+        <Container>
+          <Box>
+            {samenameCities.map(samenameCity => (
+              <UserRow key={samenameCity.id} type={"samenameCities"}>
+                <Link to={`/city/${samenameCity.cityId}`}>
+                  <Header>
+                    <SAvatar size={"sm"} url={samenameCity.cityPhoto} />
+                    <HeaderColumn>
+                      <HeaderText text={samenameCity.cityName} />
+                      <Location>{samenameCity.country.countryName}</Location>
+                    </HeaderColumn>
+                  </Header>
+                </Link>
+                <CityLikeBtn
+                  isLiked={samenameCity.isLiked}
+                  cityId={samenameCity.id}
+                  likeCount={samenameCity.likeCount}
+                  type={"row"}
+                />
+                <Text>{samenameCity.distance}km</Text>
               </UserRow>
             ))}
           </Box>

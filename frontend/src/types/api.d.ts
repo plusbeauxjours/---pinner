@@ -624,6 +624,46 @@ export interface CityProfileVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetSamenameCities
+// ====================================================
+
+export interface GetSamenameCities_getSamenameCities_cities_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetSamenameCities_getSamenameCities_cities {
+  __typename: "CityType";
+  id: string;
+  latitude: number | null;
+  longitude: number | null;
+  cityName: string | null;
+  cityId: string | null;
+  cityPhoto: string | null;
+  distance: number | null;
+  country: GetSamenameCities_getSamenameCities_cities_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
+}
+
+export interface GetSamenameCities_getSamenameCities {
+  __typename: "CitiesResponse";
+  cities: (GetSamenameCities_getSamenameCities_cities | null)[] | null;
+}
+
+export interface GetSamenameCities {
+  getSamenameCities: GetSamenameCities_getSamenameCities;
+}
+
+export interface GetSamenameCitiesVariables {
+  cityId: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: CityUsersBefore
 // ====================================================
 
@@ -828,6 +868,7 @@ export interface ContinentProfile_continentProfile_usersBefore {
 
 export interface ContinentProfile_continentProfile_continent {
   __typename: "ContinentType";
+  countryCount: number | null;
   id: string;
   continentName: string | null;
   continentCode: string | null;
@@ -836,6 +877,7 @@ export interface ContinentProfile_continentProfile_continent {
 
 export interface ContinentProfile_continentProfile_continents {
   __typename: "ContinentType";
+  countryCount: number | null;
   id: string;
   continentName: string | null;
   continentCode: string | null;

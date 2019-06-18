@@ -1,5 +1,9 @@
 import gql from "graphql-tag";
-import { PROFILE_FRAGMENT, CONTINENT_FRAGMENT } from "src/sharedQueries";
+import {
+  PROFILE_FRAGMENT,
+  CITY_FRAGMENT,
+  CONTINENT_FRAGMENT
+} from "src/sharedQueries";
 
 export const CITY_PROFILE = gql`
   query CityProfile($page: Int, $cityId: String!) {
@@ -42,4 +46,15 @@ export const CITY_PROFILE = gql`
   }
   ${PROFILE_FRAGMENT}
   ${CONTINENT_FRAGMENT}
+`;
+
+export const GET_SAMENAME_CITIES = gql`
+  query GetSamenameCities($cityId: String!) {
+    getSamenameCities(cityId: $cityId) {
+      cities {
+        ...CityParts
+      }
+    }
+  }
+  ${CITY_FRAGMENT}
 `;

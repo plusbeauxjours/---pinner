@@ -144,6 +144,12 @@ class Query(object):
         required=True,
         args={'countryCode': graphene.String()}
     )
+    get_samename_cities = graphene.Field(
+        types.CitiesResponse,
+        resolver=queries.resolve_get_samename_cities,
+        required=True,
+        args={'cityId': graphene.String()}
+    )
 
 
 class Mutation(object):

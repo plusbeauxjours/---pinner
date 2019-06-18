@@ -90,6 +90,34 @@ def resolve_city_profile(self, info, **kwargs):
 
 
 @login_required
+def resolve_get_samename_cities(self, info, **kwargs):
+
+    user = info.context.user
+    cityId = kwargs.get('cityId')
+    page = kwargs.get('page', 0)
+
+    city = models.City.objects.get(city_id=cityId)
+    cities = models.City.objects.filter(city_name__icontains=city.city_name)
+
+    def get_locations_nearby_coords(latitude, longitude, max_distance=None):
+
+        gcd_formula = "6371 * acos(cos(radians(%s)) * \
+        cos(radians(latitude)) \
+        * cos(radians(longitude) - radians(%s)) + \
+        sin(radians(%s)) * sin(radians(latitude)))"
+        distance_raw_sql = RawSQL(
+            gcd_formula,
+            (latitude, longitude, latitude)
+        )
+        qs = cities.annotate(distance=distance_raw_sql).order_by('distance')
+        return qs
+
+    cities = get_locations_nearby_coords(city.latitude, city.longitude)
+
+    return types.CitiesResponse(cities=cities)
+
+
+@login_required
 def resolve_city_users_now(self, info, **kwargs):
 
     user = info.context.user

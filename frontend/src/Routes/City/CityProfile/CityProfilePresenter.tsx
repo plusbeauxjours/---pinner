@@ -218,7 +218,8 @@ interface IProps {
   cityLoading: boolean;
   nearCitiesData?: any;
   nearCitiesLoading: boolean;
-
+  samenameCitiesData: any;
+  samenameCitiesLoading: boolean;
   coffeeReportModalOpen: boolean;
   coffeeRequestModalOpen: boolean;
   toggleCoffeeRequestModal: () => void;
@@ -244,7 +245,10 @@ const CityProfilePresenter: React.SFC<IProps> = ({
   cityLoading,
   nearCitiesData: { nearCities: { cities: nearCities = null } = {} } = {},
   nearCitiesLoading,
-
+  samenameCitiesData: {
+    getSamenameCities: { cities: samenameCities = null } = {}
+  } = {},
+  samenameCitiesLoading,
   coffeeReportModalOpen,
   coffeeRequestModalOpen,
   toggleCoffeeRequestModal,
@@ -411,6 +415,12 @@ const CityProfilePresenter: React.SFC<IProps> = ({
             cityId={cityId}
             title={"NEAR CITIES"}
             loading={nearCitiesLoading}
+          />
+          <LocationBox
+            samenameCities={samenameCities}
+            cityId={cityId}
+            title={"SAMENAME CITIES"}
+            loading={samenameCitiesLoading}
           />
         </SWrapper>
       </>
