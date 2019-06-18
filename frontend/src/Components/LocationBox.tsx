@@ -49,6 +49,8 @@ const UserRow = styled.div<ITheme>`
   grid-template-columns: ${props => {
     if (props.type === "nearCities") {
       return "2fr 1fr 1fr";
+    } else if (props.type === "continents") {
+      return "2fr 1fr";
     } else {
       return "1fr";
     }
@@ -192,7 +194,34 @@ const UserBox: React.SFC<IProps> = ({
   } else if (!loading && countries && countries.length !== 0) {
     return <GreyLine />;
   } else if (!loading && continents && continents.length !== 0) {
-    return <GreyLine />;
+    return (
+      <>
+        <GreyLine />
+        <Title>
+          <SText text={title} />
+        </Title>
+        <Container>
+          <Box>
+            {continents.map(continent => (
+              <UserRow key={continent.id} type={"continents"}>
+                <Link to={`/continent/${continent.continentCode}`}>
+                  <Header>
+                    <SAvatar size={"sm"} url={continent.continentPhoto} />
+                    <HeaderColumn>
+                      <HeaderText text={continent.continentName} />
+                    </HeaderColumn>
+                  </Header>
+                </Link>
+                <Text>
+                  {continent.countryCount}{" "}
+                  {continent.countryCount === 1 ? "country" : "countries"}
+                </Text>
+              </UserRow>
+            ))}
+          </Box>
+        </Container>
+      </>
+    );
   } else {
     return null;
   }

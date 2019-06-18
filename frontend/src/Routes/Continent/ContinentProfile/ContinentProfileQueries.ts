@@ -21,9 +21,11 @@ export const CONTINENT_PROFILE = gql`
         }
       }
       continent {
+        countryCount
         ...ContinentParts
       }
       continents {
+        countryCount
         ...ContinentParts
       }
       countries {
