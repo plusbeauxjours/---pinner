@@ -17,8 +17,8 @@ def resolve_get_coffees(self, info, **kwargs):
     location = kwargs.get('location')
     cityId = kwargs.get('cityId')
     countryCode = kwargs.get('countryCode')
+    continentCode = kwargs.get('continentCode')
     userName = kwargs.get('userName')
-    print(location, cityId)
     if location == "city":
         try:
             city = location_models.City.objects.prefetch_related('coffee').get(city_id=cityId)
@@ -84,6 +84,26 @@ def resolve_get_coffees(self, info, **kwargs):
             profile = me.profile
             matches = me.guest.values('id').all()
 
+            coffees = coffee_models.Coffee.objects.filter((Q(target='everyone') |
+                                                           Q(target='nationality', host__profile__nationality=profile.nationality) |
+                                                           Q(target='gender', host__profile__gender=profile.gender)) &
+                                                          Q(expires__gt=timezone.now()) & Q(city__id__in=allCities)).exclude(match__id__in=matches).order_by('-created_at')
+
+            return types.GetCoffeesResponse(coffees=coffees)
+
+        except models.Coffee.DoesNotExist:
+            return types.GetCoffeesResponse(coffees=None)
+
+    elif location == "continent":
+
+        try:
+            allCities = location_models.City.objects.values('id').filter(country__continent__continent_code=continentCode)
+        except location_models.City.DoesNotExist:
+            return types.GetCoffeesResponse(coffees=None)
+
+        try:
+            profile = me.profile
+            matches = me.guest.values('id').all()
             coffees = coffee_models.Coffee.objects.filter((Q(target='everyone') |
                                                            Q(target='nationality', host__profile__nationality=profile.nationality) |
                                                            Q(target='gender', host__profile__gender=profile.gender)) &

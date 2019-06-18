@@ -71,6 +71,7 @@ export const COUNTRY_FRAGMENT = gql`
     countryCode
     countryPhoto
     continent {
+      continentCode
       continentName
     }
   }

@@ -151,7 +151,7 @@ const SearchPresenter: React.SFC<IProps> = ({
           countries.length > 0 &&
           countries.map(country => (
             <UserRow key={country.id}>
-              <Link to={`/country/${country.countryName}`}>
+              <Link to={`/country/${country.countryCode}`}>
                 <Header>
                   <SAvatar size={"sm"} url={country.countryPhoto} />
                   <HeaderColumn>
@@ -167,7 +167,7 @@ const SearchPresenter: React.SFC<IProps> = ({
           continents.length > 0 &&
           continents.map(continent => (
             <UserRow key={continent.id}>
-              <Link to={`/continent/${continent.continentName}`}>
+              <Link to={`/continent/${continent.continentCode}`}>
                 <Header>
                   <SAvatar size={"sm"} url={continent.continentPhoto} />
                   <HeaderColumn>

@@ -12,6 +12,7 @@ class Query(object):
             'location': graphene.String(required=True),
             'cityId': graphene.String(),
             'countryCode': graphene.String(),
+            'continentCode': graphene.String(),
             'userName': graphene.String(),
         }
     )

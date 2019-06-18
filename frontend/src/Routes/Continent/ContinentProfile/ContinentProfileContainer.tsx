@@ -3,11 +3,15 @@ import { Query } from "react-apollo";
 import ContinentProfilePresenter from "./ContinentProfilePresenter";
 import {
   ContinentProfile,
-  ContinentProfileVariables
+  ContinentProfileVariables,
+  GetCoffees,
+  GetCoffeesVariables
 } from "../../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
 import { CONTINENT_PROFILE } from "./ContinentProfileQueries";
+import { GET_COFFEES } from "../../User/Coffees/CoffeesQueries";
 
+class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
 class ContinentProfileQuery extends Query<
   ContinentProfile,
   ContinentProfileVariables
@@ -19,22 +23,25 @@ interface IState {
   search: string;
   countryList: any;
   activeId: number;
+  currentCityId: string;
 }
 class ContinentProfileContainer extends React.Component<IProps, IState> {
   public data;
+  public coffeeData;
   constructor(props) {
     super(props);
     this.state = {
       search: "",
       countryList: [],
-      activeId: null
+      activeId: null,
+      currentCityId: localStorage.getItem("cityId")
     };
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
     if (
-      prevProps.match.params.continentName !==
-      newProps.match.params.continentName
+      prevProps.match.params.continentCode !==
+      newProps.match.params.continentCode
     ) {
       this.setState({ search: "", countryList: [] });
       console.log(this.state);
@@ -43,30 +50,46 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
   public render() {
     const {
       match: {
-        params: { continentName }
+        params: { continentCode }
       }
     } = this.props;
-    const { search, countryList, activeId } = this.state;
+    const { search, countryList, activeId, currentCityId } = this.state;
     return (
       <ContinentProfileQuery
         query={CONTINENT_PROFILE}
-        variables={{ continentName }}
+        variables={{ continentCode }}
       >
         {({ data, loading }) => {
           this.data = data;
           return (
-            <ContinentProfilePresenter
-              data={data}
-              loading={loading}
-              continentName={continentName}
-              onChange={this.onChange}
-              search={search}
-              activeId={activeId}
-              countryList={countryList}
-              onKeyDown={this.onKeyDown}
-              onClick={this.onClick}
-              onBlur={this.onBlur}
-            />
+            <GetCoffeesQuery
+              query={GET_COFFEES}
+              variables={{
+                continentCode,
+                location: "continent"
+              }}
+            >
+              {({ data: coffeeData, loading: coffeeLoading }) => {
+                this.coffeeData = coffeeData;
+                return (
+                  <ContinentProfilePresenter
+                    data={data}
+                    loading={loading}
+                    coffeeData={coffeeData}
+                    coffeeLoading={coffeeLoading}
+                    continentCode={continentCode}
+                    onChange={this.onChange}
+                    search={search}
+                    activeId={activeId}
+                    countryList={countryList}
+                    onKeyDown={this.onKeyDown}
+                    onClick={this.onClick}
+                    onBlur={this.onBlur}
+                    currentCityId={currentCityId}
+                  />
+                );
+              }}
+            </GetCoffeesQuery>
           );
         }}
       </ContinentProfileQuery>

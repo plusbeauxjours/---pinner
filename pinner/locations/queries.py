@@ -83,12 +83,8 @@ def resolve_city_profile(self, info, **kwargs):
 
     coffees = city.coffee.filter(expires__gt=timezone.now())
 
-    if usersNow.count() < 5:
-        usersBefore = notification_models.MoveNotification.objects.filter(
-            city__city_id=cityId).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
-    else:
-        usersBefore = notification_models.MoveNotification.objects.filter(
-            id=0)
+    usersBefore = notification_models.MoveNotification.objects.filter(
+        city__city_id=cityId).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
 
     return card_types.FirstAnnotateResponse(usersNow=usersNow, usersBefore=usersBefore, city=city)
 
@@ -145,12 +141,8 @@ def resolve_country_profile(self, info, **kwargs):
     usersNow = User.objects.filter(
         profile__current_city__country__country_code=countryCode).order_by('-id').distinct('id')[:12]
 
-    if usersNow.count() < 5:
-        usersBefore = notification_models.MoveNotification.objects.filter(
-            city__country__country_code=countryCode).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
-    else:
-        usersBefore = notification_models.MoveNotification.objects.filter(
-            id=0)
+    usersBefore = notification_models.MoveNotification.objects.filter(
+        city__country__country_code=countryCode).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
 
     cities = models.City.objects.filter(country__country_code=countryCode)
 
@@ -218,42 +210,34 @@ def resolve_get_countries(self, info, **kwargs):
 def resolve_continent_profile(self, info, **kwargs):
 
     user = info.context.user
-    continentName = kwargs.get('continentName')
+    continentCode = kwargs.get('continentCode')
     page = kwargs.get('page', 0)
 
-    continent = models.Continent.objects.get(continent_name=continentName)
-
-    allCities = models.City.objects.values('id').filter(country__continent__continent_name=continentName)
+    continent = models.Continent.objects.get(continent_code=continentCode)
 
     usersNow = User.objects.filter(
-        profile__current_city__country__continent__continent_name=continentName).order_by('-id').distinct('id')[:12]
+        profile__current_city__country__continent__continent_code=continentCode).order_by('-id').distinct('id')[:12]
 
-    if usersNow.count() < 5:
-        usersBefore = notification_models.MoveNotification.objects.filter(
-            city__country__continent__continent_name=continentName).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
-    else:
-        usersBefore = notification_models.MoveNotification.objects.filter(
-            id=0)
+    usersBefore = notification_models.MoveNotification.objects.filter(
+        city__country__continent__continent_code=continentCode).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
 
-    countries = models.Country.objects.filter(continent__continent_name=continentName)
+    countries = models.Country.objects.filter(continent__continent_code=continentCode)
 
-    coffees = coffee_models.Coffee.objects.filter(Q(city__id__in=allCities) & Q(expires__gt=timezone.now()))
-
-    return card_types.ThirdAnnotateResponse(countries=countries,  usersNow=usersNow, usersBefore=usersBefore, continent=continent, coffees=coffees)
+    return card_types.ThirdAnnotateResponse(countries=countries,  usersNow=usersNow, usersBefore=usersBefore, continent=continent)
 
 
 @login_required
 def resolve_continent_users_now(self, info, **kwargs):
 
     user = info.context.user
-    continentName = kwargs.get('continentName')
+    continentCode = kwargs.get('continentCode')
     page = kwargs.get('page', 0)
     offset = 20 * page
 
     nextPage = page+1
 
     usersNow = User.objects.filter(
-        profile__current_city__country__continent__continent_name=continentName).order_by('-id').distinct('id')
+        profile__current_city__country__continent__continent_code=continentCode).order_by('-id').distinct('id')
 
     hasNextPage = offset < usersNow.count()
 
@@ -266,14 +250,14 @@ def resolve_continent_users_now(self, info, **kwargs):
 def resolve_continent_users_before(self, info, **kwargs):
 
     user = info.context.user
-    continentName = kwargs.get('continentName')
+    continentCode = kwargs.get('continentCode')
     page = kwargs.get('page', 0)
     offset = 20 * page
 
     nextPage = page+1
 
     usersBefore = notification_models.MoveNotification.objects.filter(
-        city__country__continent__continent_name=continentName).order_by('-actor_id').distinct('actor_id')
+        city__country__continent__continent_code=continentCode).order_by('-actor_id').distinct('actor_id')
 
     hasNextPage = offset < usersBefore.count()
 

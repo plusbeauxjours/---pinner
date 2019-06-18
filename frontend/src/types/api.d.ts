@@ -820,24 +820,6 @@ export interface ContinentProfile_continentProfile_usersBefore {
   actor: ContinentProfile_continentProfile_usersBefore_actor;
 }
 
-export interface ContinentProfile_continentProfile_coffees_host_profile {
-  __typename: "ProfileType";
-  avatar: string;
-}
-
-export interface ContinentProfile_continentProfile_coffees_host {
-  __typename: "UserType";
-  profile: ContinentProfile_continentProfile_coffees_host_profile | null;
-}
-
-export interface ContinentProfile_continentProfile_coffees {
-  __typename: "CoffeeType";
-  id: string;
-  uuid: any | null;
-  target: CoffeeTarget;
-  host: ContinentProfile_continentProfile_coffees_host;
-}
-
 export interface ContinentProfile_continentProfile_continent {
   __typename: "ContinentType";
   continentName: string | null;
@@ -864,7 +846,6 @@ export interface ContinentProfile_continentProfile {
   __typename: "ThirdAnnotateResponse";
   usersNow: (ContinentProfile_continentProfile_usersNow | null)[] | null;
   usersBefore: (ContinentProfile_continentProfile_usersBefore | null)[] | null;
-  coffees: (ContinentProfile_continentProfile_coffees | null)[] | null;
   continent: ContinentProfile_continentProfile_continent | null;
   countries: (ContinentProfile_continentProfile_countries | null)[] | null;
 }
@@ -875,7 +856,7 @@ export interface ContinentProfile {
 
 export interface ContinentProfileVariables {
   page?: number | null;
-  continentName: string;
+  continentCode: string;
 }
 
 
@@ -929,7 +910,7 @@ export interface ContinentUsersBefore {
 
 export interface ContinentUsersBeforeVariables {
   page?: number | null;
-  continentName: string;
+  continentCode: string;
 }
 
 
@@ -978,7 +959,7 @@ export interface ContinentUsersNow {
 
 export interface ContinentUsersNowVariables {
   page?: number | null;
-  continentName: string;
+  continentCode: string;
 }
 
 
@@ -1850,6 +1831,7 @@ export interface GetCoffees {
 export interface GetCoffeesVariables {
   cityId?: string | null;
   countryCode?: string | null;
+  continentCode?: string | null;
   userName?: string | null;
   location: string;
 }

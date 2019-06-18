@@ -45,7 +45,7 @@ class ContinentUsersNowContainer extends React.Component<IProps, IState> {
   public render() {
     const {
       match: {
-        params: { continentName }
+        params: { continentCode }
       }
     } = this.props;
     console.log(this.props);
@@ -54,7 +54,7 @@ class ContinentUsersNowContainer extends React.Component<IProps, IState> {
       <ContinentUsersNowQuery
         query={CONTINENT_USERS_NOW}
         variables={{
-          continentName
+          continentCode
         }}
       >
         {({ data, loading, fetchMore }) => {
@@ -71,7 +71,7 @@ class ContinentUsersNowContainer extends React.Component<IProps, IState> {
               usersNowList={usersNowList}
               onChange={this.onChange}
               loadMore={this.loadMore}
-              continentName={continentName}
+              continentCode={continentCode}
               onKeyDown={this.onKeyDown}
               onClick={this.onClick}
               onBlur={this.onBlur}
@@ -109,13 +109,13 @@ class ContinentUsersNowContainer extends React.Component<IProps, IState> {
   public loadMore = page => {
     const {
       match: {
-        params: { continentName }
+        params: { continentCode }
       }
     } = this.props;
     this.fetchMore({
       query: CONTINENT_USERS_NOW,
       variables: {
-        continentName,
+        continentCode,
         page
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {

@@ -35,7 +35,6 @@ class ThirdAnnotateResponse(graphene.ObjectType):
     countries = graphene.List(location_types.CountryType)
     usersNow = graphene.List(coffee_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
-    coffees = graphene.List(coffee_types.CoffeeType)
 
 
 class UsersNowResponse(graphene.ObjectType):

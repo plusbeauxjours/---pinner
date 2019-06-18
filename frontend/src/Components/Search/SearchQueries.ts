@@ -27,6 +27,7 @@ export const CREATE_CITY = gql`
           countryPhoto
           countryCode
           continent {
+            continentCode
             continentName
           }
         }

@@ -139,14 +139,17 @@ const Input = styled.input`
   }
 `;
 
-const LocationRow = styled(UserRow)`
+const LocationRow = styled.div`
+  display: grid;
+  flex-direction: row;
   grid-template-columns: 1fr;
-  width: 300px;
+  width: 100%;
   height: 50px;
-  margin-top: 26px;
-  margin-bottom: 15px;
-  border-top: 1px solid grey;
-  border-bottom: 1px solid grey;
+  padding: 0 5px 0 5px;
+  grid-gap: 15px;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 `;
 
 interface ITheme {
@@ -233,7 +236,7 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
               <LocationRow>
                 <Link
                   to={{
-                    pathname: `/continent/${country.continent.continentName}`,
+                    pathname: `/continent/${country.continent.continentCode}`,
                     state: { continentName: country.continent.continentName }
                   }}
                 >
@@ -333,7 +336,7 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
             <CoffeeBox
               coffees={coffees}
               coffeeLoading={coffeeLoading}
-              currentCityId={currentCityId}
+              cityId={currentCityId}
               currentCountryCode={countryCode}
             />
           )}

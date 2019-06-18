@@ -2,8 +2,8 @@ import gql from "graphql-tag";
 import { PROFILE_FRAGMENT, COUNTRY_FRAGMENT } from "src/sharedQueries";
 
 export const CONTINENT_PROFILE = gql`
-  query ContinentProfile($page: Int, $continentName: String!) {
-    continentProfile(page: $page, continentName: $continentName) {
+  query ContinentProfile($page: Int, $continentCode: String!) {
+    continentProfile(page: $page, continentCode: $continentCode) {
       usersNow {
         profile {
           ...ProfileParts
@@ -13,16 +13,6 @@ export const CONTINENT_PROFILE = gql`
         actor {
           profile {
             ...ProfileParts
-          }
-        }
-      }
-      coffees {
-        id
-        uuid
-        target
-        host {
-          profile {
-            avatar
           }
         }
       }

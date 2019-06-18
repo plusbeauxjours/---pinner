@@ -70,18 +70,26 @@ class LoggedInPages extends React.Component<IProps> {
           <Route path="/people" exact={true} component={PeoplePage} />
           <Route path="/coffees" exact={true} component={CoffeesPage} />
           <Route path="/match" exact={true} component={Match} />
+
+          {/* CONTINENT */}
           <Route
-            path="/continent/:continentName/usersNow"
+            path="/country/:continentCode/coffees"
+            component={CoffeesPage}
+          />
+          <Route
+            path="/continent/:continentCode/usersNow"
             component={ContinentUsersNow}
           />
           <Route
-            path="/continent/:continentName/usersBefore"
+            path="/continent/:continentCode/usersBefore"
             component={ContinentUsersBefore}
           />
           <Route
-            path="/continent/:continentName"
+            path="/continent/:continentCode"
             component={ContinentProfile}
           />
+
+          {/* COUNTRY */}
           <Route path="/country/:countryCode/coffees" component={CoffeesPage} />
           <Route
             path="/country/:countryCode/usersNow"
@@ -92,12 +100,16 @@ class LoggedInPages extends React.Component<IProps> {
             component={CountryUsersBefore}
           />
           <Route path="/country/:countryCode" component={CountryProfile} />
+
+          {/* CITY */}
           <Route path="/city/:cityId/coffees" component={CoffeesPage} />
           <Route path="/city/:cityId/nearCities" component={NearCities} />
           <Route path="/city/:cityId/usersNow" component={CityUsersNow} />
           <Route path="/city/:cityId/usersBefore" component={CityUsersBefore} />
           <Route path="/city/:cityId/:duration" component={TripProfile} />
           <Route path="/city/:cityId" component={CityProfile} />
+
+          {/* USER */}
           <Route path="/:username/countries" component={Countries} />
           <Route path="/:username/cities" component={Cities} />
           <Route path="/:username/coffees" component={Coffees} />

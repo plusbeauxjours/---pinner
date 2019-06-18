@@ -139,8 +139,10 @@ const GreyLine = styled.div`
 
 interface IProps extends RouteComponentProps<any> {
   coffeeLoading?: boolean;
+  cityId?: string;
   currentCityId?: string;
   currentCountryCode?: string;
+  currentContinentCode?: string;
   toggleCoffeeRequestModal?: () => void;
   coffees: any;
   isStaying?: boolean;
@@ -148,13 +150,14 @@ interface IProps extends RouteComponentProps<any> {
 
 const UserBox: React.SFC<IProps> = ({
   coffeeLoading,
+  cityId,
   currentCityId,
   currentCountryCode,
+  currentContinentCode,
   toggleCoffeeRequestModal,
   coffees,
   isStaying
 }) => {
-  console.log(currentCityId, currentCountryCode);
   if (coffeeLoading) {
     return <Loader />;
   } else if (!coffeeLoading) {
@@ -166,6 +169,16 @@ const UserBox: React.SFC<IProps> = ({
             <UserContainer>
               <UserNameRow>
                 <Username>NEED SOME COFFEE NOW</Username>
+                {currentContinentCode && (
+                  <Link
+                    to={{
+                      pathname: `/continent/${currentContinentCode}/coffees`,
+                      state: { location: "continent", currentContinentCode }
+                    }}
+                  >
+                    <SeeAll>SEE ALL</SeeAll>
+                  </Link>
+                )}
                 {currentCountryCode && (
                   <Link
                     to={{
@@ -229,8 +242,7 @@ const UserBox: React.SFC<IProps> = ({
                             </HeaderColumn>
                           </AvatarContainer>
                         </Link>
-                        {(currentCityId === coffee.city.cityId ||
-                          isStaying) && (
+                        {(cityId === coffee.city.cityId || isStaying) && (
                           <CoffeeBtn
                             coffeeId={coffee.uuid}
                             isMatching={coffee.isMatching}

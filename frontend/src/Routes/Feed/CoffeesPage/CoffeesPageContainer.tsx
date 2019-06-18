@@ -12,6 +12,7 @@ interface IState {
   location: string;
   cityId: string;
   countryCode: string;
+  continentCode: string;
   search: string;
   coffeesList: any;
 }
@@ -25,6 +26,7 @@ class CoffeesPageContainer extends React.Component<IProps, IState> {
       location: state.location,
       cityId: state.currentCityId,
       countryCode: state.currentCountryCode,
+      continentCode: state.currentContinentCode,
       search: "",
       coffeesList: []
     };
@@ -38,13 +40,21 @@ class CoffeesPageContainer extends React.Component<IProps, IState> {
     }
   }
   public render = () => {
-    const { location, cityId, countryCode, search, coffeesList } = this.state;
+    const {
+      location,
+      cityId,
+      countryCode,
+      continentCode,
+      search,
+      coffeesList
+    } = this.state;
     return (
       <GetCoffeesQuery
         query={GET_COFFEES}
         variables={{
           cityId,
           countryCode,
+          continentCode,
           location
         }}
       >

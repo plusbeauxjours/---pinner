@@ -146,10 +146,17 @@ const UserRow = styled.div<ITheme>`
   }
 `;
 
-const LocationRow = styled(UserRow)`
+const LocationRow = styled.div`
+  display: grid;
+  flex-direction: row;
   grid-template-columns: 1fr;
-  width: 300px;
+  width: 100%;
   height: 50px;
+  padding: 0 5px 0 5px;
+  grid-gap: 15px;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 `;
 
 const UserNameRow = styled.div`

@@ -18,6 +18,7 @@ export const COUNTRY_PROFILE = gql`
         cityCount
         continent {
           continentPhoto
+          continentCode
           continentName
         }
       }

@@ -6,8 +6,8 @@ import Wrapper from "../../../Components/Wrapper";
 import Loader from "../../../Components/Loader";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
-import AvatarGrid from "../../../Components/AvatarGrid";
 import UserBox from "src/Components/UserBox";
+import CoffeeBox from "src/Components/CoffeeBox";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -35,24 +35,6 @@ const SText = styled(Bold)`
   font-weight: 100;
 `;
 
-const SSText = styled(Bold)`
-  font-size: 12px;
-  font-weight: 100;
-`;
-
-const Title = styled.div`
-  display: flex;
-  margin-top: 10px;
-  @media screen and (max-width: 935px) {
-    margin-left: 10px;
-  }
-`;
-
-const SmallTitle = styled(Title)`
-  flex-direction: column;
-  align-items: center;
-`;
-
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
@@ -60,10 +42,6 @@ const GreyLine = styled.div`
   @media screen and (max-width: 935px) {
     margin: 0 10px 0 10px;
   }
-`;
-
-const SmallGreyLine = styled(GreyLine)`
-  width: 40%;
 `;
 
 const UserRow = styled.div<ITheme>`
@@ -168,7 +146,9 @@ interface ITheme {
 interface IProps {
   data?: any;
   loading: boolean;
-  continentName: string;
+  coffeeData?: any;
+  coffeeLoading: boolean;
+  continentCode: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
   countryList: any;
@@ -176,6 +156,7 @@ interface IProps {
   onClick: any;
   onBlur: any;
   activeId: number;
+  currentCityId: string;
 }
 
 const ContinentProfilePresenter: React.SFC<IProps> = ({
@@ -184,19 +165,21 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
       continent = null,
       countries = null,
       usersNow = null,
-      usersBefore = null,
-      coffees = null
+      usersBefore = null
     } = {}
   } = {},
   loading,
-  continentName,
+  coffeeData: { getCoffees: { coffees = null } = {} } = {},
+  coffeeLoading,
+  continentCode,
   onChange,
   search,
   countryList,
   onKeyDown,
   onClick,
   onBlur,
-  activeId
+  activeId,
+  currentCityId
 }) => {
   if (loading) {
     return <Loader />;
@@ -282,18 +265,9 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
                 })}
             </UserContainer>
           </PHeader>
-          {coffees && coffees.length !== 0 ? (
-            <>
-              <SmallTitle>
-                <SmallGreyLine />
-                <SSText text={"COFFEES NOW"} />
-              </SmallTitle>
-              <AvatarGrid coffees={coffees} />
-            </>
-          ) : null}
-          <GreyLine />
           {usersNow && usersNow.length !== 0 ? (
             <>
+              <GreyLine />
               <UserBox users={usersNow} type={"usersNow"} />
             </>
           ) : null}
@@ -303,6 +277,14 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
               <UserBox users={usersBefore} type={"usersBefore"} />
             </>
           ) : null}
+          {!coffeeLoading && (
+            <CoffeeBox
+              coffees={coffees}
+              coffeeLoading={coffeeLoading}
+              cityId={currentCityId}
+              currentContinentCode={continentCode}
+            />
+          )}
         </SWrapper>
       </>
     );
