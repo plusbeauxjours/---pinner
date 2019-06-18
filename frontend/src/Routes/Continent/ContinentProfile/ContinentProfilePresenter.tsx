@@ -165,7 +165,8 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
       continent = null,
       countries = null,
       usersNow = null,
-      usersBefore = null
+      usersBefore = null,
+      continents = null
     } = {}
   } = {},
   loading,
@@ -268,23 +269,29 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
           {usersNow && usersNow.length !== 0 ? (
             <>
               <GreyLine />
-              <UserBox users={usersNow} type={"usersNow"} />
+              <UserBox
+                users={usersNow}
+                currentContinentCode={continentCode}
+                type={"usersNow"}
+              />
             </>
           ) : null}
           {usersBefore && usersBefore.length !== 0 ? (
             <>
               <GreyLine />
-              <UserBox users={usersBefore} type={"usersBefore"} />
+              <UserBox
+                users={usersBefore}
+                currentContinentCode={continentCode}
+                type={"usersBefore"}
+              />
             </>
           ) : null}
-          {!coffeeLoading && (
-            <CoffeeBox
-              coffees={coffees}
-              coffeeLoading={coffeeLoading}
-              cityId={currentCityId}
-              currentContinentCode={continentCode}
-            />
-          )}
+          <CoffeeBox
+            coffees={coffees}
+            coffeeLoading={coffeeLoading}
+            cityId={currentCityId}
+            currentContinentCode={continentCode}
+          />
         </SWrapper>
       </>
     );

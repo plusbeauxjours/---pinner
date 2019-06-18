@@ -81,6 +81,7 @@ export const CONTINENT_FRAGMENT = gql`
   fragment ContinentParts on ContinentType {
     id
     continentName
+    continentCode
     continentPhoto
   }
 `;

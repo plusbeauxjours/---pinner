@@ -6,7 +6,6 @@ import Wrapper from "../../../Components/Wrapper";
 import Loader from "../../../Components/Loader";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
-import UserHeader from "../../../Components/UserHeader";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -104,6 +103,26 @@ const Input = styled.input`
   }
 `;
 
+const Location = styled.span`
+  display: flex;
+  margin-top: 5px;
+  position: block;
+  font-size: 12px;
+  font-weight: 200;
+`;
+
+const HeaderColumn = styled.div`
+  margin-left: 15px;
+`;
+
+const CText = styled(Bold)`
+  display: flex;
+`;
+
+const Explain = styled(Location)`
+  color: grey;
+`;
+
 interface ITheme {
   active?: string;
 }
@@ -155,9 +174,11 @@ const CoffeesPresenter: React.SFC<IProps> = ({
             <UserNameRow>
               <Username>{userName} Coffees</Username>
               <Input
-                placeholder="Search"
-                value={search}
+                autoFocus={true}
+                placeholder={"Search"}
                 onChange={onChange}
+                value={search}
+                autoComplete={"off"}
                 onKeyDown={onKeyDown}
                 onClick={onClick}
                 onBlur={onBlur}
@@ -170,22 +191,19 @@ const CoffeesPresenter: React.SFC<IProps> = ({
                   active = "active";
                 }
                 return (
-                  <React.Fragment key={index}>
+                  <UserRow active={active} key={index}>
                     <Link to={`/c/${coffee.uuid}`}>
-                      <UserRow active={active}>
-                        <UserHeader
-                          username={coffee.city.cityName}
-                          currentCity={coffee.city.country.countryName}
-                          avatar={coffee.host.profile.avatar}
-                          size={"sm"}
-                          type={"coffee"}
-                          target={coffee.target}
-                        />
-                        <GreyText text={coffee.target} />
-                        <GreyText text={coffee.expires} />
-                      </UserRow>
+                      <AvatarContainer>
+                        <Avatar size={"sm"} url={coffee.host.profile.avatar} />
+                        <HeaderColumn>
+                          <CText text={coffee.host.username} />
+                          <Explain>with same nationality</Explain>
+                        </HeaderColumn>
+                      </AvatarContainer>
+                      <GreyText text={coffee.target} />
+                      <GreyText text={coffee.expires} />
                     </Link>
-                  </React.Fragment>
+                  </UserRow>
                 );
               })}
             {coffeesList.length === 0 &&
@@ -197,22 +215,19 @@ const CoffeesPresenter: React.SFC<IProps> = ({
                   active = "active";
                 }
                 return (
-                  <React.Fragment key={index}>
+                  <UserRow active={active} key={index}>
                     <Link to={`/c/${coffee.uuid}`}>
-                      <UserRow active={active}>
-                        <UserHeader
-                          username={coffee.city.cityName}
-                          currentCity={coffee.city.country.countryName}
-                          avatar={coffee.host.profile.avatar}
-                          size={"sm"}
-                          type={"coffee"}
-                          target={coffee.target}
-                        />
-                        <GreyText text={coffee.target} />
-                        <GreyText text={coffee.expires} />
-                      </UserRow>
+                      <AvatarContainer>
+                        <Avatar size={"sm"} url={coffee.host.profile.avatar} />
+                        <HeaderColumn>
+                          <CText text={coffee.host.username} />
+                          <Explain>with same nationality</Explain>
+                        </HeaderColumn>
+                      </AvatarContainer>
+                      <GreyText text={coffee.target} />
+                      <GreyText text={coffee.expires} />
                     </Link>
-                  </React.Fragment>
+                  </UserRow>
                 );
               })}
           </UserContainer>

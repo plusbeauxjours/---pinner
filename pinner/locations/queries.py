@@ -223,7 +223,9 @@ def resolve_continent_profile(self, info, **kwargs):
 
     countries = models.Country.objects.filter(continent__continent_code=continentCode)
 
-    return card_types.ThirdAnnotateResponse(countries=countries,  usersNow=usersNow, usersBefore=usersBefore, continent=continent)
+    continents = models.Continent.objects.all()
+
+    return card_types.ThirdAnnotateResponse(countries=countries,  usersNow=usersNow, usersBefore=usersBefore, continent=continent, continents=continents)
 
 
 @login_required

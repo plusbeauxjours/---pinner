@@ -136,8 +136,8 @@ const CoffeesPagePresenter: React.SFC<IProps> = ({
                 return (
                   <UserRow key={coffee.uuid}>
                     <Link to={`/c/${coffee.uuid}`}>
-                      <SAvatar size={"sm"} url={coffee.host.profile.avatar} />
                       <AvatarContainer>
+                        <SAvatar size={"sm"} url={coffee.host.profile.avatar} />
                         <HeaderColumn>
                           <CText text={coffee.host.username} />
                           {(() => {

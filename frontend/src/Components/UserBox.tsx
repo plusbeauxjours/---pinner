@@ -86,9 +86,19 @@ interface IProps extends RouteComponentProps<any> {
   history: History;
   users?: any;
   type?: string;
+  currentCityId?: string;
+  currentCountryCode?: string;
+  currentContinentCode?: string;
 }
 
-const UserBox: React.SFC<IProps> = ({ history, users, type }) => (
+const UserBox: React.SFC<IProps> = ({
+  history,
+  users,
+  type,
+  currentCityId,
+  currentCountryCode,
+  currentContinentCode
+}) => (
   <>
     {(() => {
       switch (type) {
@@ -97,9 +107,36 @@ const UserBox: React.SFC<IProps> = ({ history, users, type }) => (
             <>
               <Title>
                 <SText text={"USERS NOW"} />
-                <Link to={`${history.location.pathname}/usersnow`}>
-                  <SeeAll>SEE ALL</SeeAll>
-                </Link>
+                {currentContinentCode && (
+                  <Link
+                    to={{
+                      pathname: `/continent/${currentContinentCode}/usersnow`,
+                      state: { location: "continent", currentContinentCode }
+                    }}
+                  >
+                    <SeeAll>SEE ALL</SeeAll>
+                  </Link>
+                )}
+                {currentCountryCode && (
+                  <Link
+                    to={{
+                      pathname: `/country/${currentCountryCode}/usersnow`,
+                      state: { location: "country", currentCountryCode }
+                    }}
+                  >
+                    <SeeAll>SEE ALL</SeeAll>
+                  </Link>
+                )}
+                {currentCityId && (
+                  <Link
+                    to={{
+                      pathname: `/city/${currentCityId}/usersnow`,
+                      state: { location: "city", currentCityId }
+                    }}
+                  >
+                    <SeeAll>SEE ALL</SeeAll>
+                  </Link>
+                )}
               </Title>
               <Container>
                 <Box>
@@ -131,9 +168,36 @@ const UserBox: React.SFC<IProps> = ({ history, users, type }) => (
             <>
               <Title>
                 <SText text={"USERS BEFORE"} />
-                <Link to={`${history.location.pathname}/usersbefore`}>
-                  <SeeAll>SEE ALL</SeeAll>
-                </Link>
+                {currentContinentCode && (
+                  <Link
+                    to={{
+                      pathname: `/continent/${currentContinentCode}/usersbefore`,
+                      state: { location: "continent", currentContinentCode }
+                    }}
+                  >
+                    <SeeAll>SEE ALL</SeeAll>
+                  </Link>
+                )}
+                {currentCountryCode && (
+                  <Link
+                    to={{
+                      pathname: `/country/${currentCountryCode}/usersbefore`,
+                      state: { location: "country", currentCountryCode }
+                    }}
+                  >
+                    <SeeAll>SEE ALL</SeeAll>
+                  </Link>
+                )}
+                {currentCityId && (
+                  <Link
+                    to={{
+                      pathname: `/city/${currentCityId}/usersbefore`,
+                      state: { location: "city", currentCityId }
+                    }}
+                  >
+                    <SeeAll>SEE ALL</SeeAll>
+                  </Link>
+                )}
               </Title>
               <Container>
                 <Box>

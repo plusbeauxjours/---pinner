@@ -294,6 +294,7 @@ export interface SearchTerms_searchUsers {
 
 export interface SearchTerms_searchCountries_countries_continent {
   __typename: "ContinentType";
+  continentCode: string | null;
   continentName: string | null;
 }
 
@@ -315,6 +316,7 @@ export interface SearchTerms_searchContinents_continents {
   __typename: "ContinentType";
   id: string;
   continentName: string | null;
+  continentCode: string | null;
   continentPhoto: string | null;
 }
 
@@ -365,6 +367,7 @@ export interface logInVariables {
 
 export interface CreateCity_createCity_city_country_continent {
   __typename: "ContinentType";
+  continentCode: string | null;
   continentName: string | null;
 }
 
@@ -569,7 +572,10 @@ export interface CityProfile_cityProfile_usersBefore {
 
 export interface CityProfile_cityProfile_city_country_continent {
   __typename: "ContinentType";
+  id: string;
   continentName: string | null;
+  continentCode: string | null;
+  continentPhoto: string | null;
 }
 
 export interface CityProfile_cityProfile_city_country {
@@ -822,13 +828,23 @@ export interface ContinentProfile_continentProfile_usersBefore {
 
 export interface ContinentProfile_continentProfile_continent {
   __typename: "ContinentType";
+  id: string;
   continentName: string | null;
+  continentCode: string | null;
   continentPhoto: string | null;
-  countryCount: number | null;
+}
+
+export interface ContinentProfile_continentProfile_continents {
+  __typename: "ContinentType";
+  id: string;
+  continentName: string | null;
+  continentCode: string | null;
+  continentPhoto: string | null;
 }
 
 export interface ContinentProfile_continentProfile_countries_continent {
   __typename: "ContinentType";
+  continentCode: string | null;
   continentName: string | null;
 }
 
@@ -847,6 +863,7 @@ export interface ContinentProfile_continentProfile {
   usersNow: (ContinentProfile_continentProfile_usersNow | null)[] | null;
   usersBefore: (ContinentProfile_continentProfile_usersBefore | null)[] | null;
   continent: ContinentProfile_continentProfile_continent | null;
+  continents: (ContinentProfile_continentProfile_continents | null)[] | null;
   countries: (ContinentProfile_continentProfile_countries | null)[] | null;
 }
 
@@ -972,8 +989,10 @@ export interface ContinentUsersNowVariables {
 
 export interface CountryProfile_countryProfile_country_continent {
   __typename: "ContinentType";
-  continentPhoto: string | null;
+  id: string;
   continentName: string | null;
+  continentCode: string | null;
+  continentPhoto: string | null;
 }
 
 export interface CountryProfile_countryProfile_country {
@@ -1089,6 +1108,7 @@ export interface CountryProfileVariables {
 
 export interface GetCountries_getCountries_countries_continent {
   __typename: "ContinentType";
+  continentCode: string | null;
   continentName: string | null;
 }
 
@@ -1846,6 +1866,7 @@ export interface GetCoffeesVariables {
 
 export interface TopCountries_topCountries_countries_continent {
   __typename: "ContinentType";
+  continentCode: string | null;
   continentName: string | null;
 }
 
@@ -1883,6 +1904,7 @@ export interface TopCountriesVariables {
 
 export interface UserProfile_userProfile_user_profile_nationality_continent {
   __typename: "ContinentType";
+  continentCode: string | null;
   continentName: string | null;
 }
 
@@ -1898,6 +1920,7 @@ export interface UserProfile_userProfile_user_profile_nationality {
 
 export interface UserProfile_userProfile_user_profile_residence_continent {
   __typename: "ContinentType";
+  continentCode: string | null;
   continentName: string | null;
 }
 
@@ -1980,6 +2003,7 @@ export interface UserProfileVariables {
 
 export interface EditProfile_editProfile_user_profile_nationality_continent {
   __typename: "ContinentType";
+  continentCode: string | null;
   continentName: string | null;
 }
 
@@ -1995,6 +2019,7 @@ export interface EditProfile_editProfile_user_profile_nationality {
 
 export interface EditProfile_editProfile_user_profile_residence_continent {
   __typename: "ContinentType";
+  continentCode: string | null;
   continentName: string | null;
 }
 
@@ -2391,6 +2416,7 @@ export interface CityParts {
 
 export interface CountryParts_continent {
   __typename: "ContinentType";
+  continentCode: string | null;
   continentName: string | null;
 }
 
@@ -2415,6 +2441,7 @@ export interface ContinentParts {
   __typename: "ContinentType";
   id: string;
   continentName: string | null;
+  continentCode: string | null;
   continentPhoto: string | null;
 }
 

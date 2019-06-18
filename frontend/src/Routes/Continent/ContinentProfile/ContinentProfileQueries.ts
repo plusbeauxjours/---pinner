@@ -1,5 +1,9 @@
 import gql from "graphql-tag";
-import { PROFILE_FRAGMENT, COUNTRY_FRAGMENT } from "src/sharedQueries";
+import {
+  PROFILE_FRAGMENT,
+  COUNTRY_FRAGMENT,
+  CONTINENT_FRAGMENT
+} from "src/sharedQueries";
 
 export const CONTINENT_PROFILE = gql`
   query ContinentProfile($page: Int, $continentCode: String!) {
@@ -17,9 +21,10 @@ export const CONTINENT_PROFILE = gql`
         }
       }
       continent {
-        continentName
-        continentPhoto
-        countryCount
+        ...ContinentParts
+      }
+      continents {
+        ...ContinentParts
       }
       countries {
         ...CountryParts
@@ -29,4 +34,5 @@ export const CONTINENT_PROFILE = gql`
   }
   ${PROFILE_FRAGMENT}
   ${COUNTRY_FRAGMENT}
+  ${CONTINENT_FRAGMENT}
 `;

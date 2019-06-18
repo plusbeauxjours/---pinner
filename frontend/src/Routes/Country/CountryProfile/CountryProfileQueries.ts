@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 import {
   CITY_FRAGMENT,
   COUNTRY_FRAGMENT,
+  CONTINENT_FRAGMENT,
   PROFILE_FRAGMENT
 } from "src/sharedQueries";
 
@@ -17,9 +18,7 @@ export const COUNTRY_PROFILE = gql`
         countryEmoji
         cityCount
         continent {
-          continentPhoto
-          continentCode
-          continentName
+          ...ContinentParts
         }
       }
       usersNow {
@@ -41,6 +40,7 @@ export const COUNTRY_PROFILE = gql`
   }
   ${CITY_FRAGMENT}
   ${PROFILE_FRAGMENT}
+  ${CONTINENT_FRAGMENT}
 `;
 
 export const GET_COUNTRIES = gql`

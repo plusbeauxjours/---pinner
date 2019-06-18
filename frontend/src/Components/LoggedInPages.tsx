@@ -73,7 +73,7 @@ class LoggedInPages extends React.Component<IProps> {
 
           {/* CONTINENT */}
           <Route
-            path="/country/:continentCode/coffees"
+            path="/continent/:continentCode/coffees"
             component={CoffeesPage}
           />
           <Route

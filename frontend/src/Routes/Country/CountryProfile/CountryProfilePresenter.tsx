@@ -323,23 +323,29 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
           {usersNow && usersNow.length !== 0 ? (
             <>
               <GreyLine />
-              <UserBox users={usersNow} type={"usersNow"} />
+              <UserBox
+                users={usersNow}
+                currentCountryCode={countryCode}
+                type={"usersNow"}
+              />
             </>
           ) : null}
           {usersBefore && usersBefore.length !== 0 ? (
             <>
               <GreyLine />
-              <UserBox users={usersBefore} type={"usersBefore"} />
+              <UserBox
+                users={usersBefore}
+                currentCountryCode={countryCode}
+                type={"usersBefore"}
+              />
             </>
           ) : null}
-          {!coffeeLoading && (
-            <CoffeeBox
-              coffees={coffees}
-              coffeeLoading={coffeeLoading}
-              cityId={currentCityId}
-              currentCountryCode={countryCode}
-            />
-          )}
+          <CoffeeBox
+            coffees={coffees}
+            coffeeLoading={coffeeLoading}
+            cityId={currentCityId}
+            currentCountryCode={countryCode}
+          />
         </SWrapper>
       </>
     );

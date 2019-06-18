@@ -12,6 +12,7 @@ import UserHeader from "../../../Components/UserHeader";
 import CityLikeBtn from "../../../Components/CityLikeBtn";
 import UserBox from "src/Components/UserBox";
 import CoffeeBox from "src/Components/CoffeeBox";
+import LocationBox from "src/Components/LocationBox";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -37,15 +38,6 @@ const InfoRow = styled.span``;
 const SText = styled(Bold)`
   font-size: 18px;
   font-weight: 100;
-`;
-
-const Title = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  @media screen and (max-width: 935px) {
-    margin-left: 10px;
-  }
 `;
 
 const ModalAnimation = keyframes`
@@ -213,48 +205,6 @@ const Location = styled.span`
   display: block;
   font-size: 12px;
   font-weight: 200;
-`;
-
-const Text = styled.p`
-  font-weight: 300;
-  display: flex;
-  align-items: center;
-`;
-
-const Container = styled.div`
-  -webkit-box-flex: 0;
-  padding: 15px;
-`;
-
-const Box = styled.div`
-  max-width: 905px;
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-rows: repeat(3, 50px);
-  grid-auto-columns: 400px;
-  column-gap: 10px;
-  overflow-x: auto;
-  padding-bottom: 15px;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  ::-webkit-scrollbar {
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    background-color: ${props => props.theme.bgColor};
-  }
-  ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-    background-color: ${props => props.theme.greyColor};
-  }
-`;
-
-const SeeAll = styled.p`
-  font-size: 12px;
-  font-weight: 100;
-  cursor: pointer;
 `;
 
 interface ITheme {
@@ -442,53 +392,26 @@ const CityProfilePresenter: React.SFC<IProps> = ({
           {usersBefore && usersBefore.length !== 0 ? (
             <>
               <GreyLine />
-              <UserBox users={usersBefore} type={"usersBefore"} />
+              <UserBox
+                users={usersBefore}
+                currentCityId={cityId}
+                type={"usersBefore"}
+              />
             </>
           ) : null}
-          {coffees && coffees.length !== 0 ? (
-            <CoffeeBox
-              coffeeLoading={coffeeLoading}
-              currentCityId={cityId}
-              toggleCoffeeRequestModal={toggleCoffeeRequestModal}
-              coffees={coffees}
-              isStaying={isStaying}
-            />
-          ) : null}
-          <GreyLine />
-          <Title>
-            <SText text={"NEAR CITIES"} />
-            <Link to={`/city/${city.cityId}/nearCities`}>
-              <SeeAll>SEE ALL</SeeAll>
-            </Link>
-          </Title>
-          <Container>
-            <Box>
-              {nearCities && !nearCitiesLoading && nearCities.length !== 0 ? (
-                nearCities.map(nearCity => (
-                  <UserRow key={nearCity.id}>
-                    <Link to={`/city/${nearCity.cityId}`}>
-                      <Header>
-                        <SAvatar size={"sm"} url={nearCity.cityPhoto} />
-                        <HeaderColumn>
-                          <HeaderText text={nearCity.cityName} />
-                          <Location>{nearCity.country.countryName}</Location>
-                        </HeaderColumn>
-                      </Header>
-                    </Link>
-                    <CityLikeBtn
-                      isLiked={nearCity.isLiked}
-                      cityId={nearCity.id}
-                      likeCount={nearCity.likeCount}
-                      type={"row"}
-                    />
-                    <Text>{nearCity.distance}km</Text>
-                  </UserRow>
-                ))
-              ) : (
-                <Loader />
-              )}
-            </Box>
-          </Container>
+          <CoffeeBox
+            coffeeLoading={coffeeLoading}
+            currentCityId={cityId}
+            toggleCoffeeRequestModal={toggleCoffeeRequestModal}
+            coffees={coffees}
+            isStaying={isStaying}
+          />
+          <LocationBox
+            nearCities={nearCities}
+            cityId={cityId}
+            title={"NEAR CITIES"}
+            loading={nearCitiesLoading}
+          />
         </SWrapper>
       </>
     );

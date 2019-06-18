@@ -31,10 +31,11 @@ class SecondAnnotateResponse(graphene.ObjectType):
 
 
 class ThirdAnnotateResponse(graphene.ObjectType):
-    continent = graphene.Field(location_types.ContinentType)
     countries = graphene.List(location_types.CountryType)
     usersNow = graphene.List(coffee_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
+    continent = graphene.Field(location_types.ContinentType)
+    continents = graphene.List(location_types.ContinentType)
 
 
 class UsersNowResponse(graphene.ObjectType):
