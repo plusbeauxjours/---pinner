@@ -13,6 +13,7 @@ import CityLikeBtn from "../../../Components/CityLikeBtn";
 import UserBox from "src/Components/UserBox";
 import CoffeeBox from "src/Components/CoffeeBox";
 import LocationBox from "src/Components/LocationBox";
+import { Right, Left } from "../../../Icons";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -67,7 +68,7 @@ const GreyLine = styled.div`
   margin-bottom: 10px;
   border-bottom: 1px solid grey;
   @media screen and (max-width: 935px) {
-    margin: 0 10px 0 10px;
+    margin: 10px 10px 0 10px;
   }
 `;
 
@@ -207,6 +208,26 @@ const Location = styled.span`
   font-weight: 200;
 `;
 
+const RightIcon = styled.div`
+  position: absolute;
+  display: flex;
+  margin-right: 30px;
+  top: 40%;
+  svg {
+    fill: white;
+  }
+`;
+
+const LeftIcon = styled.div`
+  position: absolute;
+  display: flex;
+  margin-left: -30px;
+  top: 40%;
+  svg {
+    fill: white;
+  }
+`;
+
 interface ITheme {
   active?: string;
 }
@@ -298,6 +319,12 @@ const CityProfilePresenter: React.SFC<IProps> = ({
           </ModalContainer>
         )}
         <SWrapper>
+          <LeftIcon>
+            <Link to={`/country/${city.country.countryCode}`}>
+              <Left />
+            </Link>
+          </LeftIcon>
+
           <PHeader>
             <AvatarContainer>
               <CAvatar size="lg" url={city.cityPhoto} />
@@ -422,6 +449,11 @@ const CityProfilePresenter: React.SFC<IProps> = ({
             title={"SAMENAME CITIES"}
             loading={samenameCitiesLoading}
           />
+          <RightIcon>
+            <Link to={`/country/${city.country.countryCode}`}>
+              <Right />
+            </Link>
+          </RightIcon>
         </SWrapper>
       </>
     );

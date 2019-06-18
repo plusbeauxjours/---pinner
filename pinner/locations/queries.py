@@ -97,7 +97,7 @@ def resolve_get_samename_cities(self, info, **kwargs):
     page = kwargs.get('page', 0)
 
     city = models.City.objects.get(city_id=cityId)
-    cities = models.City.objects.filter(city_name__icontains=city.city_name)
+    cities = models.City.objects.filter(city_name__icontains=city.city_name+ ' ')
 
     def get_locations_nearby_coords(latitude, longitude, max_distance=None):
 
