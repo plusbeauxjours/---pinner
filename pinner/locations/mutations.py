@@ -8,6 +8,7 @@ from graphql_jwt.decorators import login_required
 
 from . import models, types
 from . import locationThumbnail
+from . import reversePlace
 from notifications import models as notification_models
 
 
@@ -15,10 +16,6 @@ class CreateCity(graphene.Mutation):
 
     class Arguments:
         cityId = graphene.String(required=True)
-        cityName = graphene.String(required=True)
-        cityLatitude = graphene.Float(required=True)
-        cityLongitude = graphene.Float(required=True)
-        countryCode = graphene.String(required=True)
 
     Output = types.CreateCityResponse
 
@@ -27,12 +24,6 @@ class CreateCity(graphene.Mutation):
         user = info.context.user
 
         cityId = kwargs.get('cityId')
-        cityName = kwargs.get('cityName')
-        cityLatitude = kwargs.get('cityLatitude')
-        cityLongitude = kwargs.get('cityLongitude')
-        countryCode = kwargs.get('countryCode')
-
-        print('createCity')
 
         def get_locations_nearby_coords(latitude, longitude, max_distance=3000):
             gcd_formula = "6371 * acos(cos(radians(%s)) * \
@@ -43,83 +34,71 @@ class CreateCity(graphene.Mutation):
                 gcd_formula,
                 (latitude, longitude, latitude)
             )
+            print('get_locations_nearby_coords')
             qs = models.City.objects.all().annotate(distance=distance_raw_sql).order_by('distance')
             if max_distance is not None:
                 qs = qs.filter(Q(distance__lt=max_distance))
             return qs
 
         try:
-            country = models.Country.objects.get(country_code=countryCode)
-        except models.Country.DoesNotExist:
-            with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
-                countryData = json.load(file)
-                currentCountry = countryData[countryCode]
-                countryName = currentCountry['name']
-                countryNameNative = currentCountry['native']
-                countryCapital = currentCountry['capital']
-                countryCurrency = currentCountry['currency']
-                countryPhone = currentCountry['phone']
-                countryEmoji = currentCountry['emoji']
-                countryEmojiU = currentCountry['emojiU']
-                continentCode = currentCountry['continent']
-
-                try:
-                    continent = models.Continent.objects.get(continent_code=continentCode)
-                except:
-                    with open('pinner/locations/continentData.json', mode='rt', encoding='utf-8') as file:
-                        continentData = json.load(file)
-                        continentName = continentData[continentCode]
-
-                        try:
-                            gp = locationThumbnail.get_photos(term=continentName)
-                            continentPhotoURL = gp.get_urls()
-                        except:
-                            continentPhotoURL = None
-
-                        # DOWNLOAD IMAGE
-                        # continentPhotoURL = gp.get_urls()
-                        # # for i in range(gp.num):
-                        # #     print('Downloading...' + str(i) + '/' + str(gp.num))
-                        # #     gp.download(i)
-
-                        continent = models.Continent.objects.create(
-                            continent_name=continentName,
-                            continent_photo=continentPhotoURL,
-                            continent_code=continentCode
-                        )
-            try:
-                gp = locationThumbnail.get_photos(term=countryName)
-                countryPhotoURL = gp.get_urls()
-            except:
-                countryPhotoURL = None
-
-            # DOWNLOAD IMAGE
-            # for i in range(gp.num):
-            #     print('Downloading...' + str(i) + '/' + str(gp.num))
-            #     gp.download(i)
-
-            country = models.Country.objects.create(
-                country_code=countryCode,
-                country_name=countryName,
-                country_name_native=countryNameNative,
-                country_capital=countryCapital,
-                country_currency=countryCurrency,
-                country_phone=countryPhone,
-                country_emoji=countryEmoji,
-                country_emojiU=countryEmojiU,
-                country_photo=countryPhotoURL,
-                continent=continent,
-            )
-        try:
             city = models.City.objects.get(city_id=cityId)
-            if city.near_city.count() < 20:
-                nearCities = get_locations_nearby_coords(cityLatitude, cityLongitude, 3000)[:20]
-                for i in nearCities:
-                    city.near_city.add(i)
-                    city.save()
-
+            return types.CreateCityResponse(ok=True)
         except models.City.DoesNotExist:
+            cityLatitude, cityLongitude, cityName, countryCode = reversePlace.reverse_place(cityId)
             nearCities = get_locations_nearby_coords(cityLatitude, cityLongitude, 3000)[:20]
+
+            try:
+                country = models.Country.objects.get(country_code=countryCode)
+            except models.Country.DoesNotExist:
+
+                with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
+                    countryData = json.load(file)
+                    currentCountry = countryData[countryCode]
+                    countryName = currentCountry['name']
+                    countryNameNative = currentCountry['native']
+                    countryCapital = currentCountry['capital']
+                    countryCurrency = currentCountry['currency']
+                    countryPhone = currentCountry['phone']
+                    countryEmoji = currentCountry['emoji']
+                    countryEmojiU = currentCountry['emojiU']
+                    continentCode = currentCountry['continent']
+
+                    try:
+                        continent = models.Continent.objects.get(continent_code=continentCode)
+                    except:
+                        with open('pinner/locations/continentData.json', mode='rt', encoding='utf-8') as file:
+                            continentData = json.load(file)
+                            continentName = continentData[continentCode]
+
+                            try:
+                                gp = locationThumbnail.get_photos(term=continentName)
+                                continentPhotoURL = gp.get_urls()
+                            except:
+                                continentPhotoURL = None
+
+                            continent = models.Continent.objects.create(
+                                continent_name=continentName,
+                                continent_photo=continentPhotoURL,
+                                continent_code=continentCode
+                            )
+                try:
+                    gp = locationThumbnail.get_photos(term=countryName)
+                    countryPhotoURL = gp.get_urls()
+                except:
+                    countryPhotoURL = None
+
+                country = models.Country.objects.create(
+                    country_code=countryCode,
+                    country_name=countryName,
+                    country_name_native=countryNameNative,
+                    country_capital=countryCapital,
+                    country_currency=countryCurrency,
+                    country_phone=countryPhone,
+                    country_emoji=countryEmoji,
+                    country_emojiU=countryEmojiU,
+                    country_photo=countryPhotoURL,
+                    continent=continent,
+                )
 
             try:
                 gp = locationThumbnail.get_photos(term=cityName)
@@ -127,11 +106,6 @@ class CreateCity(graphene.Mutation):
             except:
                 cityPhotoURL = None
 
-            # DOWNLOAD IMAGE
-            # countryPhotoURL = gp.get_urls()
-            # # for i in range(gp.num):
-            # #     print('Downloading...' + str(i) + '/' + str(gp.num))
-            # #     gp.download(i)
             city = models.City.objects.create(
                 city_id=cityId,
                 city_name=cityName,
