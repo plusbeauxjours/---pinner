@@ -1,20 +1,8 @@
 import gql from "graphql-tag";
 
 export const CREATE_CITY = gql`
-  mutation CreateCity(
-    $cityId: String!
-    $cityName: String!
-    $cityLatitude: Float!
-    $cityLongitude: Float!
-    $countryCode: String!
-  ) {
-    createCity(
-      cityId: $cityId
-      cityName: $cityName
-      cityLatitude: $cityLatitude
-      cityLongitude: $cityLongitude
-      countryCode: $countryCode
-    ) {
+  mutation CreateCity($cityId: String!) {
+    createCity(cityId: $cityId) {
       ok
     }
   }

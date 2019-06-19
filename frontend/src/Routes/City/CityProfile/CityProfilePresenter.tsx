@@ -209,9 +209,10 @@ const Location = styled.span`
 `;
 
 const RightIcon = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
-  margin-right: 30px;
+  flex-direction: row-reverse;
+  margin-right: -30px;
   top: 40%;
   svg {
     fill: white;
@@ -219,7 +220,7 @@ const RightIcon = styled.div`
 `;
 
 const LeftIcon = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   margin-left: -30px;
   top: 40%;
@@ -324,7 +325,11 @@ const CityProfilePresenter: React.SFC<IProps> = ({
               <Left />
             </Link>
           </LeftIcon>
-
+          <RightIcon>
+            <Link to={`/country/${city.country.countryCode}`}>
+              <Right />
+            </Link>
+          </RightIcon>
           <PHeader>
             <AvatarContainer>
               <CAvatar size="lg" url={city.cityPhoto} />
@@ -449,11 +454,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
             title={"SAMENAME CITIES"}
             loading={samenameCitiesLoading}
           />
-          <RightIcon>
-            <Link to={`/country/${city.country.countryCode}`}>
-              <Right />
-            </Link>
-          </RightIcon>
         </SWrapper>
       </>
     );

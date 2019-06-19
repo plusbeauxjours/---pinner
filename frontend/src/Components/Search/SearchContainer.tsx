@@ -9,7 +9,6 @@ import {
   CreateCityVariables
 } from "../../types/api";
 import { REPORT_LOCATION } from "../../Routes/Login/Home/HomeQueries";
-import { reversePlaceId } from "../../mapHelpers";
 import { CREATE_CITY } from "./SearchQueries";
 
 class CreateCityQuery extends Mutation<CreateCity, CreateCityVariables> {}
@@ -74,14 +73,9 @@ class SearchContainer extends React.Component<IProps, IState> {
   }
   public onClick = async (placeId: string) => {
     const { history } = this.props;
-    const city = await reversePlaceId(placeId);
     await this.createCityFn({
       variables: {
-        cityId: placeId,
-        cityName: city.storableLocation.cityName,
-        cityLatitude: city.storableLocation.latitude,
-        cityLongitude: city.storableLocation.longitude,
-        countryCode: city.storableLocation.countryCode
+        cityId: placeId
       }
     });
     await history.push({
