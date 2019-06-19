@@ -84,13 +84,9 @@ class SearchContainer extends React.Component<IProps, IState> {
         countryCode: city.storableLocation.countryCode
       }
     });
-    try {
-      await history.push({
-        pathname: `/city/${placeId}`
-      });
-    } catch (e) {
-      console.log(e);
-    }
+    await history.push({
+      pathname: `/city/${placeId}`
+    });
   };
 }
 

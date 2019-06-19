@@ -50,7 +50,7 @@ class HeaderResponse(graphene.ObjectType):
 
 
 class CreateCityResponse(graphene.ObjectType):
-    city = graphene.Field(CityType)
+    ok = graphene.Boolean()
 
 
 class PhotoResponse(graphene.ObjectType):

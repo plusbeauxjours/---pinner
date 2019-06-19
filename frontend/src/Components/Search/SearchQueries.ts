@@ -15,29 +15,7 @@ export const CREATE_CITY = gql`
       cityLongitude: $cityLongitude
       countryCode: $countryCode
     ) {
-      city {
-        id
-        latitude
-        longitude
-        cityId
-        cityName
-        cityPhoto
-        country {
-          countryName
-          countryPhoto
-          countryCode
-          continent {
-            continentCode
-            continentName
-          }
-        }
-        likeCount
-        isLiked
-        userCount
-        userLogCount
-        count
-        diff
-      }
+      ok
     }
   }
 `;

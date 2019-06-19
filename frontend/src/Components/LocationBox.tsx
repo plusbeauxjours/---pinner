@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
-import Loader from "./Loader";
 import Bold from "./Bold";
 import Avatar from "./Avatar";
 import CityLikeBtn from "./CityLikeBtn";
@@ -154,9 +153,7 @@ const UserBox: React.SFC<IProps> = ({
   title,
   loading
 }) => {
-  if (loading) {
-    return <Loader />;
-  } else if (!loading && nearCities && nearCities.length !== 0) {
+  if (!loading && nearCities && nearCities.length !== 0) {
     return (
       <>
         <GreyLine />

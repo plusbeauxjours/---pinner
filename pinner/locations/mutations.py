@@ -143,10 +143,7 @@ class CreateCity(graphene.Mutation):
             for i in nearCities:
                 city.near_city.add(i)
                 city.save()
-            print("nani")
-            return city
-        print('cityDone')
-        return types.CreateCityResponse(city=city)
+        return types.CreateCityResponse(ok=True)
 
 
 class ReportLocation(graphene.Mutation):
