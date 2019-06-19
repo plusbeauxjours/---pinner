@@ -87,6 +87,7 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
   };
   public onCompletedDeleteCoffee = data => {
     if (data.deleteCoffee.ok) {
+      this.props.history.goBack();
       toast.success("Coffee deleted");
     } else {
       toast.error("error");
@@ -95,7 +96,7 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
   public updateDeleteCoffee = (cache, { data: { deleteCoffee } }) => {
     const { username } = deleteCoffee;
     console.log(username);
-    const currentCity = localStorage.getItem("cityName");
+    const currentCity = localStorage.getItem("cityId");
     try {
       const profileData = cache.readQuery({
         query: GET_COFFEES,
@@ -104,10 +105,10 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
       console.log(profileData);
       if (profileData) {
         profileData.getCoffees.coffees = profileData.getCoffees.coffees.filter(
-          i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
+          i => i.uuid !== deleteCoffee.coffeeId
         );
         profileData.getCoffees.coffees = profileData.getCoffees.coffees.filter(
-          i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
+          i => i.uuid !== deleteCoffee.coffeeId
         );
         cache.writeQuery({
           query: GET_COFFEES,
@@ -121,16 +122,16 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
     try {
       const feedData = cache.readQuery({
         query: GET_COFFEES,
-        variables: { cityName: currentCity, location: "city" }
+        variables: { cityId: currentCity, location: "city" }
       });
       if (feedData) {
         feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
-          i => parseInt(i.id, 10) !== deleteCoffee.coffeeId
+          i => i.uuid !== deleteCoffee.coffeeId
         );
         cache.writeQuery({
           query: GET_COFFEES,
           variables: {
-            cityName: currentCity,
+            cityId: currentCity,
             location: "city"
           },
           data: feedData
@@ -143,10 +144,11 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
   public deleteCoffee = () => {
     const {
       match: {
-        params: { id }
+        params: { uuid }
       }
     } = this.props;
-    this.deleteCoffeeFn({ variables: { coffeeId: parseInt(id, 10) } });
+    console.log(uuid);
+    this.deleteCoffeeFn({ variables: { coffeeId: uuid } });
     this.setState({
       modalOpen: false
     });

@@ -1015,7 +1015,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       const feedData = cache.readQuery({
         query: GET_COFFEES,
         variables: {
-          cityName: localStorage.getItem("cityName"),
+          cityId: localStorage.getItem("cityId"),
           location: "city"
         }
       });
@@ -1024,7 +1024,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         cache.writeQuery({
           query: GET_COFFEES,
           variables: {
-            cityName: localStorage.getItem("cityName"),
+            cityId: localStorage.getItem("cityId"),
             location: "city"
           },
           data: feedData
