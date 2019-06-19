@@ -5,7 +5,6 @@ import Bold from "./Bold";
 import { Upload } from "../Icons";
 import Avatar from "./Avatar";
 import CoffeeBtn from "src/Components/CoffeeBtn";
-import Loader from "./Loader";
 
 const Title = styled.div`
   display: flex;
@@ -149,9 +148,7 @@ const UserBox: React.SFC<IProps> = ({
   coffees,
   isStaying
 }) => {
-  if (coffeeLoading) {
-    return <Loader />;
-  } else if (!coffeeLoading && coffees && coffees.length !== 0) {
+  if (!coffeeLoading && coffees && coffees.length !== 0) {
     return (
       <>
         <GreyLine />

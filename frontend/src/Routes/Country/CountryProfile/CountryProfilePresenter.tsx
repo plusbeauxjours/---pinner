@@ -42,7 +42,7 @@ const GreyLine = styled.div`
   margin-bottom: 10px;
   border-bottom: 1px solid grey;
   @media screen and (max-width: 935px) {
-    margin: 0 10px 0 10px;
+    margin: 10px 10px 0 10px;
   }
 `;
 
