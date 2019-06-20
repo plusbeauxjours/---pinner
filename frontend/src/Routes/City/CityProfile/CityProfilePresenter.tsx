@@ -28,12 +28,6 @@ const PHeader = styled.header`
   }
 `;
 
-const Username = styled.span`
-  text-align: center;
-  font-size: 22px;
-  font-weight: 100;
-`;
-
 const InfoRow = styled.span`
   display: grid;
   grid-template-columns: 1.5fr 1fr;
@@ -140,19 +134,6 @@ const UserRow = styled.div<ITheme>`
   }
 `;
 
-const LocationRow = styled.div`
-  display: grid;
-  flex-direction: row;
-  grid-template-columns: 1fr;
-  width: 100%;
-  height: 50px;
-  padding: 0 5px 0 5px;
-  grid-gap: 15px;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-`;
-
 const UserNameRow = styled.div`
   display: flex;
   flex-direction: row;
@@ -180,11 +161,12 @@ const Input = styled.input`
   }
 `;
 
-const Header = styled.header`
+const Header = styled.div`
   display: flex;
   align-items: center;
-  border-radius: 3px;
   cursor: pointer;
+  height: 50px;
+  padding-left: 5px;
 `;
 
 const HeaderText = styled(Bold)`
@@ -228,6 +210,18 @@ const LeftIcon = styled.div`
   svg {
     fill: white;
   }
+`;
+
+const LocationName = styled.span`
+  font-size: 35px;
+  font-weight: 300;
+  margin: 5px 10px 5px 0;
+`;
+
+const SText = styled(Bold)`
+  font-size: 18px;
+  font-weight: 100;
+  text-transform: uppercase;
 `;
 
 interface ITheme {
@@ -344,6 +338,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
           <PHeader>
             <AvatarContainer>
               <CAvatar size="lg" url={city.cityPhoto} />
+              <LocationName>{city.cityName}</LocationName>
               <InfoRow>
                 <Weather latitude={city.latitude} longitude={city.longitude} />
                 <CityLikeBtn
@@ -353,28 +348,24 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                   type={"profile"}
                 />
               </InfoRow>
-              <LocationRow>
-                <Link
-                  to={{
-                    pathname: `/country/${city.country.countryCode}`,
-                    state: { countryName: city.country.countryName }
-                  }}
-                >
-                  <Header>
-                    <SAvatar size={"sm"} url={city.country.countryPhoto} />
-                    <HeaderColumn>
-                      <HeaderText text={city.country.countryName} />
-                      <Location>
-                        {city.country.continent.continentName}
-                      </Location>
-                    </HeaderColumn>
-                  </Header>
-                </Link>
-              </LocationRow>
+              <Link
+                to={{
+                  pathname: `/country/${city.country.countryCode}`,
+                  state: { countryName: city.country.countryName }
+                }}
+              >
+                <Header>
+                  <SAvatar size={"sm"} url={city.country.countryPhoto} />
+                  <HeaderColumn>
+                    <HeaderText text={city.country.countryName} />
+                    <Location>{city.country.continent.continentName}</Location>
+                  </HeaderColumn>
+                </Header>
+              </Link>
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>
-                <Username>{city.cityName}</Username>
+                <SText text={city.userCount === 1 ? `USER` : `USERS`} />
                 <Input
                   placeholder="Search"
                   onChange={onChange}

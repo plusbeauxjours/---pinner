@@ -24,18 +24,26 @@ const PHeader = styled.header`
   }
 `;
 
-const Username = styled.span`
-  text-align: center;
-  font-size: 22px;
-  font-weight: 100;
-`;
-
-const InfoRow = styled.span``;
+// const InfoRow = styled.div`
+//   display: flex;
+//   flex-wrap: nowrap;
+//   align-items: center;
+//   padding-left: 5px;
+//   margin-bottom: 5px;
+// `;
 
 const SText = styled(Bold)`
   font-size: 18px;
   font-weight: 100;
+  text-transform: uppercase;
 `;
+
+// const SSText = styled(Bold)`
+//   width: 45px;
+//   font-size: 25px;
+//   font-weight: 200;
+//   text-align: center;
+// `;
 
 const GreyLine = styled.div`
   margin-top: 10px;
@@ -100,8 +108,9 @@ const AvatarContainer = styled.div`
 const Header = styled.header`
   display: flex;
   align-items: center;
-  border-radius: 3px;
   cursor: pointer;
+  height: 50px;
+  padding-left: 5px;
 `;
 
 const HeaderText = styled(Bold)`
@@ -140,17 +149,16 @@ const Input = styled.input`
   }
 `;
 
-const LocationRow = styled.div`
-  display: grid;
-  flex-direction: row;
-  grid-template-columns: 1fr;
-  width: 100%;
-  height: 50px;
-  padding: 0 5px 0 5px;
-  grid-gap: 15px;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+const LocationContainer = styled.span``;
+
+const LocationName = styled.span`
+  font-size: 35px;
+  font-weight: 300;
+  margin: 5px 5px 5px 0;
+`;
+
+const Flag = styled.span`
+  font-size: 20px;
 `;
 
 interface ITheme {
@@ -209,53 +217,44 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
         <SWrapper>
           <PHeader>
             <AvatarContainer>
-              <CAvatar size="lg" url={country.countryPhoto} />
-              <InfoRow>
-                <SText text={String(country.cityCount)} />
-                cities
-              </InfoRow>
-              <InfoRow>
-                <SText text={String(country.distance)} />
+              <LocationContainer>
+                <CAvatar size="lg" url={country.countryPhoto} />
+                <LocationName>{country.countryName}</LocationName>
+                <Flag>{country.countryEmoji}</Flag>
+              </LocationContainer>
+              {/* <InfoRow>
+                <SSText text={String(country.distance)} />
                 TIME DIFFERENCE
               </InfoRow>
               <InfoRow>
-                <SText text={String(country.countryCapital)} />
+                <SSText text={String(country.countryCapital)} />
                 countryCapital
               </InfoRow>
               <InfoRow>
-                <SText text={String(country.countryCurrency)} />
+                <SSText text={String(country.countryCurrency)} />
                 countryCurrency
               </InfoRow>
               <InfoRow>
-                <SText text={String(country.countryEmoji)} />
-                countryEmoji
-              </InfoRow>
-              <InfoRow>
-                <SText text={String(country.language)} />
+                <SSText text={String(country.language)} />
                 language
-              </InfoRow>
-              <LocationRow>
-                <Link
-                  to={{
-                    pathname: `/continent/${country.continent.continentCode}`,
-                    state: { continentName: country.continent.continentName }
-                  }}
-                >
-                  <Header>
-                    <SAvatar
-                      size={"sm"}
-                      url={country.continent.continentPhoto}
-                    />
-                    <HeaderColumn>
-                      <HeaderText text={country.continent.continentName} />
-                    </HeaderColumn>
-                  </Header>
-                </Link>
-              </LocationRow>
+              </InfoRow> */}
+              <Link
+                to={{
+                  pathname: `/continent/${country.continent.continentCode}`,
+                  state: { continentName: country.continent.continentName }
+                }}
+              >
+                <Header>
+                  <SAvatar size={"sm"} url={country.continent.continentPhoto} />
+                  <HeaderColumn>
+                    <HeaderText text={country.continent.continentName} />
+                  </HeaderColumn>
+                </Header>
+              </Link>
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>
-                <Username>{countryName}</Username>
+                <SText text={country.cityCount === 1 ? `CITY` : `CITIES`} />
                 <Input
                   placeholder="Search"
                   value={search}

@@ -23,17 +23,10 @@ const PHeader = styled.header`
   }
 `;
 
-const Username = styled.span`
-  text-align: center;
-  font-size: 22px;
-  font-weight: 100;
-`;
-
-const InfoRow = styled.span``;
-
 const SText = styled(Bold)`
   font-size: 18px;
   font-weight: 100;
+  text-transform: uppercase;
 `;
 
 const GreyLine = styled.div`
@@ -91,12 +84,6 @@ const UserNameRow = styled.div`
   margin-bottom: 10px;
 `;
 
-const AvatarContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
 const Header = styled.header`
   display: flex;
   align-items: center;
@@ -138,6 +125,13 @@ const Input = styled.input`
   &::placeholder {
     color: ${props => props.theme.greyColor};
   }
+`;
+const LocationContainer = styled.span``;
+
+const LocationName = styled.span`
+  font-size: 35px;
+  font-weight: 300;
+  margin: 5px 5px 5px 0;
 `;
 
 interface ITheme {
@@ -190,16 +184,15 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
       <>
         <SWrapper>
           <PHeader>
-            <AvatarContainer>
+            <LocationContainer>
               <CAvatar size="lg" url={continent.continentPhoto} />
-              <InfoRow>
-                <SText text={String(continent.countryCount)} />
-                cities
-              </InfoRow>
-            </AvatarContainer>
+              <LocationName>{continent.continentName}</LocationName>
+            </LocationContainer>
             <UserContainer>
               <UserNameRow>
-                <Username>{continent.continentName}</Username>
+                <SText
+                  text={continent.countryCount === 1 ? `COUNTRY` : `COUNTRIES`}
+                />
                 <Input
                   placeholder="Search"
                   value={search}

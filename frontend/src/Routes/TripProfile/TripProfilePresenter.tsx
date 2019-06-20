@@ -11,6 +11,7 @@ import Weather from "src/Components/Weather";
 import AvatarGrid from "../../Components/AvatarGrid";
 import UserHeader from "../../Components/UserHeader";
 import LocationBox from "src/Components/LocationBox";
+import CityLikeBtn from "../../Components/CityLikeBtn";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -31,11 +32,12 @@ const Username = styled.span`
   font-weight: 100;
 `;
 
-const InfoRow = styled.span``;
-
-const SText = styled(Bold)`
-  font-size: 18px;
-  font-weight: 100;
+const InfoRow = styled.span`
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  grid-gap: 10px;
+  width: 300px;
+  margin-top: 10px;
 `;
 
 const SSText = styled(Bold)`
@@ -62,7 +64,7 @@ const GreyLine = styled.div`
   margin-bottom: 10px;
   border-bottom: 1px solid grey;
   @media screen and (max-width: 935px) {
-    margin: 0 10px 0 10px;
+    margin: 10px 10px 0 10px;
   }
 `;
 
@@ -107,14 +109,6 @@ const UserRow = styled.div<ITheme>`
   }
 `;
 
-// const LocationRow = styled(UserRow)`
-//   width: 300px;
-//   height: 50px;
-//   margin-top: 15px;
-//   margin-bottom: 15px;
-//   border-top: 1px solid grey;
-// `;
-
 const UserNameRow = styled.div`
   display: flex;
   flex-direction: row;
@@ -140,6 +134,36 @@ const Input = styled.input`
   &::placeholder {
     color: ${props => props.theme.greyColor};
   }
+`;
+
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  height: 50px;
+  padding-left: 5px;
+`;
+
+const HeaderText = styled(Bold)`
+  display: flex;
+`;
+
+const HeaderColumn = styled.div`
+  margin-left: 15px;
+`;
+
+const SAvatar = styled(Avatar)`
+  border-radius: 3px;
+  height: 45px;
+  width: 45px;
+`;
+
+const Location = styled.span`
+  display: flex;
+  margin-top: 5px;
+  display: block;
+  font-size: 12px;
+  font-weight: 200;
 `;
 
 interface ITheme {
@@ -206,15 +230,28 @@ const TripProfilePresenter: React.SFC<IProps> = ({
             <AvatarContainer>
               <CAvatar size="lg" url={city.cityPhoto} />
               <InfoRow>
-                <SText text={String(city.userLogCount)} />
-                DISTANCE
+                <Weather latitude={city.latitude} longitude={city.longitude} />
+                <CityLikeBtn
+                  isLiked={city.isLiked}
+                  cityId={city.id}
+                  likeCount={city.likeCount}
+                  type={"profile"}
+                />
               </InfoRow>
-              <SText text={String(city.distance)} />
-              <InfoRow>
-                TIME DIFFERENCE
-                <SText text={String(city.userCount)} />
-              </InfoRow>
-              <Weather latitude={city.latitude} longitude={city.longitude} />
+              <Link
+                to={{
+                  pathname: `/country/${city.country.countryCode}`,
+                  state: { countryName: city.country.countryName }
+                }}
+              >
+                <Header>
+                  <SAvatar size={"sm"} url={city.country.countryPhoto} />
+                  <HeaderColumn>
+                    <HeaderText text={city.country.countryName} />
+                    <Location>{city.country.continent.continentName}</Location>
+                  </HeaderColumn>
+                </Header>
+              </Link>
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>

@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import {} from "src/sharedQueries";
+import { CONTINENT_FRAGMENT } from "src/sharedQueries";
 
 export const TRIP_PROFILE = gql`
   query TripProfile($cityId: String!, $startDate: Date!, $endDate: Date!) {
@@ -35,6 +35,7 @@ export const TRIP_PROFILE = gql`
         }
       }
       city {
+        id
         latitude
         longitude
         cityId
@@ -44,7 +45,12 @@ export const TRIP_PROFILE = gql`
           countryName
           countryPhoto
           countryCode
+          continent {
+            ...ContinentParts
+          }
         }
+        likeCount
+        isLiked
         userCount
         userLogCount
         count
@@ -52,4 +58,5 @@ export const TRIP_PROFILE = gql`
       }
     }
   }
+  ${CONTINENT_FRAGMENT}
 `;
