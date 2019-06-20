@@ -151,7 +151,12 @@ const SearchPresenter: React.SFC<IProps> = ({
           countries.length > 0 &&
           countries.map(country => (
             <UserRow key={country.id}>
-              <Link to={`/country/${country.countryCode}`}>
+              <Link
+                to={{
+                  pathname: `/country/${country.countryCode}`,
+                  state: { countryName: country.countryName }
+                }}
+              >
                 <Header>
                   <SAvatar size={"sm"} url={country.countryPhoto} />
                   <HeaderColumn>

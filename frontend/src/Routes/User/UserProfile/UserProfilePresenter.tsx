@@ -1062,7 +1062,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               ) : null}
               {user.profile.nationality ? (
                 <Row>
-                  <Link to={`/country/${user.profile.nationality.countryName}`}>
+                  <Link to={`/country/${user.profile.nationality.countryCode}`}>
                     <UBold
                       text={String(user.profile.nationality.countryEmoji)}
                     />
@@ -1072,7 +1072,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               ) : null}
               {user.profile.residence ? (
                 <Row>
-                  <Link to={`/country/${user.profile.residence.countryName}`}>
+                  <Link to={`/country/${user.profile.residence.countryCode}`}>
                     <UBold text={String(user.profile.residence.countryEmoji)} />
                     <UBold text={" residence - done"} />
                   </Link>

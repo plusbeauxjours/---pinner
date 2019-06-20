@@ -34,11 +34,12 @@ const Username = styled.span`
   font-weight: 100;
 `;
 
-const InfoRow = styled.span``;
-
-const SText = styled(Bold)`
-  font-size: 18px;
-  font-weight: 100;
+const InfoRow = styled.span`
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  grid-gap: 10px;
+  width: 300px;
+  margin-top: 10px;
 `;
 
 const ModalAnimation = keyframes`
@@ -209,7 +210,7 @@ const Location = styled.span`
 `;
 
 const RightIcon = styled.div`
-  position: fixed;
+  position: absolute;
   display: flex;
   flex-direction: row-reverse;
   margin-right: -30px;
@@ -220,7 +221,7 @@ const RightIcon = styled.div`
 `;
 
 const LeftIcon = styled.div`
-  position: fixed;
+  position: absolute;
   display: flex;
   margin-left: -30px;
   top: 40%;
@@ -321,12 +322,22 @@ const CityProfilePresenter: React.SFC<IProps> = ({
         )}
         <SWrapper>
           <LeftIcon>
-            <Link to={`/country/${city.country.countryCode}`}>
+            <Link
+              to={{
+                pathname: `/country/${city.country.countryCode}`,
+                state: { countryName: city.country.countryName }
+              }}
+            >
               <Left />
             </Link>
           </LeftIcon>
           <RightIcon>
-            <Link to={`/country/${city.country.countryCode}`}>
+            <Link
+              to={{
+                pathname: `/country/${city.country.countryCode}`,
+                state: { countryName: city.country.countryName }
+              }}
+            >
               <Right />
             </Link>
           </RightIcon>
@@ -334,10 +345,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
             <AvatarContainer>
               <CAvatar size="lg" url={city.cityPhoto} />
               <InfoRow>
-                <SText text={String(city.userLogCount)} />
-                DISTANCE
-              </InfoRow>
-              <InfoRow>
+                <Weather latitude={city.latitude} longitude={city.longitude} />
                 <CityLikeBtn
                   isLiked={city.isLiked}
                   cityId={city.id}
@@ -345,7 +353,6 @@ const CityProfilePresenter: React.SFC<IProps> = ({
                   type={"profile"}
                 />
               </InfoRow>
-              <Weather latitude={city.latitude} longitude={city.longitude} />
               <LocationRow>
                 <Link
                   to={{

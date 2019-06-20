@@ -151,7 +151,7 @@ const UserBox: React.SFC<IProps> = ({
 }) => {
   if (coffeeLoading) {
     return <Loader />;
-  } else if (!coffeeLoading && currentCityId) {
+  } else if (!coffeeLoading && currentCityId && isStaying) {
     return (
       <>
         <GreyLine />

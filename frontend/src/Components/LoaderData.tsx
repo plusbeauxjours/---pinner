@@ -7,9 +7,23 @@ const BounceAnimation = keyframes`
   100% { margin-bottom: 0 }
 `;
 
-const DotWrapper = styled.div`
+const DotWrapper = styled.div<ITheme>`
+  width: ${props => {
+    if (props.type === "feed") {
+      return "22px";
+    } else {
+      return "60px";
+    }
+  }};
+  height: ${props => {
+    if (props.type === "feed") {
+      return "22px";
+    } else {
+      return "60px";
+    }
+  }};
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 `;
 
 const Dot = styled.div<ITheme>`
@@ -36,7 +50,7 @@ const Dot = styled.div<ITheme>`
 `;
 
 interface ITheme {
-  delay: string;
+  delay?: string;
   type?: string;
 }
 
@@ -48,7 +62,7 @@ class LoaderData extends Component<IProps> {
   public render() {
     const { type } = this.props;
     return (
-      <DotWrapper>
+      <DotWrapper type={type}>
         <Dot delay="0s" type={type} />
         <Dot delay=".1s" type={type} />
         <Dot delay=".2s" type={type} />

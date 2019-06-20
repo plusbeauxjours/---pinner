@@ -67,11 +67,11 @@ const TempNumber = styled.div<ITheme>`
       return "#0000FF";
     } else if (props.aqi < -20) {
       return "#00008B";
-    } else if (25 <= props.temp && props.temp < 30) {
-      return colorMidium;
     } else if (30 <= props.temp && props.temp < 35) {
+      return colorMidium;
+    } else if (35 <= props.temp && props.temp < 40) {
       return colorHigh;
-    } else if (35 <= props.temp) {
+    } else if (40 <= props.temp) {
       return colorVeryHigh;
     } else {
       return "white";
@@ -81,11 +81,11 @@ const TempNumber = styled.div<ITheme>`
 
 const AqiNumber = styled(TempNumber)`
   color: ${props => {
-    if (50 <= props.aqi && props.aqi < 100) {
+    if (100 <= props.aqi && props.aqi < 150) {
       return colorMidium;
-    } else if (100 <= props.aqi && props.aqi < 150) {
+    } else if (150 <= props.aqi && props.aqi < 200) {
       return colorHigh;
-    } else if (150 <= props.aqi) {
+    } else if (200 <= props.aqi) {
       return colorVeryHigh;
     } else {
       return "white";
@@ -95,10 +95,10 @@ const AqiNumber = styled(TempNumber)`
 
 const HumidityNumber = styled(TempNumber)`
   color: ${props => {
-    if (50 <= props.humidity && props.humidity < 60) {
-      return "#008d62";
-    } else {
+    if (40 <= props.humidity && props.humidity < 70) {
       return "white";
+    } else {
+      return "#008d62";
     }
   }};
 `;

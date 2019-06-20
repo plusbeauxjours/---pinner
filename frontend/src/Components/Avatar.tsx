@@ -114,7 +114,7 @@ const Avatar: React.SFC<IProps> = ({
     const { getCityPhoto: { photo = null } = {} } = cityPhotoData;
     console.log(photo);
     return (
-      <ProgressiveImage delay={1000} src={photo} placeholder="">
+      <ProgressiveImage delay={0} src={photo} placeholder="">
         {(src, loading) => {
           return loading ? (
             <AvatarContainer size={size}>
@@ -135,7 +135,7 @@ const Avatar: React.SFC<IProps> = ({
     const { getCountryPhoto: { photo = null } = {} } = countryPhotoData;
 
     return (
-      <ProgressiveImage delay={1000} src={photo} placeholder="">
+      <ProgressiveImage delay={0} src={photo} placeholder="">
         {(src, loading) => {
           return loading ? (
             <AvatarContainer size={size}>
@@ -151,7 +151,7 @@ const Avatar: React.SFC<IProps> = ({
     );
   } else {
     return (
-      <ProgressiveImage delay={1000} src={url} placeholder="">
+      <ProgressiveImage delay={0} src={url} placeholder="">
         {(src, loading) => {
           return loading ? (
             <AvatarContainer size={size}>

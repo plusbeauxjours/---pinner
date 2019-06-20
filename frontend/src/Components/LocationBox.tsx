@@ -260,20 +260,20 @@ const UserBox: React.SFC<IProps> = ({
         <Container>
           <Box>
             {continents.map(continent => (
-              <UserRow key={continent.id} type={"continents"}>
-                <Link to={`/continent/${continent.continentCode}`}>
+              <Link to={`/continent/${continent.continentCode}`}>
+                <UserRow key={continent.id} type={"continents"}>
                   <Header>
                     <SAvatar size={"sm"} url={continent.continentPhoto} />
                     <HeaderColumn>
                       <HeaderText text={continent.continentName} />
                     </HeaderColumn>
                   </Header>
-                </Link>
-                <Text>
-                  {continent.countryCount}{" "}
-                  {continent.countryCount === 1 ? "country" : "countries"}
-                </Text>
-              </UserRow>
+                  <Text>
+                    {continent.countryCount}{" "}
+                    {continent.countryCount === 1 ? "country" : "countries"}
+                  </Text>
+                </UserRow>
+              </Link>
             ))}
           </Box>
         </Container>

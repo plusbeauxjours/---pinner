@@ -124,10 +124,10 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
       {
         countryList.length
           ? history.push({
-              pathname: `/country/${countryList[activeId].countryName}`
+              pathname: `/country/${countryList[activeId].countryCode}`
             })
           : history.push({
-              pathname: `/country/${countries[activeId].countryName}`
+              pathname: `/country/${countries[activeId].countryCode}`
             });
       }
       this.setState({
