@@ -22,12 +22,14 @@ const BoxButtonContainer = styled.div`
 
 const LikeAnimation = keyframes`
 	  from{
-	    opacity:1;
-	    transform:scale(1.1);
+	    opacity:0;
+      height: 115%
+      width: 115%
 	  }
 	  to{
 	    opacity:1;
-	    transform:none;
+      height: 100%
+      width: 100%
 	  }
 	`;
 
@@ -36,10 +38,10 @@ const Button = styled.span<ITheme>`
   &:first-child {
     margin-right: 10px;
   }
-  transition: all 0.3s ease-in-out;
+  transition: all 0.5s ease-in-out;
   width: ${props => props.type === "profile" && "45px"};
   svg {
-    transition: all 0.3s ease-in-out;
+    transition: all 0.5s ease-in-out;
     fill: ${props => (props.isLiked ? "#EC4956" : props.theme.greyColor)};
   }
 `;
@@ -49,16 +51,16 @@ const BoxButton = styled.span<ITheme>`
   &:first-child {
     margin-right: 10px;
   }
+  display: flex;
+  justify-content: center;
   width: ${props => props.type === "profile" && "45px"};
   svg {
-    transition: all 0.3s ease-in-out;
+    animation: ${LikeAnimation} 0.4s linear;
     fill: ${props => (props.isLiked ? "#EC4956" : props.theme.greyColor)};
   }
-  animation: ${LikeAnimation} 0.1s linear;
 `;
 
 const Text = styled(Bold)<ITheme>`
-  font-weight: 300;
   display: flex;
   align-items: center;
   color: ${props => (props.type === "row" ? "grey" : "white")};
