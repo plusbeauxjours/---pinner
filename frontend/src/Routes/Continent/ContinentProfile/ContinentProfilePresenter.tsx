@@ -126,7 +126,11 @@ const Input = styled.input`
     color: ${props => props.theme.greyColor};
   }
 `;
-const LocationContainer = styled.span``;
+
+const AvatarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const LocationName = styled.span`
   font-size: 35px;
@@ -184,10 +188,10 @@ const ContinentProfilePresenter: React.SFC<IProps> = ({
       <>
         <SWrapper>
           <PHeader>
-            <LocationContainer>
+            <AvatarContainer>
               <CAvatar size="lg" url={continent.continentPhoto} />
               <LocationName>{continent.continentName}</LocationName>
-            </LocationContainer>
+            </AvatarContainer>
             <UserContainer>
               <UserNameRow>
                 <SText

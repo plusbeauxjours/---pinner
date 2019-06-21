@@ -113,6 +113,10 @@ const Header = styled.header`
   padding-left: 5px;
 `;
 
+const LocationHeader = styled(Header)`
+  margin-top: 10px;
+`;
+
 const HeaderText = styled(Bold)`
   display: flex;
 `;
@@ -149,12 +153,14 @@ const Input = styled.input`
   }
 `;
 
-const LocationContainer = styled.span``;
+const LocationContainer = styled.span`
+  margin: 5px 5px 5px 0;
+`;
 
 const LocationName = styled.span`
   font-size: 35px;
   font-weight: 300;
-  margin: 5px 5px 5px 0;
+  margin-right: 5px;
 `;
 
 const Flag = styled.span`
@@ -217,8 +223,8 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
         <SWrapper>
           <PHeader>
             <AvatarContainer>
+              <CAvatar size="lg" url={country.countryPhoto} />
               <LocationContainer>
-                <CAvatar size="lg" url={country.countryPhoto} />
                 <LocationName>{country.countryName}</LocationName>
                 <Flag>{country.countryEmoji}</Flag>
               </LocationContainer>
@@ -244,12 +250,12 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
                   state: { continentName: country.continent.continentName }
                 }}
               >
-                <Header>
+                <LocationHeader>
                   <SAvatar size={"sm"} url={country.continent.continentPhoto} />
                   <HeaderColumn>
                     <HeaderText text={country.continent.continentName} />
                   </HeaderColumn>
-                </Header>
+                </LocationHeader>
               </Link>
             </AvatarContainer>
             <UserContainer>

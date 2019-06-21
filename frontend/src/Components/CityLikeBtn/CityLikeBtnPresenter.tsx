@@ -38,10 +38,10 @@ const Button = styled.span<ITheme>`
   &:first-child {
     margin-right: 10px;
   }
-  transition: all 0.3s ease-in-out;
+  transition: all 0.5s ease-in-out;
   width: ${props => props.type === "profile" && "45px"};
   svg {
-    transition: all 0.3s ease-in-out;
+    transition: all 0.5s ease-in-out;
     fill: ${props => (props.isLiked ? "#EC4956" : props.theme.greyColor)};
   }
 `;
@@ -53,7 +53,7 @@ const BoxButton = styled.span<ITheme>`
   justify-content: center;
   width: ${props => props.type === "profile" && "45px"};
   svg {
-    animation: ${LikeAnimation} 0.2s linear;
+    animation: ${LikeAnimation} 0.1s linear;
     fill: ${props => (props.isLiked ? "#EC4956" : props.theme.greyColor)};
   }
 `;
