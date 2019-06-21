@@ -59,7 +59,7 @@ const NotificationRow: React.SFC<IProps> = ({
                 <>
                   <Link
                     to={{
-                      pathname: `/match/`
+                      pathname: `/`
                     }}
                     onClick={() => onMarkRead(notification.id)}
                   >

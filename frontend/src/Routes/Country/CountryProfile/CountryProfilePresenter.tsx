@@ -10,6 +10,7 @@ import CityLikeBtn from "../../../Components/CityLikeBtn";
 import UserBox from "src/Components/UserBox";
 import CoffeeBox from "src/Components/CoffeeBox";
 import LocationBox from "src/Components/LocationBox";
+import { Right } from "../../../Icons";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -167,6 +168,26 @@ const Flag = styled.span`
   font-size: 20px;
 `;
 
+const RightIcon = styled.div`
+  position: absolute;
+  display: flex;
+  margin-left: 941px;
+  top: 40%;
+  svg {
+    fill: white;
+  }
+`;
+
+// const LeftIcon = styled.div`
+//   position: absolute;
+//   display: flex;
+//   margin-left: -30px;
+//   top: 40%;
+//   svg {
+//     fill: white;
+//   }
+// `;
+
 interface ITheme {
   active?: string;
 }
@@ -188,6 +209,7 @@ interface IProps {
   activeId: number;
   countryCode: string;
   currentCityId: string;
+  back: (event) => void;
 }
 
 const CountryProfilePresenter: React.SFC<IProps> = ({
@@ -221,6 +243,26 @@ const CountryProfilePresenter: React.SFC<IProps> = ({
     return (
       <>
         <SWrapper>
+          {/* <LeftIcon>
+            <Link
+              to={{
+                pathname: `/country/${city.country.countryCode}`,
+                state: { countryName: city.country.countryName }
+              }}
+            >
+              <Left />
+            </Link>
+          </LeftIcon> */}
+          <RightIcon>
+            <Link
+              to={{
+                pathname: `/continent/${country.continent.continentCode}`,
+                state: { countryName: country.continent.continentName }
+              }}
+            >
+              <Right />
+            </Link>
+          </RightIcon>
           <PHeader>
             <AvatarContainer>
               <CAvatar size="lg" url={country.countryPhoto} />

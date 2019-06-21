@@ -229,7 +229,7 @@ const HeaderPresenter: React.SFC<IProps> = ({
         <SWrapper>
           <Column>
             <Icon>
-              <Link to="/match">
+              <Link to="/">
                 <Compass />
               </Link>
             </Icon>

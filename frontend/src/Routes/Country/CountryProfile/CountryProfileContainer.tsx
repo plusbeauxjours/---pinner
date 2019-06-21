@@ -45,6 +45,7 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
     };
   }
   public componentDidUpdate(prevProps) {
+    console.log(prevProps);
     const newProps = this.props;
     if (
       prevProps.match.params.countryCode !== newProps.match.params.countryCode
@@ -54,6 +55,7 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
     }
   }
   public render() {
+    console.log(this.props);
     const {
       match: {
         params: { countryCode }
@@ -110,6 +112,7 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
                           onBlur={this.onBlur}
                           countryCode={countryCode}
                           currentCityId={currentCityId}
+                          back={this.back}
                         />
                       );
                     }}
@@ -122,6 +125,9 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
       </GetCountriesQuery>
     );
   }
+  public back = event => {
+    this.props.history.goBack();
+  };
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
     const {
       target: { value }

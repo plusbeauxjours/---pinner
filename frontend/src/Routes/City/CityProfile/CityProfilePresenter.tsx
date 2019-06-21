@@ -13,7 +13,7 @@ import CityLikeBtn from "../../../Components/CityLikeBtn";
 import UserBox from "src/Components/UserBox";
 import CoffeeBox from "src/Components/CoffeeBox";
 import LocationBox from "src/Components/LocationBox";
-import { Right, Left } from "../../../Icons";
+import { Right } from "../../../Icons";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -191,27 +191,6 @@ const Location = styled.span`
   font-weight: 200;
 `;
 
-const RightIcon = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: row-reverse;
-  margin-right: -30px;
-  top: 40%;
-  svg {
-    fill: white;
-  }
-`;
-
-const LeftIcon = styled.div`
-  position: absolute;
-  display: flex;
-  margin-left: -30px;
-  top: 40%;
-  svg {
-    fill: white;
-  }
-`;
-
 const LocationName = styled.span`
   font-size: 35px;
   font-weight: 300;
@@ -223,6 +202,26 @@ const SText = styled(Bold)`
   font-weight: 100;
   text-transform: uppercase;
 `;
+
+const RightIcon = styled.div`
+  position: absolute;
+  display: flex;
+  margin-left: 941px;
+  top: 40%;
+  svg {
+    fill: white;
+  }
+`;
+
+// const LeftIcon = styled.div`
+//   position: absolute;
+//   display: flex;
+//   margin-left: -30px;
+//   top: 40%;
+//   svg {
+//     fill: white;
+//   }
+// `;
 
 interface ITheme {
   active?: string;
@@ -315,7 +314,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
           </ModalContainer>
         )}
         <SWrapper>
-          <LeftIcon>
+          {/* <LeftIcon>
             <Link
               to={{
                 pathname: `/country/${city.country.countryCode}`,
@@ -324,7 +323,7 @@ const CityProfilePresenter: React.SFC<IProps> = ({
             >
               <Left />
             </Link>
-          </LeftIcon>
+          </LeftIcon> */}
           <RightIcon>
             <Link
               to={{

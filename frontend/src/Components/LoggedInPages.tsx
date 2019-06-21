@@ -62,14 +62,14 @@ class LoggedInPages extends React.Component<IProps> {
         <Header />
         {modalOpen ? (
           <>
-            <Route path="/match" exact={true} component={Match} />
+            <Route path="/" exact={true} component={Match} />
             <Route path="/c/:uuid" exact={true} component={CoffeeDetail} />
           </>
         ) : null}
         <Switch location={modalOpen ? this.previousLocation : location}>
           <Route path="/people" exact={true} component={PeoplePage} />
           <Route path="/coffees" exact={true} component={CoffeesPage} />
-          <Route path="/match" exact={true} component={Match} />
+          <Route path="/" exact={true} component={Match} />
 
           {/* CONTINENT */}
           <Route
