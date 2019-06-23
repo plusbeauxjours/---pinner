@@ -15,3 +15,24 @@ class ProfileAdmin(admin.ModelAdmin):
         'nationality',
         'residence'
     )
+
+
+@admin.register(models.Avatar)
+class AvatarAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'uuid',
+        'creator',
+        'image',
+        'thumbnail',
+        'is_main',
+    )
+
+
+@admin.register(models.Like)
+class LikeAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'creator',
+        'avatar',
+    )

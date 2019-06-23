@@ -26,12 +26,6 @@ class Query(object):
         required=True,
         args={'search': graphene.String(required=True)}
     )
-    check_username = graphene.Field(
-        types.CheckUsernameResponse,
-        resolver=queries.resolve_check_username,
-        required=True,
-        args={'username': graphene.String(required=True)}
-    )
     recommand_users = graphene.Field(
         types.RecommandUsersResponse,
         resolver=queries.resolve_recommand_users,
@@ -57,6 +51,22 @@ class Query(object):
         required=True,
         args={
             'userName': graphene.String(required=True),
+        }
+    )
+    get_avatars = graphene.Field(
+        types.AvatarListResponse,
+        resolver=queries.resolve_get_avatars,
+        required=True,
+        args={
+            'userName': graphene.String(required=True),
+        }
+    )
+    get_avatar_details = graphene.Field(
+        types.AvatarDetailResponse,
+        resolver=queries.resolve_get_avatar_details,
+        required=True,
+        args={
+            'avatarId': graphene.String(required=True),
         }
     )
 

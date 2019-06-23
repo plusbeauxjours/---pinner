@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from config import models as config_models
@@ -14,10 +15,12 @@ from cached_property import cached_property
 
 class Avatar(config_models.TimeStampedModel):
     is_main = models.BooleanField(default=False)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, blank=True, null=True)
+    creator = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name='avatar')
     image = ProcessedImageField(
         null=True,
         blank=True,
-        processors=[ResizeToFill(900, 900)],
+        processors=[ResizeToFill(935, 935)],
         format='JPEG',
         options={'quality': 100}
     )
@@ -44,7 +47,11 @@ class Avatar(config_models.TimeStampedModel):
 @receiver(post_delete, sender=Avatar)
 def delete_attached_image(sender, **kwargs):
     instance = kwargs.pop('instance')
-    instance.file.delete(save=False)
+    instance.image.delete(save=False)
+
+    @property
+    def natural_time(self):
+        return naturaltime(self.created_at)
 
 
 class Like(config_models.TimeStampedModel):
@@ -77,7 +84,7 @@ class Profile(config_models.TimeStampedModel):
     avatar = models.URLField(
         blank=True,
         default="http://basmed.unilag.edu.ng/wp-content/uploads/2018/10/avatar__181424.png")
-    avatars = models.ForeignKey(Avatar, blank=True, null=True, on_delete=models.CASCADE, related_name='avatars')
+    avatars = models.ManyToManyField(Avatar, related_name='avatars')
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     verified_phone_number = models.BooleanField(default=False)
     verified_email = models.BooleanField(default=False)

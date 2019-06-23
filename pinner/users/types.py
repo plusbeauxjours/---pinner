@@ -27,6 +27,27 @@ class ProfileType(DjangoObjectType):
         model = models.Profile
 
 
+class AvatarType(DjangoObjectType):
+    like_count = graphene.Int(source='like_count')
+
+    class Meta:
+        model = models.Avatar
+
+
+class LikeType(DjangoObjectType):
+
+    class Meta:
+        model = models.Like
+
+
+class AvatarListResponse(graphene.ObjectType):
+    avatars = graphene.List(AvatarType)
+
+
+class AvatarDetailResponse(graphene.ObjectType):
+    avatar = graphene.Field(AvatarType)
+
+
 class UserProfileResponse(graphene.ObjectType):
     user = graphene.Field(coffee_types.UserType)
 
@@ -50,10 +71,6 @@ class ChangePasswordResponse(graphene.ObjectType, config_types.ResponseFields):
 
 class SearchUsersResponse(graphene.ObjectType):
     users = graphene.List(coffee_types.UserType)
-
-
-class CheckUsernameResponse(graphene.ObjectType):
-    ok = graphene.Boolean()
 
 
 class CreateAccountResponse(graphene.ObjectType):

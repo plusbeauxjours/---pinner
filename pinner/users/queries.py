@@ -22,6 +22,30 @@ def resolve_profile(self, info, **kwargs):
     return types.UserProfileResponse(user=profile)
 
 
+def resolve_get_avatars(self, info, **kwargs):
+
+    user = info.context.user
+    userName = kwargs.get('userName')
+
+    try:
+        avatars = models.Avatar.objects.filter(creator__username=userName)
+        return types.AvatarListResponse(avatars=avatars)
+    except models.Avatar.DoesNotExist:
+        return types.AvatarListResponse(avatars=None)
+
+
+def resolve_get_avatar_details(self, info, **kwargs):
+
+    user = info.context.user
+    avatarId = kwargs.get('avatarId')
+
+    try:
+        avatar = models.Avatar.objects.get(uuid=avatarId)
+        return types.AvatarDetailResponse(avatar=avatar)
+    except models.Avatar.DoesNotExist:
+        return types.AvatarDetailResponse(avatar=None)
+
+
 @login_required
 def resolve_top_countries(self, info, **kwargs):
 
@@ -68,19 +92,6 @@ def resolve_search_users(self, info, **kwargs):
     users = User.objects.filter(username__istartswith=search)
 
     return types.SearchUsersResponse(users=users)
-
-
-@login_required
-def resolve_check_username(self, info, **kwargs):
-
-    user = info.context.user
-    username = kwargs.get('username')
-
-    try:
-        existing_username = User.objects.get(username=username)
-        raise Exception("Username is taken")
-    except User.DoesNotExist:
-        return types.CheckUsernameResponse(ok=True)
 
 
 @login_required
