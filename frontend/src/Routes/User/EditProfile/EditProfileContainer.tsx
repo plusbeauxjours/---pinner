@@ -1,22 +1,17 @@
 import React from "react";
 import EditProfilePresenter from "./EditProfilePresenter";
-import {  Mutation, MutationFn } from "react-apollo";
+import { Mutation, MutationFn } from "react-apollo";
 import {
-  
   EditProfile,
   EditProfileVariables,
-  DeleteProfile,
+  DeleteProfile
 } from "src/types/api";
-import {
-  EDIT_PROFILE,
-  DELETE_PROFILE,
-} from "./EditProfileQueries";
+import { EDIT_PROFILE, DELETE_PROFILE } from "./EditProfileQueries";
 
 import { withRouter, RouteComponentProps } from "react-router";
 import { LOG_USER_OUT } from "src/sharedQueries.local";
 import { toast } from "react-toastify";
-import { GET_USER } from '../UserProfile/UserProfileQueries';
-
+import { GET_USER } from "../UserProfile/UserProfileQueries";
 
 class EditProfileMutation extends Mutation<EditProfile, EditProfileVariables> {}
 class DeleteProfileMutation extends Mutation<DeleteProfile> {}
@@ -45,7 +40,7 @@ interface IState {
   countryName: string;
   lat: number;
   lng: number;
-  isSelf: boolean
+  isSelf: boolean;
 }
 
 class EditProfileContainer extends React.Component<IProps, IState> {
@@ -111,150 +106,81 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       isSelf
     } = this.state;
     return (
-                        <LogOutMutation mutation={LOG_USER_OUT}>
-                          {logUserOutFn => {
-                            this.logUserOutFn = logUserOutFn;
-                            return (
-         
-                                  <EditProfileMutation
-                                    mutation={EDIT_PROFILE}
-                                    update={this.updatEditProfile}
-                                    onCompleted={editData => {
-                                      const { editProfile } = editData;
-                                      if (editProfile.ok) {
-                                        toast.success("Profile updated!");
-                                      } else {
-                                        toast.error(
-                                          "Profile Could not Updated!"
-                                        );
-                                      }
-                                    }}
-                                  >
-                                    {editProfileFn => {
-                                      this.editProfileFn = editProfileFn;
-                                      return (
-                                        <DeleteProfileMutation
-                                          mutation={DELETE_PROFILE}
-                                          onCompleted={deleteResult => {
-                                            const {
-                                              deleteProfile
-                                            } = deleteResult;
-                                            if (deleteProfile.ok) {
-                                              toast.success("Place added!");
-                                              setTimeout(() => {
-                                                history.push("/");
-                                              }, 2000);
-                                            } else {
-                                              toast.error("kokoko");
-                                            }
-                                          }}
-                                        >
-                                          {deleteProfileFn => {
-                                            this.deleteProfileFn = deleteProfileFn;
-                                            return (
-                                 
-                                                               
-                                                                      <EditProfilePresenter
-                                                                        modalOpen={
-                                                                          modalOpen
-                                                                        }
-                                                                        confirmModalOpen={confirmModalOpen}
-                                                                        profilFormModalOpen={
-                                                                          profilFormModalOpen
-                                                                        }
-                                                                        editMode={
-                                                                          editMode
-                                                                        }
-                                                                        logUserOutFn={
-                                                                          logUserOutFn
-                                                                        }
-                                                                        confirmDeleteProfile={
-                                                                          this
-                                                                            .confirmDeleteProfile
-                                                                        }
-                                                                        toggleModal={
-                                                                          this
-                                                                            .toggleModal
-                                                                        }
-                                                                        toggleConfirmModal={
-                                                                          this
-                                                                            .toggleConfirmModal
-                                                                        }
-                                                                      
-                                                                        toggleProfileFormModal={
-                                                                          this
-                                                                            .toggleProfileFormModal
-                                                                        }
-                                                                        openEditMode={
-                                                                          this
-                                                                            .openEditMode
-                                                                        }
-                                                                        onInputChange={
-                                                                          this
-                                                                            .onInputChange
-                                                                        }
-                                                           
-                                                                        onKeyDownSubmit={
-                                                                          this
-                                                                            .onKeyDownSubmit
-                                                                        }
-                                                                        userName={
-                                                                          userName
-                                                                        }
-                                                                        bio={
-                                                                          bio
-                                                                        }
-                                                                        gender={
-                                                                          gender
-                                                                        }
-                                                                        avatar={
-                                                                          avatar
-                                                                        }
-                                                                        nationality={
-                                                                          nationality
-                                                                        }
-                                                                        residence={
-                                                                          residence
-                                                                        }
-                                                                        email={
-                                                                          email
-                                                                        }
-                                                                        firstName={
-                                                                          firstName
-                                                                        }
-                                                                        lastName={
-                                                                          lastName
-                                                                        }
-                                                                        cityName={
-                                                                          cityName
-                                                                        }
-                                                                        cityId={
-                                                                          cityId
-                                                                        }
-                                                                        cityPhoto={
-                                                                          cityPhoto
-                                                                        }
-                                                                        countryName={
-                                                                          countryName
-                                                                        }
-                                                                        username={
-                                                                          username
-                                                                        }
-                                                                        isSelf={isSelf}
-                                                                        onSelectChange={this.onSelectChange}
-                                                                      />
-                                        
-                                            );
-                                          }}
-                                        </DeleteProfileMutation>
-                                      );
-                                    }}
-                                  </EditProfileMutation>
-                              
-                            );
-                          }}
-                        </LogOutMutation>
-
+      <LogOutMutation mutation={LOG_USER_OUT}>
+        {logUserOutFn => {
+          this.logUserOutFn = logUserOutFn;
+          return (
+            <EditProfileMutation
+              mutation={EDIT_PROFILE}
+              update={this.updatEditProfile}
+              onCompleted={editData => {
+                const { editProfile } = editData;
+                if (editProfile.ok) {
+                  toast.success("Profile updated!");
+                } else {
+                  toast.error("Profile Could not Updated!");
+                }
+              }}
+            >
+              {editProfileFn => {
+                this.editProfileFn = editProfileFn;
+                return (
+                  <DeleteProfileMutation
+                    mutation={DELETE_PROFILE}
+                    onCompleted={deleteResult => {
+                      const { deleteProfile } = deleteResult;
+                      if (deleteProfile.ok) {
+                        toast.success("Place added!");
+                        setTimeout(() => {
+                          history.push("/");
+                        }, 2000);
+                      } else {
+                        toast.error("kokoko");
+                      }
+                    }}
+                  >
+                    {deleteProfileFn => {
+                      this.deleteProfileFn = deleteProfileFn;
+                      return (
+                        <EditProfilePresenter
+                          modalOpen={modalOpen}
+                          confirmModalOpen={confirmModalOpen}
+                          profilFormModalOpen={profilFormModalOpen}
+                          editMode={editMode}
+                          logUserOutFn={logUserOutFn}
+                          confirmDeleteProfile={this.confirmDeleteProfile}
+                          toggleModal={this.toggleModal}
+                          toggleConfirmModal={this.toggleConfirmModal}
+                          toggleProfileFormModal={this.toggleProfileFormModal}
+                          openEditMode={this.openEditMode}
+                          onInputChange={this.onInputChange}
+                          onKeyDownSubmit={this.onKeyDownSubmit}
+                          userName={userName}
+                          bio={bio}
+                          gender={gender}
+                          avatar={avatar}
+                          nationality={nationality}
+                          residence={residence}
+                          email={email}
+                          firstName={firstName}
+                          lastName={lastName}
+                          cityName={cityName}
+                          cityId={cityId}
+                          cityPhoto={cityPhoto}
+                          countryName={countryName}
+                          username={username}
+                          isSelf={isSelf}
+                          onSelectChange={this.onSelectChange}
+                        />
+                      );
+                    }}
+                  </DeleteProfileMutation>
+                );
+              }}
+            </EditProfileMutation>
+          );
+        }}
+      </LogOutMutation>
     );
   }
   public openEditMode = () => {
@@ -306,7 +232,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       return null;
     }
   };
-  
+
   public toggleModal = () => {
     const { modalOpen } = this.state;
     this.setState({
@@ -321,7 +247,6 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     } as any);
   };
 
- 
   public toggleProfileFormModal = () => {
     this.setState({
       profilFormModalOpen: false
@@ -362,16 +287,15 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     }
   };
   public onSelectChange: React.ChangeEventHandler<
-  HTMLInputElement | HTMLSelectElement
-> = event => {
-  const {
-    target: { name, value }
-  } = event;
-  this.setState({
-    [name]: value
-  } as any);
-};
-  
+    HTMLInputElement | HTMLSelectElement
+  > = event => {
+    const {
+      target: { name, value }
+    } = event;
+    this.setState({
+      [name]: value
+    } as any);
+  };
 }
 
 export default withRouter(EditProfileContainer);
