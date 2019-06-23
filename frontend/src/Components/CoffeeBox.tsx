@@ -181,7 +181,7 @@ const UserBox: React.SFC<IProps> = ({
                   <Link
                     to={{
                       pathname: `/c/${coffee.uuid}`,
-                      state: { modalOpen: true }
+                      state: { coffeeModalOpen: true }
                     }}
                   >
                     <AvatarContainer>
@@ -264,7 +264,7 @@ const UserBox: React.SFC<IProps> = ({
                   <Link
                     to={{
                       pathname: `/c/${coffee.uuid}`,
-                      state: { modalOpen: true }
+                      state: { coffeeModalOpen: true }
                     }}
                   >
                     <AvatarContainer>

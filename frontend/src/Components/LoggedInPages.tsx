@@ -10,9 +10,11 @@ import CoffeeDetail from "../Routes/Detail/CoffeeDetail";
 import Match from "../Routes/Match";
 
 import UserProfile from "../Routes/User/UserProfile";
+import EditProfile from "../Routes/User/EditProfile";
 import Coffees from "../Routes/User/Coffees";
 import Cities from "../Routes/User/Cities";
 import Countries from "../Routes/User/Countries";
+
 import PeoplePage from "../Routes/Feed/PeoplePage";
 import CoffeesPage from "../Routes/Feed/CoffeesPage";
 
@@ -44,7 +46,9 @@ class LoggedInPages extends React.Component<IProps> {
     const { location } = this.props;
     if (
       nextProps.history.action !== "POP" &&
-      (!location.state || !location.state.modalOpen)
+      (!location.state ||
+        !location.state.coffeeModalOpen ||
+        !location.state.editModalOpen)
     ) {
       this.previousLocation = this.props.location;
     }
@@ -52,21 +56,31 @@ class LoggedInPages extends React.Component<IProps> {
 
   public render() {
     const { location } = this.props;
-    const modalOpen = !!(
+    const coffeeModalOpen = !!(
       location.state &&
-      location.state.modalOpen &&
+      location.state.coffeeModalOpen &&
       this.previousLocation !== location
-    ); // not initial render
+    );
+    const editModalOpen = !(
+      location.state &&
+      location.state.editModalOpen &&
+      this.previousLocation !== location
+    );
     return (
       <Wrapper>
         <Header />
-        {modalOpen ? (
+        {coffeeModalOpen && (
           <>
-            <Route path="/" exact={true} component={Match} />
             <Route path="/c/:uuid" exact={true} component={CoffeeDetail} />
           </>
-        ) : null}
-        <Switch location={modalOpen ? this.previousLocation : location}>
+        )}
+        {editModalOpen && (
+          <>
+            <Route path="/:username/edit" component={EditProfile} />
+          </>
+        )}
+
+        <Switch location={coffeeModalOpen ? this.previousLocation : location}>
           <Route path="/people" exact={true} component={PeoplePage} />
           <Route path="/coffees" exact={true} component={CoffeesPage} />
           <Route path="/" exact={true} component={Match} />
@@ -113,6 +127,7 @@ class LoggedInPages extends React.Component<IProps> {
           <Route path="/:username/countries" component={Countries} />
           <Route path="/:username/cities" component={Cities} />
           <Route path="/:username/coffees" component={Coffees} />
+          <Route path="/:username/edit" component={EditProfile} />
           <Route path="/:username" exact={true} component={UserProfile} />
         </Switch>
       </Wrapper>
