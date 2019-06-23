@@ -293,6 +293,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                       this.deleteTripFn = deleteTripFn;
                                                       return (
                                                         <UserProfilePresenter
+                                                          avatarsData={
+                                                            avatarsData
+                                                          }
+                                                          avatarsLoading={
+                                                            avatarsLoading
+                                                          }
                                                           modalOpen={modalOpen}
                                                           avatarModalOpen={
                                                             avatarModalOpen

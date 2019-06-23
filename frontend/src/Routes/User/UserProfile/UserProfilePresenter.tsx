@@ -16,6 +16,7 @@ import AvatarGrid from "../../../Components/AvatarGrid";
 import Weather from "../../../Components/Weather";
 import { GOOGLE_PLACE_KEY } from "src/keys";
 import useGoogleAutocomplete from "../../../autocompleteHelpers";
+import { BACKEND_URL } from 'src/constants';
 
 const Header = styled.header`
   display: flex;
@@ -399,6 +400,23 @@ const UserRow = styled.div<ITheme>`
   }
 `;
 
+const ModalAvatars = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap:10px
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalAvatarImage = styled.img`
+z-index: 10;
+  height: 300px;
+  width: 300px;
+  background-position: center center;
+  border-radius: 3%;
+  object-fit: cover;
+`;
+
 interface ITheme {
   size?: string;
   active?: string;
@@ -407,6 +425,9 @@ interface ITheme {
 interface IProps {
   userProfileData: any;
   userProfileLoading: boolean;
+
+  avatarsData: any;
+  avatarsLoading: boolean;
 
   getTripsData?: any;
   getTipsLoading: boolean;
@@ -492,6 +513,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   userProfileData: { userProfile: { user = null } = {} } = {},
   userProfileLoading,
 
+  avatarsData: { getAvatars: { avatars = null } = {} } = {},
+  avatarsLoading,
+
   getTripsData: { getTrips: { trip: getTrips = null } = {} } = {},
   getTipsLoading,
 
@@ -561,7 +585,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
       language: "en"
     }
   });
-  if (userProfileLoading) {
+  if (userProfileLoading || avatarsLoading) {
     return <Loader />;
   } else if (user && coffees) {
     return (
@@ -569,7 +593,16 @@ const UserProfilePresenter: React.SFC<IProps> = ({
         {avatarModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleAvatarModalOpen} />
-            <Modal />
+            <ModalAvatars>
+              {!avatarsLoading &&
+                avatars &&
+                avatars.length !== 0 &&
+                avatars.map(avatar => {
+                  return (
+                    <ModalAvatarImage key={avatar.id} src={`${BACKEND_URL}/media/${avatar.thumbnail}`} />
+                  );
+                })}
+            </ModalAvatars>
           </ModalContainer>
         )}
         {requestModalOpen && (
@@ -1032,7 +1065,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
       </>
     );
   }
-  return null
+  return null;
 };
 
 export default UserProfilePresenter;
