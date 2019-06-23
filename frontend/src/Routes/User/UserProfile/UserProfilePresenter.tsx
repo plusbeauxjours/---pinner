@@ -291,10 +291,13 @@ const TripModalContainer = styled.div`
 
 const Modal = styled.div`
   background-color: #2d3a41;
-  width: 30%;
   border-radius: 12px;
+  width: 312px;
   z-index: 10;
   animation: ${ModalAnimation} 0.1s linear;
+  @media screen and (max-width: 935px) {
+    width: 30%
+  }
 `;
 
 const ModalOverlay = styled.div`
@@ -753,7 +756,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleModal} />
             <Modal>
+              <ModalLink onClick={toggleConfirmModal}>Edit Avatar</ModalLink>
               <ModalLink onClick={openEditMode}>Edit Profile</ModalLink>
+              <ModalLink onClick={toggleConfirmModal}>Settings</ModalLink>
               <ModalLink onClick={toggleConfirmModal}>Delete Profile</ModalLink>
               <ModalLink onClick={logUserOutFn}>Log Out</ModalLink>
               <ModalLink onClick={toggleModal}>CANCEL</ModalLink>
@@ -1020,10 +1025,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               ) : (
                 <Bio>{`${user.profile.bio}`}</Bio>
               )}
-              <Row>
-                <UBold text={String(user.profile.postCount)} />
-                <UBold text={" how many POSTS - done"} />
-              </Row>
+      
               <Row>
                 <UBold text={String(user.profile.postCount)} />
                 <UBold text={" how many KM"} />

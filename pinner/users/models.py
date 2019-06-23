@@ -2,13 +2,57 @@ from django.db import models
 from django.contrib.auth.models import User
 from config import models as config_models
 from locations import models as location_models
-# from django.db.models import Count, Sum
+from django.contrib.humanize.templatetags.humanize import naturaltime
 
-# from django.dispatch import receiver
+from django.dispatch import receiver
+from django.db.models.signals import post_delete
 
-# from imagekit.models import ProcessedImageField
-# from imagekit.processors import ResizeToFill
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 from cached_property import cached_property
+
+
+class Avatar(config_models.TimeStampedModel):
+    is_main = models.BooleanField(default=False)
+    image = ProcessedImageField(
+        null=True,
+        blank=True,
+        processors=[ResizeToFill(900, 900)],
+        format='JPEG',
+        options={'quality': 100}
+    )
+    thumbnail = ProcessedImageField(
+        null=True,
+        blank=True,
+        processors=[ResizeToFill(300, 300)],
+        format='JPEG',
+        options={'quality': 100}
+    )
+
+    @cached_property
+    def like_count(self):
+        return self.likes.all().count()
+
+    @property
+    def natural_time(self):
+        return naturaltime(self.created_at)
+
+    class Meta:
+        ordering = ['-created_at']
+
+
+@receiver(post_delete, sender=Avatar)
+def delete_attached_image(sender, **kwargs):
+    instance = kwargs.pop('instance')
+    instance.file.delete(save=False)
+
+
+class Like(config_models.TimeStampedModel):
+
+    creator = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, related_name='avatar_likes')
+    avatar = models.ForeignKey(
+        Avatar, on_delete=models.CASCADE, null=True, related_name='likes')
 
 
 class Profile(config_models.TimeStampedModel):
@@ -33,7 +77,7 @@ class Profile(config_models.TimeStampedModel):
     avatar = models.URLField(
         blank=True,
         default="http://basmed.unilag.edu.ng/wp-content/uploads/2018/10/avatar__181424.png")
-
+    avatars = models.ForeignKey(Avatar, blank=True, null=True, on_delete=models.CASCADE, related_name='avatars')
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     verified_phone_number = models.BooleanField(default=False)
     verified_email = models.BooleanField(default=False)
