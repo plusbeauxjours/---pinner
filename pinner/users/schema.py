@@ -61,9 +61,9 @@ class Query(object):
             'userName': graphene.String(required=True),
         }
     )
-    get_avatar_details = graphene.Field(
+    get_avatar_detail = graphene.Field(
         types.AvatarDetailResponse,
-        resolver=queries.resolve_get_avatar_details,
+        resolver=queries.resolve_get_avatar_detail,
         required=True,
         args={
             'avatarId': graphene.String(required=True),

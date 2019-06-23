@@ -34,7 +34,7 @@ def resolve_get_avatars(self, info, **kwargs):
         return types.AvatarListResponse(avatars=None)
 
 
-def resolve_get_avatar_details(self, info, **kwargs):
+def resolve_get_avatar_detail(self, info, **kwargs):
 
     user = info.context.user
     avatarId = kwargs.get('avatarId')

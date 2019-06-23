@@ -11,7 +11,7 @@ import Match from "../Routes/Match";
 
 import UserProfile from "../Routes/User/UserProfile";
 import EditProfile from "../Routes/User/EditProfile";
-import UserAvatar from "../Routes/User/UserAvatar";
+import UserAvatarDetail from "../Routes/User/UserAvatarDetail";
 import Coffees from "../Routes/User/Coffees";
 import Cities from "../Routes/User/Cities";
 import Countries from "../Routes/User/Countries";
@@ -76,21 +76,6 @@ class LoggedInPages extends React.Component<IProps> {
     return (
       <Wrapper>
         <Header />
-        {coffeeModalOpen && (
-          <>
-            <Route path="/c/:uuid" exact={true} component={CoffeeDetail} />
-          </>
-        )}
-        {editModalOpen && (
-          <>
-            <Route path="/:username/edit" component={EditProfile} />
-          </>
-        )}
-        {avatarModalOpen && (
-          <>
-            <Route path="/:username/avatar" component={UserAvatar} />
-          </>
-        )}
 
         <Switch location={coffeeModalOpen ? this.previousLocation : location}>
           <Route path="/people" exact={true} component={PeoplePage} />
@@ -139,8 +124,25 @@ class LoggedInPages extends React.Component<IProps> {
           <Route path="/:username/countries" component={Countries} />
           <Route path="/:username/cities" component={Cities} />
           <Route path="/:username/coffees" component={Coffees} />
+          <Route path="/:username/coffees" component={Coffees} />
+
           <Route path="/:username/edit" component={EditProfile} />
           <Route path="/:username" exact={true} component={UserProfile} />
+          {coffeeModalOpen && (
+            <>
+              <Route path="/c/:uuid" exact={true} component={CoffeeDetail} />
+            </>
+          )}
+          {editModalOpen && (
+            <>
+              <Route path="/:username/edit" component={EditProfile} />
+            </>
+          )}
+          {avatarModalOpen && (
+            <>
+              <Route path="/:username/:uuid" component={UserAvatarDetail} />
+            </>
+          )}
         </Switch>
       </Wrapper>
     );

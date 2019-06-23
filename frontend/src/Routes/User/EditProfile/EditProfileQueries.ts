@@ -75,26 +75,3 @@ export const DELETE_PROFILE = gql`
     }
   }
 `;
-
-export const GET_TRIPS = gql`
-  query GetTrips($username: String!, $tripPage: Int) {
-    getTrips(username: $username, tripPage: $tripPage) {
-      trip {
-        id
-        city {
-          cityId
-          cityName
-          cityPhoto
-          country {
-            countryName
-            countryCode
-          }
-        }
-        startDate
-        endDate
-        naturalTime
-        diffDays
-      }
-    }
-  }
-`;

@@ -5,9 +5,6 @@ import { Query, Mutation, MutationFn } from "react-apollo";
 import {
   UserProfile,
   UserProfileVariables,
-  EditProfile,
-  EditProfileVariables,
-  DeleteProfile,
   AddTrip,
   GetTrips,
   GetTripsVariables,
@@ -25,8 +22,6 @@ import {
 } from "src/types/api";
 import {
   GET_USER,
-  EDIT_PROFILE,
-  DELETE_PROFILE,
   GET_TRIPS,
   ADD_TRIP,
   EDIT_TRIP,
@@ -55,15 +50,12 @@ class RequestCoffeeMutation extends Mutation<
 > {}
 class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
 
-class EditProfileMutation extends Mutation<EditProfile, EditProfileVariables> {}
-class DeleteProfileMutation extends Mutation<DeleteProfile> {}
 class LogOutMutation extends Mutation {}
 
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   modalOpen: boolean;
-  confirmModalOpen: boolean;
   tripModalOpen: boolean;
   tripConfirmModalOpen: boolean;
   tripAddModalOpen: boolean;
@@ -105,8 +97,6 @@ interface IState {
 
 class UserProfileContainer extends React.Component<IProps, IState> {
   public logUserOutFn: MutationFn;
-  public editProfileFn: MutationFn;
-  public deleteProfileFn: MutationFn;
   public addTripFn: MutationFn;
   public editTripFn: MutationFn;
   public deleteTripFn: MutationFn;
@@ -122,7 +112,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     const { location: { state = {} } = {} } = ({} = props);
     this.state = {
       modalOpen: false,
-      confirmModalOpen: false,
       tripModalOpen: false,
       tripConfirmModalOpen: false,
       tripAddModalOpen: false,
@@ -176,10 +165,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         params: { username }
       }
     } = this.props;
-    const { history } = this.props;
     const {
       modalOpen,
-      confirmModalOpen,
       tripModalOpen,
       tripConfirmModalOpen,
       tripAddModalOpen,
@@ -251,383 +238,274 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                   data: userProfileData,
                                   loading: userProfileLoading
                                 }) => (
-                                  <EditProfileMutation
-                                    mutation={EDIT_PROFILE}
-                                    update={this.updatEditProfile}
-                                    onCompleted={editData => {
-                                      const { editProfile } = editData;
-                                      if (editProfile.ok) {
-                                        toast.success("Profile updated!");
-                                      } else {
-                                        toast.error(
-                                          "Profile Could not Updated!"
-                                        );
-                                      }
+                                  <GetTiprsQuery
+                                    query={GET_TRIPS}
+                                    variables={{
+                                      username,
+                                      tripPage
                                     }}
                                   >
-                                    {editProfileFn => {
-                                      this.editProfileFn = editProfileFn;
+                                    {({
+                                      data: getTripsData,
+                                      loading: getTipsLoading
+                                    }) => {
+                                      this.getTripsData = getTripsData;
                                       return (
-                                        <DeleteProfileMutation
-                                          mutation={DELETE_PROFILE}
-                                          onCompleted={deleteResult => {
-                                            const {
-                                              deleteProfile
-                                            } = deleteResult;
-                                            if (deleteProfile.ok) {
-                                              toast.success("Place added!");
-                                              setTimeout(() => {
-                                                history.push("/");
-                                              }, 2000);
-                                            } else {
-                                              toast.error("kokoko");
-                                            }
+                                        <AddTripMutation
+                                          mutation={ADD_TRIP}
+                                          variables={{
+                                            cityId,
+                                            startDate,
+                                            endDate
                                           }}
+                                          refetchQueries={[
+                                            {
+                                              query: GET_TRIPS,
+                                              variables: {
+                                                username,
+                                                tripPage
+                                              }
+                                            }
+                                          ]}
+                                          onCompleted={this.onCompletedAddTrip}
                                         >
-                                          {deleteProfileFn => {
-                                            this.deleteProfileFn = deleteProfileFn;
+                                          {addTripFn => {
+                                            this.addTripFn = addTripFn;
                                             return (
-                                              <GetTiprsQuery
-                                                query={GET_TRIPS}
+                                              <EditTripMutation
+                                                mutation={EDIT_TRIP}
                                                 variables={{
-                                                  username,
-                                                  tripPage
+                                                  moveNotificationId: parseInt(
+                                                    moveNotificationId,
+                                                    10
+                                                  ),
+                                                  cityId,
+                                                  startDate,
+                                                  endDate
                                                 }}
+                                                refetchQueries={[
+                                                  {
+                                                    query: GET_TRIPS,
+                                                    variables: {
+                                                      username,
+                                                      tripPage
+                                                    }
+                                                  }
+                                                ]}
+                                                onCompleted={
+                                                  this.onCompletedEditTrip
+                                                }
                                               >
-                                                {({
-                                                  data: getTripsData,
-                                                  loading: getTipsLoading
-                                                }) => {
-                                                  this.getTripsData = getTripsData;
+                                                {editTripFn => {
+                                                  this.editTripFn = editTripFn;
                                                   return (
-                                                    <AddTripMutation
-                                                      mutation={ADD_TRIP}
+                                                    <DeleteTripMutation
+                                                      mutation={DELETE_TRIP}
                                                       variables={{
-                                                        cityId,
-                                                        startDate,
-                                                        endDate
+                                                        moveNotificationId: parseInt(
+                                                          moveNotificationId,
+                                                          10
+                                                        )
                                                       }}
-                                                      refetchQueries={[
-                                                        {
-                                                          query: GET_TRIPS,
-                                                          variables: {
-                                                            username,
-                                                            tripPage
-                                                          }
-                                                        }
-                                                      ]}
                                                       onCompleted={
-                                                        this.onCompletedAddTrip
+                                                        this
+                                                          .onCompletedDeleteTrip
+                                                      }
+                                                      update={
+                                                        this.updateDeleteTrip
                                                       }
                                                     >
-                                                      {addTripFn => {
-                                                        this.addTripFn = addTripFn;
+                                                      {deleteTripFn => {
+                                                        this.deleteTripFn = deleteTripFn;
                                                         return (
-                                                          <EditTripMutation
-                                                            mutation={EDIT_TRIP}
-                                                            variables={{
-                                                              moveNotificationId: parseInt(
-                                                                moveNotificationId,
-                                                                10
-                                                              ),
-                                                              cityId,
-                                                              startDate,
-                                                              endDate
-                                                            }}
-                                                            refetchQueries={[
-                                                              {
-                                                                query: GET_TRIPS,
-                                                                variables: {
-                                                                  username,
-                                                                  tripPage
-                                                                }
-                                                              }
-                                                            ]}
-                                                            onCompleted={
-                                                              this
-                                                                .onCompletedEditTrip
+                                                          <UserProfilePresenter
+                                                            modalOpen={
+                                                              modalOpen
                                                             }
-                                                          >
-                                                            {editTripFn => {
-                                                              this.editTripFn = editTripFn;
-                                                              return (
-                                                                <DeleteTripMutation
-                                                                  mutation={
-                                                                    DELETE_TRIP
-                                                                  }
-                                                                  variables={{
-                                                                    moveNotificationId: parseInt(
-                                                                      moveNotificationId,
-                                                                      10
-                                                                    )
-                                                                  }}
-                                                                  onCompleted={
-                                                                    this
-                                                                      .onCompletedDeleteTrip
-                                                                  }
-                                                                  update={
-                                                                    this
-                                                                      .updateDeleteTrip
-                                                                  }
-                                                                >
-                                                                  {deleteTripFn => {
-                                                                    this.deleteTripFn = deleteTripFn;
-                                                                    return (
-                                                                      <UserProfilePresenter
-                                                                        modalOpen={
-                                                                          modalOpen
-                                                                        }
-                                                                        tripModalOpen={
-                                                                          tripModalOpen
-                                                                        }
-                                                                        confirmModalOpen={
-                                                                          confirmModalOpen
-                                                                        }
-                                                                        tripConfirmModalOpen={
-                                                                          tripConfirmModalOpen
-                                                                        }
-                                                                        tripAddModalOpen={
-                                                                          tripAddModalOpen
-                                                                        }
-                                                                        tripEditModalOpen={
-                                                                          tripEditModalOpen
-                                                                        }
-                                                                        profilFormModalOpen={
-                                                                          profilFormModalOpen
-                                                                        }
-                                                                        editMode={
-                                                                          editMode
-                                                                        }
-                                                                        logUserOutFn={
-                                                                          logUserOutFn
-                                                                        }
-                                                                        confirmDeleteProfile={
-                                                                          this
-                                                                            .confirmDeleteProfile
-                                                                        }
-                                                                        toggleModal={
-                                                                          this
-                                                                            .toggleModal
-                                                                        }
-                                                                        toggleConfirmModal={
-                                                                          this
-                                                                            .toggleConfirmModal
-                                                                        }
-                                                                        toggleTripModal={
-                                                                          this
-                                                                            .toggleTripModal
-                                                                        }
-                                                                        toggleTripConfirmModal={
-                                                                          this
-                                                                            .toggleTripConfirmModal
-                                                                        }
-                                                                        toggleAddTripModal={
-                                                                          this
-                                                                            .toggleAddTripModal
-                                                                        }
-                                                                        toggleEditTripModal={
-                                                                          this
-                                                                            .toggleEditTripModal
-                                                                        }
-                                                                        toggleProfileFormModal={
-                                                                          this
-                                                                            .toggleProfileFormModal
-                                                                        }
-                                                                        openEditMode={
-                                                                          this
-                                                                            .openEditMode
-                                                                        }
-                                                                        userProfileData={
-                                                                          userProfileData
-                                                                        }
-                                                                        userProfileLoading={
-                                                                          userProfileLoading
-                                                                        }
-                                                                        getTripsData={
-                                                                          getTripsData
-                                                                        }
-                                                                        getTipsLoading={
-                                                                          getTipsLoading
-                                                                        }
-                                                                        onInputChange={
-                                                                          this
-                                                                            .onInputChange
-                                                                        }
-                                                                        onSearchInputChange={
-                                                                          this
-                                                                            .onSearchInputChange
-                                                                        }
-                                                                        onSelectChange={
-                                                                          this
-                                                                            .onSelectChange
-                                                                        }
-                                                                        onKeyDownSubmit={
-                                                                          this
-                                                                            .onKeyDownSubmit
-                                                                        }
-                                                                        userName={
-                                                                          userName
-                                                                        }
-                                                                        bio={
-                                                                          bio
-                                                                        }
-                                                                        gender={
-                                                                          gender
-                                                                        }
-                                                                        avatar={
-                                                                          avatar
-                                                                        }
-                                                                        nationality={
-                                                                          nationality
-                                                                        }
-                                                                        residence={
-                                                                          residence
-                                                                        }
-                                                                        email={
-                                                                          email
-                                                                        }
-                                                                        firstName={
-                                                                          firstName
-                                                                        }
-                                                                        lastName={
-                                                                          lastName
-                                                                        }
-                                                                        tripCitySearch={
-                                                                          tripCitySearch
-                                                                        }
-                                                                        cityName={
-                                                                          cityName
-                                                                        }
-                                                                        cityId={
-                                                                          cityId
-                                                                        }
-                                                                        cityPhoto={
-                                                                          cityPhoto
-                                                                        }
-                                                                        countryName={
-                                                                          countryName
-                                                                        }
-                                                                        startDate={
-                                                                          startDate
-                                                                        }
-                                                                        tripStartDate={
-                                                                          tripStartDate
-                                                                        }
-                                                                        tripEndDate={
-                                                                          tripEndDate
-                                                                        }
-                                                                        endDate={
-                                                                          endDate
-                                                                        }
-                                                                        focusedInput={
-                                                                          focusedInput
-                                                                        }
-                                                                        onDatesChange={
-                                                                          this
-                                                                            .onDatesChange
-                                                                        }
-                                                                        onFocusChange={
-                                                                          this
-                                                                            .onFocusChange
-                                                                        }
-                                                                        addTrip={
-                                                                          this
-                                                                            .addTrip
-                                                                        }
-                                                                        editTrip={
-                                                                          this
-                                                                            .editTrip
-                                                                        }
-                                                                        deleteTrip={
-                                                                          this
-                                                                            .deleteTrip
-                                                                        }
-                                                                        gotoTrip={
-                                                                          this
-                                                                            .gotoTrip
-                                                                        }
-                                                                        coffeeData={
-                                                                          coffeeData
-                                                                        }
-                                                                        coffeeLoading={
-                                                                          coffeeLoading
-                                                                        }
-                                                                        toggleRequestModal={
-                                                                          this
-                                                                            .toggleRequestModal
-                                                                        }
-                                                                        requestModalOpen={
-                                                                          requestModalOpen
-                                                                        }
-                                                                        submitCoffee={
-                                                                          this
-                                                                            .submitCoffee
-                                                                        }
-                                                                        username={
-                                                                          username
-                                                                        }
-                                                                        search={
-                                                                          search
-                                                                        }
-                                                                        onChange={
-                                                                          this
-                                                                            .onChange
-                                                                        }
-                                                                        tripList={
-                                                                          tripList
-                                                                        }
-                                                                        isDayBlocked={
-                                                                          this
-                                                                            .isDayBlocked
-                                                                        }
-                                                                        tripActiveId={
-                                                                          tripActiveId
-                                                                        }
-                                                                        searchActiveId={
-                                                                          searchActiveId
-                                                                        }
-                                                                        onKeyDownSearch={
-                                                                          this
-                                                                            .onKeyDownSearch
-                                                                        }
-                                                                        onKeyDownTrip={
-                                                                          this
-                                                                            .onKeyDownTrip
-                                                                        }
-                                                                        onClick={
-                                                                          this
-                                                                            .onClick
-                                                                        }
-                                                                        onBlur={
-                                                                          this
-                                                                            .onBlur
-                                                                        }
-                                                                        onClickSearch={
-                                                                          this
-                                                                            .onClickSearch
-                                                                        }
-                                                                        createCityLoading={
-                                                                          createCityLoading
-                                                                        }
-                                                                      />
-                                                                    );
-                                                                  }}
-                                                                </DeleteTripMutation>
-                                                              );
-                                                            }}
-                                                          </EditTripMutation>
+                                                            tripModalOpen={
+                                                              tripModalOpen
+                                                            }
+                                                    
+                                                            tripConfirmModalOpen={
+                                                              tripConfirmModalOpen
+                                                            }
+                                                            tripAddModalOpen={
+                                                              tripAddModalOpen
+                                                            }
+                                                            tripEditModalOpen={
+                                                              tripEditModalOpen
+                                                            }
+                                                            profilFormModalOpen={
+                                                              profilFormModalOpen
+                                                            }
+                                                            editMode={editMode}
+                                                            logUserOutFn={
+                                                              logUserOutFn
+                                                            }
+                                                            toggleModal={
+                                                              this.toggleModal
+                                                            }
+                                                            toggleTripModal={
+                                                              this
+                                                                .toggleTripModal
+                                                            }
+                                                            toggleTripConfirmModal={
+                                                              this
+                                                                .toggleTripConfirmModal
+                                                            }
+                                                            toggleAddTripModal={
+                                                              this
+                                                                .toggleAddTripModal
+                                                            }
+                                                            toggleEditTripModal={
+                                                              this
+                                                                .toggleEditTripModal
+                                                            }
+                                                            toggleProfileFormModal={
+                                                              this
+                                                                .toggleProfileFormModal
+                                                            }
+                                                            userProfileData={
+                                                              userProfileData
+                                                            }
+                                                            userProfileLoading={
+                                                              userProfileLoading
+                                                            }
+                                                            getTripsData={
+                                                              getTripsData
+                                                            }
+                                                            getTipsLoading={
+                                                              getTipsLoading
+                                                            }
+                                                            onInputChange={
+                                                              this.onInputChange
+                                                            }
+                                                            onSearchInputChange={
+                                                              this
+                                                                .onSearchInputChange
+                                                            }
+                                                            onSelectChange={
+                                                              this
+                                                                .onSelectChange
+                                                            }
+                                                            userName={userName}
+                                                            bio={bio}
+                                                            gender={gender}
+                                                            avatar={avatar}
+                                                            nationality={
+                                                              nationality
+                                                            }
+                                                            residence={
+                                                              residence
+                                                            }
+                                                            email={email}
+                                                            firstName={
+                                                              firstName
+                                                            }
+                                                            lastName={lastName}
+                                                            tripCitySearch={
+                                                              tripCitySearch
+                                                            }
+                                                            cityName={cityName}
+                                                            cityId={cityId}
+                                                            cityPhoto={
+                                                              cityPhoto
+                                                            }
+                                                            countryName={
+                                                              countryName
+                                                            }
+                                                            startDate={
+                                                              startDate
+                                                            }
+                                                            tripStartDate={
+                                                              tripStartDate
+                                                            }
+                                                            tripEndDate={
+                                                              tripEndDate
+                                                            }
+                                                            endDate={endDate}
+                                                            focusedInput={
+                                                              focusedInput
+                                                            }
+                                                            onDatesChange={
+                                                              this.onDatesChange
+                                                            }
+                                                            onFocusChange={
+                                                              this.onFocusChange
+                                                            }
+                                                            addTrip={
+                                                              this.addTrip
+                                                            }
+                                                            editTrip={
+                                                              this.editTrip
+                                                            }
+                                                            deleteTrip={
+                                                              this.deleteTrip
+                                                            }
+                                                            gotoTrip={
+                                                              this.gotoTrip
+                                                            }
+                                                            coffeeData={
+                                                              coffeeData
+                                                            }
+                                                            coffeeLoading={
+                                                              coffeeLoading
+                                                            }
+                                                            toggleRequestModal={
+                                                              this
+                                                                .toggleRequestModal
+                                                            }
+                                                            requestModalOpen={
+                                                              requestModalOpen
+                                                            }
+                                                            submitCoffee={
+                                                              this.submitCoffee
+                                                            }
+                                                            username={username}
+                                                            search={search}
+                                                            onChange={
+                                                              this.onChange
+                                                            }
+                                                            tripList={tripList}
+                                                            isDayBlocked={
+                                                              this.isDayBlocked
+                                                            }
+                                                            tripActiveId={
+                                                              tripActiveId
+                                                            }
+                                                            searchActiveId={
+                                                              searchActiveId
+                                                            }
+                                                            onKeyDownSearch={
+                                                              this
+                                                                .onKeyDownSearch
+                                                            }
+                                                            onKeyDownTrip={
+                                                              this.onKeyDownTrip
+                                                            }
+                                                            onClick={
+                                                              this.onClick
+                                                            }
+                                                            onBlur={this.onBlur}
+                                                            onClickSearch={
+                                                              this.onClickSearch
+                                                            }
+                                                            createCityLoading={
+                                                              createCityLoading
+                                                            }
+                                                          />
                                                         );
                                                       }}
-                                                    </AddTripMutation>
+                                                    </DeleteTripMutation>
                                                   );
                                                 }}
-                                              </GetTiprsQuery>
+                                              </EditTripMutation>
                                             );
                                           }}
-                                        </DeleteProfileMutation>
+                                        </AddTripMutation>
                                       );
                                     }}
-                                  </EditProfileMutation>
+                                  </GetTiprsQuery>
                                 )}
                               </UserProfileQuery>
                             );
@@ -644,55 +522,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       </CreateCityQuery>
     );
   }
-  public openEditMode = () => {
-    const { modalOpen } = this.state;
-    this.setState({
-      modalOpen: !modalOpen,
-      editMode: true
-    });
-  };
-  public closeEditMode = () => {
-    this.setState({
-      editMode: false
-    });
-  };
-
-  public confirmDeleteProfile = () => {
-    this.deleteProfileFn();
-    this.logUserOutFn();
-  };
-  public onKeyDownSubmit = event => {
-    const {
-      userName,
-      bio,
-      gender,
-      avatar,
-      firstName,
-      lastName,
-      nationality,
-      residence,
-      email
-    } = this.state;
-    console.log(email);
-    const { keyCode } = event;
-    if (keyCode === 13) {
-      this.editProfileFn({
-        variables: {
-          username: userName,
-          bio,
-          gender,
-          avatar,
-          firstName,
-          lastName,
-          nationality,
-          residence,
-          email
-        }
-      });
-    } else {
-      return null;
-    }
-  };
   public toggleTripModal = (
     moveNotificationId,
     cityName,
@@ -720,14 +549,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       modalOpen: !modalOpen
     } as any);
   };
-  public toggleConfirmModal = () => {
-    const { confirmModalOpen, modalOpen } = this.state;
-    this.setState({
-      confirmModalOpen: !confirmModalOpen,
-      modalOpen: !modalOpen
-    } as any);
-  };
-
   public toggleTripConfirmModal = () => {
     const { tripConfirmModalOpen, tripModalOpen } = this.state;
     this.setState({
@@ -961,30 +782,30 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       console.log(e);
     }
   };
-  public updatEditProfile = (cache, { data: { editProfile } }) => {
-    const {
-      match: {
-        params: { username }
-      }
-    } = this.props;
-    try {
-      const data = cache.readQuery({
-        query: GET_USER,
-        variables: { username }
-      });
-      if (data) {
-        console.log(data);
-        data.userProfile.user = editProfile.user;
-        cache.writeQuery({
-          query: GET_USER,
-          variables: { username },
-          data
-        });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // public updatEditProfile = (cache, { data: { editProfile } }) => {
+  //   const {
+  //     match: {
+  //       params: { username }
+  //     }
+  //   } = this.props;
+  //   try {
+  //     const data = cache.readQuery({
+  //       query: GET_USER,
+  //       variables: { username }
+  //     });
+  //     if (data) {
+  //       console.log(data);
+  //       data.userProfile.user = editProfile.user;
+  //       cache.writeQuery({
+  //         query: GET_USER,
+  //         variables: { username },
+  //         data
+  //       });
+  //     }
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
   public toggleRequestModal = () => {
     const { requestModalOpen } = this.state;
     this.setState({

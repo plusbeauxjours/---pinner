@@ -4,11 +4,9 @@ import styled from "src/Styles/typed-components";
 import { EditProfile, EditProfileVariables } from "../types/api";
 import { Mutation, MutationFn } from "react-apollo";
 import { withRouter, RouteComponentProps } from "react-router";
-import {
-  EDIT_PROFILE,
-  GET_USER
-} from "../Routes/User/UserProfile/UserProfileQueries";
+import { GET_USER } from "../Routes/User/UserProfile/UserProfileQueries";
 import { toast } from "react-toastify";
+import { EDIT_PROFILE } from "../Routes/User/EditProfile/EditProfileQueries";
 
 class EditProfileMutation extends Mutation<EditProfile, EditProfileVariables> {}
 

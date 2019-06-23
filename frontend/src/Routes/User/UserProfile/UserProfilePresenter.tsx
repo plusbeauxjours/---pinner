@@ -7,7 +7,6 @@ import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import { DateRangePicker } from "react-dates";
 import { Upload } from "../../../Icons";
-import { countries } from "../../../countryData";
 
 import Wrapper from "../../../Components/Wrapper";
 import Loader from "../../../Components/Loader";
@@ -296,7 +295,7 @@ const Modal = styled.div`
   z-index: 10;
   animation: ${ModalAnimation} 0.1s linear;
   @media screen and (max-width: 935px) {
-    width: 30%
+    width: 30%;
   }
 `;
 
@@ -322,24 +321,6 @@ const ModalLink = styled.div`
   }
 `;
 
-const Input = styled.input`
-  z-index: 10;
-  border: 0;
-  border-bottom: 1px solid ${props => props.theme.greyColor};
-  padding: 5px;
-  color: white;
-  background-color: transparent;
-  font-size: 12px;
-  font-weight: 100;
-  transition: border-bottom 0.1s linear;
-  &:focus {
-    outline: none;
-  }
-  &::placeholder {
-    color: ${props => props.theme.greyColor};
-  }
-  animation: ${ModalAnimation} 0.1s linear;
-`;
 
 const TripInputContainer = styled.div`
   z-index: 10;
@@ -401,20 +382,6 @@ const TripInput = styled.input`
   }
 `;
 
-const Select = styled.select`
-  font-size: 12px;
-  color: "#2c3e50";
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-color: #2d3a41;
-  border: 0;
-  margin-bottom: 20px;
-  width: 90%;
-`;
-
-const Option = styled.option``;
-
 const UserRow = styled.div<ITheme>`
   display: grid;
   flex-direction: row;
@@ -450,7 +417,6 @@ interface IProps {
   coffeeLoading: boolean;
 
   modalOpen: boolean;
-  confirmModalOpen: boolean;
 
   tripModalOpen: boolean;
   tripConfirmModalOpen: boolean;
@@ -460,7 +426,6 @@ interface IProps {
   profilFormModalOpen: boolean;
 
   editMode: boolean;
-  openEditMode: () => void;
 
   userName: string;
   bio: string;
@@ -489,7 +454,6 @@ interface IProps {
   onFocusChange: (arg: "startDate" | "endDate" | null) => void;
 
   toggleModal: () => void;
-  toggleConfirmModal: () => void;
 
   toggleTripModal: any;
   toggleTripConfirmModal: () => void;
@@ -501,7 +465,6 @@ interface IProps {
 
   logUserOutFn: () => void;
 
-  confirmDeleteProfile: () => void;
   addTrip: () => void;
   editTrip: () => void;
   deleteTrip: () => void;
@@ -520,7 +483,6 @@ interface IProps {
   onSelectChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
-  onKeyDownSubmit: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 
   username: string;
 
@@ -551,7 +513,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 
   modalOpen,
   tripModalOpen,
-  confirmModalOpen,
   tripConfirmModalOpen,
   tripAddModalOpen,
   tripEditModalOpen,
@@ -563,7 +524,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   editMode,
 
   toggleModal,
-  toggleConfirmModal,
   toggleTripModal,
   toggleTripConfirmModal,
   toggleAddTripModal,
@@ -572,9 +532,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleRequestModal,
 
   toggleProfileFormModal,
-  openEditMode,
   logUserOutFn,
-  confirmDeleteProfile,
   addTrip,
   editTrip,
   deleteTrip,
@@ -582,7 +540,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   onInputChange,
   onSearchInputChange,
   onSelectChange,
-  onKeyDownSubmit,
   userName,
   bio,
   gender,
@@ -634,107 +591,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   } else if (user && coffees) {
     return (
       <>
-        {(!user.profile.nationality ||
-          !user.profile.residence ||
-          !user.profile.gender ||
-          !user.profile.email) &&
-          profilFormModalOpen &&
-          user.profile.isSelf && (
-            <ModalContainer>
-              <ModalOverlay onClick={toggleProfileFormModal} />
-              <Modal>
-                <ModalLink>
-                  <Input
-                    onChange={onInputChange}
-                    type={"text"}
-                    value={username}
-                    placeholder={user.username}
-                    name={"userName"}
-                    onKeyDown={onKeyDownSubmit}
-                    autoComplete={"off"}
-                  />
-                </ModalLink>
-                <ModalLink>
-                  <Input
-                    onChange={onInputChange}
-                    type={"text"}
-                    value={avatar}
-                    placeholder={user.profile.avatar}
-                    name={"avatar"}
-                    onKeyDown={onKeyDownSubmit}
-                    autoComplete={"off"}
-                  />
-                </ModalLink>
-                <ModalLink>
-                  <Input
-                    onChange={onInputChange}
-                    type={"text"}
-                    value={bio}
-                    placeholder={"bio"}
-                    name={"bio"}
-                    onKeyDown={onKeyDownSubmit}
-                    autoComplete={"off"}
-                  />
-                </ModalLink>
-                {!user.profile.nationality ? (
-                  <ModalLink>
-                    <Select
-                      value={nationality}
-                      name={"nationality"}
-                      onChange={onSelectChange}
-                    >
-                      {countries.map((country, index) => (
-                        <Option key={index} value={country.code}>
-                          {country.emoji} {country.name}
-                        </Option>
-                      ))}
-                    </Select>
-                  </ModalLink>
-                ) : null}
-                {!user.profile.residence ? (
-                  <ModalLink>
-                    <Select
-                      value={residence}
-                      name={"residence"}
-                      onChange={onSelectChange}
-                    >
-                      {countries.map((country, index) => (
-                        <Option key={index} value={country.code}>
-                          {country.emoji} {country.name}
-                        </Option>
-                      ))}
-                    </Select>
-                  </ModalLink>
-                ) : null}
-                {!user.profile.gender ? (
-                  <ModalLink>
-                    <Select
-                      value={gender}
-                      name={"gender"}
-                      onChange={onSelectChange}
-                    >
-                      <Option value={""}>-</Option>
-                      <Option value={"Masculine"}>Masculine</Option>
-                      <Option value={"Feminine"}>Feminine</Option>
-                      <Option value={"Genderqueer"}>Genderqueer</Option>
-                    </Select>
-                  </ModalLink>
-                ) : null}
-                {!user.profile.email ? (
-                  <ModalLink>
-                    <Input
-                      onChange={onInputChange}
-                      type={"text"}
-                      value={email}
-                      placeholder={"email"}
-                      name={"email"}
-                      onKeyDown={onKeyDownSubmit}
-                    />
-                  </ModalLink>
-                ) : null}
-              </Modal>
-            </ModalContainer>
-          )}
         {requestModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleRequestModal} />
@@ -756,21 +612,20 @@ const UserProfilePresenter: React.SFC<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleModal} />
             <Modal>
-              <ModalLink onClick={toggleConfirmModal}>Edit Avatar</ModalLink>
-              <ModalLink onClick={openEditMode}>Edit Profile</ModalLink>
-              <ModalLink onClick={toggleConfirmModal}>Settings</ModalLink>
-              <ModalLink onClick={toggleConfirmModal}>Delete Profile</ModalLink>
+              <ModalLink onClick={() => console.log("Edit Avatar")}>
+                Edit Avatar
+              </ModalLink>
+              <ModalLink onClick={() => console.log("Edit Profile")}>
+                Edit Profile
+              </ModalLink>
+              <ModalLink onClick={() => console.log("Settings")}>
+                Settings
+              </ModalLink>
+              <ModalLink onClick={() => console.log("Delete Profile")}>
+                Delete Profile
+              </ModalLink>
               <ModalLink onClick={logUserOutFn}>Log Out</ModalLink>
               <ModalLink onClick={toggleModal}>CANCEL</ModalLink>
-            </Modal>
-          </ModalContainer>
-        )}
-        {confirmModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleConfirmModal} />
-            <Modal>
-              <ModalLink onClick={confirmDeleteProfile}>Yes</ModalLink>
-              <ModalLink onClick={toggleConfirmModal}>No</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -961,18 +816,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
         <Header>
           <PAvatar size="lg" url={user.profile.avatar} />
           <NameContainer>
-            {editMode ? (
-              <Input
-                onChange={onInputChange}
-                type={"text"}
-                value={userName}
-                placeholder={user.username}
-                name={"userName"}
-                onKeyDown={onKeyDownSubmit}
-              />
-            ) : (
+     
               <Username>{user.username}</Username>
-            )}
             {user.profile.isSelf ? (
               <ListIcon onClick={toggleModal}>
                 <List />
@@ -989,43 +834,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <Link to={`/city/${user.profile.currentCity.cityId}`}>
                 <CAvatar size="lg" url={user.profile.currentCity.cityPhoto} />
               </Link>
-              {editMode ? (
-                <>
-                  <Input
-                    onChange={onInputChange}
-                    type={"text"}
-                    value={firstName}
-                    placeholder={user.firstName || "First Name"}
-                    name={"firstName"}
-                    onKeyDown={onKeyDownSubmit}
-                  />
-                  <Input
-                    onChange={onInputChange}
-                    type={"text"}
-                    value={lastName}
-                    placeholder={user.lastName || "Last Name"}
-                    name={"lastName"}
-                    onKeyDown={onKeyDownSubmit}
-                  />
-                </>
-              ) : (
-                <p>
-                  {user.firstName} {user.lastName}
-                </p>
-              )}
-              {editMode ? (
-                <Input
-                  onChange={onInputChange}
-                  type={"text"}
-                  value={bio}
-                  placeholder={user.profile.bio || "Bio"}
-                  name={"bio"}
-                  onKeyDown={onKeyDownSubmit}
-                />
-              ) : (
+              
                 <Bio>{`${user.profile.bio}`}</Bio>
-              )}
-      
               <Row>
                 <UBold text={String(user.profile.postCount)} />
                 <UBold text={" how many KM"} />

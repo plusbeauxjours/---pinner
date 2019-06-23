@@ -365,40 +365,9 @@ export interface logInVariables {
 // GraphQL mutation operation: CreateCity
 // ====================================================
 
-export interface CreateCity_createCity_city_country_continent {
-  __typename: "ContinentType";
-  continentCode: string | null;
-  continentName: string | null;
-}
-
-export interface CreateCity_createCity_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-  countryPhoto: string | null;
-  countryCode: string | null;
-  continent: CreateCity_createCity_city_country_continent | null;
-}
-
-export interface CreateCity_createCity_city {
-  __typename: "CityType";
-  id: string;
-  latitude: number | null;
-  longitude: number | null;
-  cityId: string | null;
-  cityName: string | null;
-  cityPhoto: string | null;
-  country: CreateCity_createCity_city_country;
-  likeCount: number | null;
-  isLiked: boolean | null;
-  userCount: number | null;
-  userLogCount: number | null;
-  count: number | null;
-  diff: number | null;
-}
-
 export interface CreateCity_createCity {
   __typename: "CreateCityResponse";
-  city: CreateCity_createCity_city | null;
+  ok: boolean | null;
 }
 
 export interface CreateCity {
@@ -407,10 +376,6 @@ export interface CreateCity {
 
 export interface CreateCityVariables {
   cityId: string;
-  cityName: string;
-  cityLatitude: number;
-  cityLongitude: number;
-  countryCode: string;
 }
 
 
@@ -1740,21 +1705,33 @@ export interface TripProfile_tripProfile_coffees {
   host: TripProfile_tripProfile_coffees_host;
 }
 
+export interface TripProfile_tripProfile_city_country_continent {
+  __typename: "ContinentType";
+  id: string;
+  continentName: string | null;
+  continentCode: string | null;
+  continentPhoto: string | null;
+}
+
 export interface TripProfile_tripProfile_city_country {
   __typename: "CountryType";
   countryName: string | null;
   countryPhoto: string | null;
   countryCode: string | null;
+  continent: TripProfile_tripProfile_city_country_continent | null;
 }
 
 export interface TripProfile_tripProfile_city {
   __typename: "CityType";
+  id: string;
   latitude: number | null;
   longitude: number | null;
   cityId: string | null;
   cityName: string | null;
   cityPhoto: string | null;
   country: TripProfile_tripProfile_city_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
   userCount: number | null;
   userLogCount: number | null;
   count: number | null;
@@ -1941,105 +1918,6 @@ export interface TopCountriesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: UserProfile
-// ====================================================
-
-export interface UserProfile_userProfile_user_profile_nationality_continent {
-  __typename: "ContinentType";
-  continentCode: string | null;
-  continentName: string | null;
-}
-
-export interface UserProfile_userProfile_user_profile_nationality {
-  __typename: "CountryType";
-  countryEmoji: string | null;
-  id: string;
-  countryName: string | null;
-  countryCode: string | null;
-  countryPhoto: string | null;
-  continent: UserProfile_userProfile_user_profile_nationality_continent | null;
-}
-
-export interface UserProfile_userProfile_user_profile_residence_continent {
-  __typename: "ContinentType";
-  continentCode: string | null;
-  continentName: string | null;
-}
-
-export interface UserProfile_userProfile_user_profile_residence {
-  __typename: "CountryType";
-  countryEmoji: string | null;
-  id: string;
-  countryName: string | null;
-  countryCode: string | null;
-  countryPhoto: string | null;
-  continent: UserProfile_userProfile_user_profile_residence_continent | null;
-}
-
-export interface UserProfile_userProfile_user_profile_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-  countryCode: string | null;
-}
-
-export interface UserProfile_userProfile_user_profile_currentCity {
-  __typename: "CityType";
-  latitude: number | null;
-  longitude: number | null;
-  cityName: string | null;
-  cityId: string | null;
-  cityPhoto: string | null;
-  country: UserProfile_userProfile_user_profile_currentCity_country;
-}
-
-export interface UserProfile_userProfile_user_profile {
-  __typename: "ProfileType";
-  bio: string | null;
-  gender: ProfileGender | null;
-  avatar: string;
-  website: string | null;
-  email: string | null;
-  nationality: UserProfile_userProfile_user_profile_nationality | null;
-  residence: UserProfile_userProfile_user_profile_residence | null;
-  postCount: number | null;
-  tripCount: number | null;
-  cityCount: number | null;
-  countryCount: number | null;
-  continentCount: number | null;
-  isSelf: boolean | null;
-  currentCity: UserProfile_userProfile_user_profile_currentCity | null;
-}
-
-export interface UserProfile_userProfile_user {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  firstName: string;
-  lastName: string;
-  profile: UserProfile_userProfile_user_profile | null;
-}
-
-export interface UserProfile_userProfile {
-  __typename: "UserProfileResponse";
-  user: UserProfile_userProfile_user | null;
-}
-
-export interface UserProfile {
-  userProfile: UserProfile_userProfile;
-}
-
-export interface UserProfileVariables {
-  username: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL mutation operation: EditProfile
 // ====================================================
 
@@ -2158,6 +2036,154 @@ export interface DeleteProfile_deleteProfile {
 
 export interface DeleteProfile {
   deleteProfile: DeleteProfile_deleteProfile;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetAvatarDetail
+// ====================================================
+
+export interface GetAvatarDetail_getAvatarDetail_avatar_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface GetAvatarDetail_getAvatarDetail_avatar {
+  __typename: "AvatarType";
+  uuid: any | null;
+  image: string | null;
+  thumbnail: string | null;
+  creator: GetAvatarDetail_getAvatarDetail_avatar_creator | null;
+  isMain: boolean;
+  likeCount: number | null;
+}
+
+export interface GetAvatarDetail_getAvatarDetail {
+  __typename: "AvatarDetailResponse";
+  avatar: GetAvatarDetail_getAvatarDetail_avatar | null;
+}
+
+export interface GetAvatarDetail {
+  getAvatarDetail: GetAvatarDetail_getAvatarDetail;
+}
+
+export interface GetAvatarDetailVariables {
+  avatarId: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: UserProfile
+// ====================================================
+
+export interface UserProfile_userProfile_user_profile_avatars {
+  __typename: "AvatarType";
+  uuid: any | null;
+  image: string | null;
+  isMain: boolean;
+  likeCount: number | null;
+  thumbnail: string | null;
+}
+
+export interface UserProfile_userProfile_user_profile_nationality_continent {
+  __typename: "ContinentType";
+  continentCode: string | null;
+  continentName: string | null;
+}
+
+export interface UserProfile_userProfile_user_profile_nationality {
+  __typename: "CountryType";
+  countryEmoji: string | null;
+  id: string;
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+  continent: UserProfile_userProfile_user_profile_nationality_continent | null;
+}
+
+export interface UserProfile_userProfile_user_profile_residence_continent {
+  __typename: "ContinentType";
+  continentCode: string | null;
+  continentName: string | null;
+}
+
+export interface UserProfile_userProfile_user_profile_residence {
+  __typename: "CountryType";
+  countryEmoji: string | null;
+  id: string;
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+  continent: UserProfile_userProfile_user_profile_residence_continent | null;
+}
+
+export interface UserProfile_userProfile_user_profile_currentCity_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryCode: string | null;
+}
+
+export interface UserProfile_userProfile_user_profile_currentCity {
+  __typename: "CityType";
+  latitude: number | null;
+  longitude: number | null;
+  cityName: string | null;
+  cityId: string | null;
+  cityPhoto: string | null;
+  country: UserProfile_userProfile_user_profile_currentCity_country;
+}
+
+export interface UserProfile_userProfile_user_profile {
+  __typename: "ProfileType";
+  bio: string | null;
+  gender: ProfileGender | null;
+  avatar: string;
+  avatars: (UserProfile_userProfile_user_profile_avatars | null)[] | null;
+  website: string | null;
+  email: string | null;
+  nationality: UserProfile_userProfile_user_profile_nationality | null;
+  residence: UserProfile_userProfile_user_profile_residence | null;
+  postCount: number | null;
+  tripCount: number | null;
+  cityCount: number | null;
+  countryCount: number | null;
+  continentCount: number | null;
+  isSelf: boolean | null;
+  currentCity: UserProfile_userProfile_user_profile_currentCity | null;
+}
+
+export interface UserProfile_userProfile_user {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  firstName: string;
+  lastName: string;
+  profile: UserProfile_userProfile_user_profile | null;
+}
+
+export interface UserProfile_userProfile {
+  __typename: "UserProfileResponse";
+  user: UserProfile_userProfile_user | null;
+}
+
+export interface UserProfile {
+  userProfile: UserProfile_userProfile;
+}
+
+export interface UserProfileVariables {
+  username: string;
 }
 
 
@@ -2331,11 +2357,13 @@ export interface DeleteTripVariables {
 
 export interface Me_me_user_profile_currentCity {
   __typename: "CityType";
+  cityId: string | null;
   cityName: string | null;
 }
 
 export interface Me_me_user_profile {
   __typename: "ProfileType";
+  avatar: string;
   currentCity: Me_me_user_profile_currentCity | null;
 }
 
