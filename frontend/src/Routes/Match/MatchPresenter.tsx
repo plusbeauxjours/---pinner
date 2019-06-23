@@ -255,9 +255,9 @@ const MatchPresenter: React.SFC<IProps> = ({
   submitCoffee,
   isStaying
 }) => {
-  if (matchLoading) {
+  if (matchLoading || recommandUsersLoading) {
     return <Loader />;
-  } else if (!matchLoading && matches) {
+  } else if (!matchLoading && !recommandUsersLoading && matches) {
     return (
       <>
         {coffeeReportModalOpen && (
@@ -289,48 +289,41 @@ const MatchPresenter: React.SFC<IProps> = ({
           </ModalContainer>
         )}
         <SWrapper>
-          {recommandUsersLoading ? (
-            <Loader />
-          ) : (
-            <UserContainer>
-              <UserNameRow>
-                <Username>RECOMMAND USER</Username>
-                <Link to={`/people`}>
-                  <SeeAll>SEE ALL</SeeAll>
-                </Link>
-              </UserNameRow>
-              <Container>
-                <Box>
-                  {users &&
-                    users.map(user => {
-                      return (
-                        <UserRow key={user.id}>
-                          <Link to={`/${user.username}`}>
-                            <AvatarContainer>
-                              <Avatar size={"sm"} url={user.profile.avatar} />
-                              <HeaderColumn>
-                                <CText text={user.username} />
-                                <Explain>with same nationality</Explain>
-                              </HeaderColumn>
-                            </AvatarContainer>
-                          </Link>
-                        </UserRow>
-                      );
-                    })}
-                </Box>
-              </Container>
-            </UserContainer>
-          )}
-          {!coffeeLoading ? (
-            <CoffeeBox
-              currentCityId={currentCityId}
-              toggleCoffeeRequestModal={toggleRequestModal}
-              coffees={coffees}
-              isStaying={isStaying}
-            />
-          ) : (
-            <Loader />
-          )}
+          <UserContainer>
+            <UserNameRow>
+              <Username>RECOMMAND USER</Username>
+              <Link to={`/people`}>
+                <SeeAll>SEE ALL</SeeAll>
+              </Link>
+            </UserNameRow>
+            <Container>
+              <Box>
+                {users &&
+                  users.map(user => {
+                    return (
+                      <UserRow key={user.id}>
+                        <Link to={`/${user.username}`}>
+                          <AvatarContainer>
+                            <Avatar size={"sm"} url={user.profile.avatar} />
+                            <HeaderColumn>
+                              <CText text={user.username} />
+                              <Explain>with same nationality</Explain>
+                            </HeaderColumn>
+                          </AvatarContainer>
+                        </Link>
+                      </UserRow>
+                    );
+                  })}
+              </Box>
+            </Container>
+          </UserContainer>
+          <CoffeeBox
+            coffeeLoading={coffeeLoading}
+            currentCityId={currentCityId}
+            toggleCoffeeRequestModal={toggleRequestModal}
+            coffees={coffees}
+            isStaying={isStaying}
+          />
           <GreyLine />
           <UserContainer>
             <UserNameRow>

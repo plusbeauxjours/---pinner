@@ -13,6 +13,14 @@ export const GET_USER = gql`
           bio
           gender
           avatar
+          avatars {
+            uuid
+            image
+            isMain
+            likeCount
+            thumbnail
+          }
+
           website
           email
           nationality {

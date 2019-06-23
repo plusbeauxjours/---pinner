@@ -11,6 +11,7 @@ import Match from "../Routes/Match";
 
 import UserProfile from "../Routes/User/UserProfile";
 import EditProfile from "../Routes/User/EditProfile";
+import UserAvatar from "../Routes/User/UserAvatar";
 import Coffees from "../Routes/User/Coffees";
 import Cities from "../Routes/User/Cities";
 import Countries from "../Routes/User/Countries";
@@ -48,7 +49,8 @@ class LoggedInPages extends React.Component<IProps> {
       nextProps.history.action !== "POP" &&
       (!location.state ||
         !location.state.coffeeModalOpen ||
-        !location.state.editModalOpen)
+        !location.state.editModalOpen ||
+        !location.state.avatarModalOpen)
     ) {
       this.previousLocation = this.props.location;
     }
@@ -66,6 +68,11 @@ class LoggedInPages extends React.Component<IProps> {
       location.state.editModalOpen &&
       this.previousLocation !== location
     );
+    const avatarModalOpen = !(
+      location.state &&
+      location.state.avatarModalOpen &&
+      this.previousLocation !== location
+    );
     return (
       <Wrapper>
         <Header />
@@ -77,6 +84,11 @@ class LoggedInPages extends React.Component<IProps> {
         {editModalOpen && (
           <>
             <Route path="/:username/edit" component={EditProfile} />
+          </>
+        )}
+        {avatarModalOpen && (
+          <>
+            <Route path="/:username/avatar" component={UserAvatar} />
           </>
         )}
 
