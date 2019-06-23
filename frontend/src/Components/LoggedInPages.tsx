@@ -63,12 +63,12 @@ class LoggedInPages extends React.Component<IProps> {
       location.state.coffeeModalOpen &&
       this.previousLocation !== location
     );
-    const editModalOpen = !(
+    const editModalOpen = !!(
       location.state &&
       location.state.editModalOpen &&
       this.previousLocation !== location
     );
-    const avatarModalOpen = !(
+    const avatarModalOpen = !!(
       location.state &&
       location.state.avatarModalOpen &&
       this.previousLocation !== location
@@ -77,7 +77,21 @@ class LoggedInPages extends React.Component<IProps> {
       <Wrapper>
         <Header />
 
-        <Switch location={coffeeModalOpen ? this.previousLocation : location}>
+        {avatarModalOpen && (
+          <Route path="/:username/:uuid" component={UserAvatarDetail} />
+        )}
+        {coffeeModalOpen && <Route path="/c/:uuid" component={CoffeeDetail} />}
+        {editModalOpen && (
+          <Route path="/:username/edit" component={EditProfile} />
+        )}
+
+        <Switch
+          location={
+            coffeeModalOpen || editModalOpen || avatarModalOpen
+              ? this.previousLocation
+              : location
+          }
+        >
           <Route path="/people" exact={true} component={PeoplePage} />
           <Route path="/coffees" exact={true} component={CoffeesPage} />
           <Route path="/" exact={true} component={Match} />
@@ -128,21 +142,6 @@ class LoggedInPages extends React.Component<IProps> {
 
           <Route path="/:username/edit" component={EditProfile} />
           <Route path="/:username" exact={true} component={UserProfile} />
-          {coffeeModalOpen && (
-            <>
-              <Route path="/c/:uuid" exact={true} component={CoffeeDetail} />
-            </>
-          )}
-          {editModalOpen && (
-            <>
-              <Route path="/:username/edit" component={EditProfile} />
-            </>
-          )}
-          {avatarModalOpen && (
-            <>
-              <Route path="/:username/:uuid" component={UserAvatarDetail} />
-            </>
-          )}
         </Switch>
       </Wrapper>
     );

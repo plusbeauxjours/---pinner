@@ -34,17 +34,14 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
       modalOpen: false,
       userId: null
     };
-    console.log(this.state);
   }
   public render() {
-    console.log(this.props);
     const {
       match: {
         params: { uuid }
       }
     } = this.props;
     const { modalOpen } = this.state;
-    console.log(this.state);
     return (
       <DeleteCoffeeMutation
         mutation={DELETE_COFFEE}

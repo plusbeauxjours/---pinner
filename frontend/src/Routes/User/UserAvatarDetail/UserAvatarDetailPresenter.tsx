@@ -4,8 +4,10 @@ import { keyframes } from "styled-components";
 
 import Loader from "../../../Components/Loader";
 import Wrapper from "../../../Components/Wrapper";
+import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)`
+  z-index: 101;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,6 +17,7 @@ const SWrapper = styled(Wrapper)`
 `;
 
 const ModalContainer = styled.div`
+  z-index: 101;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,28 +79,9 @@ const MenuModal = styled(Modal)`
   z-index: 101;
 `;
 
-const FormModal = styled(Modal)`
-  z-index: 101;
-  display: flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  width: 600px;
-  height: 400px;
-  margin-top: 45px;
-  @media screen and (max-width: 630px) {
-    width: 100%;
-    margin-right: 15px;
-    margin-left: 15px;
-  }
-  @media screen and (max-height: 400px) {
-    height: 100%;
-  }
-`;
-
 const Img = styled.img`
-  height: 900px;
-  width: 900px;
+  height: 935px;
+  width: 935px;
   @media screen and (max-width: 935px) {
     width: 100%;
     height: 100%;
@@ -147,10 +131,9 @@ const UserAvatarDetailPresenter: React.SFC<IProps> = ({
         )}
         <ModalContainer>
           <ModalOverlay onClick={back} />
-          <FormModal>
-            <SWrapper />
-            <Img src={`${avatar.image}`} />
-          </FormModal>
+          <SWrapper>
+            <Img src={`${BACKEND_URL}/media/${avatar.image}`} />
+          </SWrapper>
         </ModalContainer>
       </>
     );

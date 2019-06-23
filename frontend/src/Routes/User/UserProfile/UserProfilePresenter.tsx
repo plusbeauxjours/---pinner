@@ -16,7 +16,7 @@ import AvatarGrid from "../../../Components/AvatarGrid";
 import Weather from "../../../Components/Weather";
 import { GOOGLE_PLACE_KEY } from "src/keys";
 import useGoogleAutocomplete from "../../../autocompleteHelpers";
-import { BACKEND_URL } from 'src/constants';
+import { BACKEND_URL } from "src/constants";
 
 const Header = styled.header`
   display: flex;
@@ -400,20 +400,25 @@ const UserRow = styled.div<ITheme>`
   }
 `;
 
+const AvatarKeyContainer = styled.div`
+  z-index: 10;
+`;
+
 const ModalAvatars = styled.div`
+  z-index: 10;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap:10px
+  grid-gap:10px;
   justify-content: center;
   align-items: center;
+  animation: ${ModalAnimation} 0.1s linear;
 `;
 
 const ModalAvatarImage = styled.img`
-z-index: 10;
+  z-index: 10;
   height: 300px;
   width: 300px;
   background-position: center center;
-  border-radius: 3%;
   object-fit: cover;
 `;
 
@@ -599,7 +604,19 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 avatars.length !== 0 &&
                 avatars.map(avatar => {
                   return (
-                    <ModalAvatarImage key={avatar.id} src={`${BACKEND_URL}/media/${avatar.thumbnail}`} />
+                    <AvatarKeyContainer key={avatar.id}>
+                      <Link
+                        to={{
+                          pathname: `/${username}/${avatar.uuid}`,
+                          state: { avatarModalOpen: true }
+                        }}
+                      >
+                        <ModalAvatarImage
+                          key={avatar.id}
+                          src={`${BACKEND_URL}/media/${avatar.thumbnail}`}
+                        />
+                      </Link>
+                    </AvatarKeyContainer>
                   );
                 })}
             </ModalAvatars>
