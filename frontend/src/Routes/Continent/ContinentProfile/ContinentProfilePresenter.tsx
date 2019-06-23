@@ -133,9 +133,10 @@ const AvatarContainer = styled.div`
 `;
 
 const LocationName = styled.span`
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 300;
   margin: 5px 5px 5px 0;
+  text-transform: uppercase;
 `;
 
 interface ITheme {

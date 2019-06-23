@@ -192,9 +192,10 @@ const Location = styled.span`
 `;
 
 const LocationName = styled.span`
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 300;
   margin: 5px 10px 5px 0;
+  text-transform: uppercase;
 `;
 
 const SText = styled(Bold)`

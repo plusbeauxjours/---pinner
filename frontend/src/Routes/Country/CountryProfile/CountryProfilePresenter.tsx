@@ -159,9 +159,10 @@ const LocationContainer = styled.span`
 `;
 
 const LocationName = styled.span`
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 300;
   margin-right: 5px;
+  text-transform: uppercase;
 `;
 
 const Flag = styled.span`

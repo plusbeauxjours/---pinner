@@ -60,6 +60,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
+    console.log("updating");
     if (prevProps.match.params.cityId !== newProps.match.params.cityId) {
       this.setState({ search: "", usersNowList: [] });
     }
@@ -72,7 +73,6 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       }
     } = this.props;
     const isStaying = this.state.currentCityId === cityId;
-    console.log("isStaying::::", isStaying);
     const {
       search,
       usersNowList,
