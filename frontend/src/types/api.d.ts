@@ -2046,12 +2046,18 @@ export interface DeleteProfile {
 // GraphQL query operation: GetAvatarDetail
 // ====================================================
 
+export interface GetAvatarDetail_getAvatarDetail_avatar_creator_profile {
+  __typename: "ProfileType";
+  isSelf: boolean | null;
+}
+
 export interface GetAvatarDetail_getAvatarDetail_avatar_creator {
   __typename: "UserType";
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
+  profile: GetAvatarDetail_getAvatarDetail_avatar_creator_profile | null;
 }
 
 export interface GetAvatarDetail_getAvatarDetail_avatar {
@@ -2184,6 +2190,51 @@ export interface UserProfile {
 
 export interface UserProfileVariables {
   username: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetAvatars
+// ====================================================
+
+export interface GetAvatars_getAvatars_avatars_creator_profile {
+  __typename: "ProfileType";
+  isSelf: boolean | null;
+}
+
+export interface GetAvatars_getAvatars_avatars_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: GetAvatars_getAvatars_avatars_creator_profile | null;
+}
+
+export interface GetAvatars_getAvatars_avatars {
+  __typename: "AvatarType";
+  uuid: any | null;
+  image: string | null;
+  thumbnail: string | null;
+  creator: GetAvatars_getAvatars_avatars_creator | null;
+  isMain: boolean;
+  likeCount: number | null;
+}
+
+export interface GetAvatars_getAvatars {
+  __typename: "AvatarListResponse";
+  avatars: (GetAvatars_getAvatars_avatars | null)[] | null;
+}
+
+export interface GetAvatars {
+  getAvatars: GetAvatars_getAvatars;
+}
+
+export interface GetAvatarsVariables {
+  userName: string;
 }
 
 

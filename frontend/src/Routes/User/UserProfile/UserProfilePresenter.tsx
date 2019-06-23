@@ -60,12 +60,11 @@ const PHeader = styled.header`
   }
 `;
 
-const AvatarContainer = styled.div`
+const AvatarContainer = styled.div``;
+
+const LocationAvatarContainer = styled.div`
   display: flex;
   position: relative;
-`;
-
-const LocationAvatarContainer = styled(AvatarContainer)`
   flex-direction: column;
 `;
 
@@ -321,7 +320,6 @@ const ModalLink = styled.div`
   }
 `;
 
-
 const TripInputContainer = styled.div`
   z-index: 10;
   top: 30%;
@@ -425,17 +423,6 @@ interface IProps {
   requestModalOpen: boolean;
   profilFormModalOpen: boolean;
 
-  editMode: boolean;
-
-  userName: string;
-  bio: string;
-  gender: string;
-  avatar: string;
-  nationality: string;
-  residence: string;
-  email: string;
-  firstName: string;
-  lastName: string;
   tripCitySearch: string;
   cityName: string;
   cityId: string;
@@ -462,8 +449,8 @@ interface IProps {
 
   toggleRequestModal: () => void;
   toggleProfileFormModal: () => void;
-
-  logUserOutFn: () => void;
+  avatarModalOpen: boolean;
+  toggleAvatarModalOpen: () => void;
 
   addTrip: () => void;
   editTrip: () => void;
@@ -519,10 +506,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
 
   requestModalOpen,
 
-  profilFormModalOpen,
-
-  editMode,
-
   toggleModal,
   toggleTripModal,
   toggleTripConfirmModal,
@@ -532,7 +515,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleRequestModal,
 
   toggleProfileFormModal,
-  logUserOutFn,
   addTrip,
   editTrip,
   deleteTrip,
@@ -540,16 +522,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   onInputChange,
   onSearchInputChange,
   onSelectChange,
-  userName,
-  bio,
-  gender,
-  firstName,
-  lastName,
   tripCitySearch,
-  avatar,
-  nationality,
-  residence,
-  email,
   cityName,
   cityId,
   cityPhoto,
@@ -576,7 +549,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   onBlur,
   tripActiveId,
   searchActiveId,
-  createCityLoading
+  createCityLoading,
+  avatarModalOpen,
+  toggleAvatarModalOpen
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
     apiKey: `${GOOGLE_PLACE_KEY}`,
@@ -591,6 +566,12 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   } else if (user && coffees) {
     return (
       <>
+        {avatarModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleAvatarModalOpen} />
+            <Modal />
+          </ModalContainer>
+        )}
         {requestModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleRequestModal} />
@@ -624,7 +605,9 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <ModalLink onClick={() => console.log("Delete Profile")}>
                 Delete Profile
               </ModalLink>
-              <ModalLink onClick={logUserOutFn}>Log Out</ModalLink>
+              <ModalLink onClick={() => console.log("Log Out")}>
+                Log Out
+              </ModalLink>
               <ModalLink onClick={toggleModal}>CANCEL</ModalLink>
             </Modal>
           </ModalContainer>
@@ -814,10 +797,11 @@ const UserProfilePresenter: React.SFC<IProps> = ({
         ////////////// HEADER //////////////
         */}
         <Header>
-          <PAvatar size="lg" url={user.profile.avatar} />
+          <AvatarContainer onClick={toggleAvatarModalOpen}>
+            <PAvatar size="lg" url={user.profile.avatar} />
+          </AvatarContainer>
           <NameContainer>
-     
-              <Username>{user.username}</Username>
+            <Username>{user.username}</Username>
             {user.profile.isSelf ? (
               <ListIcon onClick={toggleModal}>
                 <List />
@@ -834,8 +818,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
               <Link to={`/city/${user.profile.currentCity.cityId}`}>
                 <CAvatar size="lg" url={user.profile.currentCity.cityPhoto} />
               </Link>
-              
-                <Bio>{`${user.profile.bio}`}</Bio>
+
+              <Bio>{`${user.profile.bio}`}</Bio>
               <Row>
                 <UBold text={String(user.profile.postCount)} />
                 <UBold text={" how many KM"} />
@@ -1048,7 +1032,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
       </>
     );
   }
-  return null;
+  return null
 };
 
 export default UserProfilePresenter;

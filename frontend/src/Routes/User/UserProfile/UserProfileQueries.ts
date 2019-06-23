@@ -55,6 +55,26 @@ export const GET_USER = gql`
   ${COUNTRY_FRAGMENT}
 `;
 
+export const GET_AVATARS = gql`
+  query GetAvatars($userName: String!) {
+    getAvatars(userName: $userName) {
+      avatars {
+        uuid
+        image
+        thumbnail
+        creator {
+          username
+          profile {
+            isSelf
+          }
+        }
+        isMain
+        likeCount
+      }
+    }
+  }
+`;
+
 export const GET_TRIPS = gql`
   query GetTrips($username: String!, $tripPage: Int) {
     getTrips(username: $username, tripPage: $tripPage) {
