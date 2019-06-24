@@ -32,7 +32,6 @@ class AvatarType(DjangoObjectType):
 
     class Meta:
         model = models.Avatar
-        filter_fields = ["image", "thumbnail"]
 
 
 class LikeType(DjangoObjectType):

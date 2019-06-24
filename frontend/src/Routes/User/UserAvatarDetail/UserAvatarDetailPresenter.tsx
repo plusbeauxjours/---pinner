@@ -6,16 +6,6 @@ import Loader from "../../../Components/Loader";
 import Wrapper from "../../../Components/Wrapper";
 import { BACKEND_URL } from "src/constants";
 
-const SWrapper = styled(Wrapper)`
-  z-index: 101;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 150px;
-`;
-
 const ModalContainer = styled.div`
   z-index: 101;
   display: flex;
@@ -52,6 +42,14 @@ const Modal = styled.div`
   width: 30%;
   border-radius: 12px;
   z-index: 101;
+  animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const SWrapper = styled(Wrapper)`
+  z-index: 101;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   animation: ${ModalAnimation} 0.1s linear;
 `;
 

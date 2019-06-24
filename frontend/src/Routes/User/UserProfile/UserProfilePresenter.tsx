@@ -409,7 +409,7 @@ const ModalAvatars = styled.div`
   z-index: 10;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap:10px;
+  grid-gap: 10px;
   justify-content: center;
   align-items: center;
   animation: ${ModalAnimation} 0.1s linear;
@@ -422,6 +422,30 @@ const ModalAvatarImage = styled.img`
   background-position: center center;
   object-fit: cover;
 `;
+
+// const ImageUpload = styled.form``;
+const ImageInput = styled.input`
+  display: none;
+`;
+
+const AvatarUploadIcon = styled.div`
+  z-index: 11;
+  height: 300px;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  svg {
+    fill: white;
+    transition: fill 0.2s ease-in-out;
+    &:hover {
+      fill: grey;
+    }
+  }
+`;
+const Label = styled.label``;
 
 interface ITheme {
   size?: string;
@@ -513,6 +537,9 @@ interface IProps {
   tripActiveId: number;
   searchActiveId: number;
   createCityLoading: boolean;
+  uploadAvatarLoading: boolean;
+  onChangeImage: (currentTarget) => void;
+  onSubmitImage: (event) => void;
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
@@ -580,8 +607,11 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   tripActiveId,
   searchActiveId,
   createCityLoading,
+  uploadAvatarLoading,
   avatarModalOpen,
-  toggleAvatarModalOpen
+  toggleAvatarModalOpen,
+  onChangeImage,
+  onSubmitImage
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
     apiKey: `${GOOGLE_PLACE_KEY}`,
@@ -598,8 +628,23 @@ const UserProfilePresenter: React.SFC<IProps> = ({
       <>
         {avatarModalOpen && (
           <ModalContainer>
-            <ModalOverlay onClick={toggleAvatarModalOpen} />
+            {/* <ModalOverlay onClick={toggleAvatarModalOpen} /> */}
+            <ModalOverlay onClick={() => onSubmitImage(event)} />
             <ModalAvatars>
+            {user.profile.isSelf ? (
+              <AvatarUploadIcon>
+              <Label htmlFor="image">
+                <Upload />
+              </Label>
+              <ImageInput
+                name="imageFile"
+                id="image"
+                type="file"
+                onChange={onChangeImage}
+              />
+            </AvatarUploadIcon>
+            ) : null}
+              
               {!avatarsLoading &&
                 avatars &&
                 avatars.length !== 0 &&

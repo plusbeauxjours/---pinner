@@ -226,23 +226,26 @@ class UploadAvatar(graphene.Mutation):
 
     class Arguments:
 
-        file = Upload(required=True)
+        files = graphene.String(required=True)
+        print(files)
 
     Output = types.UploadAvatarResponse
 
     @login_required
-    def mutate(self, info, file, **kwargs):
+    def mutate(self, info,  **kwargs):
 
         user = info.context.user
-        files = info.context.FILES['imageFile']
-        print(file)
+        files = kwargs.get('files')
+        print(files)
 
-        try:
-            avatar = models.Avatar.create(
-                is_main=False, image=file, thumbnail=file, creator=user)
-            return types.UploadAvatarResponse(ok=True, avatar=avatar)
-        except:
-            return types.UploadAvatarResponse(ok=False, avatar=None)
+        for file in files:
+            try:
+                avatar = models.Avatar.create(
+                    is_main=False, image=file, thumbnail=file, creator=user)
+                return types.UploadAvatarResponse(ok=True, avatar=avatar)
+
+            except:
+                return types.UploadAvatarResponse(ok=False, avatar=None)
 
 
 class ChangePassword(graphene.Mutation):

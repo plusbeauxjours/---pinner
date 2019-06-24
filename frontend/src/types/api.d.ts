@@ -2403,6 +2403,52 @@ export interface DeleteTripVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: UploadAvatar
+// ====================================================
+
+export interface UploadAvatar_uploadAvatar_avatar_creator_profile {
+  __typename: "ProfileType";
+  isSelf: boolean | null;
+}
+
+export interface UploadAvatar_uploadAvatar_avatar_creator {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: UploadAvatar_uploadAvatar_avatar_creator_profile | null;
+}
+
+export interface UploadAvatar_uploadAvatar_avatar {
+  __typename: "AvatarType";
+  uuid: any | null;
+  image: string | null;
+  thumbnail: string | null;
+  creator: UploadAvatar_uploadAvatar_avatar_creator | null;
+  isMain: boolean;
+  likeCount: number | null;
+}
+
+export interface UploadAvatar_uploadAvatar {
+  __typename: "UploadAvatarResponse";
+  ok: boolean | null;
+  avatar: UploadAvatar_uploadAvatar_avatar | null;
+}
+
+export interface UploadAvatar {
+  uploadAvatar: UploadAvatar_uploadAvatar;
+}
+
+export interface UploadAvatarVariables {
+  files: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: Me
 // ====================================================
 

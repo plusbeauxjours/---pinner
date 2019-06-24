@@ -164,3 +164,24 @@ export const DELETE_TRIP = gql`
     }
   }
 `;
+
+export const UPLOAD_AVATAR = gql`
+  mutation UploadAvatar($files: String!) {
+    uploadAvatar(files: $files) {
+      ok
+      avatar {
+        uuid
+        image
+        thumbnail
+        creator {
+          username
+          profile {
+            isSelf
+          }
+        }
+        isMain
+        likeCount
+      }
+    }
+  }
+`;
