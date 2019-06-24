@@ -32,6 +32,7 @@ class AvatarType(DjangoObjectType):
 
     class Meta:
         model = models.Avatar
+        filter_fields = ["image", "thumbnail"]
 
 
 class LikeType(DjangoObjectType):
@@ -45,6 +46,11 @@ class AvatarListResponse(graphene.ObjectType):
 
 
 class AvatarDetailResponse(graphene.ObjectType):
+    avatar = graphene.Field(AvatarType)
+
+
+class UploadAvatarResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
     avatar = graphene.Field(AvatarType)
 
 

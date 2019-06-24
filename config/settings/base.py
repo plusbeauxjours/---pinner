@@ -73,7 +73,7 @@ THIRD_PARTY_APPS = [
     'graphene_django',
     'corsheaders',
     'twilio',
-    'cached_property'
+    'cached_property',
 ]
 LOCAL_APPS = [
     'users.apps.UsersConfig',

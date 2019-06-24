@@ -205,8 +205,6 @@ class EditProfile(graphene.Mutation):
 
 class DeleteProfile(graphene.Mutation):
 
-    """ Delete Profile """
-
     Output = types.DeleteProfileResponse
 
     @login_required
@@ -215,13 +213,36 @@ class DeleteProfile(graphene.Mutation):
         user = info.context.user
 
         try:
-            user.delete()
             user.profile.delete()
+            user.delete()
             return types.DeleteProfileResponse(ok=True)
 
         except IntegrityError as e:
             print(e)
             return types.DeleteProfileResponse(ok=False)
+
+
+class UploadAvatar(graphene.Mutation):
+
+    class Arguments:
+
+        file = Upload(required=True)
+
+    Output = types.UploadAvatarResponse
+
+    @login_required
+    def mutate(self, info, file, **kwargs):
+
+        user = info.context.user
+        files = info.context.FILES['imageFile']
+        print(file)
+
+        try:
+            avatar = models.Avatar.create(
+                is_main=False, image=file, thumbnail=file, creator=user)
+            return types.UploadAvatarResponse(ok=True, avatar=avatar)
+        except:
+            return types.UploadAvatarResponse(ok=False, avatar=None)
 
 
 class ChangePassword(graphene.Mutation):

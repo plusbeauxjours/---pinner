@@ -37,6 +37,7 @@ const PAvatar = styled(Avatar)`
   justify-self: center;
   align-self: center;
   margin-top: 70px;
+  cursor: pointer;
 `;
 
 const NameContainer = styled.span`

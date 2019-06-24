@@ -79,3 +79,4 @@ class Mutation(object):
     log_in = graphql_jwt.ObtainJSONWebToken.Field(required=True)
     create_account = mutations.CreateAccount.Field(required=True)
     facebook_connect = mutations.FacebookConnect.Field(required=True)
+    upload_avatar = mutations.UploadAvatar.Field(required=True)

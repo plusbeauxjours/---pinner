@@ -7,6 +7,7 @@ from django.views import defaults as default_views
 from graphene_django.views import GraphQLView
 from django.views.decorators.csrf import csrf_exempt
 from . import views
+from graphene_file_upload.django import FileUploadGraphQLView
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
@@ -24,9 +25,10 @@ urlpatterns = [
     ),
     path("accounts/", include("allauth.urls")),
     path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    path("graphql", FileUploadGraphQLView.as_view(graphiql=True)),
     # path("s3Upload/", csrf_exempt(views.sign_s3))
-    
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
