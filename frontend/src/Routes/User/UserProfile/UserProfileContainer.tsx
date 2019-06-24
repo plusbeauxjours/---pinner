@@ -190,7 +190,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       imagePreviewUrl
     } = this.state;
     return (
-      <UploadAvatarMutation mutation={UPLOAD_AVATAR}>
+      <UploadAvatarMutation
+        mutation={UPLOAD_AVATAR}
+        update={this.updatUploadAvatar}
+      >
         {(uploadAvatarFn, { loading: uploadAvatarLoading }) => {
           this.uploadAvatarFn = uploadAvatarFn;
           return (
@@ -521,7 +524,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                 imagePreviewUrl={
                                                                   imagePreviewUrl
                                                                 }
-                                                                togglePreviewAvatarModalOpen={this.togglePreviewAvatarModalOpen}
+                                                                togglePreviewAvatarModalOpen={
+                                                                  this
+                                                                    .togglePreviewAvatarModalOpen
+                                                                }
                                                               />
                                                             );
                                                           }}
@@ -1052,6 +1058,31 @@ class UserProfileContainer extends React.Component<IProps, IState> {
 
     this.uploadAvatarFn({ variables: { file } });
     this.setState({ file: "", imagePreviewUrl: "", avatarModalOpen: false });
+  };
+  public updatUploadAvatar = (cache, { data: { uploadAvatar } }) => {
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    try {
+      const data = cache.readQuery({
+        query: GET_USER,
+        variables: { username }
+      });
+      if (data) {
+        console.log(uploadAvatar.avatar);
+        console.log(data.userProfile.user.profile.avatars);
+        data.userProfile.user.profile.avatars.unshift(uploadAvatar.avatar);
+        cache.writeQuery({
+          query: GET_USER,
+          variables: { username },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 }
 

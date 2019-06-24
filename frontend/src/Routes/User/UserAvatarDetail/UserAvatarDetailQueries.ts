@@ -6,15 +6,9 @@ export const GET_AVATAR_DETAIL = gql`
       avatar {
         uuid
         image
-        thumbnail
-        creator {
-          username
-          profile {
-            isSelf
-          }
-        }
         isMain
         likeCount
+        thumbnail
       }
     }
   }

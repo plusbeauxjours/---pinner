@@ -236,7 +236,7 @@ class UploadAvatar(graphene.Mutation):
     def mutate(self, info, file, **kwargs):
 
         user = info.context.user
-        print('file2: ', file.name)
+        print('file2: ', file)
 
         try:
             avatar = models.Avatar.objects.create(

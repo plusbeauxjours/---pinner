@@ -20,7 +20,6 @@ export const GET_USER = gql`
             likeCount
             thumbnail
           }
-
           website
           email
           nationality {
@@ -61,15 +60,9 @@ export const GET_AVATARS = gql`
       avatars {
         uuid
         image
-        thumbnail
-        creator {
-          username
-          profile {
-            isSelf
-          }
-        }
         isMain
         likeCount
+        thumbnail
       }
     }
   }
@@ -172,15 +165,9 @@ export const UPLOAD_AVATAR = gql`
       avatar {
         uuid
         image
-        thumbnail
-        creator {
-          username
-          profile {
-            isSelf
-          }
-        }
         isMain
         likeCount
+        thumbnail
       }
     }
   }

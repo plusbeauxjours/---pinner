@@ -2046,28 +2046,13 @@ export interface DeleteProfile {
 // GraphQL query operation: GetAvatarDetail
 // ====================================================
 
-export interface GetAvatarDetail_getAvatarDetail_avatar_creator_profile {
-  __typename: "ProfileType";
-  isSelf: boolean | null;
-}
-
-export interface GetAvatarDetail_getAvatarDetail_avatar_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: GetAvatarDetail_getAvatarDetail_avatar_creator_profile | null;
-}
-
 export interface GetAvatarDetail_getAvatarDetail_avatar {
   __typename: "AvatarType";
   uuid: any | null;
   image: string | null;
-  thumbnail: string | null;
-  creator: GetAvatarDetail_getAvatarDetail_avatar_creator | null;
   isMain: boolean;
   likeCount: number | null;
+  thumbnail: string | null;
 }
 
 export interface GetAvatarDetail_getAvatarDetail {
@@ -2200,28 +2185,13 @@ export interface UserProfileVariables {
 // GraphQL query operation: GetAvatars
 // ====================================================
 
-export interface GetAvatars_getAvatars_avatars_creator_profile {
-  __typename: "ProfileType";
-  isSelf: boolean | null;
-}
-
-export interface GetAvatars_getAvatars_avatars_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: GetAvatars_getAvatars_avatars_creator_profile | null;
-}
-
 export interface GetAvatars_getAvatars_avatars {
   __typename: "AvatarType";
   uuid: any | null;
   image: string | null;
-  thumbnail: string | null;
-  creator: GetAvatars_getAvatars_avatars_creator | null;
   isMain: boolean;
   likeCount: number | null;
+  thumbnail: string | null;
 }
 
 export interface GetAvatars_getAvatars {
@@ -2406,28 +2376,13 @@ export interface DeleteTripVariables {
 // GraphQL mutation operation: UploadAvatar
 // ====================================================
 
-export interface UploadAvatar_uploadAvatar_avatar_creator_profile {
-  __typename: "ProfileType";
-  isSelf: boolean | null;
-}
-
-export interface UploadAvatar_uploadAvatar_avatar_creator {
-  __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: UploadAvatar_uploadAvatar_avatar_creator_profile | null;
-}
-
 export interface UploadAvatar_uploadAvatar_avatar {
   __typename: "AvatarType";
   uuid: any | null;
   image: string | null;
-  thumbnail: string | null;
-  creator: UploadAvatar_uploadAvatar_avatar_creator | null;
   isMain: boolean;
   likeCount: number | null;
+  thumbnail: string | null;
 }
 
 export interface UploadAvatar_uploadAvatar {
