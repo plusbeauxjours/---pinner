@@ -4,6 +4,7 @@ from django.db import IntegrityError
 from django.contrib.auth.models import User
 from graphql_jwt.decorators import login_required
 from graphql_jwt.shortcuts import get_token
+from graphene_file_upload.scalars import Upload
 
 from locations import locationThumbnail
 from locations import models as location_models
@@ -226,26 +227,27 @@ class UploadAvatar(graphene.Mutation):
 
     class Arguments:
 
-        files = graphene.String(required=True)
-        print(files)
+        file = Upload(required=True)
+        print('file1: ', file)
 
     Output = types.UploadAvatarResponse
 
     @login_required
-    def mutate(self, info,  **kwargs):
+    def mutate(self, info, file, **kwargs):
 
         user = info.context.user
-        files = kwargs.get('files')
-        print(files)
+        print('file2: ', file.name)
 
-        for file in files:
-            try:
-                avatar = models.Avatar.create(
-                    is_main=False, image=file, thumbnail=file, creator=user)
-                return types.UploadAvatarResponse(ok=True, avatar=avatar)
+        try:
+            avatar = models.Avatar.objects.create(
+                is_main=False, image=file, thumbnail=file, creator=user)
+            avatar.save()
+            print("avatar")
+            return types.UploadAvatarResponse(ok=True, avatar=avatar)
 
-            except:
-                return types.UploadAvatarResponse(ok=False, avatar=None)
+        except:
+            print("none")
+            return types.UploadAvatarResponse(ok=False, avatar=None)
 
 
 class ChangePassword(graphene.Mutation):

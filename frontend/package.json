@@ -19,6 +19,7 @@
     "react-apollo": "^2.4.1",
     "react-apollo-hooks": "^0.4.5",
     "react-code-input": "^3.8.1",
+    "react-cookies": "^0.1.1",
     "react-dates": "^20.2.0",
     "react-dom": "16.7.0-alpha.0",
     "react-easy-chart": "^1.0.0",

@@ -60,6 +60,7 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   modalOpen: boolean;
+  avatarPreviewModalOpen: boolean;
   avatarModalOpen: boolean;
   tripModalOpen: boolean;
   tripConfirmModalOpen: boolean;
@@ -89,7 +90,8 @@ interface IState {
   lng: number;
   tripActiveId: number;
   searchActiveId: number;
-  data: any;
+  file: any;
+  imagePreviewUrl: any;
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
@@ -110,6 +112,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     const { location: { state = {} } = {} } = ({} = props);
     this.state = {
       modalOpen: false,
+      avatarPreviewModalOpen: false,
       avatarModalOpen: false,
       tripModalOpen: false,
       tripConfirmModalOpen: false,
@@ -139,7 +142,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       currentCityId: state.currentCityId || localStorage.getItem("cityId"),
       tripActiveId: null,
       searchActiveId: null,
-      data: { imageFile: "" }
+      file: "",
+      imagePreviewUrl: ""
     };
   }
 
@@ -158,6 +162,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } = this.props;
     const {
       modalOpen,
+      avatarPreviewModalOpen,
       avatarModalOpen,
       tripModalOpen,
       tripConfirmModalOpen,
@@ -181,7 +186,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       search,
       tripList,
       tripActiveId,
-      searchActiveId
+      searchActiveId,
+      imagePreviewUrl
     } = this.state;
     return (
       <UploadAvatarMutation mutation={UPLOAD_AVATAR}>
@@ -320,6 +326,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                 }
                                                                 modalOpen={
                                                                   modalOpen
+                                                                }
+                                                                avatarPreviewModalOpen={
+                                                                  avatarPreviewModalOpen
                                                                 }
                                                                 avatarModalOpen={
                                                                   avatarModalOpen
@@ -509,6 +518,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                   this
                                                                     .onSubmitImage
                                                                 }
+                                                                imagePreviewUrl={
+                                                                  imagePreviewUrl
+                                                                }
+                                                                togglePreviewAvatarModalOpen={this.togglePreviewAvatarModalOpen}
                                                               />
                                                             );
                                                           }}
@@ -544,6 +557,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     const { avatarModalOpen } = this.state;
     this.setState({
       avatarModalOpen: !avatarModalOpen
+    });
+  };
+  public togglePreviewAvatarModalOpen = () => {
+    const { avatarPreviewModalOpen } = this.state;
+    this.setState({
+      avatarPreviewModalOpen: !avatarPreviewModalOpen
     });
   };
   public toggleTripModal = (
@@ -1014,19 +1033,25 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     //   }
     // }
   };
-  public onChangeImage = ({ currentTarget: input }) => {
-    const data = { ...this.state.data };
-    data[input.name] = input.files[0];
-    console.log(input.name);
-    console.log(input.files[0]);
-    this.setState({ data });
+  public onChangeImage = async event => {
+    event.preventDefault();
+
+    let reader = new FileReader();
+    console.log(event.target.files[0]);
+    const file = event.target.files[0];
+    reader.onloadend = () => {
+      this.setState({ file, imagePreviewUrl: reader.result });
+    };
+    reader.readAsDataURL(file);
   };
   public onSubmitImage = async event => {
-    const data = this.state.data;
-    console.log(this.state.data);
     event.preventDefault();
-    this.uploadAvatarFn({ variables: { files: data } });
-    this.setState({ data: { imageFile: "" }, avatarModalOpen: false });
+    const { file, imagePreviewUrl } = this.state;
+
+    console.log(file, imagePreviewUrl);
+
+    this.uploadAvatarFn({ variables: { file } });
+    this.setState({ file: "", imagePreviewUrl: "", avatarModalOpen: false });
   };
 }
 

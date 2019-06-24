@@ -74,6 +74,7 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'twilio',
     'cached_property',
+    # 'graphene_file_upload'
 ]
 LOCAL_APPS = [
     'users.apps.UsersConfig',

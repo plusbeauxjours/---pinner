@@ -166,8 +166,8 @@ export const DELETE_TRIP = gql`
 `;
 
 export const UPLOAD_AVATAR = gql`
-  mutation UploadAvatar($files: String!) {
-    uploadAvatar(files: $files) {
+  mutation UploadAvatar($file: Upload!) {
+    uploadAvatar(file: $file) {
       ok
       avatar {
         uuid

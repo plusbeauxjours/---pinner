@@ -447,6 +447,29 @@ const AvatarUploadIcon = styled.div`
 `;
 const Label = styled.label``;
 
+const AWrapper = styled(Wrapper)`
+  z-index: 101;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const Img = styled.img`
+  height: 935px;
+  width: 935px;
+  background-position: center center;
+  object-fit: cover;
+  @media screen and (max-width: 935px) {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const PreviewModalContainer = styled(ModalContainer)`
+  z-index: 10;
+`;
+
 interface ITheme {
   size?: string;
   active?: string;
@@ -466,6 +489,7 @@ interface IProps {
   coffeeLoading: boolean;
 
   modalOpen: boolean;
+  avatarPreviewModalOpen: boolean;
 
   tripModalOpen: boolean;
   tripConfirmModalOpen: boolean;
@@ -502,6 +526,7 @@ interface IProps {
   toggleProfileFormModal: () => void;
   avatarModalOpen: boolean;
   toggleAvatarModalOpen: () => void;
+  togglePreviewAvatarModalOpen: () => void;
 
   addTrip: () => void;
   editTrip: () => void;
@@ -540,6 +565,7 @@ interface IProps {
   uploadAvatarLoading: boolean;
   onChangeImage: (currentTarget) => void;
   onSubmitImage: (event) => void;
+  imagePreviewUrl: string;
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
@@ -556,6 +582,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   coffeeLoading,
 
   modalOpen,
+  avatarPreviewModalOpen,
   tripModalOpen,
   tripConfirmModalOpen,
   tripAddModalOpen,
@@ -568,6 +595,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleTripConfirmModal,
   toggleAddTripModal,
   toggleEditTripModal,
+  togglePreviewAvatarModalOpen,
 
   toggleRequestModal,
 
@@ -611,7 +639,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   avatarModalOpen,
   toggleAvatarModalOpen,
   onChangeImage,
-  onSubmitImage
+  onSubmitImage,
+  imagePreviewUrl
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
     apiKey: `${GOOGLE_PLACE_KEY}`,
@@ -626,25 +655,32 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   } else if (user && coffees) {
     return (
       <>
+        {avatarPreviewModalOpen && (
+          <PreviewModalContainer>
+            <ModalOverlay onClick={togglePreviewAvatarModalOpen} />
+            <AWrapper>
+              <Img src={imagePreviewUrl} />
+            </AWrapper>
+          </PreviewModalContainer>
+        )}
         {avatarModalOpen && (
           <ModalContainer>
             {/* <ModalOverlay onClick={toggleAvatarModalOpen} /> */}
             <ModalOverlay onClick={() => onSubmitImage(event)} />
             <ModalAvatars>
-            {user.profile.isSelf ? (
-              <AvatarUploadIcon>
-              <Label htmlFor="image">
-                <Upload />
-              </Label>
-              <ImageInput
-                name="imageFile"
-                id="image"
-                type="file"
-                onChange={onChangeImage}
-              />
-            </AvatarUploadIcon>
-            ) : null}
-              
+              {user.profile.isSelf && imagePreviewUrl.length === 0 && (
+                <AvatarUploadIcon>
+                  <Label htmlFor="image">
+                    <Upload />
+                  </Label>
+                  <ImageInput id="image" type="file" onChange={onChangeImage} />
+                </AvatarUploadIcon>
+              )}
+              {user.profile.isSelf && imagePreviewUrl.length !== 0 && (
+                <AvatarKeyContainer onClick={togglePreviewAvatarModalOpen}>
+                  <ModalAvatarImage src={imagePreviewUrl} />
+                </AvatarKeyContainer>
+              )}
               {!avatarsLoading &&
                 avatars &&
                 avatars.length !== 0 &&
@@ -658,7 +694,6 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                         }}
                       >
                         <ModalAvatarImage
-                          key={avatar.id}
                           src={`${BACKEND_URL}/media/${avatar.thumbnail}`}
                         />
                       </Link>

@@ -2441,7 +2441,7 @@ export interface UploadAvatar {
 }
 
 export interface UploadAvatarVariables {
-  files: string;
+  file: any;
 }
 
 
