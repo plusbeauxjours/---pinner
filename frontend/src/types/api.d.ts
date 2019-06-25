@@ -2404,6 +2404,28 @@ export interface UploadAvatarVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: DeleteAvatar
+// ====================================================
+
+export interface DeleteAvatar_deleteAvatar {
+  __typename: "DeleteAvatarResponse";
+  ok: boolean | null;
+  uuid: string | null;
+}
+
+export interface DeleteAvatar {
+  deleteAvatar: DeleteAvatar_deleteAvatar;
+}
+
+export interface DeleteAvatarVariables {
+  uuid: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: Me
 // ====================================================
 

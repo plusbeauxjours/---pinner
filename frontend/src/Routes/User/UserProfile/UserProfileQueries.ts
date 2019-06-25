@@ -13,13 +13,6 @@ export const GET_USER = gql`
           bio
           gender
           avatar
-          avatars {
-            uuid
-            image
-            isMain
-            likeCount
-            thumbnail
-          }
           website
           email
           nationality {
@@ -169,6 +162,15 @@ export const UPLOAD_AVATAR = gql`
         likeCount
         thumbnail
       }
+    }
+  }
+`;
+
+export const DELETE_AVATAR = gql`
+  mutation DeleteAvatar($uuid: String!) {
+    deleteAvatar(uuid: $uuid) {
+      ok
+      uuid
     }
   }
 `;

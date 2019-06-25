@@ -104,9 +104,6 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
         profileData.getCoffees.coffees = profileData.getCoffees.coffees.filter(
           i => i.uuid !== deleteCoffee.coffeeId
         );
-        profileData.getCoffees.coffees = profileData.getCoffees.coffees.filter(
-          i => i.uuid !== deleteCoffee.coffeeId
-        );
         cache.writeQuery({
           query: GET_COFFEES,
           variables: { userName: username, location: "profile" },

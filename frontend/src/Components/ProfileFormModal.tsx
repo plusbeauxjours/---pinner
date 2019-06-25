@@ -205,7 +205,7 @@ class ProfileForm extends React.Component<IProps, IState> {
       console.log(data);
       if (data) {
         data.user = editProfile.user;
-        data.getCoffees.cache.writeQuery({
+        cache.writeQuery({
           query: GET_USER,
           variables: { username },
           data

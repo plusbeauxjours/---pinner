@@ -241,7 +241,8 @@ class UploadAvatar(graphene.Mutation):
         try:
             avatar = models.Avatar.objects.create(
                 is_main=False, image=file, thumbnail=file, creator=user)
-            avatar.save()
+            user.profile.avatars.add(avatar)
+            user.profile.save()
             print("avatar")
             return types.UploadAvatarResponse(ok=True, avatar=avatar)
 
@@ -266,10 +267,10 @@ class DeleteAvatar(graphene.Mutation):
         try:
             avatar = models.Avatar.objects.get(uuid=uuid)
             avatar.delete()
-            return types.DeleteAvatarResponse(ok=True)
+            return types.DeleteAvatarResponse(ok=True, uuid=uuid)
 
         except:
-            return types.DeleteAvatarResponse(ok=False)
+            return types.DeleteAvatarResponse(ok=False, uuid=uuid)
 
 
 class ChangePassword(graphene.Mutation):

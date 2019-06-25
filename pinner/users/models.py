@@ -6,7 +6,7 @@ from locations import models as location_models
 from django.contrib.humanize.templatetags.humanize import naturaltime
 
 from django.dispatch import receiver
-from django.db.models.signals import post_delete
+from django.db.models.signals import post_delete, pre_save
 
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
@@ -48,6 +48,7 @@ class Avatar(config_models.TimeStampedModel):
 def delete_attached_image(sender, **kwargs):
     instance = kwargs.pop('instance')
     instance.image.delete(save=False)
+
 
     @property
     def natural_time(self):

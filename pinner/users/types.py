@@ -71,6 +71,7 @@ class DeleteProfileResponse(graphene.ObjectType):
 
 
 class DeleteAvatarResponse(graphene.ObjectType):
+    uuid = graphene.String()
     ok = graphene.Boolean()
 
 

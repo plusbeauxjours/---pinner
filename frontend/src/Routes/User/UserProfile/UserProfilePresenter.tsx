@@ -17,6 +17,7 @@ import Weather from "../../../Components/Weather";
 import { GOOGLE_PLACE_KEY } from "src/keys";
 import useGoogleAutocomplete from "../../../autocompleteHelpers";
 import { BACKEND_URL } from "src/constants";
+import { MutationFn } from "react-apollo";
 
 const Header = styled.header`
   display: flex;
@@ -582,6 +583,7 @@ interface IProps {
   onSubmitImage: (event) => void;
   imagePreviewUrl: string;
   removeImagePreviewUrl: () => void;
+  deleteAvatarFn: MutationFn;
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
@@ -657,7 +659,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   onChangeImage,
   onSubmitImage,
   imagePreviewUrl,
-  removeImagePreviewUrl
+  removeImagePreviewUrl,
+  deleteAvatarFn
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
     apiKey: `${GOOGLE_PLACE_KEY}`,
@@ -709,16 +712,25 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 avatars.map(avatar => {
                   return (
                     <AvatarKeyContainer key={avatar.id}>
-                      <Link
-                        to={{
-                          pathname: `/${username}/${avatar.uuid}`,
-                          state: { avatarModalOpen: true }
-                        }}
+                      <AvatarImage>
+                        <Link
+                          to={{
+                            pathname: `/${username}/${avatar.uuid}`,
+                            state: { avatarModalOpen: true }
+                          }}
+                        >
+                          <ModalAvatarImage
+                            src={`${BACKEND_URL}/media/${avatar.thumbnail}`}
+                          />
+                        </Link>
+                      </AvatarImage>
+                      <AvatarIcon
+                        onClick={() =>
+                          deleteAvatarFn({ variables: { uuid: avatar.uuid } })
+                        }
                       >
-                        <ModalAvatarImage
-                          src={`${BACKEND_URL}/media/${avatar.thumbnail}`}
-                        />
-                      </Link>
+                        <Delete />
+                      </AvatarIcon>
                     </AvatarKeyContainer>
                   );
                 })}
