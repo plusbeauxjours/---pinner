@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { List } from "../../../Icons";
+import { List, Delete } from "../../../Icons";
 import styled, { keyframes } from "../../../Styles/typed-components";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
@@ -402,6 +402,7 @@ const UserRow = styled.div<ITheme>`
 `;
 
 const AvatarKeyContainer = styled.div`
+  position: relative;
   z-index: 10;
 `;
 
@@ -456,6 +457,7 @@ const AWrapper = styled(Wrapper)`
 `;
 
 const Img = styled.img`
+  display: flex;
   height: 935px;
   width: 935px;
   background-position: center center;
@@ -468,6 +470,19 @@ const Img = styled.img`
 
 const PreviewModalContainer = styled(ModalContainer)`
   z-index: 10;
+`;
+
+const AvatarImage = styled.div``;
+
+const AvatarIcon = styled.div`
+  z-index: 20;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  svg {
+    fill: white;
+  }
 `;
 
 interface ITheme {
@@ -566,6 +581,7 @@ interface IProps {
   onChangeImage: (currentTarget) => void;
   onSubmitImage: (event) => void;
   imagePreviewUrl: string;
+  removeImagePreviewUrl: () => void;
 }
 
 const UserProfilePresenter: React.SFC<IProps> = ({
@@ -640,7 +656,8 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   toggleAvatarModalOpen,
   onChangeImage,
   onSubmitImage,
-  imagePreviewUrl
+  imagePreviewUrl,
+  removeImagePreviewUrl
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
     apiKey: `${GOOGLE_PLACE_KEY}`,
@@ -677,8 +694,13 @@ const UserProfilePresenter: React.SFC<IProps> = ({
                 </AvatarUploadIcon>
               )}
               {user.profile.isSelf && imagePreviewUrl.length !== 0 && (
-                <AvatarKeyContainer onClick={togglePreviewAvatarModalOpen}>
-                  <ModalAvatarImage src={imagePreviewUrl} />
+                <AvatarKeyContainer>
+                  <AvatarIcon onClick={removeImagePreviewUrl}>
+                    <Delete />
+                  </AvatarIcon>
+                  <AvatarImage onClick={togglePreviewAvatarModalOpen}>
+                    <ModalAvatarImage src={imagePreviewUrl} />
+                  </AvatarImage>
                 </AvatarKeyContainer>
               )}
               {!avatarsLoading &&

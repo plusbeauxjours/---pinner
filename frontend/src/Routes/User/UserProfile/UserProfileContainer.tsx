@@ -528,6 +528,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                   this
                                                                     .togglePreviewAvatarModalOpen
                                                                 }
+                                                                removeImagePreviewUrl={this.removeImagePreviewUrl}
                                                               />
                                                             );
                                                           }}
@@ -1055,9 +1056,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     const { file, imagePreviewUrl } = this.state;
 
     console.log(file, imagePreviewUrl);
-
-    this.uploadAvatarFn({ variables: { file } });
-    this.setState({ file: "", imagePreviewUrl: "", avatarModalOpen: false });
+    if (file.length !== 0 && imagePreviewUrl.length !== 0) {
+      this.uploadAvatarFn({ variables: { file } });
+      this.setState({ file: "", imagePreviewUrl: "", avatarModalOpen: false });
+    } else {
+      this.setState({ avatarModalOpen: false });
+    }
   };
   public updatUploadAvatar = (cache, { data: { uploadAvatar } }) => {
     const {
@@ -1083,6 +1087,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } catch (e) {
       console.log(e);
     }
+  };
+  public removeImagePreviewUrl = () => {
+    this.setState({ file: "", imagePreviewUrl: "" });
   };
 }
 
