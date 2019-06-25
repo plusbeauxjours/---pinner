@@ -250,6 +250,28 @@ class UploadAvatar(graphene.Mutation):
             return types.UploadAvatarResponse(ok=False, avatar=None)
 
 
+class DeleteAvatar(graphene.Mutation):
+
+    class Arguments:
+        uuid = graphene.String(required=True)
+
+    Output = types.DeleteAvatarResponse
+
+    @login_required
+    def mutate(self, info,  **kwargs):
+
+        user = info.context.user
+        uuid = kwargs.get('uuid')
+
+        try:
+            avatar = models.Avatar.objects.get(uuid=uuid)
+            avatar.delete()
+            return types.DeleteAvatarResponse(ok=True)
+
+        except:
+            return types.DeleteAvatarResponse(ok=False)
+
+
 class ChangePassword(graphene.Mutation):
 
     class Arguments:

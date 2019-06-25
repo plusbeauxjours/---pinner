@@ -70,6 +70,10 @@ class DeleteProfileResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
 
+class DeleteAvatarResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
+
+
 class ChangePasswordResponse(graphene.ObjectType, config_types.ResponseFields):
     pass
 
