@@ -672,7 +672,7 @@ const UserProfilePresenter: React.SFC<IProps> = ({
   });
   if (userProfileLoading || avatarsLoading) {
     return <Loader />;
-  } else if (user && coffees) {
+  } else if (user && coffees && avatars) {
     return (
       <>
         {avatarPreviewModalOpen && (
@@ -685,15 +685,19 @@ const UserProfilePresenter: React.SFC<IProps> = ({
         )}
         {avatarModalOpen && (
           <ModalContainer>
-            {/* <ModalOverlay onClick={toggleAvatarModalOpen} /> */}
-            <ModalOverlay onClick={() => onSubmitImage(event)} />
+            <ModalOverlay onClick={e => onSubmitImage(e)} />
             <ModalAvatars>
               {user.profile.isSelf && imagePreviewUrl.length === 0 && (
                 <AvatarUploadIcon>
-                  <Label htmlFor="image">
+                  <Label htmlFor="file">
                     <Upload />
                   </Label>
-                  <ImageInput id="image" type="file" onChange={onChangeImage} />
+                  <ImageInput
+                    id="file"
+                    type="file"
+                    accept="image/*"
+                    onChange={e => onChangeImage(e)}
+                  />
                 </AvatarUploadIcon>
               )}
               {user.profile.isSelf && imagePreviewUrl.length !== 0 && (

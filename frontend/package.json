@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "apollo-boost": "^0.1.27",
+    "apollo-link-context": "^1.0.18",
     "apollo-link-ws": "^1.0.12",
+    "apollo-upload-client": "^10.0.1",
     "axios": "^0.18.0",
     "cors-anywhere": "^0.4.1",
     "google-maps-react": "^2.0.2",
@@ -22,6 +24,7 @@
     "react-cookies": "^0.1.1",
     "react-dates": "^20.2.0",
     "react-dom": "16.7.0-alpha.0",
+    "react-dropzone": "^10.1.5",
     "react-easy-chart": "^1.0.0",
     "react-expanding-textarea": "^0.2.0",
     "react-facebook-login": "^4.1.1",
@@ -45,7 +48,7 @@
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "precodegen": "apollo schema:download --endpoint=http://localhost:8000/graphql",
+    "precodegen": "apollo schema:download --endpoint=http://localhost:8000/graphql/",
     "codegen": "apollo codegen:generate src/types/api.d.ts --queries='src/**/!(*.local).ts' --addTypename --schema schema.json --target typescript --outputFlat",
     "deploy": "gh-pages -d dist"
   },

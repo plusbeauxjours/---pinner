@@ -1,3 +1,4 @@
+import os
 import uuid
 from django.db import models
 from django.contrib.auth.models import User
@@ -6,11 +7,21 @@ from locations import models as location_models
 from django.contrib.humanize.templatetags.humanize import naturaltime
 
 from django.dispatch import receiver
-from django.db.models.signals import post_delete, pre_save
+from django.db.models.signals import post_delete, post_save
 
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from cached_property import cached_property
+
+
+def upload_image(instance, filename):
+    name, extension = os.path.splitext(filename)
+    return os.path.join('{}/image/{}{}').format(instance.creator.username, instance.uuid, extension.lower())
+
+
+def upload_thumbnail(instance, filename):
+    name, extension = os.path.splitext(filename)
+    return os.path.join('{}/thumbnail/{}{}').format(instance.creator.username, instance.uuid, extension.lower())
 
 
 class Avatar(config_models.TimeStampedModel):
@@ -18,6 +29,7 @@ class Avatar(config_models.TimeStampedModel):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, blank=True, null=True)
     creator = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name='avatar')
     image = ProcessedImageField(
+        upload_to=upload_image,
         null=True,
         blank=True,
         processors=[ResizeToFill(935, 935)],
@@ -25,6 +37,7 @@ class Avatar(config_models.TimeStampedModel):
         options={'quality': 100}
     )
     thumbnail = ProcessedImageField(
+        upload_to=upload_thumbnail,
         null=True,
         blank=True,
         processors=[ResizeToFill(300, 300)],
@@ -49,10 +62,15 @@ def delete_attached_image(sender, **kwargs):
     instance = kwargs.pop('instance')
     instance.image.delete(save=False)
 
-
     @property
     def natural_time(self):
         return naturaltime(self.created_at)
+
+
+def logo_image_upload_to(instance, filename):
+    m = hashlib.md5()
+    m.update(f'{instance.id}{filename}'.encode('utf-8'))
+    return f'media/{m.hexdigest()}/{filename}'
 
 
 class Like(config_models.TimeStampedModel):

@@ -4,8 +4,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
-from graphene_django.views import GraphQLView
 from django.views.decorators.csrf import csrf_exempt
+from graphene_django.views import GraphQLView
 from graphene_file_upload.django import FileUploadGraphQLView
 from . import views
 
@@ -24,8 +24,8 @@ urlpatterns = [
         include("pinner.users.urls", namespace="users"),
     ),
     path("accounts/", include("allauth.urls")),
-    path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True))),
-    path("upload/", FileUploadGraphQLView.as_view(graphiql=True)),
+    # path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    path('graphql/', csrf_exempt(FileUploadGraphQLView.as_view(graphiql=True))),
     # path("s3Upload/", csrf_exempt(views.sign_s3))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

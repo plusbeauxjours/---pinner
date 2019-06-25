@@ -2048,6 +2048,7 @@ export interface DeleteProfile {
 
 export interface GetAvatarDetail_getAvatarDetail_avatar {
   __typename: "AvatarType";
+  id: string;
   uuid: any | null;
   image: string | null;
   isMain: boolean;
@@ -2075,15 +2076,6 @@ export interface GetAvatarDetailVariables {
 // ====================================================
 // GraphQL query operation: UserProfile
 // ====================================================
-
-export interface UserProfile_userProfile_user_profile_avatars {
-  __typename: "AvatarType";
-  uuid: any | null;
-  image: string | null;
-  isMain: boolean;
-  likeCount: number | null;
-  thumbnail: string | null;
-}
 
 export interface UserProfile_userProfile_user_profile_nationality_continent {
   __typename: "ContinentType";
@@ -2138,7 +2130,6 @@ export interface UserProfile_userProfile_user_profile {
   bio: string | null;
   gender: ProfileGender | null;
   avatar: string;
-  avatars: (UserProfile_userProfile_user_profile_avatars | null)[] | null;
   website: string | null;
   email: string | null;
   nationality: UserProfile_userProfile_user_profile_nationality | null;
@@ -2187,6 +2178,7 @@ export interface UserProfileVariables {
 
 export interface GetAvatars_getAvatars_avatars {
   __typename: "AvatarType";
+  id: string;
   uuid: any | null;
   image: string | null;
   isMain: boolean;
@@ -2378,6 +2370,7 @@ export interface DeleteTripVariables {
 
 export interface UploadAvatar_uploadAvatar_avatar {
   __typename: "AvatarType";
+  id: string;
   uuid: any | null;
   image: string | null;
   isMain: boolean;

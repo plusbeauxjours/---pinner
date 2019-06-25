@@ -57,6 +57,7 @@ django-heroku = "*"
 psycopg2 = "*"
 whitenoise = "*"
 graphene-file-upload = "*"
+django-resized = "*"
 
 [requires]
 python_version = "3.7"

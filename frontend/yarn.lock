@@ -1537,6 +1537,12 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
+"@wry/equality@^0.1.2":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@wry/equality/-/equality-0.1.9.tgz#b13e18b7a8053c6858aa6c85b54911fb31e3a909"
+  dependencies:
+    tslib "^1.9.3"
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
@@ -1794,6 +1800,13 @@ apollo-client@^2.4.12:
     tslib "^1.9.3"
     zen-observable "^0.8.0"
 
+apollo-link-context@^1.0.18:
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/apollo-link-context/-/apollo-link-context-1.0.18.tgz#9e700e3314da8ded50057fee0a18af2bfcedbfc3"
+  dependencies:
+    apollo-link "^1.2.12"
+    tslib "^1.9.3"
+
 apollo-link-dedup@^1.0.0:
   version "1.0.13"
   resolved "https://registry.yarnpkg.com/apollo-link-dedup/-/apollo-link-dedup-1.0.13.tgz#bb22957e18b6125ae8bfb46cab6bda8d33ba8046"
@@ -1806,6 +1819,14 @@ apollo-link-error@^1.0.3:
   dependencies:
     apollo-link "^1.2.6"
     apollo-link-http-common "^0.2.8"
+
+apollo-link-http-common@^0.2.13:
+  version "0.2.14"
+  resolved "https://registry.yarnpkg.com/apollo-link-http-common/-/apollo-link-http-common-0.2.14.tgz#d3a195c12e00f4e311c417f121181dcc31f7d0c8"
+  dependencies:
+    apollo-link "^1.2.12"
+    ts-invariant "^0.4.0"
+    tslib "^1.9.3"
 
 apollo-link-http-common@^0.2.8:
   version "0.2.8"
@@ -1840,11 +1861,37 @@ apollo-link@^1.0.0, apollo-link@^1.0.6, apollo-link@^1.2.6:
     apollo-utilities "^1.0.0"
     zen-observable-ts "^0.8.13"
 
+apollo-link@^1.2.11, apollo-link@^1.2.12:
+  version "1.2.12"
+  resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.2.12.tgz#014b514fba95f1945c38ad4c216f31bcfee68429"
+  dependencies:
+    apollo-utilities "^1.3.0"
+    ts-invariant "^0.4.0"
+    tslib "^1.9.3"
+    zen-observable-ts "^0.8.19"
+
+apollo-upload-client@^10.0.1:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/apollo-upload-client/-/apollo-upload-client-10.0.1.tgz#e8446288d03edb1c582c91c26a18b27533f85013"
+  dependencies:
+    apollo-link "^1.2.11"
+    apollo-link-http-common "^0.2.13"
+    extract-files "^5.0.1"
+
 apollo-utilities@1.1.2, apollo-utilities@^1.0.0, apollo-utilities@^1.0.8, apollo-utilities@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.1.2.tgz#aa5eca9d1f1eb721c381a22e0dde03559d856db3"
   dependencies:
     fast-json-stable-stringify "^2.0.0"
+    tslib "^1.9.3"
+
+apollo-utilities@^1.3.0:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.3.2.tgz#8cbdcf8b012f664cd6cb5767f6130f5aed9115c9"
+  dependencies:
+    "@wry/equality" "^0.1.2"
+    fast-json-stable-stringify "^2.0.0"
+    ts-invariant "^0.4.0"
     tslib "^1.9.3"
 
 append-transform@^0.4.0:
@@ -2050,6 +2097,12 @@ asynckit@^0.4.0:
 atob@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
+
+attr-accept@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-1.1.3.tgz#48230c79f93790ef2775fcec4f0db0f5db41ca52"
+  dependencies:
+    core-js "^2.5.0"
 
 autoprefixer@7.1.6:
   version "7.1.6"
@@ -5586,6 +5639,10 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
+extract-files@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/extract-files/-/extract-files-5.0.1.tgz#c9492a8410be643e260a376f0151361993d5f659"
+
 extract-text-webpack-plugin@3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/extract-text-webpack-plugin/-/extract-text-webpack-plugin-3.0.2.tgz#5f043eaa02f9750a9258b78c0a6e0dc1408fb2f7"
@@ -5716,6 +5773,12 @@ file-loader@3.0.1:
   dependencies:
     loader-utils "^1.0.2"
     schema-utils "^1.0.0"
+
+file-selector@^0.1.11:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/file-selector/-/file-selector-0.1.12.tgz#fe726547be219a787a9dcc640575a04a032b1fd0"
+  dependencies:
+    tslib "^1.9.0"
 
 filename-regex@^2.0.0:
   version "2.0.1"
@@ -11085,6 +11148,14 @@ react-dom@^16.3.2:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
+react-dropzone@^10.1.5:
+  version "10.1.5"
+  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-10.1.5.tgz#5f2817ab924b270010c7034fe01f49b6240b9c91"
+  dependencies:
+    attr-accept "^1.1.3"
+    file-selector "^0.1.11"
+    prop-types "^15.7.2"
+
 react-easy-chart@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-easy-chart/-/react-easy-chart-1.0.0.tgz#1f30f219ee889dd612ad439892503f880e13a0b8"
@@ -13042,6 +13113,12 @@ tryer@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/tryer/-/tryer-1.0.1.tgz#f2c85406800b9b0f74c9f7465b81eaad241252f8"
 
+ts-invariant@^0.4.0:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/ts-invariant/-/ts-invariant-0.4.4.tgz#97a523518688f93aafad01b0e80eb803eb2abd86"
+  dependencies:
+    tslib "^1.9.3"
+
 ts-jest@22.0.1:
   version "22.0.1"
   resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-22.0.1.tgz#48942936a466c2e76e259b02e2f1356f1839afc3"
@@ -14299,6 +14376,13 @@ zen-observable-ts@^0.8.13:
   version "0.8.13"
   resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-0.8.13.tgz#ae1fd77c84ef95510188b1f8bca579d7a5448fc2"
   dependencies:
+    zen-observable "^0.8.0"
+
+zen-observable-ts@^0.8.19:
+  version "0.8.19"
+  resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-0.8.19.tgz#c094cd20e83ddb02a11144a6e2a89706946b5694"
+  dependencies:
+    tslib "^1.9.3"
     zen-observable "^0.8.0"
 
 zen-observable@^0.8.0:

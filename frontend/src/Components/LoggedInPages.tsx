@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import styled from "styled-components";
 
 import CityProfile from "../Routes/City/CityProfile";
@@ -142,6 +142,7 @@ class LoggedInPages extends React.Component<IProps> {
 
           <Route path="/:username/edit" component={EditProfile} />
           <Route path="/:username" exact={true} component={UserProfile} />
+          <Redirect from="*" to="/" />
         </Switch>
       </Wrapper>
     );

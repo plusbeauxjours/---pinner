@@ -74,7 +74,6 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'twilio',
     'cached_property',
-    # 'graphene_file_upload'
 ]
 LOCAL_APPS = [
     'users.apps.UsersConfig',
@@ -286,3 +285,6 @@ TWILIO_TOKEN = env('TWILIO_TOKEN')
 TWILIO_PHONE = env('TWILIO_PHONE')
 GOOGLE_MAPS_KEY = env('GOOGLE_MAPS_KEY')
 TO = env('TO')
+
+
+APPEND_SLASH = False

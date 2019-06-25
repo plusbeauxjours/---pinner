@@ -23,7 +23,7 @@ class HomeContainer extends React.Component<IProps, IState> {
       countryCode: localStorage.getItem("countryCode") || "",
       countryPhone:
         countries.find(i => i.code === localStorage.getItem("countryCode"))
-          .phone || "",
+          .phone || "KR",
       verificationModalOpen: false
     };
   }

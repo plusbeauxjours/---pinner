@@ -51,6 +51,7 @@ export const GET_AVATARS = gql`
   query GetAvatars($userName: String!) {
     getAvatars(userName: $userName) {
       avatars {
+        id
         uuid
         image
         isMain
@@ -156,6 +157,7 @@ export const UPLOAD_AVATAR = gql`
     uploadAvatar(file: $file) {
       ok
       avatar {
+        id
         uuid
         image
         isMain

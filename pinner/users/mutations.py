@@ -223,20 +223,48 @@ class DeleteProfile(graphene.Mutation):
             return types.DeleteProfileResponse(ok=False)
 
 
+# class UploadAvatar(graphene.Mutation):
+
+#     class Arguments:
+#         file = Upload(required=True)
+#         print('file1: ', file)
+
+#     Output = types.UploadAvatarResponse
+
+#     @login_required
+#     def mutate(self, info, file, **kwargs):
+#         user = info.context.user
+#         print('file2:::::', file)
+#         print(kwargs)
+
+#         try:
+#             avatar = models.Avatar.objects.create(
+#                 is_main=False, image=file, thumbnail=file, creator=user)
+#             user.profile.avatars.add(avatar)
+#             user.profile.save()
+#             print("avatar")
+#             return types.UploadAvatarResponse(ok=True, avatar=avatar)
+
+#         except:
+#             print("none")
+#             return types.UploadAvatarResponse(ok=False, avatar=None)
+
+
 class UploadAvatar(graphene.Mutation):
 
     class Arguments:
-
         file = Upload(required=True)
         print('file1: ', file)
 
-    Output = types.UploadAvatarResponse
+    ok = graphene.Boolean()
+    avatar = graphene.Field(types.AvatarType)
 
     @login_required
     def mutate(self, info, file, **kwargs):
-
         user = info.context.user
-        print('file2: ', file)
+        print('file2:::::', file)
+        files = info.context.FILES
+        print(files)
 
         try:
             avatar = models.Avatar.objects.create(
@@ -244,11 +272,11 @@ class UploadAvatar(graphene.Mutation):
             user.profile.avatars.add(avatar)
             user.profile.save()
             print("avatar")
-            return types.UploadAvatarResponse(ok=True, avatar=avatar)
+            return UploadAvatar(ok=True, avatar=avatar)
 
         except:
             print("none")
-            return types.UploadAvatarResponse(ok=False, avatar=None)
+            return UploadAvatar(ok=False, avatar=None)
 
 
 class DeleteAvatar(graphene.Mutation):

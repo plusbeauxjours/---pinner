@@ -1,24 +1,105 @@
-import ApolloClient from "apollo-boost";
-import { defaults, resolvers } from "./localState";
+// import ApolloClient from "apollo-boost";
+
+import { ApolloClient } from "apollo-client";
 import { toast } from "react-toastify";
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { createUploadLink } from "apollo-upload-client";
+import { ApolloLink, Observable } from "apollo-link";
+import { withClientState } from "apollo-link-state";
+import { onError } from "apollo-link-error";
 
-const client = new ApolloClient({
-  uri: "http://localhost:8000/graphql",
-  clientState: { defaults, resolvers },
-  cache: new InMemoryCache(),
-  onError: ({ graphQLErrors }) => {
-    if (graphQLErrors && graphQLErrors.map) {
-      graphQLErrors.forEach(error => toast.error(error.message));
+const cache = new InMemoryCache();
+
+const API_SERVER = "http://localhost:8000/graphql/";
+
+const uploadLink = createUploadLink({
+  uri: API_SERVER,
+  fetch
+});
+
+const request = async operation => {
+  operation.setContext({
+    headers: {
+      Authorization: `JWT ${localStorage.getItem("jwt") || ""}`
     }
-  },
-  request: async operation => {
-    operation.setContext({
-      headers: {
-        Authorization: `JWT ${localStorage.getItem("jwt") || ""}`
-      }
+  });
+};
+
+const requestLink = new ApolloLink(
+  (operation, forward) =>
+    new Observable(observer => {
+      let handle;
+      Promise.resolve(operation)
+        .then(oper => request(oper))
+        .then(() => {
+          handle = forward(operation).subscribe({
+            next: observer.next.bind(observer),
+            error: observer.error.bind(observer),
+            complete: observer.complete.bind(observer)
+          });
+        })
+        .catch(observer.error.bind(observer));
+
+      return () => {
+        if (handle) {
+          handle.unsubscribe();
+        }
+      };
+    })
+);
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (networkError) {
+    console.log(`[Network error]: ${networkError}`);
+  }
+  if (graphQLErrors) {
+    graphQLErrors.map(({ message, locations, path }) => {
+      graphQLErrors.forEach(error => toast.error(error.message));
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      );
+      // alert(message);
     });
   }
+});
+
+const client = new ApolloClient({
+  link: ApolloLink.from([
+    withClientState({
+      defaults: {
+        auth: {
+          __typename: "Auth",
+          isLoggedIn: Boolean(localStorage.getItem("jwt")) || false
+        }
+      },
+      resolvers: {
+        Mutation: {
+          logUserIn: (_, { token }, { cache: mutationCache }) => {
+            localStorage.setItem("jwt", token);
+            mutationCache.writeData({
+              data: {
+                auth: {
+                  __typename: "Auth",
+                  isLoggedIn: true
+                }
+              }
+            });
+            return null;
+          },
+          logUserOut: (_, __, { cache: mutationCache }) => {
+            localStorage.removeItem("jwt");
+            window.location.reload();
+            return null;
+          }
+        }
+      },
+      cache
+    }),
+    requestLink,
+    errorLink,
+    uploadLink
+  ]),
+  cache
 });
 
 export default client;

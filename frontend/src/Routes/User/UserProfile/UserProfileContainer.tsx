@@ -20,7 +20,11 @@ import {
   CreateCity,
   CreateCityVariables,
   GetAvatars,
-  GetAvatarsVariables
+  GetAvatarsVariables,
+  UploadAvatar,
+  UploadAvatarVariables,
+  DeleteAvatar,
+  DeleteAvatarVariables
 } from "src/types/api";
 import {
   GET_USER,
@@ -41,11 +45,6 @@ import {
   UPLOAD_AVATAR,
   DELETE_AVATAR
 } from "./UserProfileQueries";
-import {
-  UploadAvatar,
-  DeleteAvatar,
-  DeleteAvatarVariables
-} from "../../../types/api";
 
 class CreateCityQuery extends Mutation<CreateCity, CreateCityVariables> {}
 
@@ -55,7 +54,10 @@ class AddTripMutation extends Mutation<AddTrip, AddTripVariables> {}
 class EditTripMutation extends Mutation<EditTrip, EditTripVariables> {}
 class DeleteTripMutation extends Mutation<DeleteTrip, DeleteTripVariables> {}
 
-class UploadAvatarMutation extends Mutation<UploadAvatar> {}
+class UploadAvatarMutation extends Mutation<
+  UploadAvatar,
+  UploadAvatarVariables
+> {}
 class DeleteAvatarMutation extends Mutation<
   DeleteAvatar,
   DeleteAvatarVariables
@@ -157,11 +159,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       currentCityId: state.currentCityId || localStorage.getItem("cityId"),
       tripActiveId: null,
       searchActiveId: null,
-      file: "",
+      file: null,
       imagePreviewUrl: ""
     };
   }
-
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
     if (prevProps.match.params.username !== newProps.match.params.username) {
@@ -202,7 +203,8 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripList,
       tripActiveId,
       searchActiveId,
-      imagePreviewUrl
+      imagePreviewUrl,
+      file
     } = this.state;
     return (
       <DeleteAvatarMutation
@@ -215,6 +217,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
           return (
             <UploadAvatarMutation
               mutation={UPLOAD_AVATAR}
+              variables={{
+                file
+              }}
               update={this.updatUploadAvatar}
               onCompleted={this.onCompletedUploadAvatar}
             >
@@ -1087,28 +1092,46 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     //   }
     // }
   };
-  public onChangeImage = async event => {
+  public onChangeImage = event => {
     event.preventDefault();
-
+    const {
+      target: {
+        validity,
+        files: [file]
+      }
+    } = event;
+    if (!validity.valid || !file) {
+      return;
+    }
     let reader = new FileReader();
-    console.log(event.target.files[0]);
-    const file = event.target.files[0];
+
+    //
+    // let file = files[0];
+    //
+
+    console.log(file);
     reader.onloadend = () => {
-      this.setState({ file, imagePreviewUrl: reader.result });
+      this.setState({
+        file,
+        imagePreviewUrl: reader.result
+      });
     };
     reader.readAsDataURL(file);
   };
-  public onSubmitImage = async event => {
+  public onSubmitImage = event => {
     event.preventDefault();
     const { file, imagePreviewUrl } = this.state;
-
-    console.log(file, imagePreviewUrl);
     if (
       (file && file.length !== 0) ||
       (imagePreviewUrl && imagePreviewUrl.length !== 0)
     ) {
+      console.log(file);
       this.uploadAvatarFn({ variables: { file } });
-      this.setState({ file: "", imagePreviewUrl: "", avatarModalOpen: false });
+      this.setState({
+        file: null,
+        imagePreviewUrl: "",
+        avatarModalOpen: false
+      });
     } else {
       this.setState({ avatarModalOpen: false });
     }
@@ -1125,9 +1148,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         variables: { userName: username }
       });
       if (data) {
-        console.log(data);
-        console.log(uploadAvatar.avatar);
-        console.log(data.getAvatars.avatars);
         data.getAvatars.avatars.unshift(uploadAvatar.avatar);
         cache.writeQuery({
           query: GET_AVATARS,
@@ -1140,13 +1160,13 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     }
   };
   public removeImagePreviewUrl = () => {
-    this.setState({ file: "", imagePreviewUrl: "" });
+    this.setState({ file: null, imagePreviewUrl: "" });
   };
   public onCompletedUploadAvatar = data => {
     if (data.uploadAvatar.ok) {
       toast.success("Avatar updated");
     } else {
-      toast.error("error");
+      toast.error("error uploading avatar");
     }
   };
   public updateDeleteAvatar = (cache, { data: { deleteAvatar } }) => {
@@ -1161,8 +1181,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         variables: { userName: username }
       });
       if (data) {
-        console.log(deleteAvatar.uuid);
-        console.log(data.getAvatars.avatars);
         data.getAvatars.avatars = data.getAvatars.avatars.filter(
           i => i.uuid !== deleteAvatar.uuid
         );
