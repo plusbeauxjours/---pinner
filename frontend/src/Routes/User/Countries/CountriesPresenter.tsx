@@ -150,7 +150,7 @@ interface IProps {
   activeId: number;
 }
 
-const CountriesPresenter: React.SFC<IProps> = ({
+const CountriesPresenter: React.FunctionComponent<IProps> = ({
   data: { topCountries: { countries = null } = {} } = {},
   loading,
   userName,

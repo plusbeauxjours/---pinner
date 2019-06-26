@@ -44,7 +44,7 @@ interface IProps {
   target?: string;
 }
 
-const UserHeader: React.SFC<IProps> = ({
+const UserHeader: React.FunctionComponent<IProps> = ({
   username,
   avatar,
   currentCity,

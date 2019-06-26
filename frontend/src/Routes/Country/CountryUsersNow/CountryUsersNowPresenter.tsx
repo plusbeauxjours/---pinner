@@ -111,7 +111,7 @@ interface IProps {
   onBlur: any;
 }
 
-const CountryUsersNowPresenter: React.SFC<IProps> = ({
+const CountryUsersNowPresenter: React.FunctionComponent<IProps> = ({
   data: { countryUsersNow: { usersNow = null, hasNextPage = null } = {} } = {},
   loading,
   modalOpen,

@@ -16,7 +16,7 @@ interface IProps {
   loginCallback: (response) => void;
 }
 
-const SocialLoginPresenter: React.SFC<IProps> = ({ loginCallback }) => (
+const SocialLoginPresenter: React.FunctionComponent<IProps> = ({ loginCallback }) => (
   <FacebookLogin
     appId="242663513281642"
     autoLoad={false}

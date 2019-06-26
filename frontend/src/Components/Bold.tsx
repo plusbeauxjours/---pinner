@@ -10,7 +10,7 @@ interface IProps {
   className?: string;
 }
 
-const Bold: React.SFC<IProps> = ({ text, className }) => (
+const Bold: React.FunctionComponent<IProps> = ({ text, className }) => (
   <Container className={className}>{text}</Container>
 );
 

@@ -26,7 +26,7 @@ interface IProps {
   signUpFn: MutationFn;
 }
 
-const SignUpPresenter: React.SFC<IProps> = ({
+const SignUpPresenter: React.FunctionComponent<IProps> = ({
   email,
   firstName,
   lastName,

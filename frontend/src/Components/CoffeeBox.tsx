@@ -139,7 +139,7 @@ interface IProps extends RouteComponentProps<any> {
   isStaying?: boolean;
 }
 
-const UserBox: React.SFC<IProps> = ({
+const UserBox: React.FunctionComponent<IProps> = ({
   coffeeLoading,
   cityId,
   currentCityId,

@@ -1,6 +1,6 @@
 import React from "react";
 
-export const HeartEmpty: React.SFC = () => (
+export const HeartEmpty: React.FunctionComponent = () => (
   <svg
     width="24"
     height="24"
@@ -12,7 +12,7 @@ export const HeartEmpty: React.SFC = () => (
   </svg>
 );
 
-export const HeartFilled: React.SFC = () => (
+export const HeartFilled: React.FunctionComponent = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -23,7 +23,7 @@ export const HeartFilled: React.SFC = () => (
   </svg>
 );
 
-export const SearchIcon: React.SFC = () => (
+export const SearchIcon: React.FunctionComponent = () => (
   <svg
     width="24"
     height="24"
@@ -35,7 +35,7 @@ export const SearchIcon: React.SFC = () => (
   </svg>
 );
 
-export const SmallHeartEmpty: React.SFC = () => (
+export const SmallHeartEmpty: React.FunctionComponent = () => (
   <svg
     width="15"
     height="15"
@@ -48,7 +48,7 @@ export const SmallHeartEmpty: React.SFC = () => (
   </svg>
 );
 
-export const BigHeartEmpty: React.SFC = () => (
+export const BigHeartEmpty: React.FunctionComponent = () => (
   <svg
     width="30"
     height="30"
@@ -61,7 +61,7 @@ export const BigHeartEmpty: React.SFC = () => (
   </svg>
 );
 
-export const SmallHeartFilled: React.SFC = () => (
+export const SmallHeartFilled: React.FunctionComponent = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="15"
@@ -72,7 +72,7 @@ export const SmallHeartFilled: React.SFC = () => (
   </svg>
 );
 
-export const BigHeartFilled: React.SFC = () => (
+export const BigHeartFilled: React.FunctionComponent = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="30"
@@ -83,7 +83,7 @@ export const BigHeartFilled: React.SFC = () => (
   </svg>
 );
 
-export const Bubble: React.SFC = () => (
+export const Bubble: React.FunctionComponent = () => (
   <svg
     width="24"
     height="24"
@@ -95,7 +95,7 @@ export const Bubble: React.SFC = () => (
   </svg>
 );
 
-export const BubbleFilled: React.SFC = () => (
+export const BubbleFilled: React.FunctionComponent = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -106,7 +106,7 @@ export const BubbleFilled: React.SFC = () => (
   </svg>
 );
 
-export const Compass: React.SFC = () => (
+export const Compass: React.FunctionComponent = () => (
   <svg
     width="24"
     height="24"
@@ -118,7 +118,7 @@ export const Compass: React.SFC = () => (
   </svg>
 );
 
-export const Profile: React.SFC = () => (
+export const Profile: React.FunctionComponent = () => (
   <svg
     width="24"
     height="24"
@@ -130,7 +130,7 @@ export const Profile: React.SFC = () => (
   </svg>
 );
 
-export const Gear: React.SFC = () => (
+export const Gear: React.FunctionComponent = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -141,7 +141,7 @@ export const Gear: React.SFC = () => (
   </svg>
 );
 
-export const Phone: React.SFC = () => (
+export const Phone: React.FunctionComponent = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -152,7 +152,7 @@ export const Phone: React.SFC = () => (
   </svg>
 );
 
-export const FootprintMap: React.SFC = () => (
+export const FootprintMap: React.FunctionComponent = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -163,7 +163,7 @@ export const FootprintMap: React.SFC = () => (
   </svg>
 );
 
-export const HeaderMap: React.SFC = () => (
+export const HeaderMap: React.FunctionComponent = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -174,7 +174,7 @@ export const HeaderMap: React.SFC = () => (
   </svg>
 );
 
-export const Upload: React.SFC = () => (
+export const Upload: React.FunctionComponent = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="35"
@@ -185,13 +185,13 @@ export const Upload: React.SFC = () => (
   </svg>
 );
 
-export const RedDot: React.SFC = () => (
+export const RedDot: React.FunctionComponent = () => (
   <svg width="5" height="5">
     <circle cx="2.5" cy="2.5" r="2.5" fill="red" />
   </svg>
 );
 
-export const List: React.SFC = () => (
+export const List: React.FunctionComponent = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="16"
@@ -202,7 +202,7 @@ export const List: React.SFC = () => (
   </svg>
 );
 
-export const Delete: React.SFC = () => (
+export const Delete: React.FunctionComponent = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -213,7 +213,7 @@ export const Delete: React.SFC = () => (
   </svg>
 );
 
-export const Edit: React.SFC = () => (
+export const Edit: React.FunctionComponent = () => (
   <svg
     width="15"
     height="15"
@@ -225,7 +225,7 @@ export const Edit: React.SFC = () => (
     <path d="M8.071 21.586l-7.071 1.414 1.414-7.071 14.929-14.929 5.657 5.657-14.929 14.929zm-.493-.921l-4.243-4.243-1.06 5.303 5.303-1.06zm9.765-18.251l-13.3 13.301 4.242 4.242 13.301-13.3-4.243-4.243z" />
   </svg>
 );
-export const Right: React.SFC = () => (
+export const Right: React.FunctionComponent = () => (
   <svg
     width="24"
     height="24"
@@ -236,7 +236,7 @@ export const Right: React.SFC = () => (
     <path d="M4 .755l14.374 11.245-14.374 11.219.619.781 15.381-12-15.391-12-.609.755z" />
   </svg>
 );
-export const Left: React.SFC = () => (
+export const Left: React.FunctionComponent = () => (
   <svg
     width="24"
     height="24"

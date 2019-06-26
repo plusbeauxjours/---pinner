@@ -34,7 +34,7 @@ interface IProps {
   autoFocus?: boolean;
 }
 
-const Input: React.SFC<IProps> = ({
+const Input: React.FunctionComponent<IProps> = ({
   value,
   placeholder = "",
   type = "text",

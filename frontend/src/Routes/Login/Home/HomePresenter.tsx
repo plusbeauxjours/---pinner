@@ -110,7 +110,7 @@ interface IProps {
   toggleVerificationModal: () => void;
 }
 
-const HomePresenter: React.SFC<IProps> = ({
+const HomePresenter: React.FunctionComponent<IProps> = ({
   isLogIn,
   modalOpen,
   countryCode,

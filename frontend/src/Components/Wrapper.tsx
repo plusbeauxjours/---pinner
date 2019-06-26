@@ -12,7 +12,7 @@ interface IProps {
   className?: string;
 }
 
-const Wrapper: React.SFC<IProps> = ({ children, className }) => (
+const Wrapper: React.FunctionComponent<IProps> = ({ children, className }) => (
   <Container className={className}>{children}</Container>
 );
 

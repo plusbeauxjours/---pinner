@@ -111,7 +111,7 @@ interface IProps {
   onBlur: any;
 }
 
-const CountryUsersBeforePresenter: React.SFC<IProps> = ({
+const CountryUsersBeforePresenter: React.FunctionComponent<IProps> = ({
   data: {
     countryUsersBefore: { usersBefore = null, hasNextPage = null } = {}
   } = {},

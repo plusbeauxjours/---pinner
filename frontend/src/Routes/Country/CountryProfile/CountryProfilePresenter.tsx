@@ -213,7 +213,7 @@ interface IProps {
   back: (event) => void;
 }
 
-const CountryProfilePresenter: React.SFC<IProps> = ({
+const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
   data: {
     countryProfile: {
       cities = null,

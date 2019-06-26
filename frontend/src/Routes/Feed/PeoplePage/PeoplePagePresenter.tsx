@@ -102,7 +102,7 @@ interface IProps {
   loadMore: any;
 }
 
-const PeoplePagePresenter: React.SFC<IProps> = ({
+const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
   recommandUsersData: {
     recommandUsers: { users = null, hasNextPage = null } = {}
   } = {},

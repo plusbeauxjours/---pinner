@@ -39,7 +39,7 @@ interface IProps {
   toggleRequestModal?: () => void;
 }
 
-const AvatarGrid: React.SFC<IProps> = ({
+const AvatarGrid: React.FunctionComponent<IProps> = ({
   usersBefore,
   usersNow,
   coffees,

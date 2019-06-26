@@ -253,7 +253,7 @@ interface IProps {
   submitCoffee: any;
 }
 
-const CityProfilePresenter: React.SFC<IProps> = ({
+const CityProfilePresenter: React.FunctionComponent<IProps> = ({
   coffeeData: { getCoffees: { coffees = null } = {} } = {},
   coffeeLoading,
   cityData: {

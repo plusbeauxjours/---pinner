@@ -10,7 +10,7 @@ interface IProps {
   className?: string;
 }
 
-const Thin: React.SFC<IProps> = ({ text, className }) => (
+const Thin: React.FunctionComponent<IProps> = ({ text, className }) => (
   <Container className={className}>{text}</Container>
 );
 

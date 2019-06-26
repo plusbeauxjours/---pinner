@@ -112,7 +112,7 @@ interface IProps {
   onBlur: any;
 }
 
-const ContinentUsersBeforePresenter: React.SFC<IProps> = ({
+const ContinentUsersBeforePresenter: React.FunctionComponent<IProps> = ({
   data: {
     continentUsersBefore: { usersBefore = null, hasNextPage = null } = {}
   } = {},

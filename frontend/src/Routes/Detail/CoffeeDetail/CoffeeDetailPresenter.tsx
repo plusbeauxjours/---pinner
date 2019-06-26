@@ -195,7 +195,7 @@ interface IProps {
   deleteCoffee: () => void;
 }
 
-const CoffeeDetailPresenter: React.SFC<IProps> = ({
+const CoffeeDetailPresenter: React.FunctionComponent<IProps> = ({
   data: { coffeeDetail: { coffee = null } = {} } = {},
   loading,
   modalOpen,

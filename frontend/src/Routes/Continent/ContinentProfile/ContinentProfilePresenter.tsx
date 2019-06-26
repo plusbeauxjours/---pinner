@@ -159,7 +159,7 @@ interface IProps {
   currentCityId: string;
 }
 
-const ContinentProfilePresenter: React.SFC<IProps> = ({
+const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
   data: {
     continentProfile: {
       continent = null,

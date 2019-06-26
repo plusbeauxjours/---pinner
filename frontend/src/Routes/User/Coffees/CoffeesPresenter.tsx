@@ -140,7 +140,7 @@ interface IProps {
   activeId: number;
 }
 
-const CoffeesPresenter: React.SFC<IProps> = ({
+const CoffeesPresenter: React.FunctionComponent<IProps> = ({
   data: { getCoffees: { coffees = null } = {} } = {},
   loading,
   userName,

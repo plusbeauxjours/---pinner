@@ -15,7 +15,7 @@ interface IProps {
   isMatching: boolean;
 }
 
-const CoffeeBtnPresenter: React.SFC<IProps> = ({
+const CoffeeBtnPresenter: React.FunctionComponent<IProps> = ({
   matchFn,
   isSelf,
   unMatchFn,

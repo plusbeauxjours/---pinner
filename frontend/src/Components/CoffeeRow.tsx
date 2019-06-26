@@ -38,7 +38,7 @@ interface IProps {
   target?: string;
 }
 
-const CoffeeRow: React.SFC<IProps> = ({
+const CoffeeRow: React.FunctionComponent<IProps> = ({
   id,
   avatar,
   username,

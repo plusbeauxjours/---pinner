@@ -220,7 +220,7 @@ interface IProps {
   ) => void;
 }
 
-const EditProfilePresenter: React.SFC<IProps> = ({
+const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   modalOpen,
   confirmModalOpen,
 

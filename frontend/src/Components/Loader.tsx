@@ -16,7 +16,7 @@ interface IProps {
   text?: string;
 }
 
-const Loader: React.SFC<IProps> = () => (
+const Loader: React.FunctionComponent<IProps> = () => (
   <Container>
     <LoadingOverlay
       active={true}

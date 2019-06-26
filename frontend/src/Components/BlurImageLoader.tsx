@@ -21,7 +21,7 @@ interface IProps {
   src?: string;
 }
 
-const BlurImageLoader: React.SFC<IProps> = ({
+const BlurImageLoader: React.FunctionComponent<IProps> = ({
   placeholder,
   image,
   ...props

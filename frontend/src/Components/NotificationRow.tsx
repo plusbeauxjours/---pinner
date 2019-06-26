@@ -43,7 +43,7 @@ interface IProps {
   onMarkRead: (notificationId: string) => void;
 }
 
-const NotificationRow: React.SFC<IProps> = ({
+const NotificationRow: React.FunctionComponent<IProps> = ({
   notification,
   actor,
   onMarkRead,

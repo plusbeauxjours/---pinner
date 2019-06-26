@@ -79,7 +79,7 @@ const Loader = styled.div`
   }
 `;
 
-const LoaderCoffee: React.SFC = () => (
+const LoaderCoffee: React.FunctionComponent = () => (
   <Container>
     <Loader />
   </Container>

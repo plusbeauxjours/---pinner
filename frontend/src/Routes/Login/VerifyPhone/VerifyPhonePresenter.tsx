@@ -98,7 +98,7 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const VerifyPhonePresenter: React.SFC<IProps> = ({
+const VerifyPhonePresenter: React.FunctionComponent<IProps> = ({
   verificationKey,
   onSubmit,
   loading,

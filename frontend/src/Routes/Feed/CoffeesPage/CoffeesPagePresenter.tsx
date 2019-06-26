@@ -113,7 +113,7 @@ interface IProps {
   coffeesList: any;
 }
 
-const CoffeesPagePresenter: React.SFC<IProps> = ({
+const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
   coffeeData: { getCoffees: { coffees = null } = {} } = {},
   coffeeLoading,
   onChange,

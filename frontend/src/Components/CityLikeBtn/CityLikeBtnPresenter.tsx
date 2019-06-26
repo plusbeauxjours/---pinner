@@ -77,7 +77,7 @@ interface IProps {
   type: string;
 }
 
-const CityLikeBtnPresenter: React.SFC<IProps> = ({
+const CityLikeBtnPresenter: React.FunctionComponent<IProps> = ({
   likeCount,
   isLiked,
   onLikeClick,

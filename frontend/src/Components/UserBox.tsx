@@ -93,7 +93,7 @@ interface IProps extends RouteComponentProps<any> {
   currentContinentCode?: string;
 }
 
-const UserBox: React.SFC<IProps> = ({
+const UserBox: React.FunctionComponent<IProps> = ({
   history,
   users,
   type,

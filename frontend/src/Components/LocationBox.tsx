@@ -141,7 +141,7 @@ interface IProps extends RouteComponentProps<any> {
   loading: boolean;
 }
 
-const UserBox: React.SFC<IProps> = ({
+const UserBox: React.FunctionComponent<IProps> = ({
   cityId,
   countryCode,
   continentCode,

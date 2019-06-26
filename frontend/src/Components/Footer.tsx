@@ -45,7 +45,7 @@ const Copyright = styled.span`
   color: ${props => props.theme.greyColor};
 `;
 
-const Footer: React.SFC<any> = () => (
+const Footer: React.FunctionComponent<any> = () => (
   <Container>
     <SWrapper>
       <List>

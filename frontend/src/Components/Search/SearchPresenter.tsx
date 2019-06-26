@@ -74,7 +74,7 @@ interface IProps {
   createCityLoading: boolean;
 }
 
-const SearchPresenter: React.SFC<IProps> = ({
+const SearchPresenter: React.FunctionComponent<IProps> = ({
   search,
   activeId,
   searchData: {

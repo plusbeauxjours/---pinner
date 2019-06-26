@@ -119,7 +119,7 @@ interface IProps {
   onBlur: any;
 }
 
-const NearCitiesPresenter: React.SFC<IProps> = ({
+const NearCitiesPresenter: React.FunctionComponent<IProps> = ({
   data: { nearCities: { cities = null, hasNextPage = null } = {} } = {},
   loading,
   modalOpen,

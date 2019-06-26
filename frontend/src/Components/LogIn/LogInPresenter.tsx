@@ -23,7 +23,7 @@ interface IProps {
   loading: boolean;
 }
 
-const LogInPresenter: React.SFC<IProps> = ({
+const LogInPresenter: React.FunctionComponent<IProps> = ({
   username,
   password,
   onChangeHandler,

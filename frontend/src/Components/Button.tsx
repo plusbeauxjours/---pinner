@@ -29,7 +29,7 @@ interface IProps {
   className?: string;
 }
 
-const Button: React.SFC<IProps> = ({
+const Button: React.FunctionComponent<IProps> = ({
   text,
   active,
   onClick,

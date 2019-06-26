@@ -235,7 +235,7 @@ interface IProps {
   isStaying: boolean;
 }
 
-const MatchPresenter: React.SFC<IProps> = ({
+const MatchPresenter: React.FunctionComponent<IProps> = ({
   matchData: { getMatches: { matches = null } = {} } = {},
   matchLoading,
   recommandUsersData: { recommandUsers: { users = null } = {} } = {},

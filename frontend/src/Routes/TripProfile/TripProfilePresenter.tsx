@@ -194,7 +194,7 @@ interface IProps {
   cityId: string;
 }
 
-const TripProfilePresenter: React.SFC<IProps> = ({
+const TripProfilePresenter: React.FunctionComponent<IProps> = ({
   cityName,
   cityPhoto,
   countryName,

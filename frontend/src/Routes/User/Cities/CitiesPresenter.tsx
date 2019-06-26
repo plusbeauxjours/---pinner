@@ -151,7 +151,7 @@ interface IProps {
   activeId: number;
 }
 
-const CitiesPresenter: React.SFC<IProps> = ({
+const CitiesPresenter: React.FunctionComponent<IProps> = ({
   data: { frequentVisits: { cities = null } = {} } = {},
   loading,
   userName,

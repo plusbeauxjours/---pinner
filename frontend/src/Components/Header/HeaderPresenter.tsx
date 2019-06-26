@@ -182,7 +182,7 @@ interface IProps extends RouteComponentProps<any> {
   onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 }
 
-const HeaderPresenter: React.SFC<IProps> = ({
+const HeaderPresenter: React.FunctionComponent<IProps> = ({
   me: { me: { user = null } = {} } = {},
   data: { header: { city = null } = {} } = {},
   loading,

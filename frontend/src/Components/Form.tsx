@@ -5,7 +5,7 @@ interface IProps {
   className?: string;
 }
 
-const Form: React.SFC<IProps> = ({ children, onSubmit, className }) => (
+const Form: React.FunctionComponent<IProps> = ({ children, onSubmit, className }) => (
   <form
     onSubmit={e => {
       e.preventDefault();

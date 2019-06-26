@@ -176,7 +176,7 @@ interface IProps {
   toggleModal: () => void;
 }
 
-const PhoneLoginPresenter: React.SFC<IProps> = ({
+const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
   countryCode,
   phoneNumber,
   countryPhone,

@@ -94,7 +94,7 @@ interface IProps {
   back: (event) => void;
 }
 
-const UserAvatarDetailPresenter: React.SFC<IProps> = ({
+const UserAvatarDetailPresenter: React.FunctionComponent<IProps> = ({
   data: { getAvatarDetail: { avatar = null } = {} } = {},
   loading,
   modalOpen,

@@ -93,7 +93,7 @@ interface IProps {
   countryCode?: string;
 }
 
-const Avatar: React.SFC<IProps> = ({
+const Avatar: React.FunctionComponent<IProps> = ({
   className,
   url,
   size,

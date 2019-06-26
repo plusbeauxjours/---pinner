@@ -594,7 +594,7 @@ interface IProps {
   deleteAvatarFn: MutationFn;
 }
 
-const UserProfilePresenter: React.SFC<IProps> = ({
+const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   userProfileData: { userProfile: { user = null } = {} } = {},
   userProfileLoading,
 
