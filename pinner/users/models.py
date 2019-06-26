@@ -61,6 +61,7 @@ class Avatar(config_models.TimeStampedModel):
 def delete_attached_image(sender, **kwargs):
     instance = kwargs.pop('instance')
     instance.image.delete(save=False)
+    instance.thumbnail.delete(save=False)
 
     @property
     def natural_time(self):

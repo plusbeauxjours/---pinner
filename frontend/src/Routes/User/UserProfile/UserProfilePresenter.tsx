@@ -405,6 +405,12 @@ const UserRow = styled.div<ITheme>`
 const AvatarKeyContainer = styled.div`
   position: relative;
   z-index: 10;
+  &:hover {
+    svg {
+      opacity: 1;
+      transition: all 0.1s ease-in-out;
+    }
+  }
 `;
 
 const ModalAvatars = styled.div`
@@ -482,6 +488,8 @@ const AvatarIcon = styled.div`
   right: 10px;
   cursor: pointer;
   svg {
+    opacity: 0;
+    transition: all 0.1s ease-in-out;
     fill: white;
   }
 `;
