@@ -8,6 +8,7 @@ import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
 import CoffeeBtn from "src/Components/CoffeeBtn";
 import { List } from "../../../Icons";
+import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)`
   display: flex;
@@ -239,7 +240,12 @@ const CoffeeDetailPresenter: React.FunctionComponent<IProps> = ({
               <Icon onClick={toggleModal}>
                 <List />
               </Icon>
-              <SAvatar url={coffee.host.profile.avatar} size="lg" />
+              <SAvatar
+                url={`${BACKEND_URL}/media/${
+                  coffee.host.profile.avatar.thumbnail
+                }`}
+                size="lg"
+              />
 
               <SText text={coffee.host.username} />
               <Location>

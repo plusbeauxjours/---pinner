@@ -6,7 +6,6 @@ export const EDIT_PROFILE = gql`
     $userName: String
     $bio: String
     $gender: String
-    $avatar: String
     $firstName: String
     $lastName: String
     $nationality: String
@@ -17,7 +16,6 @@ export const EDIT_PROFILE = gql`
       username: $userName
       bio: $bio
       gender: $gender
-      avatar: $avatar
       firstName: $firstName
       lastName: $lastName
       nationality: $nationality

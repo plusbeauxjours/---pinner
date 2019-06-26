@@ -3,6 +3,7 @@ import styled from "../Styles/typed-components";
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
 import { Upload } from "../Icons";
+import { BACKEND_URL } from "src/constants";
 
 const Grid = styled.div`
   display: grid;
@@ -56,7 +57,12 @@ const AvatarGrid: React.FunctionComponent<IProps> = ({
         usersBefore.map(user => (
           <AvatarContainer key={user.id}>
             <Link to={`/${user.actor.profile.username}`}>
-              <SAvatar size={"md"} url={user.actor.profile.avatar} />
+              <SAvatar
+                size={"md"}
+                url={`${BACKEND_URL}/media/${
+                  user.actor.profile.avatar.thumbnail
+                }`}
+              />
             </Link>
           </AvatarContainer>
         ))}
@@ -64,7 +70,10 @@ const AvatarGrid: React.FunctionComponent<IProps> = ({
         usersNow.map(user => (
           <AvatarContainer key={user.id}>
             <Link to={`/${user.profile.username}`}>
-              <SAvatar size={"md"} url={user.profile.avatar} />
+              <SAvatar
+                size={"md"}
+                url={`${BACKEND_URL}/media/${user.profile.avatar.thumbnail}`}
+              />
             </Link>
           </AvatarContainer>
         ))}

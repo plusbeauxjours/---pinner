@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
-import { Profile, Compass, SearchIcon } from "../../Icons";
+import { Compass, SearchIcon } from "../../Icons";
 
 import Wrapper from "../Wrapper";
 import { RouteComponentProps, withRouter } from "react-router";
@@ -11,6 +11,7 @@ import { keyframes } from "styled-components";
 import Avatar from "../Avatar";
 import Bold from "../Bold";
 import Weather from "src/Components/Weather";
+import { BACKEND_URL } from 'src/constants';
 
 const Header = styled.header`
   background-color: ${props => props.theme.bgColor};
@@ -272,11 +273,10 @@ const HeaderPresenter: React.FunctionComponent<IProps> = ({
                 }}
               >
                 {console.log(user)}
-                {user.profile.avatar ? (
-                  <Avatar size={"sm"} url={user.profile.avatar} />
-                ) : (
-                  <Profile />
-                )}
+                <Avatar
+                  size={"sm"}
+                  url={`${BACKEND_URL}/media/${user.profile.avatar.thumbnail}`}
+                />
               </Link>
             </Icon>
           </Column>

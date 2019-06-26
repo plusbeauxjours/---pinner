@@ -18,7 +18,6 @@ class EditProfile(graphene.Mutation):
     class Arguments:
         bio = graphene.String()
         gender = graphene.String()
-        avatar = graphene.String()
         first_name = graphene.String()
         last_name = graphene.String()
         username = graphene.String()
@@ -39,7 +38,6 @@ class EditProfile(graphene.Mutation):
 
             bio = kwargs.get('bio', user.profile.bio)
             gender = kwargs.get('gender', user.profile.gender)
-            avatar = kwargs.get('avatar', user.profile.avatar)
             first_name = kwargs.get('first_name', user.first_name)
             last_name = kwargs.get('last_name', user.last_name)
             username = kwargs.get('username', user.username)
@@ -179,7 +177,6 @@ class EditProfile(graphene.Mutation):
             try:
                 profile.bio = bio
                 profile.gender = gender
-                profile.avatar = avatar
                 profile.nationality = nationality
                 profile.residence = residence
                 profile.email = email

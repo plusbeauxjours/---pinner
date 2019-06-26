@@ -49,7 +49,6 @@ interface IProps extends RouteComponentProps<any> {
   nationality: string;
   gender: string;
   email: string;
-  avatar: string;
 }
 
 interface IState {
@@ -57,7 +56,6 @@ interface IState {
   nationality: string;
   gender: string;
   email: string;
-  avatar: string;
 }
 
 class ProfileForm extends React.Component<IProps, IState> {
@@ -68,12 +66,11 @@ class ProfileForm extends React.Component<IProps, IState> {
       username: props.username,
       nationality: props.nationality,
       gender: props.gender,
-      email: props.email,
-      avatar: props.avatar
+      email: props.email
     };
   }
   public render() {
-    const { username, nationality, gender, email, avatar } = this.state;
+    const { username, nationality, gender, email } = this.state;
     return (
       <EditProfileMutation
         mutation={EDIT_PROFILE}
@@ -81,8 +78,7 @@ class ProfileForm extends React.Component<IProps, IState> {
           userName: username,
           nationality,
           gender,
-          email,
-          avatar
+          email
         }}
         update={this.updatEditProfile}
         onCompleted={editData => {
@@ -110,18 +106,6 @@ class ProfileForm extends React.Component<IProps, IState> {
                   />
                 </ModalLink>
               )}
-              {avatar ? (
-                <ModalLink>
-                  <Input
-                    onChange={this.onInputChange}
-                    type={"text"}
-                    value={avatar}
-                    placeholder={avatar}
-                    name={"avatar"}
-                    onKeyDown={this.onKeyDown}
-                  />
-                </ModalLink>
-              ) : null}
               {!nationality ? (
                 <ModalLink>
                   <Input
@@ -174,7 +158,7 @@ class ProfileForm extends React.Component<IProps, IState> {
     console.log(this.state);
   };
   public onKeyDown = event => {
-    const { username, nationality, gender, email, avatar } = this.state;
+    const { username, nationality, gender, email } = this.state;
     const { keyCode } = event;
     if (keyCode === 13) {
       this.editProfileFn({
@@ -182,8 +166,7 @@ class ProfileForm extends React.Component<IProps, IState> {
           userName: username,
           nationality,
           gender,
-          email,
-          avatar
+          email
         }
       });
     } else {

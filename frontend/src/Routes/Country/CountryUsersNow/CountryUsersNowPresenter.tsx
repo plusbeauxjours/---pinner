@@ -7,6 +7,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
+import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -158,7 +159,12 @@ const CountryUsersNowPresenter: React.FunctionComponent<IProps> = ({
                     <UserRow key={user.id} active={active}>
                       <Link to={`/${user.profile.username}`}>
                         <AvatarContainer>
-                          <Avatar size={"sm"} url={user.profile.avatar} />
+                          <Avatar
+                            size={"sm"}
+                            url={`${BACKEND_URL}/media/${
+                              user.profile.avatar.thumbnail
+                            }`}
+                          />
                           <HeaderColumn>
                             <CText text={user.profile.username} />
                             <Explain>with same nationality</Explain>
@@ -181,7 +187,12 @@ const CountryUsersNowPresenter: React.FunctionComponent<IProps> = ({
                     <UserRow key={user.id} active={active}>
                       <Link to={`/${user.profile.username}`}>
                         <AvatarContainer>
-                          <Avatar size={"sm"} url={user.profile.avatar} />
+                          <Avatar
+                            size={"sm"}
+                            url={`${BACKEND_URL}/media/${
+                              user.profile.avatar.thumbnail
+                            }`}
+                          />
                           <HeaderColumn>
                             <CText text={user.profile.username} />
                             <Explain>with same nationality</Explain>

@@ -7,6 +7,7 @@ import Loader from "../../../Components/Loader";
 import Bold from "../../../Components/Bold";
 import CoffeeBtn from "src/Components/CoffeeBtn";
 import Avatar from "../../../Components/Avatar";
+import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -137,7 +138,12 @@ const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
                   <UserRow key={coffee.uuid}>
                     <Link to={`/c/${coffee.uuid}`}>
                       <AvatarContainer>
-                        <SAvatar size={"sm"} url={coffee.host.profile.avatar} />
+                        <SAvatar
+                          size={"sm"}
+                          url={`${BACKEND_URL}/media/${
+                            coffee.host.profile.avatar.thumbnail
+                          }`}
+                        />
                         <HeaderColumn>
                           <CText text={coffee.host.username} />
                           {(() => {
@@ -171,7 +177,12 @@ const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
                   <UserRow key={coffee.uuid}>
                     <Link to={`/c/${coffee.uuid}`}>
                       <AvatarContainer>
-                        <SAvatar size={"sm"} url={coffee.host.profile.avatar} />
+                        <SAvatar
+                          size={"sm"}
+                          url={`${BACKEND_URL}/media/${
+                            coffee.host.profile.avatar.thumbnail
+                          }`}
+                        />
                         <HeaderColumn>
                           <CText text={coffee.host.username} />
                           {(() => {

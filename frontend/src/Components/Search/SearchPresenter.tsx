@@ -8,6 +8,7 @@ import UserHeader from "../UserHeader";
 import Avatar from "../Avatar";
 import useGoogleAutocomplete from "../../autocompleteHelpers";
 import { GOOGLE_PLACE_KEY } from "src/keys";
+import { BACKEND_URL } from 'src/constants';
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -116,7 +117,7 @@ const SearchPresenter: React.FunctionComponent<IProps> = ({
                     currentCountry={
                       user.profile.currentCity.country.countryName
                     }
-                    avatar={user.profile.avatar}
+                    avatar={`${BACKEND_URL}/media/${user.profile.avatar.thumbnail}`}
                     size={"sm"}
                   />
                 </Link>

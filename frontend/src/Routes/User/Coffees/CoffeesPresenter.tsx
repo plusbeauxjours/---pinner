@@ -6,6 +6,7 @@ import Wrapper from "../../../Components/Wrapper";
 import Loader from "../../../Components/Loader";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
+import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -194,7 +195,12 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
                   <UserRow active={active} key={index}>
                     <Link to={`/c/${coffee.uuid}`}>
                       <AvatarContainer>
-                        <Avatar size={"sm"} url={coffee.host.profile.avatar} />
+                        <Avatar
+                          size={"sm"}
+                          url={`${BACKEND_URL}/media/${
+                            coffee.host.profile.avatar.thumbnail
+                          }`}
+                        />
                         <HeaderColumn>
                           <CText text={coffee.host.username} />
                           <Explain>with same nationality</Explain>
@@ -218,7 +224,12 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
                   <UserRow active={active} key={index}>
                     <Link to={`/c/${coffee.uuid}`}>
                       <AvatarContainer>
-                        <Avatar size={"sm"} url={coffee.host.profile.avatar} />
+                        <Avatar
+                          size={"sm"}
+                          url={`${BACKEND_URL}/media/${
+                            coffee.host.profile.avatar.thumbnail
+                          }`}
+                        />
                         <HeaderColumn>
                           <CText text={coffee.host.username} />
                           <Explain>with same nationality</Explain>

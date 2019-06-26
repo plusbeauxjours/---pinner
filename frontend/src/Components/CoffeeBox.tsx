@@ -6,6 +6,7 @@ import { Upload } from "../Icons";
 import Avatar from "./Avatar";
 import CoffeeBtn from "src/Components/CoffeeBtn";
 import Loader from "src/Components/Loader";
+import { BACKEND_URL } from "src/constants";
 
 const Title = styled.div`
   display: flex;
@@ -185,7 +186,12 @@ const UserBox: React.FunctionComponent<IProps> = ({
                     }}
                   >
                     <AvatarContainer>
-                      <Avatar size={"sm"} url={coffee.host.profile.avatar} />
+                      <Avatar
+                        size={"sm"}
+                        url={`${BACKEND_URL}/media/${
+                          coffee.host.profile.avatar.thumbnail
+                        }`}
+                      />
                       <HeaderColumn>
                         <CText text={coffee.host.username} />
                         {(() => {
@@ -268,7 +274,12 @@ const UserBox: React.FunctionComponent<IProps> = ({
                     }}
                   >
                     <AvatarContainer>
-                      <Avatar size={"sm"} url={coffee.host.profile.avatar} />
+                      <Avatar
+                        size={"sm"}
+                        url={`${BACKEND_URL}/media/${
+                          coffee.host.profile.avatar.thumbnail
+                        }`}
+                      />
                       <HeaderColumn>
                         <CText text={coffee.host.username} />
                         {(() => {

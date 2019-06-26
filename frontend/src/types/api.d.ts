@@ -2138,7 +2138,6 @@ export interface EditProfileVariables {
   userName?: string | null;
   bio?: string | null;
   gender?: string | null;
-  avatar?: string | null;
   firstName?: string | null;
   lastName?: string | null;
   nationality?: string | null;

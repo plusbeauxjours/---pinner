@@ -7,13 +7,14 @@ class ProfileAdmin(admin.ModelAdmin):
 
     list_display = (
         'username',
+        'avatar',
         'current_city',
         'city_count',
         'trip_count',
         'country_count',
         'continent_count',
         'nationality',
-        'residence'
+        'residence',
     )
 
 

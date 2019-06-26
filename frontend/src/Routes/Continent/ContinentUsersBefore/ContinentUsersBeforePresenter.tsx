@@ -7,6 +7,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
+import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -162,7 +163,12 @@ const ContinentUsersBeforePresenter: React.FunctionComponent<IProps> = ({
                     <UserRow key={index} active={active}>
                       <Link to={`/${user.actor.profile.username}`}>
                         <AvatarContainer>
-                          <Avatar size={"sm"} url={user.actor.profile.avatar} />
+                          <Avatar
+                            size={"sm"}
+                            url={`${BACKEND_URL}/media/${
+                              user.actor.profile.avatar.thumbnail
+                            }`}
+                          />
                           <HeaderColumn>
                             <CText text={user.actor.profile.username} />
                             <Explain>with same nationality</Explain>
@@ -184,7 +190,12 @@ const ContinentUsersBeforePresenter: React.FunctionComponent<IProps> = ({
                     <UserRow key={index} active={active}>
                       <Link to={`/${user.actor.profile.username}`}>
                         <AvatarContainer>
-                          <Avatar size={"sm"} url={user.actor.profile.avatar} />
+                          <Avatar
+                            size={"sm"}
+                            url={`${BACKEND_URL}/media/${
+                              user.actor.profile.avatar.thumbnail
+                            }`}
+                          />
                           <HeaderColumn>
                             <CText text={user.actor.profile.username} />
                             <Explain>with same nationality</Explain>

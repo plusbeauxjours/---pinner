@@ -14,6 +14,7 @@ import UserBox from "src/Components/UserBox";
 import CoffeeBox from "src/Components/CoffeeBox";
 import LocationBox from "src/Components/LocationBox";
 import { Right } from "../../../Icons";
+import { BACKEND_URL } from 'src/constants';
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -390,7 +391,9 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                           currentCountry={
                             user.profile.currentCity.country.countryName
                           }
-                          avatar={user.profile.avatar}
+                          avatar={`${BACKEND_URL}/media/${
+                            user.profile.avatar.thumbnail
+                          }`}
                           size={"sm"}
                         />
                       </Link>
@@ -414,7 +417,9 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                           currentCountry={
                             user.profile.currentCity.country.countryName
                           }
-                          avatar={user.profile.avatar}
+                          avatar={`${BACKEND_URL}/media/${
+                            user.profile.avatar.thumbnail
+                          }`}
                           size={"sm"}
                         />
                       </Link>
