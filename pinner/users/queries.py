@@ -15,11 +15,15 @@ def resolve_profile(self, info, **kwargs):
 
     try:
         profile = User.objects.get(username=username)
+        try:
+            mainAvatar = models.Avatar.objects.get(is_main=True)
+        except:
+            mainAvatar = models.Avatar.objects.latest('created_at')
 
     except User.DoesNotExist:
         raise Exception('User not found')
 
-    return types.UserProfileResponse(user=profile)
+    return types.UserProfileResponse(user=profile, mainAvatar=mainAvatar)
 
 
 def resolve_get_avatars(self, info, **kwargs):

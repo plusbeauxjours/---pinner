@@ -4,6 +4,14 @@ import { COUNTRY_FRAGMENT } from "src/sharedQueries";
 export const GET_USER = gql`
   query UserProfile($username: String!) {
     userProfile(username: $username) {
+      mainAvatar {
+        id
+        uuid
+        image
+        isMain
+        likeCount
+        thumbnail
+      }
       user {
         id
         username
@@ -12,7 +20,6 @@ export const GET_USER = gql`
         profile {
           bio
           gender
-          avatar
           website
           email
           nationality {
@@ -153,8 +160,8 @@ export const DELETE_TRIP = gql`
 `;
 
 export const UPLOAD_AVATAR = gql`
-  mutation UploadAvatar($file: Upload!) {
-    uploadAvatar(file: $file) {
+  mutation UploadAvatar($file: Upload!, isMainAvatar: Boolean!) {
+    uploadAvatar(file: $file, isMainAvatar: $isMainAvatar) {
       ok
       avatar {
         id
@@ -173,6 +180,22 @@ export const DELETE_AVATAR = gql`
     deleteAvatar(uuid: $uuid) {
       ok
       uuid
+    }
+  }
+`;
+
+export const MARK_AS_MAIN = gql`
+  mutation MarkAsMain($uuid: String!) {
+    markAsMain(uuid: $uuid) {
+      ok
+      avatar {
+        id
+        uuid
+        image
+        isMain
+        likeCount
+        thumbnail
+      }
     }
   }
 `;

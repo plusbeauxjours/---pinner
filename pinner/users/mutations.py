@@ -203,6 +203,7 @@ class EditProfile(graphene.Mutation):
             error = 'You need to log in'
             return types.EditProfileResponse(ok=False)
 
+
 class MarkAsMain(graphene.Mutation):
 
     class Arguments:
@@ -212,11 +213,13 @@ class MarkAsMain(graphene.Mutation):
 
     @login_required
     def mutate(self, info,  **kwargs):
-        
+
         user = info.context.user
         uuid = kwargs.get('uuid')
 
         try:
+            mainAvatar = models.Avatar.objects.get(is_main=True)
+            mainAvatar.is_main=False
             avatar = models.Avatar.objects.get(uuid=uuid)
             avatar.is_main = True
             avatar.save()
@@ -249,16 +252,19 @@ class UploadAvatar(graphene.Mutation):
 
     class Arguments:
         file = Upload(required=True)
+        isMainAvatar = graphene.Boolean(required=True)
 
     Output = types.UploadAvatarResponse
 
     @login_required
     def mutate(self, info, file, **kwargs):
+
         user = info.context.user
+        isMainAvatar = kwargs.get('isMainAvatar')
 
         try:
             avatar = models.Avatar.objects.create(
-                is_main=False, image=file, thumbnail=file, creator=user)
+                is_main=isMainAvatar, image=file, thumbnail=file, creator=user)
             user.profile.avatars.add(avatar)
             user.profile.save()
             return types.UploadAvatarResponse(ok=True, avatar=avatar)

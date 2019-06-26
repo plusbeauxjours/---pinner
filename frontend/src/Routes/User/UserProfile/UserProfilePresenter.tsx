@@ -592,10 +592,12 @@ interface IProps {
   imagePreviewUrl: string;
   removeImagePreviewUrl: () => void;
   deleteAvatarFn: MutationFn;
+  markAsMainFn: any;
+  isMainAvatar: boolean;
 }
 
 const UserProfilePresenter: React.FunctionComponent<IProps> = ({
-  userProfileData: { userProfile: { user = null } = {} } = {},
+  userProfileData: { userProfile: { mainAvatar=null, user = null } = {} } = {},
   userProfileLoading,
 
   avatarsData: { getAvatars: { avatars = null } = {} } = {},
@@ -668,7 +670,9 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   onSubmitImage,
   imagePreviewUrl,
   removeImagePreviewUrl,
-  deleteAvatarFn
+  deleteAvatarFn,
+  markAsMainFn,
+  isMainAvatar
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
     apiKey: `${GOOGLE_PLACE_KEY}`,
@@ -975,7 +979,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
         */}
         <Header>
           <AvatarContainer onClick={toggleAvatarModalOpen}>
-            <PAvatar size="lg" url={user.profile.avatar} />
+            <PAvatar size="lg" url={mainAvatar} />
           </AvatarContainer>
           <NameContainer>
             <Username>{user.username}</Username>

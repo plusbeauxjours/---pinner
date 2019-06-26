@@ -60,6 +60,7 @@ class UploadAvatarResponse(graphene.ObjectType):
 
 class UserProfileResponse(graphene.ObjectType):
     user = graphene.Field(coffee_types.UserType)
+    mainAvatar = graphene.Field(AvatarType)
 
 
 class ProfileListResponse(graphene.ObjectType):

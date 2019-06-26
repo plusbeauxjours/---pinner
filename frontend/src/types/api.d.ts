@@ -2077,6 +2077,16 @@ export interface GetAvatarDetailVariables {
 // GraphQL query operation: UserProfile
 // ====================================================
 
+export interface UserProfile_userProfile_mainAvatar {
+  __typename: "AvatarType";
+  id: string;
+  uuid: any | null;
+  image: string | null;
+  isMain: boolean;
+  likeCount: number | null;
+  thumbnail: string | null;
+}
+
 export interface UserProfile_userProfile_user_profile_nationality_continent {
   __typename: "ContinentType";
   continentCode: string | null;
@@ -2129,7 +2139,6 @@ export interface UserProfile_userProfile_user_profile {
   __typename: "ProfileType";
   bio: string | null;
   gender: ProfileGender | null;
-  avatar: string;
   website: string | null;
   email: string | null;
   nationality: UserProfile_userProfile_user_profile_nationality | null;
@@ -2157,6 +2166,7 @@ export interface UserProfile_userProfile_user {
 
 export interface UserProfile_userProfile {
   __typename: "UserProfileResponse";
+  mainAvatar: UserProfile_userProfile_mainAvatar | null;
   user: UserProfile_userProfile_user | null;
 }
 
@@ -2365,38 +2375,6 @@ export interface DeleteTripVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: UploadAvatar
-// ====================================================
-
-export interface UploadAvatar_uploadAvatar_avatar {
-  __typename: "AvatarType";
-  id: string;
-  uuid: any | null;
-  image: string | null;
-  isMain: boolean;
-  likeCount: number | null;
-  thumbnail: string | null;
-}
-
-export interface UploadAvatar_uploadAvatar {
-  __typename: "UploadAvatarResponse";
-  ok: boolean | null;
-  avatar: UploadAvatar_uploadAvatar_avatar | null;
-}
-
-export interface UploadAvatar {
-  uploadAvatar: UploadAvatar_uploadAvatar;
-}
-
-export interface UploadAvatarVariables {
-  file: any;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL mutation operation: DeleteAvatar
 // ====================================================
 
@@ -2411,6 +2389,38 @@ export interface DeleteAvatar {
 }
 
 export interface DeleteAvatarVariables {
+  uuid: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: MarkAsMain
+// ====================================================
+
+export interface MarkAsMain_markAsMain_avatar {
+  __typename: "AvatarType";
+  id: string;
+  uuid: any | null;
+  image: string | null;
+  isMain: boolean;
+  likeCount: number | null;
+  thumbnail: string | null;
+}
+
+export interface MarkAsMain_markAsMain {
+  __typename: "MarkAsMainResponse";
+  ok: boolean | null;
+  avatar: MarkAsMain_markAsMain_avatar | null;
+}
+
+export interface MarkAsMain {
+  markAsMain: MarkAsMain_markAsMain;
+}
+
+export interface MarkAsMainVariables {
   uuid: string;
 }
 
