@@ -101,10 +101,8 @@ class Profile(config_models.TimeStampedModel):
         location_models.Country, blank=True, null=True, on_delete=models.CASCADE, related_name='residence')
     nationality = models.ForeignKey(
         location_models.Country, blank=True, null=True, on_delete=models.CASCADE, related_name='nationality')
-    avatar = models.URLField(
-        blank=True,
-        default="http://basmed.unilag.edu.ng/wp-content/uploads/2018/10/avatar__181424.png")
-    avatars = models.ManyToManyField(Avatar, related_name='avatars')
+    avatar = models.ForeignKey(
+        Avatar, blank=True, null=True, on_delete=models.CASCADE, related_name='avatar')
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     verified_phone_number = models.BooleanField(default=False)
     verified_email = models.BooleanField(default=False)
@@ -136,20 +134,6 @@ class Profile(config_models.TimeStampedModel):
     @cached_property
     def trip_count(self):
         return self.user.movenotification.all().count()
-
-    # @property
-    # def cities(self):
-    #     return location_models.City.objects.filter(
-    #         movenotification__actor__username=self.user.username).annotate(
-    #         count=Count('movenotification', distinct=True)).annotate(
-    #         diff=Sum('movenotification__diff_days')).order_by('-count')[:6]
-
-    # @property
-    # def countries(self):
-    #     return location_models.Country.objects.filter(
-    #         cities__movenotification__actor__username=self.user.username).annotate(
-    #         count=Count('cities__movenotification', distinct=True)).annotate(
-    #         diff=Sum('cities__movenotification__diff_days')).order_by('-count')[:6]
 
     class Meta:
         ordering = ['-created_at']

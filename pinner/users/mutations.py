@@ -218,15 +218,25 @@ class MarkAsMain(graphene.Mutation):
         uuid = kwargs.get('uuid')
 
         try:
-            mainAvatar = models.Avatar.objects.get(is_main=True)
-            mainAvatar.is_main=False
-            avatar = models.Avatar.objects.get(uuid=uuid)
-            avatar.is_main = True
-            avatar.save()
-            return types.MarkAsMainResponse(ok=True, avatar=avatar)
+            prevMainAvatar = models.Avatar.objects.get(is_main=True)
+            if prevMainAvatar:
+                newMainAvatar = models.Avatar.objects.get(uuid=uuid)
+                prevMainAvatar.is_main = False
+                newMainAvatar.is_main = True
+                prevMainAvatar.save()
+                newMainAvatar.save()
+            else:
+                newMainAvatar = models.Avatar.objects.get(uuid=uuid)
+                newMainAvatar.is_main = True
+                newMainAvatar.save()
+                return types.MarkAsMainResponse(ok=True, avatar=newMainAvatar)
 
         except:
-            return types.MarkAsMainResponse(ok=False, avatar=None)
+            newMainAvatar = models.Avatar.objects.get(uuid=uuid)
+            newMainAvatar.is_main = True
+            newMainAvatar.save()
+
+        return types.MarkAsMainResponse(ok=True, avatar=newMainAvatar, uuid=uuid)
 
 
 class DeleteProfile(graphene.Mutation):
@@ -263,9 +273,14 @@ class UploadAvatar(graphene.Mutation):
         isMainAvatar = kwargs.get('isMainAvatar')
 
         try:
+            if isMainAvatar:
+                prevMainAvatar = models.Avatar.objects.get(is_main=True)
+                prevMainAvatar.is_main = False
+                prevMainAvatar.save()
+
             avatar = models.Avatar.objects.create(
                 is_main=isMainAvatar, image=file, thumbnail=file, creator=user)
-            user.profile.avatars.add(avatar)
+            user.profile.avatar = avatar
             user.profile.save()
             return types.UploadAvatarResponse(ok=True, avatar=avatar)
 
@@ -288,7 +303,13 @@ class DeleteAvatar(graphene.Mutation):
 
         try:
             avatar = models.Avatar.objects.get(uuid=uuid)
-            avatar.delete()
+            if avatar.is_main:
+                main = models.Avatar.objects.latest('created_at')
+                avatar.delete()
+                main.is_main = True
+                main.save()
+            else:
+                avatar.delete()
             return types.DeleteAvatarResponse(ok=True, uuid=uuid)
 
         except:

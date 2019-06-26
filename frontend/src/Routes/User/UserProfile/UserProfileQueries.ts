@@ -4,14 +4,6 @@ import { COUNTRY_FRAGMENT } from "src/sharedQueries";
 export const GET_USER = gql`
   query UserProfile($username: String!) {
     userProfile(username: $username) {
-      mainAvatar {
-        id
-        uuid
-        image
-        isMain
-        likeCount
-        thumbnail
-      }
       user {
         id
         username
@@ -20,6 +12,9 @@ export const GET_USER = gql`
         profile {
           bio
           gender
+          avatar {
+            thumbnail
+          }
           website
           email
           nationality {
@@ -52,21 +47,6 @@ export const GET_USER = gql`
     }
   }
   ${COUNTRY_FRAGMENT}
-`;
-
-export const GET_AVATARS = gql`
-  query GetAvatars($userName: String!) {
-    getAvatars(userName: $userName) {
-      avatars {
-        id
-        uuid
-        image
-        isMain
-        likeCount
-        thumbnail
-      }
-    }
-  }
 `;
 
 export const GET_TRIPS = gql`
@@ -159,8 +139,23 @@ export const DELETE_TRIP = gql`
   }
 `;
 
+export const GET_AVATARS = gql`
+  query GetAvatars($userName: String!) {
+    getAvatars(userName: $userName) {
+      avatars {
+        id
+        uuid
+        image
+        isMain
+        likeCount
+        thumbnail
+      }
+    }
+  }
+`;
+
 export const UPLOAD_AVATAR = gql`
-  mutation UploadAvatar($file: Upload!, isMainAvatar: Boolean!) {
+  mutation UploadAvatar($file: Upload!, $isMainAvatar: Boolean!) {
     uploadAvatar(file: $file, isMainAvatar: $isMainAvatar) {
       ok
       avatar {
@@ -188,6 +183,7 @@ export const MARK_AS_MAIN = gql`
   mutation MarkAsMain($uuid: String!) {
     markAsMain(uuid: $uuid) {
       ok
+      uuid
       avatar {
         id
         uuid

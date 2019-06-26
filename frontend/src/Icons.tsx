@@ -186,8 +186,14 @@ export const Upload: React.FunctionComponent = () => (
 );
 
 export const RedDot: React.FunctionComponent = () => (
-  <svg width="5" height="5">
-    <circle cx="2.5" cy="2.5" r="2.5" fill="red" />
+  <svg width="12" height="12">
+    <circle cx="6" cy="6" r="6" fill="red" />
+  </svg>
+);
+
+export const WhiteDot: React.FunctionComponent = () => (
+  <svg width="12" height="12">
+    <circle cx="6" cy="6" r="6" fill="white" />
   </svg>
 );
 

@@ -50,6 +50,7 @@ class AvatarDetailResponse(graphene.ObjectType):
 
 class MarkAsMainResponse(graphene.ObjectType):
     ok = graphene.Boolean()
+    uuid = graphene.String()
     avatar = graphene.Field(AvatarType)
 
 

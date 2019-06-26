@@ -3,6 +3,16 @@ import ProgressiveImage from "react-progressive-image";
 import styled from "styled-components";
 import { useQuery } from "react-apollo-hooks";
 import { GET_CITY_PHOTO, GET_COUNTRY_PHOTO } from "./Search/SearchQueries";
+import { keyframes } from "styled-components";
+
+const Animation = keyframes`
+	  from{
+	    opacity:0;
+	  }
+	  to{
+	    opacity:1;
+	  }
+  `;
 
 const Container = styled.img<ITheme>`
   height: ${props => {
@@ -31,6 +41,7 @@ const Container = styled.img<ITheme>`
   border-radius: 50%;
   background-size: cover;
   object-fit: cover;
+  animation: ${Animation} 0.1s linear;
 `;
 
 const Placeholder = styled.div<ITheme>`
@@ -58,6 +69,7 @@ const Placeholder = styled.div<ITheme>`
     }
   }};
   border-radius: 50%;
+  animation: ${Animation} 0.1s linear;
 `;
 
 const AvatarContainer = styled.div<ITheme>`

@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { List, Delete } from "../../../Icons";
+import { List, Delete, RedDot, WhiteDot } from "../../../Icons";
 import styled, { keyframes } from "../../../Styles/typed-components";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
@@ -481,12 +481,28 @@ const PreviewModalContainer = styled(ModalContainer)`
 
 const AvatarImage = styled.div``;
 
-const AvatarIcon = styled.div`
+const AvatarDeleteIcon = styled.div`
   z-index: 20;
   position: absolute;
   top: 10px;
   right: 10px;
   cursor: pointer;
+  svg {
+    opacity: 0;
+    transition: all 0.1s ease-in-out;
+    fill: white;
+  }
+`;
+
+const RedDotIcon = styled.div`
+  z-index: 20;
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  cursor: pointer;
+`;
+
+const WhiteDotIcon = styled(RedDotIcon)`
   svg {
     opacity: 0;
     transition: all 0.1s ease-in-out;
@@ -597,7 +613,7 @@ interface IProps {
 }
 
 const UserProfilePresenter: React.FunctionComponent<IProps> = ({
-  userProfileData: { userProfile: { mainAvatar=null, user = null } = {} } = {},
+  userProfileData: { userProfile: { user = null } = {} } = {},
   userProfileLoading,
 
   avatarsData: { getAvatars: { avatars = null } = {} } = {},
@@ -714,9 +730,9 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               )}
               {user.profile.isSelf && imagePreviewUrl.length !== 0 && (
                 <AvatarKeyContainer>
-                  <AvatarIcon onClick={removeImagePreviewUrl}>
+                  <AvatarDeleteIcon onClick={removeImagePreviewUrl}>
                     <Delete />
-                  </AvatarIcon>
+                  </AvatarDeleteIcon>
                   <AvatarImage onClick={togglePreviewAvatarModalOpen}>
                     <ModalAvatarImage src={imagePreviewUrl} />
                   </AvatarImage>
@@ -740,13 +756,29 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                           />
                         </Link>
                       </AvatarImage>
-                      <AvatarIcon
+                      {avatar.isMain && user.profile.isSelf ? (
+                        <RedDotIcon>
+                          <RedDot />
+                        </RedDotIcon>
+                      ) : null}
+                      {!avatar.isMain && user.profile.isSelf ? (
+                        <WhiteDotIcon
+                          onClick={() =>
+                            markAsMainFn({
+                              variables: { uuid: avatar.uuid }
+                            })
+                          }
+                        >
+                          <WhiteDot />
+                        </WhiteDotIcon>
+                      ) : null}
+                      <AvatarDeleteIcon
                         onClick={() =>
                           deleteAvatarFn({ variables: { uuid: avatar.uuid } })
                         }
                       >
                         <Delete />
-                      </AvatarIcon>
+                      </AvatarDeleteIcon>
                     </AvatarKeyContainer>
                   );
                 })}
@@ -979,7 +1011,10 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
         */}
         <Header>
           <AvatarContainer onClick={toggleAvatarModalOpen}>
-            <PAvatar size="lg" url={mainAvatar} />
+            <PAvatar
+              size="lg"
+              url={`${BACKEND_URL}/media/${user.profile.avatar.thumbnail}`}
+            />
           </AvatarContainer>
           <NameContainer>
             <Username>{user.username}</Username>

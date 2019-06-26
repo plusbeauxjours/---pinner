@@ -112,7 +112,7 @@ interface IState {
   file: any;
   imagePreviewUrl: any;
   isMainAvatar: boolean;
-  uuid: string;
+  prevMainAvatarUuid: string;
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
@@ -169,7 +169,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       file: null,
       imagePreviewUrl: "",
       isMainAvatar: false,
-      uuid: ""
+      prevMainAvatarUuid: ""
     };
   }
   public componentDidUpdate(prevProps) {
@@ -212,15 +212,14 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripList,
       tripActiveId,
       searchActiveId,
-      file,
       imagePreviewUrl,
-      isMainAvatar,
-      uuid
+      isMainAvatar
+      // prevMainAvatarUuid
     } = this.state;
     return (
       <MarkAsMainMutation
         mutation={MARK_AS_MAIN}
-        variables={{ uuid }}
+        update={this.updateMarkAsMain}
         onCompleted={this.onCompletedMarkAsMain}
       >
         {markAsMainFn => {
@@ -1135,12 +1134,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       return;
     }
     let reader = new FileReader();
-
-    //
-    // let file = files[0];
-    //
-
-    console.log(file);
     reader.onloadend = () => {
       this.setState({
         file,
@@ -1156,7 +1149,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       (file && file.length !== 0) ||
       (imagePreviewUrl && imagePreviewUrl.length !== 0)
     ) {
-      console.log(file);
       this.uploadAvatarFn({ variables: { file, isMainAvatar } });
       this.setState({
         file: null,
@@ -1233,30 +1225,57 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       toast.error("error");
     }
   };
-  // public updateMarkAsMain = (cache, { data: { markAsMain } }) => {
-  //   const {
-  //     match: {
-  //       params: { username }
-  //     }
-  //   } = this.props;
-  //   try {
-  //     const data = cache.readQuery({
-  //       query: GET_AVATARS,
-  //       variables: { userName: username }
-  //     });
-  //     if (data) {
-  //       cache.writeQuery({
-  //         query: GET_AVATARS,
-  //         variables: { userName: username },
-  //         data
-  //       });
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+  public updateMarkAsMain = (cache, { data: { markAsMain } }) => {
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    try {
+      const data = cache.readQuery({
+        query: GET_USER,
+        variables: { username }
+      });
+      if (data) {
+        data.userProfile.user.profile.avatar.thumbnail = markAsMain.avatar.thumbnail;
+        cache.writeQuery({
+          query: GET_USER,
+          variables: { username },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    // try {
+    //   const data = cache.readQuery({
+    //     query: GET_AVATARS,
+    //     variables: { userName: username }
+    //   });
+    //   if (data) {
+    //     data.getAvatars.avatars.find(i => i.isMain === true).isMain = false;
+    //     data.getAvatars.avatars.find(
+    //       i => i.uuid === markAsMain.uuid
+    //     ).isMain = true;
+    //     {
+    //       console.log(markAsMain.avatar.isMain);
+    //     }
+    //     {
+    //       console.log(data);
+    //     }
+    //     cache.writeQuery({
+    //       query: GET_AVATARS,
+    //       variables: { userName: username },
+    //       data
+    //     });
+    //   }
+    // } catch (e) {
+    //   console.log(e);
+    // }
+  };
+
   public onCompletedMarkAsMain = data => {
-    if (data.uploadAvatar.ok) {
+    if (data.markAsMain.ok) {
       toast.success("Mark As Main updated");
     } else {
       toast.error("error Marking As Main");
