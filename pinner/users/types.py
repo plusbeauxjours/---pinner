@@ -48,6 +48,11 @@ class AvatarDetailResponse(graphene.ObjectType):
     avatar = graphene.Field(AvatarType)
 
 
+class MarkAsMainResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
+    avatar = graphene.Field(AvatarType)
+
+
 class UploadAvatarResponse(graphene.ObjectType):
     ok = graphene.Boolean()
     avatar = graphene.Field(AvatarType)
@@ -71,8 +76,8 @@ class DeleteProfileResponse(graphene.ObjectType):
 
 
 class DeleteAvatarResponse(graphene.ObjectType):
-    uuid = graphene.String()
     ok = graphene.Boolean()
+    uuid = graphene.String()
 
 
 class ChangePasswordResponse(graphene.ObjectType, config_types.ResponseFields):

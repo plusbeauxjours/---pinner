@@ -81,3 +81,4 @@ class Mutation(object):
     facebook_connect = mutations.FacebookConnect.Field(required=True)
     upload_avatar = mutations.UploadAvatar.Field(required=True)
     delete_avatar = mutations.DeleteAvatar.Field(required=True)
+    mark_as_main = mutations.MarkAsMain.Field(required=True)
