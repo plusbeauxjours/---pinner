@@ -415,20 +415,29 @@ const AvatarKeyContainer = styled.div`
 
 const ModalAvatars = styled.div`
   z-index: 10;
+  margin-top: 150px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
   justify-content: center;
   align-items: center;
   animation: ${ModalAnimation} 0.1s linear;
+  height: 100vh;
+  overflow-y: auto;
+  @media screen and (max-width: 635px) {
+    grid-template-columns: 1fr;
+  }
+  @media screen and (min-width: 635px) and (max-width: 935px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 const ModalAvatarImage = styled.img`
   z-index: 10;
   height: 300px;
   width: 300px;
-  background-position: center center;
   object-fit: cover;
+}
 `;
 
 // const ImageUpload = styled.form``;
@@ -465,11 +474,11 @@ const AWrapper = styled(Wrapper)`
 
 const Img = styled.img`
   display: flex;
-  height: 935px;
-  width: 935px;
+  height: 700px;
+  width: 700px;
   background-position: center center;
   object-fit: cover;
-  @media screen and (max-width: 935px) {
+  @media screen and (max-width: 700px) {
     width: 100%;
     height: 100%;
   }
@@ -686,7 +695,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   imagePreviewUrl,
   removeImagePreviewUrl,
   deleteAvatarFn,
-  markAsMainFn,
+  markAsMainFn
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
     apiKey: `${GOOGLE_PLACE_KEY}`,
@@ -696,7 +705,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
       language: "en"
     }
   });
-  if (userProfileLoading || avatarsLoading||uploadAvatarLoading) {
+  if (userProfileLoading || avatarsLoading) {
     return <Loader />;
   } else if (user && coffees && avatars) {
     return (
@@ -771,14 +780,14 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                         </WhiteDotIcon>
                       ) : null}
                       {!avatar.isMain && user.profile.isSelf ? (
-                      <AvatarDeleteIcon
-                        onClick={() =>
-                          deleteAvatarFn({ variables: { uuid: avatar.uuid } })
-                        }
-                      >
-                        <Delete />
-                      </AvatarDeleteIcon>
-                       ) : null}
+                        <AvatarDeleteIcon
+                          onClick={() =>
+                            deleteAvatarFn({ variables: { uuid: avatar.uuid } })
+                          }
+                        >
+                          <Delete />
+                        </AvatarDeleteIcon>
+                      ) : null}
                     </AvatarKeyContainer>
                   );
                 })}
@@ -1031,7 +1040,6 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
         <SWrapper>
           <PHeader>
             <LocationAvatarContainer>
-              
               <Link to={`/city/${user.profile.currentCity.cityId}`}>
                 <CAvatar size="lg" url={user.profile.currentCity.cityPhoto} />
               </Link>

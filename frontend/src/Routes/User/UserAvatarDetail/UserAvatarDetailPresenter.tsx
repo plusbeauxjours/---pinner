@@ -78,9 +78,9 @@ const MenuModal = styled(Modal)`
 `;
 
 const Img = styled.img`
-  height: 935px;
-  width: 935px;
-  @media screen and (max-width: 935px) {
+  height: 700px;
+  width: 700px;
+  @media screen and (max-width: 700px) {
     width: 100%;
     height: 100%;
   }

@@ -24,9 +24,9 @@ class AvatarAdmin(admin.ModelAdmin):
     list_display = (
         'uuid',
         'creator',
+        'is_main',
         'image',
         'thumbnail',
-        'is_main',
     )
 
 
