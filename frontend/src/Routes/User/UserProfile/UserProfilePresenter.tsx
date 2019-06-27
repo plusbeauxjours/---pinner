@@ -609,7 +609,6 @@ interface IProps {
   removeImagePreviewUrl: () => void;
   deleteAvatarFn: MutationFn;
   markAsMainFn: any;
-  isMainAvatar: boolean;
 }
 
 const UserProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -688,7 +687,6 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   removeImagePreviewUrl,
   deleteAvatarFn,
   markAsMainFn,
-  isMainAvatar
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
     apiKey: `${GOOGLE_PLACE_KEY}`,
@@ -698,7 +696,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
       language: "en"
     }
   });
-  if (userProfileLoading || avatarsLoading) {
+  if (userProfileLoading || avatarsLoading||uploadAvatarLoading) {
     return <Loader />;
   } else if (user && coffees && avatars) {
     return (
@@ -1033,6 +1031,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
         <SWrapper>
           <PHeader>
             <LocationAvatarContainer>
+              
               <Link to={`/city/${user.profile.currentCity.cityId}`}>
                 <CAvatar size="lg" url={user.profile.currentCity.cityPhoto} />
               </Link>

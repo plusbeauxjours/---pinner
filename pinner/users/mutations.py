@@ -259,7 +259,6 @@ class UploadAvatar(graphene.Mutation):
 
     class Arguments:
         file = Upload(required=True)
-        isMainAvatar = graphene.Boolean(required=True)
 
     Output = types.UploadAvatarResponse
 
@@ -267,19 +266,16 @@ class UploadAvatar(graphene.Mutation):
     def mutate(self, info, file, **kwargs):
 
         user = info.context.user
-        isMainAvatar = kwargs.get('isMainAvatar')
 
         try:
-            if isMainAvatar:
-                prevMainAvatar = models.Avatar.objects.get(is_main=True)
-                prevMainAvatar.is_main = False
-                prevMainAvatar.save()
-
-            avatar = models.Avatar.objects.create(
-                is_main=isMainAvatar, image=file, thumbnail=file, creator=user)
-            user.profile.avatar = avatar
+            prevMainAvatar = models.Avatar.objects.get(is_main=True, creator=user)
+            prevMainAvatar.is_main = False
+            newMainAvatar = models.Avatar.objects.create(
+                is_main=True, image=file, thumbnail=file, creator=user)
+            user.profile.avatar = newMainAvatar
+            prevMainAvatar.save()
             user.profile.save()
-            return types.UploadAvatarResponse(ok=True, avatar=avatar)
+            return types.UploadAvatarResponse(ok=True, avatar=newMainAvatar)
 
         except:
             return types.UploadAvatarResponse(ok=False, avatar=None)
@@ -300,12 +296,7 @@ class DeleteAvatar(graphene.Mutation):
 
         try:
             avatar = models.Avatar.objects.get(uuid=uuid)
-            if avatar.is_main:
-                main = models.Avatar.objects.latest('created_at')
-                avatar.delete()
-                main.is_main = True
-                main.save()
-            else:
+            if not avatar.is_main:
                 avatar.delete()
             return types.DeleteAvatarResponse(ok=True, uuid=uuid)
 

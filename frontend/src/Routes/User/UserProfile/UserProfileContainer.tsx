@@ -111,8 +111,6 @@ interface IState {
   searchActiveId: number;
   file: any;
   imagePreviewUrl: any;
-  isMainAvatar: boolean;
-  prevMainAvatarUuid: string;
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
@@ -168,8 +166,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       searchActiveId: null,
       file: null,
       imagePreviewUrl: "",
-      isMainAvatar: false,
-      prevMainAvatarUuid: ""
     };
   }
   public componentDidUpdate(prevProps) {
@@ -213,8 +209,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripActiveId,
       searchActiveId,
       imagePreviewUrl,
-      isMainAvatar
-      // prevMainAvatarUuid
+
     } = this.state;
     return (
       <MarkAsMainMutation
@@ -602,9 +597,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                             markAsMainFn={
                                                                               markAsMainFn
                                                                             }
-                                                                            isMainAvatar={
-                                                                              isMainAvatar
-                                                                            }
+                                                                      
                                                                           />
                                                                         );
                                                                       }}
@@ -1144,16 +1137,15 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   };
   public onSubmitImage = event => {
     event.preventDefault();
-    const { file, imagePreviewUrl, isMainAvatar } = this.state;
+    const { file, imagePreviewUrl,  } = this.state;
     if (
       (file && file.length !== 0) ||
       (imagePreviewUrl && imagePreviewUrl.length !== 0)
     ) {
-      this.uploadAvatarFn({ variables: { file, isMainAvatar } });
+      this.uploadAvatarFn({ variables: { file,  } });
       this.setState({
         file: null,
         imagePreviewUrl: "",
-        isMainAvatar: false,
         avatarModalOpen: false
       });
     } else {
@@ -1176,6 +1168,22 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         cache.writeQuery({
           query: GET_AVATARS,
           variables: { userName: username },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const data = cache.readQuery({
+        query: GET_USER,
+        variables: { username }
+      });
+      if (data) {
+        data.userProfile.user.profile.avatar.thumbnail = uploadAvatar.avatar.thumbnail;
+        cache.writeQuery({
+          query: GET_USER,
+          variables: { username },
           data
         });
       }

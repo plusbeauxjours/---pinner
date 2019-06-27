@@ -155,8 +155,8 @@ export const GET_AVATARS = gql`
 `;
 
 export const UPLOAD_AVATAR = gql`
-  mutation UploadAvatar($file: Upload!, $isMainAvatar: Boolean!) {
-    uploadAvatar(file: $file, isMainAvatar: $isMainAvatar) {
+  mutation UploadAvatar($file: Upload!) {
+    uploadAvatar(file: $file) {
       ok
       avatar {
         id

@@ -73,7 +73,7 @@ export interface Match_match_match_host_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: Match_match_match_host_profile_avatar | null;
+  avatar: Match_match_match_host_profile_avatar;
   isSelf: boolean | null;
   currentCity: Match_match_match_host_profile_currentCity | null;
 }
@@ -103,7 +103,7 @@ export interface Match_match_match_guest_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: Match_match_match_guest_profile_avatar | null;
+  avatar: Match_match_match_guest_profile_avatar;
   isSelf: boolean | null;
   currentCity: Match_match_match_guest_profile_currentCity | null;
 }
@@ -186,7 +186,7 @@ export interface UnMatch_unMatch_coffee_host_profile_currentCity {
 
 export interface UnMatch_unMatch_coffee_host_profile {
   __typename: "ProfileType";
-  avatar: UnMatch_unMatch_coffee_host_profile_avatar | null;
+  avatar: UnMatch_unMatch_coffee_host_profile_avatar;
   isSelf: boolean | null;
   currentCity: UnMatch_unMatch_coffee_host_profile_currentCity | null;
 }
@@ -292,18 +292,15 @@ export interface SearchTerms_searchUsers_users_profile_currentCity {
 
 export interface SearchTerms_searchUsers_users_profile {
   __typename: "ProfileType";
-  avatar: SearchTerms_searchUsers_users_profile_avatar | null;
+  id: string;
+  username: string | null;
+  avatar: SearchTerms_searchUsers_users_profile_avatar;
   isSelf: boolean | null;
   currentCity: SearchTerms_searchUsers_users_profile_currentCity | null;
 }
 
 export interface SearchTerms_searchUsers_users {
   __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
   profile: SearchTerms_searchUsers_users_profile | null;
 }
 
@@ -520,7 +517,7 @@ export interface CityProfile_cityProfile_usersNow_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: CityProfile_cityProfile_usersNow_profile_avatar | null;
+  avatar: CityProfile_cityProfile_usersNow_profile_avatar;
   isSelf: boolean | null;
   currentCity: CityProfile_cityProfile_usersNow_profile_currentCity | null;
 }
@@ -550,7 +547,7 @@ export interface CityProfile_cityProfile_usersBefore_actor_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: CityProfile_cityProfile_usersBefore_actor_profile_avatar | null;
+  avatar: CityProfile_cityProfile_usersBefore_actor_profile_avatar;
   isSelf: boolean | null;
   currentCity: CityProfile_cityProfile_usersBefore_actor_profile_currentCity | null;
 }
@@ -682,7 +679,7 @@ export interface CityUsersBefore_cityUsersBefore_usersBefore_actor_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: CityUsersBefore_cityUsersBefore_usersBefore_actor_profile_avatar | null;
+  avatar: CityUsersBefore_cityUsersBefore_usersBefore_actor_profile_avatar;
   isSelf: boolean | null;
   currentCity: CityUsersBefore_cityUsersBefore_usersBefore_actor_profile_currentCity | null;
 }
@@ -742,7 +739,7 @@ export interface CityUsersNow_cityUsersNow_usersNow_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: CityUsersNow_cityUsersNow_usersNow_profile_avatar | null;
+  avatar: CityUsersNow_cityUsersNow_usersNow_profile_avatar;
   isSelf: boolean | null;
   currentCity: CityUsersNow_cityUsersNow_usersNow_profile_currentCity | null;
 }
@@ -836,7 +833,7 @@ export interface ContinentProfile_continentProfile_usersNow_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: ContinentProfile_continentProfile_usersNow_profile_avatar | null;
+  avatar: ContinentProfile_continentProfile_usersNow_profile_avatar;
   isSelf: boolean | null;
   currentCity: ContinentProfile_continentProfile_usersNow_profile_currentCity | null;
 }
@@ -866,7 +863,7 @@ export interface ContinentProfile_continentProfile_usersBefore_actor_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: ContinentProfile_continentProfile_usersBefore_actor_profile_avatar | null;
+  avatar: ContinentProfile_continentProfile_usersBefore_actor_profile_avatar;
   isSelf: boolean | null;
   currentCity: ContinentProfile_continentProfile_usersBefore_actor_profile_currentCity | null;
 }
@@ -961,7 +958,7 @@ export interface ContinentUsersBefore_continentUsersBefore_usersBefore_actor_pro
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: ContinentUsersBefore_continentUsersBefore_usersBefore_actor_profile_avatar | null;
+  avatar: ContinentUsersBefore_continentUsersBefore_usersBefore_actor_profile_avatar;
   isSelf: boolean | null;
   currentCity: ContinentUsersBefore_continentUsersBefore_usersBefore_actor_profile_currentCity | null;
 }
@@ -1020,7 +1017,7 @@ export interface ContinentUsersNow_continentUsersNow_usersNow_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: ContinentUsersNow_continentUsersNow_usersNow_profile_avatar | null;
+  avatar: ContinentUsersNow_continentUsersNow_usersNow_profile_avatar;
   isSelf: boolean | null;
   currentCity: ContinentUsersNow_continentUsersNow_usersNow_profile_currentCity | null;
 }
@@ -1094,7 +1091,7 @@ export interface CountryProfile_countryProfile_usersNow_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: CountryProfile_countryProfile_usersNow_profile_avatar | null;
+  avatar: CountryProfile_countryProfile_usersNow_profile_avatar;
   isSelf: boolean | null;
   currentCity: CountryProfile_countryProfile_usersNow_profile_currentCity | null;
 }
@@ -1124,7 +1121,7 @@ export interface CountryProfile_countryProfile_usersBefore_actor_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: CountryProfile_countryProfile_usersBefore_actor_profile_avatar | null;
+  avatar: CountryProfile_countryProfile_usersBefore_actor_profile_avatar;
   isSelf: boolean | null;
   currentCity: CountryProfile_countryProfile_usersBefore_actor_profile_currentCity | null;
 }
@@ -1239,7 +1236,7 @@ export interface CountryUsersBefore_countryUsersBefore_usersBefore_actor_profile
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: CountryUsersBefore_countryUsersBefore_usersBefore_actor_profile_avatar | null;
+  avatar: CountryUsersBefore_countryUsersBefore_usersBefore_actor_profile_avatar;
   isSelf: boolean | null;
   currentCity: CountryUsersBefore_countryUsersBefore_usersBefore_actor_profile_currentCity | null;
 }
@@ -1298,7 +1295,7 @@ export interface CountryUsersNow_countryUsersNow_usersNow_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: CountryUsersNow_countryUsersNow_usersNow_profile_avatar | null;
+  avatar: CountryUsersNow_countryUsersNow_usersNow_profile_avatar;
   isSelf: boolean | null;
   currentCity: CountryUsersNow_countryUsersNow_usersNow_profile_currentCity | null;
 }
@@ -1366,7 +1363,7 @@ export interface CoffeeDetail_coffeeDetail_coffee_host_profile_residence {
 export interface CoffeeDetail_coffeeDetail_coffee_host_profile {
   __typename: "ProfileType";
   isSelf: boolean | null;
-  avatar: CoffeeDetail_coffeeDetail_coffee_host_profile_avatar | null;
+  avatar: CoffeeDetail_coffeeDetail_coffee_host_profile_avatar;
   gender: ProfileGender | null;
   currentCity: CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity | null;
   nationality: CoffeeDetail_coffeeDetail_coffee_host_profile_nationality | null;
@@ -1457,18 +1454,15 @@ export interface RecommandUsers_recommandUsers_users_profile_currentCity {
 
 export interface RecommandUsers_recommandUsers_users_profile {
   __typename: "ProfileType";
-  avatar: RecommandUsers_recommandUsers_users_profile_avatar | null;
+  id: string;
+  username: string | null;
+  avatar: RecommandUsers_recommandUsers_users_profile_avatar;
   isSelf: boolean | null;
   currentCity: RecommandUsers_recommandUsers_users_profile_currentCity | null;
 }
 
 export interface RecommandUsers_recommandUsers_users {
   __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
   profile: RecommandUsers_recommandUsers_users_profile | null;
 }
 
@@ -1595,7 +1589,7 @@ export interface GetMatches_getMatches_matches_host_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: GetMatches_getMatches_matches_host_profile_avatar | null;
+  avatar: GetMatches_getMatches_matches_host_profile_avatar;
   isSelf: boolean | null;
   currentCity: GetMatches_getMatches_matches_host_profile_currentCity | null;
 }
@@ -1625,7 +1619,7 @@ export interface GetMatches_getMatches_matches_guest_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: GetMatches_getMatches_matches_guest_profile_avatar | null;
+  avatar: GetMatches_getMatches_matches_guest_profile_avatar;
   isSelf: boolean | null;
   currentCity: GetMatches_getMatches_matches_guest_profile_currentCity | null;
 }
@@ -1706,7 +1700,7 @@ export interface RequestCoffee_requestCoffee_coffee_host_profile_currentCity {
 
 export interface RequestCoffee_requestCoffee_coffee_host_profile {
   __typename: "ProfileType";
-  avatar: RequestCoffee_requestCoffee_coffee_host_profile_avatar | null;
+  avatar: RequestCoffee_requestCoffee_coffee_host_profile_avatar;
   isSelf: boolean | null;
   currentCity: RequestCoffee_requestCoffee_coffee_host_profile_currentCity | null;
 }
@@ -1777,7 +1771,7 @@ export interface TripProfile_tripProfile_usersBefore_actor_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: TripProfile_tripProfile_usersBefore_actor_profile_avatar | null;
+  avatar: TripProfile_tripProfile_usersBefore_actor_profile_avatar;
   isSelf: boolean | null;
   currentCity: TripProfile_tripProfile_usersBefore_actor_profile_currentCity | null;
 }
@@ -1799,7 +1793,7 @@ export interface TripProfile_tripProfile_coffees_host_profile_avatar {
 
 export interface TripProfile_tripProfile_coffees_host_profile {
   __typename: "ProfileType";
-  avatar: TripProfile_tripProfile_coffees_host_profile_avatar | null;
+  avatar: TripProfile_tripProfile_coffees_host_profile_avatar;
 }
 
 export interface TripProfile_tripProfile_coffees_host {
@@ -1951,7 +1945,7 @@ export interface GetCoffees_getCoffees_coffees_host_profile_currentCity {
 
 export interface GetCoffees_getCoffees_coffees_host_profile {
   __typename: "ProfileType";
-  avatar: GetCoffees_getCoffees_coffees_host_profile_avatar | null;
+  avatar: GetCoffees_getCoffees_coffees_host_profile_avatar;
   isSelf: boolean | null;
   currentCity: GetCoffees_getCoffees_coffees_host_profile_currentCity | null;
 }
@@ -2098,7 +2092,7 @@ export interface EditProfile_editProfile_user_profile {
   __typename: "ProfileType";
   bio: string | null;
   gender: ProfileGender | null;
-  avatar: EditProfile_editProfile_user_profile_avatar | null;
+  avatar: EditProfile_editProfile_user_profile_avatar;
   website: string | null;
   email: string | null;
   nationality: EditProfile_editProfile_user_profile_nationality | null;
@@ -2258,7 +2252,7 @@ export interface UserProfile_userProfile_user_profile {
   __typename: "ProfileType";
   bio: string | null;
   gender: ProfileGender | null;
-  avatar: UserProfile_userProfile_user_profile_avatar | null;
+  avatar: UserProfile_userProfile_user_profile_avatar;
   website: string | null;
   email: string | null;
   nationality: UserProfile_userProfile_user_profile_nationality | null;
@@ -2519,7 +2513,6 @@ export interface UploadAvatar {
 
 export interface UploadAvatarVariables {
   file: any;
-  isMainAvatar: boolean;
 }
 
 
@@ -2598,16 +2591,13 @@ export interface Me_me_user_profile_currentCity {
 
 export interface Me_me_user_profile {
   __typename: "ProfileType";
-  avatar: Me_me_user_profile_avatar | null;
+  username: string | null;
+  avatar: Me_me_user_profile_avatar;
   currentCity: Me_me_user_profile_currentCity | null;
 }
 
 export interface Me_me_user {
   __typename: "UserType";
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
   profile: Me_me_user_profile | null;
 }
 
@@ -2618,47 +2608,6 @@ export interface Me_me {
 
 export interface Me {
   me: Me_me;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: UserParts
-// ====================================================
-
-export interface UserParts_profile_avatar {
-  __typename: "AvatarType";
-  thumbnail: string | null;
-}
-
-export interface UserParts_profile_currentCity_country {
-  __typename: "CountryType";
-  countryName: string | null;
-}
-
-export interface UserParts_profile_currentCity {
-  __typename: "CityType";
-  cityName: string | null;
-  country: UserParts_profile_currentCity_country;
-}
-
-export interface UserParts_profile {
-  __typename: "ProfileType";
-  avatar: UserParts_profile_avatar | null;
-  isSelf: boolean | null;
-  currentCity: UserParts_profile_currentCity | null;
-}
-
-export interface UserParts {
-  __typename: "UserType";
-  id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  profile: UserParts_profile | null;
 }
 
 
@@ -2689,7 +2638,7 @@ export interface ProfileParts {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: ProfileParts_avatar | null;
+  avatar: ProfileParts_avatar;
   isSelf: boolean | null;
   currentCity: ProfileParts_currentCity | null;
 }
@@ -2798,7 +2747,7 @@ export interface CoffeeParts_host_profile_currentCity {
 
 export interface CoffeeParts_host_profile {
   __typename: "ProfileType";
-  avatar: CoffeeParts_host_profile_avatar | null;
+  avatar: CoffeeParts_host_profile_avatar;
   isSelf: boolean | null;
   currentCity: CoffeeParts_host_profile_currentCity | null;
 }
@@ -2864,7 +2813,7 @@ export interface MatchParts_host_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: MatchParts_host_profile_avatar | null;
+  avatar: MatchParts_host_profile_avatar;
   isSelf: boolean | null;
   currentCity: MatchParts_host_profile_currentCity | null;
 }
@@ -2894,7 +2843,7 @@ export interface MatchParts_guest_profile {
   __typename: "ProfileType";
   id: string;
   username: string | null;
-  avatar: MatchParts_guest_profile_avatar | null;
+  avatar: MatchParts_guest_profile_avatar;
   isSelf: boolean | null;
   currentCity: MatchParts_guest_profile_currentCity | null;
 }
