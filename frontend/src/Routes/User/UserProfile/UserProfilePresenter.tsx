@@ -415,7 +415,7 @@ const AvatarKeyContainer = styled.div`
 
 const ModalAvatars = styled.div`
   z-index: 10;
-  margin-top: 150px;
+  margin-top: 85px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
@@ -424,6 +424,15 @@ const ModalAvatars = styled.div`
   animation: ${ModalAnimation} 0.1s linear;
   height: 100vh;
   overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 3px;
+    background: none;
+  }
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
   @media screen and (max-width: 635px) {
     grid-template-columns: 1fr;
   }
@@ -440,7 +449,6 @@ const ModalAvatarImage = styled.img`
 }
 `;
 
-// const ImageUpload = styled.form``;
 const ImageInput = styled.input`
   display: none;
 `;
