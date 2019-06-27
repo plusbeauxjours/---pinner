@@ -16,13 +16,12 @@ from cached_property import cached_property
 
 def upload_image(instance, filename):
     name, extension = os.path.splitext(filename)
-    return os.path.join('{}/image/{}{}').format(instance.creator.username, instance.uuid, extension.lower())
+    return os.path.join('profileAvatar/{}/image/{}{}').format(instance.creator.username, instance.uuid, extension.lower())
 
 
 def upload_thumbnail(instance, filename):
     name, extension = os.path.splitext(filename)
-    return os.path.join('{}/thumbnail/{}{}').format(instance.creator.username, instance.uuid, extension.lower())
-
+    return os.path.join('profileAvatar/{}/thumbnail/{}{}').format(instance.creator.username, instance.uuid, extension.lower())
 
 class Avatar(config_models.TimeStampedModel):
     is_main = models.BooleanField(default=False)
@@ -82,6 +81,8 @@ class Like(config_models.TimeStampedModel):
         Avatar, on_delete=models.CASCADE, null=True, related_name='likes')
 
 
+DEFAULT_AVATAR_PK = 226
+
 class Profile(config_models.TimeStampedModel):
 
     """ Profile Model """
@@ -102,7 +103,7 @@ class Profile(config_models.TimeStampedModel):
     nationality = models.ForeignKey(
         location_models.Country, blank=True, null=True, on_delete=models.CASCADE, related_name='nationality')
     avatar = models.ForeignKey(
-        Avatar, blank=True, null=True, on_delete=models.CASCADE, related_name='avatar')
+        Avatar, on_delete=models.SET_DEFAULT, default=DEFAULT_AVATAR_PK, related_name='avatar')
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     verified_phone_number = models.BooleanField(default=False)
     verified_email = models.BooleanField(default=False)

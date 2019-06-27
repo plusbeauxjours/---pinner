@@ -79,7 +79,7 @@ const SearchPresenter: React.FunctionComponent<IProps> = ({
   search,
   activeId,
   searchData: {
-    searchUsers: { users = null } = {},
+    searchUsers: { users=null}  = {},
     searchCountries: { countries = null } = {},
     searchContinents: { continents = null } = {}
   } = {},
@@ -110,9 +110,9 @@ const SearchPresenter: React.FunctionComponent<IProps> = ({
             }
             return (
               <UserRow key={index} active={active}>
-                <Link to={`/${user.username}`}>
+                <Link to={`/${user.profile.username}`}>
                   <UserHeader
-                    username={user.username}
+                    username={user.profile.username}
                     currentCity={user.profile.currentCity.cityName}
                     currentCountry={
                       user.profile.currentCity.country.countryName

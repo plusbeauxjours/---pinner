@@ -772,6 +772,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                           <WhiteDot />
                         </WhiteDotIcon>
                       ) : null}
+                      {!avatar.isMain && user.profile.isSelf ? (
                       <AvatarDeleteIcon
                         onClick={() =>
                           deleteAvatarFn({ variables: { uuid: avatar.uuid } })
@@ -779,6 +780,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                       >
                         <Delete />
                       </AvatarDeleteIcon>
+                       ) : null}
                     </AvatarKeyContainer>
                   );
                 })}

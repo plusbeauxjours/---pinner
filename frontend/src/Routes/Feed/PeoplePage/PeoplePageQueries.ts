@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { USER_FRAGMENT } from "src/sharedQueries";
+import { PROFILE_FRAGMENT } from "src/sharedQueries";
 
 export const RECOMMAND_USERS = gql`
   query RecommandUsers($page: Int) {
@@ -7,9 +7,11 @@ export const RECOMMAND_USERS = gql`
       page
       hasNextPage
       users {
-        ...UserParts
+        profile{
+          ...ProfileParts
+        }
       }
     }
   }
-  ${USER_FRAGMENT}
+  ${PROFILE_FRAGMENT}
 `;

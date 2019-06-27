@@ -1,6 +1,6 @@
 import { gql } from "apollo-boost";
 import {
-  USER_FRAGMENT,
+  PROFILE_FRAGMENT,
   COUNTRY_FRAGMENT,
   CONTINENT_FRAGMENT
 } from "src/sharedQueries";
@@ -28,7 +28,9 @@ export const SEARCH = gql`
   query SearchTerms($search: String!) {
     searchUsers(search: $search) {
       users {
-        ...UserParts
+        profile{
+        ...ProfileParts
+      }
       }
     }
     searchCountries(search: $search) {
@@ -42,7 +44,7 @@ export const SEARCH = gql`
       }
     }
   }
-  ${USER_FRAGMENT}
+  ${PROFILE_FRAGMENT}
   ${COUNTRY_FRAGMENT}
   ${CONTINENT_FRAGMENT}
 `;

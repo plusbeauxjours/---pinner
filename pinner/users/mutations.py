@@ -215,7 +215,7 @@ class MarkAsMain(graphene.Mutation):
         uuid = kwargs.get('uuid')
 
         try:
-            prevMainAvatar = models.Avatar.objects.get(is_main=True)
+            prevMainAvatar = models.Avatar.objects.get(is_main=True, creator=user)
             if prevMainAvatar:
                 newMainAvatar = models.Avatar.objects.get(uuid=uuid)
                 prevMainAvatar.is_main = False

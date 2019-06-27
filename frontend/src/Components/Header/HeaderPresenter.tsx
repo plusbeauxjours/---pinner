@@ -184,7 +184,7 @@ interface IProps extends RouteComponentProps<any> {
 }
 
 const HeaderPresenter: React.FunctionComponent<IProps> = ({
-  me: { me: { user = null } = {} } = {},
+  me: { me: { user= null } = {} } = {},
   data: { header: { city = null } = {} } = {},
   loading,
   searchData,
@@ -263,7 +263,7 @@ const HeaderPresenter: React.FunctionComponent<IProps> = ({
             <Icon>
               <Link
                 to={{
-                  pathname: `/${user ? user.username : ""}`,
+                  pathname: `/${user ? user.profile.username : ""}`,
                   state: {
                     currentCountryCode,
                     currentLat,

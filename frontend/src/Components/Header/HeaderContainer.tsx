@@ -221,7 +221,7 @@ class HeaderContainer extends React.Component<IProps, IState> {
     const { history } = this.props;
     if (this.searchData) {
       const {
-        searchUsers: { users = null } = {},
+        searchUsers: { users= null } = {},
         searchCities: { cities = null } = {},
         searchCountries: { countries = null } = {},
         searchContinents: { continents = null } = {}

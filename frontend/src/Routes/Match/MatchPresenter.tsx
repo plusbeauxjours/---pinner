@@ -303,7 +303,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                   users.map(user => {
                     return (
                       <UserRow key={user.id}>
-                        <Link to={`/${user.username}`}>
+                        <Link to={`/${user.profile.username}`}>
                           <AvatarContainer>
                             <Avatar
                               size={"sm"}
@@ -312,7 +312,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                               }`}
                             />
                             <HeaderColumn>
-                              <CText text={user.username} />
+                              <CText text={user.profile.username} />
                               <Explain>with same nationality</Explain>
                             </HeaderColumn>
                           </AvatarContainer>

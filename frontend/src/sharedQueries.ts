@@ -4,8 +4,8 @@ export const ME = gql`
   query Me {
     me {
       user {
-        username
         profile {
+        username
           avatar {
             thumbnail
           }
@@ -19,24 +19,6 @@ export const ME = gql`
   }
 `;
 
-export const USER_FRAGMENT = gql`
-  fragment UserParts on UserType {
-    id
-    username
-    profile {
-      avatar {
-        thumbnail
-      }
-      isSelf
-      currentCity {
-        cityName
-        country {
-          countryName
-        }
-      }
-    }
-  }
-`;
 
 export const PROFILE_FRAGMENT = gql`
   fragment ProfileParts on ProfileType {

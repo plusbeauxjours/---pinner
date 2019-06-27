@@ -133,8 +133,8 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
               {recommandUserList.length !== 0 &&
                 recommandUserList.map(user => {
                   return (
-                    <UserRow key={user.id}>
-                      <Link to={`/${user.username}`}>
+                    <UserRow key={user.profile.id}>
+                      <Link to={`/${user.profile.username}`}>
                         <AvatarContainer>
                           <Avatar
                             size={"sm"}
@@ -143,7 +143,7 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
                             }`}
                           />
                           <HeaderColumn>
-                            <CText text={user.username} />
+                            <CText text={user.profile.username} />
                             <Explain>with same nationality</Explain>
                           </HeaderColumn>
                         </AvatarContainer>
@@ -157,8 +157,8 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
                 users &&
                 users.map(user => {
                   return (
-                    <UserRow key={user.id}>
-                      <Link to={`/${user.username}`}>
+                    <UserRow key={user.profile.id}>
+                      <Link to={`/${user.profile.username}`}>
                         <AvatarContainer>
                           <Avatar
                             size={"sm"}
@@ -167,7 +167,7 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
                             }`}
                           />
                           <HeaderColumn>
-                            <CText text={user.username} />
+                            <CText text={user.profile.username} />
                             <Explain>with same nationality</Explain>
                           </HeaderColumn>
                         </AvatarContainer>
