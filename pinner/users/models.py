@@ -14,6 +14,11 @@ from imagekit.processors import ResizeToFill
 from cached_property import cached_property
 
 
+def upload_default_thumbnail(instance, filename):
+    name, extension = os.path.splitext(filename)
+    return os.path.join('defaultAvatar/{}{}').format(instance.uuid, extension.lower())
+
+
 def upload_image(instance, filename):
     name, extension = os.path.splitext(filename)
     return os.path.join('profileAvatar/{}/image/{}{}').format(instance.creator.username, instance.uuid, extension.lower())
@@ -23,7 +28,9 @@ def upload_thumbnail(instance, filename):
     name, extension = os.path.splitext(filename)
     return os.path.join('profileAvatar/{}/thumbnail/{}{}').format(instance.creator.username, instance.uuid, extension.lower())
 
+
 class Avatar(config_models.TimeStampedModel):
+    is_default = models.BooleanField(default=False)
     is_main = models.BooleanField(default=False)
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, blank=True, null=True)
     creator = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name='avatar')
@@ -81,7 +88,8 @@ class Like(config_models.TimeStampedModel):
         Avatar, on_delete=models.CASCADE, null=True, related_name='likes')
 
 
-DEFAULT_AVATAR_PK = 226
+DEFAULT_AVATAR_PK = 254
+
 
 class Profile(config_models.TimeStampedModel):
 

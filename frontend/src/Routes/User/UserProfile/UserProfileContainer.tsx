@@ -48,6 +48,7 @@ import {
   UPLOAD_AVATAR,
   DELETE_AVATAR
 } from "./UserProfileQueries";
+import { ME } from "src/sharedQueries";
 
 class CreateCityQuery extends Mutation<CreateCity, CreateCityVariables> {}
 
@@ -165,13 +166,13 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripActiveId: null,
       searchActiveId: null,
       file: null,
-      imagePreviewUrl: "",
+      imagePreviewUrl: ""
     };
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
     if (prevProps.match.params.username !== newProps.match.params.username) {
-      this.setState({ search: "", tripList: [] });
+      this.setState({ search: "", tripList: [], avatarModalOpen: false });
       console.log("updated");
     }
   }
@@ -208,8 +209,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripList,
       tripActiveId,
       searchActiveId,
-      imagePreviewUrl,
-
+      imagePreviewUrl
     } = this.state;
     return (
       <MarkAsMainMutation
@@ -597,7 +597,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                             markAsMainFn={
                                                                               markAsMainFn
                                                                             }
-                                                                      
                                                                           />
                                                                         );
                                                                       }}
@@ -1137,12 +1136,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   };
   public onSubmitImage = event => {
     event.preventDefault();
-    const { file, imagePreviewUrl,  } = this.state;
+    const { file, imagePreviewUrl } = this.state;
     if (
       (file && file.length !== 0) ||
       (imagePreviewUrl && imagePreviewUrl.length !== 0)
     ) {
-      this.uploadAvatarFn({ variables: { file,  } });
+      this.uploadAvatarFn({ variables: { file } });
       this.setState({
         file: null,
         imagePreviewUrl: "",
@@ -1180,10 +1179,25 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         variables: { username }
       });
       if (data) {
-        data.userProfile.user.profile.avatar.thumbnail = uploadAvatar.avatar.thumbnail;
+        data.userProfile.user.profile.avatar.thumbnail =
+          uploadAvatar.avatar.thumbnail;
         cache.writeQuery({
           query: GET_USER,
           variables: { username },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const data = cache.readQuery({
+        query: ME
+      });
+      if (data) {
+        data.me.user.profile.avatar.thumbnail = uploadAvatar.avatar.thumbnail;
+        cache.writeQuery({
+          query: ME,
           data
         });
       }
@@ -1245,10 +1259,25 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         variables: { username }
       });
       if (data) {
-        data.userProfile.user.profile.avatar.thumbnail = markAsMain.avatar.thumbnail;
+        data.userProfile.user.profile.avatar.thumbnail =
+          markAsMain.avatar.thumbnail;
         cache.writeQuery({
           query: GET_USER,
           variables: { username },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const data = cache.readQuery({
+        query: ME
+      });
+      if (data) {
+        data.me.user.profile.avatar.thumbnail = markAsMain.avatar.thumbnail;
+        cache.writeQuery({
+          query: ME,
           data
         });
       }

@@ -422,7 +422,8 @@ const ModalAvatars = styled.div`
   justify-content: center;
   align-items: center;
   animation: ${ModalAnimation} 0.1s linear;
-  height: 100vh;
+  /* height: 100vh; */
+  height: auto;
   overflow-y: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   ::-webkit-scrollbar {

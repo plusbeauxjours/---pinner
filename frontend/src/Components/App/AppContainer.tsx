@@ -7,6 +7,7 @@ import GlobalStyles from "../../Styles/global-styles";
 import theme from "../../Styles/theme";
 import { APP_QUERIES } from "./AppQueries.local";
 import "react-toastify/dist/ReactToastify.css";
+// import { createBrowserHistory } from "history";
 
 export default () => (
   <ThemeProvider theme={theme}>
@@ -18,7 +19,13 @@ export default () => (
           data: {
             auth: { isLoggedIn }
           }
-        }) => <Router isLoggedIn={isLoggedIn} />}
+        }) => (
+          <Router
+            // onUpdate={() => window.scrollTo(0, 0)}
+            // history={createBrowserHistory()}
+            isLoggedIn={isLoggedIn}
+          />
+        )}
       </Query>
       {/* <Footer /> */}
     </>

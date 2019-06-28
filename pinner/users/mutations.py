@@ -215,7 +215,8 @@ class MarkAsMain(graphene.Mutation):
         uuid = kwargs.get('uuid')
 
         try:
-            prevMainAvatar = models.Avatar.objects.get(is_main=True, creator=user)
+            prevMainAvatar = models.Avatar.objects.get(
+                is_main=True, creator=user)
             if prevMainAvatar:
                 newMainAvatar = models.Avatar.objects.get(uuid=uuid)
                 prevMainAvatar.is_main = False
@@ -268,7 +269,8 @@ class UploadAvatar(graphene.Mutation):
         user = info.context.user
 
         try:
-            prevMainAvatar = models.Avatar.objects.get(is_main=True, creator=user)
+            prevMainAvatar = models.Avatar.objects.get(
+                is_main=True, creator=user)
             prevMainAvatar.is_main = False
             newMainAvatar = models.Avatar.objects.create(
                 is_main=True, image=file, thumbnail=file, creator=user)
@@ -278,7 +280,11 @@ class UploadAvatar(graphene.Mutation):
             return types.UploadAvatarResponse(ok=True, avatar=newMainAvatar)
 
         except:
-            return types.UploadAvatarResponse(ok=False, avatar=None)
+            newMainAvatar = models.Avatar.objects.create(
+                is_main=True, image=file, thumbnail=file, creator=user)
+            user.profile.avatar = newMainAvatar
+            user.profile.save()
+            return types.UploadAvatarResponse(ok=True, avatar=newMainAvatar)
 
 
 class DeleteAvatar(graphene.Mutation):

@@ -22,9 +22,11 @@ class ProfileAdmin(admin.ModelAdmin):
 class AvatarAdmin(admin.ModelAdmin):
 
     list_display = (
+        'id',
         'uuid',
         'creator',
         'is_main',
+        'is_default',
         'image',
         'thumbnail',
     )
