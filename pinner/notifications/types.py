@@ -22,10 +22,6 @@ class MoveNotificationType(DjangoObjectType):
         model = models.MoveNotification
 
 
-class DurationTripsResponse(graphene.ObjectType):
-    moveNotifications = graphene.List(MoveNotificationType)
-
-
 class DurationAvatarsResponse(graphene.ObjectType):
     userCount = graphene.Int()
     usersBefore = graphene.List(MoveNotificationType)
@@ -33,12 +29,6 @@ class DurationAvatarsResponse(graphene.ObjectType):
 
 class DurationDaysResponse(graphene.ObjectType):
     myTrips = graphene.List(MoveNotificationType)
-
-
-class GetNotificationsResponse(graphene.ObjectType):
-    page = graphene.Int()
-    hasNextPage = graphene.Boolean()
-    notifications = graphene.List(NotificationType)
 
 
 class MarkAsReadResponse(graphene.ObjectType):
