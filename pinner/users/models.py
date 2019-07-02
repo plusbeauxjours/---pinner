@@ -104,6 +104,7 @@ class Profile(config_models.TimeStampedModel):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='profile')
     bio = models.TextField(default='', blank=True, null=True)
+    distance = models.IntegerField(default=0, blank=True, null=True)
     website = models.URLField(blank=True, null=True)
     gender = models.CharField(max_length=15, blank=True, null=True, choices=GENDERS)
     residence = models.ForeignKey(
