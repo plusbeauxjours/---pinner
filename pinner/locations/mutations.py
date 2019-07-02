@@ -9,6 +9,7 @@ from graphql_jwt.decorators import login_required
 from . import models, types
 from . import locationThumbnail
 from . import reversePlace
+from notifications import distanceHelper
 from notifications import models as notification_models
 
 
@@ -261,6 +262,7 @@ class ReportLocation(graphene.Mutation):
             profile.save()
             return city
 
+        distance = distanceHelper.get_total_distance(user.username)
         try:
             print(city)
             latest = user.movenotification.latest('created_at')
