@@ -141,7 +141,7 @@ interface IProps extends RouteComponentProps<any> {
   loading: boolean;
 }
 
-const UserBox: React.FunctionComponent<IProps> = ({
+const LocationBox: React.FunctionComponent<IProps> = ({
   cityId,
   countryCode,
   continentCode,
@@ -284,4 +284,4 @@ const UserBox: React.FunctionComponent<IProps> = ({
   }
 };
 
-export default withRouter(UserBox);
+export default withRouter(LocationBox);

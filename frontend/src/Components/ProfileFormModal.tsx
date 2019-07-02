@@ -74,12 +74,6 @@ class ProfileForm extends React.Component<IProps, IState> {
     return (
       <EditProfileMutation
         mutation={EDIT_PROFILE}
-        variables={{
-          userName: username,
-          nationality,
-          gender,
-          email
-        }}
         update={this.updatEditProfile}
         onCompleted={editData => {
           const { editProfile } = editData;

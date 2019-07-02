@@ -93,6 +93,8 @@ const CAvatar = styled(Avatar)`
   margin-right: 20px;
   @media screen and (max-width: 600px) {
     margin-right: 0px;
+    height: 300px;
+    width: 300px;
   }
 `;
 

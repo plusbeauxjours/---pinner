@@ -21,7 +21,7 @@ interface IState {
 }
 
 class SocialLoginContainer extends React.Component<any, IState> {
-  public facebookMutation: MutationFn;
+  public facebookConnectFn: MutationFn;
   public state = {
     name: "",
     firstName: "",
@@ -49,8 +49,8 @@ class SocialLoginContainer extends React.Component<any, IState> {
               }
             }}
           >
-            {facebookMutation => {
-              this.facebookMutation = facebookMutation;
+            {facebookConnectFn => {
+              this.facebookConnectFn = facebookConnectFn;
               return (
                 <SocialLoginPresenter loginCallback={this.loginCallback} />
               );
@@ -72,7 +72,7 @@ class SocialLoginContainer extends React.Component<any, IState> {
     } = response;
     if (accessToken) {
       toast.success(`Welcom ${name}!`);
-      this.facebookMutation({
+      this.facebookConnectFn({
         variables: {
           username: name,
           firstName: first_name,

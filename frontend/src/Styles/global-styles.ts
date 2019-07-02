@@ -4,8 +4,6 @@ import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 
 const GlobalStyle = createGlobalStyle`
-    @import url('https://fonts.googleapis.com/css?family=Maven+Pro');
-    @import url('https://fonts.googleapis.com/css?family=Qwigley');
     
     ${reset};
     * {
@@ -62,6 +60,7 @@ const GlobalStyle = createGlobalStyle`
         -webkit-appearance: none; 
         margin: 0; 
     }
-`;
+
+    `;
 
 export default GlobalStyle;

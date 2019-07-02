@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
 import Button from "../Button";
+import { MutationFn } from "react-apollo";
 
 const SButton = styled(Button)`
   display: flex;
@@ -9,9 +10,9 @@ const SButton = styled(Button)`
 `;
 
 interface IProps {
-  matchFn?: any;
+  matchFn?: MutationFn;
   isSelf: boolean;
-  unMatchFn?: any;
+  unMatchFn?: MutationFn;
   isMatching: boolean;
 }
 

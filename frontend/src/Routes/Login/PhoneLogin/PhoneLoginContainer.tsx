@@ -27,7 +27,7 @@ class PhoneLoginContainer extends React.Component<
   RouteComponentProps<any>,
   IState
 > {
-  public phoneMutation: MutationFn;
+  public phoneSignInFn: MutationFn;
   constructor(props) {
     super(props);
     const { location: { state = {} } = {} } = ({} = props);
@@ -58,9 +58,6 @@ class PhoneLoginContainer extends React.Component<
     return (
       <PhoneSignInMutation
         mutation={PHONE_SIGN_IN}
-        variables={{
-          phoneNumber: `${countryPhone}${phoneNumber}`
-        }}
         onCompleted={data => {
           const { startPhoneVerification } = data;
           const phone = `${countryPhone}${phoneNumber}`;
@@ -77,8 +74,8 @@ class PhoneLoginContainer extends React.Component<
           }
         }}
       >
-        {(phoneMutation, { loading }) => {
-          this.phoneMutation = phoneMutation;
+        {(phoneSignInFn, { loading }) => {
+          this.phoneSignInFn = phoneSignInFn;
           return (
             <PhoneLoginPresenter
               countryCode={countryCode}
@@ -121,7 +118,9 @@ class PhoneLoginContainer extends React.Component<
     const isValid = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(phone);
     if (isValid) {
       if (!isSubmitted) {
-        this.phoneMutation();
+        this.phoneSignInFn({
+          variables: { phoneNumber: `${countryPhone}${phoneNumber}` }
+        });
         this.setState({
           isSubmitted: true
         });
