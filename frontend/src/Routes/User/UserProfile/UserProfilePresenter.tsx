@@ -1057,7 +1057,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
 
               <Bio>{`${user.profile.bio}`}</Bio>
               <Row>
-                <UBold text={String(user.profile.postCount)} />
+                <UBold text={String(user.profile.distance)} />
                 <UBold text={" how many KM"} />
               </Row>
               <Row>

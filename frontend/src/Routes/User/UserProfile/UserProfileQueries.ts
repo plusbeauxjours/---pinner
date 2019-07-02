@@ -16,6 +16,7 @@ export const GET_USER = gql`
             thumbnail
           }
           website
+          distance
           email
           nationality {
             countryEmoji
