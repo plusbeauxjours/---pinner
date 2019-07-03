@@ -63,7 +63,6 @@ const UserRow = styled.div<ITheme>`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -124,10 +123,6 @@ const Explain = styled(Location)`
   color: grey;
 `;
 
-interface ITheme {
-  active?: string;
-}
-
 interface IProps {
   data?: any;
   loading: boolean;
@@ -135,10 +130,6 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
   coffeesList: any;
-  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  onClick: any;
-  onBlur: any;
-  activeId: number;
 }
 
 const CoffeesPresenter: React.FunctionComponent<IProps> = ({
@@ -147,11 +138,7 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
   userName,
   onChange,
   search,
-  coffeesList,
-  onKeyDown,
-  onClick,
-  onBlur,
-  activeId
+  coffeesList
 }) => {
   if (loading) {
     return <Loader />;
@@ -180,67 +167,54 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
                 onChange={onChange}
                 value={search}
                 autoComplete={"off"}
-                onKeyDown={onKeyDown}
                 onClick={onClick}
                 onBlur={onBlur}
               />
             </UserNameRow>
             {coffeesList.length !== 0 &&
-              coffeesList.map((coffee, index) => {
-                let active;
-                if (index === activeId) {
-                  active = "active";
-                }
-                return (
-                  <UserRow active={active} key={index}>
-                    <Link to={`/c/${coffee.uuid}`}>
-                      <AvatarContainer>
-                        <Avatar
-                          size={"sm"}
-                          url={`${BACKEND_URL}/media/${
-                            coffee.host.profile.avatar.thumbnail
-                          }`}
-                        />
-                        <HeaderColumn>
-                          <CText text={coffee.host.username} />
-                          <Explain>with same nationality</Explain>
-                        </HeaderColumn>
-                      </AvatarContainer>
-                      <GreyText text={coffee.target} />
-                      <GreyText text={coffee.expires} />
-                    </Link>
-                  </UserRow>
-                );
-              })}
+              coffeesList.map((coffee, index) => (
+                <UserRow key={index}>
+                  <Link to={`/c/${coffee.uuid}`}>
+                    <AvatarContainer>
+                      <Avatar
+                        size={"sm"}
+                        url={`${BACKEND_URL}/media/${
+                          coffee.host.profile.avatar.thumbnail
+                        }`}
+                      />
+                      <HeaderColumn>
+                        <CText text={coffee.host.username} />
+                        <Explain>with same nationality</Explain>
+                      </HeaderColumn>
+                    </AvatarContainer>
+                    <GreyText text={coffee.target} />
+                    <GreyText text={coffee.expires} />
+                  </Link>
+                </UserRow>
+              ))}
             {coffeesList.length === 0 &&
               !search &&
               coffees &&
-              coffees.map((coffee, index) => {
-                let active;
-                if (index === activeId) {
-                  active = "active";
-                }
-                return (
-                  <UserRow active={active} key={index}>
-                    <Link to={`/c/${coffee.uuid}`}>
-                      <AvatarContainer>
-                        <Avatar
-                          size={"sm"}
-                          url={`${BACKEND_URL}/media/${
-                            coffee.host.profile.avatar.thumbnail
-                          }`}
-                        />
-                        <HeaderColumn>
-                          <CText text={coffee.host.username} />
-                          <Explain>with same nationality</Explain>
-                        </HeaderColumn>
-                      </AvatarContainer>
-                      <GreyText text={coffee.target} />
-                      <GreyText text={coffee.expires} />
-                    </Link>
-                  </UserRow>
-                );
-              })}
+              coffees.map((coffee, index) => (
+                <UserRow key={index}>
+                  <Link to={`/c/${coffee.uuid}`}>
+                    <AvatarContainer>
+                      <Avatar
+                        size={"sm"}
+                        url={`${BACKEND_URL}/media/${
+                          coffee.host.profile.avatar.thumbnail
+                        }`}
+                      />
+                      <HeaderColumn>
+                        <CText text={coffee.host.username} />
+                        <Explain>with same nationality</Explain>
+                      </HeaderColumn>
+                    </AvatarContainer>
+                    <GreyText text={coffee.target} />
+                    <GreyText text={coffee.expires} />
+                  </Link>
+                </UserRow>
+              ))}
           </UserContainer>
         </PHeader>
       </SWrapper>
