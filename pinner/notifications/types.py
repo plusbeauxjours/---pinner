@@ -39,13 +39,19 @@ class MarkAsReadResponse(graphene.ObjectType):
 class AddTripResponse(graphene.ObjectType):
     ok = graphene.Boolean()
     moveNotification = graphene.Field(MoveNotificationType)
+    distance = graphene.Int()
 
 
 class EditTripResponse(graphene.ObjectType):
     ok = graphene.Boolean()
     moveNotification = graphene.Field(MoveNotificationType)
+    distance = graphene.Int()
 
 
 class DeleteTripResponse(graphene.ObjectType):
-    tripId = graphene.Int()
     ok = graphene.Boolean()
+    distance = graphene.Int()
+    tripId = graphene.Int()
+
+class CalculateDistanceResponse(graphene.ObjectType):
+    distance = graphene.Int()

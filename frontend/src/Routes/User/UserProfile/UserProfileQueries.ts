@@ -81,6 +81,7 @@ export const ADD_TRIP = gql`
   ) {
     addTrip(cityId: $cityId, startDate: $startDate, endDate: $endDate) {
       ok
+      distance
       moveNotification {
         startDate
         endDate
@@ -111,6 +112,8 @@ export const EDIT_TRIP = gql`
       startDate: $startDate
       endDate: $endDate
     ) {
+      ok
+      distance
       moveNotification {
         id
         city {
@@ -126,7 +129,6 @@ export const EDIT_TRIP = gql`
         endDate
         naturalTime
       }
-      ok
     }
   }
 `;
@@ -135,6 +137,7 @@ export const DELETE_TRIP = gql`
   mutation DeleteTrip($moveNotificationId: Int!) {
     deleteTrip(moveNotificationId: $moveNotificationId) {
       ok
+      distance
       tripId
     }
   }

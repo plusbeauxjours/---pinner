@@ -22,3 +22,4 @@ class Mutation(object):
     add_trip = mutations.AddTrip.Field(required=True)
     edit_trip = mutations.EditTrip.Field(required=True)
     delete_trip = mutations.DeleteTrip.Field(required=True)
+    CalculateDistance = mutations.CalculateDistance.Field(required=True)

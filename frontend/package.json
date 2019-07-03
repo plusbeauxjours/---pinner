@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/types": "^7.4.4",
     "apollo-boost": "^0.1.27",
     "apollo-link-context": "^1.0.18",
     "apollo-link-ws": "^1.0.12",

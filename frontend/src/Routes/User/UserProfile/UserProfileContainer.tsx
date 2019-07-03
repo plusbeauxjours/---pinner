@@ -302,6 +302,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                               }
                                                             }
                                                           ]}
+                                                          update={
+                                                            this.updateAddTrip
+                                                          }
                                                           onCompleted={
                                                             this
                                                               .onCompletedAddTrip
@@ -323,6 +326,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                     }
                                                                   }
                                                                 ]}
+                                                                update={
+                                                                  this
+                                                                    .updateEditTrip
+                                                                }
                                                                 onCompleted={
                                                                   this
                                                                     .onCompletedEditTrip
@@ -335,13 +342,13 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                       mutation={
                                                                         DELETE_TRIP
                                                                       }
-                                                                      onCompleted={
-                                                                        this
-                                                                          .onCompletedDeleteTrip
-                                                                      }
                                                                       update={
                                                                         this
                                                                           .updateDeleteTrip
+                                                                      }
+                                                                      onCompleted={
+                                                                        this
+                                                                          .onCompletedDeleteTrip
                                                                       }
                                                                     >
                                                                       {deleteTripFn => {
@@ -872,6 +879,52 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       toast.error("error");
     }
   };
+  public updateAddTrip = (cache, { data: { addTrip } }) => {
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    try {
+      const data = cache.readQuery({
+        query: GET_USER,
+        variables: { username }
+      });
+      if (data) {
+        data.userProfile.user.profile.distance = addTrip.distance;
+        cache.writeQuery({
+          query: GET_USER,
+          variables: { username },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  public updateEditTrip = (cache, { data: { editTrip } }) => {
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    try {
+      const data = cache.readQuery({
+        query: GET_USER,
+        variables: { username }
+      });
+      if (data) {
+        data.userProfile.user.profile.distance = editTrip.distance;
+        cache.writeQuery({
+          query: GET_USER,
+          variables: { username },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   public updateDeleteTrip = (cache, { data: { deleteTrip } }) => {
     const {
       match: {
@@ -891,6 +944,22 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         cache.writeQuery({
           query: GET_TRIPS,
           variables: { username, tripPage },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const data = cache.readQuery({
+        query: GET_USER,
+        variables: { username }
+      });
+      if (data) {
+        data.userProfile.user.profile.distance = deleteTrip.distance;
+        cache.writeQuery({
+          query: GET_USER,
+          variables: { username },
           data
         });
       }

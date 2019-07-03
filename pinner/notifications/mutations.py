@@ -1,6 +1,8 @@
 import graphene
 from django.db import IntegrityError
 from . import models, types
+from notifications import distanceHelper
+from math import radians, degrees, sin, cos, asin, acos, sqrt
 from graphql_jwt.decorators import login_required
 
 from locations import models as location_models
@@ -86,7 +88,6 @@ class EditTrip(graphene.Mutation):
             raise Exception('Unauthorized')
 
         else:
-
             try:
                 cityId = kwargs.get('cityId', moveNotification.city.city_id)
                 startDate = kwargs.get('startDate', moveNotification.start_date)
@@ -128,3 +129,43 @@ class DeleteTrip(graphene.Mutation):
 
         else:
             raise Exception('You need to log in')
+
+
+class CalculateDistance(graphene.Mutation):
+
+    Output = types.CalculateDistanceResponse
+
+    @login_required
+    def mutate(self, info, **kwargs):
+
+        user = info.context.user
+
+        distance = 0
+
+        try:
+            trips = models.MoveNotification.objects.filter(actor=user).order_by('-start_date', '-created_at')
+        except user.movenotification.DoesNotExist:
+            raise Exception('Trips Not Found')
+
+        try:
+            for i, trip in enumerate(trips):
+                print(i, len(trips))
+                try:
+                    lon1, lat1, lon2, lat2 = map(
+                        radians, [trips[i].city.longitude, trips[i].city.latitude, trips[i+1].city.longitude, trips[i+1].city.latitude])
+                    dist = 6371 * (
+                        acos(sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(lon1 - lon2))
+                    )
+                    print(dist, trips[i].city.city_name, trips[i+1].city.city_name)
+                    print(dist)
+                    distance += dist
+                    print(distance)
+                except (ZeroDivisionError, IndexError) as e:
+                    print(e)
+
+            user.profile.distance = int(round(distance))
+            user.profile.save()
+            return types.CalculateDistanceResponse(distance=int(round(distance)))
+
+        except IntegrityError as e:
+            raise Exception("Can't Like City")
