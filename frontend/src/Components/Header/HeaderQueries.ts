@@ -28,9 +28,9 @@ export const SEARCH = gql`
   query SearchTerms($search: String!) {
     searchUsers(search: $search) {
       users {
-        profile{
-        ...ProfileParts
-      }
+        profile {
+          ...ProfileParts
+        }
       }
     }
     searchCountries(search: $search) {

@@ -7,7 +7,7 @@ export const RECOMMAND_USERS = gql`
       page
       hasNextPage
       users {
-        profile{
+        profile {
           ...ProfileParts
         }
       }

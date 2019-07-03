@@ -46,10 +46,11 @@ class CityLikeBtnContainer extends React.Component<IProps, IState> {
   }
   public render() {
     const { isLiked, likeCount } = this.state;
-    const { type } = this.props;
+    const { cityId, type } = this.props;
     return (
       <ToggleLikeMutation
         mutation={TOGGLE_LIKE_CITY}
+        variables={{ cityId: parseInt(cityId, 10) }}
         update={this.updateToggleLike}
       >
         {toggleLikeFn => {
@@ -67,9 +68,8 @@ class CityLikeBtnContainer extends React.Component<IProps, IState> {
     );
   }
   public onLikeClick = () => {
-    const { cityId } = this.props;
     const { likeCount, isLiked } = this.props;
-    this.toggleLikeFn({ variables: { cityId: parseInt(cityId, 10) } });
+    this.toggleLikeFn();
     this.setState(state => {
       let likeNumber;
       if (!isLiked) {

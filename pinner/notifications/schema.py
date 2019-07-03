@@ -14,6 +14,33 @@ class Query(object):
             'tripPage': graphene.Int(),
         }
     )
+    # will be removed
+    get_notifications = graphene.Field(
+        types.GetNotificationsResponse,
+        resolver=queries.resolve_get_notifications,
+        required=True,
+        args={'page': graphene.Int()}
+    )
+    search_get_notifications = graphene.Field(
+        types.GetNotificationsResponse,
+        resolver=queries.resolve_search_get_notifications,
+        required=True,
+        args={
+            'page': graphene.Int(),
+            'search': graphene.String()
+        }
+    )
+    get_duration_my_trip = graphene.Field(
+        types.DurationTripsResponse,
+        resolver=queries.resolve_get_duration_my_trip,
+        required=True,
+        args={
+            'page': graphene.Int(),
+            'cityName': graphene.String(required=True),
+            'startDate': graphene.Date(required=True),
+            'endDate': graphene.Date(required=True)
+        }
+    )
 
 
 class Mutation(object):
@@ -22,4 +49,4 @@ class Mutation(object):
     add_trip = mutations.AddTrip.Field(required=True)
     edit_trip = mutations.EditTrip.Field(required=True)
     delete_trip = mutations.DeleteTrip.Field(required=True)
-    CalculateDistance = mutations.CalculateDistance.Field(required=True)
+    calculate_distance = mutations.CalculateDistance.Field(required=True)

@@ -58,6 +58,9 @@ class PhoneLoginContainer extends React.Component<
     return (
       <PhoneSignInMutation
         mutation={PHONE_SIGN_IN}
+        variables={{
+          phoneNumber: `${countryPhone}${phoneNumber}`
+        }}
         onCompleted={data => {
           const { startPhoneVerification } = data;
           const phone = `${countryPhone}${phoneNumber}`;
@@ -118,9 +121,7 @@ class PhoneLoginContainer extends React.Component<
     const isValid = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(phone);
     if (isValid) {
       if (!isSubmitted) {
-        this.phoneSignInFn({
-          variables: { phoneNumber: `${countryPhone}${phoneNumber}` }
-        });
+        this.phoneSignInFn();
         this.setState({
           isSubmitted: true
         });

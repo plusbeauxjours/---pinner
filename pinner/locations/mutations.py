@@ -9,7 +9,6 @@ from graphql_jwt.decorators import login_required
 from . import models, types
 from . import locationThumbnail
 from . import reversePlace
-from notifications import distanceHelper
 from notifications import models as notification_models
 
 
@@ -270,6 +269,7 @@ class ReportLocation(graphene.Mutation):
                 return types.ReportLocationResponse(ok=True)
         except notification_models.MoveNotification.DoesNotExist:
             notification_models.MoveNotification.objects.create(actor=user, city=city)
+            return types.ReportLocationResponse(ok=True)
 
         return types.ReportLocationResponse(ok=True)
 

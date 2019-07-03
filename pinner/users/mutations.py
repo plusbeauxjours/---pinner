@@ -194,11 +194,11 @@ class EditProfile(graphene.Mutation):
             except IntegrityError as e:
                 print(e)
                 error = "Can't save"
-                return types.EditProfileResponse(ok=False)
+                return types.EditProfileResponse(ok=False, user=None)
 
         else:
             error = 'You need to log in'
-            return types.EditProfileResponse(ok=False)
+            return types.EditProfileResponse(ok=False, user=None)
 
 
 class MarkAsMain(graphene.Mutation):
@@ -227,7 +227,7 @@ class MarkAsMain(graphene.Mutation):
                 newMainAvatar = models.Avatar.objects.get(uuid=uuid)
                 newMainAvatar.is_main = True
                 newMainAvatar.save()
-                return types.MarkAsMainResponse(ok=True, avatar=newMainAvatar)
+                return types.MarkAsMainResponse(ok=True, avatar=newMainAvatar,  uuid=uuid)
 
         except:
             newMainAvatar = models.Avatar.objects.get(uuid=uuid)

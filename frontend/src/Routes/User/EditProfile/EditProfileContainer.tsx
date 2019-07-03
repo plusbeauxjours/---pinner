@@ -217,7 +217,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     if (keyCode === 13) {
       this.editProfileFn({
         variables: {
-          username: userName,
+          userName,
           bio,
           gender,
           avatar,

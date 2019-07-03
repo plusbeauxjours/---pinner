@@ -203,6 +203,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripStartDate,
       tripEndDate,
       focusedInput,
+      moveNotificationId,
       tripPage,
       search,
       tripList,
@@ -293,6 +294,11 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                       return (
                                                         <AddTripMutation
                                                           mutation={ADD_TRIP}
+                                                          variables={{
+                                                            cityId,
+                                                            startDate,
+                                                            endDate
+                                                          }}
                                                           refetchQueries={[
                                                             {
                                                               query: GET_TRIPS,
@@ -317,6 +323,15 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                 mutation={
                                                                   EDIT_TRIP
                                                                 }
+                                                                variables={{
+                                                                  moveNotificationId: parseInt(
+                                                                    moveNotificationId,
+                                                                    10
+                                                                  ),
+                                                                  cityId,
+                                                                  startDate,
+                                                                  endDate
+                                                                }}
                                                                 refetchQueries={[
                                                                   {
                                                                     query: GET_TRIPS,
@@ -342,6 +357,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                       mutation={
                                                                         DELETE_TRIP
                                                                       }
+                                                                      variables={{
+                                                                        moveNotificationId: parseInt(
+                                                                          moveNotificationId,
+                                                                          10
+                                                                        )
+                                                                      }}
                                                                       update={
                                                                         this
                                                                           .updateDeleteTrip
@@ -687,7 +708,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } as any);
   };
   public addTrip = async () => {
-    const { tripAddModalOpen, cityId, startDate, endDate } = this.state;
+    const { tripAddModalOpen, cityId } = this.state;
     await this.setState({
       tripAddModalOpen: !tripAddModalOpen,
       tripModalOpen: false
@@ -702,7 +723,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         countryCode: city.storableLocation.countryCode
       }
     });
-    await this.addTripFn({ variables: { cityId, startDate, endDate } });
+    await this.addTripFn();
     this.setState({
       moveNotificationId: "",
       cityName: "",
@@ -711,13 +732,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     });
   };
   public editTrip = async () => {
-    const {
-      tripEditModalOpen,
-      cityId,
-      moveNotificationId,
-      startDate,
-      endDate
-    } = this.state;
+    const { tripEditModalOpen, cityId } = this.state;
     await this.setState({
       tripEditModalOpen: !tripEditModalOpen,
       tripModalOpen: false
@@ -732,14 +747,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         countryCode: city.storableLocation.countryCode
       }
     });
-    await this.editTripFn({
-      variables: {
-        moveNotificationId: parseInt(moveNotificationId, 10),
-        cityId,
-        startDate,
-        endDate
-      }
-    });
+    await this.editTripFn();
     this.setState({
       moveNotificationId: "",
       cityName: "",

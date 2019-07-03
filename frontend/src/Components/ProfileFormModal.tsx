@@ -74,6 +74,12 @@ class ProfileForm extends React.Component<IProps, IState> {
     return (
       <EditProfileMutation
         mutation={EDIT_PROFILE}
+        variables={{
+          userName: username,
+          nationality,
+          gender,
+          email
+        }}
         update={this.updatEditProfile}
         onCompleted={editData => {
           const { editProfile } = editData;
@@ -152,17 +158,9 @@ class ProfileForm extends React.Component<IProps, IState> {
     console.log(this.state);
   };
   public onKeyDown = event => {
-    const { username, nationality, gender, email } = this.state;
     const { keyCode } = event;
     if (keyCode === 13) {
-      this.editProfileFn({
-        variables: {
-          userName: username,
-          nationality,
-          gender,
-          email
-        }
-      });
+      this.editProfileFn();
     } else {
       return null;
     }

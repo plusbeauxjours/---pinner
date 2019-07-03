@@ -199,3 +199,11 @@ export const MARK_AS_MAIN = gql`
     }
   }
 `;
+
+export const CALCULATE_DISTANCE = gql`
+  mutation CalculateDistance {
+    calculateDistance {
+      distance
+    }
+  }
+`;

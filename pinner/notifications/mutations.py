@@ -1,7 +1,6 @@
 import graphene
 from django.db import IntegrityError
 from . import models, types
-from notifications import distanceHelper
 from math import radians, degrees, sin, cos, asin, acos, sqrt
 from graphql_jwt.decorators import login_required
 
