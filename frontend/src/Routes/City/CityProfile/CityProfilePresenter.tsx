@@ -14,7 +14,7 @@ import UserBox from "src/Components/UserBox";
 import CoffeeBox from "src/Components/CoffeeBox";
 import LocationBox from "src/Components/LocationBox";
 import { Right } from "../../../Icons";
-import { BACKEND_URL } from 'src/constants';
+import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -117,7 +117,7 @@ const UserContainer = styled.div`
   }
 `;
 
-const UserRow = styled.div<ITheme>`
+const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   grid-template-columns: 2fr 1fr 1fr;
@@ -126,7 +126,6 @@ const UserRow = styled.div<ITheme>`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -225,10 +224,6 @@ const RightIcon = styled.div`
 //   }
 // `;
 
-interface ITheme {
-  active?: string;
-}
-
 interface IProps {
   coffeeData: any;
   coffeeLoading: boolean;
@@ -247,10 +242,6 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
   usersNowList: any;
-  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  onClick: any;
-  onBlur: any;
-  usersNowActiveId: number;
   submitCoffee: any;
 }
 
@@ -276,10 +267,6 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
   search,
   onChange,
   usersNowList,
-  onKeyDown,
-  onClick,
-  onBlur,
-  usersNowActiveId,
   submitCoffee
 }) => {
   if (cityLoading) {
@@ -371,61 +358,46 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                   placeholder="Search"
                   onChange={onChange}
                   value={search}
-                  onKeyDown={onKeyDown}
-                  onClick={onClick}
-                  onBlur={onBlur}
                 />
               </UserNameRow>
               {usersNowList.length !== 0 &&
-                usersNowList.map((user, index) => {
-                  let active;
-                  if (index === usersNowActiveId) {
-                    active = "active";
-                  }
-                  return (
-                    <UserRow key={index} active={active}>
-                      <Link to={`/${user.profile.username}`}>
-                        <UserHeader
-                          username={user.profile.username}
-                          currentCity={user.profile.currentCity.cityName}
-                          currentCountry={
-                            user.profile.currentCity.country.countryName
-                          }
-                          avatar={`${BACKEND_URL}/media/${
-                            user.profile.avatar.thumbnail
-                          }`}
-                          size={"sm"}
-                        />
-                      </Link>
-                    </UserRow>
-                  );
-                })}
+                usersNowList.map(user => (
+                  <UserRow key={user.profile.id}>
+                    <Link to={`/${user.profile.username}`}>
+                      <UserHeader
+                        username={user.profile.username}
+                        currentCity={user.profile.currentCity.cityName}
+                        currentCountry={
+                          user.profile.currentCity.country.countryName
+                        }
+                        avatar={`${BACKEND_URL}/media/${
+                          user.profile.avatar.thumbnail
+                        }`}
+                        size={"sm"}
+                      />
+                    </Link>
+                  </UserRow>
+                ))}
               {usersNowList.length === 0 &&
                 !search &&
                 usersNow &&
-                usersNow.map((user, index) => {
-                  let active;
-                  if (index === usersNowActiveId) {
-                    active = "active";
-                  }
-                  return (
-                    <UserRow key={index} active={active}>
-                      <Link to={`/${user.profile.username}`}>
-                        <UserHeader
-                          username={user.profile.username}
-                          currentCity={user.profile.currentCity.cityName}
-                          currentCountry={
-                            user.profile.currentCity.country.countryName
-                          }
-                          avatar={`${BACKEND_URL}/media/${
-                            user.profile.avatar.thumbnail
-                          }`}
-                          size={"sm"}
-                        />
-                      </Link>
-                    </UserRow>
-                  );
-                })}
+                usersNow.map(user => (
+                  <UserRow key={user.profile.id}>
+                    <Link to={`/${user.profile.username}`}>
+                      <UserHeader
+                        username={user.profile.username}
+                        currentCity={user.profile.currentCity.cityName}
+                        currentCountry={
+                          user.profile.currentCity.country.countryName
+                        }
+                        avatar={`${BACKEND_URL}/media/${
+                          user.profile.avatar.thumbnail
+                        }`}
+                        size={"sm"}
+                      />
+                    </Link>
+                  </UserRow>
+                ))}
             </UserContainer>
           </PHeader>
           {usersBefore && usersBefore.length !== 0 ? (

@@ -33,7 +33,6 @@ interface IState {
   startDate: moment.Moment | null;
   endDate: moment.Moment | null;
   usersBeforeList: any;
-  usersBeforeActiveId: number;
 }
 
 class TripProfileContainer extends React.Component<IProps, IState> {
@@ -53,8 +52,7 @@ class TripProfileContainer extends React.Component<IProps, IState> {
       countryName: state.countryName,
       startDate: state.tripStartDate,
       endDate: state.tripEndDate,
-      usersBeforeList: [],
-      usersBeforeActiveId: null
+      usersBeforeList: []
     };
   }
   public componentDidUpdate(prevProps) {
@@ -71,8 +69,7 @@ class TripProfileContainer extends React.Component<IProps, IState> {
       countryName,
       startDate,
       endDate,
-      usersBeforeList,
-      usersBeforeActiveId
+      usersBeforeList
     } = this.state;
     const {
       match: {
@@ -110,10 +107,6 @@ class TripProfileContainer extends React.Component<IProps, IState> {
                           samenameCitiesLoading={samenameCitiesLoading}
                           search={search}
                           usersBeforeList={usersBeforeList}
-                          usersBeforeActiveId={usersBeforeActiveId}
-                          onKeyDown={this.onKeyDown}
-                          onClick={this.onClick}
-                          onBlur={this.onBlur}
                           onChange={this.onChange}
                           cityId={cityId}
                         />
@@ -142,65 +135,8 @@ class TripProfileContainer extends React.Component<IProps, IState> {
     const usersBeforeList = beforeSearch(usersBefore, value);
     this.setState({
       search: value,
-      usersBeforeList,
-      activeId: 0
+      usersBeforeList
     } as any);
-  };
-  public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const { keyCode } = event;
-    const { usersBeforeActiveId, usersBeforeList } = this.state;
-    const { history } = this.props;
-
-    const { tripProfile: { usersBefore = null } = {} } = this.data;
-
-    if (keyCode === 13 && (usersBeforeList.length || usersBefore)) {
-      {
-        usersBeforeList.length
-          ? history.push({
-              pathname: `/${
-                usersBeforeList[usersBeforeActiveId].actor.profile.username
-              }`
-            })
-          : history.push({
-              pathname: `/${
-                usersBefore[usersBeforeActiveId].actor.profile.username
-              }`
-            });
-      }
-      this.setState({
-        usersBeforeActiveId: 0
-      });
-    } else if (keyCode === 38) {
-      if (usersBeforeActiveId === 0) {
-        return;
-      }
-      this.setState({
-        usersBeforeActiveId: usersBeforeActiveId - 1
-      });
-    } else if (keyCode === 40) {
-      if (usersBeforeList.length) {
-        if (usersBeforeActiveId === usersBeforeList.length - 1) {
-          return;
-        }
-      } else {
-        if (usersBeforeActiveId === usersBefore.length - 1) {
-          return;
-        }
-      }
-      this.setState({
-        usersBeforeActiveId: usersBeforeActiveId + 1
-      });
-    }
-  };
-  public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      usersBeforeActiveId: 0
-    });
-  };
-  public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      usersBeforeActiveId: null
-    });
   };
 }
 

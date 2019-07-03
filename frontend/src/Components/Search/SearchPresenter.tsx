@@ -8,13 +8,13 @@ import UserHeader from "../UserHeader";
 import Avatar from "../Avatar";
 import useGoogleAutocomplete from "../../autocompleteHelpers";
 import { GOOGLE_PLACE_KEY } from "src/keys";
-import { BACKEND_URL } from 'src/constants';
+import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
 `;
 
-const UserRow = styled.div<ITheme>`
+const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   height: 50px;
@@ -24,7 +24,6 @@ const UserRow = styled.div<ITheme>`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -62,13 +61,8 @@ const Location = styled.span`
   font-weight: 200;
 `;
 
-interface ITheme {
-  active?: string;
-}
-
 interface IProps {
   search: string;
-  activeId: number;
   searchData?: any;
   searchLoading: boolean;
   onClick: (placeId: string) => void;
@@ -77,9 +71,8 @@ interface IProps {
 
 const SearchPresenter: React.FunctionComponent<IProps> = ({
   search,
-  activeId,
   searchData: {
-    searchUsers: { users=null}  = {},
+    searchUsers: { users = null } = {},
     searchCountries: { countries = null } = {},
     searchContinents: { continents = null } = {}
   } = {},
@@ -103,27 +96,21 @@ const SearchPresenter: React.FunctionComponent<IProps> = ({
         {search.length > 0 &&
           users &&
           users.length > 0 &&
-          users.map((user, index) => {
-            let active;
-            if (index === activeId) {
-              active = "active";
-            }
-            return (
-              <UserRow key={index} active={active}>
-                <Link to={`/${user.profile.username}`}>
-                  <UserHeader
-                    username={user.profile.username}
-                    currentCity={user.profile.currentCity.cityName}
-                    currentCountry={
-                      user.profile.currentCity.country.countryName
-                    }
-                    avatar={`${BACKEND_URL}/media/${user.profile.avatar.thumbnail}`}
-                    size={"sm"}
-                  />
-                </Link>
-              </UserRow>
-            );
-          })}
+          users.map(user => (
+            <UserRow key={user.profile.id}>
+              <Link to={`/${user.profile.username}`}>
+                <UserHeader
+                  username={user.profile.username}
+                  currentCity={user.profile.currentCity.cityName}
+                  currentCountry={user.profile.currentCity.country.countryName}
+                  avatar={`${BACKEND_URL}/media/${
+                    user.profile.avatar.thumbnail
+                  }`}
+                  size={"sm"}
+                />
+              </Link>
+            </UserRow>
+          ))}
         {search.length > 0 &&
           results.predictions &&
           results.predictions.length > 0 &&

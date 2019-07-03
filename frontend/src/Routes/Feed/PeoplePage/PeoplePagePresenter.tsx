@@ -105,7 +105,7 @@ interface IProps {
 
 const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
   recommandUsersData: {
-    recommandUsers: { users = null, hasNextPage = null } = {}
+    recommandUsers: { users: { profile = null } = {}, hasNextPage = null } = {}
   } = {},
   recommandUsersLoading,
   modalOpen,
@@ -133,17 +133,17 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
               {recommandUserList.length !== 0 &&
                 recommandUserList.map(user => {
                   return (
-                    <UserRow key={user.profile.id}>
-                      <Link to={`/${user.profile.username}`}>
+                    <UserRow key={user.id}>
+                      <Link to={`/${user.username}`}>
                         <AvatarContainer>
                           <Avatar
                             size={"sm"}
                             url={`${BACKEND_URL}/media/${
-                              user.profile.avatar.thumbnail
+                              user.avatar.thumbnail
                             }`}
                           />
                           <HeaderColumn>
-                            <CText text={user.profile.username} />
+                            <CText text={user.username} />
                             <Explain>with same nationality</Explain>
                           </HeaderColumn>
                         </AvatarContainer>
@@ -154,20 +154,20 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
               {console.log("hasNextPage:  ", hasNextPage)}
               {recommandUserList.length === 0 &&
                 !search &&
-                users &&
-                users.map(user => {
+                profile &&
+                profile.map(user => {
                   return (
-                    <UserRow key={user.profile.id}>
-                      <Link to={`/${user.profile.username}`}>
+                    <UserRow key={user.id}>
+                      <Link to={`/${user.username}`}>
                         <AvatarContainer>
                           <Avatar
                             size={"sm"}
                             url={`${BACKEND_URL}/media/${
-                              user.profile.avatar.thumbnail
+                              user.avatar.thumbnail
                             }`}
                           />
                           <HeaderColumn>
-                            <CText text={user.profile.username} />
+                            <CText text={user.username} />
                             <Explain>with same nationality</Explain>
                           </HeaderColumn>
                         </AvatarContainer>

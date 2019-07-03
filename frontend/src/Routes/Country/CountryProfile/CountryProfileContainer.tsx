@@ -24,7 +24,6 @@ interface IProps extends RouteComponentProps<any> {}
 interface IState {
   search: string;
   cityList: any;
-  activeId: number;
   countryName: string;
   currentCityId: string;
 }
@@ -39,7 +38,6 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
     this.state = {
       search: "",
       cityList: [],
-      activeId: null,
       countryName: state.countryName,
       currentCityId: localStorage.getItem("cityId")
     };
@@ -61,13 +59,7 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
         params: { countryCode }
       }
     } = this.props;
-    const {
-      search,
-      cityList,
-      activeId,
-      countryName,
-      currentCityId
-    } = this.state;
+    const { search, cityList, countryName, currentCityId } = this.state;
     return (
       <GetCountriesQuery
         query={GET_COUNTRIES}
@@ -105,11 +97,7 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
                           countryName={countryName}
                           onChange={this.onChange}
                           search={search}
-                          activeId={activeId}
                           cityList={cityList}
-                          onKeyDown={this.onKeyDown}
-                          onClick={this.onClick}
-                          onBlur={this.onBlur}
                           countryCode={countryCode}
                           currentCityId={currentCityId}
                           back={this.back}
@@ -140,61 +128,8 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
     const cityList = search(cities, value);
     this.setState({
       search: value,
-      cityList,
-      activeId: 0
+      cityList
     } as any);
-  };
-  public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const { keyCode } = event;
-    const { activeId, cityList } = this.state;
-    const { history } = this.props;
-
-    const { countryProfile: { cities = null } = {} } = this.data;
-
-    if (keyCode === 13 && (cityList.length || cities)) {
-      {
-        cityList.length
-          ? history.push({
-              pathname: `/city/${cityList[activeId].cityId}`
-            })
-          : history.push({
-              pathname: `/city/${cities[activeId].cityId}`
-            });
-      }
-      this.setState({
-        activeId: 0
-      });
-    } else if (keyCode === 38) {
-      if (activeId === 0) {
-        return;
-      }
-      this.setState({
-        activeId: activeId - 1
-      });
-    } else if (keyCode === 40) {
-      if (cityList.length) {
-        if (activeId === cityList.length - 1) {
-          return;
-        }
-      } else {
-        if (activeId === cities.length - 1) {
-          return;
-        }
-      }
-      this.setState({
-        activeId: activeId + 1
-      });
-    }
-  };
-  public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      activeId: 0
-    });
-  };
-  public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      activeId: null
-    });
   };
 }
 

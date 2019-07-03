@@ -108,6 +108,7 @@ def resolve_recommand_users(self, info, **kwargs):
     hasNextPage = offset < users.count()
 
     users = users[offset:12 + offset]
+    print(users)
 
     return types.RecommandUsersResponse(users=users, page=nextPage, hasNextPage=hasNextPage)
 

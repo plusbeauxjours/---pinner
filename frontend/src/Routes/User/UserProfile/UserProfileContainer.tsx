@@ -108,8 +108,6 @@ interface IState {
   currentCityId: string;
   lat: number;
   lng: number;
-  tripActiveId: number;
-  searchActiveId: number;
   file: any;
   imagePreviewUrl: any;
 }
@@ -163,8 +161,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       lat: state.currentLat,
       lng: state.currentLng,
       currentCityId: state.currentCityId || localStorage.getItem("cityId"),
-      tripActiveId: null,
-      searchActiveId: null,
       file: null,
       imagePreviewUrl: ""
     };
@@ -207,8 +203,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripPage,
       search,
       tripList,
-      tripActiveId,
-      searchActiveId,
       imagePreviewUrl
     } = this.state;
     return (
@@ -542,28 +536,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                               this
                                                                                 .isDayBlocked
                                                                             }
-                                                                            tripActiveId={
-                                                                              tripActiveId
-                                                                            }
-                                                                            searchActiveId={
-                                                                              searchActiveId
-                                                                            }
-                                                                            onKeyDownSearch={
-                                                                              this
-                                                                                .onKeyDownSearch
-                                                                            }
-                                                                            onKeyDownTrip={
-                                                                              this
-                                                                                .onKeyDownTrip
-                                                                            }
-                                                                            onClick={
-                                                                              this
-                                                                                .onClick
-                                                                            }
-                                                                            onBlur={
-                                                                              this
-                                                                                .onBlur
-                                                                            }
                                                                             onClickSearch={
                                                                               this
                                                                                 .onClickSearch
@@ -814,8 +786,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       target: { value }
     } = event;
     this.setState({
-      tripCitySearch: value,
-      searchActiveId: 0
+      tripCitySearch: value
     } as any);
     console.log(this.state);
   };
@@ -830,7 +801,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       [name]: value
     } as any);
   };
-
   public gotoTrip = (
     cityName,
     cityId,
@@ -1084,104 +1054,15 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     const tripList = nowSearch(trip, value);
     this.setState({
       search: value,
-      tripList,
-      tripActiveId: 0
+      tripList
     } as any);
-  };
-  public onKeyDownTrip = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const { keyCode } = event;
-    const { tripActiveId, tripList } = this.state;
-
-    const { getTrips: { trip = null } = {} } = this.getTripsData;
-
-    if (keyCode === 13 && (tripList.length || trip)) {
-      {
-        tripList.length
-          ? this.gotoTrip(
-              tripList[tripActiveId].city.cityName,
-              tripList[tripActiveId].city.cityId,
-              tripList[tripActiveId].city.cityPhoto,
-              tripList[tripActiveId].city.country.countryName,
-              tripList[tripActiveId].startDate,
-              tripList[tripActiveId].endDate
-            )
-          : this.gotoTrip(
-              trip[tripActiveId].city.cityName,
-              trip[tripActiveId].city.cityId,
-              trip[tripActiveId].city.cityPhoto,
-              trip[tripActiveId].city.country.countryName,
-              trip[tripActiveId].startDate,
-              trip[tripActiveId].endDate
-            );
-      }
-      this.setState({
-        tripActiveId: 0
-      });
-    } else if (keyCode === 38) {
-      if (tripActiveId === 0) {
-        return;
-      }
-      this.setState({
-        tripActiveId: tripActiveId - 1
-      });
-    } else if (keyCode === 40) {
-      if (tripList.length) {
-        if (tripActiveId === tripList.length - 1) {
-          return;
-        }
-      } else {
-        if (tripActiveId === trip.length - 1) {
-          return;
-        }
-      }
-      this.setState({
-        tripActiveId: tripActiveId + 1
-      });
-    }
-  };
-  public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      tripActiveId: 0
-    });
-  };
-  public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      tripActiveId: null
-    });
   };
   public onClickSearch = async (cityId: string, cityName: string) => {
     this.setState({
-      searchActiveId: 0,
       tripCitySearch: cityName,
       cityName,
       cityId
     });
-  };
-  public onKeyDownSearch = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    // const { keyCode } = event;
-    // const { searchActiveId } = this.state;
-    //   if (keyCode === 13 && cities) {
-    //     this.setState({
-    //       searchActiveId: 0,
-    //       cityId: cities[searchActiveId].cityId
-    //     });
-    //     console.log(this.state);
-    //   } else if (keyCode === 38) {
-    //     if (searchActiveId === 0) {
-    //       return;
-    //     }
-    //     this.setState({
-    //       searchActiveId: searchActiveId - 1
-    //     });
-    //   } else if (keyCode === 40) {
-    //     if (searchActiveId === cities.length - 1) {
-    //       return;
-    //     }
-    //     this.setState({
-    //       searchActiveId: searchActiveId + 1
-    //     });
-    //   }
-    // }
   };
   public onChangeImage = event => {
     event.preventDefault();

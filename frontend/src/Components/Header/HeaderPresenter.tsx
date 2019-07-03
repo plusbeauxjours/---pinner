@@ -11,7 +11,7 @@ import { keyframes } from "styled-components";
 import Avatar from "../Avatar";
 import Bold from "../Bold";
 import Weather from "src/Components/Weather";
-import { BACKEND_URL } from 'src/constants';
+import { BACKEND_URL } from "src/constants";
 
 const Header = styled.header`
   background-color: ${props => props.theme.bgColor};
@@ -177,14 +177,12 @@ interface IProps extends RouteComponentProps<any> {
   currentCountryCode: string;
   modalOpen: boolean;
   search: string;
-  activeId: number;
   toggleModal: () => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 }
 
 const HeaderPresenter: React.FunctionComponent<IProps> = ({
-  me: { me: { user= null } = {} } = {},
+  me: { me: { user = null } = {} } = {},
   data: { header: { city = null } = {} } = {},
   loading,
   searchData,
@@ -196,10 +194,8 @@ const HeaderPresenter: React.FunctionComponent<IProps> = ({
   currentCountryCode,
   modalOpen,
   search,
-  activeId,
   toggleModal,
-  onChange,
-  onKeyDown
+  onChange
 }) => {
   if (loading) {
     return null;
@@ -215,11 +211,9 @@ const HeaderPresenter: React.FunctionComponent<IProps> = ({
                 placeholder="Search"
                 value={search}
                 onChange={onChange}
-                onKeyDown={onKeyDown}
                 autoComplete={"off"}
               />
               <Search
-                activeId={activeId}
                 search={search}
                 searchData={searchData}
                 searchLoading={searchLoading}

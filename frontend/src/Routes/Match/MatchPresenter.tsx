@@ -299,27 +299,27 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
             </UserNameRow>
             <Container>
               <Box>
+                {console.log(users)}
                 {users &&
-                  users.map(user => {
-                    return (
-                      <UserRow key={user.id}>
-                        <Link to={`/${user.profile.username}`}>
-                          <AvatarContainer>
-                            <Avatar
-                              size={"sm"}
-                              url={`${BACKEND_URL}/media/${
-                                user.profile.avatar.thumbnail
-                              }`}
-                            />
-                            <HeaderColumn>
-                              <CText text={user.profile.username} />
-                              <Explain>with same nationality</Explain>
-                            </HeaderColumn>
-                          </AvatarContainer>
-                        </Link>
-                      </UserRow>
-                    );
-                  })}
+                  users.length !== 0 &&
+                  users.map(user => (
+                    <UserRow key={user.profile.id}>
+                      <Link to={`/${user.profile.username}`}>
+                        <AvatarContainer>
+                          <Avatar
+                            size={"sm"}
+                            url={`${BACKEND_URL}/media/${
+                              user.profile.avatar.thumbnail
+                            }`}
+                          />
+                          <HeaderColumn>
+                            <CText text={user.profile.username} />
+                            <Explain>with same nationality</Explain>
+                          </HeaderColumn>
+                        </AvatarContainer>
+                      </Link>
+                    </UserRow>
+                  ))}
               </Box>
             </Container>
           </UserContainer>
@@ -340,7 +340,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
               matchList.map(match => (
                 <React.Fragment key={match.id}>
                   {match.isGuest ? (
-                    <MatchUserRow key={match.id}>
+                    <MatchUserRow>
                       <Link to={`/${match.host.profile.username}`}>
                         <UserHeader
                           username={match.host.profile.username}
@@ -366,7 +366,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                       ) : null}
                     </MatchUserRow>
                   ) : (
-                    <MatchUserRow key={match.id}>
+                    <MatchUserRow>
                       <Link to={`/${match.guest.profile.username}`}>
                         <UserHeader
                           username={match.guest.profile.username}
@@ -400,7 +400,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
               matches.map(match => (
                 <React.Fragment key={match.id}>
                   {match.isGuest ? (
-                    <MatchUserRow key={match.id}>
+                    <MatchUserRow>
                       <Link to={`/${match.host.profile.username}`}>
                         <UserHeader
                           username={match.host.profile.username}
@@ -426,7 +426,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                       ) : null}
                     </MatchUserRow>
                   ) : (
-                    <MatchUserRow key={match.id}>
+                    <MatchUserRow>
                       <Link to={`/${match.guest.profile.username}`}>
                         <UserHeader
                           username={match.guest.profile.username}

@@ -157,7 +157,6 @@ const TripRow = styled.div<ITheme>`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -400,7 +399,6 @@ const UserRow = styled.div<ITheme>`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -550,7 +548,6 @@ const WhiteDotIcon = styled(RedDotIcon)`
 
 interface ITheme {
   size?: string;
-  active?: string;
 }
 
 interface IProps {
@@ -632,13 +629,7 @@ interface IProps {
   tripList: any;
   isDayBlocked: any;
 
-  onKeyDownSearch: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  onKeyDownTrip: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onClickSearch: (cityId: string, cityName: string) => void;
-  onClick: any;
-  onBlur: any;
-  tripActiveId: number;
-  searchActiveId: number;
   createCityLoading: boolean;
   uploadAvatarLoading: boolean;
   onChangeImage: (currentTarget) => void;
@@ -708,13 +699,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   tripList,
   // isDayBlocked,
 
-  onKeyDownSearch,
-  onKeyDownTrip,
   onClickSearch,
-  onClick,
-  onBlur,
-  tripActiveId,
-  searchActiveId,
   createCityLoading,
   uploadAvatarLoading,
   avatarModalOpen,
@@ -923,7 +908,6 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                 onChange={onSearchInputChange}
                 value={tripCitySearch}
                 autoComplete={"off"}
-                onKeyDown={onKeyDownSearch}
               />
               <TripModal>
                 {createCityLoading || (isLoading && <Loader />)}
@@ -932,39 +916,31 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                   !createCityLoading &&
                   !isLoading &&
                   results.predictions.length > 0 &&
-                  results.predictions.map((prediction, index) => {
-                    let active;
-                    if (index === searchActiveId) {
-                      active = "active";
-                    }
-                    return (
-                      <UserRow
-                        key={index}
-                        onClick={() =>
-                          onClickSearch(
-                            prediction.place_id,
-                            prediction.structured_formatting.main_text
-                          )
-                        }
-                        active={active}
-                      >
-                        <TripSearchHeader>
-                          <SAvatar size={"sm"} cityId={prediction.place_id} />
-                          <HeaderColumn>
-                            <HeaderText
-                              text={prediction.structured_formatting.main_text}
-                            />
-                            <Location>
-                              {prediction.structured_formatting.secondary_text
-                                ? prediction.structured_formatting
-                                    .secondary_text
-                                : prediction.structured_formatting.main_text}
-                            </Location>
-                          </HeaderColumn>
-                        </TripSearchHeader>
-                      </UserRow>
-                    );
-                  })}
+                  results.predictions.map(prediction => (
+                    <UserRow
+                      key={prediction.id}
+                      onClick={() =>
+                        onClickSearch(
+                          prediction.place_id,
+                          prediction.structured_formatting.main_text
+                        )
+                      }
+                    >
+                      <TripSearchHeader>
+                        <SAvatar size={"sm"} cityId={prediction.place_id} />
+                        <HeaderColumn>
+                          <HeaderText
+                            text={prediction.structured_formatting.main_text}
+                          />
+                          <Location>
+                            {prediction.structured_formatting.secondary_text
+                              ? prediction.structured_formatting.secondary_text
+                              : prediction.structured_formatting.main_text}
+                          </Location>
+                        </HeaderColumn>
+                      </TripSearchHeader>
+                    </UserRow>
+                  ))}
               </TripModal>
             </TripInputContainer>
           </TripModalContainer>
@@ -994,7 +970,6 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                 onChange={onSearchInputChange}
                 value={tripCitySearch}
                 autoComplete={"off"}
-                onKeyDown={onKeyDownSearch}
               />
               <TripModal>
                 {createCityLoading || (isLoading && <Loader />)}
@@ -1003,42 +978,34 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                   !createCityLoading &&
                   !isLoading &&
                   results.predictions.length > 0 &&
-                  results.predictions.map((prediction, index) => {
-                    let active;
-                    if (index === searchActiveId) {
-                      active = "active";
-                    }
-                    return (
-                      <UserRow
-                        key={index}
-                        onClick={() =>
-                          onClickSearch(
-                            prediction.place_id,
-                            prediction.structured_formatting.main_text
-                          )
-                        }
-                        active={active}
-                      >
-                        <TripSearchHeader>
-                          <SAvatar
-                            size={"sm"}
-                            url={prediction.structured_formatting.main_text}
+                  results.predictions.map(prediction => (
+                    <UserRow
+                      key={prediction.id}
+                      onClick={() =>
+                        onClickSearch(
+                          prediction.place_id,
+                          prediction.structured_formatting.main_text
+                        )
+                      }
+                    >
+                      <TripSearchHeader>
+                        <SAvatar
+                          size={"sm"}
+                          url={prediction.structured_formatting.main_text}
+                        />
+                        <HeaderColumn>
+                          <HeaderText
+                            text={prediction.structured_formatting.main_text}
                           />
-                          <HeaderColumn>
-                            <HeaderText
-                              text={prediction.structured_formatting.main_text}
-                            />
-                            <Location>
-                              {prediction.structured_formatting.secondary_text
-                                ? prediction.structured_formatting
-                                    .secondary_text
-                                : prediction.structured_formatting.main_text}
-                            </Location>
-                          </HeaderColumn>
-                        </TripSearchHeader>
-                      </UserRow>
-                    );
-                  })}
+                          <Location>
+                            {prediction.structured_formatting.secondary_text
+                              ? prediction.structured_formatting.secondary_text
+                              : prediction.structured_formatting.main_text}
+                          </Location>
+                        </HeaderColumn>
+                      </TripSearchHeader>
+                    </UserRow>
+                  ))}
               </TripModal>
             </TripInputContainer>
           </TripModalContainer>
@@ -1158,9 +1125,6 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                     placeholder="Search"
                     value={search}
                     onChange={onChange}
-                    onKeyDown={onKeyDownTrip}
-                    onClick={onClick}
-                    onBlur={onBlur}
                   />
                 </UserNameRow>
                 {user.profile.isSelf && (
@@ -1169,119 +1133,107 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                   </TripIcon>
                 )}
                 {tripList.length !== 0 &&
-                  tripList.map((trip, index) => {
-                    let active;
-                    if (index === tripActiveId) {
-                      active = "active";
-                    }
-                    return (
-                      <TripRow key={trip.id} active={active}>
-                        <THeader
-                          onClick={() =>
-                            gotoTrip(
-                              trip.city.cityName,
-                              trip.city.cityId,
-                              trip.city.cityPhoto,
-                              trip.city.country.countryName,
-                              trip.startDate,
-                              trip.endDate
-                            )
-                          }
-                        >
-                          <SAvatar size={"sm"} url={trip.city.cityPhoto} />
-                          <HeaderColumn>
-                            <HeaderText text={trip.city.cityName} />
-                            <Location>{trip.city.country.countryName}</Location>
-                          </HeaderColumn>
-                        </THeader>
-                        <GreyText text={trip.startDate} />
-                        <GreyText text={trip.endDate} />
-                        <GreyText text={`${trip.diffDays} Days`} />
-                        <TripOverlay
-                          onClick={() => {
-                            user.profile.isSelf
-                              ? toggleTripModal(
-                                  trip.id,
-                                  trip.city.cityName,
-                                  trip.city.cityId,
-                                  trip.city.cityPhoto,
-                                  trip.city.country.countryName,
-                                  trip.startDate,
-                                  trip.endDate
-                                )
-                              : gotoTrip(
-                                  trip.city.cityName,
-                                  trip.city.cityId,
-                                  trip.city.cityPhoto,
-                                  trip.city.country.countryName,
-                                  trip.startDate,
-                                  trip.endDate
-                                );
-                          }}
-                        >
-                          <List />
-                        </TripOverlay>
-                      </TripRow>
-                    );
-                  })}
+                  tripList.map(trip => (
+                    <TripRow key={trip.id}>
+                      <THeader
+                        onClick={() =>
+                          gotoTrip(
+                            trip.city.cityName,
+                            trip.city.cityId,
+                            trip.city.cityPhoto,
+                            trip.city.country.countryName,
+                            trip.startDate,
+                            trip.endDate
+                          )
+                        }
+                      >
+                        <SAvatar size={"sm"} url={trip.city.cityPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={trip.city.cityName} />
+                          <Location>{trip.city.country.countryName}</Location>
+                        </HeaderColumn>
+                      </THeader>
+                      <GreyText text={trip.startDate} />
+                      <GreyText text={trip.endDate} />
+                      <GreyText text={`${trip.diffDays} Days`} />
+                      <TripOverlay
+                        onClick={() => {
+                          user.profile.isSelf
+                            ? toggleTripModal(
+                                trip.id,
+                                trip.city.cityName,
+                                trip.city.cityId,
+                                trip.city.cityPhoto,
+                                trip.city.country.countryName,
+                                trip.startDate,
+                                trip.endDate
+                              )
+                            : gotoTrip(
+                                trip.city.cityName,
+                                trip.city.cityId,
+                                trip.city.cityPhoto,
+                                trip.city.country.countryName,
+                                trip.startDate,
+                                trip.endDate
+                              );
+                        }}
+                      >
+                        <List />
+                      </TripOverlay>
+                    </TripRow>
+                  ))}
                 {tripList.length === 0 &&
                   !search &&
                   getTrips &&
-                  getTrips.map((trip, index) => {
-                    let active;
-                    if (index === tripActiveId) {
-                      active = "active";
-                    }
-                    return (
-                      <TripRow key={trip.id} active={active}>
-                        <THeader
-                          onClick={() =>
-                            gotoTrip(
-                              trip.city.cityName,
-                              trip.city.cityId,
-                              trip.city.cityPhoto,
-                              trip.city.country.countryName,
-                              trip.startDate,
-                              trip.endDate
-                            )
-                          }
-                        >
-                          <SAvatar size={"sm"} url={trip.city.cityPhoto} />
-                          <HeaderColumn>
-                            <HeaderText text={trip.city.cityName} />
-                            <Location>{trip.city.country.countryName}</Location>
-                          </HeaderColumn>
-                        </THeader>
-                        <GreyText text={trip.startDate} />
-                        <GreyText text={trip.endDate} />
-                        <GreyText text={`${trip.diffDays} Days`} />
-                        <TripOverlay
-                          onClick={() => {
-                            user.profile.isSelf
-                              ? toggleTripModal(
-                                  trip.id,
-                                  trip.city.cityName,
-                                  trip.city.cityId,
-                                  trip.city.cityPhoto,
-                                  trip.city.country.countryName,
-                                  trip.startDate,
-                                  trip.endDate
-                                )
-                              : gotoTrip(
-                                  trip.city.cityName,
-                                  trip.city.cityId,
-                                  trip.city.cityPhoto,
-                                  trip.city.country.countryName,
-                                  trip.startDate,
-                                  trip.endDate
-                                );
-                          }}
-                        >
-                          <List />
-                        </TripOverlay>
-                      </TripRow>
-                    );
-                  })}
+                  getTrips.map(trip => (
+                    <TripRow key={trip.id}>
+                      <THeader
+                        onClick={() =>
+                          gotoTrip(
+                            trip.city.cityName,
+                            trip.city.cityId,
+                            trip.city.cityPhoto,
+                            trip.city.country.countryName,
+                            trip.startDate,
+                            trip.endDate
+                          )
+                        }
+                      >
+                        <SAvatar size={"sm"} url={trip.city.cityPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={trip.city.cityName} />
+                          <Location>{trip.city.country.countryName}</Location>
+                        </HeaderColumn>
+                      </THeader>
+                      <GreyText text={trip.startDate} />
+                      <GreyText text={trip.endDate} />
+                      <GreyText text={`${trip.diffDays} Days`} />
+                      <TripOverlay
+                        onClick={() => {
+                          user.profile.isSelf
+                            ? toggleTripModal(
+                                trip.id,
+                                trip.city.cityName,
+                                trip.city.cityId,
+                                trip.city.cityPhoto,
+                                trip.city.country.countryName,
+                                trip.startDate,
+                                trip.endDate
+                              )
+                            : gotoTrip(
+                                trip.city.cityName,
+                                trip.city.cityId,
+                                trip.city.cityPhoto,
+                                trip.city.country.countryName,
+                                trip.startDate,
+                                trip.endDate
+                              );
+                        }}
+                      >
+                        <List />
+                      </TripOverlay>
+                    </TripRow>
+                  ))}
               </TripContainer>
             </Container>
           </PHeader>

@@ -20,7 +20,7 @@ const UserContainer = styled.div`
   flex-direction: column;
 `;
 
-const UserRow = styled.div<ITheme>`
+const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   height: 50px;
@@ -30,7 +30,6 @@ const UserRow = styled.div<ITheme>`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -93,10 +92,6 @@ const Explain = styled(Location)`
   color: grey;
 `;
 
-interface ITheme {
-  active?: string;
-}
-
 interface IProps {
   data: any;
   loading: boolean;
@@ -106,10 +101,6 @@ interface IProps {
   usersNowList: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   loadMore: any;
-  usersNowActiveId: number;
-  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  onClick: any;
-  onBlur: any;
 }
 
 const CountryUsersNowPresenter: React.FunctionComponent<IProps> = ({
@@ -120,11 +111,7 @@ const CountryUsersNowPresenter: React.FunctionComponent<IProps> = ({
   search,
   usersNowList,
   onChange,
-  loadMore,
-  usersNowActiveId,
-  onKeyDown,
-  onClick,
-  onBlur
+  loadMore
 }) => {
   return (
     <>
@@ -132,14 +119,7 @@ const CountryUsersNowPresenter: React.FunctionComponent<IProps> = ({
         <UserContainer>
           <UserNameRow>
             <Username>USERS NOW</Username>
-            <Input
-              placeholder="Search"
-              value={search}
-              onChange={onChange}
-              onKeyDown={onKeyDown}
-              onClick={onClick}
-              onBlur={onBlur}
-            />
+            <Input placeholder="Search" value={search} onChange={onChange} />
           </UserNameRow>
           {loading && <Loader />}
           {!loading && (
@@ -150,58 +130,46 @@ const CountryUsersNowPresenter: React.FunctionComponent<IProps> = ({
               initialLoad={false}
             >
               {usersNowList.length !== 0 &&
-                usersNowList.map((user, index) => {
-                  let active;
-                  if (index === usersNowActiveId) {
-                    active = "active";
-                  }
-                  return (
-                    <UserRow key={user.id} active={active}>
-                      <Link to={`/${user.profile.username}`}>
-                        <AvatarContainer>
-                          <Avatar
-                            size={"sm"}
-                            url={`${BACKEND_URL}/media/${
-                              user.profile.avatar.thumbnail
-                            }`}
-                          />
-                          <HeaderColumn>
-                            <CText text={user.profile.username} />
-                            <Explain>with same nationality</Explain>
-                          </HeaderColumn>
-                        </AvatarContainer>
-                      </Link>
-                    </UserRow>
-                  );
-                })}
+                usersNowList.map(user => (
+                  <UserRow key={user.profile.id}>
+                    <Link to={`/${user.profile.username}`}>
+                      <AvatarContainer>
+                        <Avatar
+                          size={"sm"}
+                          url={`${BACKEND_URL}/media/${
+                            user.profile.avatar.thumbnail
+                          }`}
+                        />
+                        <HeaderColumn>
+                          <CText text={user.profile.username} />
+                          <Explain>with same nationality</Explain>
+                        </HeaderColumn>
+                      </AvatarContainer>
+                    </Link>
+                  </UserRow>
+                ))}
               {console.log("hasNextPage:  ", hasNextPage)}
               {usersNowList.length === 0 &&
                 !search &&
                 usersNow &&
-                usersNow.map((user, index) => {
-                  let active;
-                  if (index === usersNowActiveId) {
-                    active = "active";
-                  }
-                  return (
-                    <UserRow key={user.id} active={active}>
-                      <Link to={`/${user.profile.username}`}>
-                        <AvatarContainer>
-                          <Avatar
-                            size={"sm"}
-                            url={`${BACKEND_URL}/media/${
-                              user.profile.avatar.thumbnail
-                            }`}
-                          />
-                          <HeaderColumn>
-                            <CText text={user.profile.username} />
-                            <Explain>with same nationality</Explain>
-                          </HeaderColumn>
-                        </AvatarContainer>
-                      </Link>
-                    </UserRow>
-                  );
-                })}
+                usersNow.map(user => (
+                  <UserRow key={user.profile.id}>
+                    <Link to={`/${user.profile.username}`}>
+                      <AvatarContainer>
+                        <Avatar
+                          size={"sm"}
+                          url={`${BACKEND_URL}/media/${
+                            user.profile.avatar.thumbnail
+                          }`}
+                        />
+                        <HeaderColumn>
+                          <CText text={user.profile.username} />
+                          <Explain>with same nationality</Explain>
+                        </HeaderColumn>
+                      </AvatarContainer>
+                    </Link>
+                  </UserRow>
+                ))}
             </InfiniteScroll>
           )}
         </UserContainer>

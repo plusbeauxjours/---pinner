@@ -40,7 +40,6 @@ interface IState {
   currentCityId: string;
   coffeeReportModalOpen: boolean;
   coffeeRequestModalOpen: boolean;
-  usersNowActiveId: number;
 }
 
 class CityProfileContainer extends React.Component<IProps, IState> {
@@ -54,8 +53,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       usersNowList: [],
       currentCityId: localStorage.getItem("cityId"),
       coffeeReportModalOpen: false,
-      coffeeRequestModalOpen: false,
-      usersNowActiveId: null
+      coffeeRequestModalOpen: false
     };
   }
   public componentDidUpdate(prevProps) {
@@ -77,8 +75,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       search,
       usersNowList,
       coffeeReportModalOpen,
-      coffeeRequestModalOpen,
-      usersNowActiveId
+      coffeeRequestModalOpen
     } = this.state;
     return (
       <GetSamenameCitiesQuery
@@ -151,10 +148,6 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                                       onChange={this.onChange}
                                       search={search}
                                       usersNowList={usersNowList}
-                                      usersNowActiveId={usersNowActiveId}
-                                      onKeyDown={this.onKeyDown}
-                                      onClick={this.onClick}
-                                      onBlur={this.onBlur}
                                       submitCoffee={this.submitCoffee}
                                     />
                                   );
@@ -200,61 +193,8 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     const usersNowList = nowSearch(usersNow, value);
     this.setState({
       search: value,
-      usersNowList,
-      activeId: 0
+      usersNowList
     } as any);
-  };
-  public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const { keyCode } = event;
-    const { usersNowActiveId, usersNowList } = this.state;
-    const { history } = this.props;
-
-    const { cityProfile: { usersNow = null } = {} } = this.data;
-
-    if (keyCode === 13 && (usersNowList.length || usersNow)) {
-      {
-        usersNowList.length
-          ? history.push({
-              pathname: `/${usersNowList[usersNowActiveId].profile.username}`
-            })
-          : history.push({
-              pathname: `/${usersNow[usersNowActiveId].profile.username}`
-            });
-      }
-      this.setState({
-        usersNowActiveId: 0
-      });
-    } else if (keyCode === 38) {
-      if (usersNowActiveId === 0) {
-        return;
-      }
-      this.setState({
-        usersNowActiveId: usersNowActiveId - 1
-      });
-    } else if (keyCode === 40) {
-      if (usersNowList.length) {
-        if (usersNowActiveId === usersNowList.length - 1) {
-          return;
-        }
-      } else {
-        if (usersNowActiveId === usersNow.length - 1) {
-          return;
-        }
-      }
-      this.setState({
-        usersNowActiveId: usersNowActiveId + 1
-      });
-    }
-  };
-  public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      usersNowActiveId: 0
-    });
-  };
-  public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      usersNowActiveId: null
-    });
   };
   public submitCoffee = target => {
     const { coffeeRequestModalOpen } = this.state;

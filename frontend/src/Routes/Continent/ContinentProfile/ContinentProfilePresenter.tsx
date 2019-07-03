@@ -38,7 +38,7 @@ const GreyLine = styled.div`
   }
 `;
 
-const UserRow = styled.div<ITheme>`
+const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   height: 50px;
@@ -48,7 +48,6 @@ const UserRow = styled.div<ITheme>`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -139,10 +138,6 @@ const LocationName = styled.span`
   text-transform: uppercase;
 `;
 
-interface ITheme {
-  active?: string;
-}
-
 interface IProps {
   data?: any;
   loading: boolean;
@@ -152,10 +147,7 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
   countryList: any;
-  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  onClick: any;
-  onBlur: any;
-  activeId: number;
+
   currentCityId: string;
 }
 
@@ -176,10 +168,7 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
   onChange,
   search,
   countryList,
-  onKeyDown,
-  onClick,
-  onBlur,
-  activeId,
+
   currentCityId
 }) => {
   if (loading) {
@@ -202,67 +191,48 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
                   placeholder="Search"
                   value={search}
                   onChange={onChange}
-                  onKeyDown={onKeyDown}
-                  onClick={onClick}
-                  onBlur={onBlur}
                 />
               </UserNameRow>
               {countryList.length !== 0 &&
-                countryList.map((country, index) => {
-                  let active;
-                  if (index === activeId) {
-                    active = "active";
-                  }
-                  return (
-                    <UserRow key={index} active={active}>
-                      <Link
-                        to={{
-                          pathname: `/country/${country.countryCode}`,
-                          state: { countryName: country.countryName }
-                        }}
-                      >
-                        <Header>
-                          <SAvatar size={"sm"} url={country.countryPhoto} />
-                          <HeaderColumn>
-                            <HeaderText text={country.countryName} />
-                            <Location>
-                              {country.continent.continentName}
-                            </Location>
-                          </HeaderColumn>
-                        </Header>
-                      </Link>
-                    </UserRow>
-                  );
-                })}
+                countryList.map(country => (
+                  <UserRow key={country.id}>
+                    <Link
+                      to={{
+                        pathname: `/country/${country.countryCode}`,
+                        state: { countryName: country.countryName }
+                      }}
+                    >
+                      <Header>
+                        <SAvatar size={"sm"} url={country.countryPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={country.countryName} />
+                          <Location>{country.continent.continentName}</Location>
+                        </HeaderColumn>
+                      </Header>
+                    </Link>
+                  </UserRow>
+                ))}
               {countryList.length === 0 &&
                 !search &&
                 countries &&
-                countries.map((country, index) => {
-                  let active;
-                  if (index === activeId) {
-                    active = "active";
-                  }
-                  return (
-                    <UserRow key={index} active={active}>
-                      <Link
-                        to={{
-                          pathname: `/country/${country.countryCode}`,
-                          state: { countryName: country.countryName }
-                        }}
-                      >
-                        <Header>
-                          <SAvatar size={"sm"} url={country.countryPhoto} />
-                          <HeaderColumn>
-                            <HeaderText text={country.countryName} />
-                            <Location>
-                              {country.continent.continentName}
-                            </Location>
-                          </HeaderColumn>
-                        </Header>
-                      </Link>
-                    </UserRow>
-                  );
-                })}
+                countries.map(country => (
+                  <UserRow key={country.id}>
+                    <Link
+                      to={{
+                        pathname: `/country/${country.countryCode}`,
+                        state: { countryName: country.countryName }
+                      }}
+                    >
+                      <Header>
+                        <SAvatar size={"sm"} url={country.countryPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={country.countryName} />
+                          <Location>{country.continent.continentName}</Location>
+                        </HeaderColumn>
+                      </Header>
+                    </Link>
+                  </UserRow>
+                ))}
             </UserContainer>
           </PHeader>
           {usersNow && usersNow.length !== 0 ? (

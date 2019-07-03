@@ -19,7 +19,7 @@ const UserContainer = styled.div`
   flex-direction: column;
 `;
 
-const UserRow = styled.div<ITheme>`
+const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   height: 50px;
@@ -29,7 +29,6 @@ const UserRow = styled.div<ITheme>`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -78,10 +77,6 @@ const Explain = styled(Location)`
 
 const Container = styled.div``;
 
-interface ITheme {
-  active?: string;
-}
-
 interface IProps {
   data: any;
   loading: boolean;
@@ -92,10 +87,6 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   loadMore: any;
   cityId: string;
-  usersBeforeActiveId: number;
-  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  onClick: any;
-  onBlur: any;
 }
 
 const CityUsersBeforePresenter: React.FunctionComponent<IProps> = ({
@@ -109,11 +100,7 @@ const CityUsersBeforePresenter: React.FunctionComponent<IProps> = ({
   usersBeforeList,
   onChange,
   loadMore,
-  cityId,
-  usersBeforeActiveId,
-  onKeyDown,
-  onClick,
-  onBlur
+  cityId
 }) => {
   return (
     <>
@@ -121,14 +108,7 @@ const CityUsersBeforePresenter: React.FunctionComponent<IProps> = ({
         <UserContainer>
           <UserNameRow>
             <Username>USERS BEFORE</Username>
-            <Input
-              placeholder="Search"
-              value={search}
-              onChange={onChange}
-              onKeyDown={onKeyDown}
-              onClick={onClick}
-              onBlur={onBlur}
-            />
+            <Input placeholder="Search" value={search} onChange={onChange} />
           </UserNameRow>
           {loading && <Loader />}
           {!loading && (
@@ -139,14 +119,31 @@ const CityUsersBeforePresenter: React.FunctionComponent<IProps> = ({
               initialLoad={false}
             >
               {usersBeforeList.length !== 0 &&
-                usersBeforeList.map((user, index) => {
-                  let active;
-                  if (index === usersBeforeActiveId) {
-                    active = "active";
-                  }
-                  return (
-                    <UserRow active={active} key={index}>
-                      <Link to={`/${user.actor.profile.username}`}>
+                usersBeforeList.map(user => (
+                  <UserRow key={user.actor.profile.id}>
+                    <Link to={`/${user.actor.profile.username}`}>
+                      <UserHeader
+                        username={user.actor.profile.username}
+                        currentCity={user.actor.profile.currentCity.cityName}
+                        currentCountry={
+                          user.actor.profile.currentCity.country.countryName
+                        }
+                        avatar={`${BACKEND_URL}/media/${
+                          user.actor.profile.avatar.thumbnail
+                        }`}
+                        size={"sm"}
+                      />
+                      <Explain>{user.naturalTime}</Explain>
+                    </Link>
+                  </UserRow>
+                ))}
+              {usersBeforeList.length === 0 &&
+                !search &&
+                usersBefore &&
+                usersBefore.map(user => (
+                  <Container key={user.actor.profile.id}>
+                    <Link to={`/${user.actor.profile.username}`}>
+                      <UserRow>
                         <UserHeader
                           username={user.actor.profile.username}
                           currentCity={user.actor.profile.currentCity.cityName}
@@ -159,41 +156,10 @@ const CityUsersBeforePresenter: React.FunctionComponent<IProps> = ({
                           size={"sm"}
                         />
                         <Explain>{user.naturalTime}</Explain>
-                      </Link>
-                    </UserRow>
-                  );
-                })}
-              {usersBeforeList.length === 0 &&
-                !search &&
-                usersBefore &&
-                usersBefore.map((user, index) => {
-                  let active;
-                  if (index === usersBeforeActiveId) {
-                    active = "active";
-                  }
-                  return (
-                    <Container key={index}>
-                      <Link to={`/${user.actor.profile.username}`}>
-                        <UserRow active={active}>
-                          <UserHeader
-                            username={user.actor.profile.username}
-                            currentCity={
-                              user.actor.profile.currentCity.cityName
-                            }
-                            currentCountry={
-                              user.actor.profile.currentCity.country.countryName
-                            }
-                            avatar={`${BACKEND_URL}/media/${
-                              user.actor.profile.avatar.thumbnail
-                            }`}
-                            size={"sm"}
-                          />
-                          <Explain>{user.naturalTime}</Explain>
-                        </UserRow>
-                      </Link>
-                    </Container>
-                  );
-                })}
+                      </UserRow>
+                    </Link>
+                  </Container>
+                ))}
             </InfiniteScroll>
           )}
         </UserContainer>

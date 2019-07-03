@@ -18,7 +18,6 @@ interface IState {
   modalOpen: boolean;
   search: string;
   usersBeforeList: any;
-  usersBeforeActiveId: number;
 }
 
 class ContinentUsersBeforeContainer extends React.Component<IProps, IState> {
@@ -29,8 +28,7 @@ class ContinentUsersBeforeContainer extends React.Component<IProps, IState> {
     this.state = {
       modalOpen: false,
       search: "",
-      usersBeforeList: [],
-      usersBeforeActiveId: null
+      usersBeforeList: []
     };
   }
   public componentDidUpdate(prevProps) {
@@ -48,12 +46,7 @@ class ContinentUsersBeforeContainer extends React.Component<IProps, IState> {
         params: { continentCode }
       }
     } = this.props;
-    const {
-      modalOpen,
-      search,
-      usersBeforeList,
-      usersBeforeActiveId
-    } = this.state;
+    const { modalOpen, search, usersBeforeList } = this.state;
     return (
       <ContinentUsersBeforeQuery
         query={CONTINENT_USERS_BEFORE}
@@ -71,14 +64,10 @@ class ContinentUsersBeforeContainer extends React.Component<IProps, IState> {
               modalOpen={modalOpen}
               toggleModal={this.toggleModal}
               search={search}
-              usersBeforeActiveId={usersBeforeActiveId}
               usersBeforeList={usersBeforeList}
               onChange={this.onChange}
               loadMore={this.loadMore}
               continentCode={continentCode}
-              onKeyDown={this.onKeyDown}
-              onClick={this.onClick}
-              onBlur={this.onBlur}
             />
           );
         }}
@@ -106,8 +95,7 @@ class ContinentUsersBeforeContainer extends React.Component<IProps, IState> {
     console.log(usersBeforeList);
     this.setState({
       search: value,
-      usersBeforeList,
-      usersBeforeActiveId: 0
+      usersBeforeList
     } as any);
   };
   public loadMore = page => {
@@ -137,62 +125,6 @@ class ContinentUsersBeforeContainer extends React.Component<IProps, IState> {
         };
         return data;
       }
-    });
-  };
-  public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const { keyCode } = event;
-    const { usersBeforeActiveId, usersBeforeList } = this.state;
-    const { history } = this.props;
-
-    const { continentUsersBefore: { usersBefore = null } = {} } = this.data;
-
-    if (keyCode === 13 && (usersBeforeList.length || usersBefore)) {
-      {
-        usersBeforeList.length
-          ? history.push({
-              pathname: `/${
-                usersBeforeList[usersBeforeActiveId].actor.profile.username
-              }`
-            })
-          : history.push({
-              pathname: `/${
-                usersBefore[usersBeforeActiveId].actor.profile.username
-              }`
-            });
-      }
-      this.setState({
-        usersBeforeActiveId: 0
-      });
-    } else if (keyCode === 38) {
-      if (usersBeforeActiveId === 0) {
-        return;
-      }
-      this.setState({
-        usersBeforeActiveId: usersBeforeActiveId - 1
-      });
-    } else if (keyCode === 40) {
-      if (usersBeforeList.length) {
-        if (usersBeforeActiveId === usersBeforeList.length - 1) {
-          return;
-        }
-      } else {
-        if (usersBeforeActiveId === usersBefore.length - 1) {
-          return;
-        }
-      }
-      this.setState({
-        usersBeforeActiveId: usersBeforeActiveId + 1
-      });
-    }
-  };
-  public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      usersBeforeActiveId: 0
-    });
-  };
-  public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      usersBeforeActiveId: null
     });
   };
 }

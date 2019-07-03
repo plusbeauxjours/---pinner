@@ -20,7 +20,7 @@ const UserContainer = styled.div`
   flex-direction: column;
 `;
 
-const UserRow = styled.div<ITheme>`
+const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   height: 50px;
@@ -30,7 +30,6 @@ const UserRow = styled.div<ITheme>`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -99,10 +98,6 @@ const HeaderColumn = styled.div`
   margin-left: 15px;
 `;
 
-interface ITheme {
-  active?: string;
-}
-
 interface IProps {
   data: any;
   loading: boolean;
@@ -110,13 +105,9 @@ interface IProps {
   toggleModal: () => void;
   search: string;
   nearCitiesList: any;
-  nearCitiesActiveId: number;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   loadMore: any;
   cityId: string;
-  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  onClick: any;
-  onBlur: any;
 }
 
 const NearCitiesPresenter: React.FunctionComponent<IProps> = ({
@@ -126,13 +117,9 @@ const NearCitiesPresenter: React.FunctionComponent<IProps> = ({
   toggleModal,
   search,
   nearCitiesList,
-  nearCitiesActiveId,
   onChange,
   loadMore,
-  cityId,
-  onKeyDown,
-  onClick,
-  onBlur
+  cityId
 }) => {
   return (
     <>
@@ -140,14 +127,7 @@ const NearCitiesPresenter: React.FunctionComponent<IProps> = ({
         <UserContainer>
           <UserNameRow>
             <Username>NEAR CITIES</Username>
-            <Input
-              placeholder="Search"
-              value={search}
-              onChange={onChange}
-              onKeyDown={onKeyDown}
-              onClick={onClick}
-              onBlur={onBlur}
-            />
+            <Input placeholder="Search" value={search} onChange={onChange} />
           </UserNameRow>
           {loading && <Loader />}
           {!loading && (
@@ -158,61 +138,49 @@ const NearCitiesPresenter: React.FunctionComponent<IProps> = ({
               initialLoad={false}
             >
               {nearCitiesList.length !== 0 &&
-                nearCitiesList.map((nearCity, index) => {
-                  let active;
-                  if (index === nearCitiesActiveId) {
-                    active = "active";
-                  }
-                  return (
-                    <UserRow key={nearCity.id} active={active}>
-                      <Link to={`/city/${nearCity.cityId}`}>
-                        <Header>
-                          <SAvatar size={"sm"} url={nearCity.cityPhoto} />
-                          <HeaderColumn>
-                            <HeaderText text={nearCity.cityName} />
-                            <Location>{nearCity.country.countryName}</Location>
-                          </HeaderColumn>
-                        </Header>
-                      </Link>
-                      <CityLikeBtn
-                        isLiked={nearCity.isLiked}
-                        cityId={nearCity.id}
-                        likeCount={nearCity.likeCount}
-                        type={"row"}
-                      />
-                      <Text>{nearCity.distance}km</Text>
-                    </UserRow>
-                  );
-                })}
+                nearCitiesList.map(nearCity => (
+                  <UserRow key={nearCity.id}>
+                    <Link to={`/city/${nearCity.cityId}`}>
+                      <Header>
+                        <SAvatar size={"sm"} url={nearCity.cityPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={nearCity.cityName} />
+                          <Location>{nearCity.country.countryName}</Location>
+                        </HeaderColumn>
+                      </Header>
+                    </Link>
+                    <CityLikeBtn
+                      isLiked={nearCity.isLiked}
+                      cityId={nearCity.id}
+                      likeCount={nearCity.likeCount}
+                      type={"row"}
+                    />
+                    <Text>{nearCity.distance}km</Text>
+                  </UserRow>
+                ))}
               {nearCitiesList.length === 0 &&
                 !search &&
                 cities &&
-                cities.map((nearCity, index) => {
-                  let active;
-                  if (index === nearCitiesActiveId) {
-                    active = "active";
-                  }
-                  return (
-                    <UserRow key={nearCity.id} active={active}>
-                      <Link to={`/city/${nearCity.cityId}`}>
-                        <Header>
-                          <SAvatar size={"sm"} url={nearCity.cityPhoto} />
-                          <HeaderColumn>
-                            <HeaderText text={nearCity.cityName} />
-                            <Location>{nearCity.country.countryName}</Location>
-                          </HeaderColumn>
-                        </Header>
-                      </Link>
-                      <CityLikeBtn
-                        isLiked={nearCity.isLiked}
-                        cityId={nearCity.id}
-                        likeCount={nearCity.likeCount}
-                        type={"row"}
-                      />
-                      <Text>{nearCity.distance}km</Text>
-                    </UserRow>
-                  );
-                })}
+                cities.map(nearCity => (
+                  <UserRow key={nearCity.id}>
+                    <Link to={`/city/${nearCity.cityId}`}>
+                      <Header>
+                        <SAvatar size={"sm"} url={nearCity.cityPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={nearCity.cityName} />
+                          <Location>{nearCity.country.countryName}</Location>
+                        </HeaderColumn>
+                      </Header>
+                    </Link>
+                    <CityLikeBtn
+                      isLiked={nearCity.isLiked}
+                      cityId={nearCity.id}
+                      likeCount={nearCity.likeCount}
+                      type={"row"}
+                    />
+                    <Text>{nearCity.distance}km</Text>
+                  </UserRow>
+                ))}
             </InfiniteScroll>
           )}
         </UserContainer>

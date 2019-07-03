@@ -92,7 +92,7 @@ const UserContainer = styled.div`
   }
 `;
 
-const UserRow = styled.div<ITheme>`
+const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   grid-template-columns: 2fr 1fr 1fr;
@@ -101,7 +101,6 @@ const UserRow = styled.div<ITheme>`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -167,10 +166,6 @@ const Location = styled.span`
   font-weight: 200;
 `;
 
-interface ITheme {
-  active?: string;
-}
-
 interface IProps {
   cityName: string;
   cityPhoto: string;
@@ -188,10 +183,7 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
   usersBeforeList: any;
-  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  onClick: any;
-  onBlur: any;
-  usersBeforeActiveId: number;
+
   cityId: string;
 }
 
@@ -215,10 +207,7 @@ const TripProfilePresenter: React.FunctionComponent<IProps> = ({
   onChange,
   search,
   usersBeforeList,
-  onKeyDown,
-  onClick,
-  onBlur,
-  usersBeforeActiveId,
+
   cityId
 }) => {
   if (profileLoading) {
@@ -264,61 +253,46 @@ const TripProfilePresenter: React.FunctionComponent<IProps> = ({
                   placeholder="Search"
                   onChange={onChange}
                   value={search}
-                  onKeyDown={onKeyDown}
-                  onClick={onClick}
-                  onBlur={onBlur}
                 />
               </UserNameRow>
               {usersBeforeList.length !== 0 &&
-                usersBeforeList.map((user, index) => {
-                  let active;
-                  if (index === usersBeforeActiveId) {
-                    active = "active";
-                  }
-                  return (
-                    <UserRow key={index} active={active}>
-                      <Link to={`/${user.actor.profile.username}`}>
-                        <UserHeader
-                          username={user.actor.profile.username}
-                          currentCity={user.actor.profile.currentCity.cityName}
-                          currentCountry={
-                            user.actor.profile.currentCity.country.countryName
-                          }
-                          avatar={`${BACKEND_URL}/media/${
-                            user.actor.profile.avatar.thumbnail
-                          }`}
-                          size={"sm"}
-                        />
-                      </Link>
-                    </UserRow>
-                  );
-                })}
+                usersBeforeList.map(user => (
+                  <UserRow key={user.actor.profile.id}>
+                    <Link to={`/${user.actor.profile.username}`}>
+                      <UserHeader
+                        username={user.actor.profile.username}
+                        currentCity={user.actor.profile.currentCity.cityName}
+                        currentCountry={
+                          user.actor.profile.currentCity.country.countryName
+                        }
+                        avatar={`${BACKEND_URL}/media/${
+                          user.actor.profile.avatar.thumbnail
+                        }`}
+                        size={"sm"}
+                      />
+                    </Link>
+                  </UserRow>
+                ))}
               {usersBeforeList.length === 0 &&
                 !search &&
                 usersBefore &&
-                usersBefore.map((user, index) => {
-                  let active;
-                  if (index === usersBeforeActiveId) {
-                    active = "active";
-                  }
-                  return (
-                    <UserRow key={index} active={active}>
-                      <Link to={`/${user.actor.profile.username}`}>
-                        <UserHeader
-                          username={user.actor.profile.username}
-                          currentCity={user.actor.profile.currentCity.cityName}
-                          currentCountry={
-                            user.actor.profile.currentCity.country.countryName
-                          }
-                          avatar={`${BACKEND_URL}/media/${
-                            user.actor.profile.avatar.thumbnail
-                          }`}
-                          size={"sm"}
-                        />
-                      </Link>
-                    </UserRow>
-                  );
-                })}
+                usersBefore.map(user => (
+                  <UserRow key={user.actor.profile.id}>
+                    <Link to={`/${user.actor.profile.username}`}>
+                      <UserHeader
+                        username={user.actor.profile.username}
+                        currentCity={user.actor.profile.currentCity.cityName}
+                        currentCountry={
+                          user.actor.profile.currentCity.country.countryName
+                        }
+                        avatar={`${BACKEND_URL}/media/${
+                          user.actor.profile.avatar.thumbnail
+                        }`}
+                        size={"sm"}
+                      />
+                    </Link>
+                  </UserRow>
+                ))}
             </UserContainer>
           </PHeader>
 

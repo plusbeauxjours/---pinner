@@ -55,7 +55,7 @@ const GreyLine = styled.div`
   }
 `;
 
-const UserRow = styled.div<ITheme>`
+const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   height: 50px;
@@ -65,7 +65,6 @@ const UserRow = styled.div<ITheme>`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  background-color: ${props => (props.active ? "grey" : null)};
   &:hover {
     background-color: grey;
   }
@@ -189,10 +188,6 @@ const RightIcon = styled.div`
 //   }
 // `;
 
-interface ITheme {
-  active?: string;
-}
-
 interface IProps {
   data?: any;
   loading: boolean;
@@ -204,10 +199,7 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
   cityList: any;
-  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  onClick: any;
-  onBlur: any;
-  activeId: number;
+
   countryCode: string;
   currentCityId: string;
   back: (event) => void;
@@ -231,10 +223,7 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
   cityList,
   search,
   onChange,
-  onKeyDown,
-  onClick,
-  onBlur,
-  activeId,
+
   countryCode,
   currentCityId
 }) => {
@@ -308,65 +297,50 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
                   placeholder="Search"
                   value={search}
                   onChange={onChange}
-                  onKeyDown={onKeyDown}
-                  onClick={onClick}
-                  onBlur={onBlur}
                 />
               </UserNameRow>
               {cityList.length !== 0 &&
-                cityList.map((city, index) => {
-                  let active;
-                  if (index === activeId) {
-                    active = "active";
-                  }
-                  return (
-                    <UserRow key={index} active={active}>
-                      <Link to={`/city/${city.cityId}`}>
-                        <Header>
-                          <SAvatar size={"sm"} url={city.cityPhoto} />
-                          <HeaderColumn>
-                            <HeaderText text={city.cityName} />
-                            <Location>{countryName}</Location>
-                          </HeaderColumn>
-                        </Header>
-                      </Link>
-                      <CityLikeBtn
-                        isLiked={city.isLiked}
-                        cityId={city.id}
-                        likeCount={city.likeCount}
-                        type={"row"}
-                      />
-                    </UserRow>
-                  );
-                })}
+                cityList.map(city => (
+                  <UserRow key={city.id}>
+                    <Link to={`/city/${city.cityId}`}>
+                      <Header>
+                        <SAvatar size={"sm"} url={city.cityPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={city.cityName} />
+                          <Location>{countryName}</Location>
+                        </HeaderColumn>
+                      </Header>
+                    </Link>
+                    <CityLikeBtn
+                      isLiked={city.isLiked}
+                      cityId={city.id}
+                      likeCount={city.likeCount}
+                      type={"row"}
+                    />
+                  </UserRow>
+                ))}
               {cityList.length === 0 &&
                 !search &&
                 cities &&
-                cities.map((city, index) => {
-                  let active;
-                  if (index === activeId) {
-                    active = "active";
-                  }
-                  return (
-                    <UserRow key={index} active={active}>
-                      <Link to={`/city/${city.cityId}`}>
-                        <Header>
-                          <SAvatar size={"sm"} url={city.cityPhoto} />
-                          <HeaderColumn>
-                            <HeaderText text={city.cityName} />
-                            <Location>{countryName}</Location>
-                          </HeaderColumn>
-                        </Header>
-                      </Link>
-                      <CityLikeBtn
-                        isLiked={city.isLiked}
-                        cityId={city.id}
-                        likeCount={city.likeCount}
-                        type={"row"}
-                      />
-                    </UserRow>
-                  );
-                })}
+                cities.map(city => (
+                  <UserRow key={city.id}>
+                    <Link to={`/city/${city.cityId}`}>
+                      <Header>
+                        <SAvatar size={"sm"} url={city.cityPhoto} />
+                        <HeaderColumn>
+                          <HeaderText text={city.cityName} />
+                          <Location>{countryName}</Location>
+                        </HeaderColumn>
+                      </Header>
+                    </Link>
+                    <CityLikeBtn
+                      isLiked={city.isLiked}
+                      cityId={city.id}
+                      likeCount={city.likeCount}
+                      type={"row"}
+                    />
+                  </UserRow>
+                ))}
             </UserContainer>
           </PHeader>
           {usersNow && usersNow.length !== 0 ? (

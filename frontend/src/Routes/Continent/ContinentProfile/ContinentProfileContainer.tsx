@@ -22,7 +22,6 @@ interface IProps extends RouteComponentProps<any> {}
 interface IState {
   search: string;
   countryList: any;
-  activeId: number;
   currentCityId: string;
 }
 class ContinentProfileContainer extends React.Component<IProps, IState> {
@@ -33,7 +32,6 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
     this.state = {
       search: "",
       countryList: [],
-      activeId: null,
       currentCityId: localStorage.getItem("cityId")
     };
   }
@@ -53,7 +51,7 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
         params: { continentCode }
       }
     } = this.props;
-    const { search, countryList, activeId, currentCityId } = this.state;
+    const { search, countryList, currentCityId } = this.state;
     return (
       <ContinentProfileQuery
         query={CONTINENT_PROFILE}
@@ -80,11 +78,7 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
                     continentCode={continentCode}
                     onChange={this.onChange}
                     search={search}
-                    activeId={activeId}
                     countryList={countryList}
-                    onKeyDown={this.onKeyDown}
-                    onClick={this.onClick}
-                    onBlur={this.onBlur}
                     currentCityId={currentCityId}
                   />
                 );
@@ -109,61 +103,8 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
     const countryList = search(countries, value);
     this.setState({
       search: value,
-      countryList,
-      activeId: 0
+      countryList
     } as any);
-  };
-  public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const { keyCode } = event;
-    const { activeId, countryList } = this.state;
-    const { history } = this.props;
-
-    const { continentProfile: { countries = null } = {} } = this.data;
-
-    if (keyCode === 13 && (countryList.length || countries)) {
-      {
-        countryList.length
-          ? history.push({
-              pathname: `/country/${countryList[activeId].countryCode}`
-            })
-          : history.push({
-              pathname: `/country/${countries[activeId].countryCode}`
-            });
-      }
-      this.setState({
-        activeId: 0
-      });
-    } else if (keyCode === 38) {
-      if (activeId === 0) {
-        return;
-      }
-      this.setState({
-        activeId: activeId - 1
-      });
-    } else if (keyCode === 40) {
-      if (countryList.length) {
-        if (activeId === countryList.length - 1) {
-          return;
-        }
-      } else {
-        if (activeId === countries.length - 1) {
-          return;
-        }
-      }
-      this.setState({
-        activeId: activeId + 1
-      });
-    }
-  };
-  public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      activeId: 0
-    });
-  };
-  public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      activeId: null
-    });
   };
 }
 

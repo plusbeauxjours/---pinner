@@ -34,7 +34,6 @@ interface IState {
   currentCountryCode: string;
   modalOpen: boolean;
   search: string;
-  activeId: number;
 }
 
 class HeaderContainer extends React.Component<IProps, IState> {
@@ -53,8 +52,7 @@ class HeaderContainer extends React.Component<IProps, IState> {
       currentCityName: null,
       currentCountryCode: null,
       modalOpen: false,
-      search: "",
-      activeId: 0
+      search: ""
     };
   }
   public componentDidMount() {
@@ -85,8 +83,7 @@ class HeaderContainer extends React.Component<IProps, IState> {
       currentCityName,
       currentCountryCode,
       modalOpen,
-      search,
-      activeId
+      search
     } = this.state;
     return (
       <MeQuery query={ME}>
@@ -125,10 +122,8 @@ class HeaderContainer extends React.Component<IProps, IState> {
                                 currentCountryCode={currentCountryCode}
                                 modalOpen={modalOpen}
                                 search={search}
-                                activeId={activeId}
                                 toggleModal={this.toggleModal}
                                 onChange={this.onChange}
-                                onKeyDown={this.onKeyDown}
                               />
                             );
                           }}
@@ -210,50 +205,8 @@ class HeaderContainer extends React.Component<IProps, IState> {
       target: { value }
     } = event;
     this.setState({
-      search: value,
-      activeId: 0
+      search: value
     } as any);
-  };
-  public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    console.log("onKeyDown");
-    const { keyCode } = event;
-    const { activeId } = this.state;
-    const { history } = this.props;
-    if (this.searchData) {
-      const {
-        searchUsers: { users= null } = {},
-        searchCities: { cities = null } = {},
-        searchCountries: { countries = null } = {},
-        searchContinents: { continents = null } = {}
-      } = this.searchData;
-      // const length =
-      // users.length + cities.length + countries.length + continents.length;
-      if (users && cities && countries && continents) {
-        if (keyCode === 13 && (users || cities || countries || continents)) {
-          history.push({
-            pathname: `/${users[activeId].username}`
-          });
-          this.setState({
-            activeId: 0,
-            modalOpen: false
-          });
-        } else if (keyCode === 38) {
-          if (activeId === 0) {
-            return;
-          }
-          this.setState({
-            activeId: activeId - 1
-          });
-        } else if (keyCode === 40) {
-          if (activeId === users.length - 1) {
-            return;
-          }
-          this.setState({
-            activeId: activeId + 1
-          });
-        }
-      }
-    }
   };
 }
 

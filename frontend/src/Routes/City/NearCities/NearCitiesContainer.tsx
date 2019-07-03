@@ -12,7 +12,6 @@ interface IState {
   modalOpen: boolean;
   search: string;
   nearCitiesList: any;
-  nearCitiesActiveId: number;
 }
 
 class NearCitiesContainer extends React.Component<IProps, IState> {
@@ -23,8 +22,7 @@ class NearCitiesContainer extends React.Component<IProps, IState> {
     this.state = {
       modalOpen: false,
       search: "",
-      nearCitiesList: [],
-      nearCitiesActiveId: null
+      nearCitiesList: []
     };
   }
   public componentDidUpdate(prevProps) {
@@ -44,12 +42,7 @@ class NearCitiesContainer extends React.Component<IProps, IState> {
         params: { cityId }
       }
     } = this.props;
-    const {
-      modalOpen,
-      search,
-      nearCitiesList,
-      nearCitiesActiveId
-    } = this.state;
+    const { modalOpen, search, nearCitiesList } = this.state;
     return (
       <NearCitiesQuery
         query={NEAR_CITIES}
@@ -67,14 +60,10 @@ class NearCitiesContainer extends React.Component<IProps, IState> {
               modalOpen={modalOpen}
               toggleModal={this.toggleModal}
               search={search}
-              nearCitiesActiveId={nearCitiesActiveId}
               nearCitiesList={nearCitiesList}
               onChange={this.onChange}
               loadMore={this.loadMore}
               cityId={cityId}
-              onKeyDown={this.onKeyDown}
-              onClick={this.onClick}
-              onBlur={this.onBlur}
             />
           );
         }}
@@ -104,8 +93,7 @@ class NearCitiesContainer extends React.Component<IProps, IState> {
     console.log(nearCitiesList);
     this.setState({
       search: value,
-      nearCitiesList,
-      nearCitiesActiveId: 0
+      nearCitiesList
     } as any);
   };
   public loadMore = page => {
@@ -135,58 +123,6 @@ class NearCitiesContainer extends React.Component<IProps, IState> {
         };
         return data;
       }
-    });
-  };
-  public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const { keyCode } = event;
-    const { nearCitiesActiveId, nearCitiesList } = this.state;
-    const { history } = this.props;
-
-    const { nearCities: { cities = null } = {} } = this.data;
-
-    if (keyCode === 13 && (nearCitiesList.length || cities)) {
-      {
-        nearCitiesList.length
-          ? history.push({
-              pathname: `/city/${nearCitiesList[nearCitiesActiveId].cityId}`
-            })
-          : history.push({
-              pathname: `/city/${cities[nearCitiesActiveId].cityId}`
-            });
-      }
-      this.setState({
-        nearCitiesActiveId: 0
-      });
-    } else if (keyCode === 38) {
-      if (nearCitiesActiveId === 0) {
-        return;
-      }
-      this.setState({
-        nearCitiesActiveId: nearCitiesActiveId - 1
-      });
-    } else if (keyCode === 40) {
-      if (nearCitiesList.length) {
-        if (nearCitiesActiveId === nearCitiesList.length - 1) {
-          return;
-        }
-      } else {
-        if (nearCitiesActiveId === cities.length - 1) {
-          return;
-        }
-      }
-      this.setState({
-        nearCitiesActiveId: nearCitiesActiveId + 1
-      });
-    }
-  };
-  public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      nearCitiesActiveId: 0
-    });
-  };
-  public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      nearCitiesActiveId: null
     });
   };
 }

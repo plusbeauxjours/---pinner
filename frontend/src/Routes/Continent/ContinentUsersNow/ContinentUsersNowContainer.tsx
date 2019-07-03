@@ -18,7 +18,6 @@ interface IState {
   modalOpen: boolean;
   search: string;
   usersNowList: any;
-  usersNowActiveId: number;
 }
 
 class ContinentUsersNowContainer extends React.Component<IProps, IState> {
@@ -29,8 +28,7 @@ class ContinentUsersNowContainer extends React.Component<IProps, IState> {
     this.state = {
       modalOpen: false,
       search: "",
-      usersNowList: [],
-      usersNowActiveId: null
+      usersNowList: []
     };
   }
   public componentDidUpdate(prevProps) {
@@ -49,7 +47,7 @@ class ContinentUsersNowContainer extends React.Component<IProps, IState> {
       }
     } = this.props;
     console.log(this.props);
-    const { modalOpen, search, usersNowList, usersNowActiveId } = this.state;
+    const { modalOpen, search, usersNowList } = this.state;
     return (
       <ContinentUsersNowQuery
         query={CONTINENT_USERS_NOW}
@@ -67,14 +65,10 @@ class ContinentUsersNowContainer extends React.Component<IProps, IState> {
               modalOpen={modalOpen}
               toggleModal={this.toggleModal}
               search={search}
-              usersNowActiveId={usersNowActiveId}
               usersNowList={usersNowList}
               onChange={this.onChange}
               loadMore={this.loadMore}
               continentCode={continentCode}
-              onKeyDown={this.onKeyDown}
-              onClick={this.onClick}
-              onBlur={this.onBlur}
             />
           );
         }}
@@ -102,8 +96,7 @@ class ContinentUsersNowContainer extends React.Component<IProps, IState> {
     console.log(usersNowList);
     this.setState({
       search: value,
-      usersNowList,
-      usersNowActiveId: 0
+      usersNowList
     } as any);
   };
   public loadMore = page => {
@@ -133,58 +126,6 @@ class ContinentUsersNowContainer extends React.Component<IProps, IState> {
         };
         return data;
       }
-    });
-  };
-  public onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const { keyCode } = event;
-    const { usersNowActiveId, usersNowList } = this.state;
-    const { history } = this.props;
-
-    const { continentUsersNow: { usersNow = null } = {} } = this.data;
-
-    if (keyCode === 13 && (usersNowList.length || usersNow)) {
-      {
-        usersNowList.length
-          ? history.push({
-              pathname: `/${usersNowList[usersNowActiveId].profile.username}`
-            })
-          : history.push({
-              pathname: `/${usersNow[usersNowActiveId].profile.username}`
-            });
-      }
-      this.setState({
-        usersNowActiveId: 0
-      });
-    } else if (keyCode === 38) {
-      if (usersNowActiveId === 0) {
-        return;
-      }
-      this.setState({
-        usersNowActiveId: usersNowActiveId - 1
-      });
-    } else if (keyCode === 40) {
-      if (usersNowList.length) {
-        if (usersNowActiveId === usersNowList.length - 1) {
-          return;
-        }
-      } else {
-        if (usersNowActiveId === usersNow.length - 1) {
-          return;
-        }
-      }
-      this.setState({
-        usersNowActiveId: usersNowActiveId + 1
-      });
-    }
-  };
-  public onClick: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      usersNowActiveId: 0
-    });
-  };
-  public onBlur: React.MouseEventHandler<HTMLDivElement> = () => {
-    this.setState({
-      usersNowActiveId: null
     });
   };
 }

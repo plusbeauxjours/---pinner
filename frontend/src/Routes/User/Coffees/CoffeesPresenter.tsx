@@ -53,7 +53,7 @@ const UserContainer = styled.div`
   }
 `;
 
-const UserRow = styled.div<ITheme>`
+const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   height: 50px;
@@ -167,13 +167,11 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
                 onChange={onChange}
                 value={search}
                 autoComplete={"off"}
-                onClick={onClick}
-                onBlur={onBlur}
               />
             </UserNameRow>
             {coffeesList.length !== 0 &&
-              coffeesList.map((coffee, index) => (
-                <UserRow key={index}>
+              coffeesList.map(coffee => (
+                <UserRow key={coffee.uuid}>
                   <Link to={`/c/${coffee.uuid}`}>
                     <AvatarContainer>
                       <Avatar
@@ -195,8 +193,8 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
             {coffeesList.length === 0 &&
               !search &&
               coffees &&
-              coffees.map((coffee, index) => (
-                <UserRow key={index}>
+              coffees.map(coffee => (
+                <UserRow key={coffee.uuid}>
                   <Link to={`/c/${coffee.uuid}`}>
                     <AvatarContainer>
                       <Avatar

@@ -19,7 +19,6 @@ class ReportLocationMutation extends Mutation<
 > {}
 
 interface IProps extends RouteComponentProps<any> {
-  activeId: number;
   search: string;
   searchData: any;
   searchLoading: boolean;
@@ -45,7 +44,7 @@ class SearchContainer extends React.Component<IProps, IState> {
     }
   }
   public render() {
-    const { search, activeId, searchData, searchLoading } = this.props;
+    const { search, searchData, searchLoading } = this.props;
     return (
       <CreateCityQuery mutation={CREATE_CITY}>
         {(createCityFn, { loading: createCityLoading }) => {
@@ -57,7 +56,6 @@ class SearchContainer extends React.Component<IProps, IState> {
                 return (
                   <SearchPresenter
                     search={search}
-                    activeId={activeId}
                     searchData={searchData}
                     searchLoading={searchLoading}
                     onClick={this.onClick}
