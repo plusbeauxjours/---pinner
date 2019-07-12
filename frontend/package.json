@@ -51,7 +51,7 @@
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "precodegen": "apollo schema:download --endpoint=http://localhost:8000/graphql/",
-    "codegen": "apollo codegen:generate src/types/api.d.ts --localSchemaFile=schema.json --includes='src/**/!(*.local).ts' --target typescript --outputFlat",
+    "codegen": "apollo codegen:generate src/types/api.d.ts --localSchemaFile=schema.json --includes='src/**/!(*.local).q.ts' --target typescript --outputFlat",
     "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
