@@ -18,6 +18,7 @@ import { GOOGLE_PLACE_KEY } from "src/keys";
 import useGoogleAutocomplete from "../../../autocompleteHelpers";
 import { BACKEND_URL } from "src/constants";
 import { MutationFn } from "react-apollo";
+import Thin from "src/Components/Thin";
 
 const Header = styled.header`
   display: flex;
@@ -269,6 +270,10 @@ const ModalContainer = styled.div`
   top: 0;
 `;
 
+const AvatarModalContainer = styled(ModalContainer)`
+  z-index: 10;
+`;
+
 const TripModal = styled.div`
   z-index: 10;
   margin-top: 20px;
@@ -371,7 +376,8 @@ const SmallTitle = styled(Title)`
   align-items: center;
 `;
 
-const GreyText = styled(Bold)`
+const GreyText = styled(Thin)`
+  text-align: center;
   color: #999;
 `;
 
@@ -484,7 +490,7 @@ const AvatarUploadIcon = styled.div`
 `;
 const Label = styled.label``;
 
-const AWrapper = styled(Wrapper)`
+const AWrapper = styled.div`
   z-index: 101;
   display: flex;
   justify-content: center;
@@ -518,7 +524,7 @@ const Earth = styled.img`
 `;
 
 const PreviewModalContainer = styled(ModalContainer)`
-  z-index: 10;
+  z-index: 11;
 `;
 
 const AvatarImage = styled.div``;
@@ -739,7 +745,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
           </PreviewModalContainer>
         )}
         {avatarModalOpen && (
-          <ModalContainer>
+          <AvatarModalContainer>
             <ModalOverlay onClick={e => onSubmitImage(e)} />
             <ModalAvatars>
               {user.profile.isSelf && imagePreviewUrl.length === 0 && (
@@ -812,7 +818,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                   );
                 })}
             </ModalAvatars>
-          </ModalContainer>
+          </AvatarModalContainer>
         )}
         {requestModalOpen && (
           <ModalContainer>
@@ -835,9 +841,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleModal} />
             <Modal>
-              <ModalLink onClick={() => console.log("Edit Avatar")}>
-                Edit Avatar
-              </ModalLink>
+              <ModalLink onClick={toggleAvatarModalOpen}>Edit Avatar</ModalLink>
               <ModalLink onClick={() => console.log("Edit Profile")}>
                 Edit Profile
               </ModalLink>
@@ -1021,10 +1025,11 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
         ////////////// HEADER //////////////
         */}
         <Header>
-          <AvatarContainer onClick={toggleAvatarModalOpen}>
+          <AvatarContainer>
             <PAvatar
               size="lg"
               url={`${BACKEND_URL}/media/${user.profile.avatar.thumbnail}`}
+              onClick={toggleAvatarModalOpen}
             />
           </AvatarContainer>
           <NameContainer>
@@ -1159,9 +1164,15 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                           <Location>{trip.city.country.countryName}</Location>
                         </HeaderColumn>
                       </THeader>
-                      <GreyText text={trip.startDate} />
-                      <GreyText text={trip.endDate} />
-                      <GreyText text={`${trip.diffDays} Days`} />
+                      <GreyText text={trip.startDate ? trip.startDate : "-"} />
+                      <GreyText text={trip.endDate ? trip.endDate : "-"} />
+                      <GreyText
+                        text={
+                          trip.diffDays === 1
+                            ? `${trip.diffDays} Day`
+                            : `${trip.diffDays} Days`
+                        }
+                      />
                       <TripOverlay
                         onClick={() => {
                           user.profile.isSelf
@@ -1211,9 +1222,19 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                           <Location>{trip.city.country.countryName}</Location>
                         </HeaderColumn>
                       </THeader>
-                      <GreyText text={trip.startDate} />
-                      <GreyText text={trip.endDate} />
-                      <GreyText text={`${trip.diffDays} Days`} />
+                      <GreyText text={trip.startDate ? trip.startDate : "-"} />
+                      <GreyText text={trip.endDate ? trip.endDate : "-"} />
+                      {trip.diffDays ? (
+                        <GreyText
+                          text={
+                            trip.diffDays === 1
+                              ? `${trip.diffDays} Day`
+                              : `${trip.diffDays} Days`
+                          }
+                        />
+                      ) : (
+                        <GreyText text={"no trip date"} />
+                      )}
                       <TripOverlay
                         onClick={() => {
                           user.profile.isSelf

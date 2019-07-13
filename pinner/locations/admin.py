@@ -17,6 +17,7 @@ class CountryAdmin(admin.ModelAdmin):
         'country_name',
         'continent',
         'country_photo',
+        'total_like_count',
         'city_count',
         'country_capital',
         'country_name_native',

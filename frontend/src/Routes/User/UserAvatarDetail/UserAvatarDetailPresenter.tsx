@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { keyframes } from "styled-components";
 
 import Loader from "../../../Components/Loader";
-import Wrapper from "../../../Components/Wrapper";
 import { BACKEND_URL } from "src/constants";
 
 const ModalContainer = styled.div`
@@ -45,7 +44,7 @@ const Modal = styled.div`
   animation: ${ModalAnimation} 0.1s linear;
 `;
 
-const SWrapper = styled(Wrapper)`
+const SWrapper = styled.div`
   z-index: 101;
   display: flex;
   justify-content: center;

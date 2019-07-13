@@ -1214,31 +1214,31 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } catch (e) {
       console.log(e);
     }
-    // try {
-    //   const data = cache.readQuery({
-    //     query: GET_AVATARS,
-    //     variables: { userName: username }
-    //   });
-    //   if (data) {
-    //     data.getAvatars.avatars.find(i => i.isMain === true).isMain = false;
-    //     data.getAvatars.avatars.find(
-    //       i => i.uuid === markAsMain.uuid
-    //     ).isMain = true;
-    //     {
-    //       console.log(markAsMain.avatar.isMain);
-    //     }
-    //     {
-    //       console.log(data);
-    //     }
-    //     cache.writeQuery({
-    //       query: GET_AVATARS,
-    //       variables: { userName: username },
-    //       data
-    //     });
-    //   }
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    try {
+      const data = cache.readQuery({
+        query: GET_AVATARS,
+        variables: { userName: username }
+      });
+      if (data) {
+        data.getAvatars.avatars.find(i => i.isMain === true).isMain = false;
+        data.getAvatars.avatars.find(
+          i => i.uuid === markAsMain.uuid
+        ).isMain = true;
+        {
+          console.log(markAsMain.avatar.isMain);
+        }
+        {
+          console.log(data);
+        }
+        cache.writeQuery({
+          query: GET_AVATARS,
+          variables: { userName: username },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   public onCompletedMarkAsMain = data => {

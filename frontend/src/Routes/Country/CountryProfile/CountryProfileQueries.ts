@@ -16,6 +16,7 @@ export const COUNTRY_PROFILE = gql`
         countryCapital
         countryCurrency
         countryEmoji
+        totalLikeCount
         cityCount
         continent {
           ...ContinentParts

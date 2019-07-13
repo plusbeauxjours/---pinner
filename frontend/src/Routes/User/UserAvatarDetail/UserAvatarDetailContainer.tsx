@@ -23,15 +23,12 @@ class UserAvatarDetailContainer extends React.Component<IProps, IState> {
       modalOpen: false
     };
   }
-
   public render() {
-    console.log("avatar match:", this.props);
     const {
       match: {
         params: { uuid }
       }
     } = this.props;
-    console.log(uuid);
     const { modalOpen } = this.state;
     return (
       <GetAvatarDetailQuery

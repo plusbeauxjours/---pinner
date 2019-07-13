@@ -11,6 +11,7 @@ import Match from "../Routes/Match";
 
 import UserProfile from "../Routes/User/UserProfile";
 import EditProfile from "../Routes/User/EditProfile";
+// import Settings from "../Routes/User/Settings";
 import UserAvatarDetail from "../Routes/User/UserAvatarDetail";
 import Coffees from "../Routes/User/Coffees";
 import Cities from "../Routes/User/Cities";
@@ -77,12 +78,13 @@ class LoggedInPages extends React.Component<IProps> {
       <Wrapper>
         <Header />
 
+        {coffeeModalOpen && <Route path="/c/:uuid" component={CoffeeDetail} />}
         {avatarModalOpen && (
           <Route path="/:username/:uuid" component={UserAvatarDetail} />
         )}
-        {coffeeModalOpen && <Route path="/c/:uuid" component={CoffeeDetail} />}
         {editModalOpen && (
-          <Route path="/:username/edit" component={EditProfile} />
+          // <Route path="/account/settings" component={Settings} />
+          <Route path="/account/edit" component={EditProfile} />
         )}
 
         <Switch

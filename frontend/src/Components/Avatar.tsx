@@ -103,6 +103,7 @@ interface IProps {
   className?: string;
   cityId?: string;
   countryCode?: string;
+  onClick?: () => void;
 }
 
 const Avatar: React.FunctionComponent<IProps> = ({
@@ -110,7 +111,8 @@ const Avatar: React.FunctionComponent<IProps> = ({
   url,
   size,
   cityId,
-  countryCode
+  countryCode,
+  onClick
 }) => {
   const randomColor = require("randomcolor");
   const color = randomColor({
@@ -171,7 +173,12 @@ const Avatar: React.FunctionComponent<IProps> = ({
             </AvatarContainer>
           ) : (
             <AvatarContainer size={size}>
-              <Container className={className} src={src} size={size} />
+              <Container
+                className={className}
+                src={src}
+                size={size}
+                onClick={onClick}
+              />
             </AvatarContainer>
           );
         }}

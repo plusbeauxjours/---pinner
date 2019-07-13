@@ -37,6 +37,10 @@ class Country (config_models.TimeStampedModel):
     def city_count(self):
         return self.cities.all().count()
 
+    @cached_property
+    def total_like_count(self):
+        return Like.objects.filter(city__country=self).count()
+
     def __str__(self):
         return self.country_name
 

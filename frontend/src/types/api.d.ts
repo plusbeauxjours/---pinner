@@ -1066,6 +1066,7 @@ export interface CountryProfile_countryProfile_country {
   countryCapital: string | null;
   countryCurrency: string | null;
   countryEmoji: string | null;
+  totalLikeCount: number | null;
   cityCount: number | null;
   continent: CountryProfile_countryProfile_country_continent | null;
 }

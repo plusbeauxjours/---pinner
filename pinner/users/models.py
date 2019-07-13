@@ -118,7 +118,10 @@ class Profile(config_models.TimeStampedModel):
     verified_email = models.BooleanField(default=False)
     email = models.EmailField(blank=True, null=True, max_length=50)
     fbId = models.CharField(blank=True, null=True, max_length=20)
-
+    isDarkMode = models.BooleanField(default=True)
+    isHideTrips = models.BooleanField(default=False)
+    isHIdeCoffees = models.BooleanField(default=False)
+    isAutoLocationReport = models.BooleanField(default=False)
     current_city = models.ForeignKey(
         location_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCity', )
 

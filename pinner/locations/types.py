@@ -31,6 +31,7 @@ class CityType(DjangoObjectType):
 
 class CountryType(DjangoObjectType):
     city_count = graphene.Int(source='city_count')
+    total_like_count = graphene.Int(source='total_like_count')
     count = graphene.Int()
     diff = graphene.Int()
 

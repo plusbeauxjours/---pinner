@@ -13,6 +13,24 @@ from . import models, types
 from notifications import models as notification_models
 
 
+class Settings(graphene.Mutation):
+
+    class Arguments:
+
+    Output = types.DeleteAvatarResponse
+
+    @login_required
+    def mutate(self, info,  **kwargs):
+
+        user = info.context.user
+
+        try:
+            user.
+
+        except:
+            return types.DeleteAvatarResponse(ok=False, uuid=uuid)
+
+
 class EditProfile(graphene.Mutation):
 
     class Arguments:

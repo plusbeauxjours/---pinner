@@ -12,8 +12,8 @@ export const COFFEE_DETAIL = gql`
         target
         host {
           id
-          username
           profile {
+            username
             isSelf
             avatar {
               thumbnail

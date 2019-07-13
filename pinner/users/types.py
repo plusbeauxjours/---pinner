@@ -40,6 +40,10 @@ class LikeType(DjangoObjectType):
         model = models.Like
 
 
+class SettingsResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
+
+
 class AvatarListResponse(graphene.ObjectType):
     avatars = graphene.List(AvatarType)
 
