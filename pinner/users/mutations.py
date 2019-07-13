@@ -16,19 +16,68 @@ from notifications import models as notification_models
 class Settings(graphene.Mutation):
 
     class Arguments:
+        payload = graphene.String()
 
-    Output = types.DeleteAvatarResponse
+    Output = types.ToggleResponse
 
     @login_required
     def mutate(self, info,  **kwargs):
 
         user = info.context.user
+        payload = kwargs.get('payload')
 
-        try:
-            user.
-
-        except:
-            return types.DeleteAvatarResponse(ok=False, uuid=uuid)
+        if payload == "DARK_MODE":
+            if user.isDarkMode is True:
+                try:
+                    user.isDarkMode = False
+                    return types.ToggleResponse(ok=True, user=user)
+                except:
+                    return types.ToggleResponse(ok=False, user=None)
+            elif user.isDarkMode is False:
+                try:
+                    user.isDarkMode = True
+                    return types.ToggleResponse(ok=True, user=user)
+                except:
+                    return types.ToggleResponse(ok=False, user=None)
+        elif payload == "HIDE_TRIPS":
+            if user.isHideTrips is True:
+                try:
+                    user.isHideTrips = False
+                    return types.ToggleResponse(ok=True, user=user)
+                except:
+                    return types.ToggleResponse(ok=False, user=None)
+            elif user.isHideTrips is False:
+                try:
+                    user.isHideTrips = True
+                    return types.ToggleResponse(ok=True, user=user)
+                except:
+                    return types.ToggleResponse(ok=False, user=None)
+        elif payload == "HIDE_COFFEES":
+            if user.isHIdeCoffees is True:
+                try:
+                    user.isHIdeCoffees = False
+                    return types.ToggleResponse(ok=True, user=user)
+                except:
+                    return types.ToggleResponse(ok=False, user=None)
+            elif user.isHIdeCoffees is False:
+                try:
+                    user.isHIdeCoffees = True
+                    return types.ToggleResponse(ok=True, user=user)
+                except:
+                    return types.ToggleResponse(ok=False, user=None)
+        elif payload == "AUTO_LOCATION_REPORT":
+            if user.isAutoLocationReport is True:
+                try:
+                    user.isAutoLocationReport = False
+                    return types.ToggleResponse(ok=True, user=user)
+                except:
+                    return types.ToggleResponse(ok=False, user=None)
+            elif user.isAutoLocationReport is False:
+                try:
+                    user.isAutoLocationReport = True
+                    return types.ToggleResponse(ok=True, user=user)
+                except:
+                    return types.ToggleResponse(ok=False, user=None)
 
 
 class EditProfile(graphene.Mutation):

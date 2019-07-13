@@ -40,8 +40,9 @@ class LikeType(DjangoObjectType):
         model = models.Like
 
 
-class SettingsResponse(graphene.ObjectType):
+class ToggleResponse(graphene.ObjectType):
     ok = graphene.Boolean()
+    user = graphene.Field(coffee_typoes.UserType)
 
 
 class AvatarListResponse(graphene.ObjectType):
