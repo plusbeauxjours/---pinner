@@ -52,14 +52,21 @@ const Username = styled.span`
 const Input = styled.input`
   width: 215px;
   border: 0;
-  border: ${props => props.theme.boxBorder};
+  border-bottom: 1px solid grey;
   background-color: ${props => props.theme.bgColor};
-  border-radius: 3px;
   padding: 5px;
   color: white;
   font-size: 12px;
+  font-weight: 100;
+  &:focus {
+    outline: none;
+    &::-webkit-input-placeholder {
+      color: transparent;
+    }
+  }
   &::placeholder {
     color: ${props => props.theme.greyColor};
+    text-align: right;
   }
 `;
 
@@ -108,7 +115,11 @@ const CityUsersBeforePresenter: React.FunctionComponent<IProps> = ({
         <UserContainer>
           <UserNameRow>
             <Username>USERS BEFORE</Username>
-            <Input placeholder="Search" value={search} onChange={onChange} />
+            <Input
+              placeholder="Search users who has been this city"
+              value={search}
+              onChange={onChange}
+            />
           </UserNameRow>
           {loading && <Loader />}
           {!loading && (

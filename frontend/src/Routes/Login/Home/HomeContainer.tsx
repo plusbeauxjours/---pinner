@@ -28,7 +28,7 @@ class HomeContainer extends React.Component<IProps, IState> {
     };
   }
   public componentDidMount() {
-    const countryCode = localStorage.getItem("countryCode");
+    const countryCode = localStorage.getItem("countryCode") || "KR";
     if (!countryCode) {
       console.log("WORKING");
       navigator.geolocation.getCurrentPosition(

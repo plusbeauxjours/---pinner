@@ -95,14 +95,21 @@ const UserNameRow = styled.div`
 const Input = styled.input`
   width: 215px;
   border: 0;
-  border: ${props => props.theme.boxBorder};
+  border-bottom: 1px solid grey;
   background-color: ${props => props.theme.bgColor};
-  border-radius: 3px;
   padding: 5px;
   color: white;
   font-size: 12px;
+  font-weight: 100;
+  &:focus {
+    outline: none;
+    &::-webkit-input-placeholder {
+      color: transparent;
+    }
+  }
   &::placeholder {
     color: ${props => props.theme.greyColor};
+    text-align: right;
   }
 `;
 
@@ -130,7 +137,11 @@ const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
           <UserContainer>
             <UserNameRow>
               <Username>NEED SOME COFFEE NOW</Username>
-              <Input placeholder="Search" value={search} onChange={onChange} />
+              <Input
+                placeholder="Search users who wants coffee"
+                value={search}
+                onChange={onChange}
+              />
             </UserNameRow>
             {coffeesList.length !== 0 &&
               coffeesList.map(coffee => {

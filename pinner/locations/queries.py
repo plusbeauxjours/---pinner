@@ -32,7 +32,7 @@ def resolve_search_countries(self, info, **kwargs):
 
     search = kwargs.get('search')
 
-    countries = models.Country.objects.filter(country_name__istartswith=search)
+    countries = models.Country.objects.filter(country_name__istartswith=search)[:5]
 
     return types.CountriesResponse(countries=countries)
 

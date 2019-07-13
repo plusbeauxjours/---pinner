@@ -208,7 +208,7 @@ const HeaderPresenter: React.FunctionComponent<IProps> = ({
             <Modal>
               <Input
                 autoFocus={true}
-                placeholder="Search"
+                placeholder="Search location"
                 value={search}
                 onChange={onChange}
                 autoComplete={"off"}

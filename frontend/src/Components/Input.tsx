@@ -15,7 +15,6 @@ const Container = styled.input`
   }
   &:focus {
     outline: none;
-    border-bottom-color: #2c3e50;
   }
   &::placeholder {
     color: ${props => props.theme.greyColor};

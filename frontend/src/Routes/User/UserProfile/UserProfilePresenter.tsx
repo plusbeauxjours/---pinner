@@ -110,7 +110,7 @@ const SText = styled(Bold)`
 
 const TripContainer = styled.div`
   display: flex;
-  width: 100%;
+  width: 685px;
   flex-direction: column;
   @media screen and (max-width: 600px) {
     min-width: 300px;
@@ -378,14 +378,21 @@ const GreyText = styled(Bold)`
 const TripInput = styled.input`
   width: 215px;
   border: 0;
-  border: ${props => props.theme.boxBorder};
+  border-bottom: 1px solid grey;
   background-color: ${props => props.theme.bgColor};
-  border-radius: 3px;
   padding: 5px;
   color: white;
   font-size: 12px;
+  font-weight: 100;
+  &:focus {
+    outline: none;
+    &::-webkit-input-placeholder {
+      color: transparent;
+    }
+  }
   &::placeholder {
     color: ${props => props.theme.greyColor};
+    text-align: right;
   }
 `;
 
@@ -452,7 +459,6 @@ const ModalAvatarImage = styled.img`
   height: 300px;
   width: 300px;
   object-fit: cover;
-}
 `;
 
 const ImageInput = styled.input`
@@ -1122,7 +1128,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                 <UserNameRow>
                   <SText text={"TRIPS"} />
                   <TripInput
-                    placeholder="Search"
+                    placeholder="Search city"
                     value={search}
                     onChange={onChange}
                   />

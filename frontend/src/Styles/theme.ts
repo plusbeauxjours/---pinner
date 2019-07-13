@@ -5,7 +5,7 @@ const theme = {
   blackColor: "#262626",
   blueColor: "#3897f0",
   whiteColor: "#FFFFFF",
-  boxBorder: "1px solid #e6e6e6",
+  boxBorder: "1px solid #999",
   darkBlueColor: "#003569"
 };
 

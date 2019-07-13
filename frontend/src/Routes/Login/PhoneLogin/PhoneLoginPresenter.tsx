@@ -197,7 +197,7 @@ const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
           <SearchModalContainer>
             <SearchModalOverlay onClick={toggleModal} />
             <SearchInput
-              placeholder="Search Country"
+              placeholder="Search country"
               autoFocus={true}
               name={"search"}
               onChange={onInputChange}

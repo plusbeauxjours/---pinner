@@ -150,14 +150,21 @@ const AvatarContainer = styled.div`
 const Input = styled.input`
   width: 215px;
   border: 0;
-  border: ${props => props.theme.boxBorder};
+  border-bottom: 1px solid grey;
   background-color: ${props => props.theme.bgColor};
-  border-radius: 3px;
   padding: 5px;
   color: white;
   font-size: 12px;
+  font-weight: 100;
+  &:focus {
+    outline: none;
+    &::-webkit-input-placeholder {
+      color: transparent;
+    }
+  }
   &::placeholder {
     color: ${props => props.theme.greyColor};
+    text-align: right;
   }
 `;
 
@@ -355,7 +362,7 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
               <UserNameRow>
                 <SText text={city.userCount === 1 ? `USER` : `USERS`} />
                 <Input
-                  placeholder="Search"
+                  placeholder="Search user who is in this city"
                   onChange={onChange}
                   value={search}
                 />
