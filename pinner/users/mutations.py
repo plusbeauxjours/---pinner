@@ -13,111 +13,124 @@ from . import models, types
 from notifications import models as notification_models
 
 
-class Settings(graphene.Mutation):
+class ToggleSettings(graphene.Mutation):
 
     class Arguments:
-        payload = graphene.String()
+        payload = graphene.String(required=True)
 
-    Output = types.ToggleResponse
+    Output = types.ToggleSettingsResponse
 
     @login_required
     def mutate(self, info,  **kwargs):
 
         user = info.context.user
         payload = kwargs.get('payload')
-
         if payload == "DARK_MODE":
-            if user.is_dark_mode is True:
+            if user.profile.is_dark_mode == True:
                 try:
-                    user.is_dark_mode = False
-                    return types.ToggleResponse(ok=True, user=user)
+                    user.profile.is_dark_mode = False
+                    user.profile.save()
+                    return types.ToggleSettingsResponse(ok=True, user=user)
                 except:
-                    return types.ToggleResponse(ok=False, user=None)
-            elif user.is_dark_mode is False:
+                    return types.ToggleSettingsResponse(ok=False, user=None)
+            elif user.profile.is_dark_mode == False:
                 try:
-                    user.is_dark_mode = True
-                    return types.ToggleResponse(ok=True, user=user)
+                    user.profile.is_dark_mode = True
+                    user.profile.save()
+                    return types.ToggleSettingsResponse(ok=True, user=user)
                 except:
-                    return types.ToggleResponse(ok=False, user=None)
+                    return types.ToggleSettingsResponse(ok=False, user=None)
         elif payload == "HIDE_TRIPS":
-            if user.is_hide_trips is True:
+            if user.profile.is_hide_trips == True:
                 try:
-                    user.is_hide_trips = False
-                    return types.ToggleResponse(ok=True, user=user)
+                    user.profile.is_hide_trips = False
+                    user.profile.save()
+                    return types.ToggleSettingsResponse(ok=True, user=user)
                 except:
-                    return types.ToggleResponse(ok=False, user=None)
-            elif user.is_hide_trips is False:
+                    return types.ToggleSettingsResponse(ok=False, user=None)
+            elif user.profile.is_hide_trips == False:
                 try:
-                    user.is_hide_trips = True
-                    return types.ToggleResponse(ok=True, user=user)
+                    user.profile.is_hide_trips = True
+                    user.profile.save()
+                    return types.ToggleSettingsResponse(ok=True, user=user)
                 except:
-                    return types.ToggleResponse(ok=False, user=None)
+                    return types.ToggleSettingsResponse(ok=False, user=None)
         elif payload == "HIDE_COFFEES":
-            if user.is_hide_coffees is True:
+            if user.profile.is_hide_coffees == True:
                 try:
-                    user.is_hide_coffees = False
-                    return types.ToggleResponse(ok=True, user=user)
+                    user.profile.is_hide_coffees = False
+                    user.profile.save()
+                    return types.ToggleSettingsResponse(ok=True, user=user)
                 except:
-                    return types.ToggleResponse(ok=False, user=None)
-            elif user.is_hide_coffees is False:
+                    return types.ToggleSettingsResponse(ok=False, user=None)
+            elif user.profile.is_hide_coffees == False:
                 try:
-                    user.is_hide_coffees = True
-                    return types.ToggleResponse(ok=True, user=user)
+                    user.profile.is_hide_coffees = True
+                    user.profile.save()
+                    return types.ToggleSettingsResponse(ok=True, user=user)
                 except:
-                    return types.ToggleResponse(ok=False, user=None)
+                    return types.ToggleSettingsResponse(ok=False, user=None)
 
         elif payload == "HIDE_CITIES":
-            if user.is_hide_cities is True:
+            if user.profile.is_hide_cities == True:
                 try:
-                    user.is_hide_cities = False
-                    return types.ToggleResponse(ok=True, user=user)
+                    user.profile.is_hide_cities = False
+                    user.profile.save()
+                    return types.ToggleSettingsResponse(ok=True, user=user)
                 except:
-                    return types.ToggleResponse(ok=False, user=None)
-            elif user.is_hide_cities is False:
+                    return types.ToggleSettingsResponse(ok=False, user=None)
+            elif user.profile.is_hide_cities == False:
                 try:
-                    user.is_hide_cities = True
-                    return types.ToggleResponse(ok=True, user=user)
+                    user.profile.is_hide_cities = True
+                    user.profile.save()
+                    return types.ToggleSettingsResponse(ok=True, user=user)
                 except:
-                    return types.ToggleResponse(ok=False, user=None)
+                    return types.ToggleSettingsResponse(ok=False, user=None)
         elif payload == "HIDE_COUNTRIES":
-            if user.is_hide_countries is True:
+            if user.profile.is_hide_countries == True:
                 try:
-                    user.is_hide_countries = False
-                    return types.ToggleResponse(ok=True, user=user)
+                    user.profile.is_hide_countries = False
+                    user.profile.save()
+                    return types.ToggleSettingsResponse(ok=True, user=user)
                 except:
-                    return types.ToggleResponse(ok=False, user=None)
-            elif user.is_hide_countries is False:
+                    return types.ToggleSettingsResponse(ok=False, user=None)
+            elif user.profile.is_hide_countries == False:
                 try:
-                    user.is_hide_countries = True
-                    return types.ToggleResponse(ok=True, user=user)
+                    user.profile.is_hide_countries = True
+                    user.profile.save()
+                    return types.ToggleSettingsResponse(ok=True, user=user)
                 except:
-                    return types.ToggleResponse(ok=False, user=None)
+                    return types.ToggleSettingsResponse(ok=False, user=None)
         elif payload == "HIDE_CONTINENTS":
-            if user.is_hide_continents is True:
+            if user.profile.is_hide_continents == True:
                 try:
-                    user.is_hide_continents = False
-                    return types.ToggleResponse(ok=True, user=user)
+                    user.profile.is_hide_continents = False
+                    user.profile.save()
+                    return types.ToggleSettingsResponse(ok=True, user=user)
                 except:
-                    return types.ToggleResponse(ok=False, user=None)
-            elif user.is_hide_continents is False:
+                    return types.ToggleSettingsResponse(ok=False, user=None)
+            elif user.profile.is_hide_continents == False:
                 try:
-                    user.is_hide_continents = True
-                    return types.ToggleResponse(ok=True, user=user)
+                    user.profile.is_hide_continents = True
+                    user.profile.save()
+                    return types.ToggleSettingsResponse(ok=True, user=user)
                 except:
-                    return types.ToggleResponse(ok=False, user=None)
+                    return types.ToggleSettingsResponse(ok=False, user=None)
         elif payload == "AUTO_LOCATION_REPORT":
-            if user.is_auto_locationReport is True:
+            if user.profile.is_auto_location_report == True:
                 try:
-                    user.is_auto_locationReport = False
-                    return types.ToggleResponse(ok=True, user=user)
+                    user.profile.is_auto_location_report = False
+                    user.profile.save()
+                    return types.ToggleSettingsResponse(ok=True, user=user)
                 except:
-                    return types.ToggleResponse(ok=False, user=None)
-            elif user.is_auto_locationReport is False:
+                    return types.ToggleSettingsResponse(ok=False, user=None)
+            elif user.profile.is_auto_location_report == False:
                 try:
-                    user.is_auto_locationReport = True
-                    return types.ToggleResponse(ok=True, user=user)
+                    user.profile.is_auto_location_report = True
+                    user.profile.save()
+                    return types.ToggleSettingsResponse(ok=True, user=user)
                 except:
-                    return types.ToggleResponse(ok=False, user=None)
+                    return types.ToggleSettingsResponse(ok=False, user=None)
 
 
 class EditProfile(graphene.Mutation):

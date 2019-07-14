@@ -171,7 +171,11 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
     if (prevProps.match.params.username !== newProps.match.params.username) {
-      this.setState({ search: "", tripList: [], avatarModalOpen: false });
+      this.setState({
+        search: "",
+        tripList: [],
+        avatarModalOpen: false
+      });
       console.log("updated");
     }
   }
@@ -588,6 +592,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                   }
                                                                                   markAsMainFn={
                                                                                     markAsMainFn
+                                                                                  }
+                                                                                  linkToSettings={
+                                                                                    this
+                                                                                      .linkToSettings
                                                                                   }
                                                                                 />
                                                                               );
@@ -1247,6 +1255,37 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } else {
       toast.error("error Marking As Main");
     }
+  };
+  public linkToSettings = (
+    isSelf,
+    isDarkMode,
+    isHideTrips,
+    isHideCoffees,
+    isHideCities,
+    isHideCountries,
+    isHideContinents,
+    isAutoLocationReport
+  ) => {
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    const { history } = this.props;
+    history.push({
+      pathname: "/account/settings",
+      state: {
+        username,
+        isSelf,
+        isDarkMode,
+        isHideTrips,
+        isHideCoffees,
+        isHideCities,
+        isHideCountries,
+        isHideContinents,
+        isAutoLocationReport
+      }
+    });
   };
 }
 

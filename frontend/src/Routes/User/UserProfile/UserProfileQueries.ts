@@ -32,6 +32,13 @@ export const GET_USER = gql`
           countryCount
           continentCount
           isSelf
+          isDarkMode
+          isHideTrips
+          isHideCoffees
+          isHideCities
+          isHideCountries
+          isHideContinents
+          isAutoLocationReport
           currentCity {
             latitude
             longitude

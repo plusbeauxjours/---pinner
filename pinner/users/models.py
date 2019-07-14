@@ -124,7 +124,7 @@ class Profile(config_models.TimeStampedModel):
     is_hide_cities = models.BooleanField(default=False)
     is_hide_countries = models.BooleanField(default=False)
     is_hide_continents = models.BooleanField(default=False)
-    is_auto_locationReport = models.BooleanField(default=False)
+    is_auto_location_report = models.BooleanField(default=False)
     current_city = models.ForeignKey(
         location_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCity', )
 

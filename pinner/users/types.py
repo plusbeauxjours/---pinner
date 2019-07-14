@@ -40,7 +40,7 @@ class LikeType(DjangoObjectType):
         model = models.Like
 
 
-class ToggleResponse(graphene.ObjectType):
+class ToggleSettingsResponse(graphene.ObjectType):
     ok = graphene.Boolean()
     user = graphene.Field(coffee_types.UserType)
 

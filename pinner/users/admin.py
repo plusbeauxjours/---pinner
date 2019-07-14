@@ -8,6 +8,13 @@ class ProfileAdmin(admin.ModelAdmin):
     list_display = (
         'username',
         'avatar',
+        'is_dark_mode',
+        'is_hide_trips',
+        'is_hide_coffees',
+        'is_hide_cities',
+        'is_hide_countries',
+        'is_hide_continents',
+        'is_auto_location_report',
         'current_city',
         'city_count',
         'trip_count',

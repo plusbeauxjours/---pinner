@@ -2158,6 +2158,50 @@ export interface DeleteProfile {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: ToggleSettings
+// ====================================================
+
+export interface ToggleSettings_toggleSettings_user_profile {
+  __typename: "ProfileType";
+  isSelf: boolean | null;
+  isDarkMode: boolean;
+  isHideTrips: boolean;
+  isHideCoffees: boolean;
+  isHideCities: boolean;
+  isHideCountries: boolean;
+  isHideContinents: boolean;
+  isAutoLocationReport: boolean;
+}
+
+export interface ToggleSettings_toggleSettings_user {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: ToggleSettings_toggleSettings_user_profile | null;
+}
+
+export interface ToggleSettings_toggleSettings {
+  __typename: "ToggleSettingsResponse";
+  ok: boolean | null;
+  user: ToggleSettings_toggleSettings_user | null;
+}
+
+export interface ToggleSettings {
+  toggleSettings: ToggleSettings_toggleSettings;
+}
+
+export interface ToggleSettingsVariables {
+  payload: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetAvatarDetail
 // ====================================================
 
@@ -2261,6 +2305,13 @@ export interface UserProfile_userProfile_user_profile {
   countryCount: number | null;
   continentCount: number | null;
   isSelf: boolean | null;
+  isDarkMode: boolean;
+  isHideTrips: boolean;
+  isHideCoffees: boolean;
+  isHideCities: boolean;
+  isHideCountries: boolean;
+  isHideContinents: boolean;
+  isAutoLocationReport: boolean;
   currentCity: UserProfile_userProfile_user_profile_currentCity | null;
 }
 

@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { List, Delete, RedDot, WhiteDot, ToggleOn, ToggleOff } from '../../../Icons';
+import { List, Delete, RedDot, WhiteDot } from "../../../Icons";
 import styled, { keyframes } from "../../../Styles/typed-components";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
@@ -19,12 +19,6 @@ import useGoogleAutocomplete from "../../../autocompleteHelpers";
 import { BACKEND_URL } from "src/constants";
 import { MutationFn } from "react-apollo";
 import Thin from "src/Components/Thin";
-
-const ToggleIcon = styled.div`
-  svg {
-    fill: white;
-  }
-`;
 
 const Header = styled.header`
   display: flex;
@@ -336,7 +330,7 @@ const ModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom: 1px solid #efefef;
+    border-bottom: 1px solid grey;
   }
 `;
 
@@ -656,6 +650,16 @@ interface IProps {
   removeImagePreviewUrl: () => void;
   deleteAvatarFn: MutationFn;
   markAsMainFn: any;
+  linkToSettings: (
+    isSelf: boolean,
+    isDarkMode: boolean,
+    isHideTrips: boolean,
+    isHideCoffees: boolean,
+    isHideCities: boolean,
+    isHideCountries: boolean,
+    isHideContinents: boolean,
+    isAutoLocationReport: boolean
+  ) => void;
 }
 
 const UserProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -727,7 +731,8 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   imagePreviewUrl,
   removeImagePreviewUrl,
   deleteAvatarFn,
-  markAsMainFn
+  markAsMainFn,
+  linkToSettings
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
     apiKey: `${GOOGLE_PLACE_KEY}`,
@@ -851,11 +856,21 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               <ModalLink onClick={() => console.log("Edit Profile")}>
                 Edit Profile
               </ModalLink>
-              <ModalLink onClick={() => console.log("Settings")}>
+              <ModalLink
+                onClick={() =>
+                  linkToSettings(
+                    user.profile.isSelf,
+                    user.profile.isDarkMode,
+                    user.profile.isHideTrips,
+                    user.profile.isHideCoffees,
+                    user.profile.isHideCities,
+                    user.profile.isHideCountries,
+                    user.profile.isHideContinents,
+                    user.profile.isAutoLocationReport
+                  )
+                }
+              >
                 Settings
-              </ModalLink>
-              <ModalLink onClick={() => console.log("Delete Profile")}>
-                Delete Profile
               </ModalLink>
               <ModalLink onClick={() => console.log("Log Out")}>
                 Log Out
@@ -1267,11 +1282,6 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                       </TripOverlay>
                     </TripRow>
                   ))}
-                <ToggleIcon>
-                  <ToggleOn />
-                  <ToggleOff />
-
-                </ToggleIcon>
               </TripContainer>
             </Container>
           </PHeader>

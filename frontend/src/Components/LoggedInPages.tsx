@@ -11,7 +11,7 @@ import Match from "../Routes/Match";
 
 import UserProfile from "../Routes/User/UserProfile";
 import EditProfile from "../Routes/User/EditProfile";
-// import Settings from "../Routes/User/Settings";
+import ToggleSettings from "../Routes/User/ToggleSettings";
 import UserAvatarDetail from "../Routes/User/UserAvatarDetail";
 import Coffees from "../Routes/User/Coffees";
 import Cities from "../Routes/User/Cities";
@@ -50,7 +50,6 @@ class LoggedInPages extends React.Component<IProps> {
       nextProps.history.action !== "POP" &&
       (!location.state ||
         !location.state.coffeeModalOpen ||
-        !location.state.editModalOpen ||
         !location.state.avatarModalOpen)
     ) {
       this.previousLocation = this.props.location;
@@ -64,11 +63,6 @@ class LoggedInPages extends React.Component<IProps> {
       location.state.coffeeModalOpen &&
       this.previousLocation !== location
     );
-    const editModalOpen = !!(
-      location.state &&
-      location.state.editModalOpen &&
-      this.previousLocation !== location
-    );
     const avatarModalOpen = !!(
       location.state &&
       location.state.avatarModalOpen &&
@@ -77,19 +71,14 @@ class LoggedInPages extends React.Component<IProps> {
     return (
       <Wrapper>
         <Header />
-
         {coffeeModalOpen && <Route path="/c/:uuid" component={CoffeeDetail} />}
         {avatarModalOpen && (
           <Route path="/:username/:uuid" component={UserAvatarDetail} />
         )}
-        {editModalOpen && (
-          // <Route path="/account/settings" component={Settings} />
-          <Route path="/account/edit" component={EditProfile} />
-        )}
 
         <Switch
           location={
-            coffeeModalOpen || editModalOpen || avatarModalOpen
+            coffeeModalOpen || avatarModalOpen
               ? this.previousLocation
               : location
           }
@@ -137,6 +126,8 @@ class LoggedInPages extends React.Component<IProps> {
           <Route path="/city/:cityId" component={CityProfile} />
 
           {/* USER */}
+          <Route path="/account/edit" component={EditProfile} />
+          <Route path="/account/settings" component={ToggleSettings} />
           <Route path="/:username/countries" component={Countries} />
           <Route path="/:username/cities" component={Cities} />
           <Route path="/:username/coffees" component={Coffees} />

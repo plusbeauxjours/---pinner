@@ -1,16 +1,16 @@
 import { gql } from "apollo-boost";
 
-export const SETTINGS = gql`
-  mutation Settings($payload: String) {
-    settings(payload: $payload) {
+export const TOGGLE_SETTINGS = gql`
+  mutation ToggleSettings($payload: String!) {
+    toggleSettings(payload: $payload) {
+      ok
       user {
         id
         username
         profile {
+          isSelf
           isDarkMode
           isHideTrips
-          isHideCoffees
-          isAutoLocationReport
           isHideCoffees
           isHideCities
           isHideCountries

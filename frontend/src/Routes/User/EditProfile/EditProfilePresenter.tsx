@@ -143,7 +143,7 @@ const ModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom: 1px solid #efefef;
+    border-bottom: 1px solid grey;
   }
 `;
 
