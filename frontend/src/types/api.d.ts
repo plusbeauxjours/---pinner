@@ -1362,6 +1362,7 @@ export interface CoffeeDetail_coffeeDetail_coffee_host_profile_residence {
 
 export interface CoffeeDetail_coffeeDetail_coffee_host_profile {
   __typename: "ProfileType";
+  username: string | null;
   isSelf: boolean | null;
   avatar: CoffeeDetail_coffeeDetail_coffee_host_profile_avatar;
   gender: ProfileGender | null;
@@ -1374,10 +1375,6 @@ export interface CoffeeDetail_coffeeDetail_coffee_host_profile {
 export interface CoffeeDetail_coffeeDetail_coffee_host {
   __typename: "UserType";
   id: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
   profile: CoffeeDetail_coffeeDetail_coffee_host_profile | null;
 }
 

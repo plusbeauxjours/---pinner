@@ -27,54 +27,94 @@ class Settings(graphene.Mutation):
         payload = kwargs.get('payload')
 
         if payload == "DARK_MODE":
-            if user.isDarkMode is True:
+            if user.is_dark_mode is True:
                 try:
-                    user.isDarkMode = False
+                    user.is_dark_mode = False
                     return types.ToggleResponse(ok=True, user=user)
                 except:
                     return types.ToggleResponse(ok=False, user=None)
-            elif user.isDarkMode is False:
+            elif user.is_dark_mode is False:
                 try:
-                    user.isDarkMode = True
+                    user.is_dark_mode = True
                     return types.ToggleResponse(ok=True, user=user)
                 except:
                     return types.ToggleResponse(ok=False, user=None)
         elif payload == "HIDE_TRIPS":
-            if user.isHideTrips is True:
+            if user.is_hide_trips is True:
                 try:
-                    user.isHideTrips = False
+                    user.is_hide_trips = False
                     return types.ToggleResponse(ok=True, user=user)
                 except:
                     return types.ToggleResponse(ok=False, user=None)
-            elif user.isHideTrips is False:
+            elif user.is_hide_trips is False:
                 try:
-                    user.isHideTrips = True
+                    user.is_hide_trips = True
                     return types.ToggleResponse(ok=True, user=user)
                 except:
                     return types.ToggleResponse(ok=False, user=None)
         elif payload == "HIDE_COFFEES":
-            if user.isHIdeCoffees is True:
+            if user.is_hide_coffees is True:
                 try:
-                    user.isHIdeCoffees = False
+                    user.is_hide_coffees = False
                     return types.ToggleResponse(ok=True, user=user)
                 except:
                     return types.ToggleResponse(ok=False, user=None)
-            elif user.isHIdeCoffees is False:
+            elif user.is_hide_coffees is False:
                 try:
-                    user.isHIdeCoffees = True
+                    user.is_hide_coffees = True
+                    return types.ToggleResponse(ok=True, user=user)
+                except:
+                    return types.ToggleResponse(ok=False, user=None)
+
+        elif payload == "HIDE_CITIES":
+            if user.is_hide_cities is True:
+                try:
+                    user.is_hide_cities = False
+                    return types.ToggleResponse(ok=True, user=user)
+                except:
+                    return types.ToggleResponse(ok=False, user=None)
+            elif user.is_hide_cities is False:
+                try:
+                    user.is_hide_cities = True
+                    return types.ToggleResponse(ok=True, user=user)
+                except:
+                    return types.ToggleResponse(ok=False, user=None)
+        elif payload == "HIDE_COUNTRIES":
+            if user.is_hide_countries is True:
+                try:
+                    user.is_hide_countries = False
+                    return types.ToggleResponse(ok=True, user=user)
+                except:
+                    return types.ToggleResponse(ok=False, user=None)
+            elif user.is_hide_countries is False:
+                try:
+                    user.is_hide_countries = True
+                    return types.ToggleResponse(ok=True, user=user)
+                except:
+                    return types.ToggleResponse(ok=False, user=None)
+        elif payload == "HIDE_CONTINENTS":
+            if user.is_hide_continents is True:
+                try:
+                    user.is_hide_continents = False
+                    return types.ToggleResponse(ok=True, user=user)
+                except:
+                    return types.ToggleResponse(ok=False, user=None)
+            elif user.is_hide_continents is False:
+                try:
+                    user.is_hide_continents = True
                     return types.ToggleResponse(ok=True, user=user)
                 except:
                     return types.ToggleResponse(ok=False, user=None)
         elif payload == "AUTO_LOCATION_REPORT":
-            if user.isAutoLocationReport is True:
+            if user.is_auto_locationReport is True:
                 try:
-                    user.isAutoLocationReport = False
+                    user.is_auto_locationReport = False
                     return types.ToggleResponse(ok=True, user=user)
                 except:
                     return types.ToggleResponse(ok=False, user=None)
-            elif user.isAutoLocationReport is False:
+            elif user.is_auto_locationReport is False:
                 try:
-                    user.isAutoLocationReport = True
+                    user.is_auto_locationReport = True
                     return types.ToggleResponse(ok=True, user=user)
                 except:
                     return types.ToggleResponse(ok=False, user=None)

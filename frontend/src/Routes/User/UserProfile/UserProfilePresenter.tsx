@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { List, Delete, RedDot, WhiteDot } from "../../../Icons";
+import { List, Delete, RedDot, WhiteDot, ToggleOn, ToggleOff } from '../../../Icons';
 import styled, { keyframes } from "../../../Styles/typed-components";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
@@ -19,6 +19,12 @@ import useGoogleAutocomplete from "../../../autocompleteHelpers";
 import { BACKEND_URL } from "src/constants";
 import { MutationFn } from "react-apollo";
 import Thin from "src/Components/Thin";
+
+const ToggleIcon = styled.div`
+  svg {
+    fill: white;
+  }
+`;
 
 const Header = styled.header`
   display: flex;
@@ -1261,6 +1267,11 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                       </TripOverlay>
                     </TripRow>
                   ))}
+                <ToggleIcon>
+                  <ToggleOn />
+                  <ToggleOff />
+
+                </ToggleIcon>
               </TripContainer>
             </Container>
           </PHeader>
