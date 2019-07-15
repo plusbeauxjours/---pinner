@@ -558,6 +558,19 @@ const WhiteDotIcon = styled(RedDotIcon)`
   }
 `;
 
+const ConfirmModalContainer = styled(ModalContainer)`
+  z-index: 12;
+`;
+const ConfirmModalOverlay = styled(ModalOverlay)`
+  z-index: 12;
+`;
+const ConfirmModal = styled(Modal)`
+  z-index: 12;
+`;
+const ConfirmModalLink = styled(ModalLink)`
+  z-index: 12;
+`;
+
 interface ITheme {
   size?: string;
 }
@@ -651,6 +664,7 @@ interface IProps {
   deleteAvatarFn: MutationFn;
   markAsMainFn: any;
   linkToSettings: (
+    username: string,
     isSelf: boolean,
     isDarkMode: boolean,
     isHideTrips: boolean,
@@ -658,7 +672,37 @@ interface IProps {
     isHideCities: boolean,
     isHideCountries: boolean,
     isHideContinents: boolean,
-    isAutoLocationReport: boolean
+    isAutoLocationReport: boolean,
+    bio: string,
+    gender: string,
+    firstName: string,
+    lastName: string,
+    nationality: string,
+    residence: string,
+    thumbnail: string,
+    email: string
+  ) => void;
+  logUserOutFn: any;
+  logoutConfirmModal: boolean;
+  toggleLogoutConfirmModal: () => void;
+  linkToEditProfile: (
+    username: string,
+    isSelf: boolean,
+    isDarkMode: boolean,
+    isHideTrips: boolean,
+    isHideCoffees: boolean,
+    isHideCities: boolean,
+    isHideCountries: boolean,
+    isHideContinents: boolean,
+    isAutoLocationReport: boolean,
+    bio: string,
+    gender: string,
+    firstName: string,
+    lastName: string,
+    nationality: string,
+    residence: string,
+    thumbnail: string,
+    email: string
   ) => void;
 }
 
@@ -732,7 +776,11 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   removeImagePreviewUrl,
   deleteAvatarFn,
   markAsMainFn,
-  linkToSettings
+  linkToSettings,
+  logUserOutFn,
+  logoutConfirmModal,
+  toggleLogoutConfirmModal,
+  linkToEditProfile
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
     apiKey: `${GOOGLE_PLACE_KEY}`,
@@ -747,6 +795,17 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   } else if (user && coffees && avatars) {
     return (
       <>
+        {logoutConfirmModal && (
+          <ConfirmModalContainer>
+            <ConfirmModalOverlay onClick={toggleLogoutConfirmModal} />
+            <ConfirmModal>
+              <ConfirmModalLink onClick={logUserOutFn}>Yes</ConfirmModalLink>
+              <ConfirmModalLink onClick={toggleLogoutConfirmModal}>
+                No
+              </ConfirmModalLink>
+            </ConfirmModal>
+          </ConfirmModalContainer>
+        )}
         {avatarPreviewModalOpen && (
           <PreviewModalContainer>
             <ModalOverlay onClick={togglePreviewAvatarModalOpen} />
@@ -852,13 +911,10 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleModal} />
             <Modal>
-              <ModalLink onClick={toggleAvatarModalOpen}>Edit Avatar</ModalLink>
-              <ModalLink onClick={() => console.log("Edit Profile")}>
-                Edit Profile
-              </ModalLink>
               <ModalLink
                 onClick={() =>
-                  linkToSettings(
+                  linkToEditProfile(
+                    user.username,
                     user.profile.isSelf,
                     user.profile.isDarkMode,
                     user.profile.isHideTrips,
@@ -866,15 +922,46 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                     user.profile.isHideCities,
                     user.profile.isHideCountries,
                     user.profile.isHideContinents,
-                    user.profile.isAutoLocationReport
+                    user.profile.isAutoLocationReport,
+                    user.profile.bio,
+                    user.profile.gender,
+                    user.firstName,
+                    user.lastname,
+                    user.profile.nationality,
+                    user.profile.residence,
+                    user.profile.avatar.thumbnail,
+                    user.profile.email
+                  )
+                }
+              >
+                Edit Profile
+              </ModalLink>
+              <ModalLink
+                onClick={() =>
+                  linkToSettings(
+                    user.username,
+                    user.profile.isSelf,
+                    user.profile.isDarkMode,
+                    user.profile.isHideTrips,
+                    user.profile.isHideCoffees,
+                    user.profile.isHideCities,
+                    user.profile.isHideCountries,
+                    user.profile.isHideContinents,
+                    user.profile.isAutoLocationReport,
+                    user.profile.bio,
+                    user.profile.gender,
+                    user.firstName,
+                    user.lastname,
+                    user.profile.nationality,
+                    user.profile.residence,
+                    user.profile.avatar.thumbnail,
+                    user.profile.email
                   )
                 }
               >
                 Settings
               </ModalLink>
-              <ModalLink onClick={() => console.log("Log Out")}>
-                Log Out
-              </ModalLink>
+              <ModalLink onClick={toggleLogoutConfirmModal}>Log Out</ModalLink>
               <ModalLink onClick={toggleModal}>CANCEL</ModalLink>
             </Modal>
           </ModalContainer>
@@ -907,13 +994,15 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
           </ModalContainer>
         )}
         {tripConfirmModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleTripConfirmModal} />
-            <Modal>
-              <ModalLink onClick={deleteTrip}>Yes</ModalLink>
-              <ModalLink onClick={toggleTripConfirmModal}>No</ModalLink>
-            </Modal>
-          </ModalContainer>
+          <ConfirmModalContainer>
+            <ConfirmModalOverlay onClick={toggleTripConfirmModal} />
+            <ConfirmModal>
+              <ConfirmModalLink onClick={deleteTrip}>Yes</ConfirmModalLink>
+              <ConfirmModalLink onClick={toggleTripConfirmModal}>
+                No
+              </ConfirmModalLink>
+            </ConfirmModal>
+          </ConfirmModalContainer>
         )}
         {tripAddModalOpen && (
           <TripModalContainer>

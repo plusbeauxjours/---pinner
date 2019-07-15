@@ -5,7 +5,7 @@ export const ME = gql`
     me {
       user {
         profile {
-        username
+          username
           avatar {
             thumbnail
           }
@@ -18,7 +18,6 @@ export const ME = gql`
     }
   }
 `;
-
 
 export const PROFILE_FRAGMENT = gql`
   fragment ProfileParts on ProfileType {

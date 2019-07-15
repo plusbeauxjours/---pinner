@@ -14,11 +14,6 @@ from imagekit.processors import ResizeToFill
 from cached_property import cached_property
 
 
-def upload_default_thumbnail(instance, filename):
-    name, extension = os.path.splitext(filename)
-    return os.path.join('defaultAvatar/{}{}').format(instance.uuid, extension.lower())
-
-
 def upload_image(instance, filename):
     name, extension = os.path.splitext(filename)
     return os.path.join('profileAvatar/{}/image/{}{}').format(instance.creator.username, instance.uuid, extension.lower())
@@ -88,9 +83,6 @@ class Like(config_models.TimeStampedModel):
         Avatar, on_delete=models.CASCADE, null=True, related_name='likes')
 
 
-DEFAULT_AVATAR_PK = 254
-
-
 class Profile(config_models.TimeStampedModel):
 
     """ Profile Model """
@@ -108,11 +100,11 @@ class Profile(config_models.TimeStampedModel):
     website = models.URLField(blank=True, null=True)
     gender = models.CharField(max_length=15, blank=True, null=True, choices=GENDERS)
     residence = models.ForeignKey(
-        location_models.Country, blank=True, null=True, on_delete=models.CASCADE, related_name='residence')
+        location_models.Country, blank=True, null=True, on_delete=models.SET_NULL, related_name='residence')
     nationality = models.ForeignKey(
-        location_models.Country, blank=True, null=True, on_delete=models.CASCADE, related_name='nationality')
+        location_models.Country, blank=True, null=True, on_delete=models.SET_NULL, related_name='nationality')
     avatar = models.ForeignKey(
-        Avatar, on_delete=models.SET_DEFAULT, default=DEFAULT_AVATAR_PK, related_name='avatar')
+        Avatar, on_delete=models.SET_NULL, null=True, blank=True, related_name='avatar')
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     verified_phone_number = models.BooleanField(default=False)
     verified_email = models.BooleanField(default=False)

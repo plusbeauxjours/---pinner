@@ -431,6 +431,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                       </Column>
                       {match.isMatching ? (
                         <CoffeeBtn
+                          cityId={currentCityId}
                           isMatching={match.isMatching}
                           matchId={match.id}
                         />
@@ -457,6 +458,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                       </Column>
                       {match.isMatching ? (
                         <CoffeeBtn
+                          cityId={currentCityId}
                           isMatching={match.isMatching}
                           matchId={match.id}
                         />

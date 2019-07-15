@@ -20,27 +20,28 @@ class LogOutMutation extends Mutation {}
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
-  modalOpen: boolean;
-  confirmModalOpen: boolean;
+  deleteConfirmModalOpen: boolean;
+  logoutConfirmModalOpen: boolean;
   profilFormModalOpen: boolean;
-  editMode: boolean;
-  id: string;
-  userName: string;
+
+  username: string;
+  isSelf: boolean;
+  isDarkMode: boolean;
+  isHideTrips: boolean;
+  isHideCoffees: boolean;
+  isHideCities: boolean;
+  isHideCountries: boolean;
+  isHideContinents: boolean;
+  isAutoLocationReport: boolean;
+
   bio: string;
   gender: string;
-  nationality: string;
-  residence: string;
-  email: string;
-  avatar: string;
   firstName: string;
   lastName: string;
-  cityName: string;
-  cityId: string;
-  cityPhoto: string;
-  countryName: string;
-  lat: number;
-  lng: number;
-  isSelf: boolean;
+  nationality: string;
+  residence: string;
+  thumbnail: string;
+  email: string;
 }
 
 class EditProfileContainer extends React.Component<IProps, IState> {
@@ -51,59 +52,61 @@ class EditProfileContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     const { location: { state = {} } = {} } = ({} = props);
+    if (props.history.action === "POP" || !props.location.state) {
+      props.history.push("/");
+    }
+    console.log(state);
+    console.log(this.props);
     this.state = {
-      modalOpen: false,
-      confirmModalOpen: false,
+      deleteConfirmModalOpen: false,
+      logoutConfirmModalOpen: false,
       profilFormModalOpen: true,
-      editMode: false,
-      id: props.id,
-      userName: props.username,
 
-      bio: props.bio,
-      gender: props.gender,
-      avatar: props.avatar,
-      nationality: state.currentCountryCode,
-      residence: state.currentCountryCode,
-      email: props.email,
-      firstName: props.FirstName,
-      lastName: props.lastName,
+      isSelf: state.isSelf,
+      isDarkMode: state.isDarkMode,
+      isHideTrips: state.isHideTrips,
+      isHideCoffees: state.isHideCoffees,
+      isHideCities: state.isHideCities,
+      isHideCountries: state.isHideCountries,
+      isHideContinents: state.isHideContinents,
+      isAutoLocationReport: state.isAutoLocationReport,
 
-      cityName: props.cityName,
-      cityId: props.cityId,
-      cityPhoto: props.cityPhoto,
-      countryName: props.countryName,
-
-      lat: state.currentLat,
-      lng: state.currentLng,
-      isSelf: state.isSelf
+      username: state.username,
+      bio: state.bio,
+      gender: state.gender,
+      firstName: state.firstName,
+      lastName: state.lastName,
+      nationality: state.nationality,
+      residence: state.residence,
+      thumbnail: state.thumbnail,
+      email: state.email
     };
   }
   public render() {
-    const {
-      match: {
-        params: { username }
-      }
-    } = this.props;
     const { history } = this.props;
     const {
-      modalOpen,
-      confirmModalOpen,
+      deleteConfirmModalOpen,
+      logoutConfirmModalOpen,
       profilFormModalOpen,
-      editMode,
-      userName,
+
+      isSelf,
+      isDarkMode,
+      isHideTrips,
+      isHideCoffees,
+      isHideCities,
+      isHideCountries,
+      isHideContinents,
+      isAutoLocationReport,
+
+      username,
       bio,
       gender,
-      avatar,
-      nationality,
-      residence,
-      email,
       firstName,
       lastName,
-      cityName,
-      cityId,
-      cityPhoto,
-      countryName,
-      isSelf
+      nationality,
+      residence,
+      thumbnail,
+      email
     } = this.state;
     return (
       <LogOutMutation mutation={LOG_USER_OUT}>
@@ -143,34 +146,41 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                       this.deleteProfileFn = deleteProfileFn;
                       return (
                         <EditProfilePresenter
-                          modalOpen={modalOpen}
-                          confirmModalOpen={confirmModalOpen}
+                          deleteConfirmModalOpen={deleteConfirmModalOpen}
+                          logoutConfirmModalOpen={logoutConfirmModalOpen}
+                          toggleDeleteConfirmModal={
+                            this.toggleDeleteConfirmModal
+                          }
+                          toggleLogoutConfirmModal={
+                            this.toggleLogoutConfirmModal
+                          }
                           profilFormModalOpen={profilFormModalOpen}
-                          editMode={editMode}
-                          logUserOutFn={logUserOutFn}
-                          confirmDeleteProfile={this.confirmDeleteProfile}
-                          toggleModal={this.toggleModal}
-                          toggleConfirmModal={this.toggleConfirmModal}
                           toggleProfileFormModal={this.toggleProfileFormModal}
-                          openEditMode={this.openEditMode}
+                          deleteProfile={this.deleteProfile}
                           onInputChange={this.onInputChange}
                           onKeyDownSubmit={this.onKeyDownSubmit}
-                          userName={userName}
+                          onSelectChange={this.onSelectChange}
+                          logUserOutFn={this.logUserOutFn}
+                          // settings
+                          isSelf={isSelf}
+                          isDarkMode={isDarkMode}
+                          isHideTrips={isHideTrips}
+                          isHideCoffees={isHideCoffees}
+                          isHideCities={isHideCities}
+                          isHideCountries={isHideCountries}
+                          isHideContinents={isHideContinents}
+                          isAutoLocationReport={isAutoLocationReport}
+                          // new
+                          username={username}
                           bio={bio}
                           gender={gender}
-                          avatar={avatar}
-                          nationality={nationality}
-                          residence={residence}
-                          email={email}
                           firstName={firstName}
                           lastName={lastName}
-                          cityName={cityName}
-                          cityId={cityId}
-                          cityPhoto={cityPhoto}
-                          countryName={countryName}
-                          username={username}
-                          isSelf={isSelf}
-                          onSelectChange={this.onSelectChange}
+                          nationality={nationality}
+                          residence={residence}
+                          thumbnail={thumbnail}
+                          email={email}
+                          back={this.back}
                         />
                       );
                     }}
@@ -183,44 +193,29 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       </LogOutMutation>
     );
   }
-  public openEditMode = () => {
-    const { modalOpen } = this.state;
-    this.setState({
-      modalOpen: !modalOpen,
-      editMode: true
-    });
-  };
-  public closeEditMode = () => {
-    this.setState({
-      editMode: false
-    });
-  };
-
-  public confirmDeleteProfile = () => {
+  public deleteProfile = () => {
     this.deleteProfileFn();
     this.logUserOutFn();
   };
   public onKeyDownSubmit = event => {
     const {
-      userName,
+      username,
       bio,
       gender,
-      avatar,
       firstName,
       lastName,
       nationality,
       residence,
       email
     } = this.state;
-    console.log(email);
+    console.log(event);
     const { keyCode } = event;
     if (keyCode === 13) {
       this.editProfileFn({
         variables: {
-          userName,
+          username,
           bio,
           gender,
-          avatar,
           firstName,
           lastName,
           nationality,
@@ -232,21 +227,18 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       return null;
     }
   };
-
-  public toggleModal = () => {
-    const { modalOpen } = this.state;
+  public toggleDeleteConfirmModal = () => {
+    const { deleteConfirmModalOpen } = this.state;
     this.setState({
-      modalOpen: !modalOpen
+      deleteConfirmModalOpen: !deleteConfirmModalOpen
     } as any);
   };
-  public toggleConfirmModal = () => {
-    const { confirmModalOpen, modalOpen } = this.state;
+  public toggleLogoutConfirmModal = () => {
+    const { logoutConfirmModalOpen } = this.state;
     this.setState({
-      confirmModalOpen: !confirmModalOpen,
-      modalOpen: !modalOpen
+      logoutConfirmModalOpen: !logoutConfirmModalOpen
     } as any);
   };
-
   public toggleProfileFormModal = () => {
     this.setState({
       profilFormModalOpen: false
@@ -286,15 +278,21 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       console.log(e);
     }
   };
-  public onSelectChange: React.ChangeEventHandler<
-    HTMLInputElement | HTMLSelectElement
-  > = event => {
+  public onSelectChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const {
       target: { name, value }
     } = event;
     this.setState({
       [name]: value
     } as any);
+  };
+  public back = async event => {
+    const { history } = this.props;
+    const { username } = this.state;
+    event.stopPropagation();
+    history.push(`/${username}`);
   };
 }
 

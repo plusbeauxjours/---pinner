@@ -1,83 +1,18 @@
 import React from "react";
-import { List } from "../../../Icons";
 import styled, { keyframes } from "../../../Styles/typed-components";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
-import { countries } from "../../../countryData";
+// import { countries } from "../../../countryData";
 
-import Wrapper from "../../../Components/Wrapper";
 import Avatar from "../../../Components/Avatar";
-import Bold from "../../../Components/Bold";
-
-const Header = styled.header`
-  display: flex;
-  flex-direction: column;
-  height: 365px;
-  background: ${props => props.theme.headerColor};
-`;
+import { BACKEND_URL } from "src/constants";
+import { Link } from "react-router-dom";
 
 const PAvatar = styled(Avatar)`
   display: flex;
-  justify-self: center;
+  margin-left: 20px;
   align-self: center;
-  margin-top: 70px;
-`;
-
-const NameContainer = styled.span`
-  width: 100%;
-  margin: 0px auto;
-  padding: 55px 15px 0 15px;
-  max-width: 935px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-`;
-
-const SWrapper = styled(Wrapper)``;
-
-const PHeader = styled.header`
-  display: flex;
-  padding: 40px 15px 40px 15px;
-  @media screen and (max-width: 600px) {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-`;
-
-const AvatarContainer = styled.div`
-  display: flex;
-  position: relative;
-`;
-
-const LocationAvatarContainer = styled(AvatarContainer)`
-  flex-direction: column;
-`;
-
-const ListIcon = styled.span`
-  display: flex;
-  flex-direction: row;
-  display: flex;
-  cursor: pointer;
-  margin-top: 7px;
-  svg {
-    fill: white;
-    transition: fill 0.2s ease-in-out;
-    &:hover {
-      fill: grey;
-    }
-  }
-`;
-
-const Username = styled.span`
-  font-size: 35px;
-  font-weight: 300;
-  margin-right: 10px;
-`;
-
-const Bio = styled.p`
-  font-size: 16px;
-  margin-bottom: 10px;
+  margin: 20px 0px;
 `;
 
 const ModalAnimation = keyframes`
@@ -90,18 +25,6 @@ const ModalAnimation = keyframes`
 	    transform:none;
 	  }
   `;
-
-const Row = styled.div`
-  display: flex;
-  padding: 5px;
-`;
-
-const UBold = styled(Bold)`
-  display: flex;
-  align-self: flex-end;
-  font-weight: 100;
-  font-size: 12px;
-`;
 
 const ModalContainer = styled.div`
   z-index: 8;
@@ -163,100 +86,133 @@ const Input = styled.input`
   &::placeholder {
     color: ${props => props.theme.greyColor};
   }
-  animation: ${ModalAnimation} 0.1s linear;
 `;
 
-const Select = styled.select`
-  font-size: 12px;
-  color: "#2c3e50";
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-color: #2d3a41;
-  border: 0;
-  margin-bottom: 20px;
-  width: 90%;
+// const Select = styled.select`
+//   font-size: 12px;
+//   color: "#2c3e50";
+//   -webkit-appearance: none;
+//   -moz-appearance: none;
+//   appearance: none;
+//   background-color: #2d3a41;
+//   border: 0;
+//   margin-bottom: 20px;
+//   width: 90%;
+// `;
+
+// const Option = styled.option``;
+
+const Wrapper = styled.div`
+  display: flex;
+  margin: 20px auto;
+  flex-direction: row;
+  width: 100%;
+  max-width: 935px;
+`;
+const MenuColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  margin-top: 10px;
 `;
 
-const Option = styled.option``;
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  width: 735px;
+`;
+
+const MenuText = styled.p`
+  font-size: 18px;
+  font-weight: 100px;
+  margin-bottom: 15px;
+  cursor: pointer;
+`;
+
+const GreyLine = styled.div`
+  border-left: 1px solid grey;
+  height: 80vh;
+  margin: 0px 10px;
+`;
 
 interface IProps {
-  modalOpen: boolean;
-  confirmModalOpen: boolean;
+  deleteConfirmModalOpen: boolean;
+  logoutConfirmModalOpen: boolean;
+  toggleDeleteConfirmModal: () => void;
+  toggleLogoutConfirmModal: () => void;
   profilFormModalOpen: boolean;
-
-  editMode: boolean;
-  openEditMode: () => void;
-
-  userName: string;
-  bio: string;
-  gender: string;
-  avatar: string;
-  nationality: string;
-  residence: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  cityName: string;
-  cityId: string;
-  cityPhoto: string;
-  countryName: string;
-
-  toggleModal: () => void;
-  toggleConfirmModal: () => void;
-
   toggleProfileFormModal: () => void;
-
-  logUserOutFn: () => void;
-
-  confirmDeleteProfile: () => void;
+  deleteProfile: () => void;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDownSubmit: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-
-  username: string;
-  isSelf: boolean;
   onSelectChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
+  logUserOutFn: any;
+
+  isSelf: boolean;
+  isDarkMode: boolean;
+  isHideTrips: boolean;
+  isHideCoffees: boolean;
+  isHideCities: boolean;
+  isHideCountries: boolean;
+  isHideContinents: boolean;
+  isAutoLocationReport: boolean;
+
+  username: string;
+  bio: string;
+  gender: string;
+  firstName: string;
+  lastName: string;
+  nationality: string;
+  residence: string;
+  thumbnail: string;
+  email: string;
+  back: (event: any) => void;
 }
 
 const EditProfilePresenter: React.FunctionComponent<IProps> = ({
-  modalOpen,
-  confirmModalOpen,
-
+  deleteConfirmModalOpen,
+  logoutConfirmModalOpen,
+  toggleDeleteConfirmModal,
+  toggleLogoutConfirmModal,
   profilFormModalOpen,
-
-  editMode,
-
-  toggleModal,
-  toggleConfirmModal,
-
   toggleProfileFormModal,
-  openEditMode,
-  logUserOutFn,
-  confirmDeleteProfile,
-
+  deleteProfile,
   onInputChange,
-
   onKeyDownSubmit,
-  userName,
+  onSelectChange,
+  logUserOutFn,
+
+  isSelf,
+  isDarkMode,
+  isHideTrips,
+  isHideCoffees,
+  isHideCities,
+  isHideCountries,
+  isHideContinents,
+  isAutoLocationReport,
+
+  username,
   bio,
   gender,
   firstName,
   lastName,
-  avatar,
   nationality,
   residence,
+  thumbnail,
   email,
-  username,
-  isSelf,
-  onSelectChange
+  back
 }) => {
   return (
     <>
-      {(!nationality || !residence || !gender || !email) &&
+      {/* {(!user.profile.nationality ||
+        !user.profile.residence ||
+        !user.profile.gender ||
+        !user.profile.email) &&
         profilFormModalOpen &&
-        isSelf && (
+        user.profile.isSelf && (
           <ModalContainer>
             <ModalOverlay onClick={toggleProfileFormModal} />
             <Modal>
@@ -265,19 +221,8 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                   onChange={onInputChange}
                   type={"text"}
                   value={username}
-                  placeholder={username}
-                  name={"userName"}
-                  onKeyDown={onKeyDownSubmit}
-                  autoComplete={"off"}
-                />
-              </ModalLink>
-              <ModalLink>
-                <Input
-                  onChange={onInputChange}
-                  type={"text"}
-                  value={avatar}
-                  placeholder={avatar}
-                  name={"avatar"}
+                  placeholder={user.username}
+                  name={"username"}
                   onKeyDown={onKeyDownSubmit}
                   autoComplete={"off"}
                 />
@@ -293,7 +238,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                   autoComplete={"off"}
                 />
               </ModalLink>
-              {!nationality ? (
+              {!user.profile.nationality ? (
                 <ModalLink>
                   <Select
                     value={nationality}
@@ -308,7 +253,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                   </Select>
                 </ModalLink>
               ) : null}
-              {!residence ? (
+              {!user.profile.residence ? (
                 <ModalLink>
                   <Select
                     value={residence}
@@ -323,7 +268,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                   </Select>
                 </ModalLink>
               ) : null}
-              {!gender ? (
+              {!user.profile.gender ? (
                 <ModalLink>
                   <Select
                     value={gender}
@@ -352,103 +297,124 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
             </Modal>
           </ModalContainer>
         )}
-
-      {modalOpen && (
+      )} */}
+      {deleteConfirmModalOpen && (
         <ModalContainer>
-          <ModalOverlay onClick={toggleModal} />
+          <ModalOverlay onClick={toggleDeleteConfirmModal} />
           <Modal>
-            <ModalLink onClick={toggleConfirmModal}>Edit Avatar</ModalLink>
-            <ModalLink onClick={openEditMode}>Edit Profile</ModalLink>
-            <ModalLink onClick={toggleConfirmModal}>Settings</ModalLink>
-            <ModalLink onClick={toggleConfirmModal}>Delete Profile</ModalLink>
-            <ModalLink onClick={logUserOutFn}>Log Out</ModalLink>
-            <ModalLink onClick={toggleModal}>CANCEL</ModalLink>
+            <ModalLink onClick={deleteProfile}>Yes</ModalLink>
+            <ModalLink onClick={toggleDeleteConfirmModal}>No</ModalLink>
           </Modal>
         </ModalContainer>
       )}
-      {confirmModalOpen && (
+      {logoutConfirmModalOpen && (
         <ModalContainer>
-          <ModalOverlay onClick={toggleConfirmModal} />
+          <ModalOverlay onClick={toggleLogoutConfirmModal} />
           <Modal>
-            <ModalLink onClick={confirmDeleteProfile}>Yes</ModalLink>
-            <ModalLink onClick={toggleConfirmModal}>No</ModalLink>
+            <ModalLink onClick={logUserOutFn}>Yes</ModalLink>
+            <ModalLink onClick={toggleLogoutConfirmModal}>No</ModalLink>
           </Modal>
         </ModalContainer>
       )}
 
-      <Header>
-        <PAvatar size="lg" url={avatar} />
-        <NameContainer>
-          {editMode ? (
-            <Input
-              onChange={onInputChange}
-              type={"text"}
-              value={userName}
-              placeholder={username}
-              name={"userName"}
-              onKeyDown={onKeyDownSubmit}
-            />
-          ) : (
-            <Username>{username}</Username>
-          )}
-          {isSelf ? (
-            <ListIcon onClick={toggleModal}>
-              <List />
-            </ListIcon>
-          ) : null}
-        </NameContainer>
-      </Header>
       {/* 
         ////////////// BODY //////////////
         */}
-      <SWrapper>
-        <PHeader>
-          <LocationAvatarContainer>
-            {editMode ? (
-              <>
-                <Input
-                  onChange={onInputChange}
-                  type={"text"}
-                  value={firstName}
-                  placeholder={firstName || "First Name"}
-                  name={"firstName"}
-                  onKeyDown={onKeyDownSubmit}
-                />
-                <Input
-                  onChange={onInputChange}
-                  type={"text"}
-                  value={lastName}
-                  placeholder={lastName || "Last Name"}
-                  name={"lastName"}
-                  onKeyDown={onKeyDownSubmit}
-                />
-              </>
-            ) : (
-              <p>
-                {firstName} {lastName}
-              </p>
-            )}
-            {editMode ? (
-              <Input
-                onChange={onInputChange}
-                type={"text"}
-                value={bio}
-                placeholder={bio || "Bio"}
-                name={"bio"}
-                onKeyDown={onKeyDownSubmit}
-              />
-            ) : (
-              <Bio>{`${bio}`}</Bio>
-            )}
-            {gender ? (
-              <Row>
-                <UBold text={String(gender)} />
-                <UBold text={" gender - done"} />
-              </Row>
-            ) : null}
-          </LocationAvatarContainer>
-        </PHeader>
-      </SWrapper>
+      <Wrapper>
+        <MenuColumn>
+          <Link
+            to={{
+              pathname: `/account/edit`,
+              state: {
+                username,
+                isSelf,
+                isDarkMode,
+                isHideTrips,
+                isHideCoffees,
+                isHideCities,
+                isHideCountries,
+                isHideContinents,
+                isAutoLocationReport,
+                bio,
+                gender,
+                firstName,
+                lastName,
+                nationality,
+                residence,
+                thumbnail,
+                email
+              }
+            }}
+          >
+            <MenuText>EDIT PROFILE</MenuText>
+          </Link>
+          <Link
+            to={{
+              pathname: `/account/settings`,
+              state: {
+                username,
+                isSelf,
+                isDarkMode,
+                isHideTrips,
+                isHideCoffees,
+                isHideCities,
+                isHideCountries,
+                isHideContinents,
+                isAutoLocationReport,
+                bio,
+                gender,
+                firstName,
+                lastName,
+                nationality,
+                residence,
+                thumbnail,
+                email
+              }
+            }}
+          >
+            <MenuText>SETTINGS</MenuText>
+          </Link>
+          <MenuText onClick={toggleLogoutConfirmModal}>LOGOUT</MenuText>
+          <MenuText onClick={back}>CANCEL</MenuText>
+        </MenuColumn>
+        <GreyLine />
+        <Column>
+          <Link
+            to={{
+              pathname: `/${username}`,
+              state: { avatarModalOpen: true }
+            }}
+          >
+            {console.log(thumbnail)}
+            <PAvatar size="lg" url={`${BACKEND_URL}/media/${thumbnail}`} />
+          </Link>
+          <Input
+            onChange={onInputChange}
+            type={"text"}
+            value={firstName}
+            placeholder={firstName || "First Name"}
+            name={"firstName"}
+            onKeyDown={onKeyDownSubmit}
+          />
+          <Input
+            onChange={onInputChange}
+            type={"text"}
+            value={lastName}
+            placeholder={lastName || "Last Name"}
+            name={"lastName"}
+            onKeyDown={onKeyDownSubmit}
+          />
+
+          <Input
+            onChange={onInputChange}
+            type={"text"}
+            value={bio}
+            placeholder={bio || "Bio"}
+            name={"bio"}
+            onKeyDown={onKeyDownSubmit}
+          />
+        </Column>
+      </Wrapper>
     </>
   );
   return null;

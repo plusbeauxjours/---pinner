@@ -17,7 +17,7 @@ const Animation = keyframes`
 const Container = styled.img<ITheme>`
   height: ${props => {
     if (props.size === "md") {
-      return "50px";
+      return "100px";
     } else if (props.size === "sm") {
       return "30px";
     } else if (props.size === "lg") {
@@ -28,7 +28,7 @@ const Container = styled.img<ITheme>`
   }};
   width: ${props => {
     if (props.size === "md") {
-      return "50px";
+      return "100px";
     } else if (props.size === "sm") {
       return "30px";
     } else if (props.size === "lg") {
@@ -48,7 +48,7 @@ const Placeholder = styled.div<ITheme>`
   background-color: ${props => props.color};
   height: ${props => {
     if (props.size === "md") {
-      return "50px";
+      return "100px";
     } else if (props.size === "sm") {
       return "30px";
     } else if (props.size === "lg") {
@@ -59,7 +59,7 @@ const Placeholder = styled.div<ITheme>`
   }};
   width: ${props => {
     if (props.size === "md") {
-      return "50px";
+      return "100px";
     } else if (props.size === "sm") {
       return "30px";
     } else if (props.size === "lg") {
@@ -114,25 +114,27 @@ const Avatar: React.FunctionComponent<IProps> = ({
   countryCode,
   onClick
 }) => {
-  const randomColor = require("randomcolor");
-  const color = randomColor({
-    luminosity: "dark",
-    format: "rgba",
-    alpha: 0.9
-  });
+  // const randomColor = require("randomcolor");
+  // const color = randomColor({
+  //   luminosity: "dark",
+  //   format: "rgba",
+  //   alpha: 0.9
+  // });
   if (cityId) {
-    console.log(cityId);
     const { data: cityPhotoData } = useQuery(GET_CITY_PHOTO, {
       variables: { cityId }
     });
     const { getCityPhoto: { photo = null } = {} } = cityPhotoData;
-    console.log(photo);
     return (
       <ProgressiveImage delay={0} src={photo} placeholder="">
         {(src, loading) => {
           return loading ? (
             <AvatarContainer size={size}>
-              <Placeholder className={className} color={color} size={size} />
+              <Placeholder
+                className={className}
+                color={"#212121"}
+                size={size}
+              />
             </AvatarContainer>
           ) : (
             <AvatarContainer size={size}>
@@ -153,7 +155,11 @@ const Avatar: React.FunctionComponent<IProps> = ({
         {(src, loading) => {
           return loading ? (
             <AvatarContainer size={size}>
-              <Placeholder className={className} color={color} size={size} />
+              <Placeholder
+                className={className}
+                color={"#212121"}
+                size={size}
+              />
             </AvatarContainer>
           ) : (
             <AvatarContainer size={size}>
@@ -169,7 +175,11 @@ const Avatar: React.FunctionComponent<IProps> = ({
         {(src, loading) => {
           return loading ? (
             <AvatarContainer size={size}>
-              <Placeholder className={className} color={color} size={size} />
+              <Placeholder
+                className={className}
+                color={"#212121"}
+                size={size}
+              />
             </AvatarContainer>
           ) : (
             <AvatarContainer size={size}>

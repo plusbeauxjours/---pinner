@@ -88,7 +88,6 @@ class MatchContainer extends React.Component<IProps, IState> {
                       return (
                         <GetMatchesQuery query={GET_MATCHES}>
                           {({ data: matchData, loading: matchLoading }) => {
-                            this.matchData = matchData;
                             return (
                               <MatchPresenter
                                 matchData={matchData}

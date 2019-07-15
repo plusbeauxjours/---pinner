@@ -25,6 +25,7 @@ interface IProps extends RouteComponentProps {
 }
 
 interface IState {
+  cityId: string;
   isMatching: boolean;
 }
 
@@ -34,6 +35,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
+      cityId: props.cityId,
       isMatching: props.isMatching
     };
   }
@@ -82,12 +84,17 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
     }
   };
   public updateMatch = (cache, { data: { match } }) => {
+    const { cityId } = this.state;
     try {
       const matchData = cache.readQuery({
         query: GET_MATCHES
       });
+      console.log("matchData", matchData);
+      console.log(match);
+
       if (matchData) {
         matchData.getMatches.matches.unshift(match.match);
+        console.log(matchData);
         cache.writeQuery({
           query: GET_MATCHES,
           data: matchData
@@ -100,10 +107,12 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
       const feedData = cache.readQuery({
         query: GET_COFFEES,
         variables: {
-          cityId: localStorage.getItem("cityId"),
+          cityId: cityId || localStorage.getItem("cityId"),
           location: "city"
         }
       });
+      console.log("feedData", feedData);
+      console.log(match);
       if (feedData) {
         feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
           i => i.uuid !== match.coffeeId
@@ -111,7 +120,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
         cache.writeQuery({
           query: GET_COFFEES,
           variables: {
-            cityId: localStorage.getItem("cityId"),
+            cityId: cityId || localStorage.getItem("cityId"),
             location: "city"
           },
           data: feedData
@@ -131,6 +140,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
     }
   };
   public updateUnMatch = (cache, { data: { unMatch } }) => {
+    const { cityId } = this.state;
     try {
       const matchData = cache.readQuery({
         query: GET_MATCHES
@@ -153,7 +163,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
         const feedData = cache.readQuery({
           query: GET_COFFEES,
           variables: {
-            cityId: localStorage.getItem("cityId"),
+            cityId: cityId || localStorage.getItem("cityId"),
             location: "city"
           }
         });
@@ -162,7 +172,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
           cache.writeQuery({
             query: GET_COFFEES,
             variables: {
-              cityId: localStorage.getItem("cityId"),
+              cityId: cityId || localStorage.getItem("cityId"),
               location: "city"
             },
             data: feedData
