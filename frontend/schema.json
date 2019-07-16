@@ -3757,8 +3757,8 @@
             "deprecationReason": null
           },
           {
-            "name": "GENDERQUEER",
-            "description": "Genderqueer",
+            "name": "Other",
+            "description": "Other",
             "isDeprecated": false,
             "deprecationReason": null
           }

@@ -54,6 +54,7 @@ const Input: React.FunctionComponent<IProps> = ({
     className={className}
     required={required}
     onKeyDown={onKeyDown}
+    autoComplete={"off"}
   />
 );
 

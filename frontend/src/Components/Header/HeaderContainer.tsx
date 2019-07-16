@@ -56,7 +56,6 @@ class HeaderContainer extends React.Component<IProps, IState> {
     };
   }
   public componentDidMount() {
-    console.log("header mount");
     if (!localStorage.getItem("cityId")) {
       navigator.geolocation.getCurrentPosition(
         this.handleGeoSuccess,
@@ -71,9 +70,6 @@ class HeaderContainer extends React.Component<IProps, IState> {
         modalOpen: false
       });
     }
-    console.log("header update");
-    console.log(this.props);
-    console.log(nextProps);
   }
   public render() {
     const {

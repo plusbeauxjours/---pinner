@@ -54,14 +54,9 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     super(props);
     const { location: { state = {} } = {} } = ({} = props);
 
-    //
-    // SET BACK AFTER REFASCTORYING!!!!!!
-    //
-
-    // if (props.history.action === "POP" || !props.location.state) {
-    //   props.history.push("/");
-    // }
-
+    if (props.history.action === "POP" || !props.location.state) {
+      props.history.push("/");
+    }
     console.log(state);
     console.log(this.props);
     this.state = {
@@ -87,7 +82,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       residence: state.residence,
       thumbnail: state.thumbnail,
       email: state.email,
-      confirmUsername: props.confirmUsername
+      confirmUsername: props.confirmUsername || ""
     };
   }
   public render() {
@@ -142,12 +137,12 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                     onCompleted={deleteResult => {
                       const { deleteProfile } = deleteResult;
                       if (deleteProfile.ok) {
-                        toast.success("Place added!");
+                        toast.success("profile deleted!");
                         setTimeout(() => {
                           history.push("/");
                         }, 2000);
                       } else {
-                        toast.error("kokoko");
+                        toast.error("cann't delete profile");
                       }
                     }}
                   >
@@ -292,6 +287,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     this.setState({
       [name]: value
     } as any);
+    console.log(this.state);
   };
   public back = async event => {
     const { history } = this.props;

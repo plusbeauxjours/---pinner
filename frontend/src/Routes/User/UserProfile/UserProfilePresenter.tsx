@@ -926,9 +926,9 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                     user.profile.bio,
                     user.profile.gender,
                     user.firstName,
-                    user.lastname,
-                    user.profile.nationality,
-                    user.profile.residence,
+                    user.lastName,
+                    user.profile.nationality.countryCode,
+                    user.profile.residence.countryCode,
                     user.profile.avatar.thumbnail,
                     user.profile.email
                   )
@@ -936,6 +936,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               >
                 Edit Profile
               </ModalLink>
+              {console.log(user.profile.nationality.countryCode)}
               <ModalLink
                 onClick={() =>
                   linkToSettings(
@@ -951,9 +952,9 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                     user.profile.bio,
                     user.profile.gender,
                     user.firstName,
-                    user.lastname,
-                    user.profile.nationality,
-                    user.profile.residence,
+                    user.lastName,
+                    user.profile.nationality.countryCode,
+                    user.profile.residence.countryCode,
                     user.profile.avatar.thumbnail,
                     user.profile.email
                   )

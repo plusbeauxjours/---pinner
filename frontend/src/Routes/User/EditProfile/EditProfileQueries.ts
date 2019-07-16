@@ -50,6 +50,13 @@ export const EDIT_PROFILE = gql`
           countryCount
           continentCount
           isSelf
+          isDarkMode
+          isHideTrips
+          isHideCoffees
+          isHideCities
+          isHideCountries
+          isHideContinents
+          isAutoLocationReport
           currentCity {
             latitude
             longitude

@@ -118,6 +118,13 @@ const ModalLink = styled.div`
   }
 `;
 
+const GreyText = styled(MenuText)`
+  color: grey;
+  &:hover {
+    color: white;
+  }
+`;
+
 interface IProps {
   username: string;
   isSelf: boolean;
@@ -208,7 +215,7 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
               }
             }}
           >
-            <MenuText>EDIT PROFILE</MenuText>
+            <GreyText>EDIT PROFILE</GreyText>
           </Link>
           <Link
             to={{
@@ -236,8 +243,8 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
           >
             <MenuText>SETTINGS</MenuText>
           </Link>
-          <MenuText onClick={toggleConfirmModal}>LOGOUT</MenuText>
-          <MenuText onClick={back}>CANCEL</MenuText>
+          <GreyText onClick={toggleConfirmModal}>LOGOUT</GreyText>
+          <GreyText onClick={back}>CANCEL</GreyText>
         </MenuColumn>
         <GreyLine />
         <Column>

@@ -8,7 +8,6 @@ import Avatar from "../../../Components/Avatar";
 import { BACKEND_URL } from "src/constants";
 import { Link } from "react-router-dom";
 import Button from "src/Components/Button";
-import Form from "src/Components/Form";
 
 const PAvatar = styled(Avatar)`
   display: flex;
@@ -49,6 +48,10 @@ const Modal = styled.div`
   }
 `;
 
+const ConfirmModal = styled(Modal)`
+  width: 400px;
+`;
+
 const ModalOverlay = styled.div`
   z-index: 5;
   height: 100%;
@@ -71,10 +74,26 @@ const ModalLink = styled.div`
   }
 `;
 
+const ConfirmModalLink = styled(ModalLink)`
+  cursor: none;
+`;
+
+const ModalInputContainer = styled.div`
+  min-height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px 25px 0px 25px;
+  display: flex;
+  flex-direction: column;
+  height: 120px;
+`;
+
 const Input = styled.input`
   display: flex;
   width: 250px;
-  z-index: 10;
+  z-index: 2;
   border: 0;
   border-bottom: 1px solid ${props => props.theme.greyColor};
   color: white;
@@ -100,7 +119,7 @@ const Select = styled.select`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-color: #2d3a41;
+  background-color: transparent;
   border: none;
 `;
 
@@ -151,6 +170,7 @@ const ExplainText = styled.p`
   font-size: 12px;
   font-weight: 100;
   margin-bottom: 15px;
+  line-height: 15px;
 `;
 
 const Conatainer = styled.div`
@@ -177,9 +197,10 @@ const AvatarConatainer = styled(Conatainer)`
 const DeleteConatainer = styled.div`
   width: 600px;
   border: 1px solid grey;
-  padding: 10px 15px 0px 15px;
+  padding: 10px 15px 4px 15px;
   margin-bottom: 15px;
 `;
+
 const DConatainer = styled(Conatainer)`
   width: 100%;
 `;
@@ -204,6 +225,19 @@ const DButton = styled.button`
   border-radius: 4px;
   font-size: 12px;
   cursor: pointer;
+`;
+
+const ConfirmText = styled.p`
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 15px;
+`;
+
+const GreyText = styled(MenuText)`
+  color: grey;
+  &:hover {
+    color: white;
+  }
 `;
 
 interface IProps {
@@ -332,10 +366,34 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
       {deleteConfirmModalOpen && (
         <ModalContainer>
           <ModalOverlay onClick={toggleDeleteConfirmModal} />
-          <Modal>
-            <ModalLink onClick={deleteProfile}>Yes</ModalLink>
+          <ConfirmModal>
+            <ModalInputContainer>
+              <ConfirmText>Are you absolutely sure?</ConfirmText>
+
+              <ExplainText>
+                This action cannot be undone. This will permanently delete the
+                plusbeauxjours account, comments, trip history, and remove all
+                photos. Please type in the name of your username to confirm.
+              </ExplainText>
+            </ModalInputContainer>
+
+            {username === confirmUsername ? (
+              <ModalLink onClick={deleteProfile}>Yes</ModalLink>
+            ) : (
+              <ConfirmModalLink>
+                <Input
+                  onChange={onInputChange}
+                  type={"text"}
+                  value={confirmUsername}
+                  name={"confirmUsername"}
+                  autoFocus={true}
+                  autoComplete={"off"}
+                />
+              </ConfirmModalLink>
+            )}
+
             <ModalLink onClick={toggleDeleteConfirmModal}>No</ModalLink>
-          </Modal>
+          </ConfirmModal>
         </ModalContainer>
       )}
       {logoutConfirmModalOpen && (
@@ -402,10 +460,10 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
               }
             }}
           >
-            <MenuText>SETTINGS</MenuText>
+            <GreyText>SETTINGS</GreyText>
           </Link>
-          <MenuText onClick={toggleLogoutConfirmModal}>LOGOUT</MenuText>
-          <MenuText onClick={back}>CANCEL</MenuText>
+          <GreyText onClick={toggleLogoutConfirmModal}>LOGOUT</GreyText>
+          <GreyText onClick={back}>CANCEL</GreyText>
         </MenuColumn>
         <GreyLine />
         <Column>
@@ -419,117 +477,119 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
               <PAvatar size="lg" url={`${BACKEND_URL}/media/${thumbnail}`} />
             </Link>
           </AvatarConatainer>
-          <Form onSubmit={onSubmit}>
-            <Conatainer>
-              <TitleText>USERNAME</TitleText>
-              <Input
-                onChange={onInputChange}
-                type={"text"}
-                value={username}
-                placeholder={username || "Username"}
-                name={"username"}
-              />
-            </Conatainer>
-            <ExplainText>nani</ExplainText>
-            <Conatainer>
-              <TitleText>NATIONALITY</TitleText>
-              <Select
-                value={nationality}
-                name={"nationality"}
-                onChange={onSelectChange}
-              >
-                {countries.map((country, index) => (
-                  <Option key={index} value={country.code}>
-                    {country.emoji} {country.name}
-                  </Option>
-                ))}
-              </Select>
-            </Conatainer>
-            <ExplainText>nani</ExplainText>
-            <Conatainer>
-              <TitleText>RESIDENCE</TitleText>
-              <Select
-                value={residence}
-                name={"residence"}
-                onChange={onSelectChange}
-              >
-                {countries.map((country, index) => (
-                  <Option key={index} value={country.code}>
-                    {country.emoji} {country.name}
-                  </Option>
-                ))}
-              </Select>
-            </Conatainer>
-            <ExplainText>nani</ExplainText>
-            <Conatainer>
-              <TitleText>GENDER</TitleText>
-              <Select value={gender} name={"gender"} onChange={onSelectChange}>
-                <Option value={""}>-</Option>
-                <Option value={"Masculine"}>Masculine</Option>
-                <Option value={"Feminine"}>Feminine</Option>
-                <Option value={"Genderqueer"}>Genderqueer</Option>
-              </Select>
-            </Conatainer>
-            <ExplainText>nani</ExplainText>
-            <Conatainer>
-              <TitleText>FIRST NAME</TitleText>
-              <Input
-                onChange={onInputChange}
-                type={"text"}
-                value={firstName}
-                placeholder={firstName || "First Name"}
-                name={"firstName"}
-              />
-            </Conatainer>
-            <ExplainText>nani</ExplainText>
-            <Conatainer>
-              <TitleText>LAST NAME</TitleText>
-              <Input
-                onChange={onInputChange}
-                type={"text"}
-                value={lastName}
-                placeholder={lastName || "Last Name"}
-                name={"lastName"}
-              />
-            </Conatainer>
-            <ExplainText>nani</ExplainText>
-            <Conatainer>
-              <TitleText>BIO</TitleText>
-              <Input
-                onChange={onInputChange}
-                type={"text"}
-                value={bio}
-                placeholder={bio || "Bio"}
-                name={"bio"}
-              />
-            </Conatainer>
-            <ExplainText>nani</ExplainText>
-            <Conatainer>
-              <TitleText>EMAIL</TitleText>
-              <Input
-                onChange={onInputChange}
-                type={"email"}
-                value={email}
-                placeholder={email || "Email"}
-                name={"email"}
-              />
-            </Conatainer>
-            <ExplainText>nani</ExplainText>
-            <DeleteConatainer>
-              <DConatainer>
-                <TitleText>DELETE PROFILE</TitleText>
-                <DButton onClick={toggleDeleteConfirmModal}>
-                  DELETE PROFILE
-                </DButton>
-              </DConatainer>
-              <ExplainText>
-                Once you delete a repository, there is no going back. Please be
-                certain.
-              </ExplainText>
-            </DeleteConatainer>
-
-            <SButton text={"SUBMIT"} onClick={onSubmit} />
-          </Form>
+          <Conatainer>
+            <TitleText>USERNAME</TitleText>
+            <Input
+              onChange={onInputChange}
+              type={"text"}
+              value={username}
+              placeholder={username || "Username"}
+              name={"username"}
+              autoComplete={"off"}
+            />
+          </Conatainer>
+          <ExplainText>nani</ExplainText>
+          <Conatainer>
+            <TitleText>NATIONALITY</TitleText>
+            <Select
+              value={nationality}
+              name={"nationality"}
+              onChange={onSelectChange}
+            >
+              {countries.map((country, index) => (
+                <Option key={index} value={country.code}>
+                  {country.emoji} {country.name}
+                </Option>
+              ))}
+            </Select>
+          </Conatainer>
+          <ExplainText>nani</ExplainText>
+          <Conatainer>
+            <TitleText>RESIDENCE</TitleText>
+            <Select
+              value={residence}
+              name={"residence"}
+              onChange={onSelectChange}
+            >
+              {countries.map((country, index) => (
+                <Option key={index} value={country.code}>
+                  {country.emoji} {country.name}
+                </Option>
+              ))}
+            </Select>
+          </Conatainer>
+          <ExplainText>nani</ExplainText>
+          <Conatainer>
+            <TitleText>GENDER</TitleText>
+            <Select value={gender} name={"gender"} onChange={onSelectChange}>
+              <Option value={""}>-</Option>
+              <Option value={"Masculine"}>Masculine</Option>
+              <Option value={"Feminine"}>Feminine</Option>
+              <Option value={"Other"}>Other</Option>
+            </Select>
+          </Conatainer>
+          <ExplainText>nani</ExplainText>
+          <Conatainer>
+            <TitleText>FIRST NAME</TitleText>
+            <Input
+              onChange={onInputChange}
+              type={"text"}
+              value={firstName}
+              placeholder={firstName || "First Name"}
+              name={"firstName"}
+              autoComplete={"off"}
+            />
+          </Conatainer>
+          <ExplainText>nani</ExplainText>
+          <Conatainer>
+            <TitleText>LAST NAME</TitleText>
+            <Input
+              onChange={onInputChange}
+              type={"text"}
+              value={lastName}
+              placeholder={lastName || "Last Name"}
+              name={"lastName"}
+              autoComplete={"off"}
+            />
+          </Conatainer>
+          <ExplainText>nani</ExplainText>
+          <Conatainer>
+            <TitleText>BIO</TitleText>
+            <Input
+              onChange={onInputChange}
+              type={"text"}
+              value={bio}
+              placeholder={bio || "Bio"}
+              name={"bio"}
+              autoComplete={"off"}
+            />
+          </Conatainer>
+          <ExplainText>nani</ExplainText>
+          <Conatainer>
+            <TitleText>EMAIL</TitleText>
+            <Input
+              onChange={onInputChange}
+              type={"email"}
+              value={email}
+              placeholder={email || "Email"}
+              name={"email"}
+              autoComplete={"off"}
+            />
+          </Conatainer>
+          <ExplainText>nani</ExplainText>
+          <DeleteConatainer>
+            <DConatainer>
+              <TitleText>DELETE PROFILE</TitleText>
+              <DButton onClick={toggleDeleteConfirmModal}>
+                DELETE PROFILE
+              </DButton>
+            </DConatainer>
+            <ExplainText>
+              Once you delete a repository, there is no going back. Please be
+              certain.
+            </ExplainText>
+          </DeleteConatainer>
+          <SButton text={"SUBMIT"} onClick={onSubmit} />
         </Column>
       </Wrapper>
     </>

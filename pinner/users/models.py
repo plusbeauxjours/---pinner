@@ -90,7 +90,7 @@ class Profile(config_models.TimeStampedModel):
     GENDERS = (
         ('Masculine', 'Masculine'),
         ('Feminine', 'Feminine'),
-        ('Genderqueer', 'Genderqueer')
+        ('Other', 'Other')
     )
 
     user = models.OneToOneField(

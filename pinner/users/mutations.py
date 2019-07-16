@@ -136,11 +136,11 @@ class ToggleSettings(graphene.Mutation):
 class EditProfile(graphene.Mutation):
 
     class Arguments:
+        username = graphene.String()
         bio = graphene.String()
         gender = graphene.String()
-        first_name = graphene.String()
-        last_name = graphene.String()
-        username = graphene.String()
+        firstName = graphene.String()
+        lastName = graphene.String()
         nationality = graphene.String()
         residence = graphene.String()
         email = graphene.String()
@@ -158,13 +158,12 @@ class EditProfile(graphene.Mutation):
 
             bio = kwargs.get('bio', user.profile.bio)
             gender = kwargs.get('gender', user.profile.gender)
-            first_name = kwargs.get('first_name', user.first_name)
-            last_name = kwargs.get('last_name', user.last_name)
+            firstName = kwargs.get('firstName', user.first_name)
+            lastName = kwargs.get('lastName', user.last_name)
             username = kwargs.get('username', user.username)
             nationality_code = kwargs.get('nationality', user.profile.nationality)
             residence_code = kwargs.get('residence', user.profile.residence)
             email = kwargs.get('email', user.profile.email)
-            print(email)
 
             try:
                 nationality = location_models.Country.objects.get(country_code=nationality_code)
@@ -300,13 +299,12 @@ class EditProfile(graphene.Mutation):
                 profile.nationality = nationality
                 profile.residence = residence
                 profile.email = email
-                print(profile.email)
+                profile.save()
 
-                user.first_name = first_name
-                user.last_name = last_name
+                user.first_name = firstName
+                user.last_name = lastName
                 user.username = username
 
-                profile.save()
                 user.save()
                 print("updated")
                 return types.EditProfileResponse(ok=True, user=user)

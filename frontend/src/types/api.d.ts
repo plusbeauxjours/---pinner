@@ -2964,7 +2964,7 @@ export enum CoffeeTarget {
  */
 export enum ProfileGender {
   FEMININE = "FEMININE",
-  GENDERQUEER = "GENDERQUEER",
+  Other = "Other",
   MASCULINE = "MASCULINE",
 }
 
