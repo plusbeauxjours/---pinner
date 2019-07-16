@@ -140,9 +140,9 @@ interface IProps {
   gender: string;
   firstName: string;
   lastName: string;
-  nationality: string;
-  residence: string;
-  thumbnail: string;
+  nationality: any;
+  residence: any;
+  avatar: any;
   email: string;
 
   onClickToggleIcon: (payload: string) => void;
@@ -169,7 +169,7 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
   lastName,
   nationality,
   residence,
-  thumbnail,
+  avatar,
   email,
 
   onClickToggleIcon,
@@ -210,7 +210,7 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
                 lastName,
                 nationality,
                 residence,
-                thumbnail,
+                avatar,
                 email
               }
             }}
@@ -236,7 +236,7 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
                 lastName,
                 nationality,
                 residence,
-                thumbnail,
+                avatar,
                 email
               }
             }}

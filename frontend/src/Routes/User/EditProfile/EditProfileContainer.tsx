@@ -40,7 +40,7 @@ interface IState {
   lastName: string;
   nationality: string;
   residence: string;
-  thumbnail: string;
+  avatar: any;
   email: string;
   confirmUsername: string;
 }
@@ -78,9 +78,13 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       gender: state.gender,
       firstName: state.firstName,
       lastName: state.lastName,
-      nationality: state.nationality,
-      residence: state.residence,
-      thumbnail: state.thumbnail,
+      nationality: state.nationality
+        ? state.nationality.countryCode
+        : localStorage.getItem("countryCode"),
+      residence: state.residence
+        ? state.residence.countryCode
+        : localStorage.getItem("countryCode"),
+      avatar: state.avatar,
       email: state.email,
       confirmUsername: props.confirmUsername || ""
     };
@@ -108,7 +112,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       lastName,
       nationality,
       residence,
-      thumbnail,
+      avatar,
       email,
       confirmUsername
     } = this.state;
@@ -183,7 +187,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                           lastName={lastName}
                           nationality={nationality}
                           residence={residence}
-                          thumbnail={thumbnail}
+                          avatar={avatar}
                           email={email}
                           confirmUsername={confirmUsername}
                         />
@@ -213,6 +217,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       residence,
       email
     } = this.state;
+
     this.editProfileFn({
       variables: {
         username,

@@ -88,9 +88,9 @@ class Profile(config_models.TimeStampedModel):
     """ Profile Model """
 
     GENDERS = (
-        ('Masculine', 'Masculine'),
-        ('Feminine', 'Feminine'),
-        ('Other', 'Other')
+        ('MALE', 'Male'),
+        ('FEMALE', 'Female'),
+        ('OTHER', 'Other')
     )
 
     user = models.OneToOneField(
@@ -116,7 +116,7 @@ class Profile(config_models.TimeStampedModel):
     is_hide_cities = models.BooleanField(default=False)
     is_hide_countries = models.BooleanField(default=False)
     is_hide_continents = models.BooleanField(default=False)
-    is_auto_location_report = models.BooleanField(default=False)
+    is_auto_location_report = models.BooleanField(default=True)
     current_city = models.ForeignKey(
         location_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCity', )
 

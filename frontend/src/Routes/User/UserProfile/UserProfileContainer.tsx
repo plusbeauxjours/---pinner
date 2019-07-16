@@ -1312,7 +1312,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     lastName,
     nationality,
     residence,
-    thumbnail,
+    avatar,
     email
   ) => {
     const { history } = this.props;
@@ -1334,7 +1334,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         lastName,
         nationality,
         residence,
-        thumbnail,
+        avatar,
         email
       }
     });
@@ -1355,7 +1355,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     lastName,
     nationality,
     residence,
-    thumbnail,
+    avatar,
     email
   ) => {
     const { history } = this.props;
@@ -1377,7 +1377,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         lastName,
         nationality,
         residence,
-        thumbnail,
+        avatar,
         email
       }
     });

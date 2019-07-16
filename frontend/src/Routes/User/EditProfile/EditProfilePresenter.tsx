@@ -268,9 +268,9 @@ interface IProps {
   gender: string;
   firstName: string;
   lastName: string;
-  nationality: string;
-  residence: string;
-  thumbnail: string;
+  nationality: any;
+  residence: any;
+  avatar: any;
   email: string;
   confirmUsername: string;
   back: (event: any) => void;
@@ -305,7 +305,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   lastName,
   nationality,
   residence,
-  thumbnail,
+  avatar,
   email,
   confirmUsername,
   back,
@@ -429,7 +429,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                 lastName,
                 nationality,
                 residence,
-                thumbnail,
+                avatar,
                 email
               }
             }}
@@ -455,7 +455,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                 lastName,
                 nationality,
                 residence,
-                thumbnail,
+                avatar,
                 email
               }
             }}
@@ -474,7 +474,10 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                 state: { avatarModalOpen: true }
               }}
             >
-              <PAvatar size="lg" url={`${BACKEND_URL}/media/${thumbnail}`} />
+              <PAvatar
+                size="lg"
+                url={`${BACKEND_URL}/media/${avatar.thumbnail}`}
+              />
             </Link>
           </AvatarConatainer>
           <Conatainer>
@@ -522,10 +525,9 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
           <Conatainer>
             <TitleText>GENDER</TitleText>
             <Select value={gender} name={"gender"} onChange={onSelectChange}>
-              <Option value={""}>-</Option>
-              <Option value={"Masculine"}>Masculine</Option>
-              <Option value={"Feminine"}>Feminine</Option>
-              <Option value={"Other"}>Other</Option>
+              <Option value={"MALE"}>Male</Option>
+              <Option value={"FEMALE"}>Female</Option>
+              <Option value={"OTHER"}>Other</Option>
             </Select>
           </Conatainer>
           <ExplainText>nani</ExplainText>

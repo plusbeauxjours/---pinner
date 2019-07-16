@@ -677,9 +677,9 @@ interface IProps {
     gender: string,
     firstName: string,
     lastName: string,
-    nationality: string,
-    residence: string,
-    thumbnail: string,
+    nationality: any,
+    residence: any,
+    avatar: any,
     email: string
   ) => void;
   logUserOutFn: any;
@@ -699,9 +699,9 @@ interface IProps {
     gender: string,
     firstName: string,
     lastName: string,
-    nationality: string,
-    residence: string,
-    thumbnail: string,
+    nationality: any,
+    residence: any,
+    avatar: any,
     email: string
   ) => void;
 }
@@ -927,16 +927,15 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                     user.profile.gender,
                     user.firstName,
                     user.lastName,
-                    user.profile.nationality.countryCode,
-                    user.profile.residence.countryCode,
-                    user.profile.avatar.thumbnail,
+                    user.profile.nationality,
+                    user.profile.residence,
+                    user.profile.avatar,
                     user.profile.email
                   )
                 }
               >
                 Edit Profile
               </ModalLink>
-              {console.log(user.profile.nationality.countryCode)}
               <ModalLink
                 onClick={() =>
                   linkToSettings(
@@ -953,9 +952,9 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                     user.profile.gender,
                     user.firstName,
                     user.lastName,
-                    user.profile.nationality.countryCode,
-                    user.profile.residence.countryCode,
-                    user.profile.avatar.thumbnail,
+                    user.profile.nationality,
+                    user.profile.residence,
+                    user.profile.avatar,
                     user.profile.email
                   )
                 }

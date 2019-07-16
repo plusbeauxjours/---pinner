@@ -2298,13 +2298,9 @@
             "description": "",
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "AvatarType",
-                "ofType": null
-              }
+              "kind": "OBJECT",
+              "name": "AvatarType",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3745,19 +3741,19 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "MASCULINE",
-            "description": "Masculine",
+            "name": "MALE",
+            "description": "Male",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "FEMININE",
-            "description": "Feminine",
+            "name": "FEMALE",
+            "description": "Female",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "Other",
+            "name": "OTHER",
             "description": "Other",
             "isDeprecated": false,
             "deprecationReason": null

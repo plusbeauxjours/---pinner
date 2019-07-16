@@ -34,7 +34,7 @@ interface IState {
   lastName: string;
   nationality: string;
   residence: string;
-  thumbnail: string;
+  avatar: any;
   email: string;
 }
 
@@ -67,7 +67,7 @@ class ToggleSettingsContainer extends React.Component<IProps, IState> {
       lastName: state.lastName,
       nationality: state.nationality,
       residence: state.residence,
-      thumbnail: state.thumbnail,
+      avatar: state.avatar,
       email: state.email
     };
   }
@@ -90,7 +90,7 @@ class ToggleSettingsContainer extends React.Component<IProps, IState> {
       lastName,
       nationality,
       residence,
-      thumbnail,
+      avatar,
       email
     } = this.state;
     return (
@@ -122,7 +122,7 @@ class ToggleSettingsContainer extends React.Component<IProps, IState> {
                     lastName={lastName}
                     nationality={nationality}
                     residence={residence}
-                    thumbnail={thumbnail}
+                    avatar={avatar}
                     email={email}
                     //
                     onClickToggleIcon={this.onClickToggleIcon}

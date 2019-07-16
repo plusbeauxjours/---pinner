@@ -266,7 +266,6 @@ const HeaderPresenter: React.FunctionComponent<IProps> = ({
                   }
                 }}
               >
-                {console.log(user)}
                 <Avatar
                   size={"sm"}
                   url={
