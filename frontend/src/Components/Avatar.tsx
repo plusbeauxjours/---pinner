@@ -1,5 +1,5 @@
 import React from "react";
-import ProgressiveImage from "react-progressive-image";
+// import ProgressiveImage from "react-progressive-image";
 import styled from "styled-components";
 import { useQuery } from "react-apollo-hooks";
 import { GET_CITY_PHOTO, GET_COUNTRY_PHOTO } from "./Search/SearchQueries";
@@ -38,39 +38,42 @@ const Container = styled.img<ITheme>`
     }
   }};
   background-position: center center;
-  border-radius: 50%;
+  background-color: transparent;
   background-size: cover;
   object-fit: cover;
   animation: ${Animation} 0.1s linear;
+  border-radius: 50%;
+  border-style: none;
+  display: ${props => !props.src && "none"};
 `;
 
-const Placeholder = styled.div<ITheme>`
-  background-color: ${props => props.color};
-  height: ${props => {
-    if (props.size === "md") {
-      return "100px";
-    } else if (props.size === "sm") {
-      return "30px";
-    } else if (props.size === "lg") {
-      return "200px";
-    } else {
-      return "30px";
-    }
-  }};
-  width: ${props => {
-    if (props.size === "md") {
-      return "100px";
-    } else if (props.size === "sm") {
-      return "30px";
-    } else if (props.size === "lg") {
-      return "200px";
-    } else {
-      return "30px";
-    }
-  }};
-  border-radius: 50%;
-  animation: ${Animation} 0.1s linear;
-`;
+// const Placeholder = styled.div<ITheme>`
+//   background-color: ${props => props.color};
+//   height: ${props => {
+//     if (props.size === "md") {
+//       return "100px";
+//     } else if (props.size === "sm") {
+//       return "30px";
+//     } else if (props.size === "lg") {
+//       return "200px";
+//     } else {
+//       return "30px";
+//     }
+//   }};
+//   width: ${props => {
+//     if (props.size === "md") {
+//       return "100px";
+//     } else if (props.size === "sm") {
+//       return "30px";
+//     } else if (props.size === "lg") {
+//       return "200px";
+//     } else {
+//       return "30px";
+//     }
+//   }};
+//   border-radius: 50%;
+//   animation: ${Animation} 0.1s linear;
+// `;
 
 const AvatarContainer = styled.div<ITheme>`
   display: flex;
@@ -94,6 +97,7 @@ const AvatarContainer = styled.div<ITheme>`
 
 interface ITheme {
   size: string;
+  src?: string;
 }
 
 interface IProps {
@@ -126,23 +130,23 @@ const Avatar: React.FunctionComponent<IProps> = ({
     });
     const { getCityPhoto: { photo = null } = {} } = cityPhotoData;
     return (
-      <ProgressiveImage delay={0} src={photo} placeholder="">
-        {(src, loading) => {
-          return loading ? (
-            <AvatarContainer size={size}>
-              <Placeholder
-                className={className}
-                color={"#212121"}
-                size={size}
-              />
-            </AvatarContainer>
-          ) : (
-            <AvatarContainer size={size}>
-              <Container className={className} src={src} size={size} />
-            </AvatarContainer>
-          );
-        }}
-      </ProgressiveImage>
+      // <ProgressiveImage delay={0} src={photo} placeholder="">
+      //   {(src, loading) => {
+      //     return loading ? (
+      //       <AvatarContainer size={size}>
+      //         <Placeholder
+      //           className={className}
+      //           color={"#212121"}
+      //           size={size}
+      //         />
+      //       </AvatarContainer>
+      //     ) : (
+      <AvatarContainer size={size}>
+        <Container className={className} src={photo} size={size} />
+      </AvatarContainer>
+      //     );
+      //   }}
+      // </ProgressiveImage>
     );
   } else if (countryCode) {
     const { data: countryPhotoData } = useQuery(GET_COUNTRY_PHOTO, {
@@ -151,48 +155,48 @@ const Avatar: React.FunctionComponent<IProps> = ({
     const { getCountryPhoto: { photo = null } = {} } = countryPhotoData;
 
     return (
-      <ProgressiveImage delay={0} src={photo} placeholder="">
-        {(src, loading) => {
-          return loading ? (
-            <AvatarContainer size={size}>
-              <Placeholder
-                className={className}
-                color={"#212121"}
-                size={size}
-              />
-            </AvatarContainer>
-          ) : (
-            <AvatarContainer size={size}>
-              <Container className={className} src={src} size={size} />
-            </AvatarContainer>
-          );
-        }}
-      </ProgressiveImage>
+      // <ProgressiveImage delay={0} src={photo} placeholder="">
+      //   {(src, loading) => {
+      //     return loading ? (
+      //       <AvatarContainer size={size}>
+      //         <Placeholder
+      //           className={className}
+      //           color={"#212121"}
+      //           size={size}
+      //         />
+      //       </AvatarContainer>
+      //     ) : (
+      <AvatarContainer size={size}>
+        <Container className={className} src={photo} size={size} />
+      </AvatarContainer>
+      //     );
+      //   }}
+      // </ProgressiveImage>
     );
   } else {
     return (
-      <ProgressiveImage delay={0} src={url} placeholder="">
-        {(src, loading) => {
-          return loading ? (
-            <AvatarContainer size={size}>
-              <Placeholder
-                className={className}
-                color={"#212121"}
-                size={size}
-              />
-            </AvatarContainer>
-          ) : (
-            <AvatarContainer size={size}>
-              <Container
-                className={className}
-                src={src}
-                size={size}
-                onClick={onClick}
-              />
-            </AvatarContainer>
-          );
-        }}
-      </ProgressiveImage>
+      // <ProgressiveImage delay={0} src={url} placeholder="">
+      //   {(src, loading) => {
+      //     return loading ? (
+      //       <AvatarContainer size={size}>
+      //         <Placeholder
+      //           className={className}
+      //           color={"#212121"}
+      //           size={size}
+      //         />
+      //       </AvatarContainer>
+      //     ) : (
+      <AvatarContainer size={size}>
+        <Container
+          className={className}
+          src={url ? url : null}
+          size={size}
+          onClick={onClick}
+        />
+      </AvatarContainer>
+      //     );
+      //   }}
+      // </ProgressiveImage>
     );
   }
 };

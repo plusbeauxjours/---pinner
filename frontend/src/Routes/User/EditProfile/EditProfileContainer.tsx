@@ -208,7 +208,6 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       residence,
       email
     } = this.state;
-    console.log(event);
     const { keyCode } = event;
     if (keyCode === 13) {
       this.editProfileFn({
@@ -251,6 +250,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     this.setState({
       [name]: value
     } as any);
+    console.log(name, value);
     console.log(this.state);
   };
 

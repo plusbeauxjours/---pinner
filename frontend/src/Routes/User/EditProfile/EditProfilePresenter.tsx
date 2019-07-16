@@ -2,7 +2,7 @@ import React from "react";
 import styled, { keyframes } from "../../../Styles/typed-components";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
-// import { countries } from "../../../countryData";
+import { countries } from "../../../countryData";
 
 import Avatar from "../../../Components/Avatar";
 import { BACKEND_URL } from "src/constants";
@@ -88,19 +88,19 @@ const Input = styled.input`
   }
 `;
 
-// const Select = styled.select`
-//   font-size: 12px;
-//   color: "#2c3e50";
-//   -webkit-appearance: none;
-//   -moz-appearance: none;
-//   appearance: none;
-//   background-color: #2d3a41;
-//   border: 0;
-//   margin-bottom: 20px;
-//   width: 90%;
-// `;
+const Select = styled.select`
+  font-size: 12px;
+  color: "#2c3e50";
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #2d3a41;
+  border: 0;
+  margin-bottom: 20px;
+  width: 90%;
+`;
 
-// const Option = styled.option``;
+const Option = styled.option``;
 
 const Wrapper = styled.div`
   display: flex;
@@ -238,50 +238,9 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                   autoComplete={"off"}
                 />
               </ModalLink>
-              {!user.profile.nationality ? (
-                <ModalLink>
-                  <Select
-                    value={nationality}
-                    name={"nationality"}
-                    onChange={onSelectChange}
-                  >
-                    {countries.map((country, index) => (
-                      <Option key={index} value={country.code}>
-                        {country.emoji} {country.name}
-                      </Option>
-                    ))}
-                  </Select>
-                </ModalLink>
-              ) : null}
-              {!user.profile.residence ? (
-                <ModalLink>
-                  <Select
-                    value={residence}
-                    name={"residence"}
-                    onChange={onSelectChange}
-                  >
-                    {countries.map((country, index) => (
-                      <Option key={index} value={country.code}>
-                        {country.emoji} {country.name}
-                      </Option>
-                    ))}
-                  </Select>
-                </ModalLink>
-              ) : null}
-              {!user.profile.gender ? (
-                <ModalLink>
-                  <Select
-                    value={gender}
-                    name={"gender"}
-                    onChange={onSelectChange}
-                  >
-                    <Option value={""}>-</Option>
-                    <Option value={"Masculine"}>Masculine</Option>
-                    <Option value={"Feminine"}>Feminine</Option>
-                    <Option value={"Genderqueer"}>Genderqueer</Option>
-                  </Select>
-                </ModalLink>
-              ) : null}
+              {!user.profile.nationality ? <ModalLink /> : null}
+              {!user.profile.residence ? <ModalLink /> : null}
+              {!user.profile.gender ? <ModalLink /> : null}
               {!email ? (
                 <ModalLink>
                   <Input
@@ -316,7 +275,6 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
           </Modal>
         </ModalContainer>
       )}
-
       {/* 
         ////////////// BODY //////////////
         */}
@@ -385,9 +343,44 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
               state: { avatarModalOpen: true }
             }}
           >
-            {console.log(thumbnail)}
             <PAvatar size="lg" url={`${BACKEND_URL}/media/${thumbnail}`} />
           </Link>
+          <Input
+            onChange={onInputChange}
+            type={"text"}
+            value={username}
+            placeholder={username || "Username"}
+            name={"username"}
+            onKeyDown={onKeyDownSubmit}
+          />
+          <Select
+            value={nationality}
+            name={"nationality"}
+            onChange={onSelectChange}
+          >
+            {countries.map((country, index) => (
+              <Option key={index} value={country.code}>
+                {country.emoji} {country.name}
+              </Option>
+            ))}
+          </Select>
+          <Select
+            value={residence}
+            name={"residence"}
+            onChange={onSelectChange}
+          >
+            {countries.map((country, index) => (
+              <Option key={index} value={country.code}>
+                {country.emoji} {country.name}
+              </Option>
+            ))}
+          </Select>
+          <Select value={gender} name={"gender"} onChange={onSelectChange}>
+            <Option value={""}>-</Option>
+            <Option value={"Masculine"}>Masculine</Option>
+            <Option value={"Feminine"}>Feminine</Option>
+            <Option value={"Genderqueer"}>Genderqueer</Option>
+          </Select>
           <Input
             onChange={onInputChange}
             type={"text"}
@@ -404,13 +397,20 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
             name={"lastName"}
             onKeyDown={onKeyDownSubmit}
           />
-
           <Input
             onChange={onInputChange}
             type={"text"}
             value={bio}
             placeholder={bio || "Bio"}
             name={"bio"}
+            onKeyDown={onKeyDownSubmit}
+          />
+          <Input
+            onChange={onInputChange}
+            type={"email"}
+            value={email}
+            placeholder={email || "Email"}
+            name={"email"}
             onKeyDown={onKeyDownSubmit}
           />
         </Column>

@@ -140,7 +140,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     this.state = {
       modalOpen: false,
       avatarPreviewModalOpen: false,
-      avatarModalOpen: false,
+      avatarModalOpen: state.avatarModalOpen || false,
       tripModalOpen: false,
       tripConfirmModalOpen: false,
       tripAddModalOpen: false,
