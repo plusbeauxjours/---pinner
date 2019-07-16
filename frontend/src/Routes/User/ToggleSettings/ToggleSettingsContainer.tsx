@@ -44,10 +44,15 @@ class ToggleSettingsContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     const { location: { state = {} } = {} } = ({} = props);
-    console.log(state);
-    if (props.history.action === "POP" || !props.location.state) {
-      props.history.push("/");
-    }
+
+    //
+    // SET BACK AFTER REFASCTORYING!!!!!!
+    //
+
+    // if (props.history.action === "POP" || !props.location.state) {
+    //   props.history.push("/");
+    // }
+
     this.state = {
       username: state.username,
       isSelf: state.isSelf,

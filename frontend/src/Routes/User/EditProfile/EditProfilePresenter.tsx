@@ -7,12 +7,13 @@ import { countries } from "../../../countryData";
 import Avatar from "../../../Components/Avatar";
 import { BACKEND_URL } from "src/constants";
 import { Link } from "react-router-dom";
+import Button from "src/Components/Button";
+import Form from "src/Components/Form";
 
 const PAvatar = styled(Avatar)`
   display: flex;
   margin-left: 20px;
   align-self: center;
-  margin: 20px 0px;
 `;
 
 const ModalAnimation = keyframes`
@@ -71,15 +72,15 @@ const ModalLink = styled.div`
 `;
 
 const Input = styled.input`
+  display: flex;
+  width: 250px;
   z-index: 10;
   border: 0;
   border-bottom: 1px solid ${props => props.theme.greyColor};
-  padding: 5px;
   color: white;
   background-color: transparent;
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 100;
-  transition: border-bottom 0.1s linear;
   &:focus {
     outline: none;
   }
@@ -89,15 +90,18 @@ const Input = styled.input`
 `;
 
 const Select = styled.select`
-  font-size: 12px;
-  color: "#2c3e50";
+  height: 35px;
+  display: flex;
+  width: 250px;
+  font-size: 18px;
+  font-weight: 100;
+  border-bottom: 1px solid ${props => props.theme.greyColor};
+  color: white;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   background-color: #2d3a41;
-  border: 0;
-  margin-bottom: 20px;
-  width: 90%;
+  border: none;
 `;
 
 const Option = styled.option``;
@@ -136,6 +140,72 @@ const GreyLine = styled.div`
   margin: 0px 10px;
 `;
 
+const TitleText = styled.p`
+  display: flex;
+  align-self: center;
+  font-size: 18px;
+  font-weight: 100;
+`;
+
+const ExplainText = styled.p`
+  font-size: 12px;
+  font-weight: 100;
+  margin-bottom: 15px;
+`;
+
+const Conatainer = styled.div`
+  height: 35px;
+  display: flex;
+  width: 600px;
+  justify-content: space-between;
+  align-content: center;
+  flex-wrap: nowrap;
+  @media screen and (max-width: 831px) {
+    min-width: 300px;
+  }
+`;
+
+const AvatarConatainer = styled(Conatainer)`
+  display: flex;
+  width: 600px;
+  height: 200px;
+  justify-content: center;
+  align-content: center;
+  margin: 20px 0px 40px 0px;
+`;
+
+const DeleteConatainer = styled.div`
+  width: 600px;
+  border: 1px solid grey;
+  padding: 10px 15px 0px 15px;
+  margin-bottom: 15px;
+`;
+const DConatainer = styled(Conatainer)`
+  width: 100%;
+`;
+
+const SButton = styled(Button)`
+  display: flex;
+  width: 120px;
+`;
+
+const DButton = styled.button`
+  width: 120px;
+  height: 19px;
+  display: flex;
+  padding: 2px;
+  justify-content: center;
+  align-self: center;
+  border: 0;
+  color: white;
+  background-color: ${props => props.theme.blueColor};
+  opacity: 0.8;
+  font-weight: 600;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+`;
+
 interface IProps {
   deleteConfirmModalOpen: boolean;
   logoutConfirmModalOpen: boolean;
@@ -145,7 +215,6 @@ interface IProps {
   toggleProfileFormModal: () => void;
   deleteProfile: () => void;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyDownSubmit: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onSelectChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
@@ -169,7 +238,9 @@ interface IProps {
   residence: string;
   thumbnail: string;
   email: string;
+  confirmUsername: string;
   back: (event: any) => void;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const EditProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -181,7 +252,6 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   toggleProfileFormModal,
   deleteProfile,
   onInputChange,
-  onKeyDownSubmit,
   onSelectChange,
   logUserOutFn,
 
@@ -203,7 +273,9 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   residence,
   thumbnail,
   email,
-  back
+  confirmUsername,
+  back,
+  onSubmit
 }) => {
   return (
     <>
@@ -337,82 +409,127 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
         </MenuColumn>
         <GreyLine />
         <Column>
-          <Link
-            to={{
-              pathname: `/${username}`,
-              state: { avatarModalOpen: true }
-            }}
-          >
-            <PAvatar size="lg" url={`${BACKEND_URL}/media/${thumbnail}`} />
-          </Link>
-          <Input
-            onChange={onInputChange}
-            type={"text"}
-            value={username}
-            placeholder={username || "Username"}
-            name={"username"}
-            onKeyDown={onKeyDownSubmit}
-          />
-          <Select
-            value={nationality}
-            name={"nationality"}
-            onChange={onSelectChange}
-          >
-            {countries.map((country, index) => (
-              <Option key={index} value={country.code}>
-                {country.emoji} {country.name}
-              </Option>
-            ))}
-          </Select>
-          <Select
-            value={residence}
-            name={"residence"}
-            onChange={onSelectChange}
-          >
-            {countries.map((country, index) => (
-              <Option key={index} value={country.code}>
-                {country.emoji} {country.name}
-              </Option>
-            ))}
-          </Select>
-          <Select value={gender} name={"gender"} onChange={onSelectChange}>
-            <Option value={""}>-</Option>
-            <Option value={"Masculine"}>Masculine</Option>
-            <Option value={"Feminine"}>Feminine</Option>
-            <Option value={"Genderqueer"}>Genderqueer</Option>
-          </Select>
-          <Input
-            onChange={onInputChange}
-            type={"text"}
-            value={firstName}
-            placeholder={firstName || "First Name"}
-            name={"firstName"}
-            onKeyDown={onKeyDownSubmit}
-          />
-          <Input
-            onChange={onInputChange}
-            type={"text"}
-            value={lastName}
-            placeholder={lastName || "Last Name"}
-            name={"lastName"}
-            onKeyDown={onKeyDownSubmit}
-          />
-          <Input
-            onChange={onInputChange}
-            type={"text"}
-            value={bio}
-            placeholder={bio || "Bio"}
-            name={"bio"}
-            onKeyDown={onKeyDownSubmit}
-          />
-          <Input
-            onChange={onInputChange}
-            type={"email"}
-            value={email}
-            placeholder={email || "Email"}
-            name={"email"}
-            onKeyDown={onKeyDownSubmit}
-          />
+          <AvatarConatainer>
+            <Link
+              to={{
+                pathname: `/${username}`,
+                state: { avatarModalOpen: true }
+              }}
+            >
+              <PAvatar size="lg" url={`${BACKEND_URL}/media/${thumbnail}`} />
+            </Link>
+          </AvatarConatainer>
+          <Form onSubmit={onSubmit}>
+            <Conatainer>
+              <TitleText>USERNAME</TitleText>
+              <Input
+                onChange={onInputChange}
+                type={"text"}
+                value={username}
+                placeholder={username || "Username"}
+                name={"username"}
+              />
+            </Conatainer>
+            <ExplainText>nani</ExplainText>
+            <Conatainer>
+              <TitleText>NATIONALITY</TitleText>
+              <Select
+                value={nationality}
+                name={"nationality"}
+                onChange={onSelectChange}
+              >
+                {countries.map((country, index) => (
+                  <Option key={index} value={country.code}>
+                    {country.emoji} {country.name}
+                  </Option>
+                ))}
+              </Select>
+            </Conatainer>
+            <ExplainText>nani</ExplainText>
+            <Conatainer>
+              <TitleText>RESIDENCE</TitleText>
+              <Select
+                value={residence}
+                name={"residence"}
+                onChange={onSelectChange}
+              >
+                {countries.map((country, index) => (
+                  <Option key={index} value={country.code}>
+                    {country.emoji} {country.name}
+                  </Option>
+                ))}
+              </Select>
+            </Conatainer>
+            <ExplainText>nani</ExplainText>
+            <Conatainer>
+              <TitleText>GENDER</TitleText>
+              <Select value={gender} name={"gender"} onChange={onSelectChange}>
+                <Option value={""}>-</Option>
+                <Option value={"Masculine"}>Masculine</Option>
+                <Option value={"Feminine"}>Feminine</Option>
+                <Option value={"Genderqueer"}>Genderqueer</Option>
+              </Select>
+            </Conatainer>
+            <ExplainText>nani</ExplainText>
+            <Conatainer>
+              <TitleText>FIRST NAME</TitleText>
+              <Input
+                onChange={onInputChange}
+                type={"text"}
+                value={firstName}
+                placeholder={firstName || "First Name"}
+                name={"firstName"}
+              />
+            </Conatainer>
+            <ExplainText>nani</ExplainText>
+            <Conatainer>
+              <TitleText>LAST NAME</TitleText>
+              <Input
+                onChange={onInputChange}
+                type={"text"}
+                value={lastName}
+                placeholder={lastName || "Last Name"}
+                name={"lastName"}
+              />
+            </Conatainer>
+            <ExplainText>nani</ExplainText>
+            <Conatainer>
+              <TitleText>BIO</TitleText>
+              <Input
+                onChange={onInputChange}
+                type={"text"}
+                value={bio}
+                placeholder={bio || "Bio"}
+                name={"bio"}
+              />
+            </Conatainer>
+            <ExplainText>nani</ExplainText>
+            <Conatainer>
+              <TitleText>EMAIL</TitleText>
+              <Input
+                onChange={onInputChange}
+                type={"email"}
+                value={email}
+                placeholder={email || "Email"}
+                name={"email"}
+              />
+            </Conatainer>
+            <ExplainText>nani</ExplainText>
+            <DeleteConatainer>
+              <DConatainer>
+                <TitleText>DELETE PROFILE</TitleText>
+                <DButton onClick={toggleDeleteConfirmModal}>
+                  DELETE PROFILE
+                </DButton>
+              </DConatainer>
+              <ExplainText>
+                Once you delete a repository, there is no going back. Please be
+                certain.
+              </ExplainText>
+            </DeleteConatainer>
+
+            <SButton text={"SUBMIT"} onClick={onSubmit} />
+          </Form>
         </Column>
       </Wrapper>
     </>

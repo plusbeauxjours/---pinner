@@ -42,6 +42,7 @@ interface IState {
   residence: string;
   thumbnail: string;
   email: string;
+  confirmUsername: string;
 }
 
 class EditProfileContainer extends React.Component<IProps, IState> {
@@ -52,9 +53,15 @@ class EditProfileContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     const { location: { state = {} } = {} } = ({} = props);
-    if (props.history.action === "POP" || !props.location.state) {
-      props.history.push("/");
-    }
+
+    //
+    // SET BACK AFTER REFASCTORYING!!!!!!
+    //
+
+    // if (props.history.action === "POP" || !props.location.state) {
+    //   props.history.push("/");
+    // }
+
     console.log(state);
     console.log(this.props);
     this.state = {
@@ -79,7 +86,8 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       nationality: state.nationality,
       residence: state.residence,
       thumbnail: state.thumbnail,
-      email: state.email
+      email: state.email,
+      confirmUsername: props.confirmUsername
     };
   }
   public render() {
@@ -106,7 +114,8 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       nationality,
       residence,
       thumbnail,
-      email
+      email,
+      confirmUsername
     } = this.state;
     return (
       <LogOutMutation mutation={LOG_USER_OUT}>
@@ -158,9 +167,10 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                           toggleProfileFormModal={this.toggleProfileFormModal}
                           deleteProfile={this.deleteProfile}
                           onInputChange={this.onInputChange}
-                          onKeyDownSubmit={this.onKeyDownSubmit}
                           onSelectChange={this.onSelectChange}
                           logUserOutFn={this.logUserOutFn}
+                          back={this.back}
+                          onSubmit={this.onSubmit}
                           // settings
                           isSelf={isSelf}
                           isDarkMode={isDarkMode}
@@ -180,7 +190,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                           residence={residence}
                           thumbnail={thumbnail}
                           email={email}
-                          back={this.back}
+                          confirmUsername={confirmUsername}
                         />
                       );
                     }}
@@ -197,7 +207,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     this.deleteProfileFn();
     this.logUserOutFn();
   };
-  public onKeyDownSubmit = event => {
+  public onSubmit: React.FormEventHandler<HTMLFormElement> = event => {
     const {
       username,
       bio,
@@ -208,23 +218,18 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       residence,
       email
     } = this.state;
-    const { keyCode } = event;
-    if (keyCode === 13) {
-      this.editProfileFn({
-        variables: {
-          username,
-          bio,
-          gender,
-          firstName,
-          lastName,
-          nationality,
-          residence,
-          email
-        }
-      });
-    } else {
-      return null;
-    }
+    this.editProfileFn({
+      variables: {
+        username,
+        bio,
+        gender,
+        firstName,
+        lastName,
+        nationality,
+        residence,
+        email
+      }
+    });
   };
   public toggleDeleteConfirmModal = () => {
     const { deleteConfirmModalOpen } = this.state;
