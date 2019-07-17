@@ -162,6 +162,7 @@ class HeaderContainer extends React.Component<IProps, IState> {
         currentCountryCode: address.storableLocation.countryCode
       });
       localStorage.setItem("cityId", address.storableLocation.cityId);
+      localStorage.setItem("countryCode", address.storableLocation.countryCode);
       this.reportLocation(
         latitude,
         longitude,

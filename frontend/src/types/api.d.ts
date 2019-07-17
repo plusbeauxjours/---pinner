@@ -2133,7 +2133,7 @@ export interface EditProfile {
 }
 
 export interface EditProfileVariables {
-  userName?: string | null;
+  username?: string | null;
   bio?: string | null;
   gender?: string | null;
   firstName?: string | null;

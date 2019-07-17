@@ -23,7 +23,6 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   modalOpen: boolean;
-  userId: string;
 }
 
 class CoffeeDetailContainer extends React.Component<IProps, IState> {
@@ -31,11 +30,12 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: false,
-      userId: null
+      modalOpen: false
     };
   }
   public render() {
+    console.log(this.props);
+
     const {
       match: {
         params: { uuid }

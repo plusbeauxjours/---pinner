@@ -21,6 +21,7 @@ const SWrapper = styled(Wrapper)`
 `;
 
 const ModalContainer = styled.div`
+  z-index: 101;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -235,6 +236,7 @@ const CoffeeDetailPresenter: React.FunctionComponent<IProps> = ({
           </MenuModalContainer>
         )}
         <ModalContainer>
+          {console.log(coffee)}
           <ModalOverlay onClick={back} />
           <FormModal>
             <SWrapper>

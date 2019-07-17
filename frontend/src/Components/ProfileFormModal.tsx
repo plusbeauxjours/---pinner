@@ -75,7 +75,7 @@ class ProfileForm extends React.Component<IProps, IState> {
       <EditProfileMutation
         mutation={EDIT_PROFILE}
         variables={{
-          userName: username,
+          username,
           nationality,
           gender,
           email

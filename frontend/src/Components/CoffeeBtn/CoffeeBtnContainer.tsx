@@ -89,12 +89,9 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
       const matchData = cache.readQuery({
         query: GET_MATCHES
       });
-      console.log("matchData", matchData);
-      console.log(match);
-
+      console.log(matchData.getMatches.matches, match.match);
       if (matchData) {
-        matchData.getMatches.matches.unshift(match.match);
-        console.log(matchData);
+        matchData.getMatches.matches.push(match.match);
         cache.writeQuery({
           query: GET_MATCHES,
           data: matchData
@@ -111,8 +108,6 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
           location: "city"
         }
       });
-      console.log("feedData", feedData);
-      console.log(match);
       if (feedData) {
         feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
           i => i.uuid !== match.coffeeId
@@ -149,7 +144,6 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
         matchData.getMatches.matches = matchData.getMatches.matches.filter(
           i => parseInt(i.id, 10) !== unMatch.matchId
         );
-        console.log(matchData.getMatches.matches);
         cache.writeQuery({
           query: GET_MATCHES,
           data: matchData
@@ -168,7 +162,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
           }
         });
         if (feedData) {
-          feedData.getCoffees.coffees.unshift(unMatch.coffee);
+          feedData.getCoffees.coffees.push(unMatch.coffee);
           cache.writeQuery({
             query: GET_COFFEES,
             variables: {

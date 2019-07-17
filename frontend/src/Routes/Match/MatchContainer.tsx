@@ -11,7 +11,6 @@ import {
   GetCoffeesVariables
 } from "src/types/api";
 import { toast } from "react-toastify";
-import { RouteComponentProps, withRouter } from "react-router";
 import { GET_MATCHES, REQUEST_COFFEE } from "./MatchQueries";
 import { GET_COFFEES } from "../User/Coffees/CoffeesQueries";
 import { RECOMMAND_USERS } from "../Feed/PeoplePage/PeoplePageQueries";
@@ -24,7 +23,6 @@ class RequestCoffeeMutation extends Mutation<
   RequestCoffeeVariables
 > {}
 
-interface IProps extends RouteComponentProps<any> {}
 interface IState {
   search: string;
   matchList: any;
@@ -35,7 +33,7 @@ interface IState {
   coffeeReportModalOpen: boolean;
 }
 
-class MatchContainer extends React.Component<IProps, IState> {
+class MatchContainer extends React.Component<any, IState> {
   public requestCoffeeFn: MutationFn;
   public matchData;
   constructor(props) {
@@ -88,6 +86,7 @@ class MatchContainer extends React.Component<IProps, IState> {
                       return (
                         <GetMatchesQuery query={GET_MATCHES}>
                           {({ data: matchData, loading: matchLoading }) => {
+                            this.matchData = matchData;
                             return (
                               <MatchPresenter
                                 matchData={matchData}
@@ -227,4 +226,4 @@ class MatchContainer extends React.Component<IProps, IState> {
   };
 }
 
-export default withRouter(MatchContainer);
+export default MatchContainer;

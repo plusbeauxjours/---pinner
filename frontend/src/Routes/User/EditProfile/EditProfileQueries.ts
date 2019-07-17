@@ -3,7 +3,7 @@ import { COUNTRY_FRAGMENT } from "src/sharedQueries";
 
 export const EDIT_PROFILE = gql`
   mutation EditProfile(
-    $userName: String
+    $username: String
     $bio: String
     $gender: String
     $firstName: String
@@ -13,7 +13,7 @@ export const EDIT_PROFILE = gql`
     $email: String
   ) {
     editProfile(
-      username: $userName
+      username: $username
       bio: $bio
       gender: $gender
       firstName: $firstName

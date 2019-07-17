@@ -17,18 +17,22 @@ interface IState {
 class HomeContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
+    navigator.geolocation.getCurrentPosition(
+      this.handleGeoSuccess,
+      this.handleGeoError
+    );
     this.state = {
       isLogIn: true,
       modalOpen: false,
-      countryCode: localStorage.getItem("countryCode") || "",
-      countryPhone:
-        countries.find(i => i.code === localStorage.getItem("countryCode"))
-          .phone || "KR",
+      countryCode: localStorage.getItem("countryCode"),
+      countryPhone: countries.find(
+        i => i.code === localStorage.getItem("countryCode")
+      ).phone,
       verificationModalOpen: false
     };
   }
   public componentDidMount() {
-    const countryCode = localStorage.getItem("countryCode") || "KR";
+    const countryCode = localStorage.getItem("countryCode");
     if (!countryCode) {
       console.log("WORKING");
       navigator.geolocation.getCurrentPosition(
@@ -74,8 +78,15 @@ class HomeContainer extends React.Component<IProps, IState> {
           i => i.code === address.storableLocation.countryCode
         ).phone
       });
+      localStorage.setItem("cityId", address.storableLocation.cityId);
       localStorage.setItem("countryCode", address.storableLocation.countryCode);
     }
+    return {
+      countryCode: address.storableLocation.countryCode,
+      countryPhone: countries.find(
+        i => i.code === address.storableLocation.countryCode
+      ).phone
+    };
   };
   public handleGeoError = () => {
     console.log("No location");

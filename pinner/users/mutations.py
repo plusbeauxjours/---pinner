@@ -304,8 +304,8 @@ class EditProfile(graphene.Mutation):
                 user.first_name = firstName
                 user.last_name = lastName
                 user.username = username
-
                 user.save()
+
                 print("updated")
                 return types.EditProfileResponse(ok=True, user=user)
 

@@ -306,7 +306,6 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
             </UserNameRow>
             <Container>
               <Box>
-                {console.log(users)}
                 {users &&
                   users.length !== 0 &&
                   users.map(user => (
@@ -341,6 +340,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
           <UserContainer>
             <UserNameRow>
               <Username>MATCHES</Username>
+              {console.log(matches)}
               <Input
                 placeholder="Search matched users"
                 value={search}
