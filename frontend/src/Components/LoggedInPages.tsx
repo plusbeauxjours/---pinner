@@ -51,6 +51,7 @@ class LoggedInPages extends React.Component<IProps> {
       nextProps.history.action !== "POP" &&
       (!location.state ||
         !location.state.coffeeModalOpen ||
+        !location.state.coffeesModalOpen ||
         !location.state.avatarModalOpen ||
         !location.state.cityModalOpen ||
         !location.state.countryModalOpen ||
@@ -63,6 +64,11 @@ class LoggedInPages extends React.Component<IProps> {
   public render() {
     const { location } = this.props;
     const coffeeModalOpen = !!(
+      location.state &&
+      location.state.coffeeModalOpen &&
+      this.previousLocation !== location
+    );
+    const coffeesModalOpen = !!(
       location.state &&
       location.state.coffeeModalOpen &&
       this.previousLocation !== location
@@ -91,8 +97,8 @@ class LoggedInPages extends React.Component<IProps> {
       <Wrapper>
         <Header />
         {coffeeModalOpen && <Route path="/c/:uuid" component={CoffeeDetail} />}
-        {avatarModalOpen && (
-          <Route path="/:username/:uuid" component={UserAvatarDetail} />
+        {coffeesModalOpen && (
+          <Route path="/:username/coffees" component={Coffees} />
         )}
         {cityModalOpen && <Route path="/:username/cities" component={Cities} />}
         {countryModalOpen && (
@@ -101,10 +107,14 @@ class LoggedInPages extends React.Component<IProps> {
         {continentModalOpen && (
           <Route path="/:username/continents" component={Continents} />
         )}
+        {avatarModalOpen && (
+          <Route path="/:username/:uuid" component={UserAvatarDetail} />
+        )}
 
         <Switch
           location={
             coffeeModalOpen ||
+            coffeesModalOpen ||
             avatarModalOpen ||
             cityModalOpen ||
             countryModalOpen ||
@@ -158,7 +168,7 @@ class LoggedInPages extends React.Component<IProps> {
           <Route path="/account/settings" component={ToggleSettings} />
 
           {/* USER */}
-          <Route path="/:username/coffees" component={Coffees} />
+
           <Route path="/:username/edit" component={EditProfile} />
           <Route path="/:username" exact={true} component={UserProfile} />
           <Redirect from="*" to="/" />

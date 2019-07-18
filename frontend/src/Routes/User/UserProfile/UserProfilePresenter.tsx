@@ -1150,12 +1150,32 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                 <UBold text={String(user.profile.tripCount)} />
                 <UBold text={" how many TRIPS - done"} />
               </Row>
-              <Row>
-                <Link to={`/${username}/coffees`}>
+              {user.profile.isHideCoffees ? (
+                <Row>
                   <UBold text={String(user.profile.coffeeCount)} />
-                  <UBold text={" how many COFFEES - done"} />
+                  {user.profile.cityCount === 1 ? (
+                    <GreyUBold text={"Coffee requested"} />
+                  ) : (
+                    <GreyUBold text={"Coffees requested"} />
+                  )}
+                </Row>
+              ) : (
+                <Link
+                  to={{
+                    pathname: `/${username}/coffees`,
+                    state: { coffeeModalOpen: true }
+                  }}
+                >
+                  <Row>
+                    <UBold text={String(user.profile.coffeeCount)} />
+                    {user.profile.cityCount === 1 ? (
+                      <UBold text={"Coffee requested"} />
+                    ) : (
+                      <UBold text={"Coffees requested"} />
+                    )}
+                  </Row>
                 </Link>
-              </Row>
+              )}
               {user.profile.isHideCities ? (
                 <Row>
                   <GreyUBold text={String(user.profile.cityCount)} />
