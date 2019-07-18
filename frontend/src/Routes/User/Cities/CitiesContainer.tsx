@@ -14,10 +14,13 @@ interface IState {
   cityList: any;
 }
 
-class CitiesContainerContainer extends React.Component<IProps, IState> {
+class CitiesContainer extends React.Component<IProps, IState> {
   public data;
   constructor(props) {
     super(props);
+    if (props.history.action === "POP" || !props.location.state) {
+      props.history.push("/");
+    }
     this.state = {
       search: "",
       cityList: []
@@ -48,10 +51,10 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
             <CitiesPresenter
               loading={loading}
               data={data}
-              userName={username}
               onChange={this.onChange}
               search={search}
               cityList={cityList}
+              back={this.back}
             />
           );
         }}
@@ -77,6 +80,16 @@ class CitiesContainerContainer extends React.Component<IProps, IState> {
       cityList
     } as any);
   };
+  public back = async event => {
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    const { history } = this.props;
+    event.stopPropagation();
+    history.push(`/${username}`);
+  };
 }
 
-export default withRouter(CitiesContainerContainer);
+export default withRouter(CitiesContainer);

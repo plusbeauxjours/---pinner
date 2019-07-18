@@ -22,5 +22,4 @@ class MatchAdmin(admin.ModelAdmin):
         'city',
         'host',
         'guest',
-        'status',
     )

@@ -253,6 +253,10 @@ const UBold = styled(Bold)`
   font-size: 12px;
 `;
 
+const GreyUBold = styled(UBold)`
+  color: grey;
+`;
+
 const SAvatar = styled(Avatar)`
   border-radius: 3px;
   height: 45px;
@@ -350,7 +354,7 @@ const ModalLinkContainer = styled(Link)`
 const TripInputContainer = styled.div`
   z-index: 10;
   top: 30%;
-  width: 30%;
+  width: 400px;
   border: 0;
   position: absolute;
   display: flex;
@@ -868,7 +872,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleRequestModal} />
             <Modal>
-              <ModalLink onClick={() => submitCoffee("everyone")}>
+              <ModalLink onClick={() => submitCoffee("Everyone")}>
                 EVERYONE
               </ModalLink>
               <ModalLink onClick={() => submitCoffee("nationality")}>
@@ -1148,53 +1152,89 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               </Row>
               <Row>
                 <Link to={`/${username}/coffees`}>
-                  <UBold text={String(user.profile.tripCount)} />
+                  <UBold text={String(user.profile.coffeeCount)} />
                   <UBold text={" how many COFFEES - done"} />
                 </Link>
               </Row>
-              <Row>
-                {user.profile.isHideCities ? (
-                  <>
+              {user.profile.isHideCities ? (
+                <Row>
+                  <GreyUBold text={String(user.profile.cityCount)} />
+                  {user.profile.cityCount === 1 ? (
+                    <GreyUBold text={"City visited"} />
+                  ) : (
+                    <GreyUBold text={"Cities visited"} />
+                  )}
+                </Row>
+              ) : (
+                <Link
+                  to={{
+                    pathname: `/${username}/cities`,
+                    state: { cityModalOpen: true }
+                  }}
+                >
+                  <Row>
                     <UBold text={String(user.profile.cityCount)} />
-                    <UBold text={" how many CITIES - done"} />
-                  </>
-                ) : (
-                  <Link to={`/${username}/cities`}>
-                    <UBold text={String(user.profile.cityCount)} />
-                    <UBold text={" how many CITIES - done"} />
-                  </Link>
-                )}
-                <Link to={`/${username}/cities`}>
-                  <UBold text={String(user.profile.cityCount)} />
-                  <UBold text={" how many CITIES - done"} />
+                    {user.profile.cityCount === 1 ? (
+                      <UBold text={"City visited"} />
+                    ) : (
+                      <UBold text={"Cities visited"} />
+                    )}
+                  </Row>
                 </Link>
-              </Row>
-              <Row>
-                {user.profile.isHideCountries ? (
-                  <Link to={`/${username}/countries`}>
+              )}
+              {user.profile.isHideCountries ? (
+                <Row>
+                  <GreyUBold text={String(user.profile.countryCount)} />
+                  {user.profile.countryCount === 1 ? (
+                    <GreyUBold text={"Country visited"} />
+                  ) : (
+                    <GreyUBold text={"Countries visited"} />
+                  )}
+                </Row>
+              ) : (
+                <Link
+                  to={{
+                    pathname: `/${username}/countries`,
+                    state: { countryModalOpen: true }
+                  }}
+                >
+                  <Row>
                     <UBold text={String(user.profile.countryCount)} />
-                    <UBold text={" how many COUNTRIES - done"} />
-                  </Link>
-                ) : (
-                  <>
-                    <UBold text={String(user.profile.countryCount)} />
-                    <UBold text={" how many COUNTRIES - done"} />
-                  </>
-                )}
-              </Row>
-              <Row>
-                {user.profile.isHideContinents ? (
-                  <>
+                    {user.profile.countryCount === 1 ? (
+                      <UBold text={"Country visited"} />
+                    ) : (
+                      <UBold text={"Countries visited"} />
+                    )}
+                  </Row>
+                </Link>
+              )}
+
+              {user.profile.isHideContinents ? (
+                <Row>
+                  <GreyUBold text={String(user.profile.continentCount)} />
+                  {user.profile.continentCount === 1 ? (
+                    <GreyUBold text={"Continent visited"} />
+                  ) : (
+                    <GreyUBold text={"Continents visited"} />
+                  )}
+                </Row>
+              ) : (
+                <Link
+                  to={{
+                    pathname: `/${username}/continents`,
+                    state: { continentModalOpen: true }
+                  }}
+                >
+                  <Row>
                     <UBold text={String(user.profile.continentCount)} />
-                    <UBold text={" how many  CONTINENT - done"} />
-                  </>
-                ) : (
-                  <>
-                    <UBold text={String(user.profile.continentCount)} />
-                    <UBold text={" how many  CONTINENT - done"} />
-                  </>
-                )}
-              </Row>
+                    {user.profile.continentCount === 1 ? (
+                      <UBold text={"Continent visited"} />
+                    ) : (
+                      <UBold text={"Continents visited"} />
+                    )}
+                  </Row>
+                </Link>
+              )}
               {user.profile.gender ? (
                 <Row>
                   <UBold text={String(user.profile.gender)} />

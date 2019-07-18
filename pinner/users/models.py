@@ -143,5 +143,9 @@ class Profile(config_models.TimeStampedModel):
     def trip_count(self):
         return self.user.movenotification.all().count()
 
+    @cached_property
+    def coffee_count(self):
+        return self.user.coffee.all().count()
+
     class Meta:
         ordering = ['-created_at']

@@ -1991,6 +1991,37 @@ export interface GetCoffeesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: TopContinents
+// ====================================================
+
+export interface TopContinents_topContinents_continents {
+  __typename: "ContinentType";
+  count: number | null;
+  diff: number | null;
+  id: string;
+  continentName: string | null;
+  continentCode: string | null;
+  continentPhoto: string | null;
+}
+
+export interface TopContinents_topContinents {
+  __typename: "ContinentsResponse";
+  continents: (TopContinents_topContinents_continents | null)[] | null;
+}
+
+export interface TopContinents {
+  topContinents: TopContinents_topContinents;
+}
+
+export interface TopContinentsVariables {
+  userName: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: TopCountries
 // ====================================================
 

@@ -106,14 +106,6 @@ const SAvatar = styled(Avatar)`
   width: 45px;
 `;
 
-const Location = styled.span`
-  display: flex;
-  margin-top: 5px;
-  display: block;
-  font-size: 12px;
-  font-weight: 200;
-`;
-
 const GreyText = styled(Bold)`
   color: #999;
 `;
@@ -145,20 +137,20 @@ interface IProps {
   userName: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
-  countryList: any;
+  continentList: any;
 }
 
-const CountriesPresenter: React.FunctionComponent<IProps> = ({
-  data: { topCountries: { countries = null } = {} } = {},
+const ContinentsPresenter: React.FunctionComponent<IProps> = ({
+  data: { topContinents: { continents = null } = {} } = {},
   loading,
   userName,
   onChange,
   search,
-  countryList
+  continentList
 }) => {
   if (loading) {
     return <Loader />;
-  } else if (!loading && countries) {
+  } else if (!loading && continents) {
     return (
       <>
         <SWrapper>
@@ -174,46 +166,44 @@ const CountriesPresenter: React.FunctionComponent<IProps> = ({
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>
-                <Username>{userName} Countries</Username>
+                <Username>{userName} Continents</Username>
                 <Input
                   placeholder="Seardddch"
                   value={search}
                   onChange={onChange}
                 />
               </UserNameRow>
-              {countryList.length !== 0 &&
-                countryList &&
-                countryList.map(country => (
-                  <UserRow key={country.id}>
-                    <Link to={`/country/${country.countryCode}`}>
+              {continentList.length !== 0 &&
+                continentList &&
+                continentList.map(continent => (
+                  <UserRow key={continent.id}>
+                    <Link to={`/continent/${continent.continentCode}`}>
                       <Header>
-                        <SAvatar size={"sm"} url={country.countryPhoto} />
+                        <SAvatar size={"sm"} url={continent.continentPhoto} />
                         <HeaderColumn>
-                          <HeaderText text={country.countryName} />
-                          <Location>{country.continent.continentName}</Location>
+                          <HeaderText text={continent.continentName} />
                         </HeaderColumn>
                       </Header>
                     </Link>
-                    <GreyText text={`x ${country.count}`} />
-                    <GreyText text={`${country.diff} d`} />
+                    <GreyText text={`x ${continent.count}`} />
+                    <GreyText text={`${continent.diff} d`} />
                   </UserRow>
                 ))}
-              {countryList.length === 0 &&
+              {continentList.length === 0 &&
                 !search &&
-                countries &&
-                countries.map(country => (
-                  <UserRow key={country.id}>
-                    <Link to={`/country/${country.countryCode}`}>
+                continents &&
+                continents.map(continent => (
+                  <UserRow key={continent.id}>
+                    <Link to={`/continent/${continent.continentCode}`}>
                       <Header>
-                        <SAvatar size={"sm"} url={country.countryPhoto} />
+                        <SAvatar size={"sm"} url={continent.continentPhoto} />
                         <HeaderColumn>
-                          <HeaderText text={country.countryName} />
-                          <Location>{country.continent.continentName}</Location>
+                          <HeaderText text={continent.continentName} />
                         </HeaderColumn>
                       </Header>
                     </Link>
-                    <GreyText text={`x ${country.count}`} />
-                    <GreyText text={`${country.diff} d`} />
+                    <GreyText text={`x ${continent.count}`} />
+                    <GreyText text={`${continent.diff} d`} />
                   </UserRow>
                 ))}
             </UserContainer>
@@ -226,4 +216,4 @@ const CountriesPresenter: React.FunctionComponent<IProps> = ({
   return null;
 };
 
-export default CountriesPresenter;
+export default ContinentsPresenter;

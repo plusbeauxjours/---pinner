@@ -16,6 +16,7 @@ import UserAvatarDetail from "../Routes/User/UserAvatarDetail";
 import Coffees from "../Routes/User/Coffees";
 import Cities from "../Routes/User/Cities";
 import Countries from "../Routes/User/Countries";
+import Continents from "../Routes/User/Continents";
 
 import PeoplePage from "../Routes/Feed/PeoplePage";
 import CoffeesPage from "../Routes/Feed/CoffeesPage";
@@ -81,7 +82,11 @@ class LoggedInPages extends React.Component<IProps> {
       location.state.countryModalOpen &&
       this.previousLocation !== location
     );
-
+    const continentModalOpen = !!(
+      location.state &&
+      location.state.continentModalOpen &&
+      this.previousLocation !== location
+    );
     return (
       <Wrapper>
         <Header />
@@ -89,16 +94,21 @@ class LoggedInPages extends React.Component<IProps> {
         {avatarModalOpen && (
           <Route path="/:username/:uuid" component={UserAvatarDetail} />
         )}
-        {cityModalOpen && (
+        {cityModalOpen && <Route path="/:username/cities" component={Cities} />}
+        {countryModalOpen && (
           <Route path="/:username/countries" component={Countries} />
         )}
-        {countryModalOpen && (
-          <Route path="/:username/cities" component={Cities} />
+        {continentModalOpen && (
+          <Route path="/:username/continents" component={Continents} />
         )}
 
         <Switch
           location={
-            coffeeModalOpen || avatarModalOpen
+            coffeeModalOpen ||
+            avatarModalOpen ||
+            cityModalOpen ||
+            countryModalOpen ||
+            continentModalOpen
               ? this.previousLocation
               : location
           }
@@ -144,13 +154,11 @@ class LoggedInPages extends React.Component<IProps> {
           <Route path="/city/:cityId/usersBefore" component={CityUsersBefore} />
           <Route path="/city/:cityId/:duration" component={TripProfile} />
           <Route path="/city/:cityId" component={CityProfile} />
-
-          {/* USER */}
           <Route path="/account/edit" component={EditProfile} />
           <Route path="/account/settings" component={ToggleSettings} />
-          <Route path="/:username/coffees" component={Coffees} />
-          <Route path="/:username/coffees" component={Coffees} />
 
+          {/* USER */}
+          <Route path="/:username/coffees" component={Coffees} />
           <Route path="/:username/edit" component={EditProfile} />
           <Route path="/:username" exact={true} component={UserProfile} />
           <Redirect from="*" to="/" />

@@ -283,7 +283,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleRequestModal} />
             <Modal>
-              <ModalLink onClick={() => submitCoffee("everyone")}>
+              <ModalLink onClick={() => submitCoffee("Everyone")}>
                 EVERYONE
               </ModalLink>
               <ModalLink onClick={() => submitCoffee("nationality")}>

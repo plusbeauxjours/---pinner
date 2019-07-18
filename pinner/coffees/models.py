@@ -53,16 +53,10 @@ def get_expries(sender, **kwargs):
 
 class Match (config_models.TimeStampedModel):
 
-    STATUS = (
-        ('ongoing', 'ONGOING'),
-        ('canceled', 'CANCELED'),
-    )
-
     coffee = models.ForeignKey(Coffee, on_delete=models.PROTECT, null=True, blank=True, related_name='match')
     city = models.ForeignKey(location_models.City, on_delete=models.CASCADE, null=True, blank=True)
     host = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='host')
     guest = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='guest')
-    status = models.CharField(max_length=10, choices=STATUS, default='ongoing')
 
     @cached_property
     def country_count(self):

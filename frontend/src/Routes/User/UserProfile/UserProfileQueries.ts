@@ -28,6 +28,7 @@ export const GET_USER = gql`
           }
           postCount
           tripCount
+          coffeeCount
           cityCount
           countryCount
           continentCount

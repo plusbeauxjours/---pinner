@@ -14,6 +14,7 @@ class ProfileType(DjangoObjectType):
     continent_count = graphene.Int(source='continent_count')
     post_count = graphene.Int(source='post_count')
     trip_count = graphene.Int(source='trip_count')
+    coffee_count = graphene.Int(source='coffee_count')
     is_self = graphene.Boolean()
 
     def resolve_is_self(self, info):

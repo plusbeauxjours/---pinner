@@ -1,2 +1,2 @@
-import CountriesContainer from "./CountriesContainer";
-export default CountriesContainer;
+import ContinentsContainer from "./ContinentsContainer";
+export default ContinentsContainer;

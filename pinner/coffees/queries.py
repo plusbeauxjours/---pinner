@@ -32,7 +32,7 @@ def resolve_get_coffees(self, info, **kwargs):
             # matches = me.host.values('id').values('guest').all()
             # not allow to join. only showing is allowed if they already matched
 
-            coffees = city.coffee.filter((Q(target='everyone') |
+            coffees = city.coffee.filter((Q(target='Everyone') |
                                           Q(target='nationality', host__profile__nationality=profile.nationality) |
                                           Q(target='gender', host__profile__gender=profile.gender)) &
                                          Q(expires__gt=timezone.now())).exclude(match__id__in=matches).order_by('-created_at')
@@ -83,7 +83,7 @@ def resolve_get_coffees(self, info, **kwargs):
             profile = me.profile
             matches = me.guest.values('id').all()
 
-            coffees = coffee_models.Coffee.objects.filter((Q(target='everyone') |
+            coffees = coffee_models.Coffee.objects.filter((Q(target='Everyone') |
                                                            Q(target='nationality', host__profile__nationality=profile.nationality) |
                                                            Q(target='gender', host__profile__gender=profile.gender)) &
                                                           Q(expires__gt=timezone.now()) & Q(city__id__in=allCities)).exclude(match__id__in=matches).order_by('-created_at')
@@ -104,7 +104,7 @@ def resolve_get_coffees(self, info, **kwargs):
         try:
             profile = me.profile
             matches = me.guest.values('id').all()
-            coffees = coffee_models.Coffee.objects.filter((Q(target='everyone') |
+            coffees = coffee_models.Coffee.objects.filter((Q(target='Everyone') |
                                                            Q(target='nationality', host__profile__nationality=profile.nationality) |
                                                            Q(target='gender', host__profile__gender=profile.gender)) &
                                                           Q(expires__gt=timezone.now()) & Q(city__id__in=allCities)).exclude(match__id__in=matches).order_by('-created_at')

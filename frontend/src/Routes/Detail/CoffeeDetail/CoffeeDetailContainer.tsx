@@ -34,8 +34,6 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
     };
   }
   public render() {
-    console.log(this.props);
-
     const {
       match: {
         params: { uuid }
@@ -76,7 +74,6 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
     this.setState({
       modalOpen: !modalOpen
     });
-    console.log(this.state);
   };
   public back = event => {
     event.stopPropagation();
@@ -92,14 +89,12 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
   };
   public updateDeleteCoffee = (cache, { data: { deleteCoffee } }) => {
     const { username } = deleteCoffee;
-    console.log(username);
     const currentCity = localStorage.getItem("cityId");
     try {
       const profileData = cache.readQuery({
         query: GET_COFFEES,
         variables: { userName: username, location: "profile" }
       });
-      console.log(profileData);
       if (profileData) {
         profileData.getCoffees.coffees = profileData.getCoffees.coffees.filter(
           i => i.uuid !== deleteCoffee.coffeeId
@@ -141,7 +136,6 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
         params: { uuid }
       }
     } = this.props;
-    console.log(uuid);
     this.deleteCoffeeFn({ variables: { coffeeId: uuid } });
     this.setState({
       modalOpen: false

@@ -89,7 +89,6 @@ class EditProfileContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     const { location: { state = {} } = {} } = ({} = props);
-
     if (props.history.action === "POP" || !props.location.state) {
       props.history.push("/");
     }
