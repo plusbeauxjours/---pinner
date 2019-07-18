@@ -111,7 +111,6 @@ const SText = styled(Bold)`
 
 const TripContainer = styled.div`
   display: flex;
-  width: 685px;
   flex-direction: column;
   @media screen and (max-width: 600px) {
     min-width: 300px;
@@ -152,7 +151,8 @@ const TripRow = styled.div<ITheme>`
   display: grid;
   flex-direction: row;
   height: 50px;
-  grid-template-columns: 3fr 1fr 1fr 1fr 0.2fr;
+  width: 100%;
+  grid-template-columns: 6fr 1fr 1fr 1fr;
   padding: 0 5px 0 5px;
   grid-gap: 15px;
   align-items: center;
@@ -334,6 +334,19 @@ const ModalLink = styled.div`
   }
 `;
 
+const ModalLinkContainer = styled(Link)`
+  text-align: center;
+  min-height: 50px;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  :not(:last-child) {
+    border-bottom: 1px solid grey;
+  }
+`;
+
 const TripInputContainer = styled.div`
   z-index: 10;
   top: 30%;
@@ -488,6 +501,7 @@ const AvatarUploadIcon = styled.div`
     }
   }
 `;
+
 const Label = styled.label``;
 
 const AWrapper = styled.div`
@@ -512,14 +526,14 @@ const Img = styled.img`
 
 const Earth = styled.img`
   display: flex;
-
   width: 267px;
   height: 200px;
   background-position: center center;
   object-fit: cover;
-  @media screen and (max-width: 700px) {
-    width: 100%;
-    height: 100%;
+  @media screen and (max-width: 600px) {
+    align-self: center;
+    height: 300px;
+    width: 300px;
   }
 `;
 
@@ -663,47 +677,9 @@ interface IProps {
   removeImagePreviewUrl: () => void;
   deleteAvatarFn: MutationFn;
   markAsMainFn: any;
-  linkToSettings: (
-    username: string,
-    isSelf: boolean,
-    isDarkMode: boolean,
-    isHideTrips: boolean,
-    isHideCoffees: boolean,
-    isHideCities: boolean,
-    isHideCountries: boolean,
-    isHideContinents: boolean,
-    isAutoLocationReport: boolean,
-    bio: string,
-    gender: string,
-    firstName: string,
-    lastName: string,
-    nationality: any,
-    residence: any,
-    avatar: any,
-    email: string
-  ) => void;
   logUserOutFn: any;
   logoutConfirmModal: boolean;
   toggleLogoutConfirmModal: () => void;
-  linkToEditProfile: (
-    username: string,
-    isSelf: boolean,
-    isDarkMode: boolean,
-    isHideTrips: boolean,
-    isHideCoffees: boolean,
-    isHideCities: boolean,
-    isHideCountries: boolean,
-    isHideContinents: boolean,
-    isAutoLocationReport: boolean,
-    bio: string,
-    gender: string,
-    firstName: string,
-    lastName: string,
-    nationality: any,
-    residence: any,
-    avatar: any,
-    email: string
-  ) => void;
 }
 
 const UserProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -776,11 +752,9 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   removeImagePreviewUrl,
   deleteAvatarFn,
   markAsMainFn,
-  linkToSettings,
   logUserOutFn,
   logoutConfirmModal,
-  toggleLogoutConfirmModal,
-  linkToEditProfile
+  toggleLogoutConfirmModal
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
     apiKey: `${GOOGLE_PLACE_KEY}`,
@@ -911,56 +885,58 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleModal} />
             <Modal>
-              <ModalLink
-                onClick={() =>
-                  linkToEditProfile(
-                    user.username,
-                    user.profile.isSelf,
-                    user.profile.isDarkMode,
-                    user.profile.isHideTrips,
-                    user.profile.isHideCoffees,
-                    user.profile.isHideCities,
-                    user.profile.isHideCountries,
-                    user.profile.isHideContinents,
-                    user.profile.isAutoLocationReport,
-                    user.profile.bio,
-                    user.profile.gender,
-                    user.firstName,
-                    user.lastName,
-                    user.profile.nationality,
-                    user.profile.residence,
-                    user.profile.avatar,
-                    user.profile.email
-                  )
-                }
+              <ModalLinkContainer
+                to={{
+                  pathname: `/account/edit`,
+                  state: {
+                    username: user.username,
+                    isSelf: user.profile.isSelf,
+                    isDarkMode: user.profile.isDarkMode,
+                    isHideTrips: user.profile.isHideTrips,
+                    isHideCoffees: user.profile.isHideCoffees,
+                    isHideCities: user.profile.isHideCities,
+                    isHideCountries: user.profile.isHideCountries,
+                    isHideContinents: user.profile.isHideContinents,
+                    isAutoLocationReport: user.profile.isAutoLocationReport,
+                    bio: user.profile.bio,
+                    gender: user.profile.gender,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    nationality: user.profile.nationality,
+                    residence: user.profile.residence,
+                    avatar: user.profile.avatar,
+                    email: user.profile.email
+                  }
+                }}
               >
                 Edit Profile
-              </ModalLink>
-              <ModalLink
-                onClick={() =>
-                  linkToSettings(
-                    user.username,
-                    user.profile.isSelf,
-                    user.profile.isDarkMode,
-                    user.profile.isHideTrips,
-                    user.profile.isHideCoffees,
-                    user.profile.isHideCities,
-                    user.profile.isHideCountries,
-                    user.profile.isHideContinents,
-                    user.profile.isAutoLocationReport,
-                    user.profile.bio,
-                    user.profile.gender,
-                    user.firstName,
-                    user.lastName,
-                    user.profile.nationality,
-                    user.profile.residence,
-                    user.profile.avatar,
-                    user.profile.email
-                  )
-                }
+              </ModalLinkContainer>
+              <ModalLinkContainer
+                to={{
+                  pathname: `/account/settings`,
+                  state: {
+                    username: user.username,
+                    isSelf: user.profile.isSelf,
+                    isDarkMode: user.profile.isDarkMode,
+                    isHideTrips: user.profile.isHideTrips,
+                    isHideCoffees: user.profile.isHideCoffees,
+                    isHideCities: user.profile.isHideCities,
+                    isHideCountries: user.profile.isHideCountries,
+                    isHideContinents: user.profile.isHideContinents,
+                    isAutoLocationReport: user.profile.isAutoLocationReport,
+                    bio: user.profile.bio,
+                    gender: user.profile.gender,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    nationality: user.profile.nationality,
+                    residence: user.profile.residence,
+                    avatar: user.profile.avatar,
+                    email: user.profile.email
+                  }
+                }}
               >
                 Settings
-              </ModalLink>
+              </ModalLinkContainer>
               <ModalLink onClick={toggleLogoutConfirmModal}>Log Out</ModalLink>
               <ModalLink onClick={toggleModal}>CANCEL</ModalLink>
             </Modal>

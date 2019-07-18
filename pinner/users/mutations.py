@@ -305,8 +305,6 @@ class EditProfile(graphene.Mutation):
                 user.last_name = lastName
                 user.username = username
                 user.save()
-
-                print("updated")
                 return types.EditProfileResponse(ok=True, user=user)
 
             except IntegrityError as e:

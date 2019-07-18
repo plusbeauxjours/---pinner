@@ -10,7 +10,7 @@ import CityLikeBtn from "../../../Components/CityLikeBtn";
 import UserBox from "src/Components/UserBox";
 import CoffeeBox from "src/Components/CoffeeBox";
 import LocationBox from "src/Components/LocationBox";
-import { Right } from "../../../Icons";
+// import { Right } from "../../../Icons";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -19,7 +19,7 @@ const SWrapper = styled(Wrapper)`
 const PHeader = styled.header`
   display: flex;
   padding: 40px 15px 40px 15px;
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 700px) {
     justify-content: center;
     flex-wrap: wrap;
   }
@@ -78,7 +78,7 @@ const CAvatar = styled(Avatar)`
   height: 300px;
   width: 300px;
   margin-right: 20px;
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 700px) {
     margin-right: 0px;
   }
 `;
@@ -175,15 +175,15 @@ const Flag = styled.span`
   font-size: 20px;
 `;
 
-const RightIcon = styled.div`
-  position: absolute;
-  display: flex;
-  margin-left: 941px;
-  top: 40%;
-  svg {
-    fill: white;
-  }
-`;
+// const RightIcon = styled.div`
+//   position: absolute;
+//   display: flex;
+//   margin-left: 941px;
+//   top: 40%;
+//   svg {
+//     fill: white;
+//   }
+// `;
 
 // const LeftIcon = styled.div`
 //   position: absolute;
@@ -250,7 +250,7 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
               <Left />
             </Link>
           </LeftIcon> */}
-          <RightIcon>
+          {/* <RightIcon>
             <Link
               to={{
                 pathname: `/continent/${country.continent.continentCode}`,
@@ -259,7 +259,7 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
             >
               <Right />
             </Link>
-          </RightIcon>
+          </RightIcon> */}
           <PHeader>
             <AvatarContainer>
               <CAvatar size="lg" url={country.countryPhoto} />

@@ -74,7 +74,6 @@ def resolve_get_coffees(self, info, **kwargs):
             return types.GetCoffeesResponse(coffees=None)
 
     elif location == "country":
-
         try:
             allCities = location_models.City.objects.values('id').filter(country__country_code=countryCode)
         except location_models.City.DoesNotExist:
@@ -97,7 +96,8 @@ def resolve_get_coffees(self, info, **kwargs):
     elif location == "continent":
 
         try:
-            allCities = location_models.City.objects.values('id').filter(country__continent__continent_code=continentCode)
+            allCities = location_models.City.objects.values('id').filter(
+                country__continent__continent_code=continentCode)
         except location_models.City.DoesNotExist:
             return types.GetCoffeesResponse(coffees=None)
 

@@ -608,10 +608,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                         markAsMainFn={
                                                                                           markAsMainFn
                                                                                         }
-                                                                                        linkToSettings={
-                                                                                          this
-                                                                                            .linkToSettings
-                                                                                        }
                                                                                         logUserOutFn={
                                                                                           this
                                                                                             .logUserOutFn
@@ -622,10 +618,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                         toggleLogoutConfirmModal={
                                                                                           this
                                                                                             .toggleLogoutConfirmModal
-                                                                                        }
-                                                                                        linkToEditProfile={
-                                                                                          this
-                                                                                            .linkToEditProfile
                                                                                         }
                                                                                       />
                                                                                     );
@@ -1295,92 +1287,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } else {
       toast.error("error Marking As Main");
     }
-  };
-  public linkToSettings = (
-    username,
-    isSelf,
-    isDarkMode,
-    isHideTrips,
-    isHideCoffees,
-    isHideCities,
-    isHideCountries,
-    isHideContinents,
-    isAutoLocationReport,
-    bio,
-    gender,
-    firstName,
-    lastName,
-    nationality,
-    residence,
-    avatar,
-    email
-  ) => {
-    const { history } = this.props;
-    history.push({
-      pathname: "/account/settings",
-      state: {
-        username,
-        isSelf,
-        isDarkMode,
-        isHideTrips,
-        isHideCoffees,
-        isHideCities,
-        isHideCountries,
-        isHideContinents,
-        isAutoLocationReport,
-        bio,
-        gender,
-        firstName,
-        lastName,
-        nationality,
-        residence,
-        avatar,
-        email
-      }
-    });
-  };
-  public linkToEditProfile = (
-    username,
-    isSelf,
-    isDarkMode,
-    isHideTrips,
-    isHideCoffees,
-    isHideCities,
-    isHideCountries,
-    isHideContinents,
-    isAutoLocationReport,
-    bio,
-    gender,
-    firstName,
-    lastName,
-    nationality,
-    residence,
-    avatar,
-    email
-  ) => {
-    const { history } = this.props;
-    history.push({
-      pathname: "/account/edit",
-      state: {
-        username,
-        isSelf,
-        isDarkMode,
-        isHideTrips,
-        isHideCoffees,
-        isHideCities,
-        isHideCountries,
-        isHideContinents,
-        isAutoLocationReport,
-        bio,
-        gender,
-        firstName,
-        lastName,
-        nationality,
-        residence,
-        avatar,
-        email
-      }
-    });
   };
 }
 

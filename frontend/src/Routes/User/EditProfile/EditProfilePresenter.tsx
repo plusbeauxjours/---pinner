@@ -8,6 +8,8 @@ import Avatar from "../../../Components/Avatar";
 import { BACKEND_URL } from "src/constants";
 import { Link } from "react-router-dom";
 import Button from "src/Components/Button";
+import { Upload, Delete, RedDot, WhiteDot } from "../../../Icons";
+import { MutationFn } from "react-apollo";
 
 const PAvatar = styled(Avatar)`
   display: flex;
@@ -240,7 +242,139 @@ const GreyText = styled(MenuText)`
   }
 `;
 
+const PreviewModalContainer = styled(ModalContainer)`
+  z-index: 11;
+`;
+
+const AWrapper = styled.div`
+  z-index: 101;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const Img = styled.img`
+  display: flex;
+  height: 700px;
+  width: 700px;
+  background-position: center center;
+  object-fit: cover;
+  @media screen and (max-width: 700px) {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const AvatarModalContainer = styled(ModalContainer)`
+  z-index: 10;
+`;
+
+const ModalAvatars = styled.div`
+  z-index: 10;
+  margin-top: 85px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  justify-content: center;
+  align-items: center;
+  animation: ${ModalAnimation} 0.1s linear;
+  /* height: 100vh; */
+  height: auto;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 3px;
+    background: none;
+  }
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
+  @media screen and (max-width: 635px) {
+    grid-template-columns: 1fr;
+  }
+  @media screen and (min-width: 635px) and (max-width: 935px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+`;
+
+const AvatarUploadIcon = styled.div`
+  z-index: 11;
+  height: 300px;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  svg {
+    fill: white;
+    transition: fill 0.2s ease-in-out;
+    &:hover {
+      fill: grey;
+    }
+  }
+`;
+
+const Label = styled.label``;
+
+const ImageInput = styled.input`
+  display: none;
+`;
+
+const AvatarKeyContainer = styled.div`
+  position: relative;
+  z-index: 10;
+  &:hover {
+    svg {
+      opacity: 1;
+      transition: all 0.1s ease-in-out;
+    }
+  }
+`;
+
+const AvatarDeleteIcon = styled.div`
+  z-index: 20;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  svg {
+    opacity: 0;
+    transition: all 0.1s ease-in-out;
+    fill: white;
+  }
+`;
+
+const AvatarImage = styled.div``;
+
+const ModalAvatarImage = styled.img`
+  z-index: 10;
+  height: 300px;
+  width: 300px;
+  object-fit: cover;
+`;
+
+const RedDotIcon = styled.div`
+  z-index: 20;
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  cursor: pointer;
+`;
+
+const WhiteDotIcon = styled(RedDotIcon)`
+  svg {
+    opacity: 0;
+    transition: all 0.1s ease-in-out;
+    fill: white;
+  }
+`;
+
 interface IProps {
+  avatarsData: any;
+  avatarsLoading: boolean;
   deleteConfirmModalOpen: boolean;
   logoutConfirmModalOpen: boolean;
   toggleDeleteConfirmModal: () => void;
@@ -253,6 +387,19 @@ interface IProps {
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   logUserOutFn: any;
+
+  imagePreviewUrl: string;
+
+  avatarPreviewModalOpen: boolean;
+  avatarModalOpen: boolean;
+
+  toggleAvatarModalOpen: () => void;
+  togglePreviewAvatarModalOpen: () => void;
+  onChangeImage: (currentTarget) => void;
+  onSubmitImage: (event) => void;
+  removeImagePreviewUrl: () => void;
+  markAsMainFn: MutationFn;
+  deleteAvatarFn: MutationFn;
 
   isSelf: boolean;
   isDarkMode: boolean;
@@ -278,6 +425,8 @@ interface IProps {
 }
 
 const EditProfilePresenter: React.FunctionComponent<IProps> = ({
+  avatarsData: { getAvatars: { avatars = null } = {} } = {},
+  avatarsLoading,
   deleteConfirmModalOpen,
   logoutConfirmModalOpen,
   toggleDeleteConfirmModal,
@@ -288,6 +437,17 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   onInputChange,
   onSelectChange,
   logUserOutFn,
+
+  avatarPreviewModalOpen,
+  toggleAvatarModalOpen,
+  togglePreviewAvatarModalOpen,
+  imagePreviewUrl,
+  avatarModalOpen,
+  onChangeImage,
+  onSubmitImage,
+  removeImagePreviewUrl,
+  markAsMainFn,
+  deleteAvatarFn,
 
   isSelf,
   isDarkMode,
@@ -363,6 +523,90 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
           </ModalContainer>
         )}
       )} */}
+      {avatarPreviewModalOpen && (
+        <PreviewModalContainer>
+          <ModalOverlay onClick={togglePreviewAvatarModalOpen} />
+          <AWrapper>
+            <Img src={imagePreviewUrl} />
+          </AWrapper>
+        </PreviewModalContainer>
+      )}
+      {avatarModalOpen && (
+        <AvatarModalContainer>
+          <ModalOverlay onClick={e => onSubmitImage(e)} />
+          <ModalAvatars>
+            {isSelf && imagePreviewUrl.length === 0 && (
+              <AvatarUploadIcon>
+                <Label htmlFor="file">
+                  <Upload />
+                </Label>
+                <ImageInput
+                  id="file"
+                  type="file"
+                  accept="image/*"
+                  onChange={e => onChangeImage(e)}
+                />
+              </AvatarUploadIcon>
+            )}
+            {isSelf && imagePreviewUrl.length !== 0 && (
+              <AvatarKeyContainer>
+                <AvatarDeleteIcon onClick={removeImagePreviewUrl}>
+                  <Delete />
+                </AvatarDeleteIcon>
+                <AvatarImage onClick={togglePreviewAvatarModalOpen}>
+                  <ModalAvatarImage src={imagePreviewUrl} />
+                </AvatarImage>
+              </AvatarKeyContainer>
+            )}
+            {!avatarsLoading &&
+              avatars &&
+              avatars.length !== 0 &&
+              avatars.map(avatarS => {
+                return (
+                  <AvatarKeyContainer key={avatarS.id}>
+                    <AvatarImage>
+                      <Link
+                        to={{
+                          pathname: `/${username}/${avatarS.uuid}`,
+                          state: { avatarModalOpen: true }
+                        }}
+                      >
+                        <ModalAvatarImage
+                          src={`${BACKEND_URL}/media/${avatarS.thumbnail}`}
+                        />
+                      </Link>
+                    </AvatarImage>
+                    {avatarS.isMain && isSelf ? (
+                      <RedDotIcon>
+                        <RedDot />
+                      </RedDotIcon>
+                    ) : null}
+                    {!avatarS.isMain && isSelf ? (
+                      <WhiteDotIcon
+                        onClick={() =>
+                          markAsMainFn({
+                            variables: { uuid: avatarS.uuid }
+                          })
+                        }
+                      >
+                        <WhiteDot />
+                      </WhiteDotIcon>
+                    ) : null}
+                    {!avatarS.isMain && isSelf ? (
+                      <AvatarDeleteIcon
+                        onClick={() =>
+                          deleteAvatarFn({ variables: { uuid: avatarS.uuid } })
+                        }
+                      >
+                        <Delete />
+                      </AvatarDeleteIcon>
+                    ) : null}
+                  </AvatarKeyContainer>
+                );
+              })}
+          </ModalAvatars>
+        </AvatarModalContainer>
+      )}
       {deleteConfirmModalOpen && (
         <ModalContainer>
           <ModalOverlay onClick={toggleDeleteConfirmModal} />
@@ -468,17 +712,11 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
         <GreyLine />
         <Column>
           <AvatarConatainer>
-            <Link
-              to={{
-                pathname: `/${username}`,
-                state: { avatarModalOpen: true }
-              }}
-            >
-              <PAvatar
-                size="lg"
-                url={`${BACKEND_URL}/media/${avatar.thumbnail}`}
-              />
-            </Link>
+            <PAvatar
+              size="lg"
+              url={`${BACKEND_URL}/media/${avatar.thumbnail}`}
+              onClick={toggleAvatarModalOpen}
+            />
           </AvatarConatainer>
           <Conatainer>
             <TitleText>USERNAME</TitleText>

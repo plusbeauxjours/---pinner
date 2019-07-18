@@ -17,7 +17,7 @@ const SWrapper = styled(Wrapper)`
 const PHeader = styled.header`
   display: flex;
   padding: 40px 15px 40px 15px;
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 700px) {
     justify-content: center;
     flex-wrap: wrap;
   }
@@ -61,7 +61,7 @@ const CAvatar = styled(Avatar)`
   height: 300px;
   width: 300px;
   margin-right: 20px;
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 700px) {
     margin-right: 0px;
   }
 `;
