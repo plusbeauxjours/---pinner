@@ -223,9 +223,6 @@ def resolve_get_countries(self, info, **kwargs):
     user = info.context.user
     countryCode = kwargs.get('countryCode')
     page = kwargs.get('page', 0)
-    offset = 20*page
-
-    nextPage = page + 1
 
     country = models.Country.objects.get(country_code=countryCode)
 

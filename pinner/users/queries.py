@@ -75,6 +75,20 @@ def resolve_frequent_visits(self, info, **kwargs):
 
 
 @login_required
+def resolve_top_continents(self, info, **kwargs):
+
+    user = info.context.user
+    userName = kwargs.get('userName')
+
+    continents = location_models.Continent.objects.filter(
+        countries__cities__movenotification__actor__username=userName).annotate(
+        count=Count('countries__cities__movenotification', distinct=True)).annotate(
+        diff=Sum('countries__cities__movenotification__diff_days')).order_by('-count', '-diff')
+
+    return location_types.ContinentsResponse(continents=continents)
+
+
+@login_required
 def resolve_me(self, info):
 
     user = info.context.user

@@ -52,6 +52,14 @@ class Query(object):
             'userName': graphene.String(required=True),
         }
     )
+    top_continents = graphene.Field(
+        location_types.ContinentsResponse,
+        resolver=queries.resolve_top_continents,
+        required=True,
+        args={
+            'userName': graphene.String(required=True),
+        }
+    )
     get_avatars = graphene.Field(
         types.AvatarListResponse,
         resolver=queries.resolve_get_avatars,

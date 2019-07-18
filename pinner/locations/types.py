@@ -41,6 +41,8 @@ class CountryType(DjangoObjectType):
 
 class ContinentType(DjangoObjectType):
     country_count = graphene.Int(source='country_count')
+    count = graphene.Int()
+    diff = graphene.Int()
 
     class Meta:
         model = models.Continent
