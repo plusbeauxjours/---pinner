@@ -17,6 +17,9 @@ class CountriesContainer extends React.Component<IProps, IState> {
   public data;
   constructor(props) {
     super(props);
+    if (props.history.action === "POP" || !props.location.state) {
+      props.history.goBack();
+    }
     this.state = {
       search: "",
       countryList: []
@@ -47,10 +50,10 @@ class CountriesContainer extends React.Component<IProps, IState> {
             <CountriesPresenter
               data={data}
               loading={loading}
-              userName={username}
               onChange={this.onChange}
               search={search}
               countryList={countryList}
+              back={this.back}
             />
           );
         }}
@@ -75,6 +78,16 @@ class CountriesContainer extends React.Component<IProps, IState> {
       search: value,
       countryList
     } as any);
+  };
+  public back = async event => {
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    const { history } = this.props;
+    event.stopPropagation();
+    history.push(`/${username}`);
   };
 }
 

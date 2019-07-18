@@ -90,7 +90,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     super(props);
     const { location: { state = {} } = {} } = ({} = props);
     if (props.history.action === "POP" || !props.location.state) {
-      props.history.push("/");
+      props.history.goBack();
     }
     this.state = {
       deleteConfirmModalOpen: false,

@@ -152,7 +152,7 @@ const TripRow = styled.div<ITheme>`
   flex-direction: row;
   height: 50px;
   width: 100%;
-  grid-template-columns: 6fr 1fr 1fr 1fr;
+  grid-template-columns: 6fr 1fr 1fr 1fr 0.1fr;
   padding: 0 5px 0 5px;
   grid-gap: 15px;
   align-items: center;

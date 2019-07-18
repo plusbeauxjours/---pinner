@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { COUNTRY_FRAGMENT } from "src/sharedQueries";
+import { CONTINENT_FRAGMENT } from "src/sharedQueries";
 
 export const TOP_CONTINENTS = gql`
   query TopContinents($userName: String!) {
@@ -11,5 +11,5 @@ export const TOP_CONTINENTS = gql`
       }
     }
   }
-  ${COUNTRY_FRAGMENT}
+  ${CONTINENT_FRAGMENT}
 `;

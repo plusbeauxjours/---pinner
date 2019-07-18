@@ -78,8 +78,6 @@ class HomeContainer extends React.Component<IProps, IState> {
           i => i.code === address.storableLocation.countryCode
         ).phone
       });
-      localStorage.setItem("cityId", address.storableLocation.cityId);
-      localStorage.setItem("countryCode", address.storableLocation.countryCode);
     }
     return {
       countryCode: address.storableLocation.countryCode,
