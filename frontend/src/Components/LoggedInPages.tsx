@@ -50,7 +50,10 @@ class LoggedInPages extends React.Component<IProps> {
       nextProps.history.action !== "POP" &&
       (!location.state ||
         !location.state.coffeeModalOpen ||
-        !location.state.avatarModalOpen)
+        !location.state.avatarModalOpen ||
+        !location.state.cityModalOpen ||
+        !location.state.countryModalOpen ||
+        !location.state.continentModalOpen)
     ) {
       this.previousLocation = this.props.location;
     }
@@ -68,12 +71,29 @@ class LoggedInPages extends React.Component<IProps> {
       location.state.avatarModalOpen &&
       this.previousLocation !== location
     );
+    const cityModalOpen = !!(
+      location.state &&
+      location.state.cityModalOpen &&
+      this.previousLocation !== location
+    );
+    const countryModalOpen = !!(
+      location.state &&
+      location.state.countryModalOpen &&
+      this.previousLocation !== location
+    );
+
     return (
       <Wrapper>
         <Header />
         {coffeeModalOpen && <Route path="/c/:uuid" component={CoffeeDetail} />}
         {avatarModalOpen && (
           <Route path="/:username/:uuid" component={UserAvatarDetail} />
+        )}
+        {cityModalOpen && (
+          <Route path="/:username/countries" component={Countries} />
+        )}
+        {countryModalOpen && (
+          <Route path="/:username/cities" component={Cities} />
         )}
 
         <Switch
@@ -128,8 +148,6 @@ class LoggedInPages extends React.Component<IProps> {
           {/* USER */}
           <Route path="/account/edit" component={EditProfile} />
           <Route path="/account/settings" component={ToggleSettings} />
-          <Route path="/:username/countries" component={Countries} />
-          <Route path="/:username/cities" component={Cities} />
           <Route path="/:username/coffees" component={Coffees} />
           <Route path="/:username/coffees" component={Coffees} />
 

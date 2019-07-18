@@ -1153,20 +1153,47 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                 </Link>
               </Row>
               <Row>
+                {user.profile.isHideCities ? (
+                  <>
+                    <UBold text={String(user.profile.cityCount)} />
+                    <UBold text={" how many CITIES - done"} />
+                  </>
+                ) : (
+                  <Link to={`/${username}/cities`}>
+                    <UBold text={String(user.profile.cityCount)} />
+                    <UBold text={" how many CITIES - done"} />
+                  </Link>
+                )}
                 <Link to={`/${username}/cities`}>
                   <UBold text={String(user.profile.cityCount)} />
                   <UBold text={" how many CITIES - done"} />
                 </Link>
               </Row>
               <Row>
-                <Link to={`/${username}/countries`}>
-                  <UBold text={String(user.profile.countryCount)} />
-                  <UBold text={" how many COUNTRIES - done"} />
-                </Link>
+                {user.profile.isHideCountries ? (
+                  <Link to={`/${username}/countries`}>
+                    <UBold text={String(user.profile.countryCount)} />
+                    <UBold text={" how many COUNTRIES - done"} />
+                  </Link>
+                ) : (
+                  <>
+                    <UBold text={String(user.profile.countryCount)} />
+                    <UBold text={" how many COUNTRIES - done"} />
+                  </>
+                )}
               </Row>
               <Row>
-                <UBold text={String(user.profile.continentCount)} />
-                <UBold text={" how many  CONTINENT - done"} />
+                {user.profile.isHideContinents ? (
+                  <>
+                    <UBold text={String(user.profile.continentCount)} />
+                    <UBold text={" how many  CONTINENT - done"} />
+                  </>
+                ) : (
+                  <>
+                    <UBold text={String(user.profile.continentCount)} />
+                    <UBold text={" how many  CONTINENT - done"} />
+                  </>
+                )}
               </Row>
               {user.profile.gender ? (
                 <Row>

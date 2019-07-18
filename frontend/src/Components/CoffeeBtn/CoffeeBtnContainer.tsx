@@ -156,19 +156,13 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
       try {
         const feedData = cache.readQuery({
           query: GET_COFFEES,
-          variables: {
-            cityId: cityId || localStorage.getItem("cityId"),
-            location: "city"
-          }
+          variables: { cityId, location: "city" }
         });
         if (feedData) {
-          feedData.getCoffees.coffees.push(unMatch.coffee);
+          feedData.getCoffees.coffees.unshift(unMatch.coffee);
           cache.writeQuery({
             query: GET_COFFEES,
-            variables: {
-              cityId: cityId || localStorage.getItem("cityId"),
-              location: "city"
-            },
+            variables: { cityId, location: "city" },
             data: feedData
           });
         }
