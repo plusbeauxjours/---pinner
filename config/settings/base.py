@@ -289,3 +289,4 @@ TO = env('TO')
 
 APPEND_SLASH = False
 ADMIN_ID = env('ADMIN_ID')
+SLACK_TOKEN = env('SLACK_TOKEN')

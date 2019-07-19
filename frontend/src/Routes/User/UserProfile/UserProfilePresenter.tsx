@@ -1295,7 +1295,6 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                   <AvatarGrid toggleRequestModal={toggleRequestModal} />
                 </>
               ) : null}
-              }
             </LocationAvatarContainer>
 
             {!user.profile.isSelf && user.profile.isHideTrips ? (

@@ -58,6 +58,7 @@ psycopg2 = "*"
 whitenoise = "*"
 graphene-file-upload = "*"
 django-resized = "*"
+slacker = "*"
 
 [requires]
 python_version = "3.7"

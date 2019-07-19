@@ -6,6 +6,7 @@ from config import models as config_models
 from locations import models as location_models
 from django.contrib.humanize.templatetags.humanize import naturaltime
 
+from utils import notify_slack
 from django.dispatch import receiver
 from django.db.models.signals import post_delete, post_save
 
@@ -149,3 +150,12 @@ class Profile(config_models.TimeStampedModel):
 
     class Meta:
         ordering = ['-created_at']
+
+
+@receiver(post_save, sender=Profile)
+def send_slack_notification_city_created(sender,  **kwargs):
+    instance = kwargs.pop('instance')
+    to_channel = "#user"
+    message = "New user  %s is just join from %s. \n Total user is %s" % (
+        instance.user.username, instance.current_city, User.objects.all().count())
+    notify_slack(to_channel, message)
