@@ -98,61 +98,31 @@ class Like(config_models.TimeStampedModel):
 def send_slack_notification_city_created(sender,  instance, created, **kwargs):
     if created:
         to_channel = "#location_%s" % (instance.country.continent.continent_code.lower())
-        message = "Created new city %s on %s %s. \n Total cities on %s %s: %s. \n CityPhoto link: %s " % (
-            instance.city_name, instance.country.country_name, instance.country.country_emoji, instance.country.country_name, instance.country.country_emoji, instance.country.city_count, instance.city_photo)
         attachments = [{
             "fallback": "Required plain-text summary of the attachment.",
             "color": "#569934",
-            "pretext": "Optional text that appears above the attachment block",
-            "author_name": "Bobby Tables",
-            "author_link": "http://flickr.com/bobby/",
-            "author_icon": "http://flickr.com/icons/bobby.jpg",
-            "title": "Slack API Documentation",
-            "title_link": "https://api.slack.com/",
-            "text": "Optional text that appears within the attachment",
-            "fields": [
-                        {
-                            "title": "Priority",
-                            "value": "High",
-                            "short": False
-                        }
-            ],
-            "image_url": "http://my-website.com/path/to/image.jpg",
-            "thumb_url": "http://example.com/path/to/thumb.png",
-            "footer": "Slack API",
-            "footer_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
-            "ts": 123456789
+            "title":  "New city: %s" % (instance.city_name),
+            "title_link": "localhost:3000/city/%s" % (instance.city_id),
+            "text": "Created new city on %s %s. \n Total cities on %s %s: %s." % (
+                instance.country.country_name, instance.country.country_emoji, instance.country.country_name, instance.country.country_emoji, instance.country.city_count),
+            "image_url": instance.city_photo,
+            "footer": "🙌🏻 New City!",
         }]
-        notify_slack(to_channel, message, attachments=attachments)
+        notify_slack(to_channel, attachments=attachments)
 
 
 @receiver(post_save, sender=Country)
 def send_slack_notification_country_created(sender,  instance, created, **kwargs):
     if created:
         to_channel = "#location_%s" % (instance.continent.continent_code.lower())
-        message = "Created new country %s %s on %s. \n Total country on %s: %s. \n CountryPhoto link: %s " % (
-            instance.country_name, instance.country_emoji, instance.continent.continent_name, instance.continent.continent_name, instance.continent.country_count, instance.country_photo)
         attachments = [{
             "fallback": "Required plain-text summary of the attachment.",
             "color": "#993472",
-            "pretext": "Optional text that appears above the attachment block",
-            "author_name": "Bobby Tables",
-            "author_link": "http://flickr.com/bobby/",
-            "author_icon": "http://flickr.com/icons/bobby.jpg",
-            "title": "Slack API Documentation",
-            "title_link": "https://api.slack.com/",
+            "title":   "Created new city on %s %s. \n Total cities on %s %s: %s." % (
+                instance.country.country_name, instance.country.country_emoji, instance.country.country_name, instance.country.country_emoji, instance.country.city_count, ),
+            "title_link": "localhost:3000/country/%s" % (instance.country_code),
             "text": "Optional text that appears within the attachment",
-            "fields": [
-                        {
-                            "title": "Priority",
-                            "value": "High",
-                            "short": False
-                        }
-            ],
-            "image_url": "http://my-website.com/path/to/image.jpg",
-            "thumb_url": "http://example.com/path/to/thumb.png",
-            "footer": "Slack API",
-            "footer_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
-            "ts": 123456789
+            "image_url": instance.country_photo,
+            "footer": "🙌🏻 New Country!",
         }]
-        notify_slack(to_channel, message, attachments=attachments)
+        notify_slack(to_channel, attachments=attachments)
