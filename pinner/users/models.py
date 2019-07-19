@@ -153,9 +153,18 @@ class Profile(config_models.TimeStampedModel):
 
 
 @receiver(post_save, sender=Profile)
-def send_slack_notification_city_created(sender,  **kwargs):
-    instance = kwargs.pop('instance')
-    to_channel = "#user"
-    message = "New user  %s is just join from %s. \n Total user is %s" % (
-        instance.user.username, instance.current_city, User.objects.all().count())
-    notify_slack(to_channel, message)
+def send_slack_notification_city_created(sender, instance, created,  **kwargs):
+    if created:
+        to_channel = "#user"
+        attachments = [{
+            "fallback": "Required plain-text summary of the attachment.",
+            "color": "#3686a6",
+            # "pretext": "Optional text that appears above the attachment block",
+            # "author_name": instance.user.username,
+            # "author_link": "localhost:3000/%s" % (instance.user.username),
+            "title":  "New user: %s" % (instance.user.username),
+            "title_link": "localhost:3000/%s" % (instance.user.username),
+            "text": "From %s , %s %s. \n Total user until now is %s" % (instance.current_city, instance.current_city.country.country_name, instance.current_city.country.country_emoji, User.objects.all().count()),
+            "footer": "🙌🏻 New User!",
+        }]
+        notify_slack(to_channel,  attachments)

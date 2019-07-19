@@ -7,7 +7,6 @@ export const SIGN_UP = gql`
     $lastName: String!
     $password: String!
     $username: String!
-    $avatar: String
   ) {
     createAccount(
       email: $email
@@ -15,7 +14,6 @@ export const SIGN_UP = gql`
       lastName: $lastName
       password: $password
       username: $username
-      avatar: $avatar
     ) {
       token
     }

@@ -269,7 +269,7 @@ const HeaderPresenter: React.FunctionComponent<IProps> = ({
                 <Avatar
                   size={"sm"}
                   url={
-                    user.profile.avatar.thumbnail
+                    user.profile.avatar
                       ? `${BACKEND_URL}/media/${user.profile.avatar.thumbnail}`
                       : "https://banner2.kisspng.com/20180613/vtt/kisspng-computer-icons-avatar-user-profile-icon-design-cli-5b2114b0368752.5561258815288946402234.jpg"
                   }

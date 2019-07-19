@@ -21,7 +21,7 @@ class RequestCoffee(graphene.Mutation):
 
         user = info.context.user
         currentCityId = kwargs.get('currentCityId')
-        target = kwargs.get('target', 'Everyone')
+        target = kwargs.get('target', 'everyone')
 
         if not user.coffee.filter(expires__gt=timezone.now()):
 

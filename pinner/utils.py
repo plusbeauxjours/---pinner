@@ -12,12 +12,12 @@ def hash_file(file, block_size=65536):
     return hasher.hexdigest()
 
 
-def notify_slack(channel, message):
+def notify_slack(channel,  attachments):
     if not settings.SLACK_TOKEN:
         return False
     try:
         slack = Slacker(settings.SLACK_TOKEN)
-        slack.chat.post_message(channel, text=message)
+        slack.chat.post_message(channel, attachments=attachments)
     except:
         return False
     return True
