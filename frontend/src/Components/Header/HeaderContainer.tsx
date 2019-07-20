@@ -163,7 +163,7 @@ class HeaderContainer extends React.Component<IProps, IState> {
       });
       localStorage.setItem("cityId", address.storableLocation.cityId);
       localStorage.setItem("countryCode", address.storableLocation.countryCode);
-      this.reportLocation(
+      await this.reportLocation(
         latitude,
         longitude,
         address.storableLocation.cityId,

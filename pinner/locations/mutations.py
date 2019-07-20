@@ -11,6 +11,8 @@ from . import locationThumbnail
 from . import reversePlace
 from notifications import models as notification_models
 
+from utils import notify_slack
+
 
 class CreateCity(graphene.Mutation):
 
@@ -141,8 +143,6 @@ class ReportLocation(graphene.Mutation):
         currentCityId = kwargs.get('currentCityId')
         currentCityName = kwargs.get('currentCityName')
         currentCountryCode = kwargs.get('currentCountryCode')
-
-        print('reportlocation')
 
         def get_locations_nearby_coords(latitude, longitude, max_distance=3000):
             gcd_formula = "6371 * acos(cos(radians(%s)) * \
@@ -312,3 +312,186 @@ class ToggleLikeCity(graphene.Mutation):
         except IntegrityError as e:
             raise Exception("Can't Like City")
 
+
+class ReportLocations(graphene.Mutation):
+
+    class Arguments:
+        reportUsername = graphene.String()
+        targetLocationId = graphene.String()
+        targetLocationType = graphene.String()
+        payload = graphene.String()
+
+    Output = types.ReportLocationResponse
+
+    def mutate(self, info, **kwargs):
+
+        reportUsername = kwargs.get('reportUsername')
+        targetLocationId = kwargs.get('targetLocationId')
+        targetLocationType = kwargs.get('targetLocationType')
+        payload = kwargs.get('payload')
+
+        if payload == "PHOTO":
+            if targetLocationType == "city":
+                city = models.City.objects.get(city_id=targetLocationId)
+                to_channel = "#location_%s_reports" % (city.country.continent.continent_code.lower())
+                attachments = [{
+                    "fallback": "Required plain-text summary of the attachment.",
+                    "color": "#80318c",
+                    # "pretext": "Optional text that appears above the attachment block",
+                    "author_name": reportUsername,
+                    "author_link": "http://localhost:3000/%s" % (reportUsername),
+                    "title":  "reported city: %s" % (city.city_name),
+                    "title_link": "http://localhost:3000/city/%s" % (city.city_id),
+                    "text": "%s reports that %s has inappropriate PHOTO" % (reportUsername, city.city_name),
+                    "image_url": city.city_photo,
+                    "footer": "🙅🏻‍♂️ Inappropriate Photo!"
+                }]
+                notify_slack(to_channel, attachments)
+                return types.ReportLocationResponse(ok=True)
+            elif targetLocationType == "country":
+                country = models.Country.objects.get(country_code=targetLocationId)
+                to_channel = "#location_%s_reports" % (country.continent.continent_code.lower())
+                attachments = [{
+                    "fallback": "Required plain-text summary of the attachment.",
+                    "color": "#80318c",
+                    # "pretext": "Optional text that appears above the attachment block",
+                    "author_name": reportUsername,
+                    "author_link": "http://localhost:3000/%s" % (reportUsername),
+                    "title":  "reported country: %s %s" % (country.country_name, country.country_emoji),
+                    "title_link": "http://localhost:3000/country/%s" % (country.country_code),
+                    "text": "%s reports that %s %s has inappropriate PHOTO" % (reportUsername, country.country_name, country.country_emoji),
+                    "image_url": country.country_photo,
+                    "footer": "🙅🏻‍♂️ Inappropriate Photo!"
+                }]
+                notify_slack(to_channel, attachments)
+                return types.ReportLocationResponse(ok=True)
+
+            elif targetLocationType == "continent":
+                continent = models.Continent.objects.get(continent_code=targetLocationId)
+                to_channel = "#location_%s_reports" % (continent.continent_code.lower())
+                attachments = [{
+                    "fallback": "Required plain-text summary of the attachment.",
+                    "color": "#80318c",
+                    # "pretext": "Optional text that appears above the attachment block",
+                    "author_name": reportUsername,
+                    "author_link": "http://localhost:3000/%s" % (reportUsername),
+                    "title":  "reported continent: %s" % (continent.continent_name),
+                    "title_link": "http://localhost:3000/continent/%s" % (continent.continent_code),
+                    "text": "%s reports that %s has inappropriate PHOTO" % (reportUsername, continent.continent_name),
+                    "image_url": continent.continent_photo,
+                    "footer": "🙅🏻‍♂️ Inappropriate Photo!"
+                }]
+                notify_slack(to_channel, attachments)
+                return types.ReportLocationResponse(ok=True)
+            else:
+                return types.ReportLocationResponse(ok=False)
+        elif(payload == "LOCATION"):
+            if targetLocationType == "city":
+                city = models.City.objects.get(city_id=targetLocationId)
+                to_channel = "#location_%s_reports" % (city.country.continent.continent_code.lower())
+                attachments = [{
+                    "fallback": "Required plain-text summary of the attachment.",
+                    "color": "#80318c",
+                    # "pretext": "Optional text that appears above the attachment block",
+                    "author_name": reportUsername,
+                    "author_link": "http://localhost:3000/%s" % (reportUsername),
+                    "title":  "reported city: %s" % (city.city_name),
+                    "title_link": "http://localhost:3000/city/%s" % (city.city_id),
+                    "text": "%s reports that %s has wrong LOCATION" % (reportUsername, city.city_name),
+                    "image_url": city.city_photo,
+                    "footer": "🤦🏻‍♂️ Wrong Location!"
+                }]
+                notify_slack(to_channel, attachments)
+                return types.ReportLocationResponse(ok=True)
+            elif targetLocationType == "country":
+                country = models.Country.objects.get(country_code=targetLocationId)
+                to_channel = "#location_%s_reports" % (country.continent.continent_code.lower())
+                attachments = [{
+                    "fallback": "Required plain-text summary of the attachment.",
+                    "color": "#80318c",
+                    # "pretext": "Optional text that appears above the attachment block",
+                    "author_name": reportUsername,
+                    "author_link": "http://localhost:3000/%s" % (reportUsername),
+                    "title":  "reported country: %s %s" % (country.country_name, country.country_emoji),
+                    "title_link": "http://localhost:3000/country/%s" % (country.country_code),
+                    "text": "%s reports that %s %s haswrong LOCATION" % (reportUsername, country.country_name, country.country_emoji),
+                    "image_url": country.country_photo,
+                    "footer": "🤦🏻‍♂️ Wrong Location!"
+                }]
+                notify_slack(to_channel, attachments)
+                return types.ReportLocationResponse(ok=True)
+
+            elif targetLocationType == "continent":
+                continent = models.Continent.objects.get(continent_code=targetLocationId)
+                to_channel = "#location_%s_reports" % (continent.continent_code.lower())
+                attachments = [{
+                    "fallback": "Required plain-text summary of the attachment.",
+                    "color": "#80318c",
+                    # "pretext": "Optional text that appears above the attachment block",
+                    "author_name": reportUsername,
+                    "author_link": "http://localhost:3000/%s" % (reportUsername),
+                    "title":  "reported continent: %s" % (continent.continent_name),
+                    "title_link": "http://localhost:3000/continent/%s" % (continent.continent_code),
+                    "text": "%s reports that %s has wrong LOCATION" % (reportUsername, continent.continent_name),
+                    "image_url": continent.continent_photo,
+                    "footer": "🤦🏻‍♂️ Wrong Location!"
+                }]
+                notify_slack(to_channel, attachments)
+                return types.ReportLocationResponse(ok=True)
+            else:
+                return types.ReportLocationResponse(ok=False)
+        elif(payload == "OTHER"):
+            if targetLocationType == "city":
+                city = models.City.objects.get(city_id=targetLocationId)
+                to_channel = "#location_%s_reports" % (city.country.continent.continent_code.lower())
+                attachments = [{
+                    "fallback": "Required plain-text summary of the attachment.",
+                    "color": "#80318c",
+                    # "pretext": "Optional text that appears above the attachment block",
+                    "author_name": reportUsername,
+                    "author_link": "http://localhost:3000/%s" % (reportUsername),
+                    "title":  "reported city: %s" % (city.city_name),
+                    "title_link": "http://localhost:3000/city/%s" % (city.city_id),
+                    "text": "%s reports %s" % (reportUsername, city.city_name),
+                    "image_url": city.city_photo,
+                    "footer": "🤦🏻‍♂️ Other Report!"
+                }]
+                notify_slack(to_channel, attachments)
+                return types.ReportLocationResponse(ok=True)
+            elif targetLocationType == "country":
+                country = models.Country.objects.get(country_code=targetLocationId)
+                to_channel = "#location_%s_reports" % (country.continent.continent_code.lower())
+                attachments = [{
+                    "fallback": "Required plain-text summary of the attachment.",
+                    "color": "#80318c",
+                    # "pretext": "Optional text that appears above the attachment block",
+                    "author_name": reportUsername,
+                    "author_link": "http://localhost:3000/%s" % (reportUsername),
+                    "title":  "reported country: %s %s" % (country.country_name, country.country_emoji),
+                    "title_link": "http://localhost:3000/country/%s" % (country.country_code),
+                    "text": "%s reports %s %s" % (reportUsername, country.country_name, country.country_emoji),
+                    "image_url": country.country_photo,
+                    "footer": "🤦🏻‍♂️ Other Report!"
+                }]
+                notify_slack(to_channel, attachments)
+                return types.ReportLocationResponse(ok=True)
+
+            elif targetLocationType == "continent":
+                continent = models.Continent.objects.get(continent_code=targetLocationId)
+                to_channel = "#location_%s_reports" % (continent.continent_code.lower())
+                attachments = [{
+                    "fallback": "Required plain-text summary of the attachment.",
+                    "color": "#80318c",
+                    # "pretext": "Optional text that appears above the attachment block",
+                    "author_name": reportUsername,
+                    "author_link": "http://localhost:3000/%s" % (reportUsername),
+                    "title":  "reported continent: %s" % (continent.continent_name),
+                    "title_link": "http://localhost:3000/continent/%s" % (continent.continent_code),
+                    "text": "%s reports %s" % (reportUsername, continent.continent_name),
+                    "image_url": continent.continent_photo,
+                    "footer": "🤦🏻‍♂️ Other Report!"
+                }]
+                notify_slack(to_channel, attachments)
+                return types.ReportLocationResponse(ok=True)
+            else:
+                return types.ReportLocationResponse(ok=False)
