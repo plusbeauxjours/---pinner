@@ -311,3 +311,4 @@ class ToggleLikeCity(graphene.Mutation):
 
         except IntegrityError as e:
             raise Exception("Can't Like City")
+

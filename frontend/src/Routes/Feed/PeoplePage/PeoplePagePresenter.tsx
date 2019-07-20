@@ -127,7 +127,7 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
           <UserNameRow>
             <Username>RECOMMAND USERS</Username>
             <Input
-              placeholder="Search users who is recommanded for you"
+              placeholder="Search users who is recommanded"
               value={search}
               onChange={onChange}
             />

@@ -112,3 +112,7 @@ class ReportLocationResponse(graphene.ObjectType):
 
 class UserListResponse(graphene.ObjectType):
     users = graphene.List(coffee_types.UserType)
+
+
+class ReportUserResponse(graphene.ObjectType):
+    ok = graphene.Boolean()

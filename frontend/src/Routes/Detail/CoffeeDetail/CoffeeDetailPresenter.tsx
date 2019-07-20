@@ -74,13 +74,13 @@ const MenuModalLink = styled.div`
 `;
 
 const MenuModalContainer = styled(ModalContainer)`
-  z-index: 101;
+  z-index: 105;
 `;
 const MenuModalOverlay = styled(ModalOverlay)`
-  z-index: 101;
+  z-index: 105;
 `;
 const MenuModal = styled(Modal)`
-  z-index: 101;
+  z-index: 105;
 `;
 
 const FormModal = styled(Modal)`

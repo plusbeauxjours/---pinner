@@ -10,6 +10,8 @@ from locations import locationThumbnail
 from locations import models as location_models
 from . import models, types
 
+from utils import notify_slack
+from cards import types as card_mo
 from notifications import models as notification_models
 
 
@@ -551,3 +553,82 @@ class FacebookConnect(graphene.Mutation):
 
         except IntegrityError as e:
             raise Exception("Could not log you in")
+
+
+class ReportUser(graphene.Mutation):
+
+    class Arguments:
+        reportUsername = graphene.String()
+        targetUsername = graphene.String()
+        payload = graphene.String()
+
+    Output = types.ReportUserResponse
+
+    def mutate(self, info, **kwargs):
+
+        reportUsername = kwargs.get('reportUsername')
+        targetUsername = kwargs.get('targetUsername')
+        payload = kwargs.get('payload')
+
+        if payload == "PHOTO":
+            to_channel = "#user_reports"
+            attachments = [{
+                "fallback": "Required plain-text summary of the attachment.",
+                "color": "#80318c",
+                # "pretext": "Optional text that appears above the attachment block",
+                "author_name": reportUsername,
+                "author_link": "http://localhost:3000/%s" % (reportUsername),
+                "title":  "reported user: %s" % (targetUsername),
+                "title_link": "http://localhost:3000/%s" % (targetUsername),
+                "text": "%s reports that %s has inappropriate photo" % (reportUsername, targetUsername),
+                "footer": "🙅🏻‍♂️ Inappropriate Photo!"
+            }]
+            notify_slack(to_channel,  attachments)
+            return types.ReportUserResponse(ok=True)
+        elif(payload == "SPAM"):
+            to_channel = "#user_reports"
+            attachments = [{
+                "fallback": "Required plain-text summary of the attachment.",
+                "color": "#80318c",
+                # "pretext": "Optional text that appears above the attachment block",
+                "author_name": reportUsername,
+                "author_link": "http://localhost:3000/%s" % (reportUsername),
+                "title":  "reported user: %s" % (targetUsername),
+                "title_link": "http://localhost:3000/%s" % (targetUsername),
+                "text": "%s reports that %s looks like SPAM" % (reportUsername, targetUsername),
+                "footer": "🤦🏻‍♂️ Spam User!"
+            }]
+            notify_slack(to_channel,  attachments)
+            return types.ReportUserResponse(ok=True)
+        elif(payload == "MESSAGE"):
+            to_channel = "#user_reports"
+            attachments = [{
+                "fallback": "Required plain-text summary of the attachment.",
+                "color": "#80318c",
+                # "pretext": "Optional text that appears above the attachment block",
+                "author_name": reportUsername,
+                "author_link": "http://localhost:3000/%s" % (reportUsername),
+                "title":  "reported user: %s" % (targetUsername),
+                "title_link": "http://localhost:3000/%s" % (targetUsername),
+                "text": "%s reports that %s sent inappropriate message" % (reportUsername, targetUsername),
+                "footer": "🙅🏻‍♂️ Inappropriate Message!"
+            }]
+            notify_slack(to_channel,  attachments)
+            return types.ReportUserResponse(ok=True)
+        elif(payload == "OTHER"):
+            to_channel = "#user_reports"
+            attachments = [{
+                "fallback": "Required plain-text summary of the attachment.",
+                "color": "#80318c",
+                # "pretext": "Optional text that appears above the attachment block",
+                "author_name": reportUsername,
+                "author_link": "http://localhost:3000/%s" % (reportUsername),
+                "title":  "reported user: %s" % (targetUsername),
+                "title_link": "http://localhost:3000/%s" % (targetUsername),
+                "text": "%s reports %s" % (reportUsername, targetUsername),
+                "footer": "🤦🏻‍♂️ Other Report!"
+            }]
+            notify_slack(to_channel,  attachments)
+            return types.ReportUserResponse(ok=True)
+        else:
+            return types.ReportUserResponse(ok=False)
