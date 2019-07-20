@@ -3,6 +3,10 @@ Base settings to build other settings files upon.
 """
 
 import os
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 import environ
 from os.path import join, dirname
 from dotenv import load_dotenv
@@ -290,3 +294,9 @@ TO = env('TO')
 APPEND_SLASH = False
 ADMIN_ID = env('ADMIN_ID')
 SLACK_TOKEN = env('SLACK_TOKEN')
+
+sentry_sdk.init(
+    dsn=env('SENTRY_DSN'),
+    environment='production',
+    integrations=[DjangoIntegration()]
+)

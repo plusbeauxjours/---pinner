@@ -39,8 +39,10 @@ class CreateCity(graphene.Mutation):
             print('get_locations_nearby_coords')
             qs = models.City.objects.all().annotate(distance=distance_raw_sql).order_by('distance')
             if max_distance is not None:
-                qs = qs.filter(Q(distance__lt=max_distance))
-            return qs
+                qs = qs.filter(distance__lt=max_distance)
+                for i in qs:
+                    pass
+                return qs
 
         try:
             city = models.City.objects.get(city_id=cityId)
@@ -107,7 +109,6 @@ class CreateCity(graphene.Mutation):
                 cityPhotoURL = gp.get_urls()
             except:
                 cityPhotoURL = None
-
             city = models.City.objects.create(
                 city_id=cityId,
                 city_name=cityName,
@@ -116,9 +117,13 @@ class CreateCity(graphene.Mutation):
                 latitude=cityLatitude,
                 longitude=cityLongitude
             )
+            print(nearCities)
             for i in nearCities:
+                print(i)
+                print("amhere")
                 city.near_city.add(i)
                 city.save()
+
         return types.CreateCityResponse(ok=True)
 
 
@@ -245,7 +250,6 @@ class ReportLocation(graphene.Mutation):
             # # for i in range(gp.num):
             # #     print('Downloading...' + str(i) + '/' + str(gp.num))
             # #     gp.download(i)
-
             city = models.City.objects.create(
                 city_id=currentCityId,
                 city_name=currentCityName,
@@ -313,7 +317,7 @@ class ToggleLikeCity(graphene.Mutation):
             raise Exception("Can't Like City")
 
 
-class ReportLocations(graphene.Mutation):
+class SlackReportLocation(graphene.Mutation):
 
     class Arguments:
         reportUsername = graphene.String()
@@ -321,7 +325,7 @@ class ReportLocations(graphene.Mutation):
         targetLocationType = graphene.String()
         payload = graphene.String()
 
-    Output = types.ReportLocationResponse
+    Output = types.SlackReportLocationResponse
 
     def mutate(self, info, **kwargs):
 
@@ -347,7 +351,7 @@ class ReportLocations(graphene.Mutation):
                     "footer": "🙅🏻‍♂️ Inappropriate Photo!"
                 }]
                 notify_slack(to_channel, attachments)
-                return types.ReportLocationResponse(ok=True)
+                return types.SlackReportLocationResponse(ok=True)
             elif targetLocationType == "country":
                 country = models.Country.objects.get(country_code=targetLocationId)
                 to_channel = "#location_%s_reports" % (country.continent.continent_code.lower())
@@ -364,7 +368,7 @@ class ReportLocations(graphene.Mutation):
                     "footer": "🙅🏻‍♂️ Inappropriate Photo!"
                 }]
                 notify_slack(to_channel, attachments)
-                return types.ReportLocationResponse(ok=True)
+                return types.SlackReportLocationResponse(ok=True)
 
             elif targetLocationType == "continent":
                 continent = models.Continent.objects.get(continent_code=targetLocationId)
@@ -382,9 +386,9 @@ class ReportLocations(graphene.Mutation):
                     "footer": "🙅🏻‍♂️ Inappropriate Photo!"
                 }]
                 notify_slack(to_channel, attachments)
-                return types.ReportLocationResponse(ok=True)
+                return types.SlackReportLocationResponse(ok=True)
             else:
-                return types.ReportLocationResponse(ok=False)
+                return types.SlackReportLocationResponse(ok=False)
         elif(payload == "LOCATION"):
             if targetLocationType == "city":
                 city = models.City.objects.get(city_id=targetLocationId)
@@ -402,7 +406,7 @@ class ReportLocations(graphene.Mutation):
                     "footer": "🤦🏻‍♂️ Wrong Location!"
                 }]
                 notify_slack(to_channel, attachments)
-                return types.ReportLocationResponse(ok=True)
+                return types.SlackReportLocationResponse(ok=True)
             elif targetLocationType == "country":
                 country = models.Country.objects.get(country_code=targetLocationId)
                 to_channel = "#location_%s_reports" % (country.continent.continent_code.lower())
@@ -419,7 +423,7 @@ class ReportLocations(graphene.Mutation):
                     "footer": "🤦🏻‍♂️ Wrong Location!"
                 }]
                 notify_slack(to_channel, attachments)
-                return types.ReportLocationResponse(ok=True)
+                return types.SlackReportLocationResponse(ok=True)
 
             elif targetLocationType == "continent":
                 continent = models.Continent.objects.get(continent_code=targetLocationId)
@@ -437,9 +441,9 @@ class ReportLocations(graphene.Mutation):
                     "footer": "🤦🏻‍♂️ Wrong Location!"
                 }]
                 notify_slack(to_channel, attachments)
-                return types.ReportLocationResponse(ok=True)
+                return types.SlackReportLocationResponse(ok=True)
             else:
-                return types.ReportLocationResponse(ok=False)
+                return types.SlackReportLocationResponse(ok=False)
         elif(payload == "OTHER"):
             if targetLocationType == "city":
                 city = models.City.objects.get(city_id=targetLocationId)
@@ -457,7 +461,7 @@ class ReportLocations(graphene.Mutation):
                     "footer": "🤦🏻‍♂️ Other Report!"
                 }]
                 notify_slack(to_channel, attachments)
-                return types.ReportLocationResponse(ok=True)
+                return types.SlackReportLocationResponse(ok=True)
             elif targetLocationType == "country":
                 country = models.Country.objects.get(country_code=targetLocationId)
                 to_channel = "#location_%s_reports" % (country.continent.continent_code.lower())
@@ -474,7 +478,7 @@ class ReportLocations(graphene.Mutation):
                     "footer": "🤦🏻‍♂️ Other Report!"
                 }]
                 notify_slack(to_channel, attachments)
-                return types.ReportLocationResponse(ok=True)
+                return types.SlackReportLocationResponse(ok=True)
 
             elif targetLocationType == "continent":
                 continent = models.Continent.objects.get(continent_code=targetLocationId)
@@ -492,6 +496,6 @@ class ReportLocations(graphene.Mutation):
                     "footer": "🤦🏻‍♂️ Other Report!"
                 }]
                 notify_slack(to_channel, attachments)
-                return types.ReportLocationResponse(ok=True)
+                return types.SlackReportLocationResponse(ok=True)
             else:
-                return types.ReportLocationResponse(ok=False)
+                return types.SlackReportLocationResponse(ok=False)

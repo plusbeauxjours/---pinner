@@ -555,14 +555,14 @@ class FacebookConnect(graphene.Mutation):
             raise Exception("Could not log you in")
 
 
-class ReportUser(graphene.Mutation):
+class SlackReportUser(graphene.Mutation):
 
     class Arguments:
         reportUsername = graphene.String()
         targetUsername = graphene.String()
         payload = graphene.String()
 
-    Output = types.ReportUserResponse
+    Output = types.SlackReportUserResponse
 
     def mutate(self, info, **kwargs):
 
@@ -584,7 +584,7 @@ class ReportUser(graphene.Mutation):
                 "footer": "🙅🏻‍♂️ Inappropriate Photo!"
             }]
             notify_slack(to_channel,  attachments)
-            return types.ReportUserResponse(ok=True)
+            return types.SlackReportUserResponse(ok=True)
         elif(payload == "SPAM"):
             to_channel = "#user_reports"
             attachments = [{
@@ -599,7 +599,7 @@ class ReportUser(graphene.Mutation):
                 "footer": "🤦🏻‍♂️ Spam User!"
             }]
             notify_slack(to_channel,  attachments)
-            return types.ReportUserResponse(ok=True)
+            return types.SlackReportUserResponse(ok=True)
         elif(payload == "MESSAGE"):
             to_channel = "#user_reports"
             attachments = [{
@@ -614,7 +614,7 @@ class ReportUser(graphene.Mutation):
                 "footer": "🙅🏻‍♂️ Inappropriate Message!"
             }]
             notify_slack(to_channel,  attachments)
-            return types.ReportUserResponse(ok=True)
+            return types.SlackReportUserResponse(ok=True)
         elif(payload == "OTHER"):
             to_channel = "#user_reports"
             attachments = [{
@@ -629,6 +629,6 @@ class ReportUser(graphene.Mutation):
                 "footer": "🤦🏻‍♂️ Other Report!"
             }]
             notify_slack(to_channel,  attachments)
-            return types.ReportUserResponse(ok=True)
+            return types.SlackReportUserResponse(ok=True)
         else:
-            return types.ReportUserResponse(ok=False)
+            return types.SlackReportUserResponse(ok=False)

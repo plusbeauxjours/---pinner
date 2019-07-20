@@ -114,5 +114,5 @@ class UserListResponse(graphene.ObjectType):
     users = graphene.List(coffee_types.UserType)
 
 
-class ReportUserResponse(graphene.ObjectType):
+class SlackReportUserResponse(graphene.ObjectType):
     ok = graphene.Boolean()

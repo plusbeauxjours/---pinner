@@ -116,5 +116,5 @@ class ToggleLikeCityResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
 
-class ReportLocationResponse(graphene.ObjectType):
+class SlackReportLocationResponse(graphene.ObjectType):
     ok = graphene.Boolean()
