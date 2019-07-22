@@ -22,7 +22,8 @@ const Container = styled(Wrapper)`
 `;
 
 const Box = styled.div`
-  background-color: #2d3a41;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(128, 128, 128, 0.5);
   border: ${props => props.theme.boxBorder};
   text-align: center;
 `;
@@ -75,7 +76,8 @@ const ModalAnimation = keyframes`
 	`;
 
 const Modal = styled.div`
-  background-color: #2d3a41;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(128, 128, 128, 0.5);
   width: 30%;
   border-radius: 12px;
   z-index: 5;
@@ -91,7 +93,7 @@ const ModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
   }
 `;
 

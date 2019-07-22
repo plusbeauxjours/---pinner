@@ -71,6 +71,7 @@ class HomeContainer extends React.Component<IProps, IState> {
   };
   public getAddress = async (latitude: number, longitude: number) => {
     const address = await reverseGeoCode(latitude, longitude);
+    localStorage.setItem("countryCode", address.storableLocation.countryCode);
     if (address) {
       this.setState({
         countryCode: address.storableLocation.countryCode,

@@ -294,9 +294,10 @@ TO = env('TO')
 APPEND_SLASH = False
 ADMIN_ID = env('ADMIN_ID')
 SLACK_TOKEN = env('SLACK_TOKEN')
+SENTRY_DSN = env('SENTRY_DSN')
 
 sentry_sdk.init(
-    dsn=env('SENTRY_DSN'),
+    dsn=SENTRY_DSN,
     environment='production',
     integrations=[DjangoIntegration()]
 )

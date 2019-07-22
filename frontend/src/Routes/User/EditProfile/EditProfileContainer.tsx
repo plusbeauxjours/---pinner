@@ -196,6 +196,14 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                                   <EditProfileMutation
                                     mutation={EDIT_PROFILE}
                                     update={this.updatEditProfile}
+                                    refetchQueries={[
+                                      {
+                                        query: GET_USER,
+                                        variables: {
+                                          username
+                                        }
+                                      }
+                                    ]}
                                     onCompleted={editData => {
                                       const { editProfile } = editData;
                                       if (editProfile.ok) {

@@ -51,6 +51,7 @@ django-webpack-loader==0.6.0
 djangorestframework==3.9.0
 docutils==0.14
 environ==1.0
+sentry-sdk==0.10.2
 factory-boy==2.11.1
 Faker==1.0.5
 flake8==3.6.0

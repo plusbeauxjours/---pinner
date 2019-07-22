@@ -7,7 +7,7 @@ import GlobalStyles from "../../Styles/global-styles";
 import theme from "../../Styles/theme";
 import { APP_QUERIES } from "./AppQueries.local";
 import "react-toastify/dist/ReactToastify.css";
-// import { createBrowserHistory } from "history";
+import browserHistory from "src/Apollo/browserHistory";
 
 export default () => (
   <ThemeProvider theme={theme}>
@@ -22,7 +22,7 @@ export default () => (
         }) => (
           <Router
             // onUpdate={() => window.scrollTo(0, 0)}
-            // history={createBrowserHistory()}
+            history={browserHistory}
             isLoggedIn={isLoggedIn}
           />
         )}

@@ -62,7 +62,7 @@ const IconRow = styled.div`
   padding: 0 5px 0 5px;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
 `;
 
 const Icon = styled.div`
@@ -90,9 +90,9 @@ const UserRow = styled.div`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {
-    background-color: grey;
+    background-color: rgba(128, 128, 128, 0.5);
   }
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
   &:last-child {
     margin-bottom: 15px;
   }
@@ -126,7 +126,7 @@ const CText = styled(Bold)`
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
 `;
 
 interface IProps extends RouteComponentProps<any> {

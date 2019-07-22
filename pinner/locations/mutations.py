@@ -85,12 +85,13 @@ class CreateCity(graphene.Mutation):
                                 continent_photo=continentPhotoURL,
                                 continent_code=continentCode
                             )
+                            print("continentsAA")
                 try:
                     gp = locationThumbnail.get_photos(term=countryName)
                     countryPhotoURL = gp.get_urls()
                 except:
                     countryPhotoURL = None
-
+                print("countryAA")
                 country = models.Country.objects.create(
                     country_code=countryCode,
                     country_name=countryName,
@@ -103,12 +104,14 @@ class CreateCity(graphene.Mutation):
                     country_photo=countryPhotoURL,
                     continent=continent,
                 )
+                print("countryCC")
 
             try:
                 gp = locationThumbnail.get_photos(term=cityName)
                 cityPhotoURL = gp.get_urls()
             except:
                 cityPhotoURL = None
+            print("countryBB")
             city = models.City.objects.create(
                 city_id=cityId,
                 city_name=cityName,
@@ -117,10 +120,7 @@ class CreateCity(graphene.Mutation):
                 latitude=cityLatitude,
                 longitude=cityLongitude
             )
-            print(nearCities)
             for i in nearCities:
-                print(i)
-                print("amhere")
                 city.near_city.add(i)
                 city.save()
 
@@ -161,6 +161,8 @@ class ReportLocation(graphene.Mutation):
             qs = models.City.objects.all().annotate(distance=distance_raw_sql).order_by('distance')
             if max_distance is not None:
                 qs = qs.filter(Q(distance__lt=max_distance))
+                for i in qs:
+                    pass
             return qs
 
         try:

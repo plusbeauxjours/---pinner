@@ -65,7 +65,8 @@ const SButton = styled(Button)`
 `;
 
 const Modal = styled.div`
-  background-color: #2d3a41;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(128, 128, 128, 0.5);
   border-radius: 12px;
   width: 540px;
   height: 240px;

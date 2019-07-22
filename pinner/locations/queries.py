@@ -11,6 +11,8 @@ from cards import types as card_types
 from notifications import models as notification_models
 from coffees import models as coffee_models
 
+from graphql_extensions.exceptions import GraphQLError
+
 
 @login_required
 def resolve_header(self, info, **kwargs):
@@ -18,9 +20,7 @@ def resolve_header(self, info, **kwargs):
     user = info.context.user
     cityId = kwargs.get('cityId')
 
-    print('header')
     city = models.City.objects.get(city_id=cityId)
-    print('header')
 
     return types.HeaderResponse(city=city)
 
@@ -57,7 +57,10 @@ def resolve_trip_profile(self, info, **kwargs):
     startDate = kwargs.get('startDate')
     endDate = kwargs.get('endDate')
 
-    city = models.City.objects.prefetch_related('movenotification').prefetch_related('coffee').get(city_id=cityId)
+    try:
+        city = models.City.objects.prefetch_related('movenotification').prefetch_related('coffee').get(city_id=cityId)
+    except models.City.DoesNotExist:
+        raise GraphQLError('Trip not found')
 
     usersBefore = city.movenotification.filter(Q(start_date__lte=(endDate)) |
                                                Q(end_date__gte=(startDate))).order_by('actor_id').distinct('actor_id')
@@ -76,7 +79,10 @@ def resolve_city_profile(self, info, **kwargs):
     cityId = kwargs.get('cityId')
     page = kwargs.get('page', 0)
 
-    city = models.City.objects.prefetch_related('coffee').get(city_id=cityId)
+    try:
+        city = models.City.objects.prefetch_related('coffee').get(city_id=cityId)
+    except models.City.DoesNotExist:
+        raise GraphQLError('City not found')
 
     usersNow = User.objects.filter(
         profile__current_city__city_id=cityId).order_by('-id').distinct('id')[:12]
@@ -164,7 +170,10 @@ def resolve_country_profile(self, info, **kwargs):
     countryCode = kwargs.get('countryCode')
     page = kwargs.get('page', 0)
 
-    country = models.Country.objects.get(country_code=countryCode)
+    try:
+        country = models.Country.objects.get(country_code=countryCode)
+    except Country.DoesNotExist:
+        raise GraphQLError('Country not found')
 
     usersNow = User.objects.filter(
         profile__current_city__country__country_code=countryCode).order_by('-id').distinct('id')[:12]
@@ -238,7 +247,10 @@ def resolve_continent_profile(self, info, **kwargs):
     continentCode = kwargs.get('continentCode')
     page = kwargs.get('page', 0)
 
-    continent = models.Continent.objects.get(continent_code=continentCode)
+    try:
+        continent = models.Continent.objects.get(continent_code=continentCode)
+    except Continent.DoesNotExist:
+        raise GraphQLError('Continent not found')
 
     usersNow = User.objects.filter(
         profile__current_city__country__continent__continent_code=continentCode).order_by('-id').distinct('id')[:12]

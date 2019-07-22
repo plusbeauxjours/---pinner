@@ -63,7 +63,7 @@ const SmallTitle = styled(Title)`
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
   @media screen and (max-width: 935px) {
     margin: 10px 10px 0 10px;
   }
@@ -102,10 +102,10 @@ const UserRow = styled.div`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {
-    background-color: grey;
+    background-color: rgba(128, 128, 128, 0.5);
   }
   &:not(:last-child) {
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
   }
 `;
 
@@ -125,7 +125,7 @@ const AvatarContainer = styled.div`
 const Input = styled.input`
   width: 215px;
   border: 0;
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
   background-color: ${props => props.theme.bgColor};
   padding: 5px;
   color: white;

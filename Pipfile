@@ -61,6 +61,11 @@ django-resized = "*"
 slacker = "*"
 sentry-sdk = "==0.10.2"
 sentry-slack = "*"
+sentry-plugins = "*"
+raven = "*"
+pip = "*"
+install = "*"
+django-graphql-extensions = "*"
 
 [requires]
 python_version = "3.7"

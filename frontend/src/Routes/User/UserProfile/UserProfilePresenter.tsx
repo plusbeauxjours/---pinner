@@ -159,7 +159,7 @@ const TripRow = styled.div<ITheme>`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {
-    background-color: grey;
+    background-color: rgba(128, 128, 128, 0.5);
   }
   &:hover {
     ${TripOverlay} {
@@ -167,7 +167,7 @@ const TripRow = styled.div<ITheme>`
     }
   }
   &:not(:last-child) {
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
   }
 `;
 
@@ -225,11 +225,6 @@ const TripIcon = styled(Icon)`
   margin-bottom: 10px;
 `;
 
-const Bio = styled.p`
-  font-size: 16px;
-  margin-bottom: 10px;
-`;
-
 const ModalAnimation = keyframes`
 	  from{
 	    opacity:0;
@@ -243,7 +238,12 @@ const ModalAnimation = keyframes`
 
 const Row = styled.div`
   display: flex;
+  width: 200px;
+  justify-content: flex-end;
   padding: 5px;
+  @media screen and (max-width: 600px) {
+    width: 300px;
+  }
 `;
 
 const UBold = styled(Bold)`
@@ -306,7 +306,8 @@ const TripModalContainer = styled.div`
 `;
 
 const Modal = styled.div`
-  background-color: #2d3a41;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(128, 128, 128, 0.5);
   border-radius: 12px;
   width: 312px;
   z-index: 10;
@@ -334,7 +335,7 @@ const ModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
   }
 `;
 
@@ -347,7 +348,7 @@ const ModalLinkContainer = styled(Link)`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
   }
 `;
 
@@ -379,7 +380,7 @@ const SearchCitiesInput = styled.input`
     color: ${props => props.theme.greyColor};
   }
   animation: ${ModalAnimation} 0.1s linear;
-  margin-top: 20px;
+  margin-top: 60px;
   font-size: 34px;
 `;
 
@@ -401,7 +402,7 @@ const GreyText = styled(Thin)`
 const TripInput = styled.input`
   width: 215px;
   border: 0;
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
   background-color: ${props => props.theme.bgColor};
   padding: 5px;
   color: white;
@@ -430,10 +431,10 @@ const UserRow = styled.div<ITheme>`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {
-    background-color: grey;
+    background-color: rgba(128, 128, 128, 0.5);
   }
   &:not(:last-child) {
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
   }
 `;
 
@@ -1118,11 +1119,11 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
           <AvatarContainer>
             <PAvatar
               size="lg"
-              url={  user.profile.avatar
-                ? `${BACKEND_URL}/media/${
-                    user.profile.avatar.thumbnail
-                  }`
-                : "https://banner2.kisspng.com/20180613/vtt/kisspng-computer-icons-avatar-user-profile-icon-design-cli-5b2114b0368752.5561258815288946402234.jpg"}
+              url={
+                user.profile.avatar
+                  ? `${BACKEND_URL}/media/${user.profile.avatar.thumbnail}`
+                  : "https://banner2.kisspng.com/20180613/vtt/kisspng-computer-icons-avatar-user-profile-icon-design-cli-5b2114b0368752.5561258815288946402234.jpg"
+              }
               onClick={toggleAvatarModalOpen}
             />
           </AvatarContainer>
@@ -1144,141 +1145,147 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               <Link to={`/city/${user.profile.currentCity.cityId}`}>
                 <CAvatar size="lg" url={user.profile.currentCity.cityPhoto} />
               </Link>
-              <Bio>{`${user.profile.bio}`}</Bio>
-              <Row>
-                <UBold text={String(user.profile.distance)} />
-                <UBold text={" how many KM"} />
-              </Row>
-              <Row>
-                <UBold text={String(user.profile.tripCount)} />
-                <UBold text={" how many TRIPS - done"} />
-              </Row>
-              {user.profile.isHideCoffees ? (
+                <Row>{`${user.profile.bio}`}</Row>
                 <Row>
-                  <GreyUBold text={String(user.profile.coffeeCount)} />
-                  {user.profile.cityCount === 1 ? (
-                    <GreyUBold text={"Coffee requested"} />
-                  ) : (
-                    <GreyUBold text={"Coffees requested"} />
-                  )}
+                  <UBold text={String(user.profile.distance)} />
+                  <UBold text={" how many KM"} />
                 </Row>
-              ) : (
-                <Link
-                  to={{
-                    pathname: `/${username}/coffees`,
-                    state: { coffeesModalOpen: true }
-                  }}
-                >
+                <Row>
+                  <UBold text={String(user.profile.tripCount)} />
+                  <UBold text={" how many TRIPS - done"} />
+                </Row>
+                {user.profile.isHideCoffees ? (
                   <Row>
-                    <UBold text={String(user.profile.coffeeCount)} />
+                    <GreyUBold text={String(user.profile.coffeeCount)} />
                     {user.profile.cityCount === 1 ? (
-                      <UBold text={"Coffee requested"} />
+                      <GreyUBold text={"Coffee requested"} />
                     ) : (
-                      <UBold text={"Coffees requested"} />
+                      <GreyUBold text={"Coffees requested"} />
                     )}
                   </Row>
-                </Link>
-              )}
-              {user.profile.isHideCities ? (
-                <Row>
-                  <GreyUBold text={String(user.profile.cityCount)} />
-                  {user.profile.cityCount === 1 ? (
-                    <GreyUBold text={"City visited"} />
-                  ) : (
-                    <GreyUBold text={"Cities visited"} />
-                  )}
-                </Row>
-              ) : (
-                <Link
-                  to={{
-                    pathname: `/${username}/cities`,
-                    state: { cityModalOpen: true }
-                  }}
-                >
+                ) : (
+                  <Link
+                    to={{
+                      pathname: `/${username}/coffees`,
+                      state: { coffeesModalOpen: true }
+                    }}
+                  >
+                    <Row>
+                      <UBold text={String(user.profile.coffeeCount)} />
+                      {user.profile.cityCount === 1 ? (
+                        <UBold text={"Coffee requested"} />
+                      ) : (
+                        <UBold text={"Coffees requested"} />
+                      )}
+                    </Row>
+                  </Link>
+                )}
+                {user.profile.isHideCities ? (
                   <Row>
-                    <UBold text={String(user.profile.cityCount)} />
+                    <GreyUBold text={String(user.profile.cityCount)} />
                     {user.profile.cityCount === 1 ? (
-                      <UBold text={"City visited"} />
+                      <GreyUBold text={"City visited"} />
                     ) : (
-                      <UBold text={"Cities visited"} />
+                      <GreyUBold text={"Cities visited"} />
                     )}
                   </Row>
-                </Link>
-              )}
-              {user.profile.isHideCountries ? (
-                <Row>
-                  <GreyUBold text={String(user.profile.countryCount)} />
-                  {user.profile.countryCount === 1 ? (
-                    <GreyUBold text={"Country visited"} />
-                  ) : (
-                    <GreyUBold text={"Countries visited"} />
-                  )}
-                </Row>
-              ) : (
-                <Link
-                  to={{
-                    pathname: `/${username}/countries`,
-                    state: { countryModalOpen: true }
-                  }}
-                >
+                ) : (
+                  <Link
+                    to={{
+                      pathname: `/${username}/cities`,
+                      state: { cityModalOpen: true }
+                    }}
+                  >
+                    <Row>
+                      <UBold text={String(user.profile.cityCount)} />
+                      {user.profile.cityCount === 1 ? (
+                        <UBold text={"City visited"} />
+                      ) : (
+                        <UBold text={"Cities visited"} />
+                      )}
+                    </Row>
+                  </Link>
+                )}
+                {user.profile.isHideCountries ? (
                   <Row>
-                    <UBold text={String(user.profile.countryCount)} />
+                    <GreyUBold text={String(user.profile.countryCount)} />
                     {user.profile.countryCount === 1 ? (
-                      <UBold text={"Country visited"} />
+                      <GreyUBold text={"Country visited"} />
                     ) : (
-                      <UBold text={"Countries visited"} />
+                      <GreyUBold text={"Countries visited"} />
                     )}
                   </Row>
-                </Link>
-              )}
-              {user.profile.isHideContinents ? (
-                <Row>
-                  <GreyUBold text={String(user.profile.continentCount)} />
-                  {user.profile.continentCount === 1 ? (
-                    <GreyUBold text={"Continent visited"} />
-                  ) : (
-                    <GreyUBold text={"Continents visited"} />
-                  )}
-                </Row>
-              ) : (
-                <Link
-                  to={{
-                    pathname: `/${username}/continents`,
-                    state: { continentModalOpen: true }
-                  }}
-                >
+                ) : (
+                  <Link
+                    to={{
+                      pathname: `/${username}/countries`,
+                      state: { countryModalOpen: true }
+                    }}
+                  >
+                    <Row>
+                      <UBold text={String(user.profile.countryCount)} />
+                      {user.profile.countryCount === 1 ? (
+                        <UBold text={"Country visited"} />
+                      ) : (
+                        <UBold text={"Countries visited"} />
+                      )}
+                    </Row>
+                  </Link>
+                )}
+                {user.profile.isHideContinents ? (
                   <Row>
-                    <UBold text={String(user.profile.continentCount)} />
+                    <GreyUBold text={String(user.profile.continentCount)} />
                     {user.profile.continentCount === 1 ? (
-                      <UBold text={"Continent visited"} />
+                      <GreyUBold text={"Continent visited"} />
                     ) : (
-                      <UBold text={"Continents visited"} />
+                      <GreyUBold text={"Continents visited"} />
                     )}
                   </Row>
-                </Link>
-              )}
-              {user.profile.nationality ? (
-                <Row>
-                  <Link to={`/country/${user.profile.nationality.countryCode}`}>
-                    <UBold
-                      text={String(user.profile.nationality.countryEmoji)}
-                    />
-                    <UBold
-                      text={String(user.profile.nationality.countryName)}
-                    />
-                    <UBold text={"nationality"} />
+                ) : (
+                  <Link
+                    to={{
+                      pathname: `/${username}/continents`,
+                      state: { continentModalOpen: true }
+                    }}
+                  >
+                    <Row>
+                      <UBold text={String(user.profile.continentCount)} />
+                      {user.profile.continentCount === 1 ? (
+                        <UBold text={"Continent visited"} />
+                      ) : (
+                        <UBold text={"Continents visited"} />
+                      )}
+                    </Row>
                   </Link>
-                </Row>
-              ) : null}
-              {user.profile.residence ? (
-                <Row>
-                  <Link to={`/country/${user.profile.residence.countryCode}`}>
-                    <UBold text={String(user.profile.residence.countryEmoji)} />
-                    <UBold text={String(user.profile.residence.countryName)} />
-                    <UBold text={"residence"} />
-                  </Link>
-                </Row>
-              ) : null}
+                )}
+                {user.profile.nationality ? (
+                  <Row>
+                    <Link
+                      to={`/country/${user.profile.nationality.countryCode}`}
+                    >
+                      <UBold
+                        text={String(user.profile.nationality.countryEmoji)}
+                      />
+                      <UBold
+                        text={String(user.profile.nationality.countryName)}
+                      />
+                      <UBold text={"nationality"} />
+                    </Link>
+                  </Row>
+                ) : null}
+                {user.profile.residence ? (
+                  <Row>
+                    <Link to={`/country/${user.profile.residence.countryCode}`}>
+                      <UBold
+                        text={String(user.profile.residence.countryEmoji)}
+                      />
+                      <UBold
+                        text={String(user.profile.residence.countryName)}
+                      />
+                      <UBold text={"residence"} />
+                    </Link>
+                  </Row>
+                ) : null}
               <Weather
                 latitude={user.profile.currentCity.latitude}
                 longitude={user.profile.currentCity.longitude}

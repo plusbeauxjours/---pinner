@@ -1,5 +1,6 @@
 import graphene
 from graphql_jwt.decorators import login_required
+from graphql_extensions.exceptions import GraphQLError
 from django.contrib.auth.models import User
 from . import types, models
 from django.db.models import Count, F, Sum
@@ -17,7 +18,7 @@ def resolve_profile(self, info, **kwargs):
         profile = User.objects.get(username=username)
 
     except User.DoesNotExist:
-        raise Exception('User not found')
+        raise GraphQLError('User not found')
 
     return types.UserProfileResponse(user=profile)
 

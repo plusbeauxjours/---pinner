@@ -7,6 +7,7 @@ import { createUploadLink } from "apollo-upload-client";
 import { ApolloLink, Observable } from "apollo-link";
 import { withClientState } from "apollo-link-state";
 import { onError } from "apollo-link-error";
+import browserHistory from "src/Apollo/browserHistory";
 
 const cache = new InMemoryCache();
 
@@ -51,14 +52,17 @@ const requestLink = new ApolloLink(
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) {
     console.log(`[Network error]: ${networkError}`);
+    browserHistory.push("/404", { errors: networkError });
   }
+
   if (graphQLErrors) {
+    console.log(graphQLErrors);
     graphQLErrors.map(({ message, locations, path }) => {
       graphQLErrors.forEach(error => toast.error(error.message));
       console.log(
         `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
       );
-      // alert(message);
+      browserHistory.push("/404", { errors: graphQLErrors });
     });
   }
 });

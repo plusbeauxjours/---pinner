@@ -40,7 +40,8 @@ const ModalContainer = styled.div`
 `;
 
 const Modal = styled.div`
-  background-color: #2d3a41;
+    background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(128, 128, 128, 0.5);
   border-radius: 12px;
   width: 312px;
   z-index: 10;
@@ -72,7 +73,7 @@ const ModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
   }
 `;
 
@@ -156,7 +157,7 @@ const MenuText = styled.p`
 `;
 
 const GreyLine = styled.div`
-  border-left: 1px solid grey;
+  border-left: 1px solid rgba(128, 128, 128, 0.5);
   height: 80vh;
   margin: 0px 10px;
 `;
@@ -198,7 +199,7 @@ const AvatarConatainer = styled(Conatainer)`
 
 const DeleteConatainer = styled.div`
   width: 600px;
-  border: 1px solid grey;
+  border: 1px solid rgba(128, 128, 128, 0.5);
   padding: 10px 15px 4px 15px;
   margin-bottom: 15px;
 `;

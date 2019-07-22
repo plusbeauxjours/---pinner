@@ -12,6 +12,11 @@ import PhoneLogin from "../Routes/Login/PhoneLogin";
 
 import LoggedInPages from "./LoggedInPages";
 
+interface IProps {
+  isLoggedIn: boolean;
+  history: any;
+}
+
 const LoggedOutPages = () => (
   <Switch>
     <Route path="/" exact={true} component={Home} />
@@ -21,7 +26,10 @@ const LoggedOutPages = () => (
   </Switch>
 );
 
-const AppRouter = ({ isLoggedIn }) => {
+const AppRouter: React.FunctionComponent<IProps> = ({
+  isLoggedIn,
+  history
+}) => {
   return <Router>{isLoggedIn ? <LoggedInPages /> : <LoggedOutPages />}</Router>;
 };
 
