@@ -273,7 +273,7 @@ const TripProfilePresenter: React.FunctionComponent<IProps> = ({
                           user.actor.profile.currentCity.country.countryName
                         }
                         avatar={`${BACKEND_URL}/media/${
-                          user.actor.profile.avatar.thumbnail
+                          user.actor.profile.avatarUrl
                         }`}
                         size={"sm"}
                       />
@@ -293,7 +293,7 @@ const TripProfilePresenter: React.FunctionComponent<IProps> = ({
                           user.actor.profile.currentCity.country.countryName
                         }
                         avatar={`${BACKEND_URL}/media/${
-                          user.actor.profile.avatar.thumbnail
+                          user.actor.profile.avatarUrl
                         }`}
                         size={"sm"}
                       />

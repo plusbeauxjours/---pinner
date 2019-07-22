@@ -1149,7 +1149,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         variables: { username }
       });
       if (data) {
-        data.userProfile.user.profile.avatar.thumbnail =
+        data.userProfile.user.profile.avatarUrl =
           uploadAvatar.avatar.thumbnail;
         cache.writeQuery({
           query: GET_USER,
@@ -1165,7 +1165,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         query: ME
       });
       if (data) {
-        data.me.user.profile.avatar.thumbnail = uploadAvatar.avatar.thumbnail;
+        data.me.user.profile.avatarUrl = uploadAvatar.avatar.thumbnail;
         cache.writeQuery({
           query: ME,
           data
@@ -1229,7 +1229,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         variables: { username }
       });
       if (data) {
-        data.userProfile.user.profile.avatar.thumbnail =
+        data.userProfile.user.profile.avatarUrl =
           markAsMain.avatar.thumbnail;
         cache.writeQuery({
           query: GET_USER,
@@ -1245,7 +1245,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         query: ME
       });
       if (data) {
-        data.me.user.profile.avatar.thumbnail = markAsMain.avatar.thumbnail;
+        data.me.user.profile.avatarUrl = markAsMain.avatar.thumbnail;
         cache.writeQuery({
           query: ME,
           data

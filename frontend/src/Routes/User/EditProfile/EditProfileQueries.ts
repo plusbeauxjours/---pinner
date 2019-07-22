@@ -31,9 +31,7 @@ export const EDIT_PROFILE = gql`
         profile {
           bio
           gender
-          avatar {
-            thumbnail
-          }
+          avatarUrl
           website
           email
           nationality {

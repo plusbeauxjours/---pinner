@@ -152,7 +152,7 @@ const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
                         <SAvatar
                           size={"sm"}
                           url={`${BACKEND_URL}/media/${
-                            coffee.host.profile.avatar.thumbnail
+                            coffee.host.profile.avatarUrl
                           }`}
                         />
                         <HeaderColumn>
@@ -191,7 +191,7 @@ const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
                         <SAvatar
                           size={"sm"}
                           url={`${BACKEND_URL}/media/${
-                            coffee.host.profile.avatar.thumbnail
+                            coffee.host.profile.avatarUrl
                           }`}
                         />
                         <HeaderColumn>

@@ -7,7 +7,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
     list_display = (
         'username',
-        'avatar',
+        'avatarUrl',
         'is_dark_mode',
         'is_hide_trips',
         'is_hide_coffees',

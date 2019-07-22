@@ -189,7 +189,7 @@ const UserBox: React.FunctionComponent<IProps> = ({
                       <Avatar
                         size={"sm"}
                         url={`${BACKEND_URL}/media/${
-                          coffee.host.profile.avatar.thumbnail
+                          coffee.host.profile.avatarUrl
                         }`}
                       />
                       <HeaderColumn>
@@ -277,7 +277,7 @@ const UserBox: React.FunctionComponent<IProps> = ({
                       <Avatar
                         size={"sm"}
                         url={`${BACKEND_URL}/media/${
-                          coffee.host.profile.avatar.thumbnail
+                          coffee.host.profile.avatarUrl
                         }`}
                       />
                       <HeaderColumn>

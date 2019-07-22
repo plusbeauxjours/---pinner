@@ -116,7 +116,7 @@ const ModalAnimation = keyframes`
 	`;
 
 const Modal = styled.div`
-    background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(128, 128, 128, 0.5);
   width: 30%;
   border-radius: 12px;
@@ -316,9 +316,9 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                           <Avatar
                             size={"sm"}
                             url={
-                              user.profile.avatar
+                              user.profile.avatarUrl
                                 ? `${BACKEND_URL}/media/${
-                                    user.profile.avatar.thumbnail
+                                    user.profile.avatarUrl
                                   }`
                                 : "https://banner2.kisspng.com/20180613/vtt/kisspng-computer-icons-avatar-user-profile-icon-design-cli-5b2114b0368752.5561258815288946402234.jpg"
                             }
@@ -365,7 +365,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                             match.host.profile.currentCity.country.countryName
                           }
                           avatar={`${BACKEND_URL}/media/${
-                            match.host.profile.avatar.thumbnail
+                            match.host.profile.avatarUrl
                           }`}
                           size={"sm"}
                         />
@@ -391,7 +391,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                             match.guest.profile.currentCity.country.countryName
                           }
                           avatar={`${BACKEND_URL}/media/${
-                            match.guest.profile.avatar.thumbnail
+                            match.guest.profile.avatarUrl
                           }`}
                           size={"sm"}
                         />
@@ -425,7 +425,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                             match.host.profile.currentCity.country.countryName
                           }
                           avatar={`${BACKEND_URL}/media/${
-                            match.host.profile.avatar.thumbnail
+                            match.host.profile.avatarUrl
                           }`}
                           size={"sm"}
                         />
@@ -452,7 +452,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                             match.guest.profile.currentCity.country.countryName
                           }
                           avatar={`${BACKEND_URL}/media/${
-                            match.guest.profile.avatar.thumbnail
+                            match.guest.profile.avatarUrl
                           }`}
                           size={"sm"}
                         />

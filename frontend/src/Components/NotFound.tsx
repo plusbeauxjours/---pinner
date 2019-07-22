@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "src/Styles/typed-components";
 import Wrapper from "./Wrapper";
+import browserHistory from "../Apollo/browserHistory";
+import Button from "src/Components/Button";
 
-const Container = styled.footer`
-  margin-top: 100px;
+const Container = styled.div`
+  margin-top: 250px;
   margin-bottom: 50px;
   font-weight: 600;
   font-size: 12px;
@@ -22,7 +24,7 @@ const Bold = styled.p`
   text-align: center;
   font-size: 40px;
   margin-bottom: 30px;
-  color: grey;
+  color: white;
 `;
 
 const GreyText = styled.p`
@@ -42,6 +44,16 @@ const Image = styled.img`
   margin-bottom: 30px;
 `;
 
+const SButton = styled(Button)`
+  width: 50px;
+  margin-top: 20px;
+`;
+
+const back = event => {
+  event.stopPropagation();
+  browserHistory.goBack();
+};
+
 const NotFound: React.FunctionComponent<any> = () => (
   <Container>
     <SWrapper>
@@ -55,6 +67,7 @@ const NotFound: React.FunctionComponent<any> = () => (
         your spaceship \n with no way to get back. Your dog will be so sad. Your
         math teacher will \n be so smug. Pretty devastating. 2019 Pinner.
       </GreyText>
+      <SButton onClick={back} text={"BACK"} />
     </SWrapper>
   </Container>
 );

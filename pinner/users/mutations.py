@@ -339,17 +339,20 @@ class MarkAsMain(graphene.Mutation):
                 newMainAvatar = models.Avatar.objects.get(uuid=uuid)
                 prevMainAvatar.is_main = False
                 newMainAvatar.is_main = True
+                user.profile.avatarUrl = newMainAvatar.thumbnail
                 prevMainAvatar.save()
                 newMainAvatar.save()
             else:
                 newMainAvatar = models.Avatar.objects.get(uuid=uuid)
                 newMainAvatar.is_main = True
+                user.profile.avatarUrl = newMainAvatar.thumbnail
                 newMainAvatar.save()
                 return types.MarkAsMainResponse(ok=True, avatar=newMainAvatar,  uuid=uuid)
 
         except:
             newMainAvatar = models.Avatar.objects.get(uuid=uuid)
             newMainAvatar.is_main = True
+            user.profile.avatarUrl = newMainAvatar.thumbnail
             newMainAvatar.save()
 
         return types.MarkAsMainResponse(ok=True, avatar=newMainAvatar, uuid=uuid)
@@ -392,7 +395,8 @@ class UploadAvatar(graphene.Mutation):
             prevMainAvatar.is_main = False
             newMainAvatar = models.Avatar.objects.create(
                 is_main=True, image=file, thumbnail=file, creator=user)
-            user.profile.avatar = newMainAvatar
+            print(newMainAvatar.thumbnail)
+            user.profile.avatarUrl = newMainAvatar.thumbnail
             prevMainAvatar.save()
             user.profile.save()
             return types.UploadAvatarResponse(ok=True, avatar=newMainAvatar)
@@ -400,7 +404,7 @@ class UploadAvatar(graphene.Mutation):
         except:
             newMainAvatar = models.Avatar.objects.create(
                 is_main=True, image=file, thumbnail=file, creator=user)
-            user.profile.avatar = newMainAvatar
+            user.profile.avatarUrl = newMainAvatar.thumbnail
             user.profile.save()
             return types.UploadAvatarResponse(ok=True, avatar=newMainAvatar)
 
@@ -546,7 +550,7 @@ class FacebookConnect(graphene.Mutation):
                 user=newUser,
                 fbId=fbId,
                 gender=gender,
-                avatar='http://graph.facebook.com/{}/picture?type=large'.format(fbId)
+                avatarUrl='http://graph.facebook.com/{}/picture?type=large'.format(fbId)
             )
             token = get_token(newUser)
             return types.FacebookConnectResponse(ok=True, token=token)

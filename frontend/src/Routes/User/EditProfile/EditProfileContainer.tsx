@@ -72,7 +72,7 @@ interface IState {
   lastName: string;
   nationality: string;
   residence: string;
-  avatar: any;
+  avatarUrl: string;
   email: string;
   confirmUsername: string;
 }
@@ -122,7 +122,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       residence: state.residence
         ? state.residence.countryCode
         : localStorage.getItem("countryCode"),
-      avatar: state.avatar,
+      avatarUrl: state.avatarUrl,
       email: state.email,
       confirmUsername: props.confirmUsername || ""
     };
@@ -155,7 +155,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       lastName,
       nationality,
       residence,
-      avatar,
+      avatarUrl,
       email,
       confirmUsername
     } = this.state;
@@ -323,7 +323,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                                                 lastName={lastName}
                                                 nationality={nationality}
                                                 residence={residence}
-                                                avatar={avatar}
+                                                avatarUrl={avatarUrl}
                                                 email={email}
                                                 confirmUsername={
                                                   confirmUsername
@@ -461,11 +461,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
   };
 
   public updatEditProfile = (cache, { data: { editProfile } }) => {
-    const {
-      match: {
-        params: { username }
-      }
-    } = this.props;
+    const { username } = this.state;
     try {
       const data = cache.readQuery({
         query: GET_USER,
@@ -502,19 +498,14 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     history.push(`/${username}`);
   };
   public updateMarkAsMain = (cache, { data: { markAsMain } }) => {
-    const {
-      match: {
-        params: { username }
-      }
-    } = this.props;
+    const { username } = this.state;
     try {
       const data = cache.readQuery({
         query: GET_USER,
         variables: { username }
       });
       if (data) {
-        data.userProfile.user.profile.avatar.thumbnail =
-          markAsMain.avatar.thumbnail;
+        data.userProfile.user.profile.avatarUrl = markAsMain.avatar.thumbnail;
         cache.writeQuery({
           query: GET_USER,
           variables: { username },
@@ -529,7 +520,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
         query: ME
       });
       if (data) {
-        data.me.user.profile.avatar.thumbnail = markAsMain.avatar.thumbnail;
+        data.me.user.profile.avatarUrl = markAsMain.avatar.thumbnail;
         cache.writeQuery({
           query: ME,
           data
@@ -548,9 +539,6 @@ class EditProfileContainer extends React.Component<IProps, IState> {
         data.getAvatars.avatars.find(
           i => i.uuid === markAsMain.uuid
         ).isMain = true;
-        {
-          console.log(markAsMain.avatar.isMain);
-        }
         {
           console.log(data);
         }
@@ -572,11 +560,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     }
   };
   public updateDeleteAvatar = (cache, { data: { deleteAvatar } }) => {
-    const {
-      match: {
-        params: { username }
-      }
-    } = this.props;
+    const { username } = this.state;
     try {
       const data = cache.readQuery({
         query: GET_AVATARS,
@@ -604,16 +588,14 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     }
   };
   public updatUploadAvatar = (cache, { data: { uploadAvatar } }) => {
-    const {
-      match: {
-        params: { username }
-      }
-    } = this.props;
+    const { username } = this.state;
     try {
       const data = cache.readQuery({
         query: GET_AVATARS,
         variables: { userName: username }
       });
+      console.log(data);
+      console.log("username:", username);
       if (data) {
         data.getAvatars.avatars.unshift(uploadAvatar.avatar);
         cache.writeQuery({
@@ -631,8 +613,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
         variables: { username }
       });
       if (data) {
-        data.userProfile.user.profile.avatar.thumbnail =
-          uploadAvatar.avatar.thumbnail;
+        data.userProfile.user.profile.avatarUrl = uploadAvatar.avatar.thumbnail;
         cache.writeQuery({
           query: GET_USER,
           variables: { username },
@@ -647,7 +628,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
         query: ME
       });
       if (data) {
-        data.me.user.profile.avatar.thumbnail = uploadAvatar.avatar.thumbnail;
+        data.me.user.profile.avatarUrl = uploadAvatar.avatar.thumbnail;
         cache.writeQuery({
           query: ME,
           data
@@ -656,12 +637,13 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     } catch (e) {
       console.log(e);
     }
+    this.setState({ avatarUrl: uploadAvatar.avatar.thumbnail });
   };
   public onCompletedUploadAvatar = data => {
     if (data.uploadAvatar.ok) {
       toast.success("Avatar updated");
     } else {
-      toast.error("error uploading avatar");
+      toast.error("error uploading avatarUrl");
     }
   };
 }

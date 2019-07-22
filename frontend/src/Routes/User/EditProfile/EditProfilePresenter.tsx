@@ -40,7 +40,7 @@ const ModalContainer = styled.div`
 `;
 
 const Modal = styled.div`
-    background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(128, 128, 128, 0.5);
   border-radius: 12px;
   width: 312px;
@@ -418,7 +418,7 @@ interface IProps {
   lastName: string;
   nationality: any;
   residence: any;
-  avatar: any;
+  avatarUrl: string;
   email: string;
   confirmUsername: string;
   back: (event: any) => void;
@@ -466,7 +466,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   lastName,
   nationality,
   residence,
-  avatar,
+  avatarUrl,
   email,
   confirmUsername,
   back,
@@ -674,7 +674,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                 lastName,
                 nationality,
                 residence,
-                avatar,
+                avatarUrl,
                 email
               }
             }}
@@ -700,7 +700,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                 lastName,
                 nationality,
                 residence,
-                avatar,
+                avatarUrl,
                 email
               }
             }}
@@ -715,7 +715,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
           <AvatarConatainer>
             <PAvatar
               size="lg"
-              url={`${BACKEND_URL}/media/${avatar.thumbnail}`}
+              url={`${BACKEND_URL}/media/${avatarUrl}`}
               onClick={toggleAvatarModalOpen}
             />
           </AvatarConatainer>

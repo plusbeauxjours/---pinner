@@ -149,7 +149,7 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
                           <Avatar
                             size={"sm"}
                             url={`${BACKEND_URL}/media/${
-                              user.avatar.thumbnail
+                              user.avatarUrl
                             }`}
                           />
                           <HeaderColumn>
@@ -173,7 +173,7 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
                           <Avatar
                             size={"sm"}
                             url={`${BACKEND_URL}/media/${
-                              user.avatar.thumbnail
+                              user.avatarUrl
                             }`}
                           />
                           <HeaderColumn>

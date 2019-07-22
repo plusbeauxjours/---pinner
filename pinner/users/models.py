@@ -104,8 +104,7 @@ class Profile(config_models.TimeStampedModel):
         location_models.Country, blank=True, null=True, on_delete=models.SET_NULL, related_name='residence')
     nationality = models.ForeignKey(
         location_models.Country, blank=True, null=True, on_delete=models.SET_NULL, related_name='nationality')
-    avatar = models.ForeignKey(
-        Avatar, on_delete=models.SET_NULL, null=True, blank=True, related_name='avatar')
+    avatarUrl = models.URLField(blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     verified_phone_number = models.BooleanField(default=False)
     verified_email = models.BooleanField(default=False)

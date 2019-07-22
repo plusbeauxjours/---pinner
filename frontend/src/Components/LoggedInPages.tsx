@@ -95,97 +95,84 @@ class LoggedInPages extends React.Component<IProps> {
       this.previousLocation !== location
     );
     return (
-      <>
-        <Wrapper>
-          <Header />
-          {coffeeModalOpen && (
-            <Route path="/c/:uuid" component={CoffeeDetail} />
-          )}
-          {coffeesModalOpen && (
-            <Route path="/:username/coffees" component={Coffees} />
-          )}
-          {cityModalOpen && (
-            <Route path="/:username/cities" component={Cities} />
-          )}
-          {countryModalOpen && (
-            <Route path="/:username/countries" component={Countries} />
-          )}
-          {continentModalOpen && (
-            <Route path="/:username/continents" component={Continents} />
-          )}
-          {avatarModalOpen && (
-            <Route path="/:username/:uuid" component={UserAvatarDetail} />
-          )}
-          <Switch
-            location={
-              coffeeModalOpen ||
-              coffeesModalOpen ||
-              avatarModalOpen ||
-              cityModalOpen ||
-              countryModalOpen ||
-              continentModalOpen
-                ? this.previousLocation
-                : location
-            }
-          >
-            <Route path="/404" component={NotFound} />
-            <Route path="/people" exact={true} component={PeoplePage} />
-            <Route path="/coffees" exact={true} component={CoffeesPage} />
-            <Route path="/" exact={true} component={Match} />
+      <Wrapper>
+        <Header />
+        {coffeeModalOpen && <Route path="/c/:uuid" component={CoffeeDetail} />}
+        {coffeesModalOpen && (
+          <Route path="/:username/coffees" component={Coffees} />
+        )}
+        {cityModalOpen && <Route path="/:username/cities" component={Cities} />}
+        {countryModalOpen && (
+          <Route path="/:username/countries" component={Countries} />
+        )}
+        {continentModalOpen && (
+          <Route path="/:username/continents" component={Continents} />
+        )}
+        {avatarModalOpen && (
+          <Route path="/:username/:uuid" component={UserAvatarDetail} />
+        )}
+        <Switch
+          location={
+            coffeeModalOpen ||
+            coffeesModalOpen ||
+            avatarModalOpen ||
+            cityModalOpen ||
+            countryModalOpen ||
+            continentModalOpen
+              ? this.previousLocation
+              : location
+          }
+        >
+          <Route path="/404" exact={true} component={NotFound} />
+          <Route path="/people" exact={true} component={PeoplePage} />
+          <Route path="/coffees" exact={true} component={CoffeesPage} />
+          <Route path="/" exact={true} component={Match} />
 
-            {/* CONTINENT */}
-            <Route
-              path="/continent/:continentCode/coffees"
-              component={CoffeesPage}
-            />
-            <Route
-              path="/continent/:continentCode/usersNow"
-              component={ContinentUsersNow}
-            />
-            <Route
-              path="/continent/:continentCode/usersBefore"
-              component={ContinentUsersBefore}
-            />
-            <Route
-              path="/continent/:continentCode"
-              component={ContinentProfile}
-            />
+          {/* CONTINENT */}
+          <Route
+            path="/continent/:continentCode/coffees"
+            component={CoffeesPage}
+          />
+          <Route
+            path="/continent/:continentCode/usersNow"
+            component={ContinentUsersNow}
+          />
+          <Route
+            path="/continent/:continentCode/usersBefore"
+            component={ContinentUsersBefore}
+          />
+          <Route
+            path="/continent/:continentCode"
+            component={ContinentProfile}
+          />
 
-            {/* COUNTRY */}
-            <Route
-              path="/country/:countryCode/coffees"
-              component={CoffeesPage}
-            />
-            <Route
-              path="/country/:countryCode/usersNow"
-              component={CountryUsersNow}
-            />
-            <Route
-              path="/country/:countryCode/usersBefore"
-              component={CountryUsersBefore}
-            />
-            <Route path="/country/:countryCode" component={CountryProfile} />
+          {/* COUNTRY */}
+          <Route path="/country/:countryCode/coffees" component={CoffeesPage} />
+          <Route
+            path="/country/:countryCode/usersNow"
+            component={CountryUsersNow}
+          />
+          <Route
+            path="/country/:countryCode/usersBefore"
+            component={CountryUsersBefore}
+          />
+          <Route path="/country/:countryCode" component={CountryProfile} />
 
-            {/* CITY */}
-            <Route path="/city/:cityId/coffees" component={CoffeesPage} />
-            <Route path="/city/:cityId/nearCities" component={NearCities} />
-            <Route path="/city/:cityId/usersNow" component={CityUsersNow} />
-            <Route
-              path="/city/:cityId/usersBefore"
-              component={CityUsersBefore}
-            />
-            <Route path="/city/:cityId/:duration" component={TripProfile} />
-            <Route path="/city/:cityId" component={CityProfile} />
-            <Route path="/account/edit" component={EditProfile} />
-            <Route path="/account/settings" component={ToggleSettings} />
+          {/* CITY */}
+          <Route path="/city/:cityId/coffees" component={CoffeesPage} />
+          <Route path="/city/:cityId/nearCities" component={NearCities} />
+          <Route path="/city/:cityId/usersNow" component={CityUsersNow} />
+          <Route path="/city/:cityId/usersBefore" component={CityUsersBefore} />
+          <Route path="/city/:cityId/:duration" component={TripProfile} />
+          <Route path="/city/:cityId" component={CityProfile} />
+          <Route path="/account/edit" component={EditProfile} />
+          <Route path="/account/settings" component={ToggleSettings} />
 
-            {/* USER */}
-
-            <Route path="/:username" exact={true} component={UserProfile} />
-            <Redirect from="*" to="/404" />
-          </Switch>
-        </Wrapper>
-      </>
+          {/* USER */}
+          <Route path="/:username" exact={true} component={UserProfile} />
+          <Redirect exact={true} from="*" to="/404" />
+        </Switch>
+      </Wrapper>
     );
   }
 }

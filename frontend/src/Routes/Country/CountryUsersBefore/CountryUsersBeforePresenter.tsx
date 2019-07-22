@@ -149,7 +149,7 @@ const CountryUsersBeforePresenter: React.FunctionComponent<IProps> = ({
                         <Avatar
                           size={"sm"}
                           url={`${BACKEND_URL}/media/${
-                            user.actor.profile.avatar.thumbnail
+                            user.actor.profile.avatarUrl
                           }`}
                         />
                         <HeaderColumn>
@@ -170,7 +170,7 @@ const CountryUsersBeforePresenter: React.FunctionComponent<IProps> = ({
                         <Avatar
                           size={"sm"}
                           url={`${BACKEND_URL}/media/${
-                            user.actor.profile.avatar.thumbnail
+                            user.actor.profile.avatarUrl
                           }`}
                         />
                         <HeaderColumn>

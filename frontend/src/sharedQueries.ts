@@ -6,9 +6,7 @@ export const ME = gql`
       user {
         profile {
           username
-          avatar {
-            thumbnail
-          }
+          avatarUrl
           currentCity {
             cityId
             cityName
@@ -23,9 +21,7 @@ export const PROFILE_FRAGMENT = gql`
   fragment ProfileParts on ProfileType {
     id
     username
-    avatar {
-      thumbnail
-    }
+    avatarUrl
     isSelf
     currentCity {
       cityName
@@ -90,9 +86,7 @@ export const COFFEE_FRAGMENT = gql`
       id
       username
       profile {
-        avatar {
-          thumbnail
-        }
+        avatarUrl
         isSelf
         currentCity {
           cityName
@@ -123,9 +117,7 @@ export const MATCH_FRAGMENT = gql`
       profile {
         id
         username
-        avatar {
-          thumbnail
-        }
+        avatarUrl
         isSelf
         currentCity {
           cityName
@@ -139,9 +131,7 @@ export const MATCH_FRAGMENT = gql`
       profile {
         id
         username
-        avatar {
-          thumbnail
-        }
+        avatarUrl
         isSelf
         currentCity {
           cityName

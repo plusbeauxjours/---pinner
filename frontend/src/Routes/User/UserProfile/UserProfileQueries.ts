@@ -12,9 +12,7 @@ export const GET_USER = gql`
         profile {
           bio
           gender
-          avatar {
-            thumbnail
-          }
+          avatarUrl
           website
           distance
           email

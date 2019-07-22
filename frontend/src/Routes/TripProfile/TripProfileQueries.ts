@@ -9,9 +9,7 @@ export const TRIP_PROFILE = gql`
           profile {
             id
             username
-            avatar {
-              thumbnail
-            }
+            avatarUrl
             isSelf
             currentCity {
               cityId
@@ -32,9 +30,7 @@ export const TRIP_PROFILE = gql`
           id
           username
           profile {
-            avatar {
-              thumbnail
-            }
+            avatarUrl
           }
         }
       }

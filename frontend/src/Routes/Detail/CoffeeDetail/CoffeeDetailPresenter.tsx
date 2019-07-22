@@ -247,7 +247,7 @@ const CoffeeDetailPresenter: React.FunctionComponent<IProps> = ({
               <Link to={`/${coffee.host.profile.username}`}>
                 <SAvatar
                   url={`${BACKEND_URL}/media/${
-                    coffee.host.profile.avatar.thumbnail
+                    coffee.host.profile.avatarUrl
                   }`}
                   size="lg"
                 />
