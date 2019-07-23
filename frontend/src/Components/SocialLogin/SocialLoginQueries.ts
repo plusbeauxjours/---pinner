@@ -7,6 +7,11 @@ export const FACEBOOK_CONNECT = gql`
     $lastName: String!
     $email: String
     $gender: String
+    $latitude: Float!
+    $longitude: Float!
+    $cityId: String!
+    $cityName: String!
+    $countryCode: String!
     $fbId: String!
   ) {
     facebookConnect(
@@ -15,6 +20,11 @@ export const FACEBOOK_CONNECT = gql`
       lastName: $lastName
       email: $email
       gender: $gender
+      latitude: $latitude
+      longitude: $longitude
+      cityId: $cityId
+      cityName: $cityName
+      countryCode: $countryCode
       fbId: $fbId
     ) {
       token

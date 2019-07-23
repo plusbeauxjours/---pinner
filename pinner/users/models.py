@@ -42,7 +42,7 @@ class Avatar(config_models.TimeStampedModel):
         upload_to=upload_thumbnail,
         null=True,
         blank=True,
-        processors=[ResizeToFill(300, 300)],
+        processors=[ResizeToFill(200, 200)],
         format='JPEG',
         options={'quality': 100}
     )
@@ -104,7 +104,7 @@ class Profile(config_models.TimeStampedModel):
         location_models.Country, blank=True, null=True, on_delete=models.SET_NULL, related_name='residence')
     nationality = models.ForeignKey(
         location_models.Country, blank=True, null=True, on_delete=models.SET_NULL, related_name='nationality')
-    avatarUrl = models.URLField(blank=True, null=True)
+    avatarUrl = models.CharField(max_length=300, blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     verified_phone_number = models.BooleanField(default=False)
     verified_email = models.BooleanField(default=False)

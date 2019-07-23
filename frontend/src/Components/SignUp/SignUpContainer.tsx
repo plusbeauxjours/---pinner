@@ -30,14 +30,7 @@ class SignUpContainer extends React.Component<any, IState> {
   };
 
   public render() {
-    const {
-      email,
-      firstName,
-      lastName,
-      username,
-      password,
-      avatar
-    } = this.state;
+    const { email, firstName, lastName, username, password } = this.state;
     return (
       <LogUserInMutation mutation={LOG_USER_IN}>
         {logUserIn => (
@@ -48,8 +41,7 @@ class SignUpContainer extends React.Component<any, IState> {
               firstName,
               password,
               username,
-              lastName,
-              avatar
+              lastName
             }}
             onCompleted={({ createAccount: { token } }) =>
               logUserIn({ variables: { token } })

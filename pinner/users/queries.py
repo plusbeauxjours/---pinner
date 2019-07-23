@@ -12,7 +12,6 @@ from notifications import models as notification_models
 def resolve_profile(self, info, **kwargs):
 
     username = kwargs.get('username')
-    print('username', username)
 
     try:
         profile = User.objects.get(username=username)
@@ -123,7 +122,6 @@ def resolve_recommand_users(self, info, **kwargs):
     hasNextPage = offset < users.count()
 
     users = users[offset:12 + offset]
-    print(users)
 
     return types.RecommandUsersResponse(users=users, page=nextPage, hasNextPage=hasNextPage)
 

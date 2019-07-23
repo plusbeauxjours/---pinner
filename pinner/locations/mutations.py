@@ -136,7 +136,6 @@ class ReportLocation(graphene.Mutation):
 
     Output = types.ReportLocationResponse
 
-    @login_required
     def mutate(self, info, **kwargs):
         user = info.context.user
         profile = user.profile

@@ -7,14 +7,17 @@
       "name": "Mutation"
     },
     "subscriptionType": null,
-    "types": [{
+    "types": [
+      {
         "kind": "OBJECT",
         "name": "Query",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "getCoffees",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "location",
                 "description": null,
                 "type": {
@@ -84,20 +87,22 @@
           {
             "name": "coffeeDetail",
             "description": null,
-            "args": [{
-              "name": "coffeeId",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "coffeeId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -113,16 +118,18 @@
           {
             "name": "getMatches",
             "description": null,
-            "args": [{
-              "name": "matchPage",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "matchPage",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -138,7 +145,8 @@
           {
             "name": "header",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "cityId",
                 "description": null,
                 "type": {
@@ -178,7 +186,8 @@
           {
             "name": "tripProfile",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "cityId",
                 "description": null,
                 "type": {
@@ -236,7 +245,8 @@
           {
             "name": "cityProfile",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "cityId",
                 "description": null,
                 "type": {
@@ -276,7 +286,8 @@
           {
             "name": "cityUsersNow",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "cityId",
                 "description": null,
                 "type": {
@@ -316,7 +327,8 @@
           {
             "name": "cityUsersBefore",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "cityId",
                 "description": null,
                 "type": {
@@ -356,7 +368,8 @@
           {
             "name": "countryProfile",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "countryCode",
                 "description": null,
                 "type": {
@@ -396,7 +409,8 @@
           {
             "name": "countryUsersNow",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "countryCode",
                 "description": null,
                 "type": {
@@ -436,7 +450,8 @@
           {
             "name": "countryUsersBefore",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "countryCode",
                 "description": null,
                 "type": {
@@ -476,7 +491,8 @@
           {
             "name": "continentProfile",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "continentCode",
                 "description": null,
                 "type": {
@@ -516,7 +532,8 @@
           {
             "name": "continentUsersNow",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "continentCode",
                 "description": null,
                 "type": {
@@ -556,7 +573,8 @@
           {
             "name": "continentUsersBefore",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "continentCode",
                 "description": null,
                 "type": {
@@ -596,7 +614,8 @@
           {
             "name": "nearCities",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "cityId",
                 "description": null,
                 "type": {
@@ -636,20 +655,22 @@
           {
             "name": "searchCountries",
             "description": null,
-            "args": [{
-              "name": "search",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "search",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -665,20 +686,22 @@
           {
             "name": "searchContinents",
             "description": null,
-            "args": [{
-              "name": "search",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "search",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -694,16 +717,18 @@
           {
             "name": "getCityPhoto",
             "description": null,
-            "args": [{
-              "name": "cityId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "cityId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -719,16 +744,18 @@
           {
             "name": "getCountryPhoto",
             "description": null,
-            "args": [{
-              "name": "countryCode",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "countryCode",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -744,16 +771,18 @@
           {
             "name": "getCountries",
             "description": null,
-            "args": [{
-              "name": "countryCode",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "countryCode",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -769,16 +798,18 @@
           {
             "name": "getSamenameCities",
             "description": null,
-            "args": [{
-              "name": "cityId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "cityId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -794,16 +825,18 @@
           {
             "name": "getVerifications",
             "description": null,
-            "args": [{
-              "name": "payload",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "payload",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -819,7 +852,8 @@
           {
             "name": "getTrips",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "username",
                 "description": null,
                 "type": {
@@ -859,20 +893,22 @@
           {
             "name": "userProfile",
             "description": null,
-            "args": [{
-              "name": "username",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "username",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -904,20 +940,22 @@
           {
             "name": "searchUsers",
             "description": null,
-            "args": [{
-              "name": "search",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "search",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -933,16 +971,18 @@
           {
             "name": "recommandUsers",
             "description": null,
-            "args": [{
-              "name": "page",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "page",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -974,20 +1014,22 @@
           {
             "name": "topCountries",
             "description": null,
-            "args": [{
-              "name": "userName",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "userName",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1003,20 +1045,22 @@
           {
             "name": "frequentVisits",
             "description": null,
-            "args": [{
-              "name": "userName",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "userName",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1032,20 +1076,22 @@
           {
             "name": "topContinents",
             "description": null,
-            "args": [{
-              "name": "userName",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "userName",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1061,20 +1107,22 @@
           {
             "name": "getAvatars",
             "description": null,
-            "args": [{
-              "name": "userName",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "userName",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1090,20 +1138,22 @@
           {
             "name": "getAvatarDetail",
             "description": null,
-            "args": [{
-              "name": "avatarId",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "avatarId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -1136,22 +1186,24 @@
         "kind": "OBJECT",
         "name": "GetCoffeesResponse",
         "description": null,
-        "fields": [{
-          "name": "coffees",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "LIST",
-            "name": null,
-            "ofType": {
-              "kind": "OBJECT",
-              "name": "CoffeeType",
-              "ofType": null
-            }
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "coffees",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CoffeeType",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -1161,7 +1213,8 @@
         "kind": "OBJECT",
         "name": "CoffeeType",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "id",
             "description": "",
             "args": [],
@@ -1377,7 +1430,8 @@
         "kind": "OBJECT",
         "name": "CityType",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "createdAt",
             "description": "",
             "args": [],
@@ -1725,7 +1779,8 @@
         "kind": "OBJECT",
         "name": "CountryType",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "createdAt",
             "description": "",
             "args": [],
@@ -1774,18 +1829,6 @@
             "deprecationReason": null
           },
           {
-            "name": "countryName",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "countryCode",
             "description": "",
             "args": [],
@@ -1798,7 +1841,19 @@
             "deprecationReason": null
           },
           {
-            "name": "countryPhoto",
+            "name": "countryName",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "countryNameNative",
             "description": "",
             "args": [],
             "type": {
@@ -1834,19 +1889,7 @@
             "deprecationReason": null
           },
           {
-            "name": "countryNameNative",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "countryPhone",
+            "name": "countryPhoto",
             "description": "",
             "args": [],
             "type": {
@@ -1870,7 +1913,7 @@
             "deprecationReason": null
           },
           {
-            "name": "countryEmojiu",
+            "name": "countryPhone",
             "description": "",
             "args": [],
             "type": {
@@ -1999,7 +2042,8 @@
         "kind": "OBJECT",
         "name": "ContinentType",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "createdAt",
             "description": "",
             "args": [],
@@ -2155,7 +2199,8 @@
         "kind": "OBJECT",
         "name": "ProfileType",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "createdAt",
             "description": "",
             "args": [],
@@ -2292,12 +2337,12 @@
             "deprecationReason": null
           },
           {
-            "name": "avatar",
+            "name": "avatarUrl",
             "description": "",
             "args": [],
             "type": {
-              "kind": "OBJECT",
-              "name": "AvatarType",
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -2568,6 +2613,18 @@
             "deprecationReason": null
           },
           {
+            "name": "coffeeCount",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "isSelf",
             "description": null,
             "args": [],
@@ -2589,7 +2646,8 @@
         "kind": "OBJECT",
         "name": "UserType",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "id",
             "description": "",
             "args": [],
@@ -2905,7 +2963,8 @@
         "kind": "OBJECT",
         "name": "AvatarType",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "createdAt",
             "description": "",
             "args": [],
@@ -3050,22 +3109,6 @@
             "deprecationReason": null
           },
           {
-            "name": "avatar",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "ProfileType",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "likeCount",
             "description": null,
             "args": [],
@@ -3087,7 +3130,8 @@
         "kind": "OBJECT",
         "name": "LikeType",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "createdAt",
             "description": "",
             "args": [],
@@ -3169,7 +3213,8 @@
         "kind": "OBJECT",
         "name": "MatchType",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "createdAt",
             "description": "",
             "args": [],
@@ -3266,22 +3311,6 @@
             "deprecationReason": null
           },
           {
-            "name": "status",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "MatchStatus",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "notification",
             "description": null,
             "args": [],
@@ -3352,32 +3381,11 @@
         "possibleTypes": null
       },
       {
-        "kind": "ENUM",
-        "name": "MatchStatus",
-        "description": "An enumeration.",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [{
-            "name": "ONGOING",
-            "description": "ONGOING",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "CANCELED",
-            "description": "CANCELED",
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "NotificationType",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "createdAt",
             "description": null,
             "args": [],
@@ -3528,7 +3536,8 @@
         "fields": null,
         "inputFields": null,
         "interfaces": null,
-        "enumValues": [{
+        "enumValues": [
+          {
             "name": "UPLOAD",
             "description": "UPLOAD",
             "isDeprecated": false,
@@ -3547,7 +3556,8 @@
         "kind": "OBJECT",
         "name": "MoveNotificationType",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "createdAt",
             "description": null,
             "args": [],
@@ -3712,12 +3722,14 @@
         "fields": null,
         "inputFields": null,
         "interfaces": null,
-        "enumValues": [{
-          "name": "MOVE",
-          "description": "Move",
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "enumValues": [
+          {
+            "name": "MOVE",
+            "description": "Move",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -3727,7 +3739,8 @@
         "fields": null,
         "inputFields": null,
         "interfaces": null,
-        "enumValues": [{
+        "enumValues": [
+          {
             "name": "MALE",
             "description": "Male",
             "isDeprecated": false,
@@ -3755,7 +3768,8 @@
         "fields": null,
         "inputFields": null,
         "interfaces": null,
-        "enumValues": [{
+        "enumValues": [
+          {
             "name": "EVERYONE",
             "description": "EVERYONE",
             "isDeprecated": false,
@@ -3780,18 +3794,20 @@
         "kind": "OBJECT",
         "name": "CoffeeDetailResponse",
         "description": null,
-        "fields": [{
-          "name": "coffee",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "OBJECT",
-            "name": "CoffeeType",
-            "ofType": null
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "coffee",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CoffeeType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -3801,22 +3817,24 @@
         "kind": "OBJECT",
         "name": "GetMatchesResponse",
         "description": null,
-        "fields": [{
-          "name": "matches",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "LIST",
-            "name": null,
-            "ofType": {
-              "kind": "OBJECT",
-              "name": "MatchType",
-              "ofType": null
-            }
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "matches",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "MatchType",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -3826,18 +3844,20 @@
         "kind": "OBJECT",
         "name": "HeaderResponse",
         "description": null,
-        "fields": [{
-          "name": "city",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "OBJECT",
-            "name": "CityType",
-            "ofType": null
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "city",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CityType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -3847,7 +3867,8 @@
         "kind": "OBJECT",
         "name": "TripProfileResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "city",
             "description": null,
             "args": [],
@@ -3913,7 +3934,8 @@
         "kind": "OBJECT",
         "name": "FirstAnnotateResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "city",
             "description": null,
             "args": [],
@@ -3967,7 +3989,8 @@
         "kind": "OBJECT",
         "name": "UsersNowResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "page",
             "description": null,
             "args": [],
@@ -4017,7 +4040,8 @@
         "kind": "OBJECT",
         "name": "usersBeforeResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "page",
             "description": null,
             "args": [],
@@ -4067,7 +4091,8 @@
         "kind": "OBJECT",
         "name": "SecondAnnotateResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "country",
             "description": null,
             "args": [],
@@ -4137,7 +4162,8 @@
         "kind": "OBJECT",
         "name": "ThirdAnnotateResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "countries",
             "description": null,
             "args": [],
@@ -4223,7 +4249,8 @@
         "kind": "OBJECT",
         "name": "NearCitiesResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "page",
             "description": null,
             "args": [],
@@ -4273,22 +4300,24 @@
         "kind": "OBJECT",
         "name": "CountriesResponse",
         "description": null,
-        "fields": [{
-          "name": "countries",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "LIST",
-            "name": null,
-            "ofType": {
-              "kind": "OBJECT",
-              "name": "CountryType",
-              "ofType": null
-            }
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "countries",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CountryType",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -4298,22 +4327,24 @@
         "kind": "OBJECT",
         "name": "ContinentsResponse",
         "description": null,
-        "fields": [{
-          "name": "continents",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "LIST",
-            "name": null,
-            "ofType": {
-              "kind": "OBJECT",
-              "name": "ContinentType",
-              "ofType": null
-            }
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "continents",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ContinentType",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -4323,18 +4354,20 @@
         "kind": "OBJECT",
         "name": "PhotoResponse",
         "description": null,
-        "fields": [{
-          "name": "photo",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "SCALAR",
-            "name": "String",
-            "ofType": null
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "photo",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -4344,22 +4377,24 @@
         "kind": "OBJECT",
         "name": "CitiesResponse",
         "description": null,
-        "fields": [{
-          "name": "cities",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "LIST",
-            "name": null,
-            "ofType": {
-              "kind": "OBJECT",
-              "name": "CityType",
-              "ofType": null
-            }
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "cities",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CityType",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -4369,7 +4404,8 @@
         "kind": "OBJECT",
         "name": "GetVerificationsResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "ok",
             "description": null,
             "args": [],
@@ -4407,7 +4443,8 @@
         "kind": "OBJECT",
         "name": "VerificationType",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "createdAt",
             "description": "",
             "args": [],
@@ -4532,7 +4569,8 @@
         "fields": null,
         "inputFields": null,
         "interfaces": null,
-        "enumValues": [{
+        "enumValues": [
+          {
             "name": "PHONE",
             "description": "Phone",
             "isDeprecated": false,
@@ -4551,22 +4589,24 @@
         "kind": "OBJECT",
         "name": "TripResponse",
         "description": null,
-        "fields": [{
-          "name": "trip",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "LIST",
-            "name": null,
-            "ofType": {
-              "kind": "OBJECT",
-              "name": "MoveNotificationType",
-              "ofType": null
-            }
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "trip",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "MoveNotificationType",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -4576,18 +4616,20 @@
         "kind": "OBJECT",
         "name": "UserProfileResponse",
         "description": null,
-        "fields": [{
-          "name": "user",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "OBJECT",
-            "name": "UserType",
-            "ofType": null
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "user",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "UserType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -4597,22 +4639,24 @@
         "kind": "OBJECT",
         "name": "SearchUsersResponse",
         "description": null,
-        "fields": [{
-          "name": "users",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "LIST",
-            "name": null,
-            "ofType": {
-              "kind": "OBJECT",
-              "name": "UserType",
-              "ofType": null
-            }
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "users",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "UserType",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -4622,7 +4666,8 @@
         "kind": "OBJECT",
         "name": "RecommandUsersResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "page",
             "description": null,
             "args": [],
@@ -4672,22 +4717,24 @@
         "kind": "OBJECT",
         "name": "UserListResponse",
         "description": null,
-        "fields": [{
-          "name": "users",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "LIST",
-            "name": null,
-            "ofType": {
-              "kind": "OBJECT",
-              "name": "UserType",
-              "ofType": null
-            }
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "users",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "UserType",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -4697,22 +4744,24 @@
         "kind": "OBJECT",
         "name": "AvatarListResponse",
         "description": null,
-        "fields": [{
-          "name": "avatars",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "LIST",
-            "name": null,
-            "ofType": {
-              "kind": "OBJECT",
-              "name": "AvatarType",
-              "ofType": null
-            }
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "avatars",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "AvatarType",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -4722,18 +4771,20 @@
         "kind": "OBJECT",
         "name": "AvatarDetailResponse",
         "description": null,
-        "fields": [{
-          "name": "avatar",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "OBJECT",
-            "name": "AvatarType",
-            "ofType": null
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "avatar",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "AvatarType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -4743,10 +4794,12 @@
         "kind": "OBJECT",
         "name": "Mutation",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "requestCoffee",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "currentCityId",
                 "description": null,
                 "type": {
@@ -4786,20 +4839,22 @@
           {
             "name": "deleteCoffee",
             "description": null,
-            "args": [{
-              "name": "coffeeId",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "coffeeId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -4815,20 +4870,22 @@
           {
             "name": "match",
             "description": null,
-            "args": [{
-              "name": "coffeeId",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "coffeeId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -4844,20 +4901,22 @@
           {
             "name": "unMatch",
             "description": null,
-            "args": [{
-              "name": "matchId",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "matchId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -4873,20 +4932,22 @@
           {
             "name": "createCity",
             "description": null,
-            "args": [{
-              "name": "cityId",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "cityId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -4902,7 +4963,8 @@
           {
             "name": "reportLocation",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "currentCityId",
                 "description": null,
                 "type": {
@@ -4984,20 +5046,22 @@
           {
             "name": "toggleLikeCity",
             "description": null,
-            "args": [{
-              "name": "cityId",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "cityId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -5011,22 +5075,81 @@
             "deprecationReason": null
           },
           {
+            "name": "slackReportLocations",
+            "description": null,
+            "args": [
+              {
+                "name": "payload",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "reportUsername",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "targetLocationId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "targetLocationType",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "SlackReportLocationResponse",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "markAsVerified",
             "description": null,
-            "args": [{
-              "name": "verificationId",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "verificationId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -5042,20 +5165,22 @@
           {
             "name": "startPhoneVerification",
             "description": null,
-            "args": [{
-              "name": "phoneNumber",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "phoneNumber",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -5071,7 +5196,8 @@
           {
             "name": "completePhoneVerification",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "key",
                 "description": null,
                 "type": {
@@ -5115,20 +5241,22 @@
           {
             "name": "markAsRead",
             "description": null,
-            "args": [{
-              "name": "notificationId",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "notificationId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -5144,7 +5272,8 @@
           {
             "name": "addTrip",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "cityId",
                 "description": null,
                 "type": {
@@ -5202,7 +5331,8 @@
           {
             "name": "editTrip",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "cityId",
                 "description": null,
                 "type": {
@@ -5262,20 +5392,22 @@
           {
             "name": "deleteTrip",
             "description": null,
-            "args": [{
-              "name": "moveNotificationId",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "moveNotificationId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -5307,7 +5439,8 @@
           {
             "name": "editProfile",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "bio",
                 "description": null,
                 "type": {
@@ -5419,7 +5552,8 @@
           {
             "name": "changePassword",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "newPassword",
                 "description": null,
                 "type": {
@@ -5463,7 +5597,8 @@
           {
             "name": "logIn",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "username",
                 "description": null,
                 "type": {
@@ -5507,16 +5642,7 @@
           {
             "name": "createAccount",
             "description": null,
-            "args": [{
-                "name": "avatar",
-                "description": null,
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                },
-                "defaultValue": null
-              },
+            "args": [
               {
                 "name": "email",
                 "description": null,
@@ -5603,7 +5729,8 @@
           {
             "name": "facebookConnect",
             "description": null,
-            "args": [{
+            "args": [
+              {
                 "name": "email",
                 "description": null,
                 "type": {
@@ -5683,20 +5810,22 @@
           {
             "name": "uploadAvatar",
             "description": null,
-            "args": [{
-              "name": "file",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Upload",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "file",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Upload",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -5712,20 +5841,22 @@
           {
             "name": "deleteAvatar",
             "description": null,
-            "args": [{
-              "name": "uuid",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "uuid",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -5741,20 +5872,22 @@
           {
             "name": "markAsMain",
             "description": null,
-            "args": [{
-              "name": "uuid",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "uuid",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -5770,26 +5903,75 @@
           {
             "name": "toggleSettings",
             "description": null,
-            "args": [{
-              "name": "payload",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }],
+            "args": [
+              {
+                "name": "payload",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
                 "name": "ToggleSettingsResponse",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "slackReportUser",
+            "description": null,
+            "args": [
+              {
+                "name": "payload",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "reportUsername",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "targetUsername",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "SlackReportUserResponse",
                 "ofType": null
               }
             },
@@ -5806,7 +5988,8 @@
         "kind": "OBJECT",
         "name": "RequestCoffeeResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "ok",
             "description": null,
             "args": [],
@@ -5840,7 +6023,8 @@
         "kind": "OBJECT",
         "name": "DeleteCoffeeResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "username",
             "description": null,
             "args": [],
@@ -5886,7 +6070,8 @@
         "kind": "OBJECT",
         "name": "MatchResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "coffeeId",
             "description": null,
             "args": [],
@@ -5932,7 +6117,8 @@
         "kind": "OBJECT",
         "name": "UnMatchResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "coffee",
             "description": null,
             "args": [],
@@ -5978,18 +6164,20 @@
         "kind": "OBJECT",
         "name": "CreateCityResponse",
         "description": null,
-        "fields": [{
-          "name": "ok",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "SCALAR",
-            "name": "Boolean",
-            "ofType": null
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "ok",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -5999,18 +6187,20 @@
         "kind": "OBJECT",
         "name": "ReportLocationResponse",
         "description": null,
-        "fields": [{
-          "name": "ok",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "SCALAR",
-            "name": "Boolean",
-            "ofType": null
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "ok",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -6020,7 +6210,8 @@
         "kind": "OBJECT",
         "name": "ToggleLikeCityResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "city",
             "description": null,
             "args": [],
@@ -6052,20 +6243,45 @@
       },
       {
         "kind": "OBJECT",
+        "name": "SlackReportLocationResponse",
+        "description": null,
+        "fields": [
+          {
+            "name": "ok",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "MarkAsVerifiedResponse",
         "description": null,
-        "fields": [{
-          "name": "ok",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "SCALAR",
-            "name": "Boolean",
-            "ofType": null
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "ok",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -6075,18 +6291,20 @@
         "kind": "OBJECT",
         "name": "StartPhoneVerificationResponse",
         "description": null,
-        "fields": [{
-          "name": "ok",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "SCALAR",
-            "name": "Boolean",
-            "ofType": null
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "ok",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -6096,7 +6314,8 @@
         "kind": "OBJECT",
         "name": "CompletePhoneVerificationResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "ok",
             "description": null,
             "args": [],
@@ -6130,7 +6349,8 @@
         "kind": "OBJECT",
         "name": "MarkAsReadResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "notificationId",
             "description": null,
             "args": [],
@@ -6164,7 +6384,8 @@
         "kind": "OBJECT",
         "name": "AddTripResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "ok",
             "description": null,
             "args": [],
@@ -6210,7 +6431,8 @@
         "kind": "OBJECT",
         "name": "EditTripResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "ok",
             "description": null,
             "args": [],
@@ -6256,7 +6478,8 @@
         "kind": "OBJECT",
         "name": "DeleteTripResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "ok",
             "description": null,
             "args": [],
@@ -6302,18 +6525,20 @@
         "kind": "OBJECT",
         "name": "CalculateDistanceResponse",
         "description": null,
-        "fields": [{
-          "name": "distance",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "SCALAR",
-            "name": "Int",
-            "ofType": null
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "distance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -6323,7 +6548,8 @@
         "kind": "OBJECT",
         "name": "EditProfileResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "ok",
             "description": null,
             "args": [],
@@ -6357,18 +6583,20 @@
         "kind": "OBJECT",
         "name": "DeleteProfileResponse",
         "description": null,
-        "fields": [{
-          "name": "ok",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "SCALAR",
-            "name": "Boolean",
-            "ofType": null
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "ok",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -6378,7 +6606,8 @@
         "kind": "OBJECT",
         "name": "ChangePasswordResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "ok",
             "description": null,
             "args": [],
@@ -6416,18 +6645,20 @@
         "kind": "OBJECT",
         "name": "ObtainJSONWebToken",
         "description": "Obtain JSON Web Token mutation",
-        "fields": [{
-          "name": "token",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "SCALAR",
-            "name": "String",
-            "ofType": null
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "token",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -6437,18 +6668,20 @@
         "kind": "OBJECT",
         "name": "CreateAccountResponse",
         "description": null,
-        "fields": [{
-          "name": "token",
-          "description": null,
-          "args": [],
-          "type": {
-            "kind": "SCALAR",
-            "name": "String",
-            "ofType": null
-          },
-          "isDeprecated": false,
-          "deprecationReason": null
-        }],
+        "fields": [
+          {
+            "name": "token",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
@@ -6458,7 +6691,8 @@
         "kind": "OBJECT",
         "name": "FacebookConnectResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "ok",
             "description": null,
             "args": [],
@@ -6502,7 +6736,8 @@
         "kind": "OBJECT",
         "name": "UploadAvatarResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "ok",
             "description": null,
             "args": [],
@@ -6536,7 +6771,8 @@
         "kind": "OBJECT",
         "name": "DeleteAvatarResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "ok",
             "description": null,
             "args": [],
@@ -6570,7 +6806,8 @@
         "kind": "OBJECT",
         "name": "MarkAsMainResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "ok",
             "description": null,
             "args": [],
@@ -6616,7 +6853,8 @@
         "kind": "OBJECT",
         "name": "ToggleSettingsResponse",
         "description": null,
-        "fields": [{
+        "fields": [
+          {
             "name": "ok",
             "description": null,
             "args": [],
@@ -6648,9 +6886,33 @@
       },
       {
         "kind": "OBJECT",
+        "name": "SlackReportUserResponse",
+        "description": null,
+        "fields": [
+          {
+            "name": "ok",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "__Schema",
         "description": "A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.",
-        "fields": [{
+        "fields": [
+          {
             "name": "types",
             "description": "A list of all types supported by this server.",
             "args": [],
@@ -6748,7 +7010,8 @@
         "kind": "OBJECT",
         "name": "__Type",
         "description": "The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.\n\nDepending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name and description, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.",
-        "fields": [{
+        "fields": [
+          {
             "name": "kind",
             "description": null,
             "args": [],
@@ -6791,16 +7054,18 @@
           {
             "name": "fields",
             "description": null,
-            "args": [{
-              "name": "includeDeprecated",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              },
-              "defaultValue": "false"
-            }],
+            "args": [
+              {
+                "name": "includeDeprecated",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": "false"
+              }
+            ],
             "type": {
               "kind": "LIST",
               "name": null,
@@ -6860,16 +7125,18 @@
           {
             "name": "enumValues",
             "description": null,
-            "args": [{
-              "name": "includeDeprecated",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              },
-              "defaultValue": "false"
-            }],
+            "args": [
+              {
+                "name": "includeDeprecated",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": "false"
+              }
+            ],
             "type": {
               "kind": "LIST",
               "name": null,
@@ -6931,7 +7198,8 @@
         "fields": null,
         "inputFields": null,
         "interfaces": null,
-        "enumValues": [{
+        "enumValues": [
+          {
             "name": "SCALAR",
             "description": "Indicates this type is a scalar.",
             "isDeprecated": false,
@@ -6986,7 +7254,8 @@
         "kind": "OBJECT",
         "name": "__Field",
         "description": "Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.",
-        "fields": [{
+        "fields": [
+          {
             "name": "name",
             "description": null,
             "args": [],
@@ -7092,7 +7361,8 @@
         "kind": "OBJECT",
         "name": "__InputValue",
         "description": "Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.",
-        "fields": [{
+        "fields": [
+          {
             "name": "name",
             "description": null,
             "args": [],
@@ -7158,7 +7428,8 @@
         "kind": "OBJECT",
         "name": "__EnumValue",
         "description": "One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string.",
-        "fields": [{
+        "fields": [
+          {
             "name": "name",
             "description": null,
             "args": [],
@@ -7224,7 +7495,8 @@
         "kind": "OBJECT",
         "name": "__Directive",
         "description": "A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.\n\nIn some cases, you need to provide options to alter GraphQL's execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.",
-        "fields": [{
+        "fields": [
+          {
             "name": "name",
             "description": null,
             "args": [],
@@ -7313,7 +7585,8 @@
         "fields": null,
         "inputFields": null,
         "interfaces": null,
-        "enumValues": [{
+        "enumValues": [
+          {
             "name": "QUERY",
             "description": "Location adjacent to a query operation.",
             "isDeprecated": false,
@@ -7431,7 +7704,8 @@
         "possibleTypes": null
       }
     ],
-    "directives": [{
+    "directives": [
+      {
         "name": "include",
         "description": "Directs the executor to include this field or fragment only when the `if` argument is true.",
         "locations": [
@@ -7439,20 +7713,22 @@
           "FRAGMENT_SPREAD",
           "INLINE_FRAGMENT"
         ],
-        "args": [{
-          "name": "if",
-          "description": "Included when true.",
-          "type": {
-            "kind": "NON_NULL",
-            "name": null,
-            "ofType": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            }
-          },
-          "defaultValue": null
-        }]
+        "args": [
+          {
+            "name": "if",
+            "description": "Included when true.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ]
       },
       {
         "name": "skip",
@@ -7462,20 +7738,22 @@
           "FRAGMENT_SPREAD",
           "INLINE_FRAGMENT"
         ],
-        "args": [{
-          "name": "if",
-          "description": "Skipped when true.",
-          "type": {
-            "kind": "NON_NULL",
-            "name": null,
-            "ofType": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            }
-          },
-          "defaultValue": null
-        }]
+        "args": [
+          {
+            "name": "if",
+            "description": "Skipped when true.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ]
       }
     ]
   }

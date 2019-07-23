@@ -6,13 +6,19 @@ from graphql_jwt.decorators import login_required
 from graphql_jwt.shortcuts import get_token
 from graphene_file_upload.scalars import Upload
 
+from django.db.models.expressions import RawSQL
 from locations import locationThumbnail
+from locationslocations import reversePlace
 from locations import models as location_models
 from . import models, types
 
 from utils import notify_slack
 from cards import types as card_mo
 from notifications import models as notification_models
+
+from django.core.files.base import ContentFile
+from io import BytesIO
+from urllib.request import urlopen
 
 
 class ToggleSettings(graphene.Mutation):
@@ -509,11 +515,16 @@ class CreateAccount(graphene.Mutation):
 class FacebookConnect(graphene.Mutation):
 
     class Arguments:
-        username = graphene.String()
-        first_name = graphene.String()
-        last_name = graphene.String()
+        username = graphene.String(required=True)
+        first_name = graphene.String(required=True)
+        last_name = graphene.String(required=True)
         email = graphene.String()
         gender = graphene.String()
+        latitude = graphene.Float(required=True)
+        longitude = graphene.Float(required=True)
+        cityId = graphene.String(required=True)
+        cityName = graphene.String(required=True)
+        countryCode = graphene.String(required=True)
         fbId = graphene.String(required=True)
 
     Output = types.FacebookConnectResponse
@@ -525,34 +536,158 @@ class FacebookConnect(graphene.Mutation):
         last_name = kwargs.get('last_name')
         email = kwargs.get('email')
         gender = kwargs.get('gender')
+        latitude = kwargs.get('latitude')
+        longitude = kwargs.get('longitude')
+        cityId = kwargs.get('cityId')
+        cityName = kwargs.get('cityName')
+        countryCode = kwargs.get('countryCode')
         fbId = kwargs.get('fbId')
 
+        def get_locations_nearby_coords(latitude, longitude, max_distance=3000):
+            gcd_formula = "6371 * acos(cos(radians(%s)) * \
+            cos(radians(latitude)) \
+            * cos(radians(longitude) - radians(%s)) + \
+            sin(radians(%s)) * sin(radians(latitude)))"
+            distance_raw_sql = RawSQL(
+                gcd_formula,
+                (latitude, longitude, latitude)
+            )
+            qs = models.City.objects.all().annotate(distance=distance_raw_sql).order_by('distance')
+            if max_distance is not None:
+                qs = qs.filter(Q(distance__lt=max_distance))
+                for i in qs:
+                    pass
+            return qs
+
+        try:
+            country = models.Country.objects.get(country_code=countryCode)
+        except models.Country.DoesNotExist:
+            with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
+                countryData = json.load(file)
+                currentCountry = countryData[countryCode]
+                countryName = currentCountry['name']
+                countryNameNative = currentCountry['native']
+                countryCapital = currentCountry['capital']
+                countryCurrency = currentCountry['currency']
+                countryPhone = currentCountry['phone']
+                countryEmoji = currentCountry['emoji']
+                continentCode = currentCountry['continent']
+
+                try:
+                    continent = models.Continent.objects.get(continent_code=continentCode)
+                except:
+                    with open('pinner/locations/continentData.json', mode='rt', encoding='utf-8') as file:
+                        continentData = json.load(file)
+                        continentName = continentData[continentCode]
+
+                        try:
+                            gp = locationThumbnail.get_photos(term=continentName)
+                            continentPhotoURL = gp.get_urls()
+                        except:
+                            continentPhotoURL = None
+
+                        continent = models.Continent.objects.create(
+                            continent_name=continentName,
+                            continent_photo=continentPhotoURL,
+                            continent_code=continentCode
+                        )
+            try:
+                gp = locationThumbnail.get_photos(term=countryName)
+                countryPhotoURL = gp.get_urls()
+            except:
+                countryPhotoURL = None
+
+            country = models.Country.objects.create(
+                country_code=countryCode,
+                country_name=countryName,
+                country_name_native=countryNameNative,
+                country_capital=countryCapital,
+                country_currency=countryCurrency,
+                country_phone=countryPhone,
+                country_emoji=countryEmoji,
+                country_photo=countryPhotoURL,
+                continent=continent,
+            )
+
+        try:
+            city = models.City.objects.get(city_id=cityId)
+            profile.current_city = city
+            profile.save()
+            if city.near_city.count() < 20:
+                nearCities = get_locations_nearby_coords(latitude, longitude, 3000)[:20]
+                for i in nearCities:
+                    city.near_city.add(i)
+                    city.save()
+
+        except models.City.DoesNotExist:
+            nearCities = get_locations_nearby_coords(latitude, longitude, 3000)[:20]
+
+            try:
+                gp = locationThumbnail.get_photos(term=cityName)
+                cityPhotoURL = gp.get_urls()
+            except:
+                cityPhotoURL = None
+
+            city = models.City.objects.create(
+                city_id=cityId,
+                city_name=cityName,
+                country=country,
+                city_photo=cityPhotoURL,
+                latitude=latitude,
+                longitude=longitude
+            )
+            for i in nearCities:
+                city.near_city.add(i)
+                city.save()
+            profile.current_city = city
+            profile.save()
+            return city
+
+            
+        # 0724 
         try:
             existingUser = models.Profile.objects.get(
                 fbId=fbId
             )
-            token = get_token(existingUser.user)
-            return types.FacebookConnectResponse(ok=True, token=token)
-
+            if existingUser:
+                token = get_token(existingUser.user)
+                return types.FacebookConnectResponse(ok=True, token=token)
         except:
-            pass
-
-        try:
             newUser = User.objects.create_user(username, email)
             newUser.first_name = first_name
             newUser.last_name = last_name
             newUser.save()
+            avatarUrl = "http://graph.facebook.com/%s/picture?type=large" % fbId
+            thumbnail = BytesIO(urlopen(avatarUrl).read())
+            print(thumbnail)
+            print(type(thumbnail))
+            avatar = models.Avatar.objects.create(
+                is_main=True,
+                creator=newUser,
+            )
+            avatar.thumbnail.save("image.jpg", ContentFile(thumbnail.getvalue()), save=False)
+            avatar.save()
             profile = models.Profile.objects.create(
                 user=newUser,
                 fbId=fbId,
                 gender=gender,
-                avatarUrl='http://graph.facebook.com/{}/picture?type=large'.format(fbId)
+                avatarUrl=avatar.thumbnail
             )
+            if profile.is_auto_location_report is True:
+                try:
+                    latest = newUser.movenotification.latest('start_date', 'created_at')
+                    print(latest)
+                    if latest.city != city:
+                        notification_models.MoveNotification.objects.create(actor=newUser, city=city)
+                        return types.ReportLocationResponse(ok=True)
+                except notification_models.MoveNotification.DoesNotExist:
+                    notification_models.MoveNotification.objects.create(actor=newUser, city=city)
+                    return types.ReportLocationResponse(ok=True)
+
             token = get_token(newUser)
             return types.FacebookConnectResponse(ok=True, token=token)
 
-        except IntegrityError as e:
-            raise Exception("Could not log you in")
+
 
 
 class SlackReportUser(graphene.Mutation):
