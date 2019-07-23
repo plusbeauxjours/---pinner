@@ -8,7 +8,6 @@ import UserHeader from "../UserHeader";
 import Avatar from "../Avatar";
 import useGoogleAutocomplete from "../../autocompleteHelpers";
 import { GOOGLE_PLACE_KEY } from "src/keys";
-import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -103,11 +102,7 @@ const SearchPresenter: React.FunctionComponent<IProps> = ({
                   username={user.profile.username}
                   currentCity={user.profile.currentCity.cityName}
                   currentCountry={user.profile.currentCity.country.countryName}
-                  avatar={
-                    user.profile.avatarUrl
-                      ? `${BACKEND_URL}/media/${user.profile.avatarUrl}`
-                      : "https://banner2.kisspng.com/20180613/vtt/kisspng-computer-icons-avatar-user-profile-icon-design-cli-5b2114b0368752.5561258815288946402234.jpg"
-                  }
+                  avatar={user.profile.avatarUrl}
                   size={"sm"}
                 />
               </Link>

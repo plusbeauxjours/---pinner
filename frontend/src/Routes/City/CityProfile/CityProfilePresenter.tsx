@@ -14,7 +14,6 @@ import UserBox from "src/Components/UserBox";
 import CoffeeBox from "src/Components/CoffeeBox";
 import LocationBox from "src/Components/LocationBox";
 // import { Right } from "../../../Icons";
-import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -333,7 +332,7 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
           </RightIcon> */}
           <PHeader>
             <AvatarContainer>
-              <CAvatar size="lg" url={city.cityPhoto} />
+              <CAvatar size="lg" url={city.cityPhoto} city={true} />
               <LocationName>{city.cityName}</LocationName>
               <InfoRow>
                 <Weather latitude={city.latitude} longitude={city.longitude} />
@@ -351,7 +350,11 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                 }}
               >
                 <Header>
-                  <SAvatar size={"sm"} url={city.country.countryPhoto} />
+                  <SAvatar
+                    size={"sm"}
+                    url={city.country.countryPhoto}
+                    city={true}
+                  />
                   <HeaderColumn>
                     <HeaderText text={city.country.countryName} />
                     <Location>{city.country.continent.continentName}</Location>
@@ -378,11 +381,7 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                         currentCountry={
                           user.profile.currentCity.country.countryName
                         }
-                        avatar={
-                          user.profile.avatarUrl
-                            ? `${BACKEND_URL}/media/${user.profile.avatarUrl}`
-                            : "https://banner2.kisspng.com/20180613/vtt/kisspng-computer-icons-avatar-user-profile-icon-design-cli-5b2114b0368752.5561258815288946402234.jpg"
-                        }
+                        avatar={user.profile.avatarUrl}
                         size={"sm"}
                       />
                     </Link>
@@ -400,11 +399,7 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                         currentCountry={
                           user.profile.currentCity.country.countryName
                         }
-                        avatar={
-                          user.profile.avatarUrl
-                            ? `${BACKEND_URL}/media/${user.profile.avatarUrl}`
-                            : "https://banner2.kisspng.com/20180613/vtt/kisspng-computer-icons-avatar-user-profile-icon-design-cli-5b2114b0368752.5561258815288946402234.jpg"
-                        }
+                        avatar={user.profile.avatarUrl}
                         size={"sm"}
                       />
                     </Link>

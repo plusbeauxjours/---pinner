@@ -12,7 +12,6 @@ import AvatarGrid from "../../Components/AvatarGrid";
 import UserHeader from "../../Components/UserHeader";
 import LocationBox from "src/Components/LocationBox";
 import CityLikeBtn from "../../Components/CityLikeBtn";
-import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -272,9 +271,7 @@ const TripProfilePresenter: React.FunctionComponent<IProps> = ({
                         currentCountry={
                           user.actor.profile.currentCity.country.countryName
                         }
-                        avatar={`${BACKEND_URL}/media/${
-                          user.actor.profile.avatarUrl
-                        }`}
+                        avatar={user.actor.profile.avatarUrl}
                         size={"sm"}
                       />
                     </Link>
@@ -292,9 +289,7 @@ const TripProfilePresenter: React.FunctionComponent<IProps> = ({
                         currentCountry={
                           user.actor.profile.currentCity.country.countryName
                         }
-                        avatar={`${BACKEND_URL}/media/${
-                          user.actor.profile.avatarUrl
-                        }`}
+                        avatar={user.actor.profile.avatarUrl}
                         size={"sm"}
                       />
                     </Link>

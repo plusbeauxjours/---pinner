@@ -1121,8 +1121,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               size="lg"
               url={
                 user.profile.avatarUrl
-                  ? `${BACKEND_URL}/media/${user.profile.avatarUrl}`
-                  : "https://banner2.kisspng.com/20180613/vtt/kisspng-computer-icons-avatar-user-profile-icon-design-cli-5b2114b0368752.5561258815288946402234.jpg"
+                
               }
               onClick={toggleAvatarModalOpen}
             />

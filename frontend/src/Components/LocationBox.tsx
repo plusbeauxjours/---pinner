@@ -169,7 +169,7 @@ const LocationBox: React.FunctionComponent<IProps> = ({
               <UserRow key={nearCity.id} type={"nearCities"}>
                 <Link to={`/city/${nearCity.cityId}`}>
                   <Header>
-                    <SAvatar size={"sm"} url={nearCity.cityPhoto} />
+                    <SAvatar size={"sm"} url={nearCity.cityPhoto} city={true} />
                     <HeaderColumn>
                       <HeaderText text={nearCity.cityName} />
                       <Location>{nearCity.country.countryName}</Location>
@@ -202,7 +202,11 @@ const LocationBox: React.FunctionComponent<IProps> = ({
               <UserRow key={samenameCity.id} type={"samenameCities"}>
                 <Link to={`/city/${samenameCity.cityId}`}>
                   <Header>
-                    <SAvatar size={"sm"} url={samenameCity.cityPhoto} />
+                    <SAvatar
+                      size={"sm"}
+                      url={samenameCity.cityPhoto}
+                      city={true}
+                    />
                     <HeaderColumn>
                       <HeaderText text={samenameCity.cityName} />
                       <Location>{samenameCity.country.countryName}</Location>
@@ -237,7 +241,11 @@ const LocationBox: React.FunctionComponent<IProps> = ({
               <UserRow key={country.id} type={"countries"}>
                 <Link to={`/country/${country.countryCode}`}>
                   <Header>
-                    <SAvatar size={"sm"} url={country.countryPhoto} />
+                    <SAvatar
+                      size={"sm"}
+                      url={country.countryPhoto}
+                      city={true}
+                    />
                     <HeaderColumn>
                       <HeaderText text={country.countryName} />
                       <Location>{country.continent.continentName}</Location>
@@ -263,7 +271,11 @@ const LocationBox: React.FunctionComponent<IProps> = ({
               <Link to={`/continent/${continent.continentCode}`}>
                 <UserRow key={continent.id} type={"continents"}>
                   <Header>
-                    <SAvatar size={"sm"} url={continent.continentPhoto} />
+                    <SAvatar
+                      size={"sm"}
+                      url={continent.continentPhoto}
+                      city={true}
+                    />
                     <HeaderColumn>
                       <HeaderText text={continent.continentName} />
                     </HeaderColumn>

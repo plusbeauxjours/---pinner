@@ -6,7 +6,6 @@ import Loader from "src/Components/Loader";
 import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
 import UserHeader from "../../../Components/UserHeader";
-import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -139,9 +138,7 @@ const CityUsersBeforePresenter: React.FunctionComponent<IProps> = ({
                         currentCountry={
                           user.actor.profile.currentCity.country.countryName
                         }
-                        avatar={`${BACKEND_URL}/media/${
-                          user.actor.profile.avatarUrl
-                        }`}
+                        avatar={user.actor.profile.avatarUrl}
                         size={"sm"}
                       />
                       <Explain>{user.naturalTime}</Explain>
@@ -161,9 +158,7 @@ const CityUsersBeforePresenter: React.FunctionComponent<IProps> = ({
                           currentCountry={
                             user.actor.profile.currentCity.country.countryName
                           }
-                          avatar={`${BACKEND_URL}/media/${
-                            user.actor.profile.avatarUrl
-                          }`}
+                          avatar={user.actor.profile.avatarUrl}
                           size={"sm"}
                         />
                         <Explain>{user.naturalTime}</Explain>

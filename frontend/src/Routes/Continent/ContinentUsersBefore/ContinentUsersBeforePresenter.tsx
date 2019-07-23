@@ -7,7 +7,6 @@ import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
-import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -151,9 +150,7 @@ const ContinentUsersBeforePresenter: React.FunctionComponent<IProps> = ({
                       <AvatarContainer>
                         <Avatar
                           size={"sm"}
-                          url={`${BACKEND_URL}/media/${
-                            user.actor.profile.avatarUrl
-                          }`}
+                          url={user.actor.profile.avatarUrl}
                         />
                         <HeaderColumn>
                           <CText text={user.actor.profile.username} />
@@ -172,9 +169,7 @@ const ContinentUsersBeforePresenter: React.FunctionComponent<IProps> = ({
                       <AvatarContainer>
                         <Avatar
                           size={"sm"}
-                          url={`${BACKEND_URL}/media/${
-                            user.actor.profile.avatarUrl
-                          }`}
+                          url={user.actor.profile.avatarUrl}
                         />
                         <HeaderColumn>
                           <CText text={user.actor.profile.username} />

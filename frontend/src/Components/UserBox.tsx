@@ -4,7 +4,6 @@ import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import Bold from "./Bold";
 import { History } from "history";
 import UserHeader from "./UserHeader";
-import { BACKEND_URL } from "src/constants";
 
 const Title = styled.div`
   display: flex;
@@ -154,13 +153,7 @@ const UserBox: React.FunctionComponent<IProps> = ({
                               currentCountry={
                                 user.profile.currentCity.country.countryName
                               }
-                              avatar={
-                                user.profile.avatarUrl
-                                  ? `${BACKEND_URL}/media/${
-                                      user.profile.avatarUrl
-                                    }`
-                                  : "https://banner2.kisspng.com/20180613/vtt/kisspng-computer-icons-avatar-user-profile-icon-design-cli-5b2114b0368752.5561258815288946402234.jpg"
-                              }
+                              avatar={user.profile.avatarUrl}
                               size={"sm"}
                             />
                             <Explain>{user.createdAt}</Explain>
@@ -224,9 +217,7 @@ const UserBox: React.FunctionComponent<IProps> = ({
                                 user.actor.profile.currentCity.country
                                   .countryName
                               }
-                              avatar={`${BACKEND_URL}/media/${
-                                user.actor.profile.avatarUrl
-                              }`}
+                              avatar={user.actor.profile.avatarUrl}
                               size={"sm"}
                             />
                             <Explain>{user.naturalTime}</Explain>

@@ -8,7 +8,6 @@ import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
 import CoffeeBtn from "src/Components/CoffeeBtn";
 import { List } from "../../../Icons";
-import { BACKEND_URL } from "src/constants";
 import { Link } from "react-router-dom";
 
 const SWrapper = styled(Wrapper)`
@@ -245,12 +244,7 @@ const CoffeeDetailPresenter: React.FunctionComponent<IProps> = ({
                 <List />
               </Icon>
               <Link to={`/${coffee.host.profile.username}`}>
-                <SAvatar
-                  url={`${BACKEND_URL}/media/${
-                    coffee.host.profile.avatarUrl
-                  }`}
-                  size="lg"
-                />
+                <SAvatar url={coffee.host.profile.avatarUrl} size="lg" />
               </Link>
 
               <SText text={coffee.host.username} />

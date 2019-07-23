@@ -7,7 +7,6 @@ import Loader from "../../../Components/Loader";
 import Bold from "../../../Components/Bold";
 import CoffeeBtn from "src/Components/CoffeeBtn";
 import Avatar from "../../../Components/Avatar";
-import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -151,9 +150,7 @@ const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
                       <AvatarContainer>
                         <SAvatar
                           size={"sm"}
-                          url={`${BACKEND_URL}/media/${
-                            coffee.host.profile.avatarUrl
-                          }`}
+                          url={coffee.host.profile.avatarUrl}
                         />
                         <HeaderColumn>
                           <CText text={coffee.host.username} />
@@ -190,9 +187,7 @@ const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
                       <AvatarContainer>
                         <SAvatar
                           size={"sm"}
-                          url={`${BACKEND_URL}/media/${
-                            coffee.host.profile.avatarUrl
-                          }`}
+                          url={coffee.host.profile.avatarUrl}
                         />
                         <HeaderColumn>
                           <CText text={coffee.host.username} />

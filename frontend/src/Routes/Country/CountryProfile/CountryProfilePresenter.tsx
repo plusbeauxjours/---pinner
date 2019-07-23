@@ -262,7 +262,7 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
           </RightIcon> */}
           <PHeader>
             <AvatarContainer>
-              <CAvatar size="lg" url={country.countryPhoto} />
+              <CAvatar size="lg" url={country.countryPhoto} city={true} />
               <LocationContainer>
                 <LocationName>{country.countryName}</LocationName>
                 <Flag>{country.countryEmoji}</Flag>
@@ -290,7 +290,11 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
                 }}
               >
                 <LocationHeader>
-                  <SAvatar size={"sm"} url={country.continent.continentPhoto} />
+                  <SAvatar
+                    size={"sm"}
+                    url={country.continent.continentPhoto}
+                    city={true}
+                  />
                   <HeaderColumn>
                     <HeaderText text={country.continent.continentName} />
                   </HeaderColumn>
@@ -311,7 +315,7 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
                   <UserRow key={city.id}>
                     <Link to={`/city/${city.cityId}`}>
                       <Header>
-                        <SAvatar size={"sm"} url={city.cityPhoto} />
+                        <SAvatar size={"sm"} url={city.cityPhoto} city={true} />
                         <HeaderColumn>
                           <HeaderText text={city.cityName} />
                           <Location>{countryName}</Location>
@@ -333,7 +337,7 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
                   <UserRow key={city.id}>
                     <Link to={`/city/${city.cityId}`}>
                       <Header>
-                        <SAvatar size={"sm"} url={city.cityPhoto} />
+                        <SAvatar size={"sm"} url={city.cityPhoto} city={true} />
                         <HeaderColumn>
                           <HeaderText text={city.cityName} />
                           <Location>{countryName}</Location>

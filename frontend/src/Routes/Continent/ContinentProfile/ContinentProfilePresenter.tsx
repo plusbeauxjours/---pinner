@@ -186,7 +186,7 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
         <SWrapper>
           <PHeader>
             <AvatarContainer>
-              <CAvatar size="lg" url={continent.continentPhoto} />
+              <CAvatar size="lg" url={continent.continentPhoto} city={true} />
               <LocationName>{continent.continentName}</LocationName>
             </AvatarContainer>
             <UserContainer>
@@ -210,7 +210,11 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
                       }}
                     >
                       <Header>
-                        <SAvatar size={"sm"} url={country.countryPhoto} />
+                        <SAvatar
+                          size={"sm"}
+                          url={country.countryPhoto}
+                          city={true}
+                        />
                         <HeaderColumn>
                           <HeaderText text={country.countryName} />
                           <Location>{country.continent.continentName}</Location>
@@ -231,7 +235,11 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
                       }}
                     >
                       <Header>
-                        <SAvatar size={"sm"} url={country.countryPhoto} />
+                        <SAvatar
+                          size={"sm"}
+                          url={country.countryPhoto}
+                          city={true}
+                        />
                         <HeaderColumn>
                           <HeaderText text={country.countryName} />
                           <Location>{country.continent.continentName}</Location>

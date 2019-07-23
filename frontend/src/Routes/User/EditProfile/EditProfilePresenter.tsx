@@ -715,7 +715,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
           <AvatarConatainer>
             <PAvatar
               size="lg"
-              url={`${BACKEND_URL}/media/${avatarUrl}`}
+              url={avatarUrl}
               onClick={toggleAvatarModalOpen}
             />
           </AvatarConatainer>

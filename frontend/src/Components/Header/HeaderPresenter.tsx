@@ -11,7 +11,6 @@ import { keyframes } from "styled-components";
 import Avatar from "../Avatar";
 import Bold from "../Bold";
 import Weather from "src/Components/Weather";
-import { BACKEND_URL } from "src/constants";
 
 const Header = styled.header`
   background-color: ${props => props.theme.bgColor};
@@ -236,7 +235,7 @@ const HeaderPresenter: React.FunctionComponent<IProps> = ({
           <UserContainer>
             <Link to={`/city/${currentCityId}`}>
               <LocationHeader>
-                <SAvatar url={city.cityPhoto} size={"sm"} />
+                <SAvatar url={city.cityPhoto} size={"sm"} city={true} />
                 <HeaderColumn>
                   <HeaderRow>
                     <CText text={city.cityName} />
@@ -266,14 +265,7 @@ const HeaderPresenter: React.FunctionComponent<IProps> = ({
                   }
                 }}
               >
-                <Avatar
-                  size={"sm"}
-                  url={
-                    user.profile.avatarUrl
-                      ? `${BACKEND_URL}/media/${user.profile.avatarUrl}`
-                      : "https://banner2.kisspng.com/20180613/vtt/kisspng-computer-icons-avatar-user-profile-icon-design-cli-5b2114b0368752.5561258815288946402234.jpg"
-                  }
-                />
+                <Avatar size={"sm"} url={user.profile.avatarUrl} />
               </Link>
             </Icon>
           </Column>

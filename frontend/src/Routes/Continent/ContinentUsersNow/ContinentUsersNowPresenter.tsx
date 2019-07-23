@@ -7,7 +7,6 @@ import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
-import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -149,16 +148,7 @@ const ContinentUsersNowPresenter: React.FunctionComponent<IProps> = ({
                   <UserRow key={user.id}>
                     <Link to={`/${user.profile.username}`}>
                       <AvatarContainer>
-                        <Avatar
-                          size={"sm"}
-                          url={
-                            user.profile.avatarUrl
-                              ? `${BACKEND_URL}/media/${
-                                  user.profile.avatarUrl
-                                }`
-                              : "https://banner2.kisspng.com/20180613/vtt/kisspng-computer-icons-avatar-user-profile-icon-design-cli-5b2114b0368752.5561258815288946402234.jpg"
-                          }
-                        />
+                        <Avatar size={"sm"} url={user.profile.avatarUrl} />
                         <HeaderColumn>
                           <CText text={user.profile.username} />
                           <Explain>with same nationality</Explain>
@@ -175,16 +165,7 @@ const ContinentUsersNowPresenter: React.FunctionComponent<IProps> = ({
                   <UserRow key={user.id}>
                     <Link to={`/${user.profile.username}`}>
                       <AvatarContainer>
-                        <Avatar
-                          size={"sm"}
-                          url={
-                            user.profile.avatarUrl
-                              ? `${BACKEND_URL}/media/${
-                                  user.profile.avatarUrl
-                                }`
-                              : "https://banner2.kisspng.com/20180613/vtt/kisspng-computer-icons-avatar-user-profile-icon-design-cli-5b2114b0368752.5561258815288946402234.jpg"
-                          }
-                        />
+                        <Avatar size={"sm"} url={user.profile.avatarUrl} />
                         <HeaderColumn>
                           <CText text={user.profile.username} />
                           <Explain>with same nationality</Explain>

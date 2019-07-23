@@ -9,7 +9,6 @@ import Bold from "../../Components/Bold";
 import { keyframes } from "styled-components";
 import Avatar from "../../Components/Avatar";
 import CoffeeBox from "src/Components/CoffeeBox";
-import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)``;
 
@@ -313,16 +312,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                     <UserRow key={user.profile.id}>
                       <Link to={`/${user.profile.username}`}>
                         <AvatarContainer>
-                          <Avatar
-                            size={"sm"}
-                            url={
-                              user.profile.avatarUrl
-                                ? `${BACKEND_URL}/media/${
-                                    user.profile.avatarUrl
-                                  }`
-                                : "https://banner2.kisspng.com/20180613/vtt/kisspng-computer-icons-avatar-user-profile-icon-design-cli-5b2114b0368752.5561258815288946402234.jpg"
-                            }
-                          />
+                          <Avatar size={"sm"} url={user.profile.avatarUrl} />
                           <HeaderColumn>
                             <CText text={user.profile.username} />
                             <Explain>with same nationality</Explain>
@@ -364,9 +354,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                           currentCountry={
                             match.host.profile.currentCity.country.countryName
                           }
-                          avatar={`${BACKEND_URL}/media/${
-                            match.host.profile.avatarUrl
-                          }`}
+                          avatar={match.host.profile.avatarUrl}
                           size={"sm"}
                         />
                       </Link>
@@ -390,9 +378,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                           currentCountry={
                             match.guest.profile.currentCity.country.countryName
                           }
-                          avatar={`${BACKEND_URL}/media/${
-                            match.guest.profile.avatarUrl
-                          }`}
+                          avatar={match.guest.profile.avatarUrl}
                           size={"sm"}
                         />
                       </Link>
@@ -424,9 +410,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                           currentCountry={
                             match.host.profile.currentCity.country.countryName
                           }
-                          avatar={`${BACKEND_URL}/media/${
-                            match.host.profile.avatarUrl
-                          }`}
+                          avatar={match.host.profile.avatarUrl}
                           size={"sm"}
                         />
                       </Link>
@@ -451,9 +435,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                           currentCountry={
                             match.guest.profile.currentCity.country.countryName
                           }
-                          avatar={`${BACKEND_URL}/media/${
-                            match.guest.profile.avatarUrl
-                          }`}
+                          avatar={match.guest.profile.avatarUrl}
                           size={"sm"}
                         />
                       </Link>

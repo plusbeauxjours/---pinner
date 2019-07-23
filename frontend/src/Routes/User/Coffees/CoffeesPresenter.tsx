@@ -5,7 +5,6 @@ import styled from "../../../Styles/typed-components";
 import Loader from "../../../Components/Loader";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
-import { BACKEND_URL } from "src/constants";
 import { keyframes } from "styled-components";
 
 const ModalContainer = styled.div`
@@ -176,9 +175,7 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
                     <Header>
                       <SAvatar
                         size={"sm"}
-                        url={`${BACKEND_URL}/media/${
-                          coffee.host.profile.avatarUrl
-                        }`}
+                        url={coffee.host.profile.avatarUrl}
                       />
                       <HeaderColumn>
                         <CText text={coffee.host.username} />
@@ -199,9 +196,7 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
                     <Header>
                       <SAvatar
                         size={"sm"}
-                        url={`${BACKEND_URL}/media/${
-                          coffee.host.profile.avatarUrl
-                        }`}
+                        url={coffee.host.profile.avatarUrl}
                       />
                       <HeaderColumn>
                         <CText text={coffee.host.username} />

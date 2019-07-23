@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useQuery } from "react-apollo-hooks";
 import { GET_CITY_PHOTO, GET_COUNTRY_PHOTO } from "./Search/SearchQueries";
 import { keyframes } from "styled-components";
+import { BACKEND_URL } from "src/constants";
 
 const Animation = keyframes`
 	  from{
@@ -105,6 +106,7 @@ interface IProps {
   size: string;
   bg?: string;
   className?: string;
+  city?: boolean;
   cityId?: string;
   countryCode?: string;
   onClick?: () => void;
@@ -114,6 +116,7 @@ const Avatar: React.FunctionComponent<IProps> = ({
   className,
   url,
   size,
+  city,
   cityId,
   countryCode,
   onClick
@@ -173,6 +176,33 @@ const Avatar: React.FunctionComponent<IProps> = ({
       //   }}
       // </ProgressiveImage>
     );
+  } else if (city) {
+    return (
+      // <ProgressiveImage delay={0} src={url} placeholder="">
+      //   {(src, loading) => {
+      //     return loading ? (
+      //       <AvatarContainer size={size}>
+      //         <Placeholder
+      //           className={className}
+      //           color={"#212121"}
+      //           size={size}
+      //         />
+      //       </AvatarContainer>
+      //     ) : (
+      <AvatarContainer size={size}>
+        <Container
+          className={className}
+          src={
+            url ? `${url}` : require(`../Images/notFound/Lost Tourist-big.png`)
+          }
+          size={size}
+          onClick={onClick}
+        />
+      </AvatarContainer>
+      //     );
+      //   }}
+      // </ProgressiveImage>
+    );
   } else {
     return (
       // <ProgressiveImage delay={0} src={url} placeholder="">
@@ -189,7 +219,11 @@ const Avatar: React.FunctionComponent<IProps> = ({
       <AvatarContainer size={size}>
         <Container
           className={className}
-          src={url ? url : null}
+          src={
+            url
+              ? `${BACKEND_URL}/media/${url}`
+              : "https://banner2.kisspng.com/20180613/vtt/kisspng-computer-icons-avatar-user-profile-icon-design-cli-5b2114b0368752.5561258815288946402234.jpg"
+          }
           size={size}
           onClick={onClick}
         />

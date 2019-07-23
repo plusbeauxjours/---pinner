@@ -7,7 +7,6 @@ import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
-import { BACKEND_URL } from "src/constants";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -146,12 +145,7 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
                     <UserRow key={user.id}>
                       <Link to={`/${user.username}`}>
                         <AvatarContainer>
-                          <Avatar
-                            size={"sm"}
-                            url={`${BACKEND_URL}/media/${
-                              user.avatarUrl
-                            }`}
-                          />
+                          <Avatar size={"sm"} url={user.avatarUrl} />
                           <HeaderColumn>
                             <CText text={user.username} />
                             <Explain>with same nationality</Explain>
@@ -170,12 +164,7 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
                     <UserRow key={user.id}>
                       <Link to={`/${user.username}`}>
                         <AvatarContainer>
-                          <Avatar
-                            size={"sm"}
-                            url={`${BACKEND_URL}/media/${
-                              user.avatarUrl
-                            }`}
-                          />
+                          <Avatar size={"sm"} url={user.avatarUrl} />
                           <HeaderColumn>
                             <CText text={user.username} />
                             <Explain>with same nationality</Explain>
