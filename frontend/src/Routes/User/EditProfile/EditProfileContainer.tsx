@@ -494,7 +494,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
   public back = async event => {
     const { history } = this.props;
     const { username } = this.state;
-    event.stopPropagation();
+    await event.stopPropagation();
     history.push(`/${username}`);
   };
   public updateMarkAsMain = (cache, { data: { markAsMain } }) => {

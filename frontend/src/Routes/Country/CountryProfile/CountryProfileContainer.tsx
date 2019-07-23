@@ -113,7 +113,8 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
       </GetCountriesQuery>
     );
   }
-  public back = event => {
+  public back = async event => {
+    event.stopPropagation();
     this.props.history.goBack();
   };
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {

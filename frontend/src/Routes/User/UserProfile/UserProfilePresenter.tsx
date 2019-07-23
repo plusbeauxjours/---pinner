@@ -1119,10 +1119,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
           <AvatarContainer>
             <PAvatar
               size="lg"
-              url={
-                user.profile.avatarUrl
-                
-              }
+              url={user.profile.avatarUrl}
               onClick={toggleAvatarModalOpen}
             />
           </AvatarContainer>
@@ -1142,7 +1139,11 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
           <PHeader>
             <LocationAvatarContainer>
               <Link to={`/city/${user.profile.currentCity.cityId}`}>
-                <CAvatar size="lg" url={user.profile.currentCity.cityPhoto} />
+                <CAvatar
+                  size="lg"
+                  url={user.profile.currentCity.cityPhoto}
+                  city={true}
+                />
               </Link>
               <Row>{`${user.profile.bio}`}</Row>
               <Row>
@@ -1335,7 +1336,11 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                             )
                           }
                         >
-                          <SAvatar size={"sm"} url={trip.city.cityPhoto} />
+                          <SAvatar
+                            size={"sm"}
+                            url={trip.city.cityPhoto}
+                            city={true}
+                          />
                           <HeaderColumn>
                             <HeaderText text={trip.city.cityName} />
                             <Location>{trip.city.country.countryName}</Location>
@@ -1395,7 +1400,11 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                             )
                           }
                         >
-                          <SAvatar size={"sm"} url={trip.city.cityPhoto} />
+                          <SAvatar
+                            size={"sm"}
+                            url={trip.city.cityPhoto}
+                            city={true}
+                          />
                           <HeaderColumn>
                             <HeaderText text={trip.city.cityName} />
                             <Location>{trip.city.country.countryName}</Location>

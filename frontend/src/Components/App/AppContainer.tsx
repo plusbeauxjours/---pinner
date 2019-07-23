@@ -21,7 +21,7 @@ export default () => (
           }
         }) => (
           <Router
-            // onUpdate={() => window.scrollTo(0, 0)}
+            onUpdate={() => window.scrollTo(0, 0)}
             history={browserHistory}
             isLoggedIn={isLoggedIn}
           />

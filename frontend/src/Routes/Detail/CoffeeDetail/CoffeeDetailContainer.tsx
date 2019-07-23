@@ -39,6 +39,7 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
         params: { uuid }
       }
     } = this.props;
+    console.log(uuid);
     const { modalOpen } = this.state;
     return (
       <DeleteCoffeeMutation
@@ -52,16 +53,20 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
             <CoffeeDetailQuery
               query={COFFEE_DETAIL}
               variables={{ coffeeId: uuid }}
+              fetchPolicy="no-cache"
             >
               {({ data, loading }) => (
-                <CoffeeDetailPresenter
-                  loading={loading}
-                  data={data}
-                  modalOpen={modalOpen}
-                  toggleModal={this.toggleModal}
-                  back={this.back}
-                  deleteCoffee={this.deleteCoffee}
-                />
+                <>
+                  {console.log(data)}
+                  <CoffeeDetailPresenter
+                    loading={loading}
+                    data={data}
+                    modalOpen={modalOpen}
+                    toggleModal={this.toggleModal}
+                    back={this.back}
+                    deleteCoffee={this.deleteCoffee}
+                  />
+                </>
               )}
             </CoffeeDetailQuery>
           );
@@ -75,8 +80,8 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
       modalOpen: !modalOpen
     });
   };
-  public back = event => {
-    event.stopPropagation();
+  public back = async event => {
+    await event.stopPropagation();
     this.props.history.goBack();
   };
   public onCompletedDeleteCoffee = data => {

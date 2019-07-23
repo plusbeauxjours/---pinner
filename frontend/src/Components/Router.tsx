@@ -15,6 +15,7 @@ import LoggedInPages from "./LoggedInPages";
 interface IProps {
   isLoggedIn: boolean;
   history: any;
+  onUpdate: () => void;
 }
 
 const LoggedOutPages = () => (
@@ -28,7 +29,8 @@ const LoggedOutPages = () => (
 
 const AppRouter: React.FunctionComponent<IProps> = ({
   isLoggedIn,
-  history
+  history,
+  onUpdate
 }) => {
   return <Router>{isLoggedIn ? <LoggedInPages /> : <LoggedOutPages />}</Router>;
 };

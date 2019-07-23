@@ -130,8 +130,8 @@ class PhoneLoginContainer extends React.Component<
       toast.error("Please write a valid phone number");
     }
   };
-  public back = event => {
-    event.stopPropagation();
+  public back = async event => {
+    await event.stopPropagation();
     this.props.history.goBack();
   };
 }

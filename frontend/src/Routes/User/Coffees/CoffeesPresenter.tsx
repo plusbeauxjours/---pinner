@@ -8,7 +8,7 @@ import Bold from "../../../Components/Bold";
 import { keyframes } from "styled-components";
 
 const ModalContainer = styled.div`
-  z-index: 1;
+  z-index: 101;
   display: flex;
   position: relative;
   flex-direction: column;
@@ -21,7 +21,7 @@ const ModalContainer = styled.div`
 `;
 
 const ModalOverlay = styled.div`
-  z-index: 5;
+  z-index: 100;
   height: 100%;
   width: 100%;
   position: fixed;
@@ -41,7 +41,7 @@ const ModalAnimation = keyframes`
   `;
 
 const InputContainer = styled.div`
-  z-index: 10;
+  z-index: 110;
   top: 30%;
   width: 400px;
   border: 0;
@@ -52,7 +52,7 @@ const InputContainer = styled.div`
 `;
 
 const SearchCitiesInput = styled.input`
-  z-index: 10;
+  z-index: 110;
   border: 0;
   border-bottom: 1px solid ${props => props.theme.greyColor};
   padding: 5px;
@@ -73,7 +73,7 @@ const SearchCitiesInput = styled.input`
 `;
 
 const Modal = styled.div`
-  z-index: 10;
+  z-index: 101;
   margin-top: 20px;
   display: flex;
   flex-direction: column;

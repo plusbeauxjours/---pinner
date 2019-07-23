@@ -87,8 +87,8 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
       verificationKey: value
     } as any);
   };
-  public back = event => {
-    event.stopPropagation();
+  public back = async event => {
+    await event.stopPropagation();
     this.props.history.goBack();
   };
 }

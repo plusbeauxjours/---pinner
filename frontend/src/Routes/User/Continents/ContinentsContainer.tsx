@@ -84,7 +84,7 @@ class ContinentsContainer extends React.Component<IProps, IState> {
       }
     } = this.props;
     const { history } = this.props;
-    event.stopPropagation();
+    await event.stopPropagation();
     history.push(`/${username}`);
   };
 }

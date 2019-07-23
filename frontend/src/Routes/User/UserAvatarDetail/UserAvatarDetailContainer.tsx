@@ -55,8 +55,8 @@ class UserAvatarDetailContainer extends React.Component<IProps, IState> {
       modalOpen: !modalOpen
     });
   };
-  public back = event => {
-    event.stopPropagation();
+  public back = async event => {
+    await event.stopPropagation();
     this.props.history.goBack();
   };
 }
