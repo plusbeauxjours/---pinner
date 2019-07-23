@@ -179,7 +179,6 @@ class EditProfile(graphene.Mutation):
                     countryCurrency = currentCountry['currency']
                     countryPhone = currentCountry['phone']
                     countryEmoji = currentCountry['emoji']
-                    countryEmojiU = currentCountry['emojiU']
                     continentCode = currentCountry['continent']
 
                     try:
@@ -226,7 +225,6 @@ class EditProfile(graphene.Mutation):
                     country_currency=countryCurrency,
                     country_phone=countryPhone,
                     country_emoji=countryEmoji,
-                    country_emojiU=countryEmojiU,
                     country_photo=countryPhotoURL,
                     continent=continent,
                 )
@@ -243,7 +241,6 @@ class EditProfile(graphene.Mutation):
                     countryCurrency = currentCountry['currency']
                     countryPhone = currentCountry['phone']
                     countryEmoji = currentCountry['emoji']
-                    countryEmojiU = currentCountry['emojiU']
                     continentCode = currentCountry['continent']
 
                     try:
@@ -290,7 +287,6 @@ class EditProfile(graphene.Mutation):
                     country_currency=countryCurrency,
                     country_phone=countryPhone,
                     country_emoji=countryEmoji,
-                    country_emojiU=countryEmojiU,
                     country_photo=countryPhotoURL,
                     continent=continent,
                 )

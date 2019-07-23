@@ -26,15 +26,14 @@ class Continent (config_models.TimeStampedModel):
 
 class Country (config_models.TimeStampedModel):
 
-    country_name = models.CharField(max_length=50, null=True, blank=True)
     country_code = models.CharField(max_length=10, null=True, blank=True)
-    country_photo = models.URLField(null=True, blank=True)
+    country_name = models.CharField(max_length=50, null=True, blank=True)
+    country_name_native = models.CharField(max_length=50, null=True, blank=True)
     country_capital = models.CharField(max_length=50, null=True, blank=True)
     country_currency = models.CharField(max_length=20, null=True, blank=True)
-    country_name_native = models.CharField(max_length=50, null=True, blank=True)
-    country_phone = models.CharField(max_length=20, null=True, blank=True)
+    country_photo = models.URLField(null=True, blank=True)
     country_emoji = models.CharField(max_length=20, null=True, blank=True)
-    country_emojiU = models.CharField(max_length=20, null=True, blank=True)
+    country_phone = models.CharField(max_length=20, null=True, blank=True)
     continent = models.ForeignKey(Continent, null=True, blank=True, on_delete=models.CASCADE, related_name='countries')
 
     @cached_property
@@ -119,7 +118,7 @@ def send_slack_notification_country_created(sender,  instance, created, **kwargs
             "fallback": "Required plain-text summary of the attachment.",
             "color": "#569934",
             "title":   "Created new city on %s %s. \n Total cities on %s %s: %s." % (
-                instance.country.country_name, instance.country.country_emoji, instance.country.country_name, instance.country.country_emoji, instance.country.city_count, ),
+                instance.country_name, instance.country_emoji, instance.country_name, instance.country_emoji, instance.city_count, ),
             "title_link": "http://localhost:3000/country/%s" % (instance.country_code),
             "text": "Optional text that appears within the attachment",
             "image_url": instance.country_photo,

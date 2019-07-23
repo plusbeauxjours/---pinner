@@ -64,7 +64,6 @@ class CreateCity(graphene.Mutation):
                     countryCurrency = currentCountry['currency']
                     countryPhone = currentCountry['phone']
                     countryEmoji = currentCountry['emoji']
-                    countryEmojiU = currentCountry['emojiU']
                     continentCode = currentCountry['continent']
 
                     try:
@@ -100,11 +99,10 @@ class CreateCity(graphene.Mutation):
                     country_currency=countryCurrency,
                     country_phone=countryPhone,
                     country_emoji=countryEmoji,
-                    country_emojiU=countryEmojiU,
                     country_photo=countryPhotoURL,
                     continent=continent,
                 )
-                print("countryCC")
+                print("countryCC:", country)
 
             try:
                 gp = locationThumbnail.get_photos(term=cityName)
@@ -177,7 +175,6 @@ class ReportLocation(graphene.Mutation):
                 countryCurrency = currentCountry['currency']
                 countryPhone = currentCountry['phone']
                 countryEmoji = currentCountry['emoji']
-                countryEmojiU = currentCountry['emojiU']
                 continentCode = currentCountry['continent']
 
                 try:
@@ -223,7 +220,6 @@ class ReportLocation(graphene.Mutation):
                 country_currency=countryCurrency,
                 country_phone=countryPhone,
                 country_emoji=countryEmoji,
-                country_emojiU=countryEmojiU,
                 country_photo=countryPhotoURL,
                 continent=continent,
             )

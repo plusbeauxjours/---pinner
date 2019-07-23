@@ -23,7 +23,6 @@ class CountryAdmin(admin.ModelAdmin):
         'country_name_native',
         'country_phone',
         'country_emoji',
-        'country_emojiU',
     )
 
 
