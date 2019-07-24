@@ -456,8 +456,6 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     this.setState({
       [name]: value
     } as any);
-    console.log(name, value);
-    console.log(this.state);
   };
 
   public updatEditProfile = (cache, { data: { editProfile } }) => {
@@ -468,7 +466,6 @@ class EditProfileContainer extends React.Component<IProps, IState> {
         variables: { username }
       });
       if (data) {
-        console.log(data);
         data.userProfile.user = editProfile.user;
         cache.writeQuery({
           query: GET_USER,
@@ -489,7 +486,6 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     this.setState({
       [name]: value
     } as any);
-    console.log(this.state);
   };
   public back = async event => {
     const { history } = this.props;
@@ -539,9 +535,6 @@ class EditProfileContainer extends React.Component<IProps, IState> {
         data.getAvatars.avatars.find(
           i => i.uuid === markAsMain.uuid
         ).isMain = true;
-        {
-          console.log(data);
-        }
         cache.writeQuery({
           query: GET_AVATARS,
           variables: { userName: username },
@@ -594,8 +587,6 @@ class EditProfileContainer extends React.Component<IProps, IState> {
         query: GET_AVATARS,
         variables: { userName: username }
       });
-      console.log(data);
-      console.log("username:", username);
       if (data) {
         data.getAvatars.avatars.unshift(uploadAvatar.avatar);
         cache.writeQuery({

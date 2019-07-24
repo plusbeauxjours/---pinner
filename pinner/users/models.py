@@ -156,13 +156,13 @@ def send_slack_notification_city_created(sender, instance, created,  **kwargs):
     if created:
         to_channel = "#user"
         attachments = [{
-            "fallback": "Required plain-text summary of the attachment.",
+            "fallback": "New User on Pinner",
             "color": "#569934",
             # "pretext": "Optional text that appears above the attachment block",
             # "author_name": instance.user.username,
             # "author_link": "localhost:3000/%s" % (instance.user.username),
             "title":  "New user: %s" % (instance.user.username),
-            "title_link": "http://localhost:3000/%s/%s" % (instance.user.username),
+            "title_link": "http://localhost:3000/%s" % (instance.user.username),
             "text": "From %s , %s %s. \n Total user until now is %s" % (instance.current_city, instance.current_city.country.country_name, instance.current_city.country.country_emoji, User.objects.all().count()),
             "footer": "🙌🏻 New User!",
         }]

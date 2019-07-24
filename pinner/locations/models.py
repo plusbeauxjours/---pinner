@@ -98,7 +98,7 @@ def send_slack_notification_city_created(sender,  instance, created, **kwargs):
     if created:
         to_channel = "#location_%s" % (instance.country.continent.continent_code.lower())
         attachments = [{
-            "fallback": "Required plain-text summary of the attachment.",
+            "fallback": "New City on Pinner",
             "color": "#569934",
             "title":  "New city: %s" % (instance.city_name),
             "title_link": "http://localhost:3000/city/%s" % (instance.city_id),
@@ -115,7 +115,7 @@ def send_slack_notification_country_created(sender,  instance, created, **kwargs
     if created:
         to_channel = "#location_%s" % (instance.continent.continent_code.lower())
         attachments = [{
-            "fallback": "Required plain-text summary of the attachment.",
+            "fallback": "New Country on Pinner",
             "color": "#569934",
             "title":   "Created new city on %s %s. \n Total cities on %s %s: %s." % (
                 instance.country_name, instance.country_emoji, instance.country_name, instance.country_emoji, instance.city_count, ),

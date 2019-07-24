@@ -1,6 +1,7 @@
 import graphene
 import json
 from django.db import IntegrityError
+from django.db.models import Q
 from django.contrib.auth.models import User
 from graphql_jwt.decorators import login_required
 from graphql_jwt.shortcuts import get_token
@@ -8,7 +9,7 @@ from graphene_file_upload.scalars import Upload
 
 from django.db.models.expressions import RawSQL
 from locations import locationThumbnail
-from locationslocations import reversePlace
+from locations import reversePlace
 from locations import models as location_models
 from . import models, types
 
@@ -552,7 +553,7 @@ class FacebookConnect(graphene.Mutation):
                 gcd_formula,
                 (latitude, longitude, latitude)
             )
-            qs = models.City.objects.all().annotate(distance=distance_raw_sql).order_by('distance')
+            qs = location_models.City.objects.all().annotate(distance=distance_raw_sql).order_by('distance')
             if max_distance is not None:
                 qs = qs.filter(Q(distance__lt=max_distance))
                 for i in qs:
@@ -560,8 +561,8 @@ class FacebookConnect(graphene.Mutation):
             return qs
 
         try:
-            country = models.Country.objects.get(country_code=countryCode)
-        except models.Country.DoesNotExist:
+            country = location_models.Country.objects.get(country_code=countryCode)
+        except location_models.Country.DoesNotExist:
             with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
                 countryData = json.load(file)
                 currentCountry = countryData[countryCode]
@@ -574,7 +575,7 @@ class FacebookConnect(graphene.Mutation):
                 continentCode = currentCountry['continent']
 
                 try:
-                    continent = models.Continent.objects.get(continent_code=continentCode)
+                    continent = location_models.Continent.objects.get(continent_code=continentCode)
                 except:
                     with open('pinner/locations/continentData.json', mode='rt', encoding='utf-8') as file:
                         continentData = json.load(file)
@@ -586,7 +587,7 @@ class FacebookConnect(graphene.Mutation):
                         except:
                             continentPhotoURL = None
 
-                        continent = models.Continent.objects.create(
+                        continent = location_models.Continent.objects.create(
                             continent_name=continentName,
                             continent_photo=continentPhotoURL,
                             continent_code=continentCode
@@ -597,7 +598,7 @@ class FacebookConnect(graphene.Mutation):
             except:
                 countryPhotoURL = None
 
-            country = models.Country.objects.create(
+            country = location_models.Country.objects.create(
                 country_code=countryCode,
                 country_name=countryName,
                 country_name_native=countryNameNative,
@@ -610,25 +611,21 @@ class FacebookConnect(graphene.Mutation):
             )
 
         try:
-            city = models.City.objects.get(city_id=cityId)
-            profile.current_city = city
-            profile.save()
+            city = location_models.City.objects.get(city_id=cityId)
             if city.near_city.count() < 20:
                 nearCities = get_locations_nearby_coords(latitude, longitude, 3000)[:20]
                 for i in nearCities:
                     city.near_city.add(i)
                     city.save()
-
-        except models.City.DoesNotExist:
+        except location_models.City.DoesNotExist:
             nearCities = get_locations_nearby_coords(latitude, longitude, 3000)[:20]
-
             try:
                 gp = locationThumbnail.get_photos(term=cityName)
                 cityPhotoURL = gp.get_urls()
             except:
                 cityPhotoURL = None
 
-            city = models.City.objects.create(
+            city = location_models.City.objects.create(
                 city_id=cityId,
                 city_name=cityName,
                 country=country,
@@ -639,55 +636,44 @@ class FacebookConnect(graphene.Mutation):
             for i in nearCities:
                 city.near_city.add(i)
                 city.save()
-            profile.current_city = city
-            profile.save()
-            return city
 
-            
-        # 0724 
         try:
-            existingUser = models.Profile.objects.get(
+            profile = models.Profile.objects.get(
                 fbId=fbId
             )
-            if existingUser:
-                token = get_token(existingUser.user)
-                return types.FacebookConnectResponse(ok=True, token=token)
+            if profile:
+                profile.current_city = city
+                profile.save()
+
+            token = get_token(profile.user)
+            return types.FacebookConnectResponse(ok=True, token=token)
         except:
-            newUser = User.objects.create_user(username, email)
+            newUser = User.objects.create_user(username)
             newUser.first_name = first_name
             newUser.last_name = last_name
             newUser.save()
+
             avatarUrl = "http://graph.facebook.com/%s/picture?type=large" % fbId
             thumbnail = BytesIO(urlopen(avatarUrl).read())
-            print(thumbnail)
-            print(type(thumbnail))
             avatar = models.Avatar.objects.create(
                 is_main=True,
                 creator=newUser,
             )
             avatar.thumbnail.save("image.jpg", ContentFile(thumbnail.getvalue()), save=False)
             avatar.save()
+            print("haha")
             profile = models.Profile.objects.create(
                 user=newUser,
                 fbId=fbId,
+                email=email,
                 gender=gender,
-                avatarUrl=avatar.thumbnail
+                avatarUrl=avatar.thumbnail,
+                current_city=city
             )
-            if profile.is_auto_location_report is True:
-                try:
-                    latest = newUser.movenotification.latest('start_date', 'created_at')
-                    print(latest)
-                    if latest.city != city:
-                        notification_models.MoveNotification.objects.create(actor=newUser, city=city)
-                        return types.ReportLocationResponse(ok=True)
-                except notification_models.MoveNotification.DoesNotExist:
-                    notification_models.MoveNotification.objects.create(actor=newUser, city=city)
-                    return types.ReportLocationResponse(ok=True)
+            print("haha2")
 
-            token = get_token(newUser)
+            token = get_token(profile.user)
             return types.FacebookConnectResponse(ok=True, token=token)
-
-
 
 
 class SlackReportUser(graphene.Mutation):
