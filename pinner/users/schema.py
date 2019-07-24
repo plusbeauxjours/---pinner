@@ -90,4 +90,4 @@ class Mutation(object):
     delete_avatar = mutations.DeleteAvatar.Field(required=True)
     mark_as_main = mutations.MarkAsMain.Field(required=True)
     toggle_settings = mutations.ToggleSettings.Field(required=True)
-    slack_report_user = mutations.SlackReportUser.Field(required=True)
+    slack_report_users = mutations.SlackReportUsers.Field(required=True)

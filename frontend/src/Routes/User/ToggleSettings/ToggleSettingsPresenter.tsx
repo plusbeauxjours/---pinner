@@ -245,7 +245,7 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
             <MenuText>SETTINGS</MenuText>
           </Link>
           <GreyText onClick={toggleConfirmModal}>LOGOUT</GreyText>
-          <GreyText onClick={back}>CANCEL</GreyText>
+          <GreyText onClick={back}>Cancel</GreyText>
         </MenuColumn>
         <GreyLine />
         <Column>

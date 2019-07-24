@@ -288,7 +288,7 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
               <ModalLink onClick={() => console.log("REPORT COFFEE")}>
                 REPORT COFFEE
               </ModalLink>
-              <ModalLink onClick={toggleCoffeeReportModal}>CANCEL</ModalLink>
+              <ModalLink onClick={toggleCoffeeReportModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -305,7 +305,7 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
               <ModalLink onClick={() => submitCoffee("gender")}>
                 GENDER
               </ModalLink>
-              <ModalLink onClick={toggleCoffeeRequestModal}>CANCEL</ModalLink>
+              <ModalLink onClick={toggleCoffeeRequestModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>
         )}

@@ -464,6 +464,11 @@ export interface FacebookConnectVariables {
   lastName: string;
   email?: string | null;
   gender?: string | null;
+  latitude: number;
+  longitude: number;
+  cityId: string;
+  cityName: string;
+  countryCode: string;
   fbId: string;
 }
 
@@ -2545,6 +2550,28 @@ export interface CalculateDistance_calculateDistance {
 
 export interface CalculateDistance {
   calculateDistance: CalculateDistance_calculateDistance;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: SlackReportUsers
+// ====================================================
+
+export interface SlackReportUsers_slackReportUsers {
+  __typename: "SlackReportUsersResponse";
+  ok: boolean | null;
+}
+
+export interface SlackReportUsers {
+  slackReportUsers: SlackReportUsers_slackReportUsers;
+}
+
+export interface SlackReportUsersVariables {
+  targetUsername: string;
+  payload: string;
 }
 
 /* tslint:disable */

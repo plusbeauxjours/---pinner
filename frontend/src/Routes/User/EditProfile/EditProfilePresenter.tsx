@@ -708,7 +708,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
             <GreyText>SETTINGS</GreyText>
           </Link>
           <GreyText onClick={toggleLogoutConfirmModal}>LOGOUT</GreyText>
-          <GreyText onClick={back}>CANCEL</GreyText>
+          <GreyText onClick={back}>Cancel</GreyText>
         </MenuColumn>
         <GreyLine />
         <Column>

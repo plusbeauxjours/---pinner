@@ -676,18 +676,17 @@ class FacebookConnect(graphene.Mutation):
             return types.FacebookConnectResponse(ok=True, token=token)
 
 
-class SlackReportUser(graphene.Mutation):
+class SlackReportUsers(graphene.Mutation):
 
     class Arguments:
-        reportUsername = graphene.String()
-        targetUsername = graphene.String()
-        payload = graphene.String()
+        targetUsername = graphene.String(required=True)
+        payload = graphene.String(required=True)
 
-    Output = types.SlackReportUserResponse
+    Output = types.SlackReportUsersResponse
 
     def mutate(self, info, **kwargs):
 
-        reportUsername = kwargs.get('reportUsername')
+        reportUsername = info.context.user.username
         targetUsername = kwargs.get('targetUsername')
         payload = kwargs.get('payload')
 
@@ -705,7 +704,7 @@ class SlackReportUser(graphene.Mutation):
                 "footer": "🙅🏻‍♂️ Inappropriate Photo!"
             }]
             notify_slack(to_channel,  attachments)
-            return types.SlackReportUserResponse(ok=True)
+            return types.SlackReportUsersResponse(ok=True)
         elif(payload == "SPAM"):
             to_channel = "#user_reports"
             attachments = [{
@@ -720,7 +719,7 @@ class SlackReportUser(graphene.Mutation):
                 "footer": "🤦🏻‍♂️ Spam User!"
             }]
             notify_slack(to_channel,  attachments)
-            return types.SlackReportUserResponse(ok=True)
+            return types.SlackReportUsersResponse(ok=True)
         elif(payload == "MESSAGE"):
             to_channel = "#user_reports"
             attachments = [{
@@ -735,7 +734,7 @@ class SlackReportUser(graphene.Mutation):
                 "footer": "🙅🏻‍♂️ Inappropriate Message!"
             }]
             notify_slack(to_channel,  attachments)
-            return types.SlackReportUserResponse(ok=True)
+            return types.SlackReportUsersResponse(ok=True)
         elif(payload == "OTHER"):
             to_channel = "#user_reports"
             attachments = [{
@@ -750,6 +749,6 @@ class SlackReportUser(graphene.Mutation):
                 "footer": "🤦🏻‍♂️ Other Report!"
             }]
             notify_slack(to_channel,  attachments)
-            return types.SlackReportUserResponse(ok=True)
+            return types.SlackReportUsersResponse(ok=True)
         else:
-            return types.SlackReportUserResponse(ok=False)
+            return types.SlackReportUsersResponse(ok=False)

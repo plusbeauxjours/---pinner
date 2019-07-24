@@ -608,6 +608,7 @@ interface IProps {
   coffeeLoading: boolean;
 
   modalOpen: boolean;
+  reportModalOpen: boolean;
   avatarPreviewModalOpen: boolean;
 
   tripModalOpen: boolean;
@@ -635,7 +636,7 @@ interface IProps {
   onFocusChange: (arg: "startDate" | "endDate" | null) => void;
 
   toggleModal: () => void;
-
+  toggleReportModal: () => void;
   toggleTripModal: any;
   toggleTripConfirmModal: () => void;
   toggleAddTripModal: () => void;
@@ -685,6 +686,7 @@ interface IProps {
   logUserOutFn: any;
   logoutConfirmModal: boolean;
   toggleLogoutConfirmModal: () => void;
+  slackReportUsers: (payload: string) => void;
 }
 
 const UserProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -701,6 +703,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   coffeeLoading,
 
   modalOpen,
+  reportModalOpen,
   avatarPreviewModalOpen,
   tripModalOpen,
   tripConfirmModalOpen,
@@ -710,6 +713,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   requestModalOpen,
 
   toggleModal,
+  toggleReportModal,
   toggleTripModal,
   toggleTripConfirmModal,
   toggleAddTripModal,
@@ -759,7 +763,8 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   markAsMainFn,
   logUserOutFn,
   logoutConfirmModal,
-  toggleLogoutConfirmModal
+  toggleLogoutConfirmModal,
+  slackReportUsers
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
     apiKey: `${GOOGLE_PLACE_KEY}`,
@@ -888,7 +893,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               <ModalLink onClick={() => submitCoffee("gender")}>
                 GENDER
               </ModalLink>
-              <ModalLink onClick={toggleRequestModal}>CANCEL</ModalLink>
+              <ModalLink onClick={toggleRequestModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -949,7 +954,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                 Settings
               </ModalLinkContainer>
               <ModalLink onClick={toggleLogoutConfirmModal}>Log Out</ModalLink>
-              <ModalLink onClick={toggleModal}>CANCEL</ModalLink>
+              <ModalLink onClick={toggleModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -976,7 +981,27 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               <ModalLink onClick={toggleTripConfirmModal}>
                 Delete Trip
               </ModalLink>
-              <ModalLink onClick={toggleTripModal}>CANCEL</ModalLink>
+              <ModalLink onClick={toggleTripModal}>Cancel</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
+        {reportModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleReportModal} />
+            <Modal>
+              <ModalLink onClick={() => slackReportUsers("PHOTO")}>
+                Inappropriate Photos
+              </ModalLink>
+              <ModalLink onClick={() => slackReportUsers("SPAM")}>
+                Feels Like Spam
+              </ModalLink>
+              <ModalLink onClick={() => slackReportUsers("MESSAGE")}>
+                Inappropriate Message
+              </ModalLink>
+              <ModalLink onClick={() => slackReportUsers("OTHER")}>
+                Other
+              </ModalLink>
+              <ModalLink onClick={toggleReportModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -1135,7 +1160,11 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               <ListIcon onClick={toggleModal}>
                 <List />
               </ListIcon>
-            ) : null}
+            ) : (
+              <ListIcon onClick={toggleReportModal}>
+                <List />
+              </ListIcon>
+            )}
           </NameContainer>
         </Header>
         {/* 

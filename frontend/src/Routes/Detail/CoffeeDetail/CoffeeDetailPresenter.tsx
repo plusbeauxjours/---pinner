@@ -231,7 +231,7 @@ const CoffeeDetailPresenter: React.FunctionComponent<IProps> = ({
                   </MenuModalLink>
                 </>
               )}
-              <MenuModalLink onClick={toggleModal}>CANCEL</MenuModalLink>
+              <MenuModalLink onClick={toggleModal}>Cancel</MenuModalLink>
             </MenuModal>
           </MenuModalContainer>
         )}

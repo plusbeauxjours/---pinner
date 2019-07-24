@@ -275,7 +275,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
               <ModalLink onClick={() => console.log("REPORT COFFEE")}>
                 REPORT COFFEE
               </ModalLink>
-              <ModalLink onClick={toggleCoffeeReportModal}>CANCEL</ModalLink>
+              <ModalLink onClick={toggleCoffeeReportModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>
         )}
@@ -292,7 +292,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
               <ModalLink onClick={() => submitCoffee("gender")}>
                 GENDER
               </ModalLink>
-              <ModalLink onClick={toggleRequestModal}>CANCEL</ModalLink>
+              <ModalLink onClick={toggleRequestModal}>Cancel</ModalLink>
             </Modal>
           </ModalContainer>
         )}

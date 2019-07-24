@@ -213,3 +213,11 @@ export const CALCULATE_DISTANCE = gql`
     }
   }
 `;
+
+export const SLACK_REPORT_USERS = gql`
+  mutation SlackReportUsers($targetUsername: String!, $payload: String!) {
+    slackReportUsers(targetUsername: $targetUsername, payload: $payload) {
+      ok
+    }
+  }
+`;

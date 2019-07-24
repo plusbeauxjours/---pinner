@@ -123,7 +123,7 @@ const UserAvatarDetailPresenter: React.FunctionComponent<IProps> = ({
                   </MenuModalLink>
                 </>
               )}
-              <MenuModalLink onClick={toggleModalOpen}>CANCEL</MenuModalLink>
+              <MenuModalLink onClick={toggleModalOpen}>Cancel</MenuModalLink>
             </MenuModal>
           </MenuModalContainer>
         )}
