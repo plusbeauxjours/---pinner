@@ -993,7 +993,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                 Inappropriate Photos
               </ModalLink>
               <ModalLink onClick={() => slackReportUsers("SPAM")}>
-                Feels Like Spam
+                Wrong Loca
               </ModalLink>
               <ModalLink onClick={() => slackReportUsers("MESSAGE")}>
                 Inappropriate Message

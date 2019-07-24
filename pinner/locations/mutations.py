@@ -317,16 +317,15 @@ class ToggleLikeCity(graphene.Mutation):
 class SlackReportLocation(graphene.Mutation):
 
     class Arguments:
-        reportUsername = graphene.String()
-        targetLocationId = graphene.String()
-        targetLocationType = graphene.String()
-        payload = graphene.String()
+        targetLocationId = graphene.String(required=True)
+        targetLocationType = graphene.String(required=True)
+        payload = graphene.String(required=True)
 
     Output = types.SlackReportLocationResponse
 
     def mutate(self, info, **kwargs):
 
-        reportUsername = kwargs.get('reportUsername')
+        reportUsername = info.context.user.username
         targetLocationId = kwargs.get('targetLocationId')
         targetLocationType = kwargs.get('targetLocationType')
         payload = kwargs.get('payload')

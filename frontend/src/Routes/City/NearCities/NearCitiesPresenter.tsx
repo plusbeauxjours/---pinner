@@ -156,7 +156,11 @@ const NearCitiesPresenter: React.FunctionComponent<IProps> = ({
                   <UserRow key={nearCity.id}>
                     <Link to={`/city/${nearCity.cityId}`}>
                       <Header>
-                        <SAvatar size={"sm"} url={nearCity.cityPhoto} />
+                        <SAvatar
+                          size={"sm"}
+                          url={nearCity.cityPhoto}
+                          city={true}
+                        />
                         <HeaderColumn>
                           <HeaderText text={nearCity.cityName} />
                           <Location>{nearCity.country.countryName}</Location>
@@ -179,7 +183,11 @@ const NearCitiesPresenter: React.FunctionComponent<IProps> = ({
                   <UserRow key={nearCity.id}>
                     <Link to={`/city/${nearCity.cityId}`}>
                       <Header>
-                        <SAvatar size={"sm"} url={nearCity.cityPhoto} />
+                        <SAvatar
+                          size={"sm"}
+                          url={nearCity.cityPhoto}
+                          city={true}
+                        />
                         <HeaderColumn>
                           <HeaderText text={nearCity.cityName} />
                           <Location>{nearCity.country.countryName}</Location>

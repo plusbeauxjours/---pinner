@@ -2614,6 +2614,29 @@ export interface Me {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: SlackReportLocations
+// ====================================================
+
+export interface SlackReportLocations_slackReportLocations {
+  __typename: "SlackReportLocationResponse";
+  ok: boolean | null;
+}
+
+export interface SlackReportLocations {
+  slackReportLocations: SlackReportLocations_slackReportLocations;
+}
+
+export interface SlackReportLocationsVariables {
+  targetLocationId: string;
+  targetLocationType: string;
+  payload: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: ProfileParts
 // ====================================================
 

@@ -700,7 +700,7 @@ class SlackReportUsers(graphene.Mutation):
                 "author_link": "http://localhost:3000/%s" % (reportUsername),
                 "title":  "reported user: %s" % (targetUsername),
                 "title_link": "http://localhost:3000/%s" % (targetUsername),
-                "text": "%s reports that %s has inappropriate photo" % (reportUsername, targetUsername),
+                "text": "%s reports that %s has inappropriate PHOTO" % (reportUsername, targetUsername),
                 "footer": "🙅🏻‍♂️ Inappropriate Photo!"
             }]
             notify_slack(to_channel,  attachments)
@@ -730,7 +730,7 @@ class SlackReportUsers(graphene.Mutation):
                 "author_link": "http://localhost:3000/%s" % (reportUsername),
                 "title":  "reported user: %s" % (targetUsername),
                 "title_link": "http://localhost:3000/%s" % (targetUsername),
-                "text": "%s reports that %s sent inappropriate message" % (reportUsername, targetUsername),
+                "text": "%s reports that %s sent inappropriate MESSAGE" % (reportUsername, targetUsername),
                 "footer": "🙅🏻‍♂️ Inappropriate Message!"
             }]
             notify_slack(to_channel,  attachments)

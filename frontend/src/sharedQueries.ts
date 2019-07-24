@@ -151,3 +151,19 @@ export const MATCH_FRAGMENT = gql`
     isMatching
   }
 `;
+
+export const SLACK_REPORT_LOCATIONS = gql`
+  mutation SlackReportLocations(
+    $targetLocationId: String!
+    $targetLocationType: String!
+    $payload: String!
+  ) {
+    slackReportLocations(
+      targetLocationId: $targetLocationId
+      targetLocationType: $targetLocationType
+      payload: $payload
+    ) {
+      ok
+    }
+  }
+`;

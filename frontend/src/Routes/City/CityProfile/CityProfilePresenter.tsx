@@ -13,7 +13,7 @@ import CityLikeBtn from "../../../Components/CityLikeBtn";
 import UserBox from "src/Components/UserBox";
 import CoffeeBox from "src/Components/CoffeeBox";
 import LocationBox from "src/Components/LocationBox";
-// import { Right } from "../../../Icons";
+import { List } from "../../../Icons";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -211,6 +211,32 @@ const SText = styled(Bold)`
   text-transform: uppercase;
 `;
 
+const NameContainer = styled.span`
+  width: 100%;
+  margin: 0px auto;
+  padding: 55px 15px 0 15px;
+  max-width: 935px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+const ListIcon = styled.span`
+  display: flex;
+  flex-direction: row;
+  display: flex;
+  cursor: pointer;
+  margin-top: 7px;
+  svg {
+    fill: white;
+    transition: fill 0.2s ease-in-out;
+    &:hover {
+      fill: grey;
+    }
+  }
+`;
+
 // const RightIcon = styled.div`
 //   position: absolute;
 //   display: flex;
@@ -250,6 +276,9 @@ interface IProps {
   search: string;
   usersNowList: any;
   submitCoffee: any;
+  reportModalOpen: boolean;
+  toggleReportModal: () => void;
+  slackReportLocations: (targetLocationId: string, payload: string) => void;
 }
 
 const CityProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -274,13 +303,40 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
   search,
   onChange,
   usersNowList,
-  submitCoffee
+  submitCoffee,
+  reportModalOpen,
+  toggleReportModal,
+  slackReportLocations
 }) => {
   if (cityLoading) {
     return <Loader />;
   } else if (!cityLoading && city) {
     return (
       <>
+        {reportModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleReportModal} />
+            <Modal>
+              <ModalLink
+                onClick={() => slackReportLocations(city.cityId, "PHOTO")}
+              >
+                Inappropriate Photos
+              </ModalLink>
+              <ModalLink
+                onClick={() => slackReportLocations(city.cityId, "LOCATION")}
+              >
+                Wrong Location
+              </ModalLink>
+
+              <ModalLink
+                onClick={() => slackReportLocations(city.cityId, "OTHER")}
+              >
+                Other
+              </ModalLink>
+              <ModalLink onClick={toggleReportModal}>Cancel</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
         {coffeeReportModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleCoffeeReportModal} />
@@ -333,7 +389,12 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
           <PHeader>
             <AvatarContainer>
               <CAvatar size="lg" url={city.cityPhoto} city={true} />
-              <LocationName>{city.cityName}</LocationName>
+              <NameContainer>
+                <LocationName>{city.cityName}</LocationName>{" "}
+                <ListIcon onClick={toggleReportModal}>
+                  <List />
+                </ListIcon>
+              </NameContainer>
               <InfoRow>
                 <Weather latitude={city.latitude} longitude={city.longitude} />
                 <CityLikeBtn

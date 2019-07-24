@@ -11,7 +11,8 @@ import {
   GetCoffees,
   GetCoffeesVariables,
   GetSamenameCities,
-  GetSamenameCitiesVariables
+  GetSamenameCitiesVariables,
+  ReportLocation
 } from "../../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
 import { CITY_PROFILE, GET_SAMENAME_CITIES } from "./CityProfileQueries";
@@ -19,6 +20,8 @@ import { NEAR_CITIES } from "../NearCities/NearCitiesQueries";
 import { GET_COFFEES } from "../../User/Coffees/CoffeesQueries";
 import { toast } from "react-toastify";
 import { REQUEST_COFFEE } from "../../Match/MatchQueries";
+import { ReportLocationVariables } from "../../../types/api";
+import { SLACK_REPORT_LOCATIONS } from "../../../sharedQueries";
 
 class CityProfileQuery extends Query<CityProfile, CityProfileVariables> {}
 class GetSamenameCitiesQuery extends Query<
@@ -31,10 +34,15 @@ class RequestCoffeeMutation extends Mutation<
   RequestCoffee,
   RequestCoffeeVariables
 > {}
+class ReportLocationsMutation extends Mutation<
+  ReportLocation,
+  ReportLocationVariables
+> {}
 
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
+  reportModalOpen: boolean;
   search: string;
   usersNowList: any;
   currentCityId: string;
@@ -46,9 +54,11 @@ class CityProfileContainer extends React.Component<IProps, IState> {
   public data;
   public coffeeFetchMore;
   public requestCoffeeFn: MutationFn;
+  public slackReportLocationsFn: MutationFn;
   constructor(props) {
     super(props);
     this.state = {
+      reportModalOpen: false,
       search: "",
       usersNowList: [],
       currentCityId: localStorage.getItem("cityId"),
@@ -72,6 +82,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     } = this.props;
     const isStaying = this.state.currentCityId === cityId;
     const {
+      reportModalOpen,
       search,
       usersNowList,
       coffeeReportModalOpen,
@@ -93,72 +104,96 @@ class CityProfileContainer extends React.Component<IProps, IState> {
             >
               {({ data: coffeeData, loading: coffeeLoading }) => {
                 return (
-                  <RequestCoffeeMutation
-                    mutation={REQUEST_COFFEE}
-                    variables={{
-                      currentCityId: cityId
-                    }}
-                    onCompleted={this.onCompletedRequestCoffee}
-                    update={this.updateRequestCoffee}
+                  <ReportLocationsMutation
+                    mutation={SLACK_REPORT_LOCATIONS}
+                    onCompleted={this.onCompltedSlackReportLocations}
                   >
-                    {requestCoffeeFn => {
-                      this.requestCoffeeFn = requestCoffeeFn;
+                    {slackReportLocationsFn => {
+                      this.slackReportLocationsFn = slackReportLocationsFn;
                       return (
-                        <NearCitiesQuery
-                          query={NEAR_CITIES}
-                          variables={{ cityId }}
+                        <RequestCoffeeMutation
+                          mutation={REQUEST_COFFEE}
+                          variables={{
+                            currentCityId: cityId
+                          }}
+                          onCompleted={this.onCompletedRequestCoffee}
+                          update={this.updateRequestCoffee}
                         >
-                          {({
-                            data: nearCitiesData,
-                            loading: nearCitiesLoading
-                          }) => {
+                          {requestCoffeeFn => {
+                            this.requestCoffeeFn = requestCoffeeFn;
                             return (
-                              <CityProfileQuery
-                                query={CITY_PROFILE}
+                              <NearCitiesQuery
+                                query={NEAR_CITIES}
                                 variables={{ cityId }}
                               >
-                                {({ data: cityData, loading: cityLoading }) => {
-                                  this.data = cityData;
+                                {({
+                                  data: nearCitiesData,
+                                  loading: nearCitiesLoading
+                                }) => {
                                   return (
-                                    <CityProfilePresenter
-                                      samenameCitiesData={samenameCitiesData}
-                                      samenameCitiesLoading={
-                                        samenameCitiesLoading
-                                      }
-                                      coffeeData={coffeeData}
-                                      coffeeLoading={coffeeLoading}
-                                      cityData={cityData}
-                                      cityLoading={cityLoading}
-                                      nearCitiesData={nearCitiesData}
-                                      nearCitiesLoading={nearCitiesLoading}
-                                      coffeeReportModalOpen={
-                                        coffeeReportModalOpen
-                                      }
-                                      coffeeRequestModalOpen={
-                                        coffeeRequestModalOpen
-                                      }
-                                      toggleCoffeeReportModal={
-                                        this.toggleCoffeeReportModal
-                                      }
-                                      toggleCoffeeRequestModal={
-                                        this.toggleCoffeeRequestModal
-                                      }
-                                      cityId={cityId}
-                                      isStaying={isStaying}
-                                      onChange={this.onChange}
-                                      search={search}
-                                      usersNowList={usersNowList}
-                                      submitCoffee={this.submitCoffee}
-                                    />
+                                    <CityProfileQuery
+                                      query={CITY_PROFILE}
+                                      variables={{ cityId }}
+                                    >
+                                      {({
+                                        data: cityData,
+                                        loading: cityLoading
+                                      }) => {
+                                        this.data = cityData;
+                                        return (
+                                          <CityProfilePresenter
+                                            reportModalOpen={reportModalOpen}
+                                            toggleReportModal={
+                                              this.toggleReportModal
+                                            }
+                                            slackReportLocations={
+                                              this.slackReportLocations
+                                            }
+                                            samenameCitiesData={
+                                              samenameCitiesData
+                                            }
+                                            samenameCitiesLoading={
+                                              samenameCitiesLoading
+                                            }
+                                            coffeeData={coffeeData}
+                                            coffeeLoading={coffeeLoading}
+                                            cityData={cityData}
+                                            cityLoading={cityLoading}
+                                            nearCitiesData={nearCitiesData}
+                                            nearCitiesLoading={
+                                              nearCitiesLoading
+                                            }
+                                            coffeeReportModalOpen={
+                                              coffeeReportModalOpen
+                                            }
+                                            coffeeRequestModalOpen={
+                                              coffeeRequestModalOpen
+                                            }
+                                            toggleCoffeeReportModal={
+                                              this.toggleCoffeeReportModal
+                                            }
+                                            toggleCoffeeRequestModal={
+                                              this.toggleCoffeeRequestModal
+                                            }
+                                            cityId={cityId}
+                                            isStaying={isStaying}
+                                            onChange={this.onChange}
+                                            search={search}
+                                            usersNowList={usersNowList}
+                                            submitCoffee={this.submitCoffee}
+                                          />
+                                        );
+                                      }}
+                                    </CityProfileQuery>
                                   );
                                 }}
-                              </CityProfileQuery>
+                              </NearCitiesQuery>
                             );
                           }}
-                        </NearCitiesQuery>
+                        </RequestCoffeeMutation>
                       );
                     }}
-                  </RequestCoffeeMutation>
+                  </ReportLocationsMutation>
                 );
               }}
             </GetCoffeesQuery>
@@ -167,6 +202,26 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       </GetSamenameCitiesQuery>
     );
   }
+  public toggleReportModal = () => {
+    const { reportModalOpen } = this.state;
+    this.setState({ reportModalOpen: !reportModalOpen });
+  };
+  public onCompltedSlackReportLocations = data => {
+    if (data.slackReportLocations.ok) {
+      toast.success("Report Sent");
+    } else {
+      toast.error("error");
+    }
+  };
+  public slackReportLocations = (targetLocationId, payload) => {
+    this.slackReportLocationsFn({
+      variables: {
+        targetLocationId,
+        targetLocationType: "city",
+        payload
+      }
+    });
+  };
   public toggleCoffeeRequestModal = () => {
     const { coffeeRequestModalOpen } = this.state;
     this.setState({
