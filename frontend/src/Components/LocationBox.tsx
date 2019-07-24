@@ -268,8 +268,8 @@ const LocationBox: React.FunctionComponent<IProps> = ({
         <Container>
           <Box>
             {continents.map(continent => (
-              <Link to={`/continent/${continent.continentCode}`}>
-                <UserRow key={continent.id} type={"continents"}>
+              <UserRow key={continent.id} type={"continents"}>
+                <Link to={`/continent/${continent.continentCode}`}>
                   <Header>
                     <SAvatar
                       size={"sm"}
@@ -284,8 +284,8 @@ const LocationBox: React.FunctionComponent<IProps> = ({
                     {continent.countryCount}{" "}
                     {continent.countryCount === 1 ? "country" : "countries"}
                   </Text>
-                </UserRow>
-              </Link>
+                </Link>
+              </UserRow>
             ))}
           </Box>
         </Container>
