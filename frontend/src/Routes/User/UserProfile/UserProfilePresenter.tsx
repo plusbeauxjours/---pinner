@@ -827,16 +827,22 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                   return (
                     <AvatarKeyContainer key={avatar.id}>
                       <AvatarImage>
-                        <Link
-                          to={{
-                            pathname: `/${username}/${avatar.uuid}`,
-                            state: { avatarModalOpen: true }
-                          }}
-                        >
+                        {avatar.image ? (
+                          <Link
+                            to={{
+                              pathname: `/${username}/${avatar.uuid}`,
+                              state: { avatarModalOpen: true }
+                            }}
+                          >
+                            <ModalAvatarImage
+                              src={`${BACKEND_URL}/media/${avatar.thumbnail}`}
+                            />
+                          </Link>
+                        ) : (
                           <ModalAvatarImage
                             src={`${BACKEND_URL}/media/${avatar.thumbnail}`}
                           />
-                        </Link>
+                        )}
                       </AvatarImage>
                       {avatar.isMain && user.profile.isSelf ? (
                         <RedDotIcon>
