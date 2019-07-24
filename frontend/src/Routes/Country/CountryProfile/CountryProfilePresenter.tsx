@@ -10,7 +10,8 @@ import CityLikeBtn from "../../../Components/CityLikeBtn";
 import UserBox from "src/Components/UserBox";
 import CoffeeBox from "src/Components/CoffeeBox";
 import LocationBox from "src/Components/LocationBox";
-// import { Right } from "../../../Icons";
+import { List } from "../../../Icons";
+import { keyframes } from "styled-components";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -175,6 +176,85 @@ const Flag = styled.span`
   font-size: 20px;
 `;
 
+const NameContainer = styled.span`
+  width: 100%;
+  margin: 0px auto;
+  padding: 55px 15px 0 15px;
+  max-width: 935px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+const ListIcon = styled.span`
+  display: flex;
+  flex-direction: row;
+  display: flex;
+  cursor: pointer;
+  margin-top: 7px;
+  svg {
+    fill: white;
+    transition: fill 0.2s ease-in-out;
+    &:hover {
+      fill: grey;
+    }
+  }
+`;
+
+const ModalAnimation = keyframes`
+	  from{
+	    opacity:0;
+	    transform:scale(1.1);
+	  }
+	  to{
+	    opacity:1;
+	    transform:none;
+	  }
+	`;
+
+const ModalContainer = styled.div`
+  z-index: 8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+`;
+
+const ModalOverlay = styled.div`
+  z-index: 5;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+`;
+
+const ModalLink = styled.div`
+  text-align: center;
+  min-height: 50px;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  :not(:last-child) {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  }
+`;
+
+const Modal = styled.div`
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  width: 30%;
+  border-radius: 12px;
+  z-index: 10;
+  animation: ${ModalAnimation} 0.1s linear;
+`;
+
 // const RightIcon = styled.div`
 //   position: absolute;
 //   display: flex;
@@ -210,6 +290,9 @@ interface IProps {
   countryCode: string;
   currentCityId: string;
   back: (event) => void;
+  reportModalOpen: boolean;
+  toggleReportModal: () => void;
+  slackReportLocations: (targetLocationId: string, payload: string) => void;
 }
 
 const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -232,13 +315,46 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
   onChange,
 
   countryCode,
-  currentCityId
+  currentCityId,
+  reportModalOpen,
+  toggleReportModal,
+  slackReportLocations
 }) => {
   if (loading) {
     return <Loader />;
   } else if (!loading && cities && usersNow && usersBefore && country) {
     return (
       <>
+        {reportModalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleReportModal} />
+            <Modal>
+              <ModalLink
+                onClick={() =>
+                  slackReportLocations(country.countryCode, "PHOTO")
+                }
+              >
+                Inappropriate Photos
+              </ModalLink>
+              <ModalLink
+                onClick={() =>
+                  slackReportLocations(country.countryCode, "LOCATION")
+                }
+              >
+                Wrong Location
+              </ModalLink>
+
+              <ModalLink
+                onClick={() =>
+                  slackReportLocations(country.countryCode, "OTHER")
+                }
+              >
+                Other
+              </ModalLink>
+              <ModalLink onClick={toggleReportModal}>Cancel</ModalLink>
+            </Modal>
+          </ModalContainer>
+        )}
         <SWrapper>
           {/* <LeftIcon>
             <Link
@@ -264,8 +380,13 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
             <AvatarContainer>
               <CAvatar size="lg" url={country.countryPhoto} city={true} />
               <LocationContainer>
-                <LocationName>{country.countryName}</LocationName>
+                <NameContainer>
+                  <LocationName>{country.countryName}</LocationName>
                 <Flag>{country.countryEmoji}</Flag>
+                  <ListIcon onClick={toggleReportModal}>
+                    <List />
+                  </ListIcon>
+                </NameContainer>
               </LocationContainer>
               {/* <InfoRow>
                 <SSText text={String(country.distance)} />

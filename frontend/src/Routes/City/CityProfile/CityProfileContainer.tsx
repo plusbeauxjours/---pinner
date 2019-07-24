@@ -12,7 +12,8 @@ import {
   GetCoffeesVariables,
   GetSamenameCities,
   GetSamenameCitiesVariables,
-  ReportLocation
+  SlackReportLocations,
+  SlackReportLocationsVariables
 } from "../../../types/api";
 import { RouteComponentProps, withRouter } from "react-router";
 import { CITY_PROFILE, GET_SAMENAME_CITIES } from "./CityProfileQueries";
@@ -20,7 +21,6 @@ import { NEAR_CITIES } from "../NearCities/NearCitiesQueries";
 import { GET_COFFEES } from "../../User/Coffees/CoffeesQueries";
 import { toast } from "react-toastify";
 import { REQUEST_COFFEE } from "../../Match/MatchQueries";
-import { ReportLocationVariables } from "../../../types/api";
 import { SLACK_REPORT_LOCATIONS } from "../../../sharedQueries";
 
 class CityProfileQuery extends Query<CityProfile, CityProfileVariables> {}
@@ -34,9 +34,9 @@ class RequestCoffeeMutation extends Mutation<
   RequestCoffee,
   RequestCoffeeVariables
 > {}
-class ReportLocationsMutation extends Mutation<
-  ReportLocation,
-  ReportLocationVariables
+class SlackReportLocationsMutation extends Mutation<
+  SlackReportLocations,
+  SlackReportLocationsVariables
 > {}
 
 interface IProps extends RouteComponentProps<any> {}
@@ -104,7 +104,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
             >
               {({ data: coffeeData, loading: coffeeLoading }) => {
                 return (
-                  <ReportLocationsMutation
+                  <SlackReportLocationsMutation
                     mutation={SLACK_REPORT_LOCATIONS}
                     onCompleted={this.onCompltedSlackReportLocations}
                   >
@@ -193,7 +193,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                         </RequestCoffeeMutation>
                       );
                     }}
-                  </ReportLocationsMutation>
+                  </SlackReportLocationsMutation>
                 );
               }}
             </GetCoffeesQuery>
@@ -207,6 +207,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     this.setState({ reportModalOpen: !reportModalOpen });
   };
   public onCompltedSlackReportLocations = data => {
+    this.setState({ reportModalOpen: false });
     if (data.slackReportLocations.ok) {
       toast.success("Report Sent");
     } else {

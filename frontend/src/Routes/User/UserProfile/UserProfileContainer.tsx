@@ -974,6 +974,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     }
   };
   public onCompletedSlackReportUsers = data => {
+    this.setState({ reportModalOpen: false });
     if (data.slackReportUsers.ok) {
       toast.success("Reporet sent");
     } else {
