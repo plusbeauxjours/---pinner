@@ -71,7 +71,7 @@ class LoggedInPages extends React.Component<IProps> {
     );
     const coffeesModalOpen = !!(
       location.state &&
-      location.state.coffeeModalOpen &&
+      location.state.coffeesModalOpen &&
       this.previousLocation !== location
     );
     const avatarModalOpen = !!(
@@ -97,19 +97,35 @@ class LoggedInPages extends React.Component<IProps> {
     return (
       <Wrapper>
         <Header />
-        {coffeeModalOpen && <Route path="/c/:uuid" component={CoffeeDetail} />}
-        {coffeesModalOpen && (
-          <Route path="/:username/coffees" component={Coffees} />
+        {coffeeModalOpen && (
+          <Route path="/c/:uuid" exact={true} component={CoffeeDetail} />
         )}
-        {cityModalOpen && <Route path="/:username/cities" component={Cities} />}
+        {coffeesModalOpen && (
+          <Route path="/:username/coffees" exact={true} component={Coffees} />
+        )}
+        {cityModalOpen && (
+          <Route path="/:username/cities" exact={true} component={Cities} />
+        )}
         {countryModalOpen && (
-          <Route path="/:username/countries" component={Countries} />
+          <Route
+            path="/:username/countries"
+            exact={true}
+            component={Countries}
+          />
         )}
         {continentModalOpen && (
-          <Route path="/:username/continents" component={Continents} />
+          <Route
+            path="/:username/continents"
+            exact={true}
+            component={Continents}
+          />
         )}
         {avatarModalOpen && (
-          <Route path="/:username/:uuid" component={UserAvatarDetail} />
+          <Route
+            path="/:username/:uuid"
+            exact={true}
+            component={UserAvatarDetail}
+          />
         )}
         <Switch
           location={
@@ -125,7 +141,6 @@ class LoggedInPages extends React.Component<IProps> {
         >
           <Route path="/404" exact={true} component={NotFound} />
           <Route path="/people" exact={true} component={PeoplePage} />
-          <Route path="/coffees" exact={true} component={CoffeesPage} />
           <Route path="/" exact={true} component={Match} />
 
           {/* CONTINENT */}

@@ -160,7 +160,11 @@ const ContinentsPresenter: React.FunctionComponent<IProps> = ({
                 <UserRow key={continent.id}>
                   <Link to={`/continent/${continent.continentCode}`}>
                     <Header>
-                      <SAvatar size={"sm"} url={continent.continentPhoto} />
+                      <SAvatar
+                        size={"sm"}
+                        url={continent.continentPhoto}
+                        city={true}
+                      />
                       <HeaderColumn>
                         <HeaderText text={continent.continentName} />
                       </HeaderColumn>
@@ -177,7 +181,11 @@ const ContinentsPresenter: React.FunctionComponent<IProps> = ({
                 <UserRow key={continent.id}>
                   <Link to={`/continent/${continent.continentCode}`}>
                     <Header>
-                      <SAvatar size={"sm"} url={continent.continentPhoto} />
+                      <SAvatar
+                        size={"sm"}
+                        url={continent.continentPhoto}
+                        city={true}
+                      />
                       <HeaderColumn>
                         <HeaderText text={continent.continentName} />
                       </HeaderColumn>

@@ -32,7 +32,7 @@ class CoffeesContainer extends React.Component<IProps, IState> {
       console.log(this.state);
     }
   }
-  public render = () => {
+  public render() {
     const {
       match: {
         params: { username }
@@ -59,7 +59,7 @@ class CoffeesContainer extends React.Component<IProps, IState> {
         }}
       </GetCoffeesQuery>
     );
-  };
+  }
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
     const {
       target: { value }

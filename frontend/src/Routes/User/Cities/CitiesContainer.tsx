@@ -8,7 +8,6 @@ import { FREQUENT_VISITS } from "./CitiesQueries";
 class GetCitiesQuery extends Query<FrequentVisits, FrequentVisitsVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
-
 interface IState {
   search: string;
   cityList: any;
