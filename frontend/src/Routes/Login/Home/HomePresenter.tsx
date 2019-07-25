@@ -1,5 +1,4 @@
 import React from "react";
-import { Route } from "react-router";
 import { Link } from "react-router-dom";
 
 import { keyframes } from "styled-components";
@@ -11,7 +10,6 @@ import Wrapper from "../../../Components/Wrapper";
 import LogIn from "../../../Components/LogIn";
 import SignUp from "../../../Components/SignUp";
 import SocialLogin from "../../../Components/SocialLogin";
-import PhoneLogin from "../PhoneLogin";
 
 const Container = styled(Wrapper)`
   display: flex;
@@ -104,40 +102,54 @@ const Icon = styled.span`
 interface IProps {
   isLogIn: boolean;
   modalOpen: boolean;
+  latitude: number;
+  longitude: number;
+  cityId: string;
+  cityName: string;
   countryCode: string;
   countryPhone: string;
-  verificationModalOpen: boolean;
   changeMode: () => void;
   toggleModal: () => void;
-  toggleVerificationModal: () => void;
 }
 
 const HomePresenter: React.FunctionComponent<IProps> = ({
   isLogIn,
   modalOpen,
+  latitude,
+  longitude,
+  cityId,
+  cityName,
   countryCode,
   countryPhone,
-  verificationModalOpen,
   toggleModal,
-  toggleVerificationModal,
   changeMode
 }) => {
   return (
     <>
-      {verificationModalOpen && (
-        <Route path="/phone-login" component={PhoneLogin} />
-      )}
       {modalOpen && (
         <ModalContainer>
           <ModalOverlay onClick={toggleModal} />
           <Modal>
             <ModalLink>
-              <SocialLogin />
+              <SocialLogin
+                latitude={latitude}
+                longitude={longitude}
+                countryCode={countryCode}
+                cityId={cityId}
+                cityName={cityName}
+              />
             </ModalLink>
             <Link
               to={{
                 pathname: `/phone-login`,
-                state: { countryCode, countryPhone }
+                state: {
+                  latitude,
+                  longitude,
+                  countryCode,
+                  countryPhone,
+                  cityId,
+                  cityName
+                }
               }}
             >
               <ModalLink>

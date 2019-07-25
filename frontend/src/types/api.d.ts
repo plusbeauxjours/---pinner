@@ -1458,6 +1458,7 @@ export interface CompletePhoneVerification {
 export interface CompletePhoneVerificationVariables {
   key: string;
   phoneNumber: string;
+  cityId: string;
 }
 
 /* tslint:disable */

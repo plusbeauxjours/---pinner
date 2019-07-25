@@ -178,8 +178,8 @@ const CountryText = styled.div`
 
 interface IProps {
   countryCode: string;
-  phoneNumber: string;
   countryPhone: string;
+  phoneNumber: string;
   modalOpen: boolean;
   loading: boolean;
   onInputChange: (
@@ -188,9 +188,7 @@ interface IProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   back: (event) => void;
   toggleModal: () => void;
-  onSelectCountry:(
-    countryCode:string, countryPhone:string
-          ) => void
+  onSelectCountry: (countryCode: string, countryPhone: string) => void;
 }
 
 const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
@@ -216,11 +214,10 @@ const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
             <SearchModal>
               <CountryContainer>
                 {countries.map((country, index) => (
-                  <CountryRow key={index}  onClick={() =>
-                    onSelectCountry(
-              country.code, country.phone
-                    )
-                  }>
+                  <CountryRow
+                    key={index}
+                    onClick={() => onSelectCountry(country.code, country.phone)}
+                  >
                     <CountryText>
                       <p>&nbsp;{country.name}</p>
                       <p>&nbsp;{country.emoji}</p>

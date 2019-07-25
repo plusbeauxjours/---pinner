@@ -15,6 +15,10 @@ class PhoneSignInMutation extends Mutation<
 > {}
 
 interface IState {
+  latitude: number;
+  longitude: number;
+  cityId: string;
+  cityName: string;
   countryCode: string;
   countryPhone: string;
   phoneNumber: string;
@@ -34,6 +38,10 @@ class PhoneLoginContainer extends React.Component<
       props.history.push("/");
     }
     this.state = {
+      latitude: state.latitude,
+      longitude: state.longitude,
+      cityId: state.cityId,
+      cityName: state.cityName,
       countryCode: state.countryCode,
       countryPhone: state.countryPhone,
       phoneNumber: null,
@@ -46,7 +54,16 @@ class PhoneLoginContainer extends React.Component<
   }
   public render() {
     const { history } = this.props;
-    const { countryCode, phoneNumber, countryPhone, modalOpen } = this.state;
+    const {
+      latitude,
+      longitude,
+      cityId,
+      cityName,
+      countryCode,
+      phoneNumber,
+      countryPhone,
+      modalOpen
+    } = this.state;
     return (
       <PhoneSignInMutation
         mutation={PHONE_SIGN_IN}
@@ -61,7 +78,12 @@ class PhoneLoginContainer extends React.Component<
             history.push({
               pathname: "/verify-phone",
               state: {
-                phone
+                phone,
+                latitude,
+                longitude,
+                cityId,
+                cityName,
+                countryCode
               }
             });
           } else {

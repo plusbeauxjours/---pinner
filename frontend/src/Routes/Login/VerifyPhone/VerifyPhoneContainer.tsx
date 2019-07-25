@@ -18,6 +18,11 @@ class VerifyMuataion extends Mutation<
 interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
+  latitude: number;
+  longitude: number;
+  cityId: string;
+  cityName: string;
+  countryCode: string;
   verificationKey: string;
   phoneNumber: string;
 }
@@ -30,13 +35,18 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
       props.history.push("/");
     }
     this.state = {
+      latitude: state.latitude,
+      longitude: state.longitude,
+      cityId: state.cityId,
+      cityName: state.cityName,
+      countryCode: state.countryCode,
       phoneNumber: state.phone,
       verificationKey: ""
     };
   }
   public render() {
     const { history } = this.props;
-    const { phoneNumber, verificationKey } = this.state;
+    const { phoneNumber, verificationKey, cityId } = this.state;
     return (
       <Mutation mutation={LOG_USER_IN}>
         {logUserIn => (
@@ -44,7 +54,8 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
             mutation={COMPLETE_PHONE_SIGN_IN}
             variables={{
               key: verificationKey,
-              phoneNumber
+              phoneNumber,
+              cityId
             }}
             onCompleted={data => {
               const { completePhoneVerification } = data;

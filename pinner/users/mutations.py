@@ -650,12 +650,10 @@ class FacebookConnect(graphene.Mutation):
             token = get_token(profile.user)
             return types.FacebookConnectResponse(ok=True, token=token)
         except:
-            with open('pinner/users/words.json', mode='rt', encoding='utf-8') as file:
-                words = json.load(file)
+            with open('pinner/users/adjectives.json', mode='rt', encoding='utf-8') as file:
+                adjectives = json.load(file)
                 local, at, domain = email.rpartition('@')
-                print(words[2])
-                username = random.choice(words) + local.capitalize()
-                print(username)
+                username = random.choice(adjectives) + local.capitalize()
 
                 newUser = User.objects.create_user(username)
                 newUser.first_name = first_name

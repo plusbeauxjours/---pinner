@@ -1,3 +1,7 @@
+import random
+import math
+import json
+
 import uuid
 import graphene
 from django.db import IntegrityError
@@ -69,6 +73,7 @@ class CompletePhoneVerification(graphene.Mutation):
     class Arguments:
         phoneNumber = graphene.String(required=True)
         key = graphene.String(required=True)
+        cityId = graphene.String(required=True)
 
     Output = types.CompletePhoneVerificationResponse
 
@@ -76,6 +81,7 @@ class CompletePhoneVerification(graphene.Mutation):
 
         phoneNumber = kwargs.get('phoneNumber')
         key = kwargs.get('key')
+        cityId = kwargs.get('cityId')
 
         try:
             verification = models.Verification.objects.get(
@@ -95,16 +101,22 @@ class CompletePhoneVerification(graphene.Mutation):
                 pass
 
             try:
-                useruuid = str(uuid.uuid4().hex)
-                newUser = User.objects.create_user(username=useruuid, password=useruuid)
-                token = get_token(newUser)
-                newUserProfile = users_models.Profile.objects.create(
-                    user=newUser,
-                    phone_number=phoneNumber
-                )
-                newUserProfile.verified_phone_number = True
-                newUserProfile.save()
-                return types.CompletePhoneVerificationResponse(ok=True, token=token)
+                with open('pinner/users/adjectives.json', mode='rt', encoding='utf-8') as adjectives:
+                    with open('pinner/users/nouns.json', mode='rt', encoding='utf-8') as nouns:
+                        adjectives = json.load(adjectives)
+                        nouns = json.load(nouns)
+                        username = random.choice(adjectives) + random.choice(nouns).capitalize()
+                        newUser = User.objects.create_user(username=username)
+                        token = get_token(newUser)
+                        city = location_models.City.objects.get(city_id=cityId)
+                        newUserProfile = users_models.Profile.objects.create(
+                            user=newUser,
+                            phone_number=phoneNumber,
+                            current_city=city
+                        )
+                        newUserProfile.verified_phone_number = True
+                        newUserProfile.save()
+                        return types.CompletePhoneVerificationResponse(ok=True, token=token)
 
             except IntegrityError as e:
                 raise Exception("No Phone to Verify")
