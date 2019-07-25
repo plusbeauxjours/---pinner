@@ -1,3 +1,7 @@
+import random
+import math
+import json
+
 import graphene
 import json
 from django.db import IntegrityError
@@ -516,7 +520,6 @@ class CreateAccount(graphene.Mutation):
 class FacebookConnect(graphene.Mutation):
 
     class Arguments:
-        username = graphene.String(required=True)
         first_name = graphene.String(required=True)
         last_name = graphene.String(required=True)
         email = graphene.String()
@@ -532,7 +535,6 @@ class FacebookConnect(graphene.Mutation):
 
     def mutate(self, info, **kwargs):
 
-        username = kwargs.get('username')
         first_name = kwargs.get('first_name')
         last_name = kwargs.get('last_name')
         email = kwargs.get('email')
@@ -648,32 +650,37 @@ class FacebookConnect(graphene.Mutation):
             token = get_token(profile.user)
             return types.FacebookConnectResponse(ok=True, token=token)
         except:
-            newUser = User.objects.create_user(username)
-            newUser.first_name = first_name
-            newUser.last_name = last_name
-            newUser.save()
+            with open('pinner/users/words.json', mode='rt', encoding='utf-8') as file:
+                words = json.load(file)
+                local, at, domain = email.rpartition('@')
+                print(words[2])
+                username = random.choice(words) + local.capitalize()
+                print(username)
 
-            avatarUrl = "http://graph.facebook.com/%s/picture?type=large" % fbId
-            thumbnail = BytesIO(urlopen(avatarUrl).read())
-            avatar = models.Avatar.objects.create(
-                is_main=True,
-                creator=newUser,
-            )
-            avatar.thumbnail.save("image.jpg", ContentFile(thumbnail.getvalue()), save=False)
-            avatar.save()
-            print("haha")
-            profile = models.Profile.objects.create(
-                user=newUser,
-                fbId=fbId,
-                email=email,
-                gender=gender,
-                avatarUrl=avatar.thumbnail,
-                current_city=city
-            )
-            print("haha2")
+                newUser = User.objects.create_user(username)
+                newUser.first_name = first_name
+                newUser.last_name = last_name
+                newUser.save()
 
-            token = get_token(profile.user)
-            return types.FacebookConnectResponse(ok=True, token=token)
+                avatarUrl = "http://graph.facebook.com/%s/picture?type=large" % fbId
+                thumbnail = BytesIO(urlopen(avatarUrl).read())
+                avatar = models.Avatar.objects.create(
+                    is_main=True,
+                    creator=newUser,
+                )
+                avatar.thumbnail.save("image.jpg", ContentFile(thumbnail.getvalue()), save=False)
+                avatar.save()
+                profile = models.Profile.objects.create(
+                    user=newUser,
+                    fbId=fbId,
+                    email=email,
+                    gender=gender,
+                    avatarUrl=avatar.thumbnail,
+                    current_city=city
+                )
+
+                token = get_token(profile.user)
+                return types.FacebookConnectResponse(ok=True, token=token)
 
 
 class SlackReportUsers(graphene.Mutation):

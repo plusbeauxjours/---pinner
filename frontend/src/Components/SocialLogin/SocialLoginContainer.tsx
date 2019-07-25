@@ -126,7 +126,6 @@ class SocialLoginContainer extends React.Component<any, IState> {
       toast.success(`Welcom ${name}!`);
       this.facebookConnectFn({
         variables: {
-          username: name,
           firstName: first_name,
           lastName: last_name,
           email,

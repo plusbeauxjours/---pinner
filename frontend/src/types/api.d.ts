@@ -459,7 +459,6 @@ export interface FacebookConnect {
 }
 
 export interface FacebookConnectVariables {
-  username: string;
   firstName: string;
   lastName: string;
   email?: string | null;
