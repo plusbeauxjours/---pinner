@@ -36,45 +36,12 @@ const ModalAnimation = keyframes`
 	  }
 	`;
 
-const Modal = styled.div`
-  background-color: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(128, 128, 128, 0.5);
-  width: 30%;
-  border-radius: 12px;
-  z-index: 101;
-  animation: ${ModalAnimation} 0.1s linear;
-`;
-
 const SWrapper = styled.div`
   z-index: 101;
   display: flex;
   justify-content: center;
   align-items: center;
   animation: ${ModalAnimation} 0.1s linear;
-`;
-
-const MenuModalLink = styled.div`
-  z-index: 101;
-  text-align: center;
-  min-height: 50px;
-  width: 100%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  :not(:last-child) {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
-  }
-`;
-
-const MenuModalContainer = styled(ModalContainer)`
-  z-index: 101;
-`;
-const MenuModalOverlay = styled(ModalOverlay)`
-  z-index: 101;
-`;
-const MenuModal = styled(Modal)`
-  z-index: 101;
 `;
 
 const Img = styled.img`
@@ -105,35 +72,12 @@ const UserAvatarDetailPresenter: React.FunctionComponent<IProps> = ({
     return <Loader />;
   } else if (!loading && avatar) {
     return (
-      <>
-        {modalOpen && (
-          <MenuModalContainer>
-            <MenuModalOverlay onClick={toggleModalOpen} />
-            <MenuModal>
-              {avatar.creator.profile.isSelf ? (
-                <>
-                  <MenuModalLink onClick={() => console.log("DELETE AVATAR")}>
-                    DELETE AVATAR
-                  </MenuModalLink>
-                </>
-              ) : (
-                <>
-                  <MenuModalLink onClick={() => console.log("LIKE AVATAR")}>
-                    LIKE AVATAR
-                  </MenuModalLink>
-                </>
-              )}
-              <MenuModalLink onClick={toggleModalOpen}>Cancel</MenuModalLink>
-            </MenuModal>
-          </MenuModalContainer>
-        )}
-        <ModalContainer>
-          <ModalOverlay onClick={back} />
-          <SWrapper>
-            <Img src={`${BACKEND_URL}/media/${avatar.image}`} />
-          </SWrapper>
-        </ModalContainer>
-      </>
+      <ModalContainer>
+        <ModalOverlay onClick={back} />
+        <SWrapper>
+          <Img src={`${BACKEND_URL}/media/${avatar.image}`} />
+        </SWrapper>
+      </ModalContainer>
     );
   }
   return null;

@@ -126,7 +126,7 @@ const Input = styled.input`
 
 const UserContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr, 1fr;
+  grid-template-columns: 1fr 1fr;
   align-content: center;
 `;
 
@@ -149,7 +149,7 @@ const SAvatar = styled(Avatar)`
 const HeaderColumn = styled.div`
   margin-left: 15px;
   display: grid;
-  grid-template-rows: 1fr, 1fr;
+  grid-template-rows: 1fr 1fr;
   height: 45px;
 `;
 

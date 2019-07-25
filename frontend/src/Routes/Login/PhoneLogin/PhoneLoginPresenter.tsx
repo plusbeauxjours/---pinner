@@ -9,16 +9,14 @@ import { countries } from "../../../countryData";
 const Container = styled.div`
   display: grid;
   grid-gap: 20px;
-  grid-template-rows: 2, 50px;
+  grid-template-rows: 2 40px;
   justify-items: center;
   align-items: center;
   padding: 20px;
   height: 100%;
 `;
 
-const Form = styled.form`
-  margin-left: 5px;
-`;
+const Form = styled.form``;
 
 const ModalContainer = styled.div`
   display: flex;
@@ -27,7 +25,6 @@ const ModalContainer = styled.div`
   position: fixed;
   height: 100%;
   width: 100%;
-  top: 0;
 `;
 
 const ModalOverlay = styled.div`
@@ -59,8 +56,14 @@ const Modal = styled.div`
   animation: ${ModalAnimation} 0.1s linear;
 `;
 
+const SearchModal = styled(Modal)`
+  padding: 30px;
+  height: 700px;
+  z-index: 10;
+`;
+
 const SButton = styled(Button)`
-  width: 50px;
+  width: 80px;
   margin-top: 20px;
 `;
 
@@ -79,14 +82,20 @@ const PhoneNumberContainer = styled.div`
   align-items: baseline;
 `;
 
-const Text = styled.p``;
+const Text = styled.div`
+  text-align: inline;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+`;
 
 const TextContainter = styled.div`
   margin: 0 10px 0 10px;
+  line-height: 13px;
 `;
 
 const CountryCode = styled.div`
-  font-size: 20px;
+  font-size: 18px;
   margin-right: 12px;
   cursor: pointer;
 `;
@@ -96,7 +105,7 @@ const CountryPhone = styled.div`
   flex-direction: row;
   align-items: baseline;
   border-bottom: 1px solid ${props => props.theme.greyColor};
-  font-size: 20px;
+  font-size: 18px;
 `;
 
 const Input = styled.input`
@@ -104,37 +113,13 @@ const Input = styled.input`
   display: flex;
   color: white;
   background-color: transparent;
-  font-size: 20px;
+  font-size: 18px;
   &:focus {
     outline: none;
   }
   &::placeholder {
     color: ${props => props.theme.greyColor};
   }
-`;
-
-const SearchInput = styled.input`
-  z-index: 10;
-  top: 10%;
-  width: 300px;
-  border: 0;
-  position: absolute;
-  display: flex;
-  align-self: center;
-  border-bottom: 1px solid ${props => props.theme.greyColor};
-  padding: 5px;
-  color: white;
-  background-color: transparent;
-  font-size: 34px;
-  font-weight: 100;
-  transition: border-bottom 0.1s linear;
-  &:focus {
-    outline: none;
-  }
-  &::placeholder {
-    color: ${props => props.theme.greyColor};
-  }
-  animation: ${ModalAnimation} 0.1s linear;
 `;
 
 const SearchModalContainer = styled(ModalContainer)`
@@ -146,20 +131,49 @@ const SearchModalOverlay = styled(ModalOverlay)`
 
 const CountryRow = styled.div`
   z-index: 10;
-  width: 300px;
-  font-size: 20px;
+  height: 40px;
+  width: 480px;
+  font-size: 18px;
   display: flex;
-  align-self: space-between;
+  justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  }
+  &:hover {
+    background-color: rgba(128, 128, 128, 0.5);
+  }
 `;
 
 const CountryContainer = styled.div`
-  top: 50%;
   z-index: 10;
   display: flex;
-  align-content: flex-start;
-  position: relative;
-  width: 300px;
+  align-content: center;
+  width: 480px;
+  height: 640px;
   flex-direction: column;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 3px;
+    background: none;
+  }
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
+`;
+
+const Underline = styled.p`
+  text-decoration: underline;
+  cursor: pointer;
+`;
+
+const CountryText = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 interface IProps {
@@ -167,7 +181,6 @@ interface IProps {
   phoneNumber: string;
   countryPhone: string;
   modalOpen: boolean;
-  search: string;
   loading: boolean;
   onInputChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -175,6 +188,9 @@ interface IProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   back: (event) => void;
   toggleModal: () => void;
+  onSelectCountry:(
+    countryCode:string, countryPhone:string
+          ) => void
 }
 
 const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
@@ -187,7 +203,7 @@ const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
   back,
   modalOpen,
   toggleModal,
-  search
+  onSelectCountry
 }) => {
   if (loading) {
     return <Loader />;
@@ -197,21 +213,23 @@ const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
         {modalOpen && (
           <SearchModalContainer>
             <SearchModalOverlay onClick={toggleModal} />
-            <SearchInput
-              placeholder="Search country"
-              autoFocus={true}
-              name={"search"}
-              onChange={onInputChange}
-              value={search}
-              autoComplete={"off"}
-            />
-            <CountryContainer>
-              {countries.map((country, index) => (
-                <CountryRow key={index}>
-                  {country.name} {country.phone}
-                </CountryRow>
-              ))}
-            </CountryContainer>
+            <SearchModal>
+              <CountryContainer>
+                {countries.map((country, index) => (
+                  <CountryRow key={index}  onClick={() =>
+                    onSelectCountry(
+              country.code, country.phone
+                    )
+                  }>
+                    <CountryText>
+                      <p>&nbsp;{country.name}</p>
+                      <p>&nbsp;{country.emoji}</p>
+                    </CountryText>
+                    <CountryText> {country.phone}</CountryText>
+                  </CountryRow>
+                ))}
+              </CountryContainer>
+            </SearchModal>
           </SearchModalContainer>
         )}
         <ModalContainer>
@@ -222,7 +240,6 @@ const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
             </Helmet>
             <Container>
               <PhoneNumberContainer>
-                {console.log(countryCode, countryPhone)}
                 <CountryCode onClick={toggleModal}>{countryCode}</CountryCode>
                 <CountryPhone>
                   {countryPhone}
@@ -240,14 +257,15 @@ const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
               </PhoneNumberContainer>
               <TextContainter>
                 <Text>
-                  <p>Changed your phone number?Login With Email.</p>
-                  <p>
-                    When you tap "Continue", Tinder will send a text with
-                    verification code. Message and data rates may apply. The
-                    verified phone number can be used to login. Learn what
-                    happens when your number changes.
-                  </p>
+                  <p>Changed your phone number?</p>
+                  <Underline>&nbsp;Login With Email.</Underline>
                 </Text>
+                <p>
+                  When you tap "Continue", Pinnder will send a text with
+                  verification code. Message and data rates may apply. The
+                  verified phone number can be used to login. Learn what happens
+                  when your number changes.
+                </p>
                 <ExtendedForm onSubmit={onSubmit}>
                   <SButton
                     text={"CONTINUE"}

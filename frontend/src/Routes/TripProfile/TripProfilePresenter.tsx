@@ -224,7 +224,7 @@ const TripProfilePresenter: React.FunctionComponent<IProps> = ({
         <SWrapper>
           <PHeader>
             <AvatarContainer>
-              <CAvatar size="lg" url={city.cityPhoto} />
+              <CAvatar size="lg" url={city.cityPhoto} city={true} />
               <InfoRow>
                 <Weather latitude={city.latitude} longitude={city.longitude} />
                 <CityLikeBtn
@@ -241,7 +241,11 @@ const TripProfilePresenter: React.FunctionComponent<IProps> = ({
                 }}
               >
                 <Header>
-                  <SAvatar size={"sm"} url={city.country.countryPhoto} />
+                  <SAvatar
+                    size={"sm"}
+                    url={city.country.countryPhoto}
+                    city={true}
+                  />
                   <HeaderColumn>
                     <HeaderText text={city.country.countryName} />
                     <Location>{city.country.continent.continentName}</Location>

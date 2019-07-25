@@ -53,7 +53,7 @@ def get_expries(sender, **kwargs):
 
 class Match (config_models.TimeStampedModel):
 
-    coffee = models.ForeignKey(Coffee, on_delete=models.PROTECT, null=True, blank=True, related_name='match')
+    coffee = models.ForeignKey(Coffee, on_delete=models.SET_NULL, null=True, blank=True, related_name='match')
     city = models.ForeignKey(location_models.City, on_delete=models.CASCADE, null=True, blank=True)
     host = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='host')
     guest = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='guest')
