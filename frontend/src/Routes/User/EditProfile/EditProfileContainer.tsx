@@ -71,8 +71,8 @@ interface IState {
   gender: string;
   firstName: string;
   lastName: string;
-  nationality: string;
-  residence: string;
+  nationalityCode: string;
+  residenceCode: string;
   avatarUrl: string;
   phoneNumber: string;
   countryPhoneNumber: string;
@@ -98,6 +98,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     if (props.history.action === "POP" || !props.location.state) {
       props.history.goBack();
     }
+    console.log(state);
     this.state = {
       deleteConfirmModalOpen: false,
       logoutConfirmModalOpen: false,
@@ -123,12 +124,14 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       gender: state.gender,
       firstName: state.firstName,
       lastName: state.lastName,
-      nationality: state.nationality
-        ? state.nationality.countryCode
-        : localStorage.getItem("countryCode"),
-      residence: state.residence
-        ? state.residence.countryCode
-        : localStorage.getItem("countryCode"),
+      nationalityCode:
+        (state.nationalityCode && state.nationalityCode) ||
+        (state.nationality && state.nationality.countryCode) ||
+        localStorage.getItem("countryCode"),
+      residenceCode:
+        (state.residenceCode && state.residenceCode) ||
+        (state.residence && state.residence.countryCode) ||
+        localStorage.getItem("countryCode"),
       avatarUrl: state.avatarUrl,
       phoneNumber: state.phoneNumber || "",
       countryPhoneNumber: state.countryPhoneNumber || "",
@@ -166,8 +169,8 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       gender,
       firstName,
       lastName,
-      nationality,
-      residence,
+      nationalityCode,
+      residenceCode,
       avatarUrl,
       phoneNumber,
       countryPhoneNumber,
@@ -214,15 +217,8 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                                   <EditProfileMutation
                                     mutation={EDIT_PROFILE}
                                     update={this.updatEditProfile}
-                                    refetchQueries={[
-                                      {
-                                        query: GET_USER,
-                                        variables: {
-                                          username
-                                        }
-                                      }
-                                    ]}
                                     onCompleted={editData => {
+                                      console.log(editData);
                                       const { editProfile } = editData;
                                       if (editProfile.ok) {
                                         toast.success("Profile updated!");
@@ -341,8 +337,10 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                                                 gender={gender}
                                                 firstName={firstName}
                                                 lastName={lastName}
-                                                nationality={nationality}
-                                                residence={residence}
+                                                nationalityCode={
+                                                  nationalityCode
+                                                }
+                                                residenceCode={residenceCode}
                                                 avatarUrl={avatarUrl}
                                                 phoneNumber={phoneNumber}
                                                 countryPhoneNumber={
@@ -464,10 +462,10 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       gender,
       firstName,
       lastName,
-      nationality,
-      residence
+      nationalityCode,
+      residenceCode
     } = this.state;
-
+    console.log(this.state);
     this.editProfileFn({
       variables: {
         username,
@@ -475,8 +473,8 @@ class EditProfileContainer extends React.Component<IProps, IState> {
         gender,
         firstName,
         lastName,
-        nationality,
-        residence
+        nationalityCode,
+        residenceCode
       }
     });
   };
@@ -534,7 +532,9 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     this.setState({
       [name]: value
     } as any);
+    console.log(this.state);
   };
+
   public back = async event => {
     const { history } = this.props;
     const { username } = this.state;

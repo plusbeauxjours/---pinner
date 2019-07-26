@@ -90,7 +90,7 @@ class CompletePhoneVerification(graphene.Mutation):
         payload = countryPhoneNumber + phoneNumber
 
         if phoneNumber.startswith('0'):
-            phoneNumber.replace('0', '')
+            phoneNumber = phoneNumber.replace('0', '')
 
         try:
             verification = models.Verification.objects.get(

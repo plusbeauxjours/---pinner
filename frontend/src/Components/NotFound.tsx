@@ -51,7 +51,7 @@ const SButton = styled(Button)`
 
 const back = event => {
   event.stopPropagation();
-  browserHistory.goBack();
+  browserHistory.push("/");
 };
 
 const NotFound: React.FunctionComponent<any> = () => (
@@ -67,7 +67,7 @@ const NotFound: React.FunctionComponent<any> = () => (
         your spaceship \n with no way to get back. Your dog will be so sad. Your
         math teacher will \n be so smug. Pretty devastating. 2019 Pinner.
       </GreyText>
-      <SButton onClick={back} text={"BACK"} />
+      <SButton onClick={back} text={"HOME"} />
     </SWrapper>
   </Container>
 );

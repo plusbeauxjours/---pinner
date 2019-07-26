@@ -201,7 +201,8 @@ const DeleteConatainer = styled.div`
   width: 600px;
   border: 1px solid rgba(128, 128, 128, 0.5);
   padding: 10px 15px 4px 15px;
-  margin-bottom: 15px;
+  margin-top: 30px;
+  margin-bottom: 45px;
 `;
 
 const DConatainer = styled(Conatainer)`
@@ -375,8 +376,8 @@ const WhiteDotIcon = styled(RedDotIcon)`
 
 const CheckIcon = styled.div`
   display: flex;
-  justify-items: flex-end;
-  position: absolute;
+  width: 250px;
+  justify-content: flex-end;
   svg {
     fill: white;
   }
@@ -403,10 +404,10 @@ const CheckIcon = styled.div`
 //   font-size: 18px;
 // `;
 
-// const Underline = styled.p`
-//   text-decoration: underline;
-//   cursor: pointer;
-// `;
+const Underline = styled.span`
+  text-decoration: underline;
+  cursor: pointer;
+`;
 
 const SearchModalContainer = styled(ModalContainer)`
   z-index: 10;
@@ -468,8 +469,10 @@ const NumberUnderline = styled.div`
   width: 250px;
   font-size: 18px;
   font-weight: 100;
+  align-items: center;
   border-bottom: 1px solid ${props => props.theme.greyColor};
 `;
+
 interface IProps {
   avatarsData: any;
   avatarsLoading: boolean;
@@ -513,8 +516,8 @@ interface IProps {
   gender: string;
   firstName: string;
   lastName: string;
-  nationality: any;
-  residence: any;
+  nationalityCode: string;
+  residenceCode: string;
   avatarUrl: string;
   phoneNumber: string;
   countryPhoneNumber: string;
@@ -572,8 +575,8 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   gender,
   firstName,
   lastName,
-  nationality,
-  residence,
+  nationalityCode,
+  residenceCode,
   avatarUrl,
   phoneNumber,
   countryPhoneNumber,
@@ -809,15 +812,15 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                 gender,
                 firstName,
                 lastName,
-                nationality,
-                residence,
+                nationalityCode,
+                residenceCode,
                 avatarUrl,
                 phoneNumber,
                 countryPhoneNumber,
                 countryPhoneCode,
                 email,
                 verifiedPhoneNumber,
-                verifiedEmail,
+                verifiedEmail
               }
             }}
           >
@@ -840,15 +843,15 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                 gender,
                 firstName,
                 lastName,
-                nationality,
-                residence,
+                nationalityCode,
+                residenceCode,
                 avatarUrl,
-phoneNumber,
-countryPhoneNumber,
-countryPhoneCode,
-email,
-verifiedPhoneNumber,
-verifiedEmail,
+                phoneNumber,
+                countryPhoneNumber,
+                countryPhoneCode,
+                email,
+                verifiedPhoneNumber,
+                verifiedEmail
               }
             }}
           >
@@ -866,14 +869,6 @@ verifiedEmail,
               onClick={toggleAvatarModalOpen}
             />
           </AvatarConatainer>
-          {console.log(
-            phoneNumber,
-            countryPhoneNumber,
-            countryPhoneCode,
-            email,
-            verifiedPhoneNumber,
-            verifiedEmail
-          )}
           <Conatainer>
             <TitleText>USERNAME</TitleText>
             <Input
@@ -889,8 +884,8 @@ verifiedEmail,
           <Conatainer>
             <TitleText>NATIONALITY</TitleText>
             <Select
-              value={nationality}
-              name={"nationality"}
+              value={nationalityCode}
+              name={"nationalityCode"}
               onChange={onSelectChange}
             >
               {countries.map((country, index) => (
@@ -904,8 +899,8 @@ verifiedEmail,
           <Conatainer>
             <TitleText>RESIDENCE</TitleText>
             <Select
-              value={residence}
-              name={"residence"}
+              value={residenceCode}
+              name={"residenceCode"}
               onChange={onSelectChange}
             >
               {countries.map((country, index) => (
@@ -976,7 +971,18 @@ verifiedEmail,
               </CheckIcon>
             </NumberUnderline>
           </Conatainer>
-          <ExplainText>nani</ExplainText>
+          {verifiedPhoneNumber ? (
+            <ExplainText>
+              Your phone number is already verified. If you want to change your
+              phone number,&nbsp;
+              <Underline>click here</Underline> to verify again.
+            </ExplainText>
+          ) : (
+            <ExplainText>
+              <Underline>click here</Underline> to verify your phone number to
+              login.
+            </ExplainText>
+          )}
           <Conatainer>
             <TitleText>EMAIL</TitleText>
             <Input
@@ -988,7 +994,17 @@ verifiedEmail,
               autoComplete={"off"}
             />
           </Conatainer>
-          <ExplainText>nani</ExplainText>
+          {verifiedEmail ? (
+            <ExplainText>
+              Your Email is already verified. If you want to change your
+              Email,&nbsp;
+              <Underline>click here</Underline> to verify again.
+            </ExplainText>
+          ) : (
+            <ExplainText>
+              <Underline>click here</Underline> to verify your email to login.
+            </ExplainText>
+          )}
           <DeleteConatainer>
             <DConatainer>
               <TitleText>DELETE PROFILE</TitleText>

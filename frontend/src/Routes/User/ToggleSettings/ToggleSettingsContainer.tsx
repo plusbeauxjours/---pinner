@@ -32,8 +32,8 @@ interface IState {
   gender: string;
   firstName: string;
   lastName: string;
-  nationality: string;
-  residence: string;
+  nationalityCode: string;
+  residenceCode: string;
   avatarUrl: string;
   phoneNumber: string;
   countryPhoneNumber: string;
@@ -49,7 +49,7 @@ class ToggleSettingsContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     const { location: { state = {} } = {} } = ({} = props);
-
+    console.log(state);
     if (props.history.action === "POP" || !props.location.state) {
       props.history.goBack();
     }
@@ -70,8 +70,14 @@ class ToggleSettingsContainer extends React.Component<IProps, IState> {
       gender: state.gender,
       firstName: state.firstName,
       lastName: state.lastName,
-      nationality: state.nationality,
-      residence: state.residence,
+      nationalityCode:
+        (state.nationalityCode && state.nationalityCode) ||
+        (state.nationality && state.nationality.countryCode) ||
+        localStorage.getItem("countryCode"),
+      residenceCode:
+        (state.residenceCode && state.residenceCode) ||
+        (state.residence && state.residence.countryCode) ||
+        localStorage.getItem("countryCode"),
       avatarUrl: state.avatarUrl,
       phoneNumber: state.phoneNumber || "",
       countryPhoneNumber: state.countryPhoneNumber || "",
@@ -98,8 +104,8 @@ class ToggleSettingsContainer extends React.Component<IProps, IState> {
       gender,
       firstName,
       lastName,
-      nationality,
-      residence,
+      nationalityCode,
+      residenceCode,
       avatarUrl,
       phoneNumber,
       countryPhoneNumber,
@@ -135,8 +141,8 @@ class ToggleSettingsContainer extends React.Component<IProps, IState> {
                     gender={gender}
                     firstName={firstName}
                     lastName={lastName}
-                    nationality={nationality}
-                    residence={residence}
+                    nationalityCode={nationalityCode}
+                    residenceCode={residenceCode}
                     avatarUrl={avatarUrl}
                     phoneNumber={phoneNumber}
                     countryPhoneNumber={countryPhoneNumber}

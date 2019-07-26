@@ -2003,7 +2003,13 @@ export interface EditProfile_editProfile_user_profile {
   gender: ProfileGender | null;
   avatarUrl: string | null;
   website: string | null;
+  distance: number | null;
+  countryPhoneNumber: string | null;
+  countryPhoneCode: string | null;
+  phoneNumber: string | null;
   email: string | null;
+  verifiedPhoneNumber: boolean;
+  verifiedEmail: boolean;
   nationality: EditProfile_editProfile_user_profile_nationality | null;
   residence: EditProfile_editProfile_user_profile_residence | null;
   postCount: number | null;

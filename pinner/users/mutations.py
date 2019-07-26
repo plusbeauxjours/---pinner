@@ -154,8 +154,8 @@ class EditProfile(graphene.Mutation):
         gender = graphene.String()
         firstName = graphene.String()
         lastName = graphene.String()
-        nationality = graphene.String()
-        residence = graphene.String()
+        nationalityCode = graphene.String()
+        residenceCode = graphene.String()
 
     Output = types.EditProfileResponse
 
@@ -165,6 +165,7 @@ class EditProfile(graphene.Mutation):
         user = info.context.user
 
         profile = user.profile
+        print('editprofile')
 
         if user.is_authenticated and profile is not None:
 
@@ -173,15 +174,15 @@ class EditProfile(graphene.Mutation):
             firstName = kwargs.get('firstName', user.first_name)
             lastName = kwargs.get('lastName', user.last_name)
             username = kwargs.get('username', user.username)
-            nationality_code = kwargs.get('nationality', user.profile.nationality)
-            residence_code = kwargs.get('residence', user.profile.residence)
+            nationalityCode = kwargs.get('nationalityCode', user.profile.nationality)
+            residenceCode = kwargs.get('residenceCode', user.profile.residence)
 
             try:
-                nationality = location_models.Country.objects.get(country_code=nationality_code)
+                nationality = location_models.Country.objects.get(country_code=nationalityCode)
             except location_models.Country.DoesNotExist:
                 with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
                     countryData = json.load(file)
-                    currentCountry = countryData[nationality_code]
+                    currentCountry = countryData[nationalityCode]
                     countryName = currentCountry['name']
                     countryNameNative = currentCountry['native']
                     countryCapital = currentCountry['capital']
@@ -227,7 +228,7 @@ class EditProfile(graphene.Mutation):
                 #     gp.download(i)
 
                 nationality = location_models.Country.objects.create(
-                    country_code=nationality_code,
+                    country_code=nationalityCode,
                     country_name=countryName,
                     country_name_native=countryNameNative,
                     country_capital=countryCapital,
@@ -239,11 +240,11 @@ class EditProfile(graphene.Mutation):
                 )
 
             try:
-                residence = location_models.Country.objects.get(country_code=residence_code)
+                residence = location_models.Country.objects.get(country_code=residenceCode)
             except location_models.Country.DoesNotExist:
                 with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
                     countryData = json.load(file)
-                    currentCountry = countryData[residence_code]
+                    currentCountry = countryData[residenceCode]
                     countryName = currentCountry['name']
                     countryNameNative = currentCountry['native']
                     countryCapital = currentCountry['capital']
@@ -289,7 +290,7 @@ class EditProfile(graphene.Mutation):
                 #     gp.download(i)
 
                 residence = location_models.Country.objects.create(
-                    country_code=residence_code,
+                    country_code=residenceCode,
                     country_name=countryName,
                     country_name_native=countryNameNative,
                     country_capital=countryCapital,

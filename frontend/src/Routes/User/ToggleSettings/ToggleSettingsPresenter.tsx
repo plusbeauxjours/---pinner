@@ -141,8 +141,8 @@ interface IProps {
   gender: string;
   firstName: string;
   lastName: string;
-  nationality: any;
-  residence: any;
+  nationalityCode: string;
+  residenceCode: string;
   avatarUrl: any;
   phoneNumber: string;
   countryPhoneNumber: string;
@@ -173,8 +173,8 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
   gender,
   firstName,
   lastName,
-  nationality,
-  residence,
+  nationalityCode,
+  residenceCode,
   avatarUrl,
   phoneNumber,
   countryPhoneNumber,
@@ -219,8 +219,8 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
                 gender,
                 firstName,
                 lastName,
-                nationality,
-                residence,
+                nationalityCode,
+                residenceCode,
                 avatarUrl,
                 phoneNumber,
                 countryPhoneNumber,
@@ -250,8 +250,8 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
                 gender,
                 firstName,
                 lastName,
-                nationality,
-                residence,
+                nationalityCode,
+                residenceCode,
                 avatarUrl,
                 phoneNumber,
                 countryPhoneNumber,

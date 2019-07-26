@@ -8,8 +8,8 @@ export const EDIT_PROFILE = gql`
     $gender: String
     $firstName: String
     $lastName: String
-    $nationality: String
-    $residence: String
+    $nationalityCode: String
+    $residenceCode: String
   ) {
     editProfile(
       username: $username
@@ -17,8 +17,8 @@ export const EDIT_PROFILE = gql`
       gender: $gender
       firstName: $firstName
       lastName: $lastName
-      nationality: $nationality
-      residence: $residence
+      nationalityCode: $nationalityCode
+      residenceCode: $residenceCode
     ) {
       ok
       user {
@@ -31,7 +31,13 @@ export const EDIT_PROFILE = gql`
           gender
           avatarUrl
           website
+          distance
+          countryPhoneNumber
+          countryPhoneCode
+          phoneNumber
           email
+          verifiedPhoneNumber
+          verifiedEmail
           nationality {
             countryEmoji
             ...CountryParts
@@ -42,6 +48,7 @@ export const EDIT_PROFILE = gql`
           }
           postCount
           tripCount
+          coffeeCount
           cityCount
           countryCount
           continentCount
