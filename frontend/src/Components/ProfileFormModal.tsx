@@ -48,14 +48,12 @@ interface IProps extends RouteComponentProps<any> {
   username: string;
   nationality: string;
   gender: string;
-  email: string;
 }
 
 interface IState {
   username: string;
   nationality: string;
   gender: string;
-  email: string;
 }
 
 class ProfileForm extends React.Component<IProps, IState> {
@@ -65,20 +63,18 @@ class ProfileForm extends React.Component<IProps, IState> {
     this.state = {
       username: props.username,
       nationality: props.nationality,
-      gender: props.gender,
-      email: props.email
+      gender: props.gender
     };
   }
   public render() {
-    const { username, nationality, gender, email } = this.state;
+    const { username, nationality, gender } = this.state;
     return (
       <EditProfileMutation
         mutation={EDIT_PROFILE}
         variables={{
           username,
           nationality,
-          gender,
-          email
+          gender
         }}
         update={this.updatEditProfile}
         onCompleted={editData => {
@@ -126,18 +122,6 @@ class ProfileForm extends React.Component<IProps, IState> {
                     value={gender}
                     placeholder={gender || "gender"}
                     name={"gender"}
-                    onKeyDown={this.onKeyDown}
-                  />
-                </ModalLink>
-              ) : null}
-              {!email ? (
-                <ModalLink>
-                  <Input
-                    onChange={this.onInputChange}
-                    type={"text"}
-                    value={email}
-                    placeholder={email || "email"}
-                    name={"email"}
                     onKeyDown={this.onKeyDown}
                   />
                 </ModalLink>

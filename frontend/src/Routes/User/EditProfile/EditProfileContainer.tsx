@@ -49,6 +49,7 @@ interface IState {
   deleteConfirmModalOpen: boolean;
   logoutConfirmModalOpen: boolean;
   profilFormModalOpen: boolean;
+  modalOpen: boolean;
 
   file: any;
   imagePreviewUrl: any;
@@ -73,7 +74,12 @@ interface IState {
   nationality: string;
   residence: string;
   avatarUrl: string;
+  phoneNumber: string;
+  countryPhoneNumber: string;
+  countryPhoneCode: string;
   email: string;
+  verifiedPhoneNumber: boolean;
+  verifiedEmail: boolean;
   confirmUsername: string;
 }
 
@@ -96,6 +102,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       deleteConfirmModalOpen: false,
       logoutConfirmModalOpen: false,
       profilFormModalOpen: true,
+      modalOpen: false,
 
       imagePreviewUrl: "",
       file: "",
@@ -123,7 +130,12 @@ class EditProfileContainer extends React.Component<IProps, IState> {
         ? state.residence.countryCode
         : localStorage.getItem("countryCode"),
       avatarUrl: state.avatarUrl,
-      email: state.email,
+      phoneNumber: state.phoneNumber || "",
+      countryPhoneNumber: state.countryPhoneNumber || "",
+      countryPhoneCode: state.countryPhoneCode || "",
+      email: state.email || "",
+      verifiedPhoneNumber: state.verifiedPhoneNumber,
+      verifiedEmail: state.verifiedEmail,
       confirmUsername: props.confirmUsername || ""
     };
   }
@@ -133,6 +145,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       deleteConfirmModalOpen,
       logoutConfirmModalOpen,
       profilFormModalOpen,
+      modalOpen,
 
       imagePreviewUrl,
 
@@ -156,7 +169,12 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       nationality,
       residence,
       avatarUrl,
+      phoneNumber,
+      countryPhoneNumber,
+      countryPhoneCode,
       email,
+      verifiedPhoneNumber,
+      verifiedEmail,
       confirmUsername
     } = this.state;
     return (
@@ -258,6 +276,8 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                                                 toggleProfileFormModal={
                                                   this.toggleProfileFormModal
                                                 }
+                                                modalOpen={modalOpen}
+                                                toggleModal={this.toggleModal}
                                                 deleteProfile={
                                                   this.deleteProfile
                                                 }
@@ -324,9 +344,23 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                                                 nationality={nationality}
                                                 residence={residence}
                                                 avatarUrl={avatarUrl}
+                                                phoneNumber={phoneNumber}
+                                                countryPhoneNumber={
+                                                  countryPhoneNumber
+                                                }
+                                                countryPhoneCode={
+                                                  countryPhoneCode
+                                                }
                                                 email={email}
+                                                verifiedPhoneNumber={
+                                                  verifiedPhoneNumber
+                                                }
+                                                verifiedEmail={verifiedEmail}
                                                 confirmUsername={
                                                   confirmUsername
+                                                }
+                                                onSelectCountry={
+                                                  this.onSelectCountry
                                                 }
                                               />
                                             );
@@ -351,6 +385,22 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       </MarkAsMainMutation>
     );
   }
+  public onSelectCountry = (
+    countryPhoneNumber: string,
+    countryPhoneCode: string
+  ) => {
+    this.setState({
+      countryPhoneNumber,
+      countryPhoneCode,
+      modalOpen: false
+    });
+  };
+  public toggleModal = () => {
+    const { modalOpen } = this.state;
+    this.setState({
+      modalOpen: !modalOpen
+    });
+  };
   public removeImagePreviewUrl = () => {
     this.setState({ file: null, imagePreviewUrl: "" });
   };
@@ -415,8 +465,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       firstName,
       lastName,
       nationality,
-      residence,
-      email
+      residence
     } = this.state;
 
     this.editProfileFn({
@@ -427,8 +476,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
         firstName,
         lastName,
         nationality,
-        residence,
-        email
+        residence
       }
     });
   };

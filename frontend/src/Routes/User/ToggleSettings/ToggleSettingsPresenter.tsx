@@ -144,7 +144,12 @@ interface IProps {
   nationality: any;
   residence: any;
   avatarUrl: any;
+  phoneNumber: string;
+  countryPhoneNumber: string;
+  countryPhoneCode: string;
   email: string;
+  verifiedPhoneNumber: boolean;
+  verifiedEmail: boolean;
 
   onClickToggleIcon: (payload: string) => void;
   logoutConfirmModalOpen: boolean;
@@ -171,7 +176,12 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
   nationality,
   residence,
   avatarUrl,
+  phoneNumber,
+  countryPhoneNumber,
+  countryPhoneCode,
   email,
+  verifiedPhoneNumber,
+  verifiedEmail,
 
   onClickToggleIcon,
   logoutConfirmModalOpen,
@@ -212,7 +222,12 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
                 nationality,
                 residence,
                 avatarUrl,
-                email
+                phoneNumber,
+                countryPhoneNumber,
+                countryPhoneCode,
+                email,
+                verifiedPhoneNumber,
+                verifiedEmail
               }
             }}
           >
@@ -238,14 +253,19 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
                 nationality,
                 residence,
                 avatarUrl,
-                email
+                phoneNumber,
+                countryPhoneNumber,
+                countryPhoneCode,
+                email,
+                verifiedPhoneNumber,
+                verifiedEmail
               }
             }}
           >
             <MenuText>SETTINGS</MenuText>
           </Link>
           <GreyText onClick={toggleConfirmModal}>LOGOUT</GreyText>
-          <GreyText onClick={back}>Cancel</GreyText>
+          <GreyText onClick={back}>CANCEL</GreyText>
         </MenuColumn>
         <GreyLine />
         <Column>

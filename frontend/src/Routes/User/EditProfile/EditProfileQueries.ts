@@ -10,7 +10,6 @@ export const EDIT_PROFILE = gql`
     $lastName: String
     $nationality: String
     $residence: String
-    $email: String
   ) {
     editProfile(
       username: $username
@@ -20,7 +19,6 @@ export const EDIT_PROFILE = gql`
       lastName: $lastName
       nationality: $nationality
       residence: $residence
-      email: $email
     ) {
       ok
       user {

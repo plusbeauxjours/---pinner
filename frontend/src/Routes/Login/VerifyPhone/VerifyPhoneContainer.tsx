@@ -23,8 +23,10 @@ interface IState {
   cityId: string;
   cityName: string;
   countryCode: string;
-  verificationKey: string;
+  countryPhoneNumber: string;
+  countryPhoneCode: string;
   phoneNumber: string;
+  verificationKey: string;
 }
 
 class VerifyPhoneContainer extends React.Component<IProps, IState> {
@@ -40,13 +42,21 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
       cityId: state.cityId,
       cityName: state.cityName,
       countryCode: state.countryCode,
-      phoneNumber: state.phone,
+      countryPhoneNumber: state.countryPhoneNumber,
+      countryPhoneCode: state.countryPhoneCode,
+      phoneNumber: state.phoneNumber,
       verificationKey: ""
     };
   }
   public render() {
     const { history } = this.props;
-    const { phoneNumber, verificationKey, cityId } = this.state;
+    const {
+      countryPhoneNumber,
+      countryPhoneCode,
+      phoneNumber,
+      verificationKey,
+      cityId
+    } = this.state;
     return (
       <Mutation mutation={LOG_USER_IN}>
         {logUserIn => (
@@ -54,6 +64,8 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
             mutation={COMPLETE_PHONE_SIGN_IN}
             variables={{
               key: verificationKey,
+              countryPhoneNumber,
+              countryPhoneCode,
               phoneNumber,
               cityId
             }}

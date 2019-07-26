@@ -8,7 +8,7 @@ import Avatar from "../../../Components/Avatar";
 import { BACKEND_URL } from "src/constants";
 import { Link } from "react-router-dom";
 import Button from "src/Components/Button";
-import { Upload, Delete, RedDot, WhiteDot } from "../../../Icons";
+import { Upload, Delete, RedDot, WhiteDot, Check } from "../../../Icons";
 import { MutationFn } from "react-apollo";
 
 const PAvatar = styled(Avatar)`
@@ -373,6 +373,103 @@ const WhiteDotIcon = styled(RedDotIcon)`
   }
 `;
 
+const CheckIcon = styled.div`
+  display: flex;
+  justify-items: flex-end;
+  position: absolute;
+  svg {
+    fill: white;
+  }
+`;
+
+// const PhoneNumberContainer = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: center;
+//   align-items: baseline;
+// `;
+
+// const CountryCode = styled.div`
+//   font-size: 18px;
+//   margin-right: 12px;
+//   cursor: pointer;
+// `;
+
+// const CountryPhone = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   align-items: baseline;
+//   border-bottom: 1px solid ${props => props.theme.greyColor};
+//   font-size: 18px;
+// `;
+
+// const Underline = styled.p`
+//   text-decoration: underline;
+//   cursor: pointer;
+// `;
+
+const SearchModalContainer = styled(ModalContainer)`
+  z-index: 10;
+`;
+const SearchModalOverlay = styled(ModalOverlay)`
+  z-index: 10;
+`;
+
+const SearchModal = styled(Modal)`
+  padding: 30px;
+  height: 700px;
+  z-index: 10;
+`;
+
+const CountryRow = styled.div`
+  z-index: 10;
+  height: 40px;
+  width: 480px;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  }
+  &:hover {
+    background-color: rgba(128, 128, 128, 0.5);
+  }
+`;
+
+const CountryText = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const CountryContainer = styled.div`
+  z-index: 10;
+  display: flex;
+  align-content: center;
+  width: 480px;
+  height: 640px;
+  flex-direction: column;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 3px;
+    background: none;
+  }
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
+`;
+
+const NumberUnderline = styled.div`
+  display: flex;
+  width: 250px;
+  font-size: 18px;
+  font-weight: 100;
+  border-bottom: 1px solid ${props => props.theme.greyColor};
+`;
 interface IProps {
   avatarsData: any;
   avatarsLoading: boolean;
@@ -419,8 +516,19 @@ interface IProps {
   nationality: any;
   residence: any;
   avatarUrl: string;
+  phoneNumber: string;
+  countryPhoneNumber: string;
+  countryPhoneCode: string;
   email: string;
+  verifiedPhoneNumber: boolean;
+  verifiedEmail: boolean;
   confirmUsername: string;
+  modalOpen: boolean;
+  toggleModal: () => void;
+  onSelectCountry: (
+    countryPhoneNumber: string,
+    countryPhoneCode: string
+  ) => void;
   back: (event: any) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
@@ -467,13 +575,42 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   nationality,
   residence,
   avatarUrl,
+  phoneNumber,
+  countryPhoneNumber,
+  countryPhoneCode,
   email,
+  verifiedPhoneNumber,
+  verifiedEmail,
   confirmUsername,
+  modalOpen,
+  toggleModal,
+  onSelectCountry,
   back,
   onSubmit
 }) => {
   return (
     <>
+      {modalOpen && (
+        <SearchModalContainer>
+          <SearchModalOverlay onClick={toggleModal} />
+          <SearchModal>
+            <CountryContainer>
+              {countries.map((country, index) => (
+                <CountryRow
+                  key={index}
+                  onClick={() => onSelectCountry(country.phone, country.code)}
+                >
+                  <CountryText>
+                    <p>&nbsp;{country.name}</p>
+                    <p>&nbsp;{country.emoji}</p>
+                  </CountryText>
+                  <CountryText> {country.phone}</CountryText>
+                </CountryRow>
+              ))}
+            </CountryContainer>
+          </SearchModal>
+        </SearchModalContainer>
+      )}
       {/* {(!user.profile.nationality ||
         !user.profile.residence ||
         !user.profile.gender ||
@@ -675,7 +812,12 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                 nationality,
                 residence,
                 avatarUrl,
-                email
+                phoneNumber,
+                countryPhoneNumber,
+                countryPhoneCode,
+                email,
+                verifiedPhoneNumber,
+                verifiedEmail,
               }
             }}
           >
@@ -701,14 +843,19 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                 nationality,
                 residence,
                 avatarUrl,
-                email
+phoneNumber,
+countryPhoneNumber,
+countryPhoneCode,
+email,
+verifiedPhoneNumber,
+verifiedEmail,
               }
             }}
           >
             <GreyText>SETTINGS</GreyText>
           </Link>
           <GreyText onClick={toggleLogoutConfirmModal}>LOGOUT</GreyText>
-          <GreyText onClick={back}>Cancel</GreyText>
+          <GreyText onClick={back}>CANCEL</GreyText>
         </MenuColumn>
         <GreyLine />
         <Column>
@@ -719,6 +866,14 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
               onClick={toggleAvatarModalOpen}
             />
           </AvatarConatainer>
+          {console.log(
+            phoneNumber,
+            countryPhoneNumber,
+            countryPhoneCode,
+            email,
+            verifiedPhoneNumber,
+            verifiedEmail
+          )}
           <Conatainer>
             <TitleText>USERNAME</TitleText>
             <Input
@@ -804,6 +959,22 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
               name={"bio"}
               autoComplete={"off"}
             />
+          </Conatainer>
+          <ExplainText>nani</ExplainText>
+          <Conatainer>
+            <TitleText>PHONE</TitleText>
+            <NumberUnderline>
+              {countryPhoneCode && countryPhoneNumber && (
+                <>
+                  {countryPhoneCode}&nbsp;
+                  {countryPhoneNumber}&nbsp;
+                  {phoneNumber}
+                </>
+              )}
+              <CheckIcon>
+                <Check />
+              </CheckIcon>
+            </NumberUnderline>
           </Conatainer>
           <ExplainText>nani</ExplainText>
           <Conatainer>

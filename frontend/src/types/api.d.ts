@@ -1458,6 +1458,8 @@ export interface CompletePhoneVerification {
 export interface CompletePhoneVerificationVariables {
   key: string;
   phoneNumber: string;
+  countryPhoneNumber: string;
+  countryPhoneCode: string;
   cityId: string;
 }
 
@@ -2050,7 +2052,6 @@ export interface EditProfileVariables {
   lastName?: string | null;
   nationality?: string | null;
   residence?: string | null;
-  email?: string | null;
 }
 
 /* tslint:disable */
@@ -2208,7 +2209,12 @@ export interface UserProfile_userProfile_user_profile {
   avatarUrl: string | null;
   website: string | null;
   distance: number | null;
+  countryPhoneNumber: string | null;
+  countryPhoneCode: string | null;
+  phoneNumber: string | null;
   email: string | null;
+  verifiedPhoneNumber: boolean;
+  verifiedEmail: boolean;
   nationality: UserProfile_userProfile_user_profile_nationality | null;
   residence: UserProfile_userProfile_user_profile_residence | null;
   postCount: number | null;

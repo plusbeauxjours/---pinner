@@ -36,4 +36,4 @@ class Verification(config_models.TimeStampedModel):
 @receiver(pre_save, sender=Verification)
 def create_key(sender, **kwargs):
     instance = kwargs.pop('instance')
-    instance.key = str(math.floor(random.random() * 1000000))
+    instance.key = str(math.floor(random.random() * 1000000)).zfill(6)

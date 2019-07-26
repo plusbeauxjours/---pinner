@@ -854,7 +854,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     });
   };
   public onDatesChange = ({ startDate, endDate }) => {
-    console.log(this.getTripsData);
     this.setState({ startDate, endDate });
   };
   public isDayBlocked = (day: moment.Moment) => {

@@ -921,7 +921,12 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                     nationality: user.profile.nationality,
                     residence: user.profile.residence,
                     avatarUrl: user.profile.avatarUrl,
-                    email: user.profile.email
+                    countryPhoneNumber: user.profile.countryPhoneNumber,
+                    countryPhoneCode: user.profile.countryPhoneCode,
+                    phoneNumber: user.profile.phoneNumber,
+                    email: user.profile.email,
+                    verifiedPhoneNumber: user.profile.verifiedPhoneNumber,
+                    verifiedEmail: user.profile.verifiedEmail
                   }
                 }}
               >
@@ -947,7 +952,12 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                     nationality: user.profile.nationality,
                     residence: user.profile.residence,
                     avatarUrl: user.profile.avatarUrl,
-                    email: user.profile.email
+                    countryPhoneNumber: user.profile.countryPhoneNumber,
+                    countryPhoneCode: user.profile.countryPhoneCode,
+                    phoneNumber: user.profile.phoneNumber,
+                    email: user.profile.email,
+                    verifiedPhoneNumber: user.profile.verifiedPhoneNumber,
+                    verifiedEmail: user.profile.verifiedEmail
                   }
                 }}
               >

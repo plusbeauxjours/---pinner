@@ -82,6 +82,7 @@ class HomeContainer extends React.Component<IProps, IState> {
         latitude,
         longitude,
         cityId: address.storableLocation.cityId,
+        cityName: address.storableLocation.cityName,
         countryCode: address.storableLocation.countryCode,
         countryPhone: countries.find(
           i => i.code === address.storableLocation.countryCode

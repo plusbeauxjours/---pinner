@@ -35,7 +35,12 @@ interface IState {
   nationality: string;
   residence: string;
   avatarUrl: string;
+  phoneNumber: string;
+  countryPhoneNumber: string;
+  countryPhoneCode: string;
   email: string;
+  verifiedPhoneNumber: boolean;
+  verifiedEmail: boolean;
 }
 
 class ToggleSettingsContainer extends React.Component<IProps, IState> {
@@ -68,7 +73,12 @@ class ToggleSettingsContainer extends React.Component<IProps, IState> {
       nationality: state.nationality,
       residence: state.residence,
       avatarUrl: state.avatarUrl,
-      email: state.email
+      phoneNumber: state.phoneNumber || "",
+      countryPhoneNumber: state.countryPhoneNumber || "",
+      countryPhoneCode: state.countryPhoneCode || "",
+      email: state.email || "",
+      verifiedPhoneNumber: state.verifiedPhoneNumber,
+      verifiedEmail: state.verifiedEmail
     };
   }
   public render() {
@@ -91,7 +101,12 @@ class ToggleSettingsContainer extends React.Component<IProps, IState> {
       nationality,
       residence,
       avatarUrl,
-      email
+      phoneNumber,
+      countryPhoneNumber,
+      countryPhoneCode,
+      email,
+      verifiedPhoneNumber,
+      verifiedEmail
     } = this.state;
     return (
       <ToggleSettingsMutation
@@ -123,7 +138,12 @@ class ToggleSettingsContainer extends React.Component<IProps, IState> {
                     nationality={nationality}
                     residence={residence}
                     avatarUrl={avatarUrl}
+                    phoneNumber={phoneNumber}
+                    countryPhoneNumber={countryPhoneNumber}
+                    countryPhoneCode={countryPhoneCode}
                     email={email}
+                    verifiedPhoneNumber={verifiedPhoneNumber}
+                    verifiedEmail={verifiedEmail}
                     //
                     onClickToggleIcon={this.onClickToggleIcon}
                     logoutConfirmModalOpen={logoutConfirmModalOpen}

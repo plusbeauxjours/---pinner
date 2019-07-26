@@ -8,6 +8,7 @@ from django.db import IntegrityError
 from graphql_jwt.decorators import login_required
 from graphql_jwt.shortcuts import get_token
 from users import models as users_models
+from locations import models as location_models
 from django.contrib.auth.models import User
 from . import models, types
 from . import sendSMS
@@ -72,6 +73,8 @@ class CompletePhoneVerification(graphene.Mutation):
 
     class Arguments:
         phoneNumber = graphene.String(required=True)
+        countryPhoneNumber = graphene.String(required=True)
+        countryPhoneCode = graphene.String(required=True)
         key = graphene.String(required=True)
         cityId = graphene.String(required=True)
 
@@ -80,12 +83,18 @@ class CompletePhoneVerification(graphene.Mutation):
     def mutate(self, info, **kwargs):
 
         phoneNumber = kwargs.get('phoneNumber')
+        countryPhoneNumber = kwargs.get('countryPhoneNumber')
+        countryPhoneCode = kwargs.get('countryPhoneCode')
         key = kwargs.get('key')
         cityId = kwargs.get('cityId')
+        payload = countryPhoneNumber + phoneNumber
+
+        if phoneNumber.startswith('0'):
+            phoneNumber.replace('0', '')
 
         try:
             verification = models.Verification.objects.get(
-                payload=phoneNumber,
+                payload=payload,
                 key=key
             )
 
@@ -98,9 +107,6 @@ class CompletePhoneVerification(graphene.Mutation):
                 return types.CompletePhoneVerificationResponse(ok=True, token=token)
 
             except users_models.Profile.DoesNotExist:
-                pass
-
-            try:
                 with open('pinner/users/adjectives.json', mode='rt', encoding='utf-8') as adjectives:
                     with open('pinner/users/nouns.json', mode='rt', encoding='utf-8') as nouns:
                         adjectives = json.load(adjectives)
@@ -111,15 +117,14 @@ class CompletePhoneVerification(graphene.Mutation):
                         city = location_models.City.objects.get(city_id=cityId)
                         newUserProfile = users_models.Profile.objects.create(
                             user=newUser,
+                            country_phone_number=countryPhoneNumber,
+                            country_phone_code=countryPhoneCode,
                             phone_number=phoneNumber,
                             current_city=city
                         )
                         newUserProfile.verified_phone_number = True
                         newUserProfile.save()
                         return types.CompletePhoneVerificationResponse(ok=True, token=token)
-
-            except IntegrityError as e:
-                raise Exception("No Phone to Verify")
 
             verification.verified = True
             verification.save()

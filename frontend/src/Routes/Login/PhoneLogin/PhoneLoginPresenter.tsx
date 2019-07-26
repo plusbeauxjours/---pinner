@@ -176,9 +176,14 @@ const CountryText = styled.div`
   flex-direction: row;
 `;
 
+const CountryPhoneNumber = styled.div`
+  cursor: pointer;
+  font-size: 18px;
+`;
+
 interface IProps {
   countryCode: string;
-  countryPhone: string;
+  countryPhoneNumber: string;
   phoneNumber: string;
   modalOpen: boolean;
   loading: boolean;
@@ -188,13 +193,16 @@ interface IProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   back: (event) => void;
   toggleModal: () => void;
-  onSelectCountry: (countryCode: string, countryPhone: string) => void;
+  onSelectCountry: (
+    countryPhoneCode: string,
+    countryPhoneNumber: string
+  ) => void;
 }
 
 const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
   countryCode,
   phoneNumber,
-  countryPhone,
+  countryPhoneNumber,
   onInputChange,
   onSubmit,
   loading,
@@ -239,10 +247,12 @@ const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
               <PhoneNumberContainer>
                 <CountryCode onClick={toggleModal}>{countryCode}</CountryCode>
                 <CountryPhone>
-                  {countryPhone}
+                  <CountryPhoneNumber onClick={toggleModal}>
+                    &nbsp;{countryPhoneNumber}&nbsp;
+                  </CountryPhoneNumber>
                   <Form onSubmit={onSubmit}>
                     <Input
-                      type={"number"}
+                      type={"text"}
                       autoFocus={true}
                       value={phoneNumber}
                       name={"phoneNumber"}
@@ -254,7 +264,7 @@ const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
               </PhoneNumberContainer>
               <TextContainter>
                 <Text>
-                  <p>Changed your phone number?</p>
+                  <p>Changed CountryPhoneour phone number?</p>
                   <Underline>&nbsp;Login With Email.</Underline>
                 </Text>
                 <p>

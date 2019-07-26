@@ -15,7 +15,12 @@ export const GET_USER = gql`
           avatarUrl
           website
           distance
+          countryPhoneNumber
+          countryPhoneCode
+          phoneNumber
           email
+          verifiedPhoneNumber
+          verifiedEmail
           nationality {
             countryEmoji
             ...CountryParts

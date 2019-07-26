@@ -4,6 +4,7 @@ import { RouteComponentProps } from "react-router";
 import { toast } from "react-toastify";
 import { PHONE_SIGN_IN } from "./PhoneLoginQueries";
 import { Mutation, MutationFn } from "react-apollo";
+import { countries } from "../../../countryData";
 import {
   StartPhoneVerification,
   StartPhoneVerificationVariables
@@ -20,7 +21,8 @@ interface IState {
   cityId: string;
   cityName: string;
   countryCode: string;
-  countryPhone: string;
+  countryPhoneCode: string;
+  countryPhoneNumber: string;
   phoneNumber: string;
   isSubmitted: boolean;
   modalOpen: boolean;
@@ -42,9 +44,13 @@ class PhoneLoginContainer extends React.Component<
       longitude: state.longitude,
       cityId: state.cityId,
       cityName: state.cityName,
-      countryCode: state.countryCode,
-      countryPhone: state.countryPhone,
-      phoneNumber: null,
+      countryCode: state.countryCode || localStorage.getItem("countryCode"),
+      countryPhoneCode: state.countryCode || "",
+      countryPhoneNumber:
+        state.countryPhone ||
+        countries.find(i => i.code === localStorage.getItem("countryCode"))
+          .phone,
+      phoneNumber: "",
       isSubmitted: false,
       modalOpen: false
     };
@@ -61,29 +67,31 @@ class PhoneLoginContainer extends React.Component<
       cityName,
       countryCode,
       phoneNumber,
-      countryPhone,
+      countryPhoneCode,
+      countryPhoneNumber,
       modalOpen
     } = this.state;
     return (
       <PhoneSignInMutation
         mutation={PHONE_SIGN_IN}
         variables={{
-          phoneNumber: `${countryPhone}${phoneNumber}`
+          phoneNumber: `${countryPhoneNumber}${phoneNumber}`
         }}
         onCompleted={data => {
           const { startPhoneVerification } = data;
-          const phone = `${countryPhone}${phoneNumber}`;
           if (startPhoneVerification.ok) {
             toast.success("SMS Sent! Redirectiong you...");
             history.push({
               pathname: "/verify-phone",
               state: {
-                phone,
                 latitude,
                 longitude,
                 cityId,
                 cityName,
-                countryCode
+                countryCode,
+                phoneNumber,
+                countryPhoneCode,
+                countryPhoneNumber
               }
             });
           } else {
@@ -97,7 +105,7 @@ class PhoneLoginContainer extends React.Component<
             <PhoneLoginPresenter
               countryCode={countryCode}
               phoneNumber={phoneNumber}
-              countryPhone={countryPhone}
+              countryPhoneNumber={countryPhoneNumber}
               modalOpen={modalOpen}
               loading={loading}
               onInputChange={this.onInputChange}
@@ -111,10 +119,13 @@ class PhoneLoginContainer extends React.Component<
       </PhoneSignInMutation>
     );
   }
-  public onSelectCountry = (countryCode: string, countryPhone: string) => {
+  public onSelectCountry = (
+    countryPhoneCode: string,
+    countryPhoneNumber: string
+  ) => {
     this.setState({
-      countryCode,
-      countryPhone,
+      countryPhoneCode,
+      countryPhoneNumber,
       modalOpen: false
     });
   };
@@ -136,8 +147,8 @@ class PhoneLoginContainer extends React.Component<
   };
   public onSubmit: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
-    const { countryPhone, phoneNumber, isSubmitted } = this.state;
-    const phone = `${countryPhone}${phoneNumber}`;
+    const { countryPhoneNumber, phoneNumber, isSubmitted } = this.state;
+    const phone = `${countryPhoneNumber}${phoneNumber}`;
     console.log(phone);
     const isValid = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(phone);
     if (isValid) {
