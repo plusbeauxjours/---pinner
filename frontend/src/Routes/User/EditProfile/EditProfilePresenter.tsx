@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import Button from "src/Components/Button";
 import { Upload, Delete, RedDot, WhiteDot, Check } from "../../../Icons";
 import { MutationFn } from "react-apollo";
+import ReactCodeInput from "react-code-input";
 
 const PAvatar = styled(Avatar)`
   display: flex;
@@ -27,8 +28,7 @@ const ModalAnimation = keyframes`
 	    transform:none;
 	  }
   `;
-
-const PhoneVerifyModal = styled.div`
+const EditPhoneModal = styled.div`
   background-color: rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(128, 128, 128, 0.5);
   border-radius: 12px;
@@ -36,6 +36,10 @@ const PhoneVerifyModal = styled.div`
   height: 240px;
   z-index: 5;
   animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const PhoneVerifyModal = styled(EditPhoneModal)`
+  z-index: 15;
 `;
 
 const ModalContainer = styled.div`
@@ -425,6 +429,18 @@ const SearchModalOverlay = styled(ModalOverlay)`
   z-index: 10;
 `;
 
+const PhoneVerifyModalContainer = styled(ModalContainer)`
+  z-index: 15;
+`;
+const PhoneVerifyModalOverlay = styled(ModalOverlay)`
+  z-index: 14;
+`;
+const EditPhoneModalContainer = styled(ModalContainer)`
+  z-index: 5;
+`;
+const EditPhoneModalOverlay = styled(ModalOverlay)`
+  z-index: 4;
+`;
 const SearchModal = styled(Modal)`
   padding: 30px;
   height: 700px;
@@ -518,7 +534,7 @@ const CountryPhoneNumber = styled.div`
   font-size: 18px;
 `;
 
-const Form = styled.form``;
+const BaseForm = styled.form``;
 
 const PhoneNumberInput = styled.input`
   border: 0;
@@ -539,13 +555,28 @@ const TextContainter = styled.div`
   line-height: 13px;
 `;
 
-const ExtendedForm = styled(Form)`
+const ExtendedForm = styled(BaseForm)`
   padding: 0px 40px;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
 `;
+
+const CodeInputStyle = {
+  fontFamily: "monospace",
+  borderRadius: "6px",
+  border: "1px solid lightgrey",
+  boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px",
+  margin: "4px",
+  paddingLeft: "12px",
+  width: "44px",
+  height: "50px",
+  fontSize: "32px",
+  boxSizing: "border-box",
+  color: "rgba(0,0,0,.65)",
+  backgroundColor: "white"
+};
 
 interface IProps {
   avatarsData: any;
@@ -556,8 +587,10 @@ interface IProps {
   toggleLogoutConfirmModal: () => void;
   editPhoneNumberModalOpen: boolean;
   editEmailAddressModalOpen: boolean;
-  toggleEditPhoneNumber: () => void;
-  toggleEditEmailAddress: () => void;
+  verifyPhoneNumberModalOpen: boolean;
+  toggleVerifyPhoneNumberModal: () => void;
+  toggleEditPhoneNumberModal: () => void;
+  toggleEditEmailAddressModal: () => void;
   profilFormModalOpen: boolean;
   toggleProfileFormModal: () => void;
   deleteProfile: () => void;
@@ -572,8 +605,8 @@ interface IProps {
   avatarPreviewModalOpen: boolean;
   avatarModalOpen: boolean;
 
-  toggleAvatarModalOpen: () => void;
-  togglePreviewAvatarModalOpen: () => void;
+  toggleAvatarModal: () => void;
+  togglePreviewAvatarModal: () => void;
   onChangeImage: (currentTarget) => void;
   onSubmitImage: (event) => void;
   removeImagePreviewUrl: () => void;
@@ -618,6 +651,10 @@ interface IProps {
   back: (event: any) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onSubmitPhoneNumber: (event: React.FormEvent<HTMLFormElement>) => void;
+
+  verificationKey: string;
+  onSubmitVerifyPhone: (event: React.FormEvent<HTMLFormElement>) => void;
+  onChangeVerifyPhone: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const EditProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -629,8 +666,10 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   toggleLogoutConfirmModal,
   editPhoneNumberModalOpen,
   editEmailAddressModalOpen,
-  toggleEditPhoneNumber,
-  toggleEditEmailAddress,
+  verifyPhoneNumberModalOpen,
+  toggleVerifyPhoneNumberModal,
+  toggleEditPhoneNumberModal,
+  toggleEditEmailAddressModal,
   newPhoneNumber,
   newCountryPhoneCode,
   newCountryPhoneNumber,
@@ -643,8 +682,8 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   logUserOutFn,
 
   avatarPreviewModalOpen,
-  toggleAvatarModalOpen,
-  togglePreviewAvatarModalOpen,
+  toggleAvatarModal,
+  togglePreviewAvatarModal,
   imagePreviewUrl,
   avatarModalOpen,
   onChangeImage,
@@ -682,14 +721,46 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   onSelectCountry,
   back,
   onSubmit,
-  onSubmitPhoneNumber
+  onSubmitPhoneNumber,
+
+  verificationKey,
+  onSubmitVerifyPhone,
+  onChangeVerifyPhone
 }) => {
   return (
     <>
-      {editPhoneNumberModalOpen && (
-        <ModalContainer>
-          <ModalOverlay onClick={toggleEditPhoneNumber} />
+      {verifyPhoneNumberModalOpen && (
+        <PhoneVerifyModalContainer>
+          <PhoneVerifyModalOverlay onClick={toggleVerifyPhoneNumberModal} />
           <PhoneVerifyModal>
+            <Container>
+              <ReactCodeInput
+                type={"number"}
+                value={verificationKey}
+                autoFocus={true}
+                fields={6}
+                onChange={onChangeVerifyPhone}
+                inputStyle={CodeInputStyle}
+              />
+              <TextContainter>
+                <ExplainText>
+                  When you tap "Continue", Pinnder will send a text with
+                  verification code. Message and data rates may apply. The
+                  verified phone number can be used to login. Learn what happens
+                  when your number changes.
+                </ExplainText>
+                <ExtendedForm onSubmit={onSubmitVerifyPhone}>
+                  <SButton text={"VERIFY"} onClick={null} />
+                </ExtendedForm>
+              </TextContainter>
+            </Container>
+          </PhoneVerifyModal>
+        </PhoneVerifyModalContainer>
+      )}
+      {editPhoneNumberModalOpen && (
+        <EditPhoneModalContainer>
+          <EditPhoneModalOverlay onClick={toggleEditPhoneNumberModal} />
+          <EditPhoneModal>
             <Container>
               <PhoneNumberContainer>
                 <CountryCode onClick={toggleCountryModal}>
@@ -699,7 +770,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                   <CountryPhoneNumber onClick={toggleCountryModal}>
                     &nbsp;{newCountryPhoneNumber}&nbsp;
                   </CountryPhoneNumber>
-                  <Form onSubmit={onSubmitPhoneNumber}>
+                  <BaseForm onSubmit={onSubmitPhoneNumber}>
                     <PhoneNumberInput
                       type={"text"}
                       autoFocus={true}
@@ -708,7 +779,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                       onChange={onInputChange}
                       autoComplete={"off"}
                     />
-                  </Form>
+                  </BaseForm>
                 </CountryPhone>
               </PhoneNumberContainer>
               <TextContainter>
@@ -722,8 +793,8 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                 </ExtendedForm>
               </TextContainter>
             </Container>
-          </PhoneVerifyModal>
-        </ModalContainer>
+          </EditPhoneModal>
+        </EditPhoneModalContainer>
       )}
       {/* editEmailAddressModalOpen */}
       {countryModalOpen && (
@@ -799,7 +870,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
       )} */}
       {avatarPreviewModalOpen && (
         <PreviewModalContainer>
-          <ModalOverlay onClick={togglePreviewAvatarModalOpen} />
+          <ModalOverlay onClick={togglePreviewAvatarModal} />
           <AWrapper>
             <Img src={imagePreviewUrl} />
           </AWrapper>
@@ -827,7 +898,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                 <AvatarDeleteIcon onClick={removeImagePreviewUrl}>
                   <Delete />
                 </AvatarDeleteIcon>
-                <AvatarImage onClick={togglePreviewAvatarModalOpen}>
+                <AvatarImage onClick={togglePreviewAvatarModal}>
                   <ModalAvatarImage src={imagePreviewUrl} />
                 </AvatarImage>
               </AvatarKeyContainer>
@@ -996,11 +1067,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
         <GreyLine />
         <Column>
           <AvatarConatainer>
-            <PAvatar
-              size="lg"
-              url={avatarUrl}
-              onClick={toggleAvatarModalOpen}
-            />
+            <PAvatar size="lg" url={avatarUrl} onClick={toggleAvatarModal} />
           </AvatarConatainer>
           <Conatainer>
             <TitleText>USERNAME</TitleText>
@@ -1110,15 +1177,17 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
             <ExplainText>
               Your phone number is already verified. If you want to change your
               phone number,&nbsp;
-              <Underline onClick={toggleEditPhoneNumber}>
+              <Underline onClick={toggleEditPhoneNumberModal}>
                 click here
-              </Underline>&nbsp;
-              to verify again.
+              </Underline>
+              &nbsp; to verify again.
             </ExplainText>
           ) : (
             <ExplainText>
-              <Underline onClick={toggleEditPhoneNumber}>click here</Underline>&nbsp;
-              to verify your phone number to login.
+              <Underline onClick={toggleEditPhoneNumberModal}>
+                click here
+              </Underline>
+              &nbsp; to verify your phone number to login.
             </ExplainText>
           )}
           <Conatainer>
@@ -1136,15 +1205,17 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
             <ExplainText>
               Your Email is already verified. If you want to change your
               Email,&nbsp;
-              <Underline onClick={toggleEditEmailAddress}>
+              <Underline onClick={toggleEditEmailAddressModal}>
                 click here
-              </Underline>&nbsp;
-              to verify again.
+              </Underline>
+              &nbsp; to verify again.
             </ExplainText>
           ) : (
             <ExplainText>
-              <Underline onClick={toggleEditEmailAddress}>click here</Underline>&nbsp;
-              to verify your email to login.
+              <Underline onClick={toggleEditEmailAddressModal}>
+                click here
+              </Underline>
+              &nbsp; to verify your email to login.
             </ExplainText>
           )}
           <DeleteConatainer>

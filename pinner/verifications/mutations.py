@@ -100,9 +100,8 @@ class CompletePhoneVerification(graphene.Mutation):
 
             try:
                 exstingUserProfile = users_models.Profile.objects.get(phone_number=phoneNumber)
-                if (exstingUserProfile.verified_phone_number == False):
-                    exstingUserProfile.verified_phone_number == True
-                    exstingUserProfile.save()
+                exstingUserProfile.verified_phone_number = True
+                exstingUserProfile.save()
                 token = get_token(exstingUserProfile.user)
                 return types.CompletePhoneVerificationResponse(ok=True, token=token)
 
@@ -128,5 +127,44 @@ class CompletePhoneVerification(graphene.Mutation):
 
             verification.verified = True
             verification.save()
+        except models.Verification.DoesNotExist:
+            raise Exception('Verification key not valid')
+
+
+class CompleteEditPhoneVerification(graphene.Mutation):
+
+    class Arguments:
+        phoneNumber = graphene.String(required=True)
+        countryPhoneNumber = graphene.String(required=True)
+        countryPhoneCode = graphene.String(required=True)
+        key = graphene.String(required=True)
+
+    Output = types.CompleteEditPhoneVerificationResponse
+
+    def mutate(self, info, **kwargs):
+
+        phoneNumber = kwargs.get('phoneNumber')
+        countryPhoneNumber = kwargs.get('countryPhoneNumber')
+        countryPhoneCode = kwargs.get('countryPhoneCode')
+        key = kwargs.get('key')
+        payload = countryPhoneNumber + phoneNumber
+        profile = info.context.user.profile
+        print(payload)
+
+        try:
+            verification = models.Verification.objects.get(
+                payload=payload,
+                key=key
+            )
+            profile.phone_number = phoneNumber
+            profile.country_phone_number = countryPhoneNumber
+            profile.country_phone_code = countryPhoneCode
+            profile.verified_phone_number = True
+            profile.save()
+            return types.CompleteEditPhoneVerificationResponse(ok=True,
+                                                               phoneNumber=phoneNumber,
+                                                               countryPhoneNumber=countryPhoneNumber,
+                                                               countryPhoneCode=countryPhoneCode)
+
         except models.Verification.DoesNotExist:
             raise Exception('Verification key not valid')

@@ -612,9 +612,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                               uploadAvatarLoading={
                                                                                                 uploadAvatarLoading
                                                                                               }
-                                                                                              toggleAvatarModalOpen={
+                                                                                              toggleAvatarModal={
                                                                                                 this
-                                                                                                  .toggleAvatarModalOpen
+                                                                                                  .toggleAvatarModal
                                                                                               }
                                                                                               onChangeImage={
                                                                                                 this
@@ -627,9 +627,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                               imagePreviewUrl={
                                                                                                 imagePreviewUrl
                                                                                               }
-                                                                                              togglePreviewAvatarModalOpen={
+                                                                                              togglePreviewAvatarModal={
                                                                                                 this
-                                                                                                  .togglePreviewAvatarModalOpen
+                                                                                                  .togglePreviewAvatarModal
                                                                                               }
                                                                                               removeImagePreviewUrl={
                                                                                                 this
@@ -710,13 +710,13 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       modalOpen: false
     });
   };
-  public toggleAvatarModalOpen = () => {
+  public toggleAvatarModal = () => {
     const { avatarModalOpen } = this.state;
     this.setState({
       avatarModalOpen: !avatarModalOpen
     });
   };
-  public togglePreviewAvatarModalOpen = () => {
+  public togglePreviewAvatarModal = () => {
     const { avatarPreviewModalOpen } = this.state;
     this.setState({
       avatarPreviewModalOpen: !avatarPreviewModalOpen

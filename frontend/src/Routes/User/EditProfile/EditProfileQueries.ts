@@ -85,3 +85,24 @@ export const DELETE_PROFILE = gql`
     }
   }
 `;
+
+export const COMPLETE_EDIT_PHONE_VERIFICATION = gql`
+  mutation CompleteEditPhoneVerification(
+    $key: String!
+    $phoneNumber: String!
+    $countryPhoneNumber: String!
+    $countryPhoneCode: String!
+  ) {
+    completeEditPhoneVerification(
+      key: $key
+      phoneNumber: $phoneNumber
+      countryPhoneNumber: $countryPhoneNumber
+      countryPhoneCode: $countryPhoneCode
+    ) {
+      ok
+      phoneNumber
+      countryPhoneNumber
+      countryPhoneCode
+    }
+  }
+`;

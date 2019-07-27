@@ -2014,6 +2014,7 @@ export interface EditProfile_editProfile_user_profile {
   residence: EditProfile_editProfile_user_profile_residence | null;
   postCount: number | null;
   tripCount: number | null;
+  coffeeCount: number | null;
   cityCount: number | null;
   countryCount: number | null;
   continentCount: number | null;
@@ -2056,8 +2057,8 @@ export interface EditProfileVariables {
   gender?: string | null;
   firstName?: string | null;
   lastName?: string | null;
-  nationality?: string | null;
-  residence?: string | null;
+  nationalityCode?: string | null;
+  residenceCode?: string | null;
 }
 
 /* tslint:disable */
@@ -2075,6 +2076,33 @@ export interface DeleteProfile_deleteProfile {
 
 export interface DeleteProfile {
   deleteProfile: DeleteProfile_deleteProfile;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: CompleteEditPhoneVerification
+// ====================================================
+
+export interface CompleteEditPhoneVerification_completeEditPhoneVerification {
+  __typename: "CompleteEditPhoneVerificationResponse";
+  ok: boolean | null;
+  phoneNumber: string | null;
+  countryPhoneNumber: string | null;
+  countryPhoneCode: string | null;
+}
+
+export interface CompleteEditPhoneVerification {
+  completeEditPhoneVerification: CompleteEditPhoneVerification_completeEditPhoneVerification;
+}
+
+export interface CompleteEditPhoneVerificationVariables {
+  key: string;
+  phoneNumber: string;
+  countryPhoneNumber: string;
+  countryPhoneCode: string;
 }
 
 /* tslint:disable */

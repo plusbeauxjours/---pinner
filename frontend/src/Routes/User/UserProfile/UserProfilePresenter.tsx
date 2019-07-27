@@ -645,8 +645,8 @@ interface IProps {
   toggleRequestModal: () => void;
   toggleProfileFormModal: () => void;
   avatarModalOpen: boolean;
-  toggleAvatarModalOpen: () => void;
-  togglePreviewAvatarModalOpen: () => void;
+  toggleAvatarModal: () => void;
+  togglePreviewAvatarModal: () => void;
 
   addTrip: () => void;
   editTrip: () => void;
@@ -718,7 +718,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   toggleTripConfirmModal,
   toggleAddTripModal,
   toggleEditTripModal,
-  togglePreviewAvatarModalOpen,
+  togglePreviewAvatarModal,
 
   toggleRequestModal,
 
@@ -754,7 +754,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   createCityLoading,
   uploadAvatarLoading,
   avatarModalOpen,
-  toggleAvatarModalOpen,
+  toggleAvatarModal,
   onChangeImage,
   onSubmitImage,
   imagePreviewUrl,
@@ -792,7 +792,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
         )}
         {avatarPreviewModalOpen && (
           <PreviewModalContainer>
-            <ModalOverlay onClick={togglePreviewAvatarModalOpen} />
+            <ModalOverlay onClick={togglePreviewAvatarModal} />
             <AWrapper>
               <Img src={imagePreviewUrl} />
             </AWrapper>
@@ -820,7 +820,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                   <AvatarDeleteIcon onClick={removeImagePreviewUrl}>
                     <Delete />
                   </AvatarDeleteIcon>
-                  <AvatarImage onClick={togglePreviewAvatarModalOpen}>
+                  <AvatarImage onClick={togglePreviewAvatarModal}>
                     <ModalAvatarImage src={imagePreviewUrl} />
                   </AvatarImage>
                 </AvatarKeyContainer>
@@ -1161,7 +1161,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
             <PAvatar
               size="lg"
               url={user.profile.avatarUrl}
-              onClick={toggleAvatarModalOpen}
+              onClick={toggleAvatarModal}
             />
           </AvatarContainer>
           <NameContainer>
