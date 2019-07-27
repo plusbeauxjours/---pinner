@@ -240,6 +240,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
           countryPhoneCode: newCountryPhoneCode,
           phoneNumber: newPhoneNumber
         }}
+        update={this.updateEditPhoneVerification}
         onCompleted={this.onCompletedEditPhoneVerification}
       >
         {completeEditPhoneVerificationFn => {
@@ -296,7 +297,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                                             return (
                                               <EditProfileMutation
                                                 mutation={EDIT_PROFILE}
-                                                update={this.updatEditProfile}
+                                                update={this.updateEditProfile}
                                                 onCompleted={editData => {
                                                   console.log(editData);
                                                   const {
@@ -565,13 +566,49 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       </CompleteEditPhoneVerificationMutation>
     );
   }
+  public updateEditPhoneVerification = (
+    cache,
+    { data: { completeEditPhoneVerification } }
+  ) => {
+    const { username } = this.state;
+    try {
+      const data = cache.readQuery({
+        query: GET_USER,
+        variables: { username }
+      });
+      console.log(completeEditPhoneVerification);
+      if (data) {
+        data.userProfile.user.profile.phoneNumber =
+          completeEditPhoneVerification.phoneNumber;
+        data.userProfile.user.profile.countryPhoneNumber =
+          completeEditPhoneVerification.countryPhoneNumber;
+        data.userProfile.user.profile.countryPhoneCode =
+          completeEditPhoneVerification.countryPhoneCode;
+        cache.writeQuery({
+          query: GET_USER,
+          variables: { username },
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   public onCompletedEditPhoneVerification = data => {
     const { completeEditPhoneVerification } = data;
+    const {
+      newPhoneNumber,
+      newCountryPhoneCode,
+      newCountryPhoneNumber
+    } = this.state;
     if (completeEditPhoneVerification.ok) {
       toast.success("Your phone number is verified");
       this.setState({
         verifyPhoneNumberModalOpen: false,
-        editPhoneNumberModalOpen: false
+        editPhoneNumberModalOpen: false,
+        phoneNumber: newPhoneNumber,
+        countryPhoneNumber: newCountryPhoneCode,
+        countryPhoneCode: newCountryPhoneNumber
       });
     } else {
       toast.error("Could not be Verified your phone number");
@@ -716,7 +753,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     } as any);
   };
 
-  public updatEditProfile = (cache, { data: { editProfile } }) => {
+  public updateEditProfile = (cache, { data: { editProfile } }) => {
     const { username } = this.state;
     try {
       const data = cache.readQuery({

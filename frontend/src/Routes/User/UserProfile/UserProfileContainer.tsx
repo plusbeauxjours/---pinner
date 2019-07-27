@@ -1006,7 +1006,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       console.log(e);
     }
   };
-  // public updatEditProfile = (cache, { data: { editProfile } }) => {
+  // public updateEditProfile = (cache, { data: { editProfile } }) => {
   //   const {
   //     match: {
   //       params: { username }
