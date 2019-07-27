@@ -1,19 +1,25 @@
 from django.conf import settings
 from twilio.rest import Client
 
-twilio_sid = settings.TWILIO_SID
-twilio_token = settings.TWILIO_TOKEN
+TWILIOSID = settings.TWILIOSID
+TWILIOTOKEN = settings.TWILIOTOKEN
 
-from_number = settings.FROM
-print(twilio_sid, twilio_token, from_number)
+FROM = settings.FROM
+print(TWILIOSID, TWILIOTOKEN, FROM)
+ADMIN_ID = settings.ADMIN_ID
+SLACK_TOKEN = settings.SLACK_TOKEN
+SENTRY_DSN = settings.SENTRY_DSN
+print(ADMIN_ID,
+      SLACK_TOKEN,
+      SENTRY_DSN)
 
 
-client = Client('ACe873d3e3e2da7f4231ca9e83669c2f9b', '447e1871da981a84c145c3915ecdc065')
+client = Client(TWILIOSID, TWILIOTOKEN)
 
 
 def sendSMS(to, body):
     return client.messages.create(to=to,
-                                  from_=from_number,
+                                  from_=FROM,
                                   body=body)
 
 

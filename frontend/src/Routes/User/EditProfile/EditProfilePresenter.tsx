@@ -966,9 +966,11 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                   {phoneNumber}
                 </>
               )}
-              <CheckIcon>
-                <Check />
-              </CheckIcon>
+              {verifiedPhoneNumber && (
+                <CheckIcon>
+                  <Check />
+                </CheckIcon>
+              )}
             </NumberUnderline>
           </Conatainer>
           {verifiedPhoneNumber ? (
@@ -985,14 +987,14 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
           )}
           <Conatainer>
             <TitleText>EMAIL</TitleText>
-            <Input
-              onChange={onInputChange}
-              type={"email"}
-              value={email}
-              placeholder={email || "Email"}
-              name={"email"}
-              autoComplete={"off"}
-            />
+            <NumberUnderline>
+              {email}
+              {verifiedEmail && (
+                <CheckIcon>
+                  <Check />
+                </CheckIcon>
+              )}
+            </NumberUnderline>
           </Conatainer>
           {verifiedEmail ? (
             <ExplainText>

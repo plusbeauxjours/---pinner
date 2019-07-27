@@ -20,6 +20,7 @@ const Container = styled.div`
 
 const TextContainter = styled.div`
   margin: 0 10px 0 10px;
+  line-height: 13px;
 `;
 
 const ExtendedForm = styled(Form)`
@@ -74,7 +75,17 @@ const Modal = styled.div`
   animation: ${ModalAnimation} 0.1s linear;
 `;
 
-const Text = styled.p``;
+const Text = styled.div`
+  text-align: inline;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+`;
+
+const Underline = styled.p`
+  text-decoration: underline;
+  cursor: pointer;
+`;
 
 const CodeInputStyle = {
   fontFamily: "monospace",
@@ -127,11 +138,15 @@ const VerifyPhonePresenter: React.FunctionComponent<IProps> = ({
             />
             <TextContainter>
               <Text>
-                Changed your phone number? Login With Email When you tap
-                "Continue", Pinner will send a text with verification code.
-                Message and data rates may apply. The verified phone number can
-                be used to login.
+                <p>Lost your phone?</p>
+                <Underline>&nbsp;Login With Email.</Underline>
               </Text>
+              <p>
+                When you tap "Continue", Pinnder will send a text with
+                verification code. Message and data rates may apply. The
+                verified phone number can be used to login. Learn what happens
+                when your number changes.
+              </p>
               <ExtendedForm onSubmit={onSubmit}>
                 <SButton text={"VERIFY"} onClick={null} inverted={loading} />
               </ExtendedForm>

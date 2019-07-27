@@ -670,6 +670,7 @@ class FacebookConnect(graphene.Mutation):
                     user=newUser,
                     fbId=fbId,
                     email=email,
+                    verified_email=True,
                     gender=gender,
                     avatarUrl=avatar.thumbnail,
                     current_city=city

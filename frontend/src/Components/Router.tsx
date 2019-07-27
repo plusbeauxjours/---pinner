@@ -9,6 +9,7 @@ import {
 import Home from "../Routes/Login/Home";
 import VerifyPhone from "../Routes/Login/VerifyPhone";
 import PhoneLogin from "../Routes/Login/PhoneLogin";
+import NotFound from "./NotFound";
 
 import LoggedInPages from "./LoggedInPages";
 
@@ -23,6 +24,7 @@ const LoggedOutPages = () => (
     <Route path="/" exact={true} component={Home} />
     <Route path="/verify-phone" component={VerifyPhone} />
     <Route path="/phone-login" component={PhoneLogin} />
+    <Route path="/404" exact={true} component={NotFound} />
     <Redirect from="*" to="/" />
   </Switch>
 );

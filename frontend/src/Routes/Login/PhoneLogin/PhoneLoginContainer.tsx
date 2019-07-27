@@ -148,18 +148,24 @@ class PhoneLoginContainer extends React.Component<
   public onSubmit: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
     const { countryPhoneNumber, phoneNumber, isSubmitted } = this.state;
-    const phone = `${countryPhoneNumber}${phoneNumber}`;
-    console.log(phone);
-    const isValid = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(phone);
-    if (isValid) {
-      if (!isSubmitted) {
-        this.phoneSignInFn();
-        this.setState({
-          isSubmitted: true
-        });
+    if (phoneNumber) {
+      const phone = `${countryPhoneNumber}${phoneNumber}`;
+      console.log(phone);
+      const isValid = /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(
+        phone
+      );
+      if (isValid) {
+        if (!isSubmitted) {
+          this.phoneSignInFn();
+          this.setState({
+            isSubmitted: true
+          });
+        }
+      } else {
+        toast.error("Please write a valid phone number");
       }
     } else {
-      toast.error("Please write a valid phone number");
+      toast.error("Please write a phone number");
     }
   };
   public back = async event => {

@@ -264,7 +264,7 @@ const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
               </PhoneNumberContainer>
               <TextContainter>
                 <Text>
-                  <p>Changed CountryPhoneour phone number?</p>
+                  <p>Changed your phone number?</p>
                   <Underline>&nbsp;Login With Email.</Underline>
                 </Text>
                 <p>
