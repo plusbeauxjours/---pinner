@@ -5,7 +5,7 @@ import browserHistory from "../Apollo/browserHistory";
 import Button from "src/Components/Button";
 
 const Container = styled.div`
-  margin-top: 250px;
+  margin-top: 50px;
   margin-bottom: 50px;
   font-weight: 600;
   font-size: 12px;

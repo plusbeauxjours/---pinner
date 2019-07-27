@@ -270,8 +270,7 @@ const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
                 <p>
                   When you tap "Continue", Pinnder will send a text with
                   verification code. Message and data rates may apply. The
-                  verified phone number can be used to login. Learn what happens
-                  when your number changes.
+                  verified phone number can be used to login.
                 </p>
                 <ExtendedForm onSubmit={onSubmit}>
                   <SButton

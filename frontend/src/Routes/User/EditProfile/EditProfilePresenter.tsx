@@ -28,6 +28,16 @@ const ModalAnimation = keyframes`
 	  }
   `;
 
+const PhoneVerifyModal = styled.div`
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  border-radius: 12px;
+  width: 540px;
+  height: 240px;
+  z-index: 5;
+  animation: ${ModalAnimation} 0.1s linear;
+`;
+
 const ModalContainer = styled.div`
   z-index: 8;
   display: flex;
@@ -36,7 +46,6 @@ const ModalContainer = styled.div`
   position: fixed;
   height: 100%;
   width: 100%;
-  top: 0;
 `;
 
 const Modal = styled.div`
@@ -473,6 +482,71 @@ const NumberUnderline = styled.div`
   border-bottom: 1px solid ${props => props.theme.greyColor};
 `;
 
+const Container = styled.div`
+  display: grid;
+  grid-gap: 20px;
+  grid-template-rows: 2 40px;
+  justify-items: center;
+  align-items: center;
+  padding: 20px;
+  height: 100%;
+`;
+
+const PhoneNumberContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+`;
+
+const CountryCode = styled.div`
+  font-size: 18px;
+  margin-right: 12px;
+  cursor: pointer;
+`;
+
+const CountryPhone = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  border-bottom: 1px solid ${props => props.theme.greyColor};
+  font-size: 18px;
+`;
+
+const CountryPhoneNumber = styled.div`
+  cursor: pointer;
+  font-size: 18px;
+`;
+
+const Form = styled.form``;
+
+const PhoneNumberInput = styled.input`
+  border: 0;
+  display: flex;
+  color: white;
+  background-color: transparent;
+  font-size: 18px;
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: ${props => props.theme.greyColor};
+  }
+`;
+
+const TextContainter = styled.div`
+  margin: 0 10px 0 10px;
+  line-height: 13px;
+`;
+
+const ExtendedForm = styled(Form)`
+  padding: 0px 40px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+`;
+
 interface IProps {
   avatarsData: any;
   avatarsLoading: boolean;
@@ -480,6 +554,10 @@ interface IProps {
   logoutConfirmModalOpen: boolean;
   toggleDeleteConfirmModal: () => void;
   toggleLogoutConfirmModal: () => void;
+  editPhoneNumberModalOpen: boolean;
+  editEmailAddressModalOpen: boolean;
+  toggleEditPhoneNumber: () => void;
+  toggleEditEmailAddress: () => void;
   profilFormModalOpen: boolean;
   toggleProfileFormModal: () => void;
   deleteProfile: () => void;
@@ -526,14 +604,20 @@ interface IProps {
   verifiedPhoneNumber: boolean;
   verifiedEmail: boolean;
   confirmUsername: string;
-  modalOpen: boolean;
-  toggleModal: () => void;
+  countryModalOpen: boolean;
+  toggleCountryModal: () => void;
+  newPhoneNumber: string;
+  newCountryPhoneCode: string;
+  newCountryPhoneNumber: string;
+  newEmailAddress: string;
+
   onSelectCountry: (
     countryPhoneNumber: string,
     countryPhoneCode: string
   ) => void;
   back: (event: any) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onSubmitPhoneNumber: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const EditProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -543,6 +627,14 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   logoutConfirmModalOpen,
   toggleDeleteConfirmModal,
   toggleLogoutConfirmModal,
+  editPhoneNumberModalOpen,
+  editEmailAddressModalOpen,
+  toggleEditPhoneNumber,
+  toggleEditEmailAddress,
+  newPhoneNumber,
+  newCountryPhoneCode,
+  newCountryPhoneNumber,
+  newEmailAddress,
   profilFormModalOpen,
   toggleProfileFormModal,
   deleteProfile,
@@ -585,17 +677,58 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   verifiedPhoneNumber,
   verifiedEmail,
   confirmUsername,
-  modalOpen,
-  toggleModal,
+  countryModalOpen,
+  toggleCountryModal,
   onSelectCountry,
   back,
-  onSubmit
+  onSubmit,
+  onSubmitPhoneNumber
 }) => {
   return (
     <>
-      {modalOpen && (
+      {editPhoneNumberModalOpen && (
+        <ModalContainer>
+          <ModalOverlay onClick={toggleEditPhoneNumber} />
+          <PhoneVerifyModal>
+            <Container>
+              <PhoneNumberContainer>
+                <CountryCode onClick={toggleCountryModal}>
+                  {newCountryPhoneCode}
+                </CountryCode>
+                <CountryPhone>
+                  <CountryPhoneNumber onClick={toggleCountryModal}>
+                    &nbsp;{newCountryPhoneNumber}&nbsp;
+                  </CountryPhoneNumber>
+                  <Form onSubmit={onSubmitPhoneNumber}>
+                    <PhoneNumberInput
+                      type={"text"}
+                      autoFocus={true}
+                      value={newPhoneNumber}
+                      name={"newPhoneNumber"}
+                      onChange={onInputChange}
+                      autoComplete={"off"}
+                    />
+                  </Form>
+                </CountryPhone>
+              </PhoneNumberContainer>
+              <TextContainter>
+                <ExplainText>
+                  When you tap "Continue", Pinnder will send a text with
+                  verification code. Message and data rates may apply. The
+                  verified phone number can be used to login.
+                </ExplainText>
+                <ExtendedForm onSubmit={onSubmitPhoneNumber}>
+                  <SButton text={"CONTINUE"} onClick={null} />
+                </ExtendedForm>
+              </TextContainter>
+            </Container>
+          </PhoneVerifyModal>
+        </ModalContainer>
+      )}
+      {/* editEmailAddressModalOpen */}
+      {countryModalOpen && (
         <SearchModalContainer>
-          <SearchModalOverlay onClick={toggleModal} />
+          <SearchModalOverlay onClick={toggleCountryModal} />
           <SearchModal>
             <CountryContainer>
               {countries.map((country, index) => (
@@ -604,8 +737,8 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                   onClick={() => onSelectCountry(country.phone, country.code)}
                 >
                   <CountryText>
-                    <p>&nbsp;{country.name}</p>
-                    <p>&nbsp;{country.emoji}</p>
+                    <ExplainText>&nbsp;{country.name}</ExplainText>
+                    <ExplainText>&nbsp;{country.emoji}</ExplainText>
                   </CountryText>
                   <CountryText> {country.phone}</CountryText>
                 </CountryRow>
@@ -977,12 +1110,15 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
             <ExplainText>
               Your phone number is already verified. If you want to change your
               phone number,&nbsp;
-              <Underline>click here</Underline> to verify again.
+              <Underline onClick={toggleEditPhoneNumber}>
+                click here
+              </Underline>&nbsp;
+              to verify again.
             </ExplainText>
           ) : (
             <ExplainText>
-              <Underline>click here</Underline> to verify your phone number to
-              login.
+              <Underline onClick={toggleEditPhoneNumber}>click here</Underline>&nbsp;
+              to verify your phone number to login.
             </ExplainText>
           )}
           <Conatainer>
@@ -1000,11 +1136,15 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
             <ExplainText>
               Your Email is already verified. If you want to change your
               Email,&nbsp;
-              <Underline>click here</Underline> to verify again.
+              <Underline onClick={toggleEditEmailAddress}>
+                click here
+              </Underline>&nbsp;
+              to verify again.
             </ExplainText>
           ) : (
             <ExplainText>
-              <Underline>click here</Underline> to verify your email to login.
+              <Underline onClick={toggleEditEmailAddress}>click here</Underline>&nbsp;
+              to verify your email to login.
             </ExplainText>
           )}
           <DeleteConatainer>

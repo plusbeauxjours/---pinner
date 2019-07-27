@@ -149,7 +149,9 @@ class PhoneLoginContainer extends React.Component<
     event.preventDefault();
     const { countryPhoneNumber, phoneNumber, isSubmitted } = this.state;
     if (phoneNumber) {
-      const phone = `${countryPhoneNumber}${phoneNumber}`;
+      const phone = `${countryPhoneNumber}${
+        phoneNumber.startsWith("0") ? phoneNumber.substring(1) : phoneNumber
+      }`;
       console.log(phone);
       const isValid = /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(
         phone
