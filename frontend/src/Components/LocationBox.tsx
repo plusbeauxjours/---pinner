@@ -4,6 +4,7 @@ import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import Bold from "./Bold";
 import Avatar from "./Avatar";
 import CityLikeBtn from "./CityLikeBtn";
+import LoadingOverlay from "react-loading-overlay";
 
 const SeeAll = styled.p`
   font-size: 12px;
@@ -153,7 +154,21 @@ const LocationBox: React.FunctionComponent<IProps> = ({
   title,
   loading
 }) => {
-  if (!loading && nearCities && nearCities.length !== 0) {
+  if (loading) {
+    return (
+      <>
+        <GreyLine />
+        <Container>
+          <LoadingOverlay
+            active={true}
+            spinner={true}
+            fadeSpeed={500}
+            text="Loading"
+          />
+        </Container>
+      </>
+    );
+  } else if (!loading && nearCities && nearCities.length !== 0) {
     return (
       <>
         <GreyLine />

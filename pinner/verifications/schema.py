@@ -16,6 +16,6 @@ class Mutation(object):
 
     mark_as_verified = mutations.MarkAsVerified.Field(required=True)
     start_phone_verification = mutations.StartPhoneVerification.Field(required=True)
-    start_edit_phone_verification = mutations.StartEditPhoneVerification.Field(required=True)
     complete_phone_verification = mutations.CompletePhoneVerification.Field(required=True)
+    start_edit_phone_verification = mutations.StartEditPhoneVerification.Field(required=True)
     complete_edit_phone_verification = mutations.CompleteEditPhoneVerification.Field(required=True)

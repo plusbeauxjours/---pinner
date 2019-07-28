@@ -2098,6 +2098,7 @@ export interface StartEditPhoneVerification {
 
 export interface StartEditPhoneVerificationVariables {
   phoneNumber: string;
+  countryPhoneNumber: string;
 }
 
 /* tslint:disable */

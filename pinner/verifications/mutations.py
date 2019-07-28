@@ -7,6 +7,7 @@ import graphene
 from django.db import IntegrityError
 from graphql_jwt.decorators import login_required
 from graphql_jwt.shortcuts import get_token
+from graphql_extensions.exceptions import GraphQLError
 from users import models as users_models
 from locations import models as location_models
 from django.contrib.auth.models import User
@@ -142,40 +143,39 @@ class StartEditPhoneVerification(graphene.Mutation):
 
     class Arguments:
         phoneNumber = graphene.String(required=True)
+        countryPhoneNumber = graphene.String(required=True)
 
     Output = types.StartEditPhoneVerificationResponse
 
     def mutate(self, info, **kwargs):
 
         phoneNumber = kwargs.get('phoneNumber')
+        countryPhoneNumber = kwargs.get('countryPhoneNumber')
+        if phoneNumber.startswith('0'):
+            phoneNumber = phoneNumber.replace('0', '')
+            return phoneNumber
+        payload = countryPhoneNumber + phoneNumber
+        print(countryPhoneNumber, phoneNumber)
+        print(payload)
 
         try:
-            existingVerification = models.Verification.objects.get(
-                payload=phoneNumber
+            existingPhoneNumber = users_models.Profile.objects.get(phone_number=phoneNumber)
+            if existingPhoneNumber:
+                return types.StartEditPhoneVerificationResponse(ok=False)
+
+        except users_models.Profile.DoesNotExist:
+            newVerification = models.Verification.objects.create(
+                payload=payload,
+                target="Phone"
             )
-            existingVerification.delete()
-
-        except IntegrityError as e:
-            raise Exception("Wrong Phone Number")
-
-        finally:
+            newVerification.save()
             try:
-                existingPhoneNumber = models.Profile.objects.get(phone_number=phoneNumber)
-                if existingPhoneNumber:
-                    raise Exception('Phone number is already verified')
-                else:
-                    newVerification = models.Verification.objects.create(
-                        payload=phoneNumber,
-                        target="Phone"
-                    )
-                    newVerification.save()
-                try:
-                    sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
-                    return types.StartEditPhoneVerificationResponse(ok=True)
-                except:
-                    return types.StartEditPhoneVerificationResponse(ok=False)
+                sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
+                return types.StartEditPhoneVerificationResponse(ok=True)
             except:
                 return types.StartEditPhoneVerificationResponse(ok=False)
+        except:
+            raise Exception('Phone number is already verified')
 
 
 class CompleteEditPhoneVerification(graphene.Mutation):

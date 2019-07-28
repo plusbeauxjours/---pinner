@@ -88,8 +88,14 @@ export const DELETE_PROFILE = gql`
 `;
 
 export const START_EDIT_PHONE_VERIFICATION = gql`
-  mutation StartEditPhoneVerification($phoneNumber: String!) {
-    startEditPhoneVerification(phoneNumber: $phoneNumber) {
+  mutation StartEditPhoneVerification(
+    $phoneNumber: String!
+    $countryPhoneNumber: String!
+  ) {
+    startEditPhoneVerification(
+      phoneNumber: $phoneNumber
+      countryPhoneNumber: $countryPhoneNumber
+    ) {
       ok
     }
   }

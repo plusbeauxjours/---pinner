@@ -13,10 +13,10 @@ import {
   DeleteAvatarVariables,
   MarkAsMain,
   MarkAsMainVariables,
-  StartPhoneVerification,
-  StartPhoneVerificationVariables,
   CompleteEditPhoneVerification,
-  CompleteEditPhoneVerificationVariables
+  CompleteEditPhoneVerificationVariables,
+  StartEditPhoneVerification,
+  StartEditPhoneVerificationVariables
 } from "src/types/api";
 import {
   EDIT_PROFILE,
@@ -29,8 +29,8 @@ import { withRouter, RouteComponentProps } from "react-router";
 import { LOG_USER_OUT } from "src/sharedQueries.local";
 import { toast } from "react-toastify";
 import { ME } from "../../../sharedQueries";
-import { PHONE_SIGN_IN } from "../../Login/PhoneLogin/PhoneLoginQueries";
 import { LOG_USER_IN } from "../../../sharedQueries.local";
+import { START_EDIT_PHONE_VERIFICATION } from "./EditProfileQueries";
 import {
   GET_USER,
   MARK_AS_MAIN,
@@ -53,9 +53,9 @@ class DeleteAvatarMutation extends Mutation<
   DeleteAvatarVariables
 > {}
 class MarkAsMainMutation extends Mutation<MarkAsMain, MarkAsMainVariables> {}
-class StartPhoneVerificationMutation extends Mutation<
-  StartPhoneVerification,
-  StartPhoneVerificationVariables
+class StartEditPhoneVerificationMutation extends Mutation<
+  StartEditPhoneVerification,
+  StartEditPhoneVerificationVariables
 > {}
 class CompleteEditPhoneVerificationMutation extends Mutation<
   CompleteEditPhoneVerification,
@@ -253,21 +253,20 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                   : newPhoneNumber
               }}
               update={this.updateEditPhoneVerification}
-              onCompleted={this.onCompletedEditPhoneVerification}
+              onCompleted={this.onCompletedCompleteEditPhoneVerification}
             >
               {completeEditPhoneVerificationFn => {
                 this.completeEditPhoneVerificationFn = completeEditPhoneVerificationFn;
                 return (
-                  <StartPhoneVerificationMutation
-                    mutation={PHONE_SIGN_IN}
+                  <StartEditPhoneVerificationMutation
+                    mutation={START_EDIT_PHONE_VERIFICATION}
                     variables={{
-                      phoneNumber: `${newCountryPhoneNumber}${
-                        newPhoneNumber.startsWith("0")
-                          ? newPhoneNumber.substring(1)
-                          : newPhoneNumber
-                      }`
+                      countryPhoneNumber: newCountryPhoneNumber,
+                      phoneNumber: newPhoneNumber.startsWith("0")
+                        ? newPhoneNumber.substring(1)
+                        : newPhoneNumber
                     }}
-                    onCompleted={this.onCompletedPhoneVerification}
+                    onCompleted={this.onCompletedStartEditPhoneVerification}
                   >
                     {phoneVerificationFn => {
                       this.phoneVerificationFn = phoneVerificationFn;
@@ -601,7 +600,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                         </MarkAsMainMutation>
                       );
                     }}
-                  </StartPhoneVerificationMutation>
+                  </StartEditPhoneVerificationMutation>
                 );
               }}
             </CompleteEditPhoneVerificationMutation>
@@ -628,6 +627,45 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     }
     const { newUsername } = this.state;
     this.setState({ username: newUsername });
+  };
+  public onCompletedCompleteEditPhoneVerification = data => {
+    const { completeEditPhoneVerification } = data;
+    const {
+      newPhoneNumber,
+      newCountryPhoneCode,
+      newCountryPhoneNumber
+    } = this.state;
+    if (completeEditPhoneVerification.ok) {
+      toast.success("Your phone number is verified");
+      this.setState({
+        verifyPhoneNumberModalOpen: false,
+        editPhoneNumberModalOpen: false,
+        phoneNumber: newPhoneNumber.startsWith("0")
+          ? newPhoneNumber.substring(1)
+          : newPhoneNumber,
+        countryPhoneNumber: newCountryPhoneNumber,
+        countryPhoneCode: newCountryPhoneCode,
+        isSubmitted: false,
+        verificationKey: "",
+        newPhoneNumber: "",
+        newCountryPhoneCode: localStorage.getItem("countryCode"),
+        newCountryPhoneNumber: countries.find(
+          i => i.code === localStorage.getItem("countryCode")
+        ).phone
+      });
+    } else {
+      toast.error("Could not be Verified your phone number");
+    }
+  };
+  public onCompletedStartEditPhoneVerification = data => {
+    const { startEditPhoneVerification } = data;
+    if (startEditPhoneVerification.ok) {
+      this.setState({ verifyPhoneNumberModalOpen: true, isSubmitted: false });
+      toast.success("SMS Sent! Redirectiong you...");
+    } else {
+      this.setState({ isSubmitted: false });
+      toast.error("Could not send you a Key");
+    }
   };
   public closeVerifyPhoneNumberModal = () => {
     this.setState({ isSubmitted: false, verifyPhoneNumberModalOpen: false });
@@ -660,35 +698,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       console.log(e);
     }
   };
-  public onCompletedEditPhoneVerification = data => {
-    const { completeEditPhoneVerification } = data;
-    const {
-      newPhoneNumber,
-      newCountryPhoneCode,
-      newCountryPhoneNumber
-    } = this.state;
-    if (completeEditPhoneVerification.ok) {
-      toast.success("Your phone number is verified");
-      this.setState({
-        verifyPhoneNumberModalOpen: false,
-        editPhoneNumberModalOpen: false,
-        phoneNumber: newPhoneNumber.startsWith("0")
-          ? newPhoneNumber.substring(1)
-          : newPhoneNumber,
-        countryPhoneNumber: newCountryPhoneNumber,
-        countryPhoneCode: newCountryPhoneCode,
-        isSubmitted: false,
-        verificationKey: "",
-        newPhoneNumber: "",
-        newCountryPhoneCode: localStorage.getItem("countryCode"),
-        newCountryPhoneNumber: countries.find(
-          i => i.code === localStorage.getItem("countryCode")
-        ).phone
-      });
-    } else {
-      toast.error("Could not be Verified your phone number");
-    }
-  };
+
   public onChangeVerifyPhone = value => {
     console.log(value);
     this.setState({
@@ -701,7 +711,10 @@ class EditProfileContainer extends React.Component<IProps, IState> {
   };
   public toggleEditPhoneNumberModal = () => {
     const { editPhoneNumberModalOpen } = this.state;
-    this.setState({ editPhoneNumberModalOpen: !editPhoneNumberModalOpen });
+    this.setState({
+      editPhoneNumberModalOpen: !editPhoneNumberModalOpen,
+      isSubmitted: false
+    });
   };
   public toggleEditEmailAddressModal = () => {
     const { editEmailAddressModalOpen } = this.state;
@@ -872,7 +885,6 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     } as any);
     console.log(this.state);
   };
-
   public onSubmitVerifyPhone: React.FormEventHandler<
     HTMLFormElement
   > = event => {
@@ -909,15 +921,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       toast.error("Please write a phone number");
     }
   };
-  public onCompletedPhoneVerification = data => {
-    const { startPhoneVerification } = data;
-    if (startPhoneVerification.ok) {
-      toast.success("SMS Sent! Redirectiong you...");
-      this.setState({ verifyPhoneNumberModalOpen: true });
-    } else {
-      toast.error("Could not send you a Key");
-    }
-  };
+
   public back = async event => {
     const { history } = this.props;
     const { username } = this.state;

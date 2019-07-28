@@ -5,7 +5,6 @@ import Bold from "./Bold";
 import { Upload } from "../Icons";
 import Avatar from "./Avatar";
 import CoffeeBtn from "src/Components/CoffeeBtn";
-import Loader from "src/Components/Loader";
 
 const Title = styled.div`
   display: flex;
@@ -149,9 +148,7 @@ const UserBox: React.FunctionComponent<IProps> = ({
   coffees,
   isStaying
 }) => {
-  if (coffeeLoading) {
-    return <Loader />;
-  } else if (!coffeeLoading && currentCityId && isStaying) {
+  if (!coffeeLoading && currentCityId && isStaying) {
     return (
       <>
         <GreyLine />
