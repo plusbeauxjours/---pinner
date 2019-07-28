@@ -13,7 +13,7 @@ import Bold from "../Bold";
 import Weather from "src/Components/Weather";
 
 const Header = styled.header`
-  background-color: ${props => props.theme.darkModeBgColor};
+  background-color: ${props => props.theme.bgColor};
   height: 45px;
   width: 100%;
   border-top: none;

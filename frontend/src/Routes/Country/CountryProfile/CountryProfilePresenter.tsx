@@ -144,7 +144,6 @@ const Input = styled.input`
   width: 215px;
   border: 0;
   border-bottom: 1px solid rgba(128, 128, 128, 0.5);
-  background-color: ${props => props.theme.darkModeBgColor};
   padding: 5px;
   color: white;
   font-size: 12px;
@@ -382,7 +381,7 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
               <LocationContainer>
                 <NameContainer>
                   <LocationName>{country.countryName}</LocationName>
-                <Flag>{country.countryEmoji}</Flag>
+                  <Flag>{country.countryEmoji}</Flag>
                   <ListIcon onClick={toggleReportModal}>
                     <List />
                   </ListIcon>

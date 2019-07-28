@@ -3,7 +3,7 @@ import { ThemedStyledComponentsModule } from "styled-components";
 
 interface IThemeInterface {
   headerColor: string;
-  darkModeBgColor: string;
+  bgColor: string;
   lightModeBgColor: string;
   greyColor: string;
   blackColor: string;
@@ -12,6 +12,9 @@ interface IThemeInterface {
   randColor: string;
   whiteColor: string;
   darkBlueColor: string;
+
+  color: string;
+  bgDark: string;
 }
 
 const {

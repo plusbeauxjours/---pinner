@@ -42,6 +42,7 @@
     "react-with-styles-interface-aphrodite": "^5.0.1",
     "styled-components": "^4.3.2",
     "styled-reset": "^1.7.1",
+    "styled-theming": "^2.2.0",
     "subscriptions-transport-ws": "^0.9.16",
     "unsplash-js": "^5.0.0"
   },

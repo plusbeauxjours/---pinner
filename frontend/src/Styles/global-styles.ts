@@ -3,7 +3,7 @@ import reset from "styled-reset";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
     
     ${reset};
     * {
@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
     }
     body{
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, 'Qwigley';
-        background-color: ${props => props.theme.darkModeBgColor};
+        background-color: ${props => props.theme.bgColor};
         color: ${props => props.theme.whiteColor};
         font-size: 12px;
         font-weight: 0
@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
         text-decoration:none;
     }
     input, textarea, button{
-        background-color: ${props => props.theme.darkModeBgColor};
+        background-color: ${props => props.theme.bgColor};
         &:active,
         &:focus{
             outline:none;
@@ -64,4 +64,4 @@ const GlobalStyle = createGlobalStyle`
 
     `;
 
-export default GlobalStyle;
+export default GlobalStyles;
