@@ -4,8 +4,8 @@ export const ME = gql`
   query Me {
     me {
       user {
+        username
         profile {
-          username
           avatarUrl
           currentCity {
             cityId

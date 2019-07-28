@@ -71,6 +71,7 @@ class UserProfileResponse(graphene.ObjectType):
 
 class EditProfileResponse(graphene.ObjectType):
     ok = graphene.Boolean()
+    token = graphene.String()
     user = graphene.Field(coffee_types.UserType)
 
 

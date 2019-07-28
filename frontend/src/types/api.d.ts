@@ -2008,8 +2008,8 @@ export interface EditProfile_editProfile_user_profile {
   countryPhoneCode: string | null;
   phoneNumber: string | null;
   email: string | null;
-  verifiedPhoneNumber: boolean;
-  verifiedEmail: boolean;
+  isVerifiedPhoneNumber: boolean;
+  isVerifiedEmail: boolean;
   nationality: EditProfile_editProfile_user_profile_nationality | null;
   residence: EditProfile_editProfile_user_profile_residence | null;
   postCount: number | null;
@@ -2044,6 +2044,7 @@ export interface EditProfile_editProfile_user {
 export interface EditProfile_editProfile {
   __typename: "EditProfileResponse";
   ok: boolean | null;
+  token: string | null;
   user: EditProfile_editProfile_user | null;
 }
 
@@ -2076,6 +2077,27 @@ export interface DeleteProfile_deleteProfile {
 
 export interface DeleteProfile {
   deleteProfile: DeleteProfile_deleteProfile;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: StartEditPhoneVerification
+// ====================================================
+
+export interface StartEditPhoneVerification_startEditPhoneVerification {
+  __typename: "StartEditPhoneVerificationResponse";
+  ok: boolean | null;
+}
+
+export interface StartEditPhoneVerification {
+  startEditPhoneVerification: StartEditPhoneVerification_startEditPhoneVerification;
+}
+
+export interface StartEditPhoneVerificationVariables {
+  phoneNumber: string;
 }
 
 /* tslint:disable */
@@ -2247,8 +2269,8 @@ export interface UserProfile_userProfile_user_profile {
   countryPhoneCode: string | null;
   phoneNumber: string | null;
   email: string | null;
-  verifiedPhoneNumber: boolean;
-  verifiedEmail: boolean;
+  isVerifiedPhoneNumber: boolean;
+  isVerifiedEmail: boolean;
   nationality: UserProfile_userProfile_user_profile_nationality | null;
   residence: UserProfile_userProfile_user_profile_residence | null;
   postCount: number | null;
@@ -2630,13 +2652,16 @@ export interface Me_me_user_profile_currentCity {
 
 export interface Me_me_user_profile {
   __typename: "ProfileType";
-  username: string | null;
   avatarUrl: string | null;
   currentCity: Me_me_user_profile_currentCity | null;
 }
 
 export interface Me_me_user {
   __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
   profile: Me_me_user_profile | null;
 }
 

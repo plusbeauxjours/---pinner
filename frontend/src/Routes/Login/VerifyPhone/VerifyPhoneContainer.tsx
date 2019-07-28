@@ -66,7 +66,9 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
               key: verificationKey,
               countryPhoneNumber,
               countryPhoneCode,
-              phoneNumber,
+              phoneNumber: phoneNumber.startsWith("0")
+                ? phoneNumber.substring(1)
+                : phoneNumber,
               cityId
             }}
             onCompleted={data => {

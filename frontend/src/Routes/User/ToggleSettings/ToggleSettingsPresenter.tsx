@@ -148,8 +148,8 @@ interface IProps {
   countryPhoneNumber: string;
   countryPhoneCode: string;
   email: string;
-  verifiedPhoneNumber: boolean;
-  verifiedEmail: boolean;
+  isVerifiedPhoneNumber: boolean;
+  isVerifiedEmail: boolean;
 
   onClickToggleIcon: (payload: string) => void;
   logoutConfirmModalOpen: boolean;
@@ -180,8 +180,8 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
   countryPhoneNumber,
   countryPhoneCode,
   email,
-  verifiedPhoneNumber,
-  verifiedEmail,
+  isVerifiedPhoneNumber,
+  isVerifiedEmail,
 
   onClickToggleIcon,
   logoutConfirmModalOpen,
@@ -226,8 +226,8 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
                 countryPhoneNumber,
                 countryPhoneCode,
                 email,
-                verifiedPhoneNumber,
-                verifiedEmail
+                isVerifiedPhoneNumber,
+                isVerifiedEmail
               }
             }}
           >
@@ -257,8 +257,8 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
                 countryPhoneNumber,
                 countryPhoneCode,
                 email,
-                verifiedPhoneNumber,
-                verifiedEmail
+                isVerifiedPhoneNumber,
+                isVerifiedEmail
               }
             }}
           >

@@ -75,7 +75,9 @@ class PhoneLoginContainer extends React.Component<
       <PhoneSignInMutation
         mutation={PHONE_SIGN_IN}
         variables={{
-          phoneNumber: `${countryPhoneNumber}${phoneNumber}`
+          phoneNumber: `${countryPhoneNumber}${
+            phoneNumber.startsWith("0") ? phoneNumber.substring(1) : phoneNumber
+          }`
         }}
         onCompleted={data => {
           const { startPhoneVerification } = data;
@@ -89,12 +91,15 @@ class PhoneLoginContainer extends React.Component<
                 cityId,
                 cityName,
                 countryCode,
-                phoneNumber,
+                phoneNumber: phoneNumber.startsWith("0")
+                  ? phoneNumber.substring(1)
+                  : phoneNumber,
                 countryPhoneCode,
                 countryPhoneNumber
               }
             });
           } else {
+            this.setState({ isSubmitted: false });
             toast.error("Could not send you a Key");
           }
         }}
@@ -153,7 +158,7 @@ class PhoneLoginContainer extends React.Component<
         phoneNumber.startsWith("0") ? phoneNumber.substring(1) : phoneNumber
       }`;
       console.log(phone);
-      const isValid = /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(
+      const isValid = /(([+][(]?[0-9]{1,3}[)]?)|([(]?[0-9]{4}[)]?))\s*[)]?[-\s\.]?[(]?[0-9]{1,3}[)]?([-\s\.]?[0-9]{3})([-\s\.]?[0-9]{3,4})/.test(
         phone
       );
       if (isValid) {

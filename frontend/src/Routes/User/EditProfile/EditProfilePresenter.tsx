@@ -441,7 +441,7 @@ const EditPhoneModalContainer = styled(ModalContainer)`
 const EditPhoneModalOverlay = styled(ModalOverlay)`
   z-index: 4;
 `;
-const SearchModal = styled(Modal)`
+const SearchModal = styled(EditPhoneModal)`
   padding: 30px;
   height: 700px;
   z-index: 10;
@@ -634,11 +634,12 @@ interface IProps {
   countryPhoneNumber: string;
   countryPhoneCode: string;
   email: string;
-  verifiedPhoneNumber: boolean;
-  verifiedEmail: boolean;
+  isVerifiedPhoneNumber: boolean;
+  isVerifiedEmail: boolean;
   confirmUsername: string;
   countryModalOpen: boolean;
   toggleCountryModal: () => void;
+  newUsername: string;
   newPhoneNumber: string;
   newCountryPhoneCode: string;
   newCountryPhoneNumber: string;
@@ -655,6 +656,7 @@ interface IProps {
   verificationKey: string;
   onSubmitVerifyPhone: (event: React.FormEvent<HTMLFormElement>) => void;
   onChangeVerifyPhone: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  closeVerifyPhoneNumberModal: () => void;
 }
 
 const EditProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -670,6 +672,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   toggleVerifyPhoneNumberModal,
   toggleEditPhoneNumberModal,
   toggleEditEmailAddressModal,
+  newUsername,
   newPhoneNumber,
   newCountryPhoneCode,
   newCountryPhoneNumber,
@@ -713,8 +716,8 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   countryPhoneNumber,
   countryPhoneCode,
   email,
-  verifiedPhoneNumber,
-  verifiedEmail,
+  isVerifiedPhoneNumber,
+  isVerifiedEmail,
   confirmUsername,
   countryModalOpen,
   toggleCountryModal,
@@ -725,13 +728,14 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
 
   verificationKey,
   onSubmitVerifyPhone,
-  onChangeVerifyPhone
+  onChangeVerifyPhone,
+  closeVerifyPhoneNumberModal
 }) => {
   return (
     <>
       {verifyPhoneNumberModalOpen && (
         <PhoneVerifyModalContainer>
-          <PhoneVerifyModalOverlay onClick={toggleVerifyPhoneNumberModal} />
+          <PhoneVerifyModalOverlay onClick={closeVerifyPhoneNumberModal} />
           <PhoneVerifyModal>
             <Container>
               <ReactCodeInput
@@ -808,8 +812,8 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                   onClick={() => onSelectCountry(country.phone, country.code)}
                 >
                   <CountryText>
-                    <ExplainText>&nbsp;{country.name}</ExplainText>
-                    <ExplainText>&nbsp;{country.emoji}</ExplainText>
+                    <p>&nbsp;{country.name}</p>
+                    <p>&nbsp;{country.emoji}</p>
                   </CountryText>
                   <CountryText> {country.phone}</CountryText>
                 </CountryRow>
@@ -818,56 +822,6 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
           </SearchModal>
         </SearchModalContainer>
       )}
-      {/* {(!user.profile.nationality ||
-        !user.profile.residence ||
-        !user.profile.gender ||
-        !user.profile.email) &&
-        profilFormModalOpen &&
-        user.profile.isSelf && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleProfileFormModal} />
-            <Modal>
-              <ModalLink>
-                <Input
-                  onChange={onInputChange}
-                  type={"text"}
-                  value={username}
-                  placeholder={user.username}
-                  name={"username"}
-                  onKeyDown={onKeyDownSubmit}
-                  autoComplete={"off"}
-                />
-              </ModalLink>
-              <ModalLink>
-                <Input
-                  onChange={onInputChange}
-                  type={"text"}
-                  value={bio}
-                  placeholder={"bio"}
-                  name={"bio"}
-                  onKeyDown={onKeyDownSubmit}
-                  autoComplete={"off"}
-                />
-              </ModalLink>
-              {!user.profile.nationality ? <ModalLink /> : null}
-              {!user.profile.residence ? <ModalLink /> : null}
-              {!user.profile.gender ? <ModalLink /> : null}
-              {!email ? (
-                <ModalLink>
-                  <Input
-                    onChange={onInputChange}
-                    type={"text"}
-                    value={email}
-                    placeholder={"email"}
-                    name={"email"}
-                    onKeyDown={onKeyDownSubmit}
-                  />
-                </ModalLink>
-              ) : null}
-            </Modal>
-          </ModalContainer>
-        )}
-      )} */}
       {avatarPreviewModalOpen && (
         <PreviewModalContainer>
           <ModalOverlay onClick={togglePreviewAvatarModal} />
@@ -1023,8 +977,8 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                 countryPhoneNumber,
                 countryPhoneCode,
                 email,
-                verifiedPhoneNumber,
-                verifiedEmail
+                isVerifiedPhoneNumber,
+                isVerifiedEmail
               }
             }}
           >
@@ -1054,8 +1008,8 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                 countryPhoneNumber,
                 countryPhoneCode,
                 email,
-                verifiedPhoneNumber,
-                verifiedEmail
+                isVerifiedPhoneNumber,
+                isVerifiedEmail
               }
             }}
           >
@@ -1074,9 +1028,9 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
             <Input
               onChange={onInputChange}
               type={"text"}
-              value={username}
-              placeholder={username || "Username"}
-              name={"username"}
+              value={newUsername}
+              placeholder={newUsername || "Username"}
+              name={"newUsername"}
               autoComplete={"off"}
             />
           </Conatainer>
@@ -1166,17 +1120,20 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                   {phoneNumber}
                 </>
               )}
-              {verifiedPhoneNumber && (
+              {isVerifiedPhoneNumber && (
                 <CheckIcon>
                   <Check />
                 </CheckIcon>
               )}
             </NumberUnderline>
           </Conatainer>
-          {verifiedPhoneNumber ? (
+          {isVerifiedPhoneNumber ? (
             <ExplainText>
-              Your phone number is already verified. If you want to change your
-              phone number,&nbsp;
+              Your phone number in{" "}
+              {countries.find(i => i.code === countryPhoneCode).name}
+              {countries.find(i => i.code === countryPhoneCode).emoji}&nbsp; is
+              already verified. <br />
+              If you want to change your phone number,&nbsp;
               <Underline onClick={toggleEditPhoneNumberModal}>
                 click here
               </Underline>
@@ -1194,14 +1151,14 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
             <TitleText>EMAIL</TitleText>
             <NumberUnderline>
               {email}
-              {verifiedEmail && (
+              {isVerifiedEmail && (
                 <CheckIcon>
                   <Check />
                 </CheckIcon>
               )}
             </NumberUnderline>
           </Conatainer>
-          {verifiedEmail ? (
+          {isVerifiedEmail ? (
             <ExplainText>
               Your Email is already verified. If you want to change your
               Email,&nbsp;

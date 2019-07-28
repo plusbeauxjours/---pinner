@@ -23,6 +23,10 @@ class StartPhoneVerificationResponse(graphene.ObjectType):
     ok = graphene.Boolean()
 
 
+class StartEditPhoneVerificationResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
+
+
 class CompletePhoneVerificationResponse(graphene.ObjectType):
     ok = graphene.Boolean()
     token = graphene.String()

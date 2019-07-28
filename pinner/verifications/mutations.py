@@ -49,6 +49,7 @@ class StartPhoneVerification(graphene.Mutation):
     def mutate(self, info, **kwargs):
 
         phoneNumber = kwargs.get('phoneNumber')
+        print(phoneNumber)
 
         try:
             existingVerification = models.Verification.objects.get(
@@ -65,8 +66,11 @@ class StartPhoneVerification(graphene.Mutation):
                 target="Phone"
             )
             newVerification.save()
-            sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
-            return types.StartPhoneVerificationResponse(ok=True)
+            try:
+                sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
+                return types.StartPhoneVerificationResponse(ok=True)
+            except:
+                return types.StartPhoneVerificationResponse(ok=False)
 
 
 class CompletePhoneVerification(graphene.Mutation):
@@ -87,10 +91,13 @@ class CompletePhoneVerification(graphene.Mutation):
         countryPhoneCode = kwargs.get('countryPhoneCode')
         key = kwargs.get('key')
         cityId = kwargs.get('cityId')
-        payload = countryPhoneNumber + phoneNumber
 
         if phoneNumber.startswith('0'):
             phoneNumber = phoneNumber.replace('0', '')
+            return phoneNumber
+
+        payload = countryPhoneNumber + phoneNumber
+        print(payload)
 
         try:
             verification = models.Verification.objects.get(
@@ -100,7 +107,7 @@ class CompletePhoneVerification(graphene.Mutation):
 
             try:
                 exstingUserProfile = users_models.Profile.objects.get(phone_number=phoneNumber)
-                exstingUserProfile.verified_phone_number = True
+                exstingUserProfile.is_verified_phone_number = True
                 exstingUserProfile.save()
                 token = get_token(exstingUserProfile.user)
                 return types.CompletePhoneVerificationResponse(ok=True, token=token)
@@ -121,7 +128,7 @@ class CompletePhoneVerification(graphene.Mutation):
                             phone_number=phoneNumber,
                             current_city=city
                         )
-                        newUserProfile.verified_phone_number = True
+                        newUserProfile.is_verified_phone_number = True
                         newUserProfile.save()
                         return types.CompletePhoneVerificationResponse(ok=True, token=token)
 
@@ -129,6 +136,46 @@ class CompletePhoneVerification(graphene.Mutation):
             verification.save()
         except models.Verification.DoesNotExist:
             raise Exception('Verification key not valid')
+
+
+class StartEditPhoneVerification(graphene.Mutation):
+
+    class Arguments:
+        phoneNumber = graphene.String(required=True)
+
+    Output = types.StartEditPhoneVerificationResponse
+
+    def mutate(self, info, **kwargs):
+
+        phoneNumber = kwargs.get('phoneNumber')
+
+        try:
+            existingVerification = models.Verification.objects.get(
+                payload=phoneNumber
+            )
+            existingVerification.delete()
+
+        except IntegrityError as e:
+            raise Exception("Wrong Phone Number")
+
+        finally:
+            try:
+                existingPhoneNumber = models.Profile.objects.get(phone_number=phoneNumber)
+                if existingPhoneNumber:
+                    raise Exception('Phone number is already verified')
+                else:
+                    newVerification = models.Verification.objects.create(
+                        payload=phoneNumber,
+                        target="Phone"
+                    )
+                    newVerification.save()
+                try:
+                    sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
+                    return types.StartEditPhoneVerificationResponse(ok=True)
+                except:
+                    return types.StartEditPhoneVerificationResponse(ok=False)
+            except:
+                return types.StartEditPhoneVerificationResponse(ok=False)
 
 
 class CompleteEditPhoneVerification(graphene.Mutation):
@@ -159,7 +206,7 @@ class CompleteEditPhoneVerification(graphene.Mutation):
             profile.phone_number = phoneNumber
             profile.country_phone_number = countryPhoneNumber
             profile.country_phone_code = countryPhoneCode
-            profile.verified_phone_number = True
+            profile.is_verified_phone_number = True
             profile.save()
             return types.CompleteEditPhoneVerificationResponse(ok=True,
                                                                phoneNumber=phoneNumber,

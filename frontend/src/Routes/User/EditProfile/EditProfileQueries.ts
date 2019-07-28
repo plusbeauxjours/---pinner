@@ -21,6 +21,7 @@ export const EDIT_PROFILE = gql`
       residenceCode: $residenceCode
     ) {
       ok
+      token
       user {
         id
         username
@@ -36,8 +37,8 @@ export const EDIT_PROFILE = gql`
           countryPhoneCode
           phoneNumber
           email
-          verifiedPhoneNumber
-          verifiedEmail
+          isVerifiedPhoneNumber
+          isVerifiedEmail
           nationality {
             countryEmoji
             ...CountryParts
@@ -81,6 +82,14 @@ export const EDIT_PROFILE = gql`
 export const DELETE_PROFILE = gql`
   mutation DeleteProfile {
     deleteProfile {
+      ok
+    }
+  }
+`;
+
+export const START_EDIT_PHONE_VERIFICATION = gql`
+  mutation StartEditPhoneVerification($phoneNumber: String!) {
+    startEditPhoneVerification(phoneNumber: $phoneNumber) {
       ok
     }
   }

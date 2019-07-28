@@ -7,7 +7,8 @@ class ProfileAdmin(admin.ModelAdmin):
 
     list_display = (
         'username',
-        'avatarUrl',
+        'gender',
+        'phone_number',
         'is_dark_mode',
         'is_hide_trips',
         'is_hide_coffees',
@@ -22,6 +23,8 @@ class ProfileAdmin(admin.ModelAdmin):
         'continent_count',
         'nationality',
         'residence',
+        'is_verified_phone_number',
+        'is_verified_email',
     )
 
 

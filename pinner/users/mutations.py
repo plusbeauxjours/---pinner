@@ -312,16 +312,17 @@ class EditProfile(graphene.Mutation):
                 user.last_name = lastName
                 user.username = username
                 user.save()
-                return types.EditProfileResponse(ok=True, user=user)
+                token = get_token(user)
+                return types.EditProfileResponse(ok=True, user=user, token=token)
 
             except IntegrityError as e:
                 print(e)
                 error = "Can't save"
-                return types.EditProfileResponse(ok=False, user=None)
+                return types.EditProfileResponse(ok=False, user=None, token=None)
 
         else:
             error = 'You need to log in'
-            return types.EditProfileResponse(ok=False, user=None)
+            return types.EditProfileResponse(ok=False, user=None, token=None)
 
 
 class MarkAsMain(graphene.Mutation):
@@ -670,7 +671,7 @@ class FacebookConnect(graphene.Mutation):
                     user=newUser,
                     fbId=fbId,
                     email=email,
-                    verified_email=True,
+                    is_verified_email=True,
                     gender=gender,
                     avatarUrl=avatar.thumbnail,
                     current_city=city
