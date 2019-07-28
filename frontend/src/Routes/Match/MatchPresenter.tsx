@@ -61,7 +61,7 @@ const Input = styled.input`
   width: 215px;
   border: 0;
   border-bottom: 1px solid rgba(128, 128, 128, 0.5);
-  background-color: ${props => props.theme.bgColor};
+  background-color: ${props => props.theme.darkModeBgColor};
   padding: 5px;
   color: white;
   font-size: 12px;
@@ -186,7 +186,6 @@ const Box = styled.div`
   ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    background-color: ${props => props.theme.bgColor};
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;

@@ -85,6 +85,7 @@ class Match(graphene.Mutation):
 
         try:
             coffee = models.Coffee.objects.get(uuid=coffeeId)
+            cityId = coffee.city.city_id
             match = models.Match.objects.create(
                 host=coffee.host,
                 city=coffee.city,
@@ -97,7 +98,7 @@ class Match(graphene.Mutation):
                 target=coffee.host,
                 match=match
             )
-            return types.MatchResponse(ok=True, match=match, coffeeId=coffeeId)
+            return types.MatchResponse(ok=True, match=match, coffeeId=coffeeId, cityId=cityId)
         except IntegrityError as e:
             print(e)
             raise Exception("Can't create a match")
@@ -129,7 +130,7 @@ class UnMatch(graphene.Mutation):
         if match.host.id == user.id or match.guest.id == user.id:
             cityId = match.coffee.city.city_id
             match.delete()
-            return types.UnMatchResponse(ok=True, matchId=matchId, coffee=coffee, cityId=None)
+            return types.UnMatchResponse(ok=True, matchId=matchId, coffee=coffee, cityId=cityId)
 
         else:
 

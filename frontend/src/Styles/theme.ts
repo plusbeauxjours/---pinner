@@ -1,6 +1,7 @@
 const theme = {
   headerColor: "#141313",
-  bgColor: "#212121",
+  darkModeBgColor: "#212121",
+  lightModeBgColor: "#e6e6e6",
   greyColor: "#999",
   blackColor: "#262626",
   blueColor: "#3897f0",

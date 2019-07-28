@@ -6,6 +6,7 @@ export const MATCH = gql`
     match(coffeeId: $coffeeId) {
       ok
       coffeeId
+      cityId
       match {
         ...MatchParts
       }

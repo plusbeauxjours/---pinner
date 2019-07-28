@@ -102,11 +102,24 @@ export interface Match_match_match_guest {
   profile: Match_match_match_guest_profile | null;
 }
 
+export interface Match_match_match_coffee_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface Match_match_match_coffee_city {
+  __typename: "CityType";
+  cityId: string | null;
+  cityName: string | null;
+  country: Match_match_match_coffee_city_country;
+}
+
 export interface Match_match_match_coffee {
   __typename: "CoffeeType";
   id: string;
   uuid: any | null;
   target: CoffeeTarget;
+  city: Match_match_match_coffee_city;
 }
 
 export interface Match_match_match {
@@ -126,6 +139,7 @@ export interface Match_match {
   __typename: "MatchResponse";
   ok: boolean | null;
   coffeeId: string | null;
+  cityId: string | null;
   match: Match_match_match | null;
 }
 
@@ -201,6 +215,7 @@ export interface UnMatch_unMatch {
   __typename: "UnMatchResponse";
   ok: boolean | null;
   matchId: number | null;
+  cityId: string | null;
   coffee: UnMatch_unMatch_coffee | null;
 }
 
@@ -1252,6 +1267,18 @@ export interface CountryUsersNowVariables {
 // GraphQL query operation: CoffeeDetail
 // ====================================================
 
+export interface CoffeeDetail_coffeeDetail_coffee_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface CoffeeDetail_coffeeDetail_coffee_city {
+  __typename: "CityType";
+  cityId: string | null;
+  cityName: string | null;
+  country: CoffeeDetail_coffeeDetail_coffee_city_country;
+}
+
 export interface CoffeeDetail_coffeeDetail_coffee_host_profile_currentCity_country {
   __typename: "CountryType";
   countryName: string | null;
@@ -1304,6 +1331,7 @@ export interface CoffeeDetail_coffeeDetail_coffee {
   naturalTime: string | null;
   status: string | null;
   target: CoffeeTarget;
+  city: CoffeeDetail_coffeeDetail_coffee_city;
   host: CoffeeDetail_coffeeDetail_coffee_host;
 }
 
@@ -1532,11 +1560,24 @@ export interface GetMatches_getMatches_matches_guest {
   profile: GetMatches_getMatches_matches_guest_profile | null;
 }
 
+export interface GetMatches_getMatches_matches_coffee_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetMatches_getMatches_matches_coffee_city {
+  __typename: "CityType";
+  cityId: string | null;
+  cityName: string | null;
+  country: GetMatches_getMatches_matches_coffee_city_country;
+}
+
 export interface GetMatches_getMatches_matches_coffee {
   __typename: "CoffeeType";
   id: string;
   uuid: any | null;
   target: CoffeeTarget;
+  city: GetMatches_getMatches_matches_coffee_city;
 }
 
 export interface GetMatches_getMatches_matches {
@@ -2921,11 +2962,24 @@ export interface MatchParts_guest {
   profile: MatchParts_guest_profile | null;
 }
 
+export interface MatchParts_coffee_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface MatchParts_coffee_city {
+  __typename: "CityType";
+  cityId: string | null;
+  cityName: string | null;
+  country: MatchParts_coffee_city_country;
+}
+
 export interface MatchParts_coffee {
   __typename: "CoffeeType";
   id: string;
   uuid: any | null;
   target: CoffeeTarget;
+  city: MatchParts_coffee_city;
 }
 
 export interface MatchParts {

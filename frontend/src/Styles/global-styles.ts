@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
     }
     body{
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, 'Qwigley';
-        background-color: ${props => props.theme.bgColor};
+        background-color: ${props => props.theme.darkModeBgColor};
         color: ${props => props.theme.whiteColor};
         font-size: 12px;
         font-weight: 0
@@ -21,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
         text-decoration:none;
     }
     input, textarea, button{
+        background-color: ${props => props.theme.darkModeBgColor};
         &:active,
         &:focus{
             outline:none;
