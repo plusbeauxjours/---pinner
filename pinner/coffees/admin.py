@@ -8,7 +8,7 @@ class CoffeeAdmin(admin.ModelAdmin):
         'id',
         'city',
         'host',
-        'created_at',
+        'match_count',
         'status',
         'target',
         # 'rest_time'

@@ -110,7 +110,7 @@ interface IProps {
 
 const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
   recommandUsersData: {
-    recommandUsers: { users: { profile = null } = {}, hasNextPage = null } = {}
+    recommandUsers: { users = null, hasNextPage = null } = {}
   } = {},
   recommandUsersLoading,
   modalOpen,
@@ -122,6 +122,7 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
   return (
     <>
       <SWrapper>
+        {console.log}
         <UserContainer>
           <UserNameRow>
             <Username>RECOMMAND USERS</Username>
@@ -143,11 +144,11 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
                 recommandUserList.map(user => {
                   return (
                     <UserRow key={user.id}>
-                      <Link to={`/${user.username}`}>
+                      <Link to={`/${user.profile.username}`}>
                         <AvatarContainer>
-                          <Avatar size={"sm"} url={user.avatarUrl} />
+                          <Avatar size={"sm"} url={user.profile.avatarUrl} />
                           <HeaderColumn>
-                            <CText text={user.username} />
+                            <CText text={user.profile.username} />
                             <Explain>with same nationality</Explain>
                           </HeaderColumn>
                         </AvatarContainer>
@@ -158,15 +159,15 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
               {console.log("hasNextPage:  ", hasNextPage)}
               {recommandUserList.length === 0 &&
                 !search &&
-                profile &&
-                profile.map(user => {
+                users &&
+                users.map(user => {
                   return (
                     <UserRow key={user.id}>
-                      <Link to={`/${user.username}`}>
+                      <Link to={`/${user.profile.username}`}>
                         <AvatarContainer>
-                          <Avatar size={"sm"} url={user.avatarUrl} />
+                          <Avatar size={"sm"} url={user.profile.avatarUrl} />
                           <HeaderColumn>
-                            <CText text={user.username} />
+                            <CText text={user.profile.username} />
                             <Explain>with same nationality</Explain>
                           </HeaderColumn>
                         </AvatarContainer>

@@ -284,6 +284,7 @@ const CoffeeDetailPresenter: React.FunctionComponent<IProps> = ({
               <GreyText>until {coffee.naturalTime}</GreyText>
               {coffee.status !== "expired" && (
                 <CoffeeBtn
+                  cityId={coffee.city.cityId}
                   coffeeId={coffee.uuid}
                   isMatching={coffee.isMatching}
                   isSelf={coffee.host.profile.isSelf}

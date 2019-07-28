@@ -75,9 +75,10 @@ class MatchResponse(graphene.ObjectType):
 
 
 class UnMatchResponse(graphene.ObjectType):
-    coffee = graphene.Field(CoffeeType)
-    matchId = graphene.Int()
     ok = graphene.Boolean()
+    matchId = graphene.Int()
+    cityId = graphene.String()
+    coffee = graphene.Field(CoffeeType)
 
 
 class DeleteCoffeeResponse(graphene.ObjectType):

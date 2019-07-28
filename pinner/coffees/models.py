@@ -36,6 +36,10 @@ class Coffee (config_models.TimeStampedModel):
         else:
             return 'requesting'
 
+    @cached_property
+    def match_count(self):
+        return self.match.all().count()
+
     @property
     def natural_time(self):
         return naturaltime(self.expires)

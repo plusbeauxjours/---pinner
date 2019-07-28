@@ -335,7 +335,6 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
           <UserContainer>
             <UserNameRow>
               <Username>MATCHES</Username>
-              {console.log(matches)}
               <Input
                 placeholder="Search matched users"
                 value={search}
@@ -364,6 +363,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                       </Column>
                       {match.isMatching ? (
                         <CoffeeBtn
+                          cityId={match.coffee.city.cityId}
                           isMatching={match.isMatching}
                           matchId={match.id}
                         />
@@ -388,6 +388,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                       </Column>
                       {match.isMatching ? (
                         <CoffeeBtn
+                          cityId={match.coffee.city.cityId}
                           isMatching={match.isMatching}
                           matchId={match.id}
                         />
@@ -418,9 +419,10 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                         <GreyText text={match.coffee.target} />
                         <GreyText text={match.naturalTime} />
                       </Column>
+                      {console.log(match.coffee)}
                       {match.isMatching ? (
                         <CoffeeBtn
-                          cityId={currentCityId}
+                          cityId={match.coffee.city.cityId}
                           isMatching={match.isMatching}
                           matchId={match.id}
                         />
@@ -445,7 +447,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                       </Column>
                       {match.isMatching ? (
                         <CoffeeBtn
-                          cityId={currentCityId}
+                          cityId={match.coffee.city.cityId}
                           isMatching={match.isMatching}
                           matchId={match.id}
                         />

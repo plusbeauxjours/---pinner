@@ -145,6 +145,13 @@ export const MATCH_FRAGMENT = gql`
       id
       uuid
       target
+      city {
+        cityId
+        cityName
+        country {
+          countryName
+        }
+      }
     }
     isHost
     isGuest

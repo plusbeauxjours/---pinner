@@ -10,6 +10,13 @@ export const COFFEE_DETAIL = gql`
         naturalTime
         status
         target
+        city {
+          cityId
+          cityName
+          country {
+            countryName
+          }
+        }
         host {
           id
           profile {

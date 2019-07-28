@@ -5,6 +5,7 @@ import Bold from "./Bold";
 import { Upload } from "../Icons";
 import Avatar from "./Avatar";
 import CoffeeBtn from "src/Components/CoffeeBtn";
+import Loader from "src/Components/Loader";
 
 const Title = styled.div`
   display: flex;
@@ -148,7 +149,9 @@ const UserBox: React.FunctionComponent<IProps> = ({
   coffees,
   isStaying
 }) => {
-  if (!coffeeLoading && currentCityId && isStaying) {
+  if (coffeeLoading) {
+    return <Loader />;
+  } else if (!coffeeLoading && currentCityId && isStaying) {
     return (
       <>
         <GreyLine />
@@ -202,6 +205,7 @@ const UserBox: React.FunctionComponent<IProps> = ({
                   </Link>
                   {(cityId === coffee.city.cityId || isStaying) && (
                     <CoffeeBtn
+                      cityId={coffee.city.cityId}
                       coffeeId={coffee.uuid}
                       isMatching={coffee.isMatching}
                       isSelf={coffee.host.profile.isSelf}
@@ -285,6 +289,7 @@ const UserBox: React.FunctionComponent<IProps> = ({
                   </Link>
                   {(cityId === coffee.city.cityId || isStaying) && (
                     <CoffeeBtn
+                      cityId={coffee.city.cityId}
                       coffeeId={coffee.uuid}
                       isMatching={coffee.isMatching}
                       isSelf={coffee.host.profile.isSelf}

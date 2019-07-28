@@ -19,6 +19,7 @@ export const UNMATCH = gql`
     unMatch(matchId: $matchId) {
       ok
       matchId
+      cityId
       coffee {
         ...CoffeeParts
       }
