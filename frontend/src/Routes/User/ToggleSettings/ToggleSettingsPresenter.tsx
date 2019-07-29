@@ -3,6 +3,7 @@ import { ToggleOn, ToggleOff } from "../../../Icons";
 import styled from "src/Styles/typed-components";
 import { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
+import { useTheme } from "src/Styles/theme-context";
 
 const Wrapper = styled.div`
   display: flex;
@@ -189,6 +190,9 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
   logUserOutFn,
   back
 }) => {
+  const { theme = isDarkMode, toggleTheme } = useTheme();
+  console.log(theme);
+  console.log(isDarkMode);
   return (
     <>
       {logoutConfirmModalOpen && (
@@ -271,8 +275,8 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
         <Column>
           <ToggleContainer>
             <ToggleText>DARK MODE</ToggleText>
-            <ToggleIcon onClick={() => onClickToggleIcon("DARK_MODE")}>
-              {isSelf && isDarkMode ? <ToggleOn /> : <ToggleOff />}
+            <ToggleIcon onClick={toggleTheme}>
+              {isSelf && theme ? <ToggleOn /> : <ToggleOff />}
             </ToggleIcon>
           </ToggleContainer>
           {isSelf && isDarkMode ? (

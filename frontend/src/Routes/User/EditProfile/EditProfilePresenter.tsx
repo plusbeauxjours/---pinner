@@ -1109,7 +1109,12 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
               autoComplete={"off"}
             />
           </Conatainer>
-          <ExplainText>nani</ExplainText>
+          <ExplainText>
+            Your bio is displayed on your profile. You can write about who you
+            are and what you're looking for on Pinner. You can also add links to
+            your website and profiles on other websites, like Instagram or your
+            blog for example.
+          </ExplainText>
           <Conatainer>
             <TitleText>PHONE</TitleText>
             <NumberUnderline>

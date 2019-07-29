@@ -11,8 +11,6 @@ import CoffeeBox from "src/Components/CoffeeBox";
 import LocationBox from "src/Components/LocationBox";
 import { List } from "../../../Icons";
 import { keyframes } from "styled-components";
-import Toggle from "./Toggle";
-import { useTheme } from "src/Styles/theme-context";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -227,17 +225,6 @@ const Modal = styled.div`
   animation: ${ModalAnimation} 0.1s linear;
 `;
 
-const Container = styled.header`
-  color: ${({ theme }) => theme.color};
-  background-color: ${({ theme }) => theme.bgDark};
-  margin-bottom: 1.45rem;
-
-  a {
-    text-decoration: none;
-    color: ${({ theme }) => theme.color};
-  }
-`;
-
 interface IProps {
   data?: any;
   loading: boolean;
@@ -271,13 +258,11 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
   onChange,
   search,
   countryList,
-
   currentCityId,
   reportModalOpen,
   toggleReportModal,
   slackReportLocations
 }) => {
-  const { theme, toggleTheme } = useTheme();
   if (loading) {
     return <Loader />;
   } else if (!loading && continent) {
@@ -316,32 +301,6 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
         <SWrapper>
           <PHeader>
             <AvatarContainer>
-              <Container>
-                <Toggle
-                  defaultChecked={theme === "dark" ? true : false}
-                  onChange={toggleTheme}
-                  icons={{
-                    checked: (
-                      <img
-                        style={{ pointerEvents: "none" }}
-                        width="16"
-                        height="16"
-                        alt="moon"
-                        aria-hidden={true}
-                      />
-                    ),
-                    unchecked: (
-                      <img
-                        style={{ pointerEvents: "none" }}
-                        width="16"
-                        height="16"
-                        alt="sun"
-                        aria-hidden={true}
-                      />
-                    )
-                  }}
-                />
-              </Container>
               <CAvatar size="lg" url={continent.continentPhoto} city={true} />
               <NameContainer>
                 <LocationName>{continent.continentName}</LocationName>
