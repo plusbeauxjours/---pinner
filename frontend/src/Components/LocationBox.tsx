@@ -46,10 +46,12 @@ const UserRow = styled.div<ITheme>`
   height: 50px;
   width: 400px;
   grid-template-columns: ${props => {
-    if (props.type === "nearCities" || "samenameCities") {
-      return "2fr 1fr 1fr";
-    } else if (props.type === "continents") {
+    if (props.type === "continents") {
       return "2fr 1fr";
+    } else if (props.type === "samenameCities") {
+      return "2fr 1fr 1fr";
+    } else if (props.type === "nearCities") {
+      return "2fr 1fr 1fr";
     } else {
       return "1fr";
     }
@@ -167,37 +169,36 @@ const LocationBox: React.FunctionComponent<IProps> = ({
         </Container>
       </>
     );
-  } else if (!loading && nearCities && nearCities.length !== 0) {
+  } else if (!loading && continents && continents.length !== 0) {
     return (
       <>
         <GreyLine />
         <Title>
           <SText text={title} />
-          <Link to={`/city/${cityId}/nearCities`}>
-            <SeeAll>SEE ALL</SeeAll>
-          </Link>
         </Title>
         <Container>
           <Box>
-            {nearCities.map(nearCity => (
-              <UserRow key={nearCity.id} type={"nearCities"}>
-                <Link to={`/city/${nearCity.cityId}`}>
-                  <Header>
-                    <SAvatar size={"sm"} url={nearCity.cityPhoto} city={true} />
-                    <HeaderColumn>
-                      <HeaderText text={nearCity.cityName} />
-                      <Location>{nearCity.country.countryName}</Location>
-                    </HeaderColumn>
-                  </Header>
+            {continents.map(continent => (
+              <React.Fragment key={continent.id}>
+                <Link to={`/continent/${continent.continentCode}`}>
+                  <UserRow type={"continents"}>
+                    <Header>
+                      <SAvatar
+                        size={"sm"}
+                        url={continent.continentPhoto}
+                        city={true}
+                      />
+                      <HeaderColumn>
+                        <HeaderText text={continent.continentName} />
+                      </HeaderColumn>
+                    </Header>
+                    <Text>
+                      {continent.countryCount}{" "}
+                      {continent.countryCount === 1 ? "country" : "countries"}
+                    </Text>
+                  </UserRow>
                 </Link>
-                <CityLikeBtn
-                  isLiked={nearCity.isLiked}
-                  cityId={nearCity.id}
-                  likeCount={nearCity.likeCount}
-                  type={"row"}
-                />
-                <Text>{nearCity.distance}km</Text>
-              </UserRow>
+              </React.Fragment>
             ))}
           </Box>
         </Container>
@@ -213,28 +214,32 @@ const LocationBox: React.FunctionComponent<IProps> = ({
         <Container>
           <Box>
             {samenameCities.map(samenameCity => (
-              <UserRow key={samenameCity.id} type={"samenameCities"}>
-                <Link to={`/city/${samenameCity.cityId}`}>
-                  <Header>
-                    <SAvatar
-                      size={"sm"}
-                      url={samenameCity.cityPhoto}
-                      city={true}
-                    />
-                    <HeaderColumn>
-                      <HeaderText text={samenameCity.cityName} />
-                      <Location>{samenameCity.country.countryName}</Location>
-                    </HeaderColumn>
-                  </Header>
-                </Link>
-                <CityLikeBtn
-                  isLiked={samenameCity.isLiked}
-                  cityId={samenameCity.id}
-                  likeCount={samenameCity.likeCount}
-                  type={"row"}
-                />
-                <Text>{samenameCity.distance}km</Text>
-              </UserRow>
+              <React.Fragment key={samenameCity.id}>
+                <UserRow key={samenameCity.id} type={"samenameCities"}>
+                  <Link to={`/city/${samenameCity.cityId}`}>
+                    <Header>
+                      <SAvatar
+                        size={"sm"}
+                        url={samenameCity.cityPhoto}
+                        city={true}
+                      />
+                      <HeaderColumn>
+                        <HeaderText text={samenameCity.cityName} />
+                        <Location>{samenameCity.country.countryName}</Location>
+                      </HeaderColumn>
+                    </Header>
+                  </Link>
+                  <CityLikeBtn
+                    isLiked={samenameCity.isLiked}
+                    cityId={samenameCity.id}
+                    likeCount={samenameCity.likeCount}
+                    type={"row"}
+                  />
+                  <Link to={`/city/${samenameCity.cityId}`}>
+                    <Text>{samenameCity.distance}km</Text>
+                  </Link>
+                </UserRow>
+              </React.Fragment>
             ))}
           </Box>
         </Container>
@@ -252,21 +257,23 @@ const LocationBox: React.FunctionComponent<IProps> = ({
         <Container>
           <Box>
             {countries.map(country => (
-              <UserRow key={country.id} type={"countries"}>
+              <React.Fragment key={country.id}>
                 <Link to={`/country/${country.countryCode}`}>
-                  <Header>
-                    <SAvatar
-                      size={"sm"}
-                      url={country.countryPhoto}
-                      city={true}
-                    />
-                    <HeaderColumn>
-                      <HeaderText text={country.countryName} />
-                      <Location>{country.continent.continentName}</Location>
-                    </HeaderColumn>
-                  </Header>
+                  <UserRow key={country.id} type={"countries"}>
+                    <Header>
+                      <SAvatar
+                        size={"sm"}
+                        url={country.countryPhoto}
+                        city={true}
+                      />
+                      <HeaderColumn>
+                        <HeaderText text={country.countryName} />
+                        <Location>{country.continent.continentName}</Location>
+                      </HeaderColumn>
+                    </Header>
+                  </UserRow>
                 </Link>
-              </UserRow>
+              </React.Fragment>
             ))}
           </Box>
         </Container>
@@ -282,24 +289,70 @@ const LocationBox: React.FunctionComponent<IProps> = ({
         <Container>
           <Box>
             {continents.map(continent => (
-              <UserRow key={continent.id} type={"continents"}>
+              <React.Fragment key={continent.id}>
                 <Link to={`/continent/${continent.continentCode}`}>
-                  <Header>
-                    <SAvatar
-                      size={"sm"}
-                      url={continent.continentPhoto}
-                      city={true}
-                    />
-                    <HeaderColumn>
-                      <HeaderText text={continent.continentName} />
-                    </HeaderColumn>
-                  </Header>
-                  <Text>
-                    {continent.countryCount}{" "}
-                    {continent.countryCount === 1 ? "country" : "countries"}
-                  </Text>
+                  <UserRow key={continent.id} type={"continents"}>
+                    <Header>
+                      <SAvatar
+                        size={"sm"}
+                        url={continent.continentPhoto}
+                        city={true}
+                      />
+                      <HeaderColumn>
+                        <HeaderText text={continent.continentName} />
+                      </HeaderColumn>
+                    </Header>
+                    <Text>
+                      {continent.countryCount}{" "}
+                      {continent.countryCount === 1 ? "country" : "countries"}
+                    </Text>
+                  </UserRow>
                 </Link>
-              </UserRow>
+              </React.Fragment>
+            ))}
+          </Box>
+        </Container>
+      </>
+    );
+  } else if (!loading && nearCities && nearCities.length !== 0) {
+    return (
+      <>
+        <GreyLine />
+        <Title>
+          <SText text={title} />
+          <Link to={`/city/${cityId}/nearCities`}>
+            <SeeAll>SEE ALL</SeeAll>
+          </Link>
+        </Title>
+        <Container>
+          <Box>
+            {nearCities.map(nearCity => (
+              <React.Fragment key={nearCity.id}>
+                <UserRow key={nearCity.id} type={"nearCities"}>
+                  <Link to={`/city/${nearCity.cityId}`}>
+                    <Header>
+                      <SAvatar
+                        size={"sm"}
+                        url={nearCity.cityPhoto}
+                        city={true}
+                      />
+                      <HeaderColumn>
+                        <HeaderText text={nearCity.cityName} />
+                        <Location>{nearCity.country.countryName}</Location>
+                      </HeaderColumn>
+                    </Header>
+                  </Link>
+                  <CityLikeBtn
+                    isLiked={nearCity.isLiked}
+                    cityId={nearCity.id}
+                    likeCount={nearCity.likeCount}
+                    type={"row"}
+                  />
+                  <Link to={`/city/${nearCity.cityId}`}>
+                    <Text>{nearCity.distance}km</Text>
+                  </Link>
+                </UserRow>
+              </React.Fragment>
             ))}
           </Box>
         </Container>
