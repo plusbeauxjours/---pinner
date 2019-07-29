@@ -22,7 +22,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: ${props => props.theme.modalOverlayColor};
 `;
 
 const ModalAnimation = keyframes`

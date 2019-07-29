@@ -42,12 +42,12 @@ const Box = styled.div`
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: inset 0 0 6px ${props => props.theme.trackShadowColor};
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: inset 0 0 6px ${props => props.theme.trackShadowColor};
     background-color: ${props => props.theme.greyColor};
   }
 `;
@@ -63,9 +63,9 @@ const UserRow = styled.div`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: ${props => props.theme.hoverColor};
   }
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   &:last-child {
     margin-bottom: 15px;
   }

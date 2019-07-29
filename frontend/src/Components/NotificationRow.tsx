@@ -16,13 +16,13 @@ const UserRow = styled.div`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: ${props => props.theme.hoverColor};
   }
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  border-bottom:  1px solid ${props => props.theme.borderColor};
 `;
 
 const GreyText = styled(Bold)`
-  color: #999;
+  color: ${props => props.theme.greyColor};;
   margin-top: 5px;
 `;
 

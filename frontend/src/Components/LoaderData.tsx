@@ -1,13 +1,31 @@
-import React, { Component } from "react";
-import styled, { keyframes } from "styled-components";
+import LoadingOverlay from "react-loading-overlay";
+import React from "react";
+import styled from "styled-components";
+import BeatLoader from "react-spinners/BeatLoader";
 
-const BounceAnimation = keyframes`
-  0% { margin-bottom: 0; }
-  50% { margin-bottom: 15px }
-  100% { margin-bottom: 0 }
+const StyledLoadingOverlay = styled(LoadingOverlay)`
+  color: ${props => props.theme.color};
 `;
 
-const DotWrapper = styled.div<ITheme>`
+const StyledLoader = styled(BeatLoader)<ITheme>`
+  width: ${props => {
+    if (props.type === "feed") {
+      return "22px";
+    } else {
+      return "60px";
+    }
+  }};
+  height: ${props => {
+    if (props.type === "feed") {
+      return "22px";
+    } else {
+      return "60px";
+    }
+  }};
+  color: ${props => props.theme.color};
+`;
+
+const Container = styled.div<ITheme>`
   width: ${props => {
     if (props.type === "feed") {
       return "22px";
@@ -24,50 +42,27 @@ const DotWrapper = styled.div<ITheme>`
   }};
   display: flex;
   align-items: center;
-`;
-
-const Dot = styled.div<ITheme>`
-  background-color: white;
-  border-radius: 50%;
-  width: ${props => {
-    if (props.type === "feed") {
-      return "2px";
-    } else {
-      return "6px";
-    }
-  }};
-  height: ${props => {
-    if (props.type === "feed") {
-      return "2px";
-    } else {
-      return "6px";
-    }
-  }};
-  margin: 0 5px;
-  /* Animation */
-  animation: ${BounceAnimation} 0.5s linear infinite;
-  animation-delay: ${props => props.delay};
+  justify-content: center;
+  transform: rotate(90deg);
 `;
 
 interface ITheme {
-  delay?: string;
   type?: string;
 }
 
 interface IProps {
   type?: string;
+  text?: string;
 }
 
-class LoaderData extends Component<IProps> {
-  public render() {
-    const { type } = this.props;
-    return (
-      <DotWrapper type={type}>
-        <Dot delay="0s" type={type} />
-        <Dot delay=".1s" type={type} />
-        <Dot delay=".2s" type={type} />
-      </DotWrapper>
-    );
-  }
-}
-export default LoaderData;
+const Loader: React.FunctionComponent<IProps> = ({ type }) => (
+  <Container type={type}>
+    <StyledLoadingOverlay
+      active={true}
+      spinner={<StyledLoader type={type} />}
+      fadeSpeed={500}
+    />
+  </Container>
+);
+
+export default Loader;

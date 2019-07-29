@@ -50,7 +50,7 @@ const SText = styled(Bold)`
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  border-bottom:  1px solid ${props => props.theme.borderColor};
   @media screen and (max-width: 935px) {
     margin: 10px 10px 0 10px;
   }
@@ -67,10 +67,10 @@ const UserRow = styled.div`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: ${props => props.theme.hoverColor};
   }
   &:not(:last-child) {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    border-bottom:  1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -143,9 +143,9 @@ const Location = styled.span`
 const Input = styled.input`
   width: 215px;
   border: 0;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  border-bottom:  1px solid ${props => props.theme.borderColor};
   padding: 5px;
-  color: white;
+  color: ${props => props.theme.color};
   font-size: 12px;
   font-weight: 100;
   &:focus {
@@ -193,7 +193,7 @@ const ListIcon = styled.span`
   cursor: pointer;
   margin-top: 7px;
   svg {
-    fill: white;
+    fill: ${props => props.theme.color};
     transition: fill 0.2s ease-in-out;
     &:hover {
       fill: grey;
@@ -229,7 +229,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: ${props => props.theme.modalOverlayColor};
 `;
 
 const ModalLink = styled.div`
@@ -241,13 +241,13 @@ const ModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    border-bottom:  1px solid ${props => props.theme.borderColor};
   }
 `;
 
 const Modal = styled.div`
-  background-color: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(128, 128, 128, 0.5);
+  background-color: ${props => props.theme.modalBgColor}
+  border: 1px solid ${props => props.theme.borderColor};
   width: 30%;
   border-radius: 12px;
   z-index: 10;
@@ -260,7 +260,7 @@ const Modal = styled.div`
 //   margin-left: 941px;
 //   top: 40%;
 //   svg {
-//     fill: white;
+//     fill: ${props => props.theme.color};
 //   }
 // `;
 
@@ -270,7 +270,7 @@ const Modal = styled.div`
 //   margin-left: -30px;
 //   top: 40%;
 //   svg {
-//     fill: white;
+//     fill: ${props => props.theme.color};
 //   }
 // `;
 

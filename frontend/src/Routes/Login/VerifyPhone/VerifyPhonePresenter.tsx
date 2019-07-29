@@ -46,7 +46,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: ${props => props.theme.modalOverlayColor};
 `;
 
 const ModalAnimation = keyframes`
@@ -66,8 +66,8 @@ const SButton = styled(Button)`
 `;
 
 const Modal = styled.div`
-  background-color: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(128, 128, 128, 0.5);
+  background-color: ${props => props.theme.modalBgColor}
+  border: 1px solid ${props => props.theme.borderColor};
   border-radius: 12px;
   width: 540px;
   height: 240px;

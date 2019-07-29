@@ -5,6 +5,7 @@ import Bold from "./Bold";
 import Avatar from "./Avatar";
 import CityLikeBtn from "./CityLikeBtn";
 import LoadingOverlay from "react-loading-overlay";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const SeeAll = styled.p`
   font-size: 12px;
@@ -31,12 +32,12 @@ const Box = styled.div`
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: inset 0 0 6px ${props => props.theme.trackShadowColor};
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: inset 0 0 6px ${props => props.theme.trackShadowColor};
     background-color: ${props => props.theme.greyColor};
   }
 `;
@@ -62,9 +63,9 @@ const UserRow = styled.div<ITheme>`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: ${props => props.theme.hoverColor};
   }
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   &:last-child {
     margin-bottom: 15px;
   }
@@ -85,7 +86,7 @@ const HeaderColumn = styled.div`
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  border-bottom: 1px solid ${props => props.theme.borderColor};
 `;
 
 const SText = styled(Bold)`
@@ -126,6 +127,13 @@ const Text = styled.p`
   align-items: center;
 `;
 
+const StyledLoadingOverlay = styled(LoadingOverlay)`
+  color: ${props => props.theme.color};
+`;
+const StyledLoader = styled(ClipLoader)`
+  color: ${props => props.theme.color};
+`;
+
 interface ITheme {
   type: string;
 }
@@ -160,11 +168,10 @@ const LocationBox: React.FunctionComponent<IProps> = ({
       <>
         <GreyLine />
         <Container>
-          <LoadingOverlay
+          <StyledLoadingOverlay
             active={true}
-            spinner={true}
+            spinner={<StyledLoader />}
             fadeSpeed={500}
-            text="Loading"
           />
         </Container>
       </>

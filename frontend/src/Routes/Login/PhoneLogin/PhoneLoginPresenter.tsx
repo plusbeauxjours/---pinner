@@ -32,7 +32,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: ${props => props.theme.modalOverlayColor};
 `;
 
 const ModalAnimation = keyframes`
@@ -47,8 +47,8 @@ const ModalAnimation = keyframes`
 	`;
 
 const Modal = styled.div`
-  background-color: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(128, 128, 128, 0.5);
+  background-color: ${props => props.theme.modalBgColor}
+  border: 1px solid ${props => props.theme.borderColor};
   border-radius: 12px;
   width: 540px;
   height: 240px;
@@ -111,7 +111,7 @@ const CountryPhone = styled.div`
 const Input = styled.input`
   border: 0;
   display: flex;
-  color: white;
+  color: ${props => props.theme.color};
   background-color: transparent;
   font-size: 18px;
   &:focus {
@@ -140,10 +140,10 @@ const CountryRow = styled.div`
   padding-bottom: 10px;
   cursor: pointer;
   &:not(:last-child) {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    border-bottom:  1px solid ${props => props.theme.borderColor};
   }
   &:hover {
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: ${props => props.theme.hoverColor};
   }
 `;
 

@@ -24,7 +24,7 @@ const Bold = styled.p`
   text-align: center;
   font-size: 40px;
   margin-bottom: 30px;
-  color: white;
+  color: ${props => props.theme.color};
 `;
 
 const GreyText = styled.p`

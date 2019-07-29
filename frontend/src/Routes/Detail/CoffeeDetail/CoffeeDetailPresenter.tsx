@@ -36,7 +36,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: ${props => props.theme.modalOverlayColor};
 `;
 
 const ModalAnimation = keyframes`
@@ -51,8 +51,8 @@ const ModalAnimation = keyframes`
 	`;
 
 const Modal = styled.div`
-  background-color: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(128, 128, 128, 0.5);
+  background-color: ${props => props.theme.modalBgColor}
+  border: 1px solid ${props => props.theme.borderColor};
   width: 30%;
   border-radius: 12px;
   z-index: 101;
@@ -69,7 +69,7 @@ const MenuModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    border-bottom:  1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -143,7 +143,7 @@ const CText = styled.p`
 `;
 
 const GreyText = styled.p`
-  color: #999;
+  color: ${props => props.theme.greyColor};;
   font-weight: 100;
   font-size: 12px;
   margin-bottom: 20px;
@@ -181,7 +181,7 @@ const Icon = styled.span`
   cursor: pointer;
   top: 20px;
   svg {
-    fill: white;
+    fill: ${props => props.theme.color};
     transition: fill 0.2s ease-in-out;
     &:hover {
       /* fill: grey; */

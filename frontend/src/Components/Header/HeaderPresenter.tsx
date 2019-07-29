@@ -48,7 +48,7 @@ const Column = styled.div`
 
 const Icon = styled.span`
   svg {
-    fill: ${props => props.theme.whiteColor};
+    fill: ${props => props.theme.color};
   }
   &:not(:first-child) {
     margin-left: 10px;
@@ -85,7 +85,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: ${props => props.theme.modalOverlayColor};
 `;
 
 const Modal = styled.div`
@@ -110,7 +110,7 @@ const Input = styled.input`
   align-self: center;
   border-bottom: 1px solid ${props => props.theme.greyColor};
   padding: 5px;
-  color: white;
+  color: ${props => props.theme.color};
   background-color: transparent;
   font-size: 34px;
   font-weight: 100;

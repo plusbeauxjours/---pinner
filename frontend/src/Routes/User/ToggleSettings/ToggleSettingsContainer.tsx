@@ -51,9 +51,8 @@ class ToggleSettingsContainer extends React.Component<IProps, IState> {
     const { location: { state = {} } = {} } = ({} = props);
     console.log(state);
     if (props.history.action === "POP" || !props.location.state) {
-      props.history.goBack();
+      props.history.push(`/${state.username}`);
     }
-
     this.state = {
       username: state.username,
       isSelf: state.isSelf,

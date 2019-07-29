@@ -12,9 +12,13 @@ interface IThemeInterface {
   randColor: string;
   whiteColor: string;
   darkBlueColor: string;
-
+  modalOverlayColor: string;
+  borderColor: string;
+  modalBgColor: string;
+  trackShadowColor: string;
+  thumbShadowColor: string;
+  hoverColor: string;
   color: string;
-  bgDark: string;
 }
 
 const {

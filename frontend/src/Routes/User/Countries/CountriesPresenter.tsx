@@ -26,7 +26,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: ${props => props.theme.modalOverlayColor};
 `;
 
 const ModalAnimation = keyframes`
@@ -56,7 +56,7 @@ const SearchCountriesInput = styled.input`
   border: 0;
   border-bottom: 1px solid ${props => props.theme.greyColor};
   padding: 5px;
-  color: white;
+  color: ${props => props.theme.color};
   background-color: transparent;
   font-size: 12px;
   font-weight: 100;
@@ -91,10 +91,10 @@ const UserRow = styled.div`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: ${props => props.theme.hoverColor};
   }
   &:not(:last-child) {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    border-bottom:  1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -126,7 +126,7 @@ const Location = styled.span`
   font-weight: 200;
 `;
 const GreyText = styled(Bold)`
-  color: #999;
+  color: ${props => props.theme.greyColor};;
 `;
 
 interface IProps {

@@ -52,7 +52,7 @@ const ExplainText = styled.p`
 `;
 
 const GreyLine = styled.div`
-  border-left: 1px solid rgba(128, 128, 128, 0.5);
+  border-left: 1px solid ${props => props.theme.hoverColor};
   height: 80vh;
   margin: 0px 10px;
 `;
@@ -87,8 +87,8 @@ const ModalContainer = styled.div`
 `;
 
 const Modal = styled.div`
-  background-color: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(128, 128, 128, 0.5);
+  background-color: ${props => props.theme.modalBgColor}
+  border: 1px solid ${props => props.theme.borderColor};
   border-radius: 12px;
   width: 312px;
   z-index: 10;
@@ -104,7 +104,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: ${props => props.theme.modalOverlayColor};
 `;
 
 const ModalLink = styled.div`
@@ -116,14 +116,14 @@ const ModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    border-bottom:  1px solid ${props => props.theme.borderColor};
   }
 `;
 
 const GreyText = styled(MenuText)`
   color: grey;
   &:hover {
-    color: white;
+    color: ${props => props.theme.color};
   }
 `;
 
@@ -191,8 +191,6 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
   back
 }) => {
   const { theme = isDarkMode, toggleTheme } = useTheme();
-  console.log(theme);
-  console.log(isDarkMode);
   return (
     <>
       {logoutConfirmModalOpen && (

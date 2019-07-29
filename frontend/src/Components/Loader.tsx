@@ -1,6 +1,14 @@
 import LoadingOverlay from "react-loading-overlay";
 import React from "react";
 import styled from "styled-components";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const StyledLoadingOverlay = styled(LoadingOverlay)`
+  color: ${props => props.theme.color};
+`;
+const StyledLoader = styled(ClipLoader)`
+  color: ${props => props.theme.color};
+`;
 
 const Container = styled.div`
   display: flex;
@@ -18,11 +26,10 @@ interface IProps {
 
 const Loader: React.FunctionComponent<IProps> = () => (
   <Container>
-    <LoadingOverlay
+    <StyledLoadingOverlay
       active={true}
-      spinner={true}
+      spinner={<StyledLoader />}
       fadeSpeed={500}
-      text="Loading"
     />
   </Container>
 );

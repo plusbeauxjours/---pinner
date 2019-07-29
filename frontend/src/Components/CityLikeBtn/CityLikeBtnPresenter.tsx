@@ -62,7 +62,7 @@ const BoxButton = styled.span<ITheme>`
 const Text = styled(Bold)<ITheme>`
   display: flex;
   align-items: center;
-  color: ${props => (props.type === "row" ? "grey" : "white")};
+  color: ${props => (props.type === "row" ? "grey" : props.theme.color)};
   /* margin-left: 8px; */
 `;
 

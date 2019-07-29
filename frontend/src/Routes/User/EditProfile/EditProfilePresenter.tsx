@@ -29,8 +29,8 @@ const ModalAnimation = keyframes`
 	  }
   `;
 const EditPhoneModal = styled.div`
-  background-color: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(128, 128, 128, 0.5);
+  background-color: ${props => props.theme.modalBgColor}
+  border: 1px solid ${props => props.theme.borderColor};
   border-radius: 12px;
   width: 540px;
   height: 240px;
@@ -53,8 +53,8 @@ const ModalContainer = styled.div`
 `;
 
 const Modal = styled.div`
-  background-color: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(128, 128, 128, 0.5);
+  background-color: ${props => props.theme.modalBgColor}
+  border: 1px solid ${props => props.theme.borderColor};
   border-radius: 12px;
   width: 312px;
   z-index: 10;
@@ -74,7 +74,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: ${props => props.theme.modalOverlayColor};
 `;
 
 const ModalLink = styled.div`
@@ -86,7 +86,7 @@ const ModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    border-bottom:  1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -112,7 +112,7 @@ const Input = styled.input`
   z-index: 2;
   border: 0;
   border-bottom: 1px solid ${props => props.theme.greyColor};
-  color: white;
+  color: ${props => props.theme.color};
   background-color: transparent;
   font-size: 18px;
   font-weight: 100;
@@ -131,7 +131,7 @@ const Select = styled.select`
   font-size: 18px;
   font-weight: 100;
   border-bottom: 1px solid ${props => props.theme.greyColor};
-  color: white;
+  color: ${props => props.theme.color};
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -170,7 +170,7 @@ const MenuText = styled.p`
 `;
 
 const GreyLine = styled.div`
-  border-left: 1px solid rgba(128, 128, 128, 0.5);
+  border-left: 1px solid ${props => props.theme.hoverColor};
   height: 80vh;
   margin: 0px 10px;
 `;
@@ -212,7 +212,7 @@ const AvatarConatainer = styled(Conatainer)`
 
 const DeleteConatainer = styled.div`
   width: 600px;
-  border: 1px solid rgba(128, 128, 128, 0.5);
+  border: 1px solid ${props => props.theme.borderColor};
   padding: 10px 15px 4px 15px;
   margin-top: 30px;
   margin-bottom: 45px;
@@ -235,7 +235,7 @@ const DButton = styled.button`
   justify-content: center;
   align-self: center;
   border: 0;
-  color: white;
+  color: ${props => props.theme.color};
   background-color: ${props => props.theme.blueColor};
   opacity: 0.8;
   font-weight: 600;
@@ -253,7 +253,7 @@ const ConfirmText = styled.p`
 const GreyText = styled(MenuText)`
   color: grey;
   &:hover {
-    color: white;
+    color: ${props => props.theme.color};
   }
 `;
 
@@ -324,7 +324,7 @@ const AvatarUploadIcon = styled.div`
   cursor: pointer;
   overflow: hidden;
   svg {
-    fill: white;
+    fill: ${props => props.theme.color};
     transition: fill 0.2s ease-in-out;
     &:hover {
       fill: grey;
@@ -358,7 +358,7 @@ const AvatarDeleteIcon = styled.div`
   svg {
     opacity: 0;
     transition: all 0.1s ease-in-out;
-    fill: white;
+    fill: ${props => props.theme.color};
   }
 `;
 
@@ -383,7 +383,7 @@ const WhiteDotIcon = styled(RedDotIcon)`
   svg {
     opacity: 0;
     transition: all 0.1s ease-in-out;
-    fill: white;
+    fill: ${props => props.theme.color};
   }
 `;
 
@@ -392,7 +392,7 @@ const CheckIcon = styled.div`
   width: 250px;
   justify-content: flex-end;
   svg {
-    fill: white;
+    fill: ${props => props.theme.color};
   }
 `;
 
@@ -458,10 +458,10 @@ const CountryRow = styled.div`
   padding-bottom: 10px;
   cursor: pointer;
   &:not(:last-child) {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    border-bottom:  1px solid ${props => props.theme.borderColor};
   }
   &:hover {
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: ${props => props.theme.hoverColor};
   }
 `;
 
@@ -539,7 +539,7 @@ const BaseForm = styled.form``;
 const PhoneNumberInput = styled.input`
   border: 0;
   display: flex;
-  color: white;
+  color: ${props => props.theme.color};
   background-color: transparent;
   font-size: 18px;
   &:focus {

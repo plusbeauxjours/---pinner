@@ -28,7 +28,7 @@ const GlobalStyles = createGlobalStyle`
         }
     }
     svg{
-        fill:#262626;
+        fill: ${props => props.theme.color};
     }
     h1,h2,h3,h4,h5,h6{
         font-family: 'Maven Pro', sans-serif;

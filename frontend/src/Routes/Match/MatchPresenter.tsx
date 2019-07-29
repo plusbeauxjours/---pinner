@@ -20,7 +20,7 @@ const UserContainer = styled.div`
 `;
 
 const GreyText = styled(Bold)`
-  color: #999;
+  color: ${props => props.theme.greyColor};;
   font-weight: 100;
   margin-top: 5px;
 `;
@@ -36,10 +36,10 @@ const MatchUserRow = styled.div`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: ${props => props.theme.hoverColor};
   }
   &:not(:last-child) {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -60,9 +60,9 @@ const UserNameRow = styled.div`
 const Input = styled.input`
   width: 215px;
   border: 0;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   padding: 5px;
-  color: white;
+  color: ${props => props.theme.color};
   font-size: 12px;
   font-weight: 100;
   &:focus {
@@ -99,7 +99,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: ${props => props.theme.modalOverlayColor};
 `;
 
 const ModalAnimation = keyframes`
@@ -114,8 +114,8 @@ const ModalAnimation = keyframes`
 	`;
 
 const Modal = styled.div`
-  background-color: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(128, 128, 128, 0.5);
+  background-color: ${props => props.theme.modalBgColor}
+  border: 1px solid ${props => props.theme.borderColor};
   width: 30%;
   border-radius: 12px;
   z-index: 10;
@@ -131,7 +131,7 @@ const ModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -142,7 +142,7 @@ const CText = styled(Bold)`
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  border-bottom: 1px solid ${props => props.theme.borderColor};
 `;
 
 const UserRow = styled.div`
@@ -156,9 +156,9 @@ const UserRow = styled.div`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: ${props => props.theme.hoverColor};
   }
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   &:last-child {
     margin-bottom: 15px;
   }
@@ -183,12 +183,12 @@ const Box = styled.div`
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: inset 0 0 6px ${props => props.theme.trackShadowColor};
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: inset 0 0 6px ${props => props.theme.trackShadowColor};
     background-color: ${props => props.theme.greyColor};
   }
 `;

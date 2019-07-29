@@ -26,27 +26,27 @@ const WeatherInfo = styled.div<ITheme>`
   flex-wrap: wrap;
 `;
 
-const WeatherImage = styled.img<ITheme>`
-  height: ${props => {
-    if (props.size === "md") {
-      return "60px";
-    } else if (props.size === "sm") {
-      return "22px";
-    } else {
-      return "60px";
-    }
-  }};
-  width: ${props => {
-    if (props.size === "md") {
-      return "60px";
-    } else if (props.size === "sm") {
-      return "22px";
-    } else {
-      return "60px";
-    }
-  }};
-  margin-right: 3px;
-`;
+// const WeatherImage = styled.img<ITheme>`
+//   height: ${props => {
+//     if (props.size === "md") {
+//       return "60px";
+//     } else if (props.size === "sm") {
+//       return "22px";
+//     } else {
+//       return "60px";
+//     }
+//   }};
+//   width: ${props => {
+//     if (props.size === "md") {
+//       return "60px";
+//     } else if (props.size === "sm") {
+//       return "22px";
+//     } else {
+//       return "60px";
+//     }
+//   }};
+//   margin-right: 3px;
+// `;
 
 const TempNumber = styled.div<ITheme>`
   display: grid;
@@ -60,6 +60,7 @@ const TempNumber = styled.div<ITheme>`
       return "12px";
     }
   }};
+  font-weight: 100;
   color: ${props => {
     if (-10 <= props.chill && props.aqi <= -5) {
       return "#1E90FF";
@@ -74,7 +75,7 @@ const TempNumber = styled.div<ITheme>`
     } else if (40 <= props.temp) {
       return colorVeryHigh;
     } else {
-      return "white";
+      return props.theme.color;
     }
   }};
 `;
@@ -88,7 +89,7 @@ const AqiNumber = styled(TempNumber)`
     } else if (200 <= props.aqi) {
       return colorVeryHigh;
     } else {
-      return "white";
+      return props.theme.color;
     }
   }};
 `;
@@ -96,13 +97,18 @@ const AqiNumber = styled(TempNumber)`
 const HumidityNumber = styled(TempNumber)`
   color: ${props => {
     if (40 <= props.humidity && props.humidity < 70) {
-      return "white";
+      return props.theme.color;
     } else {
       return "#008d62";
     }
   }};
 `;
 
+// const Icon = styled.div`
+//   svg {
+//     fill: red;
+//   }
+// `;
 interface ITheme {
   size?: string;
   type?: string;
@@ -154,14 +160,7 @@ class Weather extends React.Component<IProps, IState> {
     const { aqi, icon, humidity, temp, chill } = this.state;
     return (
       <Container>
-        {icon ? (
-          <WeatherImage
-            src={require(`../Images/weatherIcon/${icon}.svg`)}
-            size={size}
-          />
-        ) : (
-          <LoaderData type={type} />
-        )}
+        {icon ? <LoaderData type={type} /> : <LoaderData type={type} />}
         <WeatherInfo type={type}>
           <TempNumber
             size={size}

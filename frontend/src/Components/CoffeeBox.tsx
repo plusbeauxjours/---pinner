@@ -5,7 +5,6 @@ import Bold from "./Bold";
 import { Upload } from "../Icons";
 import Avatar from "./Avatar";
 import CoffeeBtn from "src/Components/CoffeeBtn";
-import Loader from "src/Components/Loader";
 
 const Title = styled.div`
   display: flex;
@@ -44,12 +43,12 @@ const Box = styled.div`
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: inset 0 0 6px ${props => props.theme.trackShadowColor};
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: inset 0 0 6px ${props => props.theme.trackShadowColor};
     background-color: ${props => props.theme.greyColor};
   }
 `;
@@ -60,7 +59,7 @@ const IconRow = styled.div`
   padding: 0 5px 0 5px;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  border-bottom: 1px solid ${props => props.theme.borderColor};
 `;
 
 const Icon = styled.div`
@@ -69,7 +68,7 @@ const Icon = styled.div`
   align-items: center;
   cursor: pointer;
   svg {
-    fill: white;
+    fill: ${props => props.theme.color};
     transition: fill 0.2s ease-in-out;
     &:hover {
       fill: grey;
@@ -88,9 +87,9 @@ const UserRow = styled.div`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: ${props => props.theme.hoverColor};
   }
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   &:last-child {
     margin-bottom: 15px;
   }
@@ -124,7 +123,7 @@ const CText = styled(Bold)`
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  border-bottom: 1px solid ${props => props.theme.borderColor};
 `;
 
 interface IProps extends RouteComponentProps<any> {
@@ -148,9 +147,7 @@ const UserBox: React.FunctionComponent<IProps> = ({
   coffees,
   isStaying
 }) => {
-  if (coffeeLoading) {
-    return <Loader />;
-  } else if (!coffeeLoading && currentCityId && isStaying) {
+  if (!coffeeLoading && currentCityId && isStaying) {
     return (
       <>
         <GreyLine />

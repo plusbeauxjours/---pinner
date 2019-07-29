@@ -17,7 +17,7 @@ const Icon = styled.span`
   align-items: center;
   justify-items: center;
   svg {
-    fill: white;
+    fill: ${props => props.theme.color};
     transition: fill 0.2s ease-in-out;
     &:hover {
       fill: grey;

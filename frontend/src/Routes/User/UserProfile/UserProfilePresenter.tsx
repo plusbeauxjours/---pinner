@@ -84,7 +84,7 @@ const ListIcon = styled.span`
   cursor: pointer;
   margin-top: 7px;
   svg {
-    fill: white;
+    fill: ${props => props.theme.color};
     transition: fill 0.2s ease-in-out;
     &:hover {
       fill: grey;
@@ -138,7 +138,7 @@ const TripOverlay = styled.div`
   align-items: center;
   cursor: pointer;
   svg {
-    fill: white;
+    fill: ${props => props.theme.color};
     transition: fill 0.3s ease-in-out;
     &:hover {
       fill: red;
@@ -159,7 +159,7 @@ const TripRow = styled.div<ITheme>`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: ${props => props.theme.hoverColor};
   }
   &:hover {
     ${TripOverlay} {
@@ -167,7 +167,7 @@ const TripRow = styled.div<ITheme>`
     }
   }
   &:not(:last-child) {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    border-bottom:  1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -211,7 +211,7 @@ const Icon = styled.span`
   margin: 0 70px 0 70px;
   cursor: pointer;
   svg {
-    fill: white;
+    fill: ${props => props.theme.color};
     transition: fill 0.2s ease-in-out;
     &:hover {
       fill: grey;
@@ -306,8 +306,8 @@ const TripModalContainer = styled.div`
 `;
 
 const Modal = styled.div`
-  background-color: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(128, 128, 128, 0.5);
+  background-color: ${props => props.theme.modalBgColor};
+  border: 1px solid ${props => props.theme.borderColor};
   border-radius: 12px;
   width: 312px;
   z-index: 10;
@@ -323,7 +323,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: ${props => props.theme.modalOverlayColor};
 `;
 
 const ModalLink = styled.div`
@@ -335,7 +335,7 @@ const ModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    border-bottom:  1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -348,7 +348,7 @@ const ModalLinkContainer = styled(Link)`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    border-bottom:  1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -368,7 +368,7 @@ const SearchCitiesInput = styled.input`
   border: 0;
   border-bottom: 1px solid ${props => props.theme.greyColor};
   padding: 5px;
-  color: white;
+  color: ${props => props.theme.color};
   background-color: transparent;
   font-size: 12px;
   font-weight: 100;
@@ -396,15 +396,15 @@ const SmallTitle = styled(Title)`
 
 const GreyText = styled(Thin)`
   text-align: center;
-  color: #999;
+  color: ${props => props.theme.greyColor};;
 `;
 
 const TripInput = styled.input`
   width: 215px;
   border: 0;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  border-bottom:  1px solid ${props => props.theme.borderColor};
   padding: 5px;
-  color: white;
+  color: ${props => props.theme.color};
   font-size: 12px;
   font-weight: 100;
   &:focus {
@@ -430,10 +430,10 @@ const UserRow = styled.div<ITheme>`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: ${props => props.theme.hoverColor};
   }
   &:not(:last-child) {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    border-bottom:  1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -498,7 +498,7 @@ const AvatarUploadIcon = styled.div`
   cursor: pointer;
   overflow: hidden;
   svg {
-    fill: white;
+    fill: ${props => props.theme.color};
     transition: fill 0.2s ease-in-out;
     &:hover {
       fill: grey;
@@ -556,7 +556,7 @@ const AvatarDeleteIcon = styled.div`
   svg {
     opacity: 0;
     transition: all 0.1s ease-in-out;
-    fill: white;
+    fill: ${props => props.theme.color};
   }
 `;
 
@@ -572,7 +572,7 @@ const WhiteDotIcon = styled(RedDotIcon)`
   svg {
     opacity: 0;
     transition: all 0.1s ease-in-out;
-    fill: white;
+    fill: ${props => props.theme.color};
   }
 `;
 

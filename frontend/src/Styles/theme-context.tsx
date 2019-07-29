@@ -6,7 +6,9 @@ import { lightTheme, darkTheme } from "./theme";
 const ThemeContext = createContext(null);
 
 const ThemeProvider = ({ children }) => {
-  const initialMode = localStorage.getItem("isDarkMode") === "true";
+  const initialMode = localStorage.getItem("isDarkMode")
+    ? localStorage.getItem("isDarkMode") === "true"
+    : true;
   console.log(initialMode);
   const [isDarkMode, setDarkMode] = useState<boolean>(initialMode);
   const themeObject = isDarkMode ? darkTheme : lightTheme;
