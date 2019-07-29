@@ -246,7 +246,7 @@ const ModalLink = styled.div`
 `;
 
 const Modal = styled.div`
-  background-color: ${props => props.theme.modalBgColor}
+  background-color: ${props => props.theme.modalBgColor};
   border: 1px solid ${props => props.theme.borderColor};
   width: 30%;
   border-radius: 12px;

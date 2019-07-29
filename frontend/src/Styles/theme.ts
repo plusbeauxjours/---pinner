@@ -10,6 +10,7 @@ const theme = {
 };
 
 const lightTheme = {
+  headerColor: "#EFEFEF",
   bgColor: "#e6e6e6",
   color: "#191919",
   greyColor: "#999",
@@ -23,10 +24,11 @@ const lightTheme = {
   borderColor: "rgba(128, 128, 128, 0.5)",
   trackShadowColor: "rgba(0, 0, 0, 0.3)",
   thumbShadowColor: "rgba(0, 0, 0, 0.5)",
-  hoverColor:"rgba(128, 128, 128, 0.5)"
+  hoverColor: "rgba(128, 128, 128, 0.5)"
 };
 
 const darkTheme = {
+  headerColor: "#141313",
   bgColor: "#212121",
   color: "white",
   greyColor: "#999",

@@ -26,27 +26,27 @@ const WeatherInfo = styled.div<ITheme>`
   flex-wrap: wrap;
 `;
 
-// const WeatherImage = styled.img<ITheme>`
-//   height: ${props => {
-//     if (props.size === "md") {
-//       return "60px";
-//     } else if (props.size === "sm") {
-//       return "22px";
-//     } else {
-//       return "60px";
-//     }
-//   }};
-//   width: ${props => {
-//     if (props.size === "md") {
-//       return "60px";
-//     } else if (props.size === "sm") {
-//       return "22px";
-//     } else {
-//       return "60px";
-//     }
-//   }};
-//   margin-right: 3px;
-// `;
+const WeatherImage = styled.img<ITheme>`
+  height: ${props => {
+    if (props.size === "md") {
+      return "60px";
+    } else if (props.size === "sm") {
+      return "22px";
+    } else {
+      return "60px";
+    }
+  }};
+  width: ${props => {
+    if (props.size === "md") {
+      return "60px";
+    } else if (props.size === "sm") {
+      return "22px";
+    } else {
+      return "60px";
+    }
+  }};
+  margin-right: 3px;
+`;
 
 const TempNumber = styled.div<ITheme>`
   display: grid;
@@ -104,11 +104,6 @@ const HumidityNumber = styled(TempNumber)`
   }};
 `;
 
-// const Icon = styled.div`
-//   svg {
-//     fill: red;
-//   }
-// `;
 interface ITheme {
   size?: string;
   type?: string;
@@ -160,7 +155,14 @@ class Weather extends React.Component<IProps, IState> {
     const { aqi, icon, humidity, temp, chill } = this.state;
     return (
       <Container>
-        {icon ? <LoaderData type={type} /> : <LoaderData type={type} />}
+        {icon ? (
+          <WeatherImage
+            src={require(`../Images/weatherIcon/${icon}.svg`)}
+            size={size}
+          />
+        ) : (
+          <LoaderData type={type} />
+        )}
         <WeatherInfo type={type}>
           <TempNumber
             size={size}

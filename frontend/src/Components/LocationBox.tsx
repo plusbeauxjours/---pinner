@@ -127,13 +127,6 @@ const Text = styled.p`
   align-items: center;
 `;
 
-const StyledLoadingOverlay = styled(LoadingOverlay)`
-  color: ${props => props.theme.color};
-`;
-const StyledLoader = styled(ClipLoader)`
-  color: ${props => props.theme.color};
-`;
-
 interface ITheme {
   type: string;
 }
@@ -168,9 +161,9 @@ const LocationBox: React.FunctionComponent<IProps> = ({
       <>
         <GreyLine />
         <Container>
-          <StyledLoadingOverlay
+          <LoadingOverlay
             active={true}
-            spinner={<StyledLoader />}
+            spinner={<ClipLoader color={"#999"} />}
             fadeSpeed={500}
           />
         </Container>

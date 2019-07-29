@@ -20,7 +20,7 @@ const Container = styled(Wrapper)`
 `;
 
 const Box = styled.div`
-  background-color: ${props => props.theme.modalBgColor}
+  background-color: ${props => props.theme.modalBgColor};
   border: 1px solid ${props => props.theme.borderColor};
   border: ${props => props.theme.boxBorder};
   text-align: center;
@@ -74,7 +74,7 @@ const ModalAnimation = keyframes`
 	`;
 
 const Modal = styled.div`
-  background-color: ${props => props.theme.modalBgColor}
+  background-color: ${props => props.theme.modalBgColor};
   border: 1px solid ${props => props.theme.borderColor};
   width: 30%;
   border-radius: 12px;

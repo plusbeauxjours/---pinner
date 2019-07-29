@@ -778,6 +778,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     this.slackReportUsersFn({
       variables: { targetUsername: username, payload }
     });
+    this.setState({ reportModalOpen: false });
   };
   public toggleEditTripModal = () => {
     const { tripEditModalOpen } = this.state;

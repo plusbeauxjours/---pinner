@@ -1,29 +1,7 @@
 import LoadingOverlay from "react-loading-overlay";
 import React from "react";
 import styled from "styled-components";
-import BeatLoader from "react-spinners/BeatLoader";
-
-const StyledLoadingOverlay = styled(LoadingOverlay)`
-  color: ${props => props.theme.color};
-`;
-
-const StyledLoader = styled(BeatLoader)<ITheme>`
-  width: ${props => {
-    if (props.type === "feed") {
-      return "22px";
-    } else {
-      return "60px";
-    }
-  }};
-  height: ${props => {
-    if (props.type === "feed") {
-      return "22px";
-    } else {
-      return "60px";
-    }
-  }};
-  color: ${props => props.theme.color};
-`;
+import BounceLoader from "react-spinners/BounceLoader";
 
 const Container = styled.div<ITheme>`
   width: ${props => {
@@ -40,9 +18,8 @@ const Container = styled.div<ITheme>`
       return "60px";
     }
   }};
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
+  padding-top: 18px;
   transform: rotate(90deg);
 `;
 
@@ -57,11 +34,13 @@ interface IProps {
 
 const Loader: React.FunctionComponent<IProps> = ({ type }) => (
   <Container type={type}>
-    <StyledLoadingOverlay
-      active={true}
-      spinner={<StyledLoader type={type} />}
-      fadeSpeed={500}
-    />
+    {type !== "feed" ? (
+      <LoadingOverlay
+        active={true}
+        spinner={<BounceLoader size={30} color={"#999"} />}
+        fadeSpeed={500}
+      />
+    ) : null}
   </Container>
 );
 

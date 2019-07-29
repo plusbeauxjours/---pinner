@@ -51,7 +51,7 @@ const ModalAnimation = keyframes`
 	`;
 
 const Modal = styled.div`
-  background-color: ${props => props.theme.modalBgColor}
+  background-color: ${props => props.theme.modalBgColor};
   border: 1px solid ${props => props.theme.borderColor};
   width: 30%;
   border-radius: 12px;
@@ -69,7 +69,7 @@ const MenuModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -143,7 +143,7 @@ const CText = styled.p`
 `;
 
 const GreyText = styled.p`
-  color: ${props => props.theme.greyColor};;
+  color: ${props => props.theme.greyColor};
   font-weight: 100;
   font-size: 12px;
   margin-bottom: 20px;
