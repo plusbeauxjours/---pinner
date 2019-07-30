@@ -30,7 +30,6 @@ export const CONTINENT_PROFILE = gql`
       }
       countries {
         ...CountryParts
-        cityCount
       }
     }
   }

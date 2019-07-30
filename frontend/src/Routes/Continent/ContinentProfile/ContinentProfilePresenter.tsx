@@ -34,7 +34,7 @@ const SText = styled(Bold)`
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   @media screen and (max-width: 935px) {
     margin: 0 10px 0 10px;
   }
@@ -44,7 +44,7 @@ const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   height: 50px;
-  grid-template-columns: 1fr;
+  grid-template-columns: 4fr 1fr;
   padding: 0 5px 0 5px;
   grid-gap: 15px;
   align-items: center;
@@ -54,7 +54,7 @@ const UserRow = styled.div`
     background-color: ${props => props.theme.hoverColor};
   }
   &:not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -117,7 +117,7 @@ const Location = styled.span`
 const Input = styled.input`
   width: 215px;
   border: 0;
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   padding: 5px;
   color: ${props => props.theme.color};
   font-size: 12px;
@@ -212,7 +212,7 @@ const ModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -223,6 +223,12 @@ const Modal = styled.div`
   border-radius: 12px;
   z-index: 10;
   animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const Text = styled.p`
+  font-weight: 300;
+  display: flex;
+  align-items: center;
 `;
 
 interface IProps {
@@ -322,13 +328,14 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
               </UserNameRow>
               {countryList.length !== 0 &&
                 countryList.map(country => (
-                  <UserRow key={country.id}>
+                  <React.Fragment key={country.id}>
                     <Link
                       to={{
                         pathname: `/country/${country.countryCode}`,
                         state: { countryName: country.countryName }
                       }}
                     >
+                  <UserRow>
                       <Header>
                         <SAvatar
                           size={"sm"}
@@ -340,20 +347,26 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
                           <Location>{country.continent.continentName}</Location>
                         </HeaderColumn>
                       </Header>
-                    </Link>
+                      <Text>
+                        {country.cityCount}{" "}
+                        {country.cityCount === 1 ? "city" : "cities"}
+                      </Text>
                   </UserRow>
+                    </Link>
+                  </React.Fragment>
                 ))}
               {countryList.length === 0 &&
                 !search &&
                 countries &&
                 countries.map(country => (
-                  <UserRow key={country.id}>
+                  <React.Fragment key={country.id}>
                     <Link
                       to={{
                         pathname: `/country/${country.countryCode}`,
                         state: { countryName: country.countryName }
                       }}
                     >
+                  <UserRow >
                       <Header>
                         <SAvatar
                           size={"sm"}
@@ -365,8 +378,13 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
                           <Location>{country.continent.continentName}</Location>
                         </HeaderColumn>
                       </Header>
-                    </Link>
+                      <Text>
+                        {country.cityCount}{" "}
+                        {country.cityCount === 1 ? "city" : "cities"}
+                      </Text>
                   </UserRow>
+                    </Link>
+                  </React.Fragment>
                 ))}
             </UserContainer>
           </PHeader>

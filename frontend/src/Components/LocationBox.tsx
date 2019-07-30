@@ -49,6 +49,8 @@ const UserRow = styled.div<ITheme>`
   grid-template-columns: ${props => {
     if (props.type === "continents") {
       return "2fr 1fr";
+    } else if (props.type === "countries") {
+      return "2fr 1fr";
     } else if (props.type === "samenameCities") {
       return "2fr 1fr 1fr";
     } else if (props.type === "nearCities") {
@@ -215,7 +217,7 @@ const LocationBox: React.FunctionComponent<IProps> = ({
           <Box>
             {samenameCities.map(samenameCity => (
               <React.Fragment key={samenameCity.id}>
-                <UserRow key={samenameCity.id} type={"samenameCities"}>
+                <UserRow type={"samenameCities"}>
                   <Link to={`/city/${samenameCity.cityId}`}>
                     <Header>
                       <SAvatar
@@ -259,7 +261,7 @@ const LocationBox: React.FunctionComponent<IProps> = ({
             {countries.map(country => (
               <React.Fragment key={country.id}>
                 <Link to={`/country/${country.countryCode}`}>
-                  <UserRow key={country.id} type={"countries"}>
+                  <UserRow type={"countries"}>
                     <Header>
                       <SAvatar
                         size={"sm"}
@@ -271,6 +273,10 @@ const LocationBox: React.FunctionComponent<IProps> = ({
                         <Location>{country.continent.continentName}</Location>
                       </HeaderColumn>
                     </Header>
+                    <Text>
+                      {country.cityCount}{" "}
+                      {country.cityCount === 1 ? "city" : "cities"}
+                    </Text>
                   </UserRow>
                 </Link>
               </React.Fragment>
@@ -291,7 +297,7 @@ const LocationBox: React.FunctionComponent<IProps> = ({
             {continents.map(continent => (
               <React.Fragment key={continent.id}>
                 <Link to={`/continent/${continent.continentCode}`}>
-                  <UserRow key={continent.id} type={"continents"}>
+                  <UserRow type={"continents"}>
                     <Header>
                       <SAvatar
                         size={"sm"}
@@ -328,7 +334,7 @@ const LocationBox: React.FunctionComponent<IProps> = ({
           <Box>
             {nearCities.map(nearCity => (
               <React.Fragment key={nearCity.id}>
-                <UserRow key={nearCity.id} type={"nearCities"}>
+                <UserRow type={"nearCities"}>
                   <Link to={`/city/${nearCity.cityId}`}>
                     <Header>
                       <SAvatar
