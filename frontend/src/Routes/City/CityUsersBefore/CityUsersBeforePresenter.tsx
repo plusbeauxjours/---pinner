@@ -31,7 +31,7 @@ const UserRow = styled.div`
   &:hover {
     background-color: ${props => props.theme.hoverColor};
   }
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
 `;
 
 const UserNameRow = styled.div`
@@ -51,7 +51,7 @@ const Username = styled.span`
 const Input = styled.input`
   width: 215px;
   border: 0;
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   padding: 5px;
   color: ${props => props.theme.color};
   font-size: 12px;
@@ -79,8 +79,6 @@ const Location = styled.span`
 const Explain = styled(Location)`
   color: grey;
 `;
-
-const Container = styled.div``;
 
 interface IProps {
   data: any;
@@ -129,26 +127,28 @@ const CityUsersBeforePresenter: React.FunctionComponent<IProps> = ({
             >
               {usersBeforeList.length !== 0 &&
                 usersBeforeList.map(user => (
-                  <UserRow key={user.actor.profile.id}>
+                  <React.Fragment key={user.actor.profile.id}>
                     <Link to={`/${user.actor.profile.username}`}>
-                      <UserHeader
-                        username={user.actor.profile.username}
-                        currentCity={user.actor.profile.currentCity.cityName}
-                        currentCountry={
-                          user.actor.profile.currentCity.country.countryName
-                        }
-                        avatar={user.actor.profile.avatarUrl}
-                        size={"sm"}
-                      />
-                      <Explain>{user.naturalTime}</Explain>
+                      <UserRow key={user.actor.profile.id}>
+                        <UserHeader
+                          username={user.actor.profile.username}
+                          currentCity={user.actor.profile.currentCity.cityName}
+                          currentCountry={
+                            user.actor.profile.currentCity.country.countryName
+                          }
+                          avatar={user.actor.profile.avatarUrl}
+                          size={"sm"}
+                        />
+                        <Explain>{user.naturalTime}</Explain>
+                      </UserRow>
                     </Link>
-                  </UserRow>
+                  </React.Fragment>
                 ))}
               {usersBeforeList.length === 0 &&
                 !search &&
                 usersBefore &&
                 usersBefore.map(user => (
-                  <Container key={user.actor.profile.id}>
+                  <React.Fragment key={user.actor.profile.id}>
                     <Link to={`/${user.actor.profile.username}`}>
                       <UserRow>
                         <UserHeader
@@ -163,7 +163,7 @@ const CityUsersBeforePresenter: React.FunctionComponent<IProps> = ({
                         <Explain>{user.naturalTime}</Explain>
                       </UserRow>
                     </Link>
-                  </Container>
+                  </React.Fragment>
                 ))}
             </InfiniteScroll>
           )}

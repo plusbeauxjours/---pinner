@@ -94,7 +94,7 @@ const UserRow = styled.div`
     background-color: ${props => props.theme.hoverColor};
   }
   &:not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -112,7 +112,7 @@ const SAvatar = styled(Avatar)`
 `;
 
 const GreyText = styled(Bold)`
-  color: ${props => props.theme.greyColor};;
+  color: ${props => props.theme.greyColor};
 `;
 
 const Location = styled.span`
@@ -179,7 +179,18 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
                       />
                       <HeaderColumn>
                         <CText text={coffee.host.username} />
-                        <Explain>with same nationality</Explain>
+                        {(() => {
+                          switch (coffee.target) {
+                            case "EVERYONE":
+                              return <Explain>with Someone</Explain>;
+                            case "GENDER":
+                              return <Explain>with same gender</Explain>;
+                            case "NATIONALITY":
+                              return <Explain>with same nationality</Explain>;
+                            default:
+                              return null;
+                          }
+                        })()}
                       </HeaderColumn>
                     </Header>
                     <GreyText text={coffee.target} />
@@ -200,7 +211,18 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
                       />
                       <HeaderColumn>
                         <CText text={coffee.host.username} />
-                        <Explain>with same nationality</Explain>
+                        {(() => {
+                          switch (coffee.target) {
+                            case "EVERYONE":
+                              return <Explain>with Someone</Explain>;
+                            case "GENDER":
+                              return <Explain>with same gender</Explain>;
+                            case "NATIONALITY":
+                              return <Explain>with same nationality</Explain>;
+                            default:
+                              return null;
+                          }
+                        })()}
                       </HeaderColumn>
                     </Header>
                     <GreyText text={coffee.target} />

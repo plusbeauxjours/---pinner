@@ -5,8 +5,7 @@ import Loader from "src/Components/Loader";
 
 import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
-import Avatar from "../../../Components/Avatar";
-import Bold from "../../../Components/Bold";
+import UserHeader from "../../../Components/UserHeader";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -33,7 +32,7 @@ const UserRow = styled.div`
     background-color: ${props => props.theme.hoverColor};
   }
   &:not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -54,7 +53,7 @@ const Username = styled.span`
 const Input = styled.input`
   width: 215px;
   border: 0;
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   padding: 5px;
   color: ${props => props.theme.color};
   font-size: 12px;
@@ -69,31 +68,6 @@ const Input = styled.input`
     color: ${props => props.theme.greyColor};
     text-align: right;
   }
-`;
-
-const Location = styled.span`
-  display: flex;
-  margin-top: 5px;
-  position: block;
-  font-size: 12px;
-  font-weight: 200;
-`;
-
-const AvatarContainer = styled.div`
-  display: flex;
-  position: relative;
-`;
-
-const HeaderColumn = styled.div`
-  margin-left: 15px;
-`;
-
-const CText = styled(Bold)`
-  display: flex;
-`;
-
-const Explain = styled(Location)`
-  color: grey;
 `;
 
 interface IProps {
@@ -143,13 +117,15 @@ const CityUsersNowPresenter: React.FunctionComponent<IProps> = ({
                 usersNowList.map((user, index) => (
                   <UserRow key={user.id}>
                     <Link to={`/${user.profile.username}`}>
-                      <AvatarContainer>
-                        <Avatar size={"sm"} url={user.profile.avatarUrl} />
-                        <HeaderColumn>
-                          <CText text={user.profile.username} />
-                          <Explain>with same nationality</Explain>
-                        </HeaderColumn>
-                      </AvatarContainer>
+                      <UserHeader
+                        username={user.profile.username}
+                        currentCity={user.profile.currentCity.cityName}
+                        currentCountry={
+                          user.profile.currentCity.country.countryName
+                        }
+                        avatar={user.profile.avatarUrl}
+                        size={"sm"}
+                      />
                     </Link>
                   </UserRow>
                 ))}
@@ -160,13 +136,15 @@ const CityUsersNowPresenter: React.FunctionComponent<IProps> = ({
                 usersNow.map((user, index) => (
                   <UserRow key={user.id}>
                     <Link to={`/${user.profile.username}`}>
-                      <AvatarContainer>
-                        <Avatar size={"sm"} url={user.profile.avatarUrl} />
-                        <HeaderColumn>
-                          <CText text={user.profile.username} />
-                          <Explain>with same nationality</Explain>
-                        </HeaderColumn>
-                      </AvatarContainer>
+                      <UserHeader
+                        username={user.profile.username}
+                        currentCity={user.profile.currentCity.cityName}
+                        currentCountry={
+                          user.profile.currentCity.country.countryName
+                        }
+                        avatar={user.profile.avatarUrl}
+                        size={"sm"}
+                      />
                     </Link>
                   </UserRow>
                 ))}

@@ -7,6 +7,7 @@ export const CONTINENT_USERS_BEFORE = gql`
       page
       hasNextPage
       usersBefore {
+        naturalTime
         actor {
           profile {
             ...ProfileParts

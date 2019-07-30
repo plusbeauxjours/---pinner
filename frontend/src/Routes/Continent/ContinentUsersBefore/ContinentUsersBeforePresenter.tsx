@@ -5,8 +5,7 @@ import Loader from "src/Components/Loader";
 
 import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
-import Avatar from "../../../Components/Avatar";
-import Bold from "../../../Components/Bold";
+import UserHeader from "../../../Components/UserHeader";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -32,9 +31,7 @@ const UserRow = styled.div`
   &:hover {
     background-color: ${props => props.theme.hoverColor};
   }
-  &:not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
-  }
+  border-bottom: 1px solid ${props => props.theme.borderColor};
 `;
 
 const UserNameRow = styled.div`
@@ -54,7 +51,7 @@ const Username = styled.span`
 const Input = styled.input`
   width: 215px;
   border: 0;
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   padding: 5px;
   color: ${props => props.theme.color};
   font-size: 12px;
@@ -70,27 +67,12 @@ const Input = styled.input`
     text-align: right;
   }
 `;
-
 const Location = styled.span`
   display: flex;
   margin-top: 5px;
   position: block;
   font-size: 12px;
   font-weight: 200;
-`;
-
-const AvatarContainer = styled.div`
-  display: flex;
-  position: relative;
-  align-items: center;
-`;
-
-const HeaderColumn = styled.div`
-  margin-left: 15px;
-`;
-
-const CText = styled(Bold)`
-  display: flex;
 `;
 
 const Explain = styled(Location)`
@@ -144,39 +126,43 @@ const ContinentUsersBeforePresenter: React.FunctionComponent<IProps> = ({
             >
               {usersBeforeList.length !== 0 &&
                 usersBeforeList.map(user => (
-                  <UserRow key={user.actor.profile.id}>
+                  <React.Fragment key={user.actor.profile.id}>
                     <Link to={`/${user.actor.profile.username}`}>
-                      <AvatarContainer>
-                        <Avatar
+                      <UserRow key={user.actor.profile.id}>
+                        <UserHeader
+                          username={user.actor.profile.username}
+                          currentCity={user.actor.profile.currentCity.cityName}
+                          currentCountry={
+                            user.actor.profile.currentCity.country.countryName
+                          }
+                          avatar={user.actor.profile.avatarUrl}
                           size={"sm"}
-                          url={user.actor.profile.avatarUrl}
                         />
-                        <HeaderColumn>
-                          <CText text={user.actor.profile.username} />
-                          <Explain>with same nationality</Explain>
-                        </HeaderColumn>
-                      </AvatarContainer>
+                        <Explain>{user.naturalTime}</Explain>
+                      </UserRow>
                     </Link>
-                  </UserRow>
+                  </React.Fragment>
                 ))}
               {usersBeforeList.length === 0 &&
                 !search &&
                 usersBefore &&
                 usersBefore.map(user => (
-                  <UserRow key={user.actor.profile.id}>
+                  <React.Fragment key={user.actor.profile.id}>
                     <Link to={`/${user.actor.profile.username}`}>
-                      <AvatarContainer>
-                        <Avatar
+                      <UserRow key={user.actor.profile.id}>
+                        <UserHeader
+                          username={user.actor.profile.username}
+                          currentCity={user.actor.profile.currentCity.cityName}
+                          currentCountry={
+                            user.actor.profile.currentCity.country.countryName
+                          }
+                          avatar={user.actor.profile.avatarUrl}
                           size={"sm"}
-                          url={user.actor.profile.avatarUrl}
                         />
-                        <HeaderColumn>
-                          <CText text={user.actor.profile.username} />
-                          <Explain>with same nationality</Explain>
-                        </HeaderColumn>
-                      </AvatarContainer>
+                        <Explain>{user.naturalTime}</Explain>
+                      </UserRow>
                     </Link>
-                  </UserRow>
+                  </React.Fragment>
                 ))}
             </InfiniteScroll>
           )}
