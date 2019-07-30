@@ -19,6 +19,7 @@ interface IThemeInterface {
   thumbShadowColor: string;
   hoverColor: string;
   color: string;
+  iconColor: string;
 }
 
 const {

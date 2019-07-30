@@ -181,7 +181,7 @@ const Icon = styled.span`
   cursor: pointer;
   top: 20px;
   svg {
-    fill: ${props => props.theme.color};
+    fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
     &:hover {
       /* fill: grey; */

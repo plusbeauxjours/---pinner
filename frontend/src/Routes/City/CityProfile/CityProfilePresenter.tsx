@@ -228,10 +228,10 @@ const ListIcon = styled.span`
   cursor: pointer;
   margin-top: 7px;
   svg {
-    fill: ${props => props.theme.color};
+    fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
-    &:hover {
-      fill: grey;
+       &:hover {
+      fill: ${props => props.theme.hoverColor}
     }
   }
 `;
@@ -242,7 +242,7 @@ const ListIcon = styled.span`
 //   margin-left: 941px;
 //   top: 40%;
 //   svg {
-//     fill: ${props => props.theme.color};
+//     fill: ${props => props.theme.iconColor};
 //   }
 // `;
 
@@ -252,7 +252,7 @@ const ListIcon = styled.span`
 //   margin-left: -30px;
 //   top: 40%;
 //   svg {
-//     fill: ${props => props.theme.color};
+//     fill: ${props => props.theme.iconColor};
 //   }
 // `;
 

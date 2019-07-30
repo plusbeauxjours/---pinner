@@ -177,6 +177,9 @@ class EditProfile(graphene.Mutation):
             nationalityCode = kwargs.get('nationalityCode', user.profile.nationality)
             residenceCode = kwargs.get('residenceCode', user.profile.residence)
 
+            # if username: 
+            #     raise Exception("Only English username is allowed "
+
             try:
                 nationality = location_models.Country.objects.get(country_code=nationalityCode)
             except location_models.Country.DoesNotExist:

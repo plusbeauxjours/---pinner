@@ -116,7 +116,6 @@ const Input = styled.input`
   background-color: transparent;
   font-size: 18px;
   font-weight: 100;
-  ime-mode: disabled;
   &:focus {
     outline: none;
   }
@@ -125,6 +124,9 @@ const Input = styled.input`
   }
 `;
 
+const UsernameInput = styled(Input)`
+  ime-mode: disabled;
+`;
 
 const Select = styled.select`
   height: 35px;
@@ -326,10 +328,10 @@ const AvatarUploadIcon = styled.div`
   cursor: pointer;
   overflow: hidden;
   svg {
-    fill: ${props => props.theme.color};
+    fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
     &:hover {
-      fill: grey;
+      fill: ${props => props.theme.hoverColor};
     }
   }
 `;
@@ -360,7 +362,7 @@ const AvatarDeleteIcon = styled.div`
   svg {
     opacity: 0;
     transition: all 0.1s ease-in-out;
-    fill: ${props => props.theme.color};
+    fill: ${props => props.theme.iconColor};
   }
 `;
 
@@ -385,7 +387,7 @@ const WhiteDotIcon = styled(RedDotIcon)`
   svg {
     opacity: 0;
     transition: all 0.1s ease-in-out;
-    fill: ${props => props.theme.color};
+    fill: ${props => props.theme.iconColor};
   }
 `;
 
@@ -394,7 +396,7 @@ const CheckIcon = styled.div`
   width: 250px;
   justify-content: flex-end;
   svg {
-    fill: ${props => props.theme.color};
+    fill: ${props => props.theme.iconColor};
   }
 `;
 
@@ -597,6 +599,7 @@ interface IProps {
   toggleProfileFormModal: () => void;
   deleteProfile: () => void;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onInputUsernameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSelectChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
@@ -683,6 +686,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   toggleProfileFormModal,
   deleteProfile,
   onInputChange,
+  onInputUsernameChange,
   onSelectChange,
   logUserOutFn,
 
@@ -1027,8 +1031,8 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
           </AvatarConatainer>
           <Conatainer>
             <TitleText>USERNAME</TitleText>
-            <Input
-              onChange={onInputChange}
+            <UsernameInput
+              onChange={onInputUsernameChange}
               type={"text"}
               value={newUsername}
               placeholder={newUsername || "Username"}

@@ -24,7 +24,9 @@ const lightTheme = {
   borderColor: "rgba(128, 128, 128, 0.5)",
   trackShadowColor: "rgba(0, 0, 0, 0.3)",
   thumbShadowColor: "rgba(0, 0, 0, 0.5)",
-  hoverColor: "rgba(128, 128, 128, 0.5)"
+  hoverColor: "#b7b7b7",
+
+  iconColor: "#999"
 };
 
 const darkTheme = {
@@ -42,7 +44,8 @@ const darkTheme = {
   borderColor: "rgba(128, 128, 128, 0.5)",
   trackShadowColor: "rgba(0, 0, 0, 0.3)",
   thumbShadowColor: "rgba(0, 0, 0, 0.5)",
-  hoverColor: "rgba(128, 128, 128, 0.5)"
+  hoverColor: "#6b6b6b",
+  iconColor: "#999"
 };
 
 export { theme, lightTheme, darkTheme };

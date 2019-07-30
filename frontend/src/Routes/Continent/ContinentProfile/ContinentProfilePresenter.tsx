@@ -44,7 +44,7 @@ const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   height: 50px;
-  grid-template-columns: 4fr 1fr;
+  grid-template-columns: 5fr 1fr;
   padding: 0 5px 0 5px;
   grid-gap: 15px;
   align-items: center;
@@ -164,10 +164,10 @@ const ListIcon = styled.span`
   cursor: pointer;
   margin-top: 7px;
   svg {
-    fill: ${props => props.theme.color};
+    fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
-    &:hover {
-      fill: grey;
+       &:hover {
+      fill: ${props => props.theme.hoverColor}
     }
   }
 `;
@@ -335,23 +335,25 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
                         state: { countryName: country.countryName }
                       }}
                     >
-                  <UserRow>
-                      <Header>
-                        <SAvatar
-                          size={"sm"}
-                          url={country.countryPhoto}
-                          city={true}
-                        />
-                        <HeaderColumn>
-                          <HeaderText text={country.countryName} />
-                          <Location>{country.continent.continentName}</Location>
-                        </HeaderColumn>
-                      </Header>
-                      <Text>
-                        {country.cityCount}{" "}
-                        {country.cityCount === 1 ? "city" : "cities"}
-                      </Text>
-                  </UserRow>
+                      <UserRow>
+                        <Header>
+                          <SAvatar
+                            size={"sm"}
+                            url={country.countryPhoto}
+                            city={true}
+                          />
+                          <HeaderColumn>
+                            <HeaderText text={country.countryName} />
+                            <Location>
+                              {country.continent.continentName}
+                            </Location>
+                          </HeaderColumn>
+                        </Header>
+                        <Text>
+                          {country.cityCount}{" "}
+                          {country.cityCount === 1 ? "city" : "cities"}
+                        </Text>
+                      </UserRow>
                     </Link>
                   </React.Fragment>
                 ))}
@@ -366,23 +368,25 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
                         state: { countryName: country.countryName }
                       }}
                     >
-                  <UserRow >
-                      <Header>
-                        <SAvatar
-                          size={"sm"}
-                          url={country.countryPhoto}
-                          city={true}
-                        />
-                        <HeaderColumn>
-                          <HeaderText text={country.countryName} />
-                          <Location>{country.continent.continentName}</Location>
-                        </HeaderColumn>
-                      </Header>
-                      <Text>
-                        {country.cityCount}{" "}
-                        {country.cityCount === 1 ? "city" : "cities"}
-                      </Text>
-                  </UserRow>
+                      <UserRow>
+                        <Header>
+                          <SAvatar
+                            size={"sm"}
+                            url={country.countryPhoto}
+                            city={true}
+                          />
+                          <HeaderColumn>
+                            <HeaderText text={country.countryName} />
+                            <Location>
+                              {country.continent.continentName}
+                            </Location>
+                          </HeaderColumn>
+                        </Header>
+                        <Text>
+                          {country.cityCount}{" "}
+                          {country.cityCount === 1 ? "city" : "cities"}
+                        </Text>
+                      </UserRow>
                     </Link>
                   </React.Fragment>
                 ))}

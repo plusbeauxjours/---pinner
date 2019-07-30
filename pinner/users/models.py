@@ -153,6 +153,12 @@ class Profile(config_models.TimeStampedModel):
         ordering = ['-created_at']
 
 
+@receiver(post_delete, sender=Profile)
+def delete_attached_image(sender, **kwargs):
+    instance = kwargs.pop('instance')
+    instance.user.delete()
+
+
 @receiver(post_save, sender=Profile)
 def send_slack_notification_city_created(sender, instance, created,  **kwargs):
     if created:

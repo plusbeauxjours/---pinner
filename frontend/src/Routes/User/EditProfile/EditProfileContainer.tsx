@@ -403,6 +403,10 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                                                                     this
                                                                       .onInputChange
                                                                   }
+                                                                  onInputUsernameChange={
+                                                                    this
+                                                                      .onInputUsernameChange
+                                                                  }
                                                                   onSelectChange={
                                                                     this
                                                                       .onSelectChange
@@ -803,17 +807,21 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       residenceCode
     } = this.state;
     console.log(this.state);
-    this.editProfileFn({
-      variables: {
-        username: newUsername,
-        bio,
-        gender,
-        firstName,
-        lastName,
-        nationalityCode,
-        residenceCode
-      }
-    });
+    if (!newUsername || newUsername === "") {
+      toast.error("Please write a username");
+    } else {
+      this.editProfileFn({
+        variables: {
+          username: newUsername,
+          bio,
+          gender,
+          firstName,
+          lastName,
+          nationalityCode,
+          residenceCode
+        }
+      });
+    }
   };
   public toggleDeleteConfirmModal = () => {
     const { deleteConfirmModalOpen } = this.state;
@@ -838,6 +846,21 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     } = event;
     this.setState({
       [name]: value
+    } as any);
+  };
+  public onInputUsernameChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const {
+      target: { name, value }
+    } = event;
+    const replaceChar = /[~!@\#$%^&*\()\-=+_'\;<>0-9\/.\`:\"\\,\[\]?|{}]/gi;
+    this.setState({
+      [name]: value
+        .replace(/^\s\s*/, "")
+        .replace(/\s\s*$/, "")
+        .replace(replaceChar, "")
+        .replace(/[^a-z|^A-Z|^0-9]/, "")
     } as any);
   };
 

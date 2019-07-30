@@ -84,10 +84,10 @@ const ListIcon = styled.span`
   cursor: pointer;
   margin-top: 7px;
   svg {
-    fill: ${props => props.theme.color};
+    fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
-    &:hover {
-      fill: grey;
+       &:hover {
+      fill: ${props => props.theme.hoverColor}
     }
   }
 `;
@@ -138,7 +138,7 @@ const TripOverlay = styled.div`
   align-items: center;
   cursor: pointer;
   svg {
-    fill: ${props => props.theme.color};
+    fill: ${props => props.theme.iconColor};
     transition: fill 0.3s ease-in-out;
     &:hover {
       fill: red;
@@ -211,10 +211,10 @@ const Icon = styled.span`
   margin: 0 70px 0 70px;
   cursor: pointer;
   svg {
-    fill: ${props => props.theme.color};
+    fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
-    &:hover {
-      fill: grey;
+       &:hover {
+      fill: ${props => props.theme.hoverColor}
     }
   }
 `;
@@ -498,10 +498,10 @@ const AvatarUploadIcon = styled.div`
   cursor: pointer;
   overflow: hidden;
   svg {
-    fill: ${props => props.theme.color};
+    fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
-    &:hover {
-      fill: grey;
+       &:hover {
+      fill: ${props => props.theme.hoverColor}
     }
   }
 `;
@@ -556,7 +556,7 @@ const AvatarDeleteIcon = styled.div`
   svg {
     opacity: 0;
     transition: all 0.1s ease-in-out;
-    fill: ${props => props.theme.color};
+    fill: ${props => props.theme.iconColor};
   }
 `;
 
@@ -572,7 +572,7 @@ const WhiteDotIcon = styled(RedDotIcon)`
   svg {
     opacity: 0;
     transition: all 0.1s ease-in-out;
-    fill: ${props => props.theme.color};
+    fill: ${props => props.theme.iconColor};
   }
 `;
 

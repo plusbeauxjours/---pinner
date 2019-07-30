@@ -68,10 +68,10 @@ const Icon = styled.div`
   align-items: center;
   cursor: pointer;
   svg {
-    fill: ${props => props.theme.color};
+    fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
-    &:hover {
-      fill: grey;
+       &:hover {
+      fill: ${props => props.theme.hoverColor}
     }
   }
 `;
