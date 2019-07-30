@@ -7,7 +7,7 @@ const SButton = styled.button<IProps>`
   align-items: center;
   border: 0;
   padding: ${props => (props.size === "md" ? "1px" : "2px")};
-  color: ${props => (props.inverted ? props.theme.blackColor : "white")};
+  color: white;
   background-color: ${props =>
     props.inverted ? "transparent" : props.theme.blueColor};
   opacity: ${props => (props.active ? 1 : 0.8)};

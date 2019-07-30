@@ -86,7 +86,7 @@ const ModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -116,6 +116,7 @@ const Input = styled.input`
   background-color: transparent;
   font-size: 18px;
   font-weight: 100;
+  ime-mode: disabled;
   &:focus {
     outline: none;
   }
@@ -123,6 +124,7 @@ const Input = styled.input`
     color: ${props => props.theme.greyColor};
   }
 `;
+
 
 const Select = styled.select`
   height: 35px;
@@ -235,7 +237,7 @@ const DButton = styled.button`
   justify-content: center;
   align-self: center;
   border: 0;
-  color: ${props => props.theme.color};
+  color: white;
   background-color: ${props => props.theme.blueColor};
   opacity: 0.8;
   font-weight: 600;
@@ -458,7 +460,7 @@ const CountryRow = styled.div`
   padding-bottom: 10px;
   cursor: pointer;
   &:not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
   &:hover {
     background-color: ${props => props.theme.hoverColor};

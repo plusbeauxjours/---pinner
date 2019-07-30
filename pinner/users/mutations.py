@@ -310,7 +310,12 @@ class EditProfile(graphene.Mutation):
 
                 user.first_name = firstName
                 user.last_name = lastName
-                user.username = username
+                if user.username != username:
+                    try:
+                        existing_user = User.objects.get(username=username)
+                        raise Exception("Username is already taken")
+                    except User.DoesNotExist:
+                        user.username = username
                 user.save()
                 token = get_token(user)
                 return types.EditProfileResponse(ok=True, user=user, token=token)
