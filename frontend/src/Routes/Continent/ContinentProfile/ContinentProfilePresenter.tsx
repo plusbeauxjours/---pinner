@@ -166,8 +166,8 @@ const ListIcon = styled.span`
   svg {
     fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
-       &:hover {
-      fill: ${props => props.theme.hoverColor}
+    &:hover {
+      fill: ${props => props.theme.hoverColor};
     }
   }
 `;
@@ -245,6 +245,7 @@ interface IProps {
   reportModalOpen: boolean;
   toggleReportModal: () => void;
   slackReportLocations: (targetLocationId: string, payload: string) => void;
+  searchSet: () => void;
 }
 
 const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -267,7 +268,8 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
   currentCityId,
   reportModalOpen,
   toggleReportModal,
-  slackReportLocations
+  slackReportLocations,
+  searchSet
 }) => {
   if (loading) {
     return <Loader />;
@@ -417,6 +419,7 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
             coffeeLoading={coffeeLoading}
             cityId={currentCityId}
             currentContinentCode={continentCode}
+            searchSet={searchSet}
           />
           <LocationBox
             continents={continents}

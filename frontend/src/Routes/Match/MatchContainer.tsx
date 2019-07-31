@@ -42,7 +42,7 @@ class MatchContainer extends React.Component<IProps, IState> {
     super(props);
     const { location: { state = {} } = {} } = ({} = props);
     this.state = {
-      search: "",
+      search: state.search || "",
       matchList: [],
       currentLat: state.currentLat,
       currentLng: state.currentLng,
@@ -50,6 +50,11 @@ class MatchContainer extends React.Component<IProps, IState> {
       requestModalOpen: false,
       coffeeReportModalOpen: false
     };
+  }
+  public shouldComponentUpdate(nextProps, nextState) {
+    console.log(this.props);
+    console.log("nani");
+    return true;
   }
   public render = () => {
     const {
@@ -128,7 +133,7 @@ class MatchContainer extends React.Component<IProps, IState> {
     );
   };
   public searchSet = () => {
-    this.setState({ search: "" });
+    this.setState({ search: "", matchList: [] });
   };
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
     const {

@@ -67,11 +67,15 @@ class CoffeesPageContainer extends React.Component<IProps, IState> {
               onChange={this.onChange}
               search={search}
               coffeesList={coffeesList}
+              searchSet={this.searchSet}
             />
           );
         }}
       </GetCoffeesQuery>
     );
+  };
+  public searchSet = () => {
+    this.setState({ search: "", coffeesList: [] });
   };
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
     const {

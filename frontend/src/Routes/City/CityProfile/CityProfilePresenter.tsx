@@ -61,7 +61,7 @@ const ModalContainer = styled.div`
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   @media screen and (max-width: 935px) {
     margin: 10px 10px 0 10px;
   }
@@ -130,7 +130,7 @@ const UserRow = styled.div`
     background-color: ${props => props.theme.hoverColor};
   }
   &:not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -150,7 +150,7 @@ const AvatarContainer = styled.div`
 const Input = styled.input`
   width: 215px;
   border: 0;
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   padding: 5px;
   color: ${props => props.theme.color};
   font-size: 12px;
@@ -230,8 +230,8 @@ const ListIcon = styled.span`
   svg {
     fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
-       &:hover {
-      fill: ${props => props.theme.hoverColor}
+    &:hover {
+      fill: ${props => props.theme.hoverColor};
     }
   }
 `;
@@ -278,6 +278,7 @@ interface IProps {
   reportModalOpen: boolean;
   toggleReportModal: () => void;
   slackReportLocations: (targetLocationId: string, payload: string) => void;
+  searchSet: () => void;
 }
 
 const CityProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -305,7 +306,8 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
   submitCoffee,
   reportModalOpen,
   toggleReportModal,
-  slackReportLocations
+  slackReportLocations,
+  searchSet
 }) => {
   if (cityLoading) {
     return <Loader />;
@@ -483,6 +485,7 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
             toggleCoffeeRequestModal={toggleCoffeeRequestModal}
             coffees={coffees}
             isStaying={isStaying}
+            searchSet={searchSet}
           />
           <LocationBox
             nearCities={nearCities}

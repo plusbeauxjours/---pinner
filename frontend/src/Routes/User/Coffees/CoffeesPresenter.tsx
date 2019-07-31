@@ -111,10 +111,6 @@ const SAvatar = styled(Avatar)`
   width: 45px;
 `;
 
-const GreyText = styled(Bold)`
-  color: ${props => props.theme.greyColor};
-`;
-
 const Location = styled.span`
   display: flex;
   margin-top: 5px;
@@ -171,30 +167,29 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
               coffeesList &&
               coffeesList.map(coffee => (
                 <UserRow key={coffee.uuid}>
-                  <Link to={`/c/${coffee.uuid}`}>
+                  <Link to={`/city/${coffee.city.cityId}`}>
                     <Header>
                       <SAvatar
                         size={"sm"}
-                        url={coffee.host.profile.avatarUrl}
+                        url={coffee.city.cityPhoto}
+                        city={true}
                       />
                       <HeaderColumn>
-                        <CText text={coffee.host.username} />
                         {(() => {
                           switch (coffee.target) {
                             case "EVERYONE":
-                              return <Explain>with Someone</Explain>;
+                              return <CText text={"with Someone"} />;
                             case "GENDER":
-                              return <Explain>with same gender</Explain>;
+                              return <CText text={"with same gender"} />;
                             case "NATIONALITY":
-                              return <Explain>with same nationality</Explain>;
+                              return <CText text={"with same nationality"} />;
                             default:
                               return null;
                           }
                         })()}
+                        <Explain>{coffee.naturalTime}</Explain>
                       </HeaderColumn>
                     </Header>
-                    <GreyText text={coffee.target} />
-                    <GreyText text={coffee.expires} />
                   </Link>
                 </UserRow>
               ))}
@@ -203,30 +198,29 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
               coffees &&
               coffees.map(coffee => (
                 <UserRow key={coffee.uuid}>
-                  <Link to={`/c/${coffee.uuid}`}>
+                  <Link to={`/city/${coffee.city.cityId}`}>
                     <Header>
                       <SAvatar
                         size={"sm"}
-                        url={coffee.host.profile.avatarUrl}
+                        url={coffee.city.cityPhoto}
+                        city={true}
                       />
                       <HeaderColumn>
-                        <CText text={coffee.host.username} />
                         {(() => {
                           switch (coffee.target) {
                             case "EVERYONE":
-                              return <Explain>with Someone</Explain>;
+                              return <CText text={"with Someone"} />;
                             case "GENDER":
-                              return <Explain>with same gender</Explain>;
+                              return <CText text={"with same gender"} />;
                             case "NATIONALITY":
-                              return <Explain>with same nationality</Explain>;
+                              return <CText text={"with same nationality"} />;
                             default:
                               return null;
                           }
                         })()}
+                        <Explain>{coffee.naturalTime}</Explain>
                       </HeaderColumn>
                     </Header>
-                    <GreyText text={coffee.target} />
-                    <GreyText text={coffee.expires} />
                   </Link>
                 </UserRow>
               ))}

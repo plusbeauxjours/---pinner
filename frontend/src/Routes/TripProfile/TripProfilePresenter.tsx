@@ -8,10 +8,10 @@ import Avatar from "../../Components/Avatar";
 import Bold from "../../Components/Bold";
 import moment = require("moment");
 import Weather from "src/Components/Weather";
-import AvatarGrid from "../../Components/AvatarGrid";
 import UserHeader from "../../Components/UserHeader";
 import LocationBox from "src/Components/LocationBox";
 import CityLikeBtn from "../../Components/CityLikeBtn";
+import CoffeeBox from "src/Components/CoffeeBox";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -38,38 +38,6 @@ const InfoRow = styled.span`
   grid-gap: 10px;
   width: 300px;
   margin-top: 10px;
-`;
-
-const SSText = styled(Bold)`
-  font-size: 12px;
-  font-weight: 100;
-`;
-
-const Title = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  @media screen and (max-width: 935px) {
-    margin-left: 10px;
-  }
-`;
-
-const SmallTitle = styled(Title)`
-  flex-direction: column;
-  align-items: center;
-`;
-
-const GreyLine = styled.div`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-bottom:  1px solid ${props => props.theme.borderColor};
-  @media screen and (max-width: 935px) {
-    margin: 10px 10px 0 10px;
-  }
-`;
-
-const SmallGreyLine = styled(GreyLine)`
-  width: 40%;
 `;
 
 const CAvatar = styled(Avatar)`
@@ -104,7 +72,7 @@ const UserRow = styled.div`
     background-color: ${props => props.theme.hoverColor};
   }
   &:not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -124,7 +92,7 @@ const AvatarContainer = styled.div`
 const Input = styled.input`
   width: 215px;
   border: 0;
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
 
   padding: 5px;
   color: ${props => props.theme.color};
@@ -302,15 +270,11 @@ const TripProfilePresenter: React.FunctionComponent<IProps> = ({
             </UserContainer>
           </PHeader>
 
-          {coffees && coffees.length !== 0 ? (
-            <>
-              <SmallTitle>
-                <SmallGreyLine />
-                <SSText text={"COFFEES AT THAT TIME"} />
-              </SmallTitle>
-              <AvatarGrid coffees={coffees} />
-            </>
-          ) : null}
+          <CoffeeBox
+            coffees={coffees}
+            coffeeLoading={profileLoading}
+            currentCityId={cityId}
+          />
           <LocationBox
             nearCities={nearCities}
             cityId={cityId}

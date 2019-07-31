@@ -23,14 +23,17 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   modalOpen: boolean;
+  from: string;
 }
 
 class CoffeeDetailContainer extends React.Component<IProps, IState> {
   public deleteCoffeeFn: MutationFn;
   constructor(props) {
     super(props);
+    const { location: { state = {} } = {} } = ({} = props);
     this.state = {
-      modalOpen: false
+      modalOpen: false,
+      from: state.from
     };
   }
   public render() {
@@ -80,7 +83,10 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
   };
   public back = async event => {
     await event.stopPropagation();
-    this.props.history.goBack();
+    this.props.history.push({
+      pathname: this.props.location.state.from,
+      state: { search: "" }
+    });
   };
   public onCompletedDeleteCoffee = data => {
     if (data.deleteCoffee.ok) {

@@ -176,10 +176,11 @@ const UserBox: React.FunctionComponent<IProps> = ({
             {coffees.map(coffee => {
               return (
                 <UserRow key={coffee.uuid}>
+                  {console.log(location.pathname)}
                   <Link
                     to={{
                       pathname: `/c/${coffee.uuid}`,
-                      state: { coffeeModalOpen: true }
+                      state: { from: location.pathname, coffeeModalOpen: true }
                     }}
                   >
                     <AvatarContainer>
@@ -264,7 +265,7 @@ const UserBox: React.FunctionComponent<IProps> = ({
                   <Link
                     to={{
                       pathname: `/c/${coffee.uuid}`,
-                      state: { coffeeModalOpen: true }
+                      state: { from: location.pathname, coffeeModalOpen: true }
                     }}
                   >
                     <AvatarContainer>

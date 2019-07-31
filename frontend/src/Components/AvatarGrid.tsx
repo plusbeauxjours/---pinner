@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "../Styles/typed-components";
-import { Link } from "react-router-dom";
+import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import Avatar from "./Avatar";
 import { Upload } from "../Icons";
 
@@ -19,8 +19,8 @@ const Icon = styled.span`
   svg {
     fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
-       &:hover {
-      fill: ${props => props.theme.hoverColor}
+    &:hover {
+      fill: ${props => props.theme.hoverColor};
     }
   }
 `;
@@ -32,7 +32,7 @@ const AvatarContainer = styled.div`
 
 const SAvatar = styled(Avatar)``;
 
-interface IProps {
+interface IProps extends RouteComponentProps<any> {
   usersBefore?: any;
   usersNow?: any;
   coffees?: any;
@@ -71,8 +71,12 @@ const AvatarGrid: React.FunctionComponent<IProps> = ({
       {coffees &&
         coffees.map(coffee => (
           <AvatarContainer key={coffee.uuid}>
+            {console.log(location)}
             <Link
-              to={{ pathname: `/c/${coffee.uuid}`, state: { modalOpen: true } }}
+              to={{
+                pathname: `/c/${coffee.uuid}`,
+                state: { from: location.pathname, coffeeModalOpen: true }
+              }}
             />
           </AvatarContainer>
         ))}
@@ -80,4 +84,4 @@ const AvatarGrid: React.FunctionComponent<IProps> = ({
   </>
 );
 
-export default AvatarGrid;
+export default withRouter(AvatarGrid);

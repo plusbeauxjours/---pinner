@@ -79,6 +79,7 @@ export const COFFEE_FRAGMENT = gql`
     city {
       cityId
       cityName
+      cityPhoto
       country {
         countryName
       }
@@ -98,7 +99,7 @@ export const COFFEE_FRAGMENT = gql`
       }
     }
     status
-    expires
+    naturalTime
     target
     createdAt
   }

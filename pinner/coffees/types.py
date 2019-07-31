@@ -72,6 +72,8 @@ class MatchResponse(graphene.ObjectType):
     ok = graphene.Boolean()
     coffeeId = graphene.String()
     cityId = graphene.String()
+    countryCode = graphene.String()
+    continentCode = graphene.String()
     match = graphene.Field(MatchType)
 
 
@@ -79,6 +81,8 @@ class UnMatchResponse(graphene.ObjectType):
     ok = graphene.Boolean()
     matchId = graphene.Int()
     cityId = graphene.String()
+    countryCode = graphene.String()
+    continentCode = graphene.String()
     coffee = graphene.Field(CoffeeType)
 
 

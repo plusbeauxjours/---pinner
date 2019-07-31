@@ -131,6 +131,7 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
                                 countryCode={countryCode}
                                 currentCityId={currentCityId}
                                 back={this.back}
+                                searchSet={this.searchSet}
                               />
                             );
                           }}
@@ -146,6 +147,9 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
       </SlackReportLocationsMutation>
     );
   }
+  public searchSet = () => {
+    this.setState({ search: "" });
+  };
   public toggleReportModal = () => {
     const { reportModalOpen } = this.state;
     this.setState({ reportModalOpen: !reportModalOpen });

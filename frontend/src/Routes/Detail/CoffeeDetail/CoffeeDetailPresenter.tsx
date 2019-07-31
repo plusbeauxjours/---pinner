@@ -189,6 +189,8 @@ const Icon = styled.span`
   }
 `;
 
+const BtnContainer = styled.div``;
+
 interface IProps {
   data: any;
   loading: boolean;
@@ -283,12 +285,14 @@ const CoffeeDetailPresenter: React.FunctionComponent<IProps> = ({
               </InfoContainer>
               <GreyText>until {coffee.naturalTime}</GreyText>
               {coffee.status !== "expired" && (
-                <CoffeeBtn
-                  cityId={coffee.city.cityId}
-                  coffeeId={coffee.uuid}
-                  isMatching={coffee.isMatching}
-                  isSelf={coffee.host.profile.isSelf}
-                />
+                <BtnContainer onClick={back}>
+                  <CoffeeBtn
+                    cityId={coffee.city.cityId}
+                    coffeeId={coffee.uuid}
+                    isMatching={coffee.isMatching}
+                    isSelf={coffee.host.profile.isSelf}
+                  />
+                </BtnContainer>
               )}
               {/* {coffee.host.profile.nationality.countryName} */}
             </SWrapper>

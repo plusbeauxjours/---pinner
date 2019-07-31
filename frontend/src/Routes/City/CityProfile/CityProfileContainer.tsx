@@ -181,6 +181,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                                             search={search}
                                             usersNowList={usersNowList}
                                             submitCoffee={this.submitCoffee}
+                                            searchSet={this.searchSet}
                                           />
                                         );
                                       }}
@@ -202,6 +203,9 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       </GetSamenameCitiesQuery>
     );
   }
+  public searchSet = () => {
+    this.setState({ search: "" });
+  };
   public toggleReportModal = () => {
     const { reportModalOpen } = this.state;
     this.setState({ reportModalOpen: !reportModalOpen });

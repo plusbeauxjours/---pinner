@@ -7,6 +7,8 @@ export const MATCH = gql`
       ok
       coffeeId
       cityId
+      countryCode
+      continentCode
       match {
         ...MatchParts
       }
@@ -21,6 +23,8 @@ export const UNMATCH = gql`
       ok
       matchId
       cityId
+      countryCode
+      continentCode
       coffee {
         ...CoffeeParts
       }

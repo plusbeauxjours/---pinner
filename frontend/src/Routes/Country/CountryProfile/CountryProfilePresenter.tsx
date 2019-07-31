@@ -292,6 +292,8 @@ interface IProps {
   reportModalOpen: boolean;
   toggleReportModal: () => void;
   slackReportLocations: (targetLocationId: string, payload: string) => void;
+  searchSet: () => void;
+
 }
 
 const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -317,7 +319,8 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
   currentCityId,
   reportModalOpen,
   toggleReportModal,
-  slackReportLocations
+  slackReportLocations,
+  searchSet
 }) => {
   if (loading) {
     return <Loader />;
@@ -499,6 +502,7 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
             coffeeLoading={coffeeLoading}
             cityId={currentCityId}
             currentCountryCode={countryCode}
+            searchSet={searchSet}
           />
           <LocationBox
             countries={countries}

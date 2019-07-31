@@ -103,6 +103,7 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
                           search={search}
                           countryList={countryList}
                           currentCityId={currentCityId}
+                          searchSet={this.searchSet}
                         />
                       );
                     }}
@@ -115,6 +116,9 @@ class ContinentProfileContainer extends React.Component<IProps, IState> {
       </SlackReportLocationsMutation>
     );
   }
+  public searchSet = () => {
+    this.setState({ search: "" });
+  };
   public toggleReportModal = () => {
     const { reportModalOpen } = this.state;
     this.setState({ reportModalOpen: !reportModalOpen });

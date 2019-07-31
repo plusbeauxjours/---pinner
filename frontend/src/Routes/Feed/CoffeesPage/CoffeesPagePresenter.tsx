@@ -49,7 +49,7 @@ const UserRow = styled.div`
   &:hover {
     background-color: ${props => props.theme.hoverColor};
   }
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   &:last-child {
     margin-bottom: 15px;
   }
@@ -94,7 +94,7 @@ const UserNameRow = styled.div`
 const Input = styled.input`
   width: 215px;
   border: 0;
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
 
   padding: 5px;
   color: ${props => props.theme.color};
@@ -118,6 +118,7 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
   coffeesList: any;
+  searchSet: () => void;
 }
 
 const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
@@ -125,7 +126,8 @@ const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
   coffeeLoading,
   onChange,
   search,
-  coffeesList
+  coffeesList,
+  searchSet
 }) => {
   if (coffeeLoading) {
     return <Loader />;
@@ -146,7 +148,12 @@ const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
               coffeesList.map(coffee => {
                 return (
                   <UserRow key={coffee.uuid}>
-                    <Link to={`/c/${coffee.uuid}`}>
+                    <Link
+                      to={{
+                        pathname: `/c/${coffee.uuid}`,
+                        state: { from: location.pathname, coffeeModalOpen: true }
+                      }}
+                    >
                       <AvatarContainer>
                         <SAvatar
                           size={"sm"}
@@ -173,6 +180,7 @@ const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
                       coffeeId={coffee.uuid}
                       isMatching={coffee.isMatching}
                       isSelf={coffee.host.profile.isSelf}
+                      searchSet={searchSet}
                     />
                   </UserRow>
                 );
@@ -183,7 +191,12 @@ const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
               coffees.map(coffee => {
                 return (
                   <UserRow key={coffee.uuid}>
-                    <Link to={`/c/${coffee.uuid}`}>
+                    <Link
+                      to={{
+                        pathname: `/c/${coffee.uuid}`,
+                        state: { from: location.pathname, coffeeModalOpen: true }
+                      }}
+                    >
                       <AvatarContainer>
                         <SAvatar
                           size={"sm"}
@@ -210,6 +223,7 @@ const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
                       coffeeId={coffee.uuid}
                       isMatching={coffee.isMatching}
                       isSelf={coffee.host.profile.isSelf}
+                      searchSet={searchSet}
                     />
                   </UserRow>
                 );

@@ -81,20 +81,23 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
     const { match } = data;
     if (match.ok) {
       toast.success("Match accepted, say hello");
-      searchSet();
+      {
+        // tslint:disable-next-line:no-unused-expression
+        searchSet && searchSet();
+      }
     } else {
       toast.error("error");
     }
   };
-  public updateMatch = async (cache, { data: { match } }) => {
+  public updateMatch = (cache, { data: { match } }) => {
     try {
-      const matchData = await cache.readQuery({
+      const matchData = cache.readQuery({
         query: GET_MATCHES
       });
       console.log(matchData.getMatches.matches, match.match);
       if (matchData) {
         matchData.getMatches.matches.push(match.match);
-        await cache.writeQuery({
+        cache.writeQuery({
           query: GET_MATCHES,
           data: matchData
         });
@@ -104,27 +107,79 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
       console.log(e);
     }
     try {
-      const feedData = await cache.readQuery({
+      const cityData = cache.readQuery({
         query: GET_COFFEES,
         variables: {
           cityId: match.cityId,
           location: "city"
         }
       });
-      console.log(feedData.getCoffees.coffees, match.coffeeId);
-      if (feedData) {
-        feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
+      console.log(cityData.getCoffees.coffees, match.coffeeId);
+      if (cityData) {
+        cityData.getCoffees.coffees = cityData.getCoffees.coffees.filter(
           i => i.uuid !== match.coffeeId
         );
-        await cache.writeQuery({
+        cache.writeQuery({
           query: GET_COFFEES,
           variables: {
             cityId: match.cityId,
             location: "city"
           },
-          data: feedData
+          data: cityData
         });
-        console.log(feedData.getCoffees.coffees, match.coffeeId);
+        console.log(cityData.getCoffees.coffees, match.coffeeId);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const countryData = cache.readQuery({
+        query: GET_COFFEES,
+        variables: {
+          countryCode: match.countryCode,
+          location: "country"
+        }
+      });
+      console.log(countryData.getCoffees.coffees, match.coffeeId);
+      if (countryData) {
+        countryData.getCoffees.coffees = countryData.getCoffees.coffees.filter(
+          i => i.uuid !== match.coffeeId
+        );
+        cache.writeQuery({
+          query: GET_COFFEES,
+          variables: {
+            countryCode: match.countryCode,
+            location: "country"
+          },
+          data: countryData
+        });
+        console.log(countryData.getCoffees.coffees, match.coffeeId);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const continentData = cache.readQuery({
+        query: GET_COFFEES,
+        variables: {
+          continentCode: match.continentCode,
+          location: "continent"
+        }
+      });
+      console.log(continentData.getCoffees.coffees, match.coffeeId);
+      if (continentData) {
+        continentData.getCoffees.coffees = continentData.getCoffees.coffees.filter(
+          i => i.uuid !== match.coffeeId
+        );
+        cache.writeQuery({
+          query: GET_COFFEES,
+          variables: {
+            continentCode: match.continentCode,
+            location: "continent"
+          },
+          data: continentData
+        });
+        console.log(continentData.getCoffees.coffees, match.coffeeId);
       }
     } catch (e) {
       console.log(e);
@@ -136,15 +191,18 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
     const { unMatch } = data;
     if (unMatch.ok) {
       toast.success("UnMatch accepted, say bye");
-      searchSet();
+      {
+        // tslint:disable-next-line:no-unused-expression
+        searchSet && searchSet();
+      }
     } else {
       toast.error("error");
     }
   };
-  public updateUnMatch = async (cache, { data: { unMatch } }) => {
+  public updateUnMatch = (cache, { data: { unMatch } }) => {
     console.log(unMatch);
     try {
-      const matchData = await cache.readQuery({
+      const matchData = cache.readQuery({
         query: GET_MATCHES
       });
       console.log(matchData.getMatches.matches, unMatch.matchId);
@@ -152,7 +210,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
         matchData.getMatches.matches = matchData.getMatches.matches.filter(
           i => parseInt(i.id, 10) !== unMatch.matchId
         );
-        await cache.writeQuery({
+        cache.writeQuery({
           query: GET_MATCHES,
           data: matchData
         });
@@ -162,20 +220,72 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
       console.log(e);
     }
     try {
-      const feedData = await cache.readQuery({
+      const cityData = cache.readQuery({
         query: GET_COFFEES,
         variables: { cityId: unMatch.cityId, location: "city" }
       });
-      console.log(feedData.getCoffees.coffees, unMatch.coffee);
+      console.log(cityData.getCoffees.coffees, unMatch.coffee);
       if (unMatch.coffee.status !== "expired") {
-        if (feedData) {
-          feedData.getCoffees.coffees.push(unMatch.coffee);
-          await cache.writeQuery({
+        if (cityData) {
+          cityData.getCoffees.coffees.push(unMatch.coffee);
+          cache.writeQuery({
             query: GET_COFFEES,
             variables: { cityId: unMatch.cityId, location: "city" },
-            data: feedData
+            data: cityData
           });
-          console.log(feedData.getCoffees.coffees, unMatch.coffee);
+          console.log(cityData.getCoffees.coffees, unMatch.coffee);
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const countryData = cache.readQuery({
+        query: GET_COFFEES,
+        variables: {
+          countryCode: unMatch.countryCode,
+          location: "country"
+        }
+      });
+      console.log(countryData.getCoffees.coffees, unMatch.coffee);
+      if (unMatch.coffee.status !== "expired") {
+        if (countryData) {
+          countryData.getCoffees.coffees.push(unMatch.coffee);
+          cache.writeQuery({
+            query: GET_COFFEES,
+            variables: {
+              countryCode: unMatch.countryCode,
+              location: "country"
+            },
+            data: countryData
+          });
+          console.log(countryData.getCoffees.coffees, unMatch.coffee);
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const continentData = cache.readQuery({
+        query: GET_COFFEES,
+        variables: {
+          continentCode: unMatch.continentCode,
+          location: "continent"
+        }
+      });
+      console.log(continentData.getCoffees.coffees, unMatch.coffee);
+      if (unMatch.coffee.status !== "expired") {
+        if (continentData) {
+          continentData.getCoffees.coffees.push(unMatch.coffee);
+          cache.writeQuery({
+            query: GET_COFFEES,
+            variables: {
+              continentCode: unMatch.continentCode,
+              location: "continent"
+            },
+            data: continentData
+          });
+          console.log(continentData.getCoffees.coffees, unMatch.coffee);
         }
       }
     } catch (e) {
