@@ -110,6 +110,12 @@ class CityLikeBtnContainer extends React.Component<IProps, IState> {
           variables: { cityId },
           data
         });
+        console.log(
+          cache.readQuery({
+            query: CITY_PROFILE,
+            variables: { cityId }
+          })
+        );
       }
     } catch (e) {
       console.log(e);

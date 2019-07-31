@@ -1,4 +1,4 @@
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 import { COUNTRY_FRAGMENT } from "src/sharedQueries";
 
 export const EDIT_PROFILE = gql`

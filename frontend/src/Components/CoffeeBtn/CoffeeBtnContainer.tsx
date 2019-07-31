@@ -22,6 +22,7 @@ interface IProps extends RouteComponentProps {
   matchId?: string;
   isSelf: boolean;
   isMatching: boolean;
+  searchSet: () => void;
 }
 
 interface IState {
@@ -76,42 +77,46 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
     );
   }
   public onCompletedMatch = data => {
+    const { searchSet } = this.props;
     const { match } = data;
     if (match.ok) {
       toast.success("Match accepted, say hello");
+      searchSet();
     } else {
       toast.error("error");
     }
   };
-  public updateMatch = (cache, { data: { match } }) => {
+  public updateMatch = async (cache, { data: { match } }) => {
     try {
-      const matchData = cache.readQuery({
+      const matchData = await cache.readQuery({
         query: GET_MATCHES
       });
       console.log(matchData.getMatches.matches, match.match);
       if (matchData) {
         matchData.getMatches.matches.push(match.match);
-        cache.writeQuery({
+        await cache.writeQuery({
           query: GET_MATCHES,
           data: matchData
         });
+        console.log(matchData.getMatches.matches, match.match);
       }
     } catch (e) {
       console.log(e);
     }
     try {
-      const feedData = cache.readQuery({
+      const feedData = await cache.readQuery({
         query: GET_COFFEES,
         variables: {
           cityId: match.cityId,
           location: "city"
         }
       });
+      console.log(feedData.getCoffees.coffees, match.coffeeId);
       if (feedData) {
         feedData.getCoffees.coffees = feedData.getCoffees.coffees.filter(
           i => i.uuid !== match.coffeeId
         );
-        cache.writeQuery({
+        await cache.writeQuery({
           query: GET_COFFEES,
           variables: {
             cityId: match.cityId,
@@ -119,6 +124,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
           },
           data: feedData
         });
+        console.log(feedData.getCoffees.coffees, match.coffeeId);
       }
     } catch (e) {
       console.log(e);
@@ -126,48 +132,54 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
   };
 
   public onCompletedUnMatch = data => {
+    const { searchSet } = this.props;
     const { unMatch } = data;
     if (unMatch.ok) {
       toast.success("UnMatch accepted, say bye");
+      searchSet();
     } else {
       toast.error("error");
     }
   };
-  public updateUnMatch = (cache, { data: { unMatch } }) => {
+  public updateUnMatch = async (cache, { data: { unMatch } }) => {
     console.log(unMatch);
     try {
-      const matchData = cache.readQuery({
+      const matchData = await cache.readQuery({
         query: GET_MATCHES
       });
+      console.log(matchData.getMatches.matches, unMatch.matchId);
       if (matchData) {
         matchData.getMatches.matches = matchData.getMatches.matches.filter(
           i => parseInt(i.id, 10) !== unMatch.matchId
         );
-        cache.writeQuery({
+        await cache.writeQuery({
           query: GET_MATCHES,
           data: matchData
         });
+        console.log(matchData.getMatches.matches, unMatch.matchId);
       }
     } catch (e) {
       console.log(e);
     }
-    if (unMatch.coffee.status !== "expired") {
-      try {
-        const feedData = cache.readQuery({
-          query: GET_COFFEES,
-          variables: { cityId: unMatch.cityId, location: "city" }
-        });
+    try {
+      const feedData = await cache.readQuery({
+        query: GET_COFFEES,
+        variables: { cityId: unMatch.cityId, location: "city" }
+      });
+      console.log(feedData.getCoffees.coffees, unMatch.coffee);
+      if (unMatch.coffee.status !== "expired") {
         if (feedData) {
           feedData.getCoffees.coffees.push(unMatch.coffee);
-          cache.writeQuery({
+          await cache.writeQuery({
             query: GET_COFFEES,
             variables: { cityId: unMatch.cityId, location: "city" },
             data: feedData
           });
+          console.log(feedData.getCoffees.coffees, unMatch.coffee);
         }
-      } catch (e) {
-        console.log(e);
       }
+    } catch (e) {
+      console.log(e);
     }
   };
 }

@@ -1,4 +1,4 @@
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 import {
   PROFILE_FRAGMENT,
   COUNTRY_FRAGMENT,

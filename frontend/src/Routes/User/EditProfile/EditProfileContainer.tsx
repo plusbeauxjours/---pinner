@@ -342,7 +342,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                                                                 setTimeout(
                                                                   () => {
                                                                     history.push(
-                                                                      "/"
+                                                                      "/match"
                                                                     );
                                                                   },
                                                                   2000

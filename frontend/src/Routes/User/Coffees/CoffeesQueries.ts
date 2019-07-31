@@ -1,4 +1,4 @@
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 import { COFFEE_FRAGMENT } from "../../../sharedQueries";
 
 export const GET_COFFEES = gql`

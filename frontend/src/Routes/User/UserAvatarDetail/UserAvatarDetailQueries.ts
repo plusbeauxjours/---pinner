@@ -1,4 +1,4 @@
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 
 export const GET_AVATAR_DETAIL = gql`
   query GetAvatarDetail($avatarId: String!) {

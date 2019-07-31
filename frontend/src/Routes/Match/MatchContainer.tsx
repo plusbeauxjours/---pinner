@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { GET_MATCHES, REQUEST_COFFEE } from "./MatchQueries";
 import { GET_COFFEES } from "../User/Coffees/CoffeesQueries";
 import { RECOMMAND_USERS } from "../Feed/PeoplePage/PeoplePageQueries";
+import { RouteComponentProps, withRouter } from "react-router";
 
 class GetMatchesQuery extends Query<GetMatches, GetMatchesVariables> {}
 class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
@@ -23,6 +24,7 @@ class RequestCoffeeMutation extends Mutation<
   RequestCoffeeVariables
 > {}
 
+interface IProps extends RouteComponentProps<any> {}
 interface IState {
   search: string;
   matchList: any;
@@ -33,7 +35,7 @@ interface IState {
   coffeeReportModalOpen: boolean;
 }
 
-class MatchContainer extends React.Component<any, IState> {
+class MatchContainer extends React.Component<IProps, IState> {
   public requestCoffeeFn: MutationFn;
   public matchData;
   constructor(props) {
@@ -109,6 +111,7 @@ class MatchContainer extends React.Component<any, IState> {
                                 toggleRequestModal={this.toggleRequestModal}
                                 submitCoffee={this.submitCoffee}
                                 isStaying={isStaying}
+                                searchSet={this.searchSet}
                               />
                             );
                           }}
@@ -123,6 +126,9 @@ class MatchContainer extends React.Component<any, IState> {
         }}
       </RecommandUsersQuery>
     );
+  };
+  public searchSet = () => {
+    this.setState({ search: "" });
   };
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
     const {
@@ -226,4 +232,4 @@ class MatchContainer extends React.Component<any, IState> {
   };
 }
 
-export default MatchContainer;
+export default withRouter(MatchContainer);

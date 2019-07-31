@@ -1,13 +1,12 @@
-// import ApolloClient from "apollo-boost";
-
-import { ApolloClient } from "apollo-client";
 import { toast } from "react-toastify";
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { HttpLink } from "apollo-link-http";
 import { createUploadLink } from "apollo-upload-client";
 import { ApolloLink, Observable } from "apollo-link";
 import { withClientState } from "apollo-link-state";
 import { onError } from "apollo-link-error";
 import browserHistory from "./browserHistory";
+import { ApolloClient } from "apollo-boost";
 
 const cache = new InMemoryCache();
 
@@ -67,6 +66,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 });
 
+const httpLink = new HttpLink({ uri: API_SERVER });
+
 const client = new ApolloClient({
   link: ApolloLink.from([
     withClientState({
@@ -101,7 +102,8 @@ const client = new ApolloClient({
     }),
     requestLink,
     errorLink,
-    uploadLink
+    uploadLink,
+    httpLink
   ]),
   cache
 });

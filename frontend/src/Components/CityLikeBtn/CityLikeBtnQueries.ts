@@ -1,4 +1,4 @@
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 
 export const TOGGLE_LIKE_CITY = gql`
   mutation ToggleLikeCity($cityId: Int!) {

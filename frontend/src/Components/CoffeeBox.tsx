@@ -70,8 +70,8 @@ const Icon = styled.div`
   svg {
     fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
-       &:hover {
-      fill: ${props => props.theme.hoverColor}
+    &:hover {
+      fill: ${props => props.theme.hoverColor};
     }
   }
 `;
@@ -135,6 +135,7 @@ interface IProps extends RouteComponentProps<any> {
   toggleCoffeeRequestModal?: () => void;
   coffees: any;
   isStaying?: boolean;
+  searchSet?: () => void;
 }
 
 const UserBox: React.FunctionComponent<IProps> = ({
@@ -145,7 +146,8 @@ const UserBox: React.FunctionComponent<IProps> = ({
   currentContinentCode,
   toggleCoffeeRequestModal,
   coffees,
-  isStaying
+  isStaying,
+  searchSet
 }) => {
   if (!coffeeLoading && currentCityId && isStaying) {
     return (
@@ -205,6 +207,7 @@ const UserBox: React.FunctionComponent<IProps> = ({
                       coffeeId={coffee.uuid}
                       isMatching={coffee.isMatching}
                       isSelf={coffee.host.profile.isSelf}
+                      searchSet={searchSet}
                     />
                   )}
                 </UserRow>
@@ -289,6 +292,7 @@ const UserBox: React.FunctionComponent<IProps> = ({
                       coffeeId={coffee.uuid}
                       isMatching={coffee.isMatching}
                       isSelf={coffee.host.profile.isSelf}
+                      searchSet={searchSet}
                     />
                   )}
                 </UserRow>

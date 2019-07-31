@@ -20,7 +20,7 @@ const UserContainer = styled.div`
 `;
 
 const GreyText = styled(Bold)`
-  color: ${props => props.theme.greyColor};;
+  color: ${props => props.theme.greyColor};
   font-weight: 100;
   margin-top: 5px;
 `;
@@ -239,6 +239,7 @@ interface IProps {
   toggleRequestModal: () => void;
   submitCoffee: any;
   isStaying: boolean;
+  searchSet: () =>void
 }
 
 const MatchPresenter: React.FunctionComponent<IProps> = ({
@@ -259,7 +260,8 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
   toggleCoffeeReportModal,
   toggleRequestModal,
   submitCoffee,
-  isStaying
+  isStaying,
+  searchSet
 }) => {
   if (matchLoading || recommandUsersLoading) {
     return <Loader />;
@@ -328,6 +330,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
             toggleCoffeeRequestModal={toggleRequestModal}
             coffees={coffees}
             isStaying={isStaying}
+            searchSet={searchSet}
           />
           <GreyLine />
           <UserContainer>
@@ -340,120 +343,137 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
               />
             </UserNameRow>
             {matchList.length !== 0 &&
-              matchList.map(match => (
-                <React.Fragment key={match.id}>
-                  {match.isGuest ? (
-                    <MatchUserRow>
-                      <Link to={`/${match.host.profile.username}`}>
-                        <UserHeader
-                          username={match.host.profile.username}
-                          currentCity={match.host.profile.currentCity.cityName}
-                          currentCountry={
-                            match.host.profile.currentCity.country.countryName
-                          }
-                          avatar={match.host.profile.avatarUrl}
-                          size={"sm"}
-                        />
-                      </Link>
-                      <Column>
-                        <GreyText text={match.coffee.target} />
-                        <GreyText text={match.naturalTime} />
-                      </Column>
-                      {match.isMatching ? (
-                        <CoffeeBtn
-                          cityId={match.coffee.city.cityId}
-                          isMatching={match.isMatching}
-                          matchId={match.id}
-                        />
-                      ) : null}
-                    </MatchUserRow>
-                  ) : (
-                    <MatchUserRow>
-                      <Link to={`/${match.guest.profile.username}`}>
-                        <UserHeader
-                          username={match.guest.profile.username}
-                          currentCity={match.guest.profile.currentCity.cityName}
-                          currentCountry={
-                            match.guest.profile.currentCity.country.countryName
-                          }
-                          avatar={match.guest.profile.avatarUrl}
-                          size={"sm"}
-                        />
-                      </Link>
-                      <Column>
-                        <GreyText text={match.coffee.target} />
-                        <GreyText text={match.naturalTime} />
-                      </Column>
-                      {match.isMatching ? (
-                        <CoffeeBtn
-                          cityId={match.coffee.city.cityId}
-                          isMatching={match.isMatching}
-                          matchId={match.id}
-                        />
-                      ) : null}
-                    </MatchUserRow>
-                  )}
-                </React.Fragment>
-              ))}
+              matchList.map(match => {
+                return (
+                  <React.Fragment key={match.id}>
+                    {match.isGuest ? (
+                      <MatchUserRow>
+                        <Link to={`/${match.host.profile.username}`}>
+                          <UserHeader
+                            username={match.host.profile.username}
+                            currentCity={
+                              match.host.profile.currentCity.cityName
+                            }
+                            currentCountry={
+                              match.host.profile.currentCity.country.countryName
+                            }
+                            avatar={match.host.profile.avatarUrl}
+                            size={"sm"}
+                          />
+                        </Link>
+                        <Column>
+                          <GreyText text={match.coffee.target} />
+                          <GreyText text={match.naturalTime} />
+                        </Column>
+                        {match.isMatching ? (
+                          <CoffeeBtn
+                            cityId={match.coffee.city.cityId}
+                            isMatching={match.isMatching}
+                            matchId={match.id}
+                            searchSet={searchSet}
+                          />
+                        ) : null}
+                      </MatchUserRow>
+                    ) : (
+                      <MatchUserRow>
+                        <Link to={`/${match.guest.profile.username}`}>
+                          <UserHeader
+                            username={match.guest.profile.username}
+                            currentCity={
+                              match.guest.profile.currentCity.cityName
+                            }
+                            currentCountry={
+                              match.guest.profile.currentCity.country
+                                .countryName
+                            }
+                            avatar={match.guest.profile.avatarUrl}
+                            size={"sm"}
+                          />
+                        </Link>
+                        <Column>
+                          <GreyText text={match.coffee.target} />
+                          <GreyText text={match.naturalTime} />
+                        </Column>
+                        {match.isMatching ? (
+                          <CoffeeBtn
+                            cityId={match.coffee.city.cityId}
+                            isMatching={match.isMatching}
+                            matchId={match.id}
+                            searchSet={searchSet}
+                          />
+                        ) : null}
+                      </MatchUserRow>
+                    )}
+                  </React.Fragment>
+                );
+              })}
             {matchList.length === 0 &&
               !search &&
               matches &&
-              matches.map(match => (
-                <React.Fragment key={match.id}>
-                  {match.isGuest ? (
-                    <MatchUserRow>
-                      <Link to={`/${match.host.profile.username}`}>
-                        <UserHeader
-                          username={match.host.profile.username}
-                          currentCity={match.host.profile.currentCity.cityName}
-                          currentCountry={
-                            match.host.profile.currentCity.country.countryName
-                          }
-                          avatar={match.host.profile.avatarUrl}
-                          size={"sm"}
-                        />
-                      </Link>
-                      <Column>
-                        <GreyText text={match.coffee.target} />
-                        <GreyText text={match.naturalTime} />
-                      </Column>
-                      {console.log(match.coffee)}
-                      {match.isMatching ? (
-                        <CoffeeBtn
-                          cityId={match.coffee.city.cityId}
-                          isMatching={match.isMatching}
-                          matchId={match.id}
-                        />
-                      ) : null}
-                    </MatchUserRow>
-                  ) : (
-                    <MatchUserRow>
-                      <Link to={`/${match.guest.profile.username}`}>
-                        <UserHeader
-                          username={match.guest.profile.username}
-                          currentCity={match.guest.profile.currentCity.cityName}
-                          currentCountry={
-                            match.guest.profile.currentCity.country.countryName
-                          }
-                          avatar={match.guest.profile.avatarUrl}
-                          size={"sm"}
-                        />
-                      </Link>
-                      <Column>
-                        <GreyText text={match.coffee.target} />
-                        <GreyText text={match.naturalTime} />
-                      </Column>
-                      {match.isMatching ? (
-                        <CoffeeBtn
-                          cityId={match.coffee.city.cityId}
-                          isMatching={match.isMatching}
-                          matchId={match.id}
-                        />
-                      ) : null}
-                    </MatchUserRow>
-                  )}
-                </React.Fragment>
-              ))}
+              matches.map(match => {
+                return (
+                  <React.Fragment key={match.id}>
+                    {match.isGuest ? (
+                      <MatchUserRow>
+                        <Link to={`/${match.host.profile.username}`}>
+                          <UserHeader
+                            username={match.host.profile.username}
+                            currentCity={
+                              match.host.profile.currentCity.cityName
+                            }
+                            currentCountry={
+                              match.host.profile.currentCity.country.countryName
+                            }
+                            avatar={match.host.profile.avatarUrl}
+                            size={"sm"}
+                          />
+                        </Link>
+                        <Column>
+                          <GreyText text={match.coffee.target} />
+                          <GreyText text={match.naturalTime} />
+                        </Column>
+                        {match.isMatching ? (
+                          <CoffeeBtn
+                            cityId={match.coffee.city.cityId}
+                            isMatching={match.isMatching}
+                            matchId={match.id}
+                            searchSet={searchSet}
+                          />
+                        ) : null}
+                      </MatchUserRow>
+                    ) : (
+                      <MatchUserRow>
+                        <Link to={`/${match.guest.profile.username}`}>
+                          <UserHeader
+                            username={match.guest.profile.username}
+                            currentCity={
+                              match.guest.profile.currentCity.cityName
+                            }
+                            currentCountry={
+                              match.guest.profile.currentCity.country
+                                .countryName
+                            }
+                            avatar={match.guest.profile.avatarUrl}
+                            size={"sm"}
+                          />
+                        </Link>
+                        <Column>
+                          <GreyText text={match.coffee.target} />
+                          <GreyText text={match.naturalTime} />
+                        </Column>
+                        {match.isMatching ? (
+                          <CoffeeBtn
+                            cityId={match.coffee.city.cityId}
+                            isMatching={match.isMatching}
+                            matchId={match.id}
+                            searchSet={searchSet}
+                          />
+                        ) : null}
+                      </MatchUserRow>
+                    )}
+                  </React.Fragment>
+                );
+              })}
           </UserContainer>
         </SWrapper>
       </>

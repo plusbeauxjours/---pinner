@@ -39,7 +39,6 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
         params: { uuid }
       }
     } = this.props;
-    console.log(uuid);
     const { modalOpen } = this.state;
     return (
       <DeleteCoffeeMutation
@@ -57,7 +56,6 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
             >
               {({ data, loading }) => (
                 <>
-                  {console.log(data)}
                   <CoffeeDetailPresenter
                     loading={loading}
                     data={data}
