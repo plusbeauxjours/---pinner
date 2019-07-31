@@ -42,7 +42,7 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
         params: { uuid }
       }
     } = this.props;
-    const { modalOpen } = this.state;
+    const { modalOpen, from } = this.state;
     return (
       <DeleteCoffeeMutation
         mutation={DELETE_COFFEE}
@@ -66,6 +66,7 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
                     toggleModal={this.toggleModal}
                     back={this.back}
                     deleteCoffee={this.deleteCoffee}
+                    from={from}
                   />
                 </>
               )}
@@ -81,10 +82,10 @@ class CoffeeDetailContainer extends React.Component<IProps, IState> {
       modalOpen: !modalOpen
     });
   };
-  public back = async event => {
-    await event.stopPropagation();
+  public back = () => {
+    const { from } = this.state;
     this.props.history.push({
-      pathname: this.props.location.state.from,
+      pathname: from,
       state: { search: "" }
     });
   };

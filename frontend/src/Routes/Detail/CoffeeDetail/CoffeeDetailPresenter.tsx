@@ -189,8 +189,6 @@ const Icon = styled.span`
   }
 `;
 
-const BtnContainer = styled.div``;
-
 interface IProps {
   data: any;
   loading: boolean;
@@ -198,6 +196,7 @@ interface IProps {
   back: any;
   toggleModal: () => void;
   deleteCoffee: () => void;
+  from: string;
 }
 
 const CoffeeDetailPresenter: React.FunctionComponent<IProps> = ({
@@ -206,7 +205,8 @@ const CoffeeDetailPresenter: React.FunctionComponent<IProps> = ({
   modalOpen,
   toggleModal,
   back,
-  deleteCoffee
+  deleteCoffee,
+  from
 }) => {
   if (loading) {
     return <Loader />;
@@ -285,14 +285,14 @@ const CoffeeDetailPresenter: React.FunctionComponent<IProps> = ({
               </InfoContainer>
               <GreyText>until {coffee.naturalTime}</GreyText>
               {coffee.status !== "expired" && (
-                <BtnContainer onClick={back}>
+                <Link to={{ pathname: `${from}`, state: { update: true } }}>
                   <CoffeeBtn
                     cityId={coffee.city.cityId}
                     coffeeId={coffee.uuid}
                     isMatching={coffee.isMatching}
                     isSelf={coffee.host.profile.isSelf}
                   />
-                </BtnContainer>
+                </Link>
               )}
               {/* {coffee.host.profile.nationality.countryName} */}
             </SWrapper>

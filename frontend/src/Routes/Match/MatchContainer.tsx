@@ -33,6 +33,7 @@ interface IState {
   currentCityId: string;
   requestModalOpen: boolean;
   coffeeReportModalOpen: boolean;
+  update: boolean;
 }
 
 class MatchContainer extends React.Component<IProps, IState> {
@@ -41,20 +42,24 @@ class MatchContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     const { location: { state = {} } = {} } = ({} = props);
+    console.log(state);
     this.state = {
-      search: state.search || "",
+      search: "",
       matchList: [],
       currentLat: state.currentLat,
       currentLng: state.currentLng,
       currentCityId: state.currentCityId || localStorage.getItem("cityId"),
       requestModalOpen: false,
-      coffeeReportModalOpen: false
+      coffeeReportModalOpen: false,
+      update: state.update || false
     };
   }
-  public shouldComponentUpdate(nextProps, nextState) {
-    console.log(this.props);
-    console.log("nani");
-    return true;
+  public componentDidUpdate(prevProps) {
+    const newProps = this.props;
+    if (prevProps.match.params !== newProps.match.params) {
+      this.setState({ search: "", update: true });
+      console.log("bonjour")
+    }
   }
   public render = () => {
     const {
