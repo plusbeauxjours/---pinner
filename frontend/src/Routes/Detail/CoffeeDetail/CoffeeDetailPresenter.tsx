@@ -285,14 +285,13 @@ const CoffeeDetailPresenter: React.FunctionComponent<IProps> = ({
               </InfoContainer>
               <GreyText>until {coffee.naturalTime}</GreyText>
               {coffee.status !== "expired" && (
-                <Link to={{ pathname: `${from}`, state: { update: true } }}>
-                  <CoffeeBtn
-                    cityId={coffee.city.cityId}
-                    coffeeId={coffee.uuid}
-                    isMatching={coffee.isMatching}
-                    isSelf={coffee.host.profile.isSelf}
-                  />
-                </Link>
+                <CoffeeBtn
+                  cityId={coffee.city.cityId}
+                  coffeeId={coffee.uuid}
+                  isMatching={coffee.isMatching}
+                  isSelf={coffee.host.profile.isSelf}
+                  from={from}
+                />
               )}
               {/* {coffee.host.profile.nationality.countryName} */}
             </SWrapper>

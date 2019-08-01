@@ -8,6 +8,10 @@ const SButton = styled(Button)`
   width: 75px;
 `;
 
+const EmptyContainer = styled.div`
+  height: 19px;
+`;
+
 interface IProps {
   isSelf: boolean;
   match: () => void;
@@ -36,7 +40,7 @@ const CoffeeBtnPresenter: React.FunctionComponent<IProps> = ({
       </>
     );
   } else {
-    return null;
+    return <EmptyContainer />;
   }
 };
 

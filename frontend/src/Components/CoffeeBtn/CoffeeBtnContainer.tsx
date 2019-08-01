@@ -23,12 +23,13 @@ interface IProps extends RouteComponentProps {
   isSelf: boolean;
   isMatching: boolean;
   searchSet: () => void;
+  from?: string;
 }
 
 interface IState {
   cityId: string;
   isMatching: boolean;
-  isSubmitted: boolean
+  isSubmitted: boolean;
 }
 
 class CoffeeBtnContainer extends React.Component<IProps, IState> {
@@ -44,7 +45,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
   }
   public render() {
     const { coffeeId, matchId, isSelf } = this.props;
-    const { isMatching , isSubmitted} = this.state;
+    const { isMatching, isSubmitted } = this.state;
     return (
       <UnMatchMutation
         mutation={UNMATCH}
@@ -79,14 +80,24 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
       </UnMatchMutation>
     );
   }
-  public match = () => {
-    this.setState({isSubmitted: true})
-    this.matchFn()
-  }
-  public unmatch = ()=>{ 
-    this.setState({isSubmitted: true})
-    this.unMatchFn()
-  }
+  public match = async () => {
+    const { from } = this.props;
+    this.setState({ isSubmitted: true });
+    await this.matchFn();
+    {
+      // tslint:disable-next-line:no-unused-expression
+      from && (await this.props.history.push(`${from}`));
+    }
+  };
+  public unmatch = async () => {
+    const { from } = this.props;
+    this.setState({ isSubmitted: true });
+    await this.unMatchFn();
+    {
+      // tslint:disable-next-line:no-unused-expression
+      from && (await this.props.history.push(`${from}`));
+    }
+  };
   public onCompletedMatch = data => {
     const { searchSet } = this.props;
     const { match } = data;

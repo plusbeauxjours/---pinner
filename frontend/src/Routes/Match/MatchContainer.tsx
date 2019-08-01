@@ -33,7 +33,6 @@ interface IState {
   currentCityId: string;
   requestModalOpen: boolean;
   coffeeReportModalOpen: boolean;
-  update: boolean;
 }
 
 class MatchContainer extends React.Component<IProps, IState> {
@@ -50,15 +49,15 @@ class MatchContainer extends React.Component<IProps, IState> {
       currentLng: state.currentLng,
       currentCityId: state.currentCityId || localStorage.getItem("cityId"),
       requestModalOpen: false,
-      coffeeReportModalOpen: false,
-      update: state.update || false
+      coffeeReportModalOpen: false
     };
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
     if (prevProps.match.params !== newProps.match.params) {
-      this.setState({ search: "", update: true });
-      console.log("bonjour")
+      this.setState({ search: "" });
+      console.log("bonjour");
+      console.log(this.state);
     }
   }
   public render = () => {
