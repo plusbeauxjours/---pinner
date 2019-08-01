@@ -28,6 +28,7 @@ interface IProps extends RouteComponentProps {
 interface IState {
   cityId: string;
   isMatching: boolean;
+  isSubmitted: boolean
 }
 
 class CoffeeBtnContainer extends React.Component<IProps, IState> {
@@ -37,12 +38,13 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       cityId: props.cityId,
-      isMatching: props.isMatching
+      isMatching: props.isMatching,
+      isSubmitted: false
     };
   }
   public render() {
     const { coffeeId, matchId, isSelf } = this.props;
-    const { isMatching } = this.state;
+    const { isMatching , isSubmitted} = this.state;
     return (
       <UnMatchMutation
         mutation={UNMATCH}
@@ -64,9 +66,10 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
                 return (
                   <CoffeeBtnPresenter
                     isMatching={isMatching}
-                    unMatchFn={unMatchFn}
-                    matchFn={matchFn}
+                    match={this.match}
+                    unmatch={this.unmatch}
                     isSelf={isSelf}
+                    isSubmitted={isSubmitted}
                   />
                 );
               }}
@@ -75,6 +78,14 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
         }}
       </UnMatchMutation>
     );
+  }
+  public match = () => {
+    this.setState({isSubmitted: true})
+    this.matchFn()
+  }
+  public unmatch = ()=>{ 
+    this.setState({isSubmitted: true})
+    this.unMatchFn()
   }
   public onCompletedMatch = data => {
     const { searchSet } = this.props;

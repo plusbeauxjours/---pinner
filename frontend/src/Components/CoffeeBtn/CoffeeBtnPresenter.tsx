@@ -9,30 +9,34 @@ const SButton = styled(Button)`
 `;
 
 interface IProps {
-  matchFn?: any;
   isSelf: boolean;
-  unMatchFn?: any;
+  match: () => void;
+  unmatch: () => void;
   isMatching: boolean;
+  isSubmitted: boolean;
 }
 
 const CoffeeBtnPresenter: React.FunctionComponent<IProps> = ({
-  matchFn,
+  match,
+  unmatch,
   isSelf,
-  unMatchFn,
-  isMatching
+  isMatching,
+  isSubmitted
 }) => {
   if (isSelf) {
     return null;
-  } else {
+  } else if (!isSubmitted) {
     return (
       <>
         {!isSelf && isMatching ? (
-          <SButton size={"xs"} text={"UNMATCH"} onClick={unMatchFn} />
+          <SButton size={"xs"} text={"UNMATCH"} onClick={unmatch} />
         ) : (
-          <SButton size={"xs"} text={"JOIN"} onClick={matchFn} />
+          <SButton size={"xs"} text={"JOIN"} onClick={match} />
         )}
       </>
     );
+  } else {
+    return null;
   }
 };
 
