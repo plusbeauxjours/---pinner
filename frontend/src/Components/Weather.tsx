@@ -19,6 +19,8 @@ const WeatherInfo = styled.div<ITheme>`
   height: ${props => {
     if (props.type === "feed") {
       return "20px";
+    } else if (props.type === "profile") {
+      return "25px";
     } else {
       return "100%";
     }
@@ -29,7 +31,7 @@ const WeatherInfo = styled.div<ITheme>`
 const WeatherImage = styled.img<ITheme>`
   height: ${props => {
     if (props.size === "md") {
-      return "60px";
+      return "22px";
     } else if (props.size === "sm") {
       return "22px";
     } else {
@@ -38,7 +40,7 @@ const WeatherImage = styled.img<ITheme>`
   }};
   width: ${props => {
     if (props.size === "md") {
-      return "60px";
+      return "22px";
     } else if (props.size === "sm") {
       return "22px";
     } else {
@@ -56,6 +58,8 @@ const TempNumber = styled.div<ITheme>`
   font-size: ${props => {
     if (props.size === "sm") {
       return "8px";
+    } else if (props.size === "md") {
+      return "12px";
     } else {
       return "12px";
     }

@@ -139,17 +139,20 @@ const AvatarContainer = styled.div`
   flex-direction: column;
 `;
 
+const LocationContainer = styled.span`
+  margin: 5px 5px 5px 0;
+`;
+
 const LocationName = styled.span`
   font-size: 30px;
   font-weight: 300;
-  margin: 5px 5px 5px 0;
+  margin-right: 5px;
   text-transform: uppercase;
 `;
-
 const NameContainer = styled.span`
   width: 100%;
   margin: 0px auto;
-  padding: 55px 15px 0 15px;
+  padding: 30px 15px 0 15px;
   max-width: 935px;
   display: flex;
   flex-direction: row;
@@ -162,7 +165,6 @@ const ListIcon = styled.span`
   flex-direction: row;
   display: flex;
   cursor: pointer;
-  margin-top: 7px;
   svg {
     fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
@@ -339,18 +341,20 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
           <PHeader>
             <AvatarContainer>
               <CAvatar size="lg" url={continent.continentPhoto} city={true} />
-              <NameContainer>
-                <LocationName>{continent.continentName}</LocationName>
-                <ListIcon onClick={toggleReportModal}>
-                  <List />
-                </ListIcon>
-              </NameContainer>
-              {count !== 0 ? (
-                <CountText>
-                  You've been {continent.continentName} {count}
-                  {count === 1 ? " time" : " times"}
-                </CountText>
-              ) : null}
+              <LocationContainer>
+                <NameContainer>
+                  <LocationName>{continent.continentName}</LocationName>
+                  <ListIcon onClick={toggleReportModal}>
+                    <List />
+                  </ListIcon>
+                </NameContainer>
+                {count !== 0 ? (
+                  <CountText>
+                    You've been {continent.continentName} {count}
+                    {count === 1 ? " time" : " times"}
+                  </CountText>
+                ) : null}
+              </LocationContainer>
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>

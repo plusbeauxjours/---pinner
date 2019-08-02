@@ -115,7 +115,8 @@ const Header = styled.header`
 `;
 
 const LocationHeader = styled(Header)`
-  margin-top: 10px;
+  margin-top: 5px;
+  padding-left: 15px;
 `;
 
 const HeaderText = styled(Bold)`
@@ -178,7 +179,7 @@ const Flag = styled.span`
 const NameContainer = styled.span`
   width: 100%;
   margin: 0px auto;
-  padding: 55px 15px 0 15px;
+  padding: 30px 15px 0 15px;
   max-width: 935px;
   display: flex;
   flex-direction: row;
@@ -191,7 +192,6 @@ const ListIcon = styled.span`
   flex-direction: row;
   display: flex;
   cursor: pointer;
-  margin-top: 7px;
   svg {
     fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;

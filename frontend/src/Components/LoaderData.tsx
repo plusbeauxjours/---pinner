@@ -8,19 +8,18 @@ const Container = styled.div<ITheme>`
     if (props.type === "feed") {
       return "22px";
     } else {
-      return "60px";
+      return "25px";
     }
   }};
   height: ${props => {
     if (props.type === "feed") {
       return "22px";
     } else {
-      return "60px";
+      return "25px";
     }
   }};
   display: block;
-  padding-top: 18px;
-  transform: rotate(90deg);
+  padding-left 3px;
 `;
 
 interface ITheme {
@@ -37,7 +36,7 @@ const Loader: React.FunctionComponent<IProps> = ({ type }) => (
     {type !== "feed" ? (
       <LoadingOverlay
         active={true}
-        spinner={<BounceLoader size={30} color={"#999"} />}
+        spinner={<BounceLoader size={20} color={"#999"} />}
         fadeSpeed={500}
       />
     ) : null}

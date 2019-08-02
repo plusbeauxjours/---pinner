@@ -66,6 +66,7 @@ const Text = styled(Bold)<ITheme>`
   display: flex;
   align-items: center;
   font-weight: 100;
+  text-transform: capitalize;
   color: ${props =>
     props.type === "row" ? props.theme.color : props.theme.color};
   /* margin-left: 8px; */

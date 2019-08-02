@@ -137,6 +137,8 @@ const UserNameRow = styled.div`
 const AvatarContainer = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
+  margin-bottom: 30px;
 `;
 
 const Input = styled.input`
@@ -205,7 +207,7 @@ const SText = styled(Bold)`
 const NameContainer = styled.span`
   width: 100%;
   margin: 0px auto;
-  padding: 55px 15px 0 15px;
+  padding: 30px 15px 0 15px;
   max-width: 935px;
   display: flex;
   flex-direction: row;
@@ -218,7 +220,6 @@ const ListIcon = styled.span`
   flex-direction: row;
   display: flex;
   cursor: pointer;
-  margin-top: 7px;
   svg {
     fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
@@ -276,6 +277,16 @@ const EmptyContainer = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
+`;
+
+const LikeBtnAlign = styled.div`
+  display: flex;
+  padding-left: 5px;
+`;
+
+const LocationHeader = styled(Header)`
+  margin-top: 5px;
+  padding-left: 10px;
 `;
 
 interface IProps {
@@ -430,12 +441,22 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                 </CountText>
               ) : null}
               <CountText>
-                <CityLikeBtn
-                  isLiked={city.isLiked}
-                  cityId={city.id}
-                  likeCount={city.likeCount}
-                  type={"row"}
+                <Weather
+                  latitude={city.latitude}
+                  longitude={city.longitude}
+                  size={"md"}
+                  type={"profile"}
                 />
+                <LikeBtnAlign>
+                  <CityLikeBtn
+                    isLiked={city.isLiked}
+                    cityId={city.id}
+                    likeCount={city.likeCount}
+                    type={"row"}
+                  />
+                </LikeBtnAlign>
+              </CountText>
+              <LocationHeader>
                 <Link
                   to={{
                     pathname: `/country/${city.country.countryCode}`,
@@ -450,15 +471,10 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                     />
                     <HeaderColumn>
                       <HeaderText text={city.country.countryName} />
-                      <Location>
-                        {city.country.continent.continentName}
-                      </Location>
                     </HeaderColumn>
                   </Header>
                 </Link>
-              </CountText>
-
-              <Weather latitude={city.latitude} longitude={city.longitude} />
+              </LocationHeader>
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>
