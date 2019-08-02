@@ -140,6 +140,8 @@ export interface Match_match {
   ok: boolean | null;
   coffeeId: string | null;
   cityId: string | null;
+  countryCode: string | null;
+  continentCode: string | null;
   match: Match_match_match | null;
 }
 
@@ -168,6 +170,7 @@ export interface UnMatch_unMatch_coffee_city {
   __typename: "CityType";
   cityId: string | null;
   cityName: string | null;
+  cityPhoto: string | null;
   country: UnMatch_unMatch_coffee_city_country;
 }
 
@@ -206,7 +209,7 @@ export interface UnMatch_unMatch_coffee {
   city: UnMatch_unMatch_coffee_city;
   host: UnMatch_unMatch_coffee_host;
   status: string | null;
-  expires: any | null;
+  naturalTime: string | null;
   target: CoffeeTarget;
   createdAt: any;
 }
@@ -216,6 +219,8 @@ export interface UnMatch_unMatch {
   ok: boolean | null;
   matchId: number | null;
   cityId: string | null;
+  countryCode: string | null;
+  continentCode: string | null;
   coffee: UnMatch_unMatch_coffee | null;
 }
 
@@ -315,6 +320,7 @@ export interface SearchTerms_searchCountries_countries {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  cityCount: number | null;
   continent: SearchTerms_searchCountries_countries_continent | null;
 }
 
@@ -584,6 +590,7 @@ export interface CityProfile_cityProfile_city {
 
 export interface CityProfile_cityProfile {
   __typename: "FirstAnnotateResponse";
+  count: number | null;
   usersNow: (CityProfile_cityProfile_usersNow | null)[] | null;
   usersBefore: (CityProfile_cityProfile_usersBefore | null)[] | null;
   city: CityProfile_cityProfile_city | null;
@@ -875,12 +882,13 @@ export interface ContinentProfile_continentProfile_countries {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
-  continent: ContinentProfile_continentProfile_countries_continent | null;
   cityCount: number | null;
+  continent: ContinentProfile_continentProfile_countries_continent | null;
 }
 
 export interface ContinentProfile_continentProfile {
   __typename: "ThirdAnnotateResponse";
+  count: number | null;
   usersNow: (ContinentProfile_continentProfile_usersNow | null)[] | null;
   usersBefore: (ContinentProfile_continentProfile_usersBefore | null)[] | null;
   continent: ContinentProfile_continentProfile_continent | null;
@@ -932,6 +940,7 @@ export interface ContinentUsersBefore_continentUsersBefore_usersBefore_actor {
 
 export interface ContinentUsersBefore_continentUsersBefore_usersBefore {
   __typename: "MoveNotificationType";
+  naturalTime: string | null;
   actor: ContinentUsersBefore_continentUsersBefore_usersBefore_actor;
 }
 
@@ -1105,6 +1114,7 @@ export interface CountryProfile_countryProfile_cities {
 
 export interface CountryProfile_countryProfile {
   __typename: "SecondAnnotateResponse";
+  count: number | null;
   country: CountryProfile_countryProfile_country | null;
   usersNow: (CountryProfile_countryProfile_usersNow | null)[] | null;
   usersBefore: (CountryProfile_countryProfile_usersBefore | null)[] | null;
@@ -1140,6 +1150,7 @@ export interface GetCountries_getCountries_countries {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  cityCount: number | null;
   continent: GetCountries_getCountries_countries_continent | null;
 }
 
@@ -1191,6 +1202,7 @@ export interface CountryUsersBefore_countryUsersBefore_usersBefore_actor {
 
 export interface CountryUsersBefore_countryUsersBefore_usersBefore {
   __typename: "MoveNotificationType";
+  naturalTime: string | null;
   actor: CountryUsersBefore_countryUsersBefore_usersBefore_actor;
 }
 
@@ -1623,6 +1635,7 @@ export interface RequestCoffee_requestCoffee_coffee_city {
   __typename: "CityType";
   cityId: string | null;
   cityName: string | null;
+  cityPhoto: string | null;
   country: RequestCoffee_requestCoffee_coffee_city_country;
 }
 
@@ -1661,7 +1674,7 @@ export interface RequestCoffee_requestCoffee_coffee {
   city: RequestCoffee_requestCoffee_coffee_city;
   host: RequestCoffee_requestCoffee_coffee_host;
   status: string | null;
-  expires: any | null;
+  naturalTime: string | null;
   target: CoffeeTarget;
   createdAt: any;
 }
@@ -1853,6 +1866,7 @@ export interface GetCoffees_getCoffees_coffees_city {
   __typename: "CityType";
   cityId: string | null;
   cityName: string | null;
+  cityPhoto: string | null;
   country: GetCoffees_getCoffees_coffees_city_country;
 }
 
@@ -1891,7 +1905,7 @@ export interface GetCoffees_getCoffees_coffees {
   city: GetCoffees_getCoffees_coffees_city;
   host: GetCoffees_getCoffees_coffees_host;
   status: string | null;
-  expires: any | null;
+  naturalTime: string | null;
   target: CoffeeTarget;
   createdAt: any;
 }
@@ -1966,6 +1980,7 @@ export interface TopCountries_topCountries_countries {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  cityCount: number | null;
   continent: TopCountries_topCountries_countries_continent | null;
 }
 
@@ -2003,6 +2018,7 @@ export interface EditProfile_editProfile_user_profile_nationality {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  cityCount: number | null;
   continent: EditProfile_editProfile_user_profile_nationality_continent | null;
 }
 
@@ -2019,6 +2035,7 @@ export interface EditProfile_editProfile_user_profile_residence {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  cityCount: number | null;
   continent: EditProfile_editProfile_user_profile_residence_continent | null;
 }
 
@@ -2265,6 +2282,7 @@ export interface UserProfile_userProfile_user_profile_nationality {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  cityCount: number | null;
   continent: UserProfile_userProfile_user_profile_nationality_continent | null;
 }
 
@@ -2281,6 +2299,7 @@ export interface UserProfile_userProfile_user_profile_residence {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  cityCount: number | null;
   continent: UserProfile_userProfile_user_profile_residence_continent | null;
 }
 
@@ -2814,6 +2833,7 @@ export interface CountryParts {
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
+  cityCount: number | null;
   continent: CountryParts_continent | null;
 }
 
@@ -2850,6 +2870,7 @@ export interface CoffeeParts_city {
   __typename: "CityType";
   cityId: string | null;
   cityName: string | null;
+  cityPhoto: string | null;
   country: CoffeeParts_city_country;
 }
 
@@ -2888,7 +2909,7 @@ export interface CoffeeParts {
   city: CoffeeParts_city;
   host: CoffeeParts_host;
   status: string | null;
-  expires: any | null;
+  naturalTime: string | null;
   target: CoffeeTarget;
   createdAt: any;
 }

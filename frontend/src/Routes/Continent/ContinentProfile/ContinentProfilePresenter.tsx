@@ -235,6 +235,32 @@ const CountText = styled(Location)`
   padding-left: 15px;
 `;
 
+const Earth = styled.img`
+  display: flex;
+  width: 267px;
+  height: 200px;
+  background-position: center center;
+  object-fit: cover;
+  align-self: center;
+  @media screen and (max-width: 600px) {
+    align-self: center;
+    height: 300px;
+    width: 300px;
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
+`;
+
+const EmptyContainer = styled.div`
+  font-weight: 100;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
@@ -323,7 +349,8 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
               </NameContainer>
               {count !== 0 ? (
                 <CountText>
-                  You've been {continent.continentName} {count} times
+                  You've been {continent.continentName} {count}
+                  {count === 1 ? " time" : " times"}
                 </CountText>
               ) : null}
             </AvatarContainer>
@@ -333,11 +360,19 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
                   text={continent.countryCount === 1 ? `COUNTRY` : `COUNTRIES`}
                 />
                 <Input
-                  placeholder="Search user who is in this continent"
+                  placeholder="Search country which is in this continent"
                   value={search}
                   onChange={onChange}
                 />
               </UserNameRow>
+              {countryList.length === 0 && countries.length === 0 && (
+                <EmptyContainer>
+                  <Earth
+                    src={require(`../../../Images/animations/darkEarth.gif`)}
+                  />
+                  There is no city yet
+                </EmptyContainer>
+              )}
               {countryList.length !== 0 &&
                 countryList.map(country => (
                   <React.Fragment key={country.id}>

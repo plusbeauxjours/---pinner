@@ -1350,7 +1350,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               <p>😎</p>
             ) : (
               <Container>
-                <Earth src={require(`../../../Images/animations/earth.gif`)} />
+                <Earth src={require(`../../../Images/animations/darkEarth.gif`)} />
                 <TripContainer>
                   <UserNameRow>
                     <SText text={"TRIPS"} />

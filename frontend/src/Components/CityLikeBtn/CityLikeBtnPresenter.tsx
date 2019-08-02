@@ -13,6 +13,7 @@ const RowButtonContainer = styled.div`
   display: flex;
   flex-wrap: nowrap;
   z-index: 20;
+  cursor: pointer;
 `;
 
 const BoxButtonContainer = styled.div`
@@ -36,6 +37,8 @@ const LikeAnimation = keyframes`
 
 const Button = styled.span<ITheme>`
   cursor: pointer;
+  display: flex;
+  align-items: center;
   &:first-child {
     margin-right: 10px;
   }
@@ -43,7 +46,7 @@ const Button = styled.span<ITheme>`
   width: ${props => props.type === "profile" && "45px"};
   svg {
     transition: all 0.5s ease-in-out;
-    fill: ${props => (props.isLiked ? "#EC4956" : props.theme.greyColor)};
+    fill: ${props => (props.isLiked ? "#EC4956" : props.theme.color)};
   }
 `;
 
@@ -62,7 +65,9 @@ const BoxButton = styled.span<ITheme>`
 const Text = styled(Bold)<ITheme>`
   display: flex;
   align-items: center;
-  color: ${props => (props.type === "row" ? "grey" : props.theme.color)};
+  font-weight: 100;
+  color: ${props =>
+    props.type === "row" ? props.theme.color : props.theme.color};
   /* margin-left: 8px; */
 `;
 
@@ -89,8 +94,8 @@ const CityLikeBtnPresenter: React.FunctionComponent<IProps> = ({
       switch (type) {
         case "row":
           return (
-            <RowButtonContainer>
-              <Button isLiked={isLiked} onClick={onLikeClick}>
+            <RowButtonContainer onClick={onLikeClick}>
+              <Button isLiked={isLiked}>
                 {isLiked ? <SmallHeartFilled /> : <SmallHeartEmpty />}
               </Button>
               <Text

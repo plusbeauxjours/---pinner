@@ -278,6 +278,32 @@ const CountText = styled(Location)`
 //   }
 // `;
 
+const Earth = styled.img`
+  display: flex;
+  width: 267px;
+  height: 200px;
+  background-position: center center;
+  object-fit: cover;
+  align-self: center;
+  @media screen and (max-width: 600px) {
+    align-self: center;
+    height: 300px;
+    width: 300px;
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
+`;
+
+const EmptyContainer = styled.div`
+  font-weight: 100;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
@@ -403,18 +429,7 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
                 <SSText text={String(country.distance)} />
                 TIME DIFFERENCE
               </InfoRow>
-              <InfoRow>
-                <SSText text={String(country.countryCapital)} />
-                countryCapital
-              </InfoRow>
-              <InfoRow>
-                <SSText text={String(country.countryCurrency)} />
-                countryCurrency
-              </InfoRow>
-              <InfoRow>
-                <SSText text={String(country.language)} />
-                language
-              </InfoRow> */}
+             */}
               <Link
                 to={{
                   pathname: `/continent/${country.continent.continentCode}`,
@@ -437,11 +452,23 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
               <UserNameRow>
                 <SText text={country.cityCount === 1 ? `CITY` : `CITIES`} />
                 <Input
-                  placeholder="Search user who is in this country"
+                  placeholder="Search city which is in this country"
                   value={search}
                   onChange={onChange}
                 />
               </UserNameRow>
+              {cityList.length === 0 && cities.length === 0 && (
+                <EmptyContainer>
+                  <Earth
+                    src={
+                      localStorage.getItem("isDarkMode") === "true"
+                        ? require(`../../../Images/animations/darkEarth.gif`)
+                        : require(`../../../Images/animations/lightEarth.gif`)
+                    }
+                  />
+                  There is no city yet
+                </EmptyContainer>
+              )}
               {cityList.length !== 0 &&
                 cityList.map(city => (
                   <UserRow key={city.id}>

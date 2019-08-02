@@ -34,7 +34,7 @@ const UserRow = styled.div`
     background-color: ${props => props.theme.hoverColor};
   }
   &:not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -55,7 +55,7 @@ const Username = styled.span`
 const Input = styled.input`
   width: 215px;
   border: 0;
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   padding: 5px;
   color: ${props => props.theme.color};
   font-size: 12px;
@@ -97,8 +97,8 @@ const SAvatar = styled(Avatar)`
   width: 45px;
 `;
 
-const Text = styled.p`
-  font-weight: 300;
+const Text = styled.div`
+  font-weight: 100;
   display: flex;
   align-items: center;
 `;
@@ -172,7 +172,7 @@ const NearCitiesPresenter: React.FunctionComponent<IProps> = ({
                       likeCount={nearCity.likeCount}
                       type={"row"}
                     />
-                    <Text>{nearCity.distance}km</Text>
+                    <Text>{nearCity.distance}&nbsp;km</Text>
                   </UserRow>
                 ))}
               {nearCitiesList.length === 0 &&
@@ -199,7 +199,7 @@ const NearCitiesPresenter: React.FunctionComponent<IProps> = ({
                       likeCount={nearCity.likeCount}
                       type={"row"}
                     />
-                    <Text>{nearCity.distance}km</Text>
+                    <Text>{nearCity.distance}&nbsp;km</Text>
                   </UserRow>
                 ))}
             </InfiniteScroll>

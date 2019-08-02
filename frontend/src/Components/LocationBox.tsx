@@ -355,7 +355,7 @@ const LocationBox: React.FunctionComponent<IProps> = ({
                     type={"row"}
                   />
                   <Link to={`/city/${nearCity.cityId}`}>
-                    <Text>{nearCity.distance}km</Text>
+                    <Text>{nearCity.distance}&nbsp;km</Text>
                   </Link>
                 </UserRow>
               </React.Fragment>

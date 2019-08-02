@@ -28,8 +28,6 @@ const PHeader = styled.header`
   }
 `;
 
-
-
 const ModalAnimation = keyframes`
 	  from{
 	    opacity:0;
@@ -252,7 +250,36 @@ const ListIcon = styled.span`
 
 const CountText = styled(Location)`
   padding-left: 15px;
+  margin-top: 0;
+  font-weight: 100;
 `;
+
+const Earth = styled.img`
+  display: flex;
+  width: 267px;
+  height: 200px;
+  background-position: center center;
+  object-fit: cover;
+  align-self: center;
+  @media screen and (max-width: 600px) {
+    align-self: center;
+    height: 300px;
+    width: 300px;
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
+`;
+
+const EmptyContainer = styled.div`
+  font-weight: 100;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
+
 
 interface IProps {
   coffeeData: any;
@@ -401,34 +428,40 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
               </NameContainer>
               {count !== 0 ? (
                 <CountText>
-                  You've been {city.cityName} {count} times
+                  You've been {city.cityName} {count}
+                  {count === 1 ? " time" : " times"}
                 </CountText>
               ) : null}
-              <Link
-                to={{
-                  pathname: `/country/${city.country.countryCode}`,
-                  state: { countryName: city.country.countryName }
-                }}
-              >
-                <Header>
-                  <SAvatar
-                    size={"sm"}
-                    url={city.country.countryPhoto}
-                    city={true}
-                  />
-                  <HeaderColumn>
-                    <HeaderText text={city.country.countryName} />
-                    <Location>{city.country.continent.continentName}</Location>
-                  </HeaderColumn>
-                </Header>
-              </Link>
+              <CountText>
+                <CityLikeBtn
+                  isLiked={city.isLiked}
+                  cityId={city.id}
+                  likeCount={city.likeCount}
+                  type={"row"}
+                />
+                <Link
+                  to={{
+                    pathname: `/country/${city.country.countryCode}`,
+                    state: { countryName: city.country.countryName }
+                  }}
+                >
+                  <Header>
+                    <SAvatar
+                      size={"sm"}
+                      url={city.country.countryPhoto}
+                      city={true}
+                    />
+                    <HeaderColumn>
+                      <HeaderText text={city.country.countryName} />
+                      <Location>
+                        {city.country.continent.continentName}
+                      </Location>
+                    </HeaderColumn>
+                  </Header>
+                </Link>
+              </CountText>
+
               <Weather latitude={city.latitude} longitude={city.longitude} />
-              <CityLikeBtn
-                isLiked={city.isLiked}
-                cityId={city.id}
-                likeCount={city.likeCount}
-                type={"profile"}
-              />
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>
@@ -439,6 +472,14 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                   value={search}
                 />
               </UserNameRow>
+              {usersNowList.length === 0 && usersNow.length === 0 && (
+                <EmptyContainer>
+                  <Earth
+                    src={require(`../../../Images/animations/darkEarth.gif`)}
+                  />
+                  There is no user now
+                </EmptyContainer>
+              )}
               {usersNowList.length !== 0 &&
                 usersNowList.map(user => (
                   <UserRow key={user.profile.id}>

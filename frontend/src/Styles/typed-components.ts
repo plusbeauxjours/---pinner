@@ -20,6 +20,7 @@ interface IThemeInterface {
   hoverColor: string;
   color: string;
   iconColor: string;
+  earth: string;
 }
 
 const {
