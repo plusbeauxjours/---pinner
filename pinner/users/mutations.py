@@ -38,6 +38,7 @@ class ToggleSettings(graphene.Mutation):
 
         user = info.context.user
         payload = kwargs.get('payload')
+        print('clicked')
         if payload == "DARK_MODE":
             if user.profile.is_dark_mode == True:
                 try:
@@ -165,7 +166,7 @@ class EditProfile(graphene.Mutation):
         user = info.context.user
 
         profile = user.profile
-        print('editprofile')
+        print('clicked')
 
         if user.is_authenticated and profile is not None:
 
@@ -177,7 +178,7 @@ class EditProfile(graphene.Mutation):
             nationalityCode = kwargs.get('nationalityCode', user.profile.nationality)
             residenceCode = kwargs.get('residenceCode', user.profile.residence)
 
-            # if username: 
+            # if username:
             #     raise Exception("Only English username is allowed "
 
             try:

@@ -73,7 +73,8 @@ interface IState {
   editPhoneNumberModalOpen: boolean;
   editEmailAddressModalOpen: boolean;
   verifyPhoneNumberModalOpen: boolean;
-  isSubmitted: boolean;
+  isPhoneSubmitted: boolean;
+  isProfileSubmitted: boolean;
 
   file: any;
   imagePreviewUrl: any;
@@ -142,7 +143,8 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       editPhoneNumberModalOpen: false,
       editEmailAddressModalOpen: false,
       verifyPhoneNumberModalOpen: false,
-      isSubmitted: false,
+      isPhoneSubmitted: false,
+      isProfileSubmitted: false,
 
       imagePreviewUrl: "",
       file: "",
@@ -630,7 +632,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       toast.error("Profile Could not Updated!");
     }
     const { newUsername } = this.state;
-    this.setState({ username: newUsername });
+    this.setState({ username: newUsername, isProfileSubmitted: false });
   };
   public onCompletedCompleteEditPhoneVerification = data => {
     const { completeEditPhoneVerification } = data;
@@ -649,7 +651,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
           : newPhoneNumber,
         countryPhoneNumber: newCountryPhoneNumber,
         countryPhoneCode: newCountryPhoneCode,
-        isSubmitted: false,
+        isPhoneSubmitted: false,
         verificationKey: "",
         newPhoneNumber: "",
         newCountryPhoneCode: localStorage.getItem("countryCode"),
@@ -664,15 +666,21 @@ class EditProfileContainer extends React.Component<IProps, IState> {
   public onCompletedStartEditPhoneVerification = data => {
     const { startEditPhoneVerification } = data;
     if (startEditPhoneVerification.ok) {
-      this.setState({ verifyPhoneNumberModalOpen: true, isSubmitted: false });
+      this.setState({
+        verifyPhoneNumberModalOpen: true,
+        isPhoneSubmitted: false
+      });
       toast.success("SMS Sent! Redirectiong you...");
     } else {
-      this.setState({ isSubmitted: false });
+      this.setState({ isPhoneSubmitted: false });
       toast.error("Could not send you a Key");
     }
   };
   public closeVerifyPhoneNumberModal = () => {
-    this.setState({ isSubmitted: false, verifyPhoneNumberModalOpen: false });
+    this.setState({
+      isPhoneSubmitted: false,
+      verifyPhoneNumberModalOpen: false
+    });
   };
   public updateEditPhoneVerification = (
     cache,
@@ -717,7 +725,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     const { editPhoneNumberModalOpen } = this.state;
     this.setState({
       editPhoneNumberModalOpen: !editPhoneNumberModalOpen,
-      isSubmitted: false
+      isPhoneSubmitted: false
     });
   };
   public toggleEditEmailAddressModal = () => {
@@ -806,21 +814,24 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       nationalityCode,
       residenceCode
     } = this.state;
-    console.log(this.state);
-    if (!newUsername || newUsername === "") {
-      toast.error("Please write a username");
-    } else {
-      this.editProfileFn({
-        variables: {
-          username: newUsername,
-          bio,
-          gender,
-          firstName,
-          lastName,
-          nationalityCode,
-          residenceCode
-        }
-      });
+    const { isProfileSubmitted } = this.state;
+    if (!isProfileSubmitted) {
+      if (!newUsername || newUsername === "") {
+        toast.error("Please write a username");
+      } else {
+        this.editProfileFn({
+          variables: {
+            username: newUsername,
+            bio,
+            gender,
+            firstName,
+            lastName,
+            nationalityCode,
+            residenceCode
+          }
+        });
+      }
+      this.setState({ isProfileSubmitted: true });
     }
   };
   public toggleDeleteConfirmModal = () => {
@@ -919,7 +930,11 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     HTMLFormElement
   > = event => {
     event.preventDefault();
-    const { newCountryPhoneNumber, newPhoneNumber, isSubmitted } = this.state;
+    const {
+      newCountryPhoneNumber,
+      newPhoneNumber,
+      isPhoneSubmitted
+    } = this.state;
     if (newPhoneNumber) {
       const phone = `${newCountryPhoneNumber}${
         newPhoneNumber.startsWith("0")
@@ -931,10 +946,10 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       );
       console.log(phone);
       if (isValid) {
-        if (!isSubmitted) {
+        if (!isPhoneSubmitted) {
           this.phoneVerificationFn();
           this.setState({
-            isSubmitted: true
+            isPhoneSubmitted: true
           });
         }
       } else {

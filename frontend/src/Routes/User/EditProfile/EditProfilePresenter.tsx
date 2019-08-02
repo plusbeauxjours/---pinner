@@ -141,6 +141,7 @@ const Select = styled.select`
   appearance: none;
   background-color: transparent;
   border: none;
+  cursor: pointer;
 `;
 
 const Option = styled.option``;
