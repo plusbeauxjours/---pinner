@@ -1350,7 +1350,11 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               <p>😎</p>
             ) : (
               <Container>
-                <Earth src={require(`../../../Images/animations/darkEarth.gif`)} />
+                <Earth src={
+                      localStorage.getItem("isDarkMode") === "true"
+                        ? require(`../../../Images/animations/darkEarth.gif`)
+                        : require(`../../../Images/animations/lightEarth.gif`)
+                    }/>
                 <TripContainer>
                   <UserNameRow>
                     <SText text={"TRIPS"} />

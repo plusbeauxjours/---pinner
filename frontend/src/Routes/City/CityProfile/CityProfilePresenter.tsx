@@ -261,11 +261,9 @@ const Earth = styled.img`
   background-position: center center;
   object-fit: cover;
   align-self: center;
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 700px) {
     align-self: center;
-    height: 300px;
-    width: 300px;
-    margin-top: 0;
+    margin-top: 30px;
     margin-bottom: 30px;
   }
 `;
@@ -279,7 +277,6 @@ const EmptyContainer = styled.div`
   justify-content: center;
   height: 100%;
 `;
-
 
 interface IProps {
   coffeeData: any;
@@ -475,7 +472,11 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
               {usersNowList.length === 0 && usersNow.length === 0 && (
                 <EmptyContainer>
                   <Earth
-                    src={require(`../../../Images/animations/darkEarth.gif`)}
+                    src={
+                      localStorage.getItem("isDarkMode") === "true"
+                        ? require(`../../../Images/animations/darkEarth.gif`)
+                        : require(`../../../Images/animations/lightEarth.gif`)
+                    }
                   />
                   There is no user now
                 </EmptyContainer>
