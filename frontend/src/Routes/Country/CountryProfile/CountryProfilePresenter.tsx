@@ -50,7 +50,7 @@ const SText = styled(Bold)`
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   @media screen and (max-width: 935px) {
     margin: 10px 10px 0 10px;
   }
@@ -70,7 +70,7 @@ const UserRow = styled.div`
     background-color: ${props => props.theme.hoverColor};
   }
   &:not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -143,7 +143,7 @@ const Location = styled.span`
 const Input = styled.input`
   width: 215px;
   border: 0;
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   padding: 5px;
   color: ${props => props.theme.color};
   font-size: 12px;
@@ -195,8 +195,8 @@ const ListIcon = styled.span`
   svg {
     fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
-       &:hover {
-      fill: ${props => props.theme.hoverColor}
+    &:hover {
+      fill: ${props => props.theme.hoverColor};
     }
   }
 `;
@@ -241,7 +241,7 @@ const ModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -252,6 +252,10 @@ const Modal = styled.div`
   border-radius: 12px;
   z-index: 10;
   animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const CountText = styled(Location)`
+  padding-left: 15px;
 `;
 
 // const RightIcon = styled.div`
@@ -293,12 +297,12 @@ interface IProps {
   toggleReportModal: () => void;
   slackReportLocations: (targetLocationId: string, payload: string) => void;
   searchSet: () => void;
-
 }
 
 const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
   data: {
     countryProfile: {
+      count = null,
       cities = null,
       usersNow = null,
       usersBefore = null,
@@ -389,6 +393,11 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
                     <List />
                   </ListIcon>
                 </NameContainer>
+                {count !== 0 ? (
+                  <CountText>
+                    You've been {country.countryName} {count} times
+                  </CountText>
+                ) : null}
               </LocationContainer>
               {/* <InfoRow>
                 <SSText text={String(country.distance)} />

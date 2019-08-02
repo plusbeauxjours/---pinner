@@ -84,6 +84,8 @@ def resolve_city_profile(self, info, **kwargs):
     except models.City.DoesNotExist:
         raise GraphQLError('City not found')
 
+    count = user.movenotification.values('id').filter(city__city_id=cityId).count()
+
     usersNow = User.objects.filter(
         profile__current_city__city_id=cityId).order_by('-id').distinct('id')[:12]
 
@@ -92,7 +94,7 @@ def resolve_city_profile(self, info, **kwargs):
     usersBefore = notification_models.MoveNotification.objects.filter(
         city__city_id=cityId).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
 
-    return card_types.FirstAnnotateResponse(usersNow=usersNow, usersBefore=usersBefore, city=city)
+    return card_types.FirstAnnotateResponse(count=count, usersNow=usersNow, usersBefore=usersBefore, city=city)
 
 
 @login_required
@@ -175,6 +177,8 @@ def resolve_country_profile(self, info, **kwargs):
     except Country.DoesNotExist:
         raise GraphQLError('Country not found')
 
+    count = user.movenotification.values('id').filter(city__country__country_code=countryCode).count()
+
     usersNow = User.objects.filter(
         profile__current_city__country__country_code=countryCode).order_by('-id').distinct('id')[:12]
 
@@ -183,7 +187,7 @@ def resolve_country_profile(self, info, **kwargs):
 
     cities = models.City.objects.filter(country__country_code=countryCode)
 
-    return card_types.SecondAnnotateResponse(cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country)
+    return card_types.SecondAnnotateResponse(count=count, cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country)
 
 
 @login_required
@@ -252,6 +256,8 @@ def resolve_continent_profile(self, info, **kwargs):
     except Continent.DoesNotExist:
         raise GraphQLError('Continent not found')
 
+    count = user.movenotification.values('id').filter(city__country__continent__continent_code=continentCode).count()
+
     usersNow = User.objects.filter(
         profile__current_city__country__continent__continent_code=continentCode).order_by('-id').distinct('id')[:12]
 
@@ -262,7 +268,7 @@ def resolve_continent_profile(self, info, **kwargs):
 
     continents = models.Continent.objects.all()
 
-    return card_types.ThirdAnnotateResponse(countries=countries,  usersNow=usersNow, usersBefore=usersBefore, continent=continent, continents=continents)
+    return card_types.ThirdAnnotateResponse(count=count, countries=countries,  usersNow=usersNow, usersBefore=usersBefore, continent=continent, continents=continents)
 
 
 @login_required

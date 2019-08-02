@@ -8,6 +8,7 @@ import {
 export const CITY_PROFILE = gql`
   query CityProfile($page: Int, $cityId: String!) {
     cityProfile(page: $page, cityId: $cityId) {
+      count
       usersNow {
         profile {
           ...ProfileParts

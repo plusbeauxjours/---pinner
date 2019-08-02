@@ -9,6 +9,7 @@ import {
 export const COUNTRY_PROFILE = gql`
   query CountryProfile($page: Int, $countryCode: String!) {
     countryProfile(page: $page, countryCode: $countryCode) {
+      count
       country {
         countryName
         countryCode

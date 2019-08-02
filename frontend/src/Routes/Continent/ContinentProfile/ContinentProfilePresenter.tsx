@@ -231,6 +231,10 @@ const Text = styled.p`
   align-items: center;
 `;
 
+const CountText = styled(Location)`
+  padding-left: 15px;
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
@@ -251,6 +255,7 @@ interface IProps {
 const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
   data: {
     continentProfile: {
+      count = null,
       continent = null,
       countries = null,
       usersNow = null,
@@ -316,6 +321,11 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
                   <List />
                 </ListIcon>
               </NameContainer>
+              {count !== 0 ? (
+                <CountText>
+                  You've been {continent.continentName} {count} times
+                </CountText>
+              ) : null}
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>

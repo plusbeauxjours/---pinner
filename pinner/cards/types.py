@@ -18,12 +18,14 @@ class FileInputType(graphene.InputObjectType):
 
 
 class FirstAnnotateResponse(graphene.ObjectType):
+    count = graphene.Int()
     city = graphene.Field(location_types.CityType)
     usersNow = graphene.List(coffee_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 
 class SecondAnnotateResponse(graphene.ObjectType):
+    count = graphene.Int()
     country = graphene.Field(location_types.CountryType)
     cities = graphene.List(location_types.CityType)
     usersNow = graphene.List(coffee_types.UserType)
@@ -31,6 +33,7 @@ class SecondAnnotateResponse(graphene.ObjectType):
 
 
 class ThirdAnnotateResponse(graphene.ObjectType):
+    count = graphene.Int()
     countries = graphene.List(location_types.CountryType)
     usersNow = graphene.List(coffee_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)

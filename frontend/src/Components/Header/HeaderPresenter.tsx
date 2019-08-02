@@ -90,7 +90,7 @@ const ModalOverlay = styled.div`
 
 const Modal = styled.div`
   top: 30%;
-  width: 935px;
+  width: 400px;
   @media screen and (max-width: 965px) {
     width: 100%;
     margin-right: 15px;

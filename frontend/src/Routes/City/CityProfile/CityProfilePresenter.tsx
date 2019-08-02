@@ -28,13 +28,7 @@ const PHeader = styled.header`
   }
 `;
 
-const InfoRow = styled.span`
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  grid-gap: 10px;
-  width: 300px;
-  margin-top: 10px;
-`;
+
 
 const ModalAnimation = keyframes`
 	  from{
@@ -256,6 +250,10 @@ const ListIcon = styled.span`
 //   }
 // `;
 
+const CountText = styled(Location)`
+  padding-left: 15px;
+`;
+
 interface IProps {
   coffeeData: any;
   coffeeLoading: boolean;
@@ -285,7 +283,12 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
   coffeeData: { getCoffees: { coffees = null } = {} } = {},
   coffeeLoading,
   cityData: {
-    cityProfile: { usersNow = null, usersBefore = null, city = null } = {}
+    cityProfile: {
+      count = null,
+      usersNow = null,
+      usersBefore = null,
+      city = null
+    } = {}
   } = {},
   cityLoading,
   nearCitiesData: { nearCities: { cities: nearCities = null } = {} } = {},
@@ -396,15 +399,11 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                   <List />
                 </ListIcon>
               </NameContainer>
-              <InfoRow>
-                <Weather latitude={city.latitude} longitude={city.longitude} />
-                <CityLikeBtn
-                  isLiked={city.isLiked}
-                  cityId={city.id}
-                  likeCount={city.likeCount}
-                  type={"profile"}
-                />
-              </InfoRow>
+              {count !== 0 ? (
+                <CountText>
+                  You've been {city.cityName} {count} times
+                </CountText>
+              ) : null}
               <Link
                 to={{
                   pathname: `/country/${city.country.countryCode}`,
@@ -423,6 +422,13 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                   </HeaderColumn>
                 </Header>
               </Link>
+              <Weather latitude={city.latitude} longitude={city.longitude} />
+              <CityLikeBtn
+                isLiked={city.isLiked}
+                cityId={city.id}
+                likeCount={city.likeCount}
+                type={"profile"}
+              />
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>
