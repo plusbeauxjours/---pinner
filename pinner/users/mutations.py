@@ -357,20 +357,21 @@ class MarkAsMain(graphene.Mutation):
                 user.profile.avatarUrl = newMainAvatar.thumbnail
                 prevMainAvatar.save()
                 newMainAvatar.save()
+                print(prevMainAvatar.uuid)
+                return types.MarkAsMainResponse(ok=True, avatar=newMainAvatar,  preAvatarUUID=prevMainAvatar.uuid, newAvatarUUID=uuid)
             else:
                 newMainAvatar = models.Avatar.objects.get(uuid=uuid)
                 newMainAvatar.is_main = True
                 user.profile.avatarUrl = newMainAvatar.thumbnail
                 newMainAvatar.save()
-                return types.MarkAsMainResponse(ok=True, avatar=newMainAvatar,  uuid=uuid)
+                return types.MarkAsMainResponse(ok=True, avatar=newMainAvatar,  preAvatarUUID=None, newAvatarUUID=uuid)
 
-        except:
+        except models.Avatar.DoesNotExist:
             newMainAvatar = models.Avatar.objects.get(uuid=uuid)
             newMainAvatar.is_main = True
             user.profile.avatarUrl = newMainAvatar.thumbnail
             newMainAvatar.save()
-
-        return types.MarkAsMainResponse(ok=True, avatar=newMainAvatar, uuid=uuid)
+            return types.MarkAsMainResponse(ok=True, avatar=newMainAvatar, preAvatarUUID=None, newAvatarUUID=uuid)
 
 
 class DeleteProfile(graphene.Mutation):
@@ -416,7 +417,7 @@ class UploadAvatar(graphene.Mutation):
             user.profile.save()
             return types.UploadAvatarResponse(ok=True, avatar=newMainAvatar)
 
-        except:
+        except models.Avatar.DoesNotExist:
             newMainAvatar = models.Avatar.objects.create(
                 is_main=True, image=file, thumbnail=file, creator=user)
             user.profile.avatarUrl = newMainAvatar.thumbnail

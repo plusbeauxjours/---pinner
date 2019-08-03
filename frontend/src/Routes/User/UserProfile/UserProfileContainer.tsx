@@ -1323,16 +1323,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         variables: { userName: username }
       });
       if (data) {
-        data.getAvatars.avatars.find(i => i.isMain === true).isMain = false;
+        data.getAvatars.avatars.find(i => i.uuid === markAsMain.preAvatarUUID).isMain = false;
         data.getAvatars.avatars.find(
-          i => i.uuid === markAsMain.uuid
+          i => i.uuid === markAsMain.newAvatarUUID
         ).isMain = true;
-        {
-          console.log(markAsMain.avatar.isMain);
-        }
-        {
-          console.log(data);
-        }
         cache.writeQuery({
           query: GET_AVATARS,
           variables: { userName: username },

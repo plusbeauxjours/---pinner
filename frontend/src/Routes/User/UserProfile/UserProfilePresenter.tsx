@@ -13,7 +13,6 @@ import Loader from "../../../Components/Loader";
 import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
 import AvatarGrid from "../../../Components/AvatarGrid";
-import Weather from "../../../Components/Weather";
 import { GOOGLE_PLACE_KEY } from "src/keys";
 import useGoogleAutocomplete from "../../../autocompleteHelpers";
 import { BACKEND_URL } from "src/constants";
@@ -803,6 +802,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
         {avatarModalOpen && (
           <AvatarModalContainer>
             <ModalOverlay onClick={e => onSubmitImage(e)} />
+            {console.log(avatars)}
             <ModalAvatars>
               {user.profile.isSelf && imagePreviewUrl.length === 0 && (
                 <AvatarUploadIcon>
@@ -1327,10 +1327,6 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                   </Link>
                 </Row>
               ) : null}
-              <Weather
-                latitude={user.profile.currentCity.latitude}
-                longitude={user.profile.currentCity.longitude}
-              />
               {!coffeeLoading && coffees && coffees.length !== 0 ? (
                 <>
                   <SmallTitle>

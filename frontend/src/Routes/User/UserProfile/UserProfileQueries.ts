@@ -198,7 +198,8 @@ export const MARK_AS_MAIN = gql`
   mutation MarkAsMain($uuid: String!) {
     markAsMain(uuid: $uuid) {
       ok
-      uuid
+      preAvatarUUID
+      newAvatarUUID
       avatar {
         id
         uuid
