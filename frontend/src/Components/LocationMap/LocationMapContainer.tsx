@@ -52,55 +52,46 @@ class LocationMapContainer extends React.Component<IProps, IState> {
         localStorage.getItem("isDarkMode") === "true"
           ? [
               {
-                featureType: "administrative",
+                featureType: "all",
+                elementType: "labels",
+                stylers: [
+                  {
+                    visibility: "on"
+                  }
+                ]
+              },
+              {
+                featureType: "all",
                 elementType: "labels.text.fill",
                 stylers: [
                   {
-                    color: "#444444"
-                  }
-                ]
-              },
-              {
-                featureType: "landscape",
-                elementType: "all",
-                stylers: [
-                  {
-                    color: "#f2f2f2"
-                  }
-                ]
-              },
-              {
-                featureType: "poi",
-                elementType: "all",
-                stylers: [
-                  {
-                    visibility: "off"
-                  }
-                ]
-              },
-              {
-                featureType: "road",
-                elementType: "all",
-                stylers: [
-                  {
-                    saturation: -100
+                    saturation: 36
                   },
                   {
-                    lightness: 45
+                    color: "#000000"
+                  },
+                  {
+                    lightness: 40
                   }
                 ]
               },
               {
-                featureType: "road.highway",
-                elementType: "all",
+                featureType: "all",
+                elementType: "labels.text.stroke",
                 stylers: [
                   {
-                    visibility: "simplified"
+                    visibility: "on"
+                  },
+                  {
+                    color: "#000000"
+                  },
+                  {
+                    lightness: 16
                   }
                 ]
               },
               {
-                featureType: "road.arterial",
+                featureType: "all",
                 elementType: "labels.icon",
                 stylers: [
                   {
@@ -109,8 +100,104 @@ class LocationMapContainer extends React.Component<IProps, IState> {
                 ]
               },
               {
-                featureType: "transit",
-                elementType: "all",
+                featureType: "administrative",
+                elementType: "geometry.fill",
+                stylers: [
+                  {
+                    color: "#000000"
+                  },
+                  {
+                    lightness: 20
+                  }
+                ]
+              },
+              {
+                featureType: "administrative",
+                elementType: "geometry.stroke",
+                stylers: [
+                  {
+                    color: "#000000"
+                  },
+                  {
+                    lightness: 17
+                  },
+                  {
+                    weight: 1.2
+                  }
+                ]
+              },
+              {
+                featureType: "administrative.locality",
+                elementType: "labels.text.fill",
+                stylers: [
+                  {
+                    color: "#c4c4c4"
+                  }
+                ]
+              },
+              {
+                featureType: "administrative.neighborhood",
+                elementType: "labels.text.fill",
+                stylers: [
+                  {
+                    color: "#707070"
+                  }
+                ]
+              },
+              {
+                featureType: "landscape",
+                elementType: "geometry",
+                stylers: [
+                  {
+                    color: "#000000"
+                  },
+                  {
+                    lightness: 20
+                  }
+                ]
+              },
+              {
+                featureType: "poi",
+                elementType: "geometry",
+                stylers: [
+                  {
+                    color: "#000000"
+                  },
+                  {
+                    lightness: 21
+                  },
+                  {
+                    visibility: "on"
+                  }
+                ]
+              },
+              {
+                featureType: "poi.business",
+                elementType: "geometry",
+                stylers: [
+                  {
+                    visibility: "on"
+                  }
+                ]
+              },
+              {
+                featureType: "road.highway",
+                elementType: "geometry.fill",
+                stylers: [
+                  {
+                    color: "#be2026"
+                  },
+                  {
+                    lightness: 0
+                  },
+                  {
+                    visibility: "on"
+                  }
+                ]
+              },
+              {
+                featureType: "road.highway",
+                elementType: "geometry.stroke",
                 stylers: [
                   {
                     visibility: "off"
@@ -118,14 +205,116 @@ class LocationMapContainer extends React.Component<IProps, IState> {
                 ]
               },
               {
-                featureType: "water",
-                elementType: "all",
+                featureType: "road.highway",
+                elementType: "labels.text.fill",
                 stylers: [
                   {
-                    color: "#425a68"
+                    visibility: "off"
+                  }
+                ]
+              },
+              {
+                featureType: "road.highway",
+                elementType: "labels.text.stroke",
+                stylers: [
+                  {
+                    visibility: "off"
                   },
                   {
-                    visibility: "on"
+                    hue: "#ff000a"
+                  }
+                ]
+              },
+              {
+                featureType: "road.arterial",
+                elementType: "geometry",
+                stylers: [
+                  {
+                    color: "#000000"
+                  },
+                  {
+                    lightness: 18
+                  }
+                ]
+              },
+              {
+                featureType: "road.arterial",
+                elementType: "geometry.fill",
+                stylers: [
+                  {
+                    color: "#575757"
+                  }
+                ]
+              },
+              {
+                featureType: "road.arterial",
+                elementType: "labels.text.fill",
+                stylers: [
+                  {
+                    color: "#ffffff"
+                  }
+                ]
+              },
+              {
+                featureType: "road.arterial",
+                elementType: "labels.text.stroke",
+                stylers: [
+                  {
+                    color: "#2c2c2c"
+                  }
+                ]
+              },
+              {
+                featureType: "road.local",
+                elementType: "geometry",
+                stylers: [
+                  {
+                    color: "#000000"
+                  },
+                  {
+                    lightness: 16
+                  }
+                ]
+              },
+              {
+                featureType: "road.local",
+                elementType: "labels.text.fill",
+                stylers: [
+                  {
+                    color: "#999999"
+                  }
+                ]
+              },
+              {
+                featureType: "road.local",
+                elementType: "labels.text.stroke",
+                stylers: [
+                  {
+                    saturation: -52
+                  }
+                ]
+              },
+              {
+                featureType: "transit",
+                elementType: "geometry",
+                stylers: [
+                  {
+                    color: "#000000"
+                  },
+                  {
+                    lightness: 19
+                  }
+                ]
+              },
+              {
+                featureType: "water",
+                elementType: "geometry",
+                stylers: [
+                  {
+                    color: "#000000"
+                  },
+                  {
+                    lightness: 17
                   }
                 ]
               }
