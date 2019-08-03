@@ -86,8 +86,8 @@ const ListIcon = styled.span`
   svg {
     fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
-       &:hover {
-      fill: ${props => props.theme.hoverColor}
+    &:hover {
+      fill: ${props => props.theme.hoverColor};
     }
   }
 `;
@@ -167,7 +167,7 @@ const TripRow = styled.div<ITheme>`
     }
   }
   &:not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -213,8 +213,8 @@ const Icon = styled.span`
   svg {
     fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
-       &:hover {
-      fill: ${props => props.theme.hoverColor}
+    &:hover {
+      fill: ${props => props.theme.hoverColor};
     }
   }
 `;
@@ -335,7 +335,7 @@ const ModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -348,7 +348,7 @@ const ModalLinkContainer = styled(Link)`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -396,13 +396,13 @@ const SmallTitle = styled(Title)`
 
 const GreyText = styled(Thin)`
   text-align: center;
-  color: ${props => props.theme.greyColor};;
+  color: ${props => props.theme.greyColor};
 `;
 
 const TripInput = styled.input`
   width: 215px;
   border: 0;
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   padding: 5px;
   color: ${props => props.theme.color};
   font-size: 12px;
@@ -433,7 +433,7 @@ const UserRow = styled.div<ITheme>`
     background-color: ${props => props.theme.hoverColor};
   }
   &:not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -500,8 +500,8 @@ const AvatarUploadIcon = styled.div`
   svg {
     fill: ${props => props.theme.iconColor};
     transition: fill 0.2s ease-in-out;
-       &:hover {
-      fill: ${props => props.theme.hoverColor}
+    &:hover {
+      fill: ${props => props.theme.hoverColor};
     }
   }
 `;
@@ -556,23 +556,26 @@ const AvatarDeleteIcon = styled.div`
   svg {
     opacity: 0;
     transition: all 0.1s ease-in-out;
-    fill: ${props => props.theme.iconColor};
+    fill: ${props => props.theme.whiteColor};
   }
 `;
 
 const RedDotIcon = styled.div`
   z-index: 20;
   position: absolute;
-  top: 18px;
-  left: 18px;
+  top: 10px;
+  left: 10px;
   cursor: pointer;
+  svg {
+    fill: #cc0000;
+  }
 `;
 
 const WhiteDotIcon = styled(RedDotIcon)`
   svg {
     opacity: 0;
     transition: all 0.1s ease-in-out;
-    fill: ${props => props.theme.iconColor};
+    fill: ${props => props.theme.whiteColor};
   }
 `;
 
@@ -1350,11 +1353,13 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               <p>😎</p>
             ) : (
               <Container>
-                <Earth src={
-                      localStorage.getItem("isDarkMode") === "true"
-                        ? require(`../../../Images/animations/darkEarth.gif`)
-                        : require(`../../../Images/animations/lightEarth.gif`)
-                    }/>
+                <Earth
+                  src={
+                    localStorage.getItem("isDarkMode") === "true"
+                      ? require(`../../../Images/animations/darkEarth.gif`)
+                      : require(`../../../Images/animations/lightEarth.gif`)
+                  }
+                />
                 <TripContainer>
                   <UserNameRow>
                     <SText text={"TRIPS"} />

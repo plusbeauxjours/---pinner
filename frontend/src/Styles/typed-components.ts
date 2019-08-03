@@ -21,6 +21,7 @@ interface IThemeInterface {
   color: string;
   iconColor: string;
   earth: string;
+  mapTheme: any;
 }
 
 const {

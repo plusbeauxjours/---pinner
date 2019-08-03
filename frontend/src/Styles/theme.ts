@@ -11,7 +11,7 @@ const theme = {
 
 const lightTheme = {
   headerColor: "#EFEFEF",
-  bgColor: "#e6e6e6",
+  bgColor: "#e8e8e8",
   color: "#191919",
   greyColor: "#999",
   blackColor: "#262626",
@@ -25,7 +25,7 @@ const lightTheme = {
   trackShadowColor: "rgba(0, 0, 0, 0.3)",
   thumbShadowColor: "rgba(0, 0, 0, 0.5)",
   hoverColor: "#b7b7b7",
-  iconColor: "#999",
+  iconColor: "#999"
 };
 
 const darkTheme = {
@@ -44,7 +44,7 @@ const darkTheme = {
   trackShadowColor: "rgba(0, 0, 0, 0.3)",
   thumbShadowColor: "rgba(0, 0, 0, 0.5)",
   hoverColor: "#6b6b6b",
-  iconColor: "#999",
+  iconColor: "#999"
 };
 
 export { theme, lightTheme, darkTheme };

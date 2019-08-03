@@ -186,14 +186,26 @@ export const Upload: React.FunctionComponent = () => (
 );
 
 export const RedDot: React.FunctionComponent = () => (
-  <svg width="12" height="12">
-    <circle cx="6" cy="6" r="6" fill="red" />
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="#white"
+  >
+    <path d="M6.166 16.943l1.4 1.4-4.622 4.657h-2.944l6.166-6.057zm11.768-6.012c2.322-2.322 4.482-.457 6.066-1.931l-8-8c-1.474 1.584.142 3.494-2.18 5.817-3.016 3.016-4.861-.625-10.228 4.742l9.6 9.6c5.367-5.367 1.725-7.211 4.742-10.228z" />
   </svg>
 );
 
 export const WhiteDot: React.FunctionComponent = () => (
-  <svg width="12" height="12">
-    <circle cx="6" cy="6" r="6" fill="white" />
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="white"
+  >
+    <path d="M6.166 16.943l1.4 1.4-4.622 4.657h-2.944l6.166-6.057zm11.768-6.012c2.322-2.322 4.482-.457 6.066-1.931l-8-8c-1.474 1.584.142 3.494-2.18 5.817-3.016 3.016-4.861-.625-10.228 4.742l9.6 9.6c5.367-5.367 1.725-7.211 4.742-10.228z" />
   </svg>
 );
 
@@ -211,8 +223,8 @@ export const List: React.FunctionComponent = () => (
 export const Delete: React.FunctionComponent = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
+    width="16"
+    height="16"
     viewBox="0 0 24 24"
   >
     <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z" />

@@ -17,7 +17,6 @@ interface IProps extends RouteComponentProps<any> {
 class LocationMapContainer extends React.Component<IProps, IState> {
   public mapRef: any;
   public map: google.maps.Map;
-  public userMarker: google.maps.Marker;
   constructor(props) {
     super(props);
     this.mapRef = React.createRef();
@@ -48,21 +47,139 @@ class LocationMapContainer extends React.Component<IProps, IState> {
         lng
       },
       disableDefaultUI: true,
-      zoom: 13
+      zoom: 13,
+      styles:
+        localStorage.getItem("isDarkMode") === "true"
+          ? [
+              {
+                featureType: "administrative",
+                elementType: "labels.text.fill",
+                stylers: [
+                  {
+                    color: "#444444"
+                  }
+                ]
+              },
+              {
+                featureType: "landscape",
+                elementType: "all",
+                stylers: [
+                  {
+                    color: "#f2f2f2"
+                  }
+                ]
+              },
+              {
+                featureType: "poi",
+                elementType: "all",
+                stylers: [
+                  {
+                    visibility: "off"
+                  }
+                ]
+              },
+              {
+                featureType: "road",
+                elementType: "all",
+                stylers: [
+                  {
+                    saturation: -100
+                  },
+                  {
+                    lightness: 45
+                  }
+                ]
+              },
+              {
+                featureType: "road.highway",
+                elementType: "all",
+                stylers: [
+                  {
+                    visibility: "simplified"
+                  }
+                ]
+              },
+              {
+                featureType: "road.arterial",
+                elementType: "labels.icon",
+                stylers: [
+                  {
+                    visibility: "off"
+                  }
+                ]
+              },
+              {
+                featureType: "transit",
+                elementType: "all",
+                stylers: [
+                  {
+                    visibility: "off"
+                  }
+                ]
+              },
+              {
+                featureType: "water",
+                elementType: "all",
+                stylers: [
+                  {
+                    color: "#425a68"
+                  },
+                  {
+                    visibility: "on"
+                  }
+                ]
+              }
+            ]
+          : [
+              {
+                featureType: "all",
+                stylers: [
+                  {
+                    saturation: 0
+                  },
+                  {
+                    hue: "#e7ecf0"
+                  }
+                ]
+              },
+              {
+                featureType: "road",
+                stylers: [
+                  {
+                    saturation: -70
+                  }
+                ]
+              },
+              {
+                featureType: "transit",
+                stylers: [
+                  {
+                    visibility: "off"
+                  }
+                ]
+              },
+              {
+                featureType: "poi",
+                stylers: [
+                  {
+                    visibility: "off"
+                  }
+                ]
+              },
+              {
+                featureType: "water",
+                stylers: [
+                  {
+                    visibility: "simplified"
+                  },
+                  {
+                    saturation: -60
+                  }
+                ]
+              }
+            ]
     };
     this.map = new maps.Map(mapNode, mapConfig);
-    const userMarkerOptions: google.maps.MarkerOptions = {
-      icon: {
-        path: maps.SymbolPath.CIRCLE,
-        scale: 7
-      },
-      position: {
-        lat,
-        lng
-      }
-    };
-    this.userMarker = new maps.Marker(userMarkerOptions);
-    this.userMarker.setMap(this.map);
     const watchOptions: PositionOptions = {
       enableHighAccuracy: true
     };
@@ -76,7 +193,6 @@ class LocationMapContainer extends React.Component<IProps, IState> {
     const {
       coords: { latitude, longitude }
     } = position;
-    this.userMarker.setPosition({ lat: latitude, lng: longitude });
     this.map.panTo({ lat: latitude, lng: longitude });
   };
   public handleGeoWatchError = () => {
