@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import HeaderPresenter from "./HeaderPresenter";
-import { reverseGeoCode } from "../../mapHelpers";
+import { reverseGeoCode, reversePlaceId } from '../../mapHelpers';
 import {
   Me,
   Header,
@@ -163,9 +163,10 @@ class HeaderContainer extends React.Component<IProps, IState> {
       });
       localStorage.setItem("cityId", address.storableLocation.cityId);
       localStorage.setItem("countryCode", address.storableLocation.countryCode);
+      const cityInfo = await reversePlaceId(address.storableLocation.cityId);
       await this.reportLocation(
-        latitude,
-        longitude,
+        cityInfo.storableLocation.latitude,
+        cityInfo.storableLocation.longitude,
         address.storableLocation.cityId,
         address.storableLocation.cityName,
         address.storableLocation.countryCode

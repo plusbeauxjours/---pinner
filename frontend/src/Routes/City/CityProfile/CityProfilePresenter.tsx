@@ -14,6 +14,7 @@ import UserBox from "src/Components/UserBox";
 import CoffeeBox from "src/Components/CoffeeBox";
 import LocationBox from "src/Components/LocationBox";
 import { List } from "../../../Icons";
+import LocationMap from "src/Components/LocationMap";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -138,7 +139,6 @@ const AvatarContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  margin-bottom: 30px;
 `;
 
 const Input = styled.input`
@@ -287,6 +287,14 @@ const LikeBtnAlign = styled.div`
 const LocationHeader = styled(Header)`
   margin-top: 5px;
   padding-left: 10px;
+  margin-bottom: 30px;
+`;
+
+const LocationMapContainer = styled.div`
+  display: flex;
+  border-radius: 3px;
+  height: 300px;
+  width: 300px;
 `;
 
 interface IProps {
@@ -475,6 +483,12 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                   </Header>
                 </Link>
               </LocationHeader>
+              <LocationMapContainer>
+                <LocationMap
+                  latitude={city.latitude}
+                  longitude={city.longitude}
+                />
+              </LocationMapContainer>
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>

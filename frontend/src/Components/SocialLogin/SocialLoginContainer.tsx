@@ -27,7 +27,6 @@ interface IState {
 
 class SocialLoginContainer extends React.Component<any, IState> {
   public facebookConnectFn: MutationFn;
-  public ReportLocationFn: MutationFn;
   constructor(props) {
     super(props);
 

@@ -2,21 +2,10 @@ import React from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import SearchPresenter from "./SearchPresenter";
 import { MutationFn, Mutation } from "react-apollo";
-import {
-  ReportLocation,
-  ReportLocationVariables,
-  CreateCity,
-  CreateCityVariables
-} from "../../types/api";
-import { REPORT_LOCATION } from "../../Routes/Login/Home/HomeQueries";
+import { CreateCity, CreateCityVariables } from "../../types/api";
 import { CREATE_CITY } from "./SearchQueries";
 
 class CreateCityQuery extends Mutation<CreateCity, CreateCityVariables> {}
-
-class ReportLocationMutation extends Mutation<
-  ReportLocation,
-  ReportLocationVariables
-> {}
 
 interface IProps extends RouteComponentProps<any> {
   search: string;
@@ -29,7 +18,6 @@ interface IState {
 }
 
 class SearchContainer extends React.Component<IProps, IState> {
-  public ReportLocationFn: MutationFn;
   public createCityFn: MutationFn;
   constructor(props) {
     super(props);
@@ -50,20 +38,13 @@ class SearchContainer extends React.Component<IProps, IState> {
         {(createCityFn, { loading: createCityLoading }) => {
           this.createCityFn = createCityFn;
           return (
-            <ReportLocationMutation mutation={REPORT_LOCATION}>
-              {ReportLocationFn => {
-                this.ReportLocationFn = ReportLocationFn;
-                return (
-                  <SearchPresenter
-                    search={search}
-                    searchData={searchData}
-                    searchLoading={searchLoading}
-                    onClick={this.onClick}
-                    createCityLoading={createCityLoading}
-                  />
-                );
-              }}
-            </ReportLocationMutation>
+            <SearchPresenter
+              search={search}
+              searchData={searchData}
+              searchLoading={searchLoading}
+              onClick={this.onClick}
+              createCityLoading={createCityLoading}
+            />
           );
         }}
       </CreateCityQuery>
