@@ -45,7 +45,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
   }
   public render() {
     const { coffeeId, matchId, isSelf } = this.props;
-    const { isMatching, isSubmitted } = this.state;
+    const { isMatching } = this.state;
     return (
       <UnMatchMutation
         mutation={UNMATCH}
@@ -70,7 +70,6 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
                     match={this.match}
                     unmatch={this.unmatch}
                     isSelf={isSelf}
-                    isSubmitted={isSubmitted}
                   />
                 );
               }}
@@ -82,25 +81,32 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
   }
   public match = async () => {
     const { from } = this.props;
-    this.setState({ isSubmitted: true });
-    await this.matchFn();
-    {
-      // tslint:disable-next-line:no-unused-expression
-      from && (await this.props.history.push(`${from}`));
+    const { isSubmitted } = this.state;
+    if (!isSubmitted) {
+      this.setState({ isSubmitted: true });
+      await this.matchFn();
+      {
+        // tslint:disable-next-line:no-unused-expression
+        from && (await this.props.history.push(`${from}`));
+      }
     }
   };
   public unmatch = async () => {
     const { from } = this.props;
-    this.setState({ isSubmitted: true });
-    await this.unMatchFn();
-    {
-      // tslint:disable-next-line:no-unused-expression
-      from && (await this.props.history.push(`${from}`));
+    const { isSubmitted } = this.state;
+    if (!isSubmitted) {
+      this.setState({ isSubmitted: true });
+      await this.unMatchFn();
+      {
+        // tslint:disable-next-line:no-unused-expression
+        from && (await this.props.history.push(`${from}`));
+      }
     }
   };
   public onCompletedMatch = data => {
     const { searchSet } = this.props;
     const { match } = data;
+    this.setState({ isSubmitted: false });
     if (match.ok) {
       toast.success("Match accepted, say hello");
       {
@@ -211,6 +217,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
   public onCompletedUnMatch = data => {
     const { searchSet } = this.props;
     const { unMatch } = data;
+    this.setState({ isSubmitted: false });
     if (unMatch.ok) {
       toast.success("UnMatch accepted, say bye");
       {

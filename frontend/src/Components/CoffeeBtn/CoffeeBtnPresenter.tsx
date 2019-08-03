@@ -8,28 +8,22 @@ const SButton = styled(Button)`
   width: 75px;
 `;
 
-const EmptyContainer = styled.div`
-  height: 19px;
-`;
-
 interface IProps {
   isSelf: boolean;
   match: () => void;
   unmatch: () => void;
   isMatching: boolean;
-  isSubmitted: boolean;
 }
 
 const CoffeeBtnPresenter: React.FunctionComponent<IProps> = ({
   match,
   unmatch,
   isSelf,
-  isMatching,
-  isSubmitted
+  isMatching
 }) => {
   if (isSelf) {
     return null;
-  } else if (!isSubmitted) {
+  } else {
     return (
       <>
         {!isSelf && isMatching ? (
@@ -39,8 +33,6 @@ const CoffeeBtnPresenter: React.FunctionComponent<IProps> = ({
         )}
       </>
     );
-  } else {
-    return <EmptyContainer />;
   }
 };
 
