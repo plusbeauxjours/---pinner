@@ -297,6 +297,17 @@ const LocationMapContainer = styled.div`
   width: 300px;
 `;
 
+const MapModal = styled(Modal)`
+  border: 0px;
+  display: flex;
+  height: 700px;
+  width: 700px;
+  @media screen and (max-width: 700px) {
+    width: 100%;
+    display: flex;
+  }
+`;
+
 interface IProps {
   coffeeData: any;
   coffeeLoading: boolean;
@@ -318,6 +329,8 @@ interface IProps {
   submitCoffee: any;
   reportModalOpen: boolean;
   toggleReportModal: () => void;
+  mapMopdalOpen: boolean;
+  toggleMapMopdal: () => void;
   slackReportLocations: (targetLocationId: string, payload: string) => void;
   searchSet: () => void;
 }
@@ -344,6 +357,7 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
   coffeeRequestModalOpen,
   toggleCoffeeRequestModal,
   toggleCoffeeReportModal,
+  toggleMapMopdal,
   isStaying,
   cityId,
   search,
@@ -351,6 +365,7 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
   usersNowList,
   submitCoffee,
   reportModalOpen,
+  mapMopdalOpen,
   toggleReportModal,
   slackReportLocations,
   searchSet
@@ -360,6 +375,18 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
   } else if (!cityLoading && city) {
     return (
       <>
+        {mapMopdalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleMapMopdal} />
+            <MapModal>
+              <LocationMap
+                latitude={city.latitude}
+                longitude={city.longitude}
+                modal={true}
+              />
+            </MapModal>
+          </ModalContainer>
+        )}
         {reportModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleReportModal} />
@@ -483,10 +510,11 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                   </Header>
                 </Link>
               </LocationHeader>
-              <LocationMapContainer>
+              <LocationMapContainer onClick={toggleMapMopdal}>
                 <LocationMap
                   latitude={city.latitude}
                   longitude={city.longitude}
+                  modal={false}
                 />
               </LocationMapContainer>
             </AvatarContainer>

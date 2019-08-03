@@ -3,18 +3,14 @@ import LocationMapPresenter from "./LocationMapPresenter";
 import ReactDOM from "react-dom";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
-interface IState {
-  latitude: number;
-  longitude: number;
-}
-
 interface IProps extends RouteComponentProps<any> {
   google: any;
   latitude: number;
   longitude: number;
+  modal: boolean;
 }
 
-class LocationMapContainer extends React.Component<IProps, IState> {
+class LocationMapContainer extends React.Component<IProps> {
   public mapRef: any;
   public map: google.maps.Map;
   constructor(props) {
@@ -31,7 +27,8 @@ class LocationMapContainer extends React.Component<IProps, IState> {
     }
   }
   public render() {
-    return <LocationMapPresenter mapRef={this.mapRef} />;
+    const { modal } = this.props;
+    return <LocationMapPresenter modal={modal} mapRef={this.mapRef} />;
   }
   public loadMap = async (lat, lng) => {
     const { google } = this.props;
@@ -53,10 +50,19 @@ class LocationMapContainer extends React.Component<IProps, IState> {
           ? [
               {
                 featureType: "all",
-                elementType: "labels",
+                elementType: "geometry",
                 stylers: [
                   {
+                    saturation: 0
+                  },
+                  {
+                    lightness: 0
+                  },
+                  {
                     visibility: "on"
+                  },
+                  {
+                    gamma: 1
                   }
                 ]
               },
@@ -68,7 +74,7 @@ class LocationMapContainer extends React.Component<IProps, IState> {
                     saturation: 36
                   },
                   {
-                    color: "#000000"
+                    color: "#e0e9f2"
                   },
                   {
                     lightness: 40
@@ -80,13 +86,13 @@ class LocationMapContainer extends React.Component<IProps, IState> {
                 elementType: "labels.text.stroke",
                 stylers: [
                   {
-                    visibility: "on"
+                    visibility: "off"
                   },
                   {
                     color: "#000000"
                   },
                   {
-                    lightness: 16
+                    lightness: 0
                   }
                 ]
               },
@@ -101,46 +107,16 @@ class LocationMapContainer extends React.Component<IProps, IState> {
               },
               {
                 featureType: "administrative",
-                elementType: "geometry.fill",
+                elementType: "labels.text",
                 stylers: [
                   {
-                    color: "#000000"
+                    visibility: "simplified"
                   },
                   {
-                    lightness: 20
-                  }
-                ]
-              },
-              {
-                featureType: "administrative",
-                elementType: "geometry.stroke",
-                stylers: [
-                  {
-                    color: "#000000"
+                    saturation: -100
                   },
                   {
-                    lightness: 17
-                  },
-                  {
-                    weight: 1.2
-                  }
-                ]
-              },
-              {
-                featureType: "administrative.locality",
-                elementType: "labels.text.fill",
-                stylers: [
-                  {
-                    color: "#c4c4c4"
-                  }
-                ]
-              },
-              {
-                featureType: "administrative.neighborhood",
-                elementType: "labels.text.fill",
-                stylers: [
-                  {
-                    color: "#707070"
+                    lightness: -43
                   }
                 ]
               },
@@ -149,10 +125,22 @@ class LocationMapContainer extends React.Component<IProps, IState> {
                 elementType: "geometry",
                 stylers: [
                   {
-                    color: "#000000"
+                    color: "#5a5858"
                   },
                   {
-                    lightness: 20
+                    lightness: 0
+                  },
+                  {
+                    visibility: "on"
+                  },
+                  {
+                    weight: 1.0
+                  },
+                  {
+                    gamma: 1
+                  },
+                  {
+                    saturation: -54
                   }
                 ]
               },
@@ -161,18 +149,15 @@ class LocationMapContainer extends React.Component<IProps, IState> {
                 elementType: "geometry",
                 stylers: [
                   {
-                    color: "#000000"
+                    color: "#6a6969"
                   },
                   {
-                    lightness: 21
-                  },
-                  {
-                    visibility: "on"
+                    lightness: 0
                   }
                 ]
               },
               {
-                featureType: "poi.business",
+                featureType: "poi.attraction",
                 elementType: "geometry",
                 stylers: [
                   {
@@ -181,22 +166,16 @@ class LocationMapContainer extends React.Component<IProps, IState> {
                 ]
               },
               {
-                featureType: "road.highway",
+                featureType: "poi.attraction",
                 elementType: "geometry.fill",
                 stylers: [
                   {
-                    color: "#be2026"
-                  },
-                  {
-                    lightness: 0
-                  },
-                  {
-                    visibility: "on"
+                    visibility: "off"
                   }
                 ]
               },
               {
-                featureType: "road.highway",
+                featureType: "poi.attraction",
                 elementType: "geometry.stroke",
                 stylers: [
                   {
@@ -205,8 +184,26 @@ class LocationMapContainer extends React.Component<IProps, IState> {
                 ]
               },
               {
-                featureType: "road.highway",
-                elementType: "labels.text.fill",
+                featureType: "poi.business",
+                elementType: "geometry.fill",
+                stylers: [
+                  {
+                    visibility: "on"
+                  }
+                ]
+              },
+              {
+                featureType: "poi.park",
+                elementType: "geometry",
+                stylers: [
+                  {
+                    color: "#698577"
+                  }
+                ]
+              },
+              {
+                featureType: "poi.park",
+                elementType: "labels",
                 stylers: [
                   {
                     visibility: "off"
@@ -214,14 +211,104 @@ class LocationMapContainer extends React.Component<IProps, IState> {
                 ]
               },
               {
-                featureType: "road.highway",
-                elementType: "labels.text.stroke",
+                featureType: "road",
+                elementType: "geometry.stroke",
+                stylers: [
+                  {
+                    visibility: "simplified"
+                  }
+                ]
+              },
+              {
+                featureType: "road",
+                elementType: "labels",
+                stylers: [
+                  {
+                    invert_lightness: true
+                  }
+                ]
+              },
+              {
+                featureType: "road",
+                elementType: "labels.icon",
                 stylers: [
                   {
                     visibility: "off"
                   },
                   {
-                    hue: "#ff000a"
+                    saturation: -100
+                  }
+                ]
+              },
+              {
+                featureType: "road.highway",
+                elementType: "geometry.fill",
+                stylers: [
+                  {
+                    lightness: 0
+                  },
+                  {
+                    color: "#474747"
+                  }
+                ]
+              },
+              {
+                featureType: "road.highway",
+                elementType: "geometry.stroke",
+                stylers: [
+                  {
+                    color: "#000000"
+                  },
+                  {
+                    lightness: 0
+                  },
+                  {
+                    weight: 0.2
+                  },
+                  {
+                    visibility: "off"
+                  }
+                ]
+              },
+              {
+                featureType: "road.highway",
+                elementType: "labels.text.fill",
+                stylers: [
+                  {
+                    invert_lightness: true
+                  }
+                ]
+              },
+              {
+                featureType: "road.highway",
+                elementType: "labels.icon",
+                stylers: [
+                  {
+                    visibility: "off"
+                  },
+                  {
+                    saturation: -100
+                  }
+                ]
+              },
+              {
+                featureType: "road.highway.controlled_access",
+                elementType: "geometry.fill",
+                stylers: [
+                  {
+                    color: "#a1a1a1"
+                  },
+                  {
+                    visibility: "off"
+                  }
+                ]
+              },
+              {
+                featureType: "road.highway.controlled_access",
+                elementType: "labels",
+                stylers: [
+                  {
+                    visibility: "off"
                   }
                 ]
               },
@@ -230,10 +317,13 @@ class LocationMapContainer extends React.Component<IProps, IState> {
                 elementType: "geometry",
                 stylers: [
                   {
-                    color: "#000000"
+                    lightness: 0
                   },
                   {
-                    lightness: 18
+                    visibility: "on"
+                  },
+                  {
+                    color: "#474747"
                   }
                 ]
               },
@@ -242,25 +332,31 @@ class LocationMapContainer extends React.Component<IProps, IState> {
                 elementType: "geometry.fill",
                 stylers: [
                   {
-                    color: "#575757"
+                    color: "#454545"
                   }
                 ]
               },
               {
                 featureType: "road.arterial",
-                elementType: "labels.text.fill",
+                elementType: "labels",
                 stylers: [
                   {
-                    color: "#ffffff"
+                    saturation: -80
+                  },
+                  {
+                    lightness: 42
+                  },
+                  {
+                    color: "#989898"
                   }
                 ]
               },
               {
                 featureType: "road.arterial",
-                elementType: "labels.text.stroke",
+                elementType: "labels.icon",
                 stylers: [
                   {
-                    color: "#2c2c2c"
+                    saturation: -100
                   }
                 ]
               },
@@ -269,28 +365,31 @@ class LocationMapContainer extends React.Component<IProps, IState> {
                 elementType: "geometry",
                 stylers: [
                   {
-                    color: "#000000"
+                    color: "#474747"
                   },
                   {
-                    lightness: 16
+                    lightness: 0
                   }
                 ]
               },
               {
                 featureType: "road.local",
-                elementType: "labels.text.fill",
+                elementType: "labels",
                 stylers: [
                   {
-                    color: "#999999"
+                    lightness: 8
+                  },
+                  {
+                    color: "#909090"
                   }
                 ]
               },
               {
                 featureType: "road.local",
-                elementType: "labels.text.stroke",
+                elementType: "labels.icon",
                 stylers: [
                   {
-                    saturation: -52
+                    saturation: -100
                   }
                 ]
               },
@@ -299,10 +398,13 @@ class LocationMapContainer extends React.Component<IProps, IState> {
                 elementType: "geometry",
                 stylers: [
                   {
-                    color: "#000000"
+                    color: "#6d6d6d"
                   },
                   {
-                    lightness: 19
+                    lightness: 0
+                  },
+                  {
+                    visibility: "simplified"
                   }
                 ]
               },
@@ -311,10 +413,10 @@ class LocationMapContainer extends React.Component<IProps, IState> {
                 elementType: "geometry",
                 stylers: [
                   {
-                    color: "#000000"
+                    color: "#616e74"
                   },
                   {
-                    lightness: 17
+                    lightness: 0
                   }
                 ]
               }

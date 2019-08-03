@@ -4,6 +4,7 @@ import styled from "styled-components";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const Container = styled.div`
+  z-index: 2;
   display: flex;
   width: 100%;
   height: 100%;

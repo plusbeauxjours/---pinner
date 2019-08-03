@@ -43,6 +43,7 @@ interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   reportModalOpen: boolean;
+  mapMopdalOpen: boolean;
   search: string;
   usersNowList: any;
   currentCityId: string;
@@ -59,6 +60,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       reportModalOpen: false,
+      mapMopdalOpen: false,
       search: "",
       usersNowList: [],
       currentCityId: localStorage.getItem("cityId"),
@@ -83,6 +85,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     const isStaying = this.state.currentCityId === cityId;
     const {
       reportModalOpen,
+      mapMopdalOpen,
       search,
       usersNowList,
       coffeeReportModalOpen,
@@ -146,6 +149,10 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                                             toggleReportModal={
                                               this.toggleReportModal
                                             }
+                                            mapMopdalOpen={mapMopdalOpen}
+                                            toggleMapMopdal={
+                                              this.toggleMapMopdal
+                                            }
                                             slackReportLocations={
                                               this.slackReportLocations
                                             }
@@ -205,6 +212,10 @@ class CityProfileContainer extends React.Component<IProps, IState> {
   }
   public searchSet = () => {
     this.setState({ search: "" });
+  };
+  public toggleMapMopdal = () => {
+    const { mapMopdalOpen } = this.state;
+    this.setState({ mapMopdalOpen: !mapMopdalOpen });
   };
   public toggleReportModal = () => {
     const { reportModalOpen } = this.state;
