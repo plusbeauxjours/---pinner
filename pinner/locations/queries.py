@@ -362,17 +362,3 @@ def resolve_get_city_photo(self, info, **kwargs):
     except models.City.DoesNotExist:
         return types.PhotoResponse(photo=None)
 
-
-@login_required
-def resolve_get_country_photo(self, info, **kwargs):
-
-    user = info.context.user
-    countryCode = kwargs.get('countryCode')
-    try:
-        country = models.Country.objects.get(country_code=countryCode)
-        photo = country.country_photo
-        print(countryCode)
-        return types.PhotoResponse(photo=photo)
-
-    except models.Country.DoesNotExist:
-        return types.PhotoResponse(photo=None)

@@ -132,12 +132,7 @@ class Query(object):
         required=True,
         args={'cityId': graphene.String()}
     )
-    get_country_photo = graphene.Field(
-        types.PhotoResponse,
-        resolver=queries.resolve_get_country_photo,
-        required=True,
-        args={'countryCode': graphene.String()}
-    )
+
     get_countries = graphene.Field(
         types.CountriesResponse,
         resolver=queries.resolve_get_countries,

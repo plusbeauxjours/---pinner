@@ -15,11 +15,3 @@ export const GET_CITY_PHOTO = gql`
     }
   }
 `;
-
-export const GET_COUNTRY_PHOTO = gql`
-  query GetCountryPhoto($countryCode: String) {
-    getCountryPhoto(countryCode: $countryCode) {
-      photo
-    }
-  }
-`;

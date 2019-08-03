@@ -2,7 +2,7 @@ import React from "react";
 // import ProgressiveImage from "react-progressive-image";
 import styled from "styled-components";
 import { useQuery } from "react-apollo-hooks";
-import { GET_CITY_PHOTO, GET_COUNTRY_PHOTO } from "./Search/SearchQueries";
+import { GET_CITY_PHOTO } from "./Search/SearchQueries";
 import { keyframes } from "styled-components";
 import { BACKEND_URL } from "src/constants";
 
@@ -108,7 +108,8 @@ interface IProps {
   className?: string;
   city?: boolean;
   cityId?: string;
-  countryCode?: string;
+  countryPhoto?: string;
+  continentPhoto?: string;
   onClick?: () => void;
 }
 
@@ -118,7 +119,8 @@ const Avatar: React.FunctionComponent<IProps> = ({
   size,
   city,
   cityId,
-  countryCode,
+  countryPhoto,
+  continentPhoto,
   onClick
 }) => {
   // const randomColor = require("randomcolor");
@@ -151,12 +153,7 @@ const Avatar: React.FunctionComponent<IProps> = ({
       //   }}
       // </ProgressiveImage>
     );
-  } else if (countryCode) {
-    const { data: countryPhotoData } = useQuery(GET_COUNTRY_PHOTO, {
-      variables: { countryCode }
-    });
-    const { getCountryPhoto: { photo = null } = {} } = countryPhotoData;
-
+  } else if (countryPhoto) {
     return (
       // <ProgressiveImage delay={0} src={photo} placeholder="">
       //   {(src, loading) => {
@@ -170,7 +167,27 @@ const Avatar: React.FunctionComponent<IProps> = ({
       //       </AvatarContainer>
       //     ) : (
       <AvatarContainer size={size}>
-        <Container className={className} src={photo} size={size} />
+        <Container className={className} src={countryPhoto} size={size} />
+      </AvatarContainer>
+      //     );
+      //   }}
+      // </ProgressiveImage>
+    );
+  } else if (continentPhoto) {
+    return (
+      // <ProgressiveImage delay={0} src={photo} placeholder="">
+      //   {(src, loading) => {
+      //     return loading ? (
+      //       <AvatarContainer size={size}>
+      //         <Placeholder
+      //           className={className}
+      //           color={"#212121"}
+      //           size={size}
+      //         />
+      //       </AvatarContainer>
+      //     ) : (
+      <AvatarContainer size={size}>
+        <Container className={className} src={continentPhoto} size={size} />
       </AvatarContainer>
       //     );
       //   }}

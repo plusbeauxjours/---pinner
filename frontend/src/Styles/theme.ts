@@ -11,7 +11,7 @@ const theme = {
 
 const lightTheme = {
   headerColor: "#EFEFEF",
-  bgColor: "#e8e8e8",
+  bgColor: "#e6e6e6",
   color: "#191919",
   greyColor: "#999",
   blackColor: "#262626",

@@ -27,7 +27,7 @@ const UserRow = styled.div`
     background-color: ${props => props.theme.hoverColor};
   }
   &:not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -143,7 +143,7 @@ const SearchPresenter: React.FunctionComponent<IProps> = ({
                 }}
               >
                 <Header>
-                  <SAvatar size={"sm"} url={country.countryPhoto} />
+                  <SAvatar size={"sm"} countryPhoto={country.countryPhoto} />
                   <HeaderColumn>
                     <HeaderText text={country.countryName} />
                     <Location>{country.continent.continentName}</Location>
@@ -159,7 +159,10 @@ const SearchPresenter: React.FunctionComponent<IProps> = ({
             <UserRow key={continent.id}>
               <Link to={`/continent/${continent.continentCode}`}>
                 <Header>
-                  <SAvatar size={"sm"} url={continent.continentPhoto} />
+                  <SAvatar
+                    size={"sm"}
+                    continentPhoto={continent.continentPhoto}
+                  />
                   <HeaderColumn>
                     <HeaderText text={continent.continentName} />
                   </HeaderColumn>

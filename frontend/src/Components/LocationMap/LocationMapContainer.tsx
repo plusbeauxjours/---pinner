@@ -189,10 +189,8 @@ class LocationMapContainer extends React.Component<IProps, IState> {
       watchOptions
     );
   };
-  public handleGeoWatchSuccess = (position: Position) => {
-    const {
-      coords: { latitude, longitude }
-    } = position;
+  public handleGeoWatchSuccess = () => {
+    const { latitude, longitude } = this.props;
     this.map.panTo({ lat: latitude, lng: longitude });
   };
   public handleGeoWatchError = () => {
