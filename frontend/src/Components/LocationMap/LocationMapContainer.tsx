@@ -2,22 +2,30 @@ import React from "react";
 import LocationMapPresenter from "./LocationMapPresenter";
 import ReactDOM from "react-dom";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import { geoCode } from "../../mapHelpers";
 
 interface IProps extends RouteComponentProps<any> {
   google: any;
-  latitude: number;
-  longitude: number;
+  latitude?: number;
+  longitude?: number;
   modal: boolean;
+  countryName?: string;
 }
 
 class LocationMapContainer extends React.Component<IProps> {
   public mapRef: any;
   public map: google.maps.Map;
+  public userMarker: google.maps.Marker;
   constructor(props) {
     super(props);
     this.mapRef = React.createRef();
-    const { latitude, longitude } = this.props;
-    this.loadMap(latitude, longitude);
+    const { latitude, longitude, countryName } = this.props;
+    console.log(countryName);
+    if (countryName) {
+      this.getPosition(countryName);
+    } else {
+      this.loadMap(latitude, longitude);
+    }
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
@@ -30,12 +38,21 @@ class LocationMapContainer extends React.Component<IProps> {
     const { modal } = this.props;
     return <LocationMapPresenter modal={modal} mapRef={this.mapRef} />;
   }
-  public loadMap = async (lat, lng) => {
+  public getPosition = async countryName => {
+    console.log(countryName);
+    const result = await geoCode(countryName);
+    console.log(result);
+    if (result !== false) {
+      const { latitude, longitude } = result;
+      this.loadMap(latitude, longitude, "country");
+    }
+  };
+  public loadMap = async (lat, lng, zoom?: string) => {
     const { google } = this.props;
     const maps = await google.maps;
     const mapNode = await ReactDOM.findDOMNode(this.mapRef.current);
     if (!mapNode) {
-      this.loadMap(lat, lng);
+      this.loadMap(lat, lng, zoom);
       return;
     }
     const mapConfig: google.maps.MapOptions = {
@@ -44,7 +61,7 @@ class LocationMapContainer extends React.Component<IProps> {
         lng
       },
       disableDefaultUI: true,
-      zoom: 13,
+      zoom: zoom === "country" ? 5 : 13,
       styles:
         localStorage.getItem("isDarkMode") === "true"
           ? [
@@ -471,6 +488,18 @@ class LocationMapContainer extends React.Component<IProps> {
             ]
     };
     this.map = new maps.Map(mapNode, mapConfig);
+    const userMarkerOptions: google.maps.MarkerOptions = {
+      icon: {
+        path: maps.SymbolPath.CIRCLE,
+        scale: 7
+      },
+      position: {
+        lat,
+        lng
+      }
+    };
+    this.userMarker = new maps.Marker(userMarkerOptions);
+    this.userMarker.setMap(this.map);
     const watchOptions: PositionOptions = {
       enableHighAccuracy: true
     };

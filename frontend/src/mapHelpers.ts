@@ -3,6 +3,26 @@ import { GOOGLE_MAPS_KEY } from "./keys";
 
 import { toast } from "react-toastify";
 
+export const geoCode = async (address: string) => {
+  const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${GOOGLE_MAPS_KEY}`;
+  const { data } = await axios(URL);
+  if (!data.error_message) {
+    const { results } = data;
+    const firstPlace = results[0];
+    console.log(results);
+    const {
+      geometry: {
+        location: { lat, lng }
+      }
+    } = firstPlace;
+    console.log(lat, lng);
+    return { latitude: lat, longitude: lng };
+  } else {
+    toast.error(data.error_message);
+    return false;
+  }
+};
+
 export const reverseGeoCode = async (latitude: number, longitude: number) => {
   const URL = `https://maps.googleapis.com/maps/api/geocode/json?&language=en&latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_KEY}`;
   const { data } = await axios(URL);
@@ -35,7 +55,6 @@ export const reverseGeoCode = async (latitude: number, longitude: number) => {
         }
       }
     }
-    console.log(storableLocation);
     return { storableLocation };
   } else {
     toast.error(data.error_message);

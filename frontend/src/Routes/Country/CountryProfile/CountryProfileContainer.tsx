@@ -38,6 +38,7 @@ interface IState {
   countryName: string;
   currentCityId: string;
   reportModalOpen: boolean;
+  mapMopdalOpen: boolean;
 }
 
 class CountryProfileContainer extends React.Component<IProps, IState> {
@@ -53,7 +54,8 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
       cityList: [],
       countryName: state.countryName,
       currentCityId: localStorage.getItem("cityId"),
-      reportModalOpen: false
+      reportModalOpen: false,
+      mapMopdalOpen: false
     };
   }
   public componentDidUpdate(prevProps) {
@@ -78,7 +80,8 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
       cityList,
       countryName,
       currentCityId,
-      reportModalOpen
+      reportModalOpen,
+      mapMopdalOpen
     } = this.state;
     return (
       <SlackReportLocationsMutation
@@ -132,6 +135,8 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
                                 currentCityId={currentCityId}
                                 back={this.back}
                                 searchSet={this.searchSet}
+                                mapMopdalOpen={mapMopdalOpen}
+                                toggleMapMopdal={this.toggleMapMopdal}
                               />
                             );
                           }}
@@ -147,6 +152,10 @@ class CountryProfileContainer extends React.Component<IProps, IState> {
       </SlackReportLocationsMutation>
     );
   }
+  public toggleMapMopdal = () => {
+    const { mapMopdalOpen } = this.state;
+    this.setState({ mapMopdalOpen: !mapMopdalOpen });
+  };
   public searchSet = () => {
     this.setState({ search: "" });
   };

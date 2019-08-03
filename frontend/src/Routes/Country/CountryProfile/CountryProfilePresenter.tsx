@@ -12,6 +12,7 @@ import CoffeeBox from "src/Components/CoffeeBox";
 import LocationBox from "src/Components/LocationBox";
 import { List } from "../../../Icons";
 import { keyframes } from "styled-components";
+import LocationMap from "src/Components/LocationMap";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -302,6 +303,24 @@ const EmptyContainer = styled.div`
   height: 100%;
 `;
 
+const LocationMapContainer = styled.div`
+  display: flex;
+  border-radius: 3px;
+  height: 300px;
+  width: 300px;
+`;
+
+const MapModal = styled(Modal)`
+  border: 0px;
+  display: flex;
+  height: 700px;
+  width: 700px;
+  @media screen and (max-width: 700px) {
+    width: 100%;
+    display: flex;
+  }
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
@@ -321,6 +340,8 @@ interface IProps {
   toggleReportModal: () => void;
   slackReportLocations: (targetLocationId: string, payload: string) => void;
   searchSet: () => void;
+  mapMopdalOpen: boolean;
+  toggleMapMopdal: () => void;
 }
 
 const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -348,13 +369,23 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
   reportModalOpen,
   toggleReportModal,
   slackReportLocations,
-  searchSet
+  searchSet,
+  toggleMapMopdal,
+  mapMopdalOpen
 }) => {
   if (loading) {
     return <Loader />;
   } else if (!loading && cities && usersNow && usersBefore && country) {
     return (
       <>
+        {mapMopdalOpen && (
+          <ModalContainer>
+            <ModalOverlay onClick={toggleMapMopdal} />
+            <MapModal>
+              <LocationMap countryName={country.countryName} modal={true} />
+            </MapModal>
+          </ModalContainer>
+        )}
         {reportModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleReportModal} />
@@ -445,6 +476,9 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
                   </HeaderColumn>
                 </LocationHeader>
               </Link>
+              <LocationMapContainer onClick={toggleMapMopdal}>
+                <LocationMap countryName={country.countryName} modal={false} />
+              </LocationMapContainer>
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>
