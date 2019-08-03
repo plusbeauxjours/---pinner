@@ -12,7 +12,6 @@ import {
 const RowButtonContainer = styled.div`
   display: flex;
   flex-wrap: nowrap;
-  z-index: 20;
   cursor: pointer;
 `;
 
