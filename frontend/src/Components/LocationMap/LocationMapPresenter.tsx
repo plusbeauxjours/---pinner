@@ -7,14 +7,14 @@ const MapBox = styled.div<ITheme>`
   border: 0px;
   height: ${props => {
     if (props.modal === true) {
-      return "700px";
+      return "699px";
     } else {
       return "300px";
     }
   }};
   width: ${props => {
     if (props.modal === true) {
-      return "700px";
+      return "699px";
     } else {
       return "300px";
     }

@@ -307,10 +307,10 @@ const LocationMapContainer = styled.div`
 `;
 
 const MapModal = styled(Modal)`
-  border: 0px;
+  border: 1px solid ${props => props.theme.borderColor};
   display: flex;
-  height: 700px;
-  width: 700px;
+  height: 701px;
+  width: 701px;
   @media screen and (max-width: 700px) {
     width: 100%;
     display: flex;
@@ -319,8 +319,6 @@ const MapModal = styled(Modal)`
 
 const Square = styled.div`
   display: flex;
-  height: 100%;
-  width: 100%;
 `;
 
 interface IProps {

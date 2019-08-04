@@ -1396,9 +1396,19 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                           </HeaderColumn>
                         </THeader>
                         <GreyText
-                          text={trip.startDate ? trip.startDate : "-"}
+                          text={
+                            trip.startDate
+                              ? moment(trip.startDate).format("MMM Do YY")
+                              : "-"
+                          }
                         />
-                        <GreyText text={trip.endDate ? trip.endDate : "-"} />
+                        <GreyText
+                          text={
+                            trip.endDate
+                              ? moment(trip.endDate).format("MMM Do YY")
+                              : "-"
+                          }
+                        />
                         <GreyText
                           text={
                             trip.diffDays === 1
@@ -1460,9 +1470,19 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                           </HeaderColumn>
                         </THeader>
                         <GreyText
-                          text={trip.startDate ? trip.startDate : "-"}
+                          text={
+                            trip.startDate
+                              ? moment(trip.startDate).format("MMM Do YY")
+                              : "-"
+                          }
                         />
-                        <GreyText text={trip.endDate ? trip.endDate : "-"} />
+                        <GreyText
+                          text={
+                            trip.endDate
+                              ? moment(trip.endDate).format("MMM Do YY")
+                              : "-"
+                          }
+                        />
                         {trip.diffDays ? (
                           <GreyText
                             text={

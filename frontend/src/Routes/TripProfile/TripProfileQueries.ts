@@ -4,6 +4,29 @@ import { CONTINENT_FRAGMENT } from "src/sharedQueries";
 export const TRIP_PROFILE = gql`
   query TripProfile($cityId: String!, $startDate: Date!, $endDate: Date!) {
     tripProfile(cityId: $cityId, startDate: $startDate, endDate: $endDate) {
+      city {
+        id
+        latitude
+        longitude
+        cityId
+        cityName
+        cityPhoto
+        country {
+          countryName
+          countryPhoto
+          countryCode
+          continent {
+            ...ContinentParts
+          }
+        }
+        likeCount
+        isLiked
+        userCount
+        userLogCount
+        count
+        diff
+      }
+      count
       usersBefore {
         actor {
           profile {
@@ -33,28 +56,6 @@ export const TRIP_PROFILE = gql`
             avatarUrl
           }
         }
-      }
-      city {
-        id
-        latitude
-        longitude
-        cityId
-        cityName
-        cityPhoto
-        country {
-          countryName
-          countryPhoto
-          countryCode
-          continent {
-            ...ContinentParts
-          }
-        }
-        likeCount
-        isLiked
-        userCount
-        userLogCount
-        count
-        diff
       }
     }
   }

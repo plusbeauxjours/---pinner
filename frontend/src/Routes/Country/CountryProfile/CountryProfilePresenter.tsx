@@ -305,20 +305,33 @@ const EmptyContainer = styled.div`
 
 const LocationMapContainer = styled.div`
   display: flex;
+  position: absolute;
+  opacity: 0;
   border-radius: 3px;
   height: 300px;
   width: 300px;
+  &:hover {
+    opacity: 1;
+  }
+  transition: opacity 0.3s ease-in-out;
+  @media screen and (max-width: 700px) {
+    margin-right: 0px;
+  }
 `;
 
 const MapModal = styled(Modal)`
-  border: 0px;
+  border: 1px solid ${props => props.theme.borderColor};
   display: flex;
-  height: 700px;
-  width: 700px;
+  height: 701px;
+  width: 701px;
   @media screen and (max-width: 700px) {
     width: 100%;
     display: flex;
   }
+`;
+
+const Square = styled.div`
+  display: flex;
 `;
 
 interface IProps {
@@ -382,12 +395,12 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleMapMopdal} />
             <MapModal>
-            <LocationMap
-                  latitude={country.latitude}
-                  longitude={country.longitude}
-                  type={"country"}
-                  modal={true}
-                />
+              <LocationMap
+                latitude={country.latitude}
+                longitude={country.longitude}
+                type={"country"}
+                modal={true}
+              />
             </MapModal>
           </ModalContainer>
         )}
@@ -444,7 +457,17 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
           </RightIcon> */}
           <PHeader>
             <AvatarContainer>
-              <CAvatar size="lg" url={country.countryPhoto} city={true} />
+              <Square>
+                <CAvatar size="lg" url={country.countryPhoto} city={true} />
+                <LocationMapContainer onClick={toggleMapMopdal}>
+                  <LocationMap
+                    latitude={country.latitude}
+                    longitude={country.longitude}
+                    type={"country"}
+                    modal={false}
+                  />
+                </LocationMapContainer>
+              </Square>
               <LocationContainer>
                 <NameContainer>
                   <LocationName>{country.countryName}</LocationName>
@@ -459,6 +482,7 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
                   </CountText>
                 ) : null}
               </LocationContainer>
+
               {/* <InfoRow>
                 <SSText text={String(country.distance)} />
                 TIME DIFFERENCE
@@ -481,14 +505,6 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
                   </HeaderColumn>
                 </LocationHeader>
               </Link>
-              <LocationMapContainer onClick={toggleMapMopdal}>
-                <LocationMap
-                  latitude={country.latitude}
-                  longitude={country.longitude}
-                  type={"country"}
-                  modal={false}
-                />
-              </LocationMapContainer>
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>

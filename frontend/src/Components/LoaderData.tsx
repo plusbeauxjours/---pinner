@@ -6,20 +6,20 @@ import BounceLoader from "react-spinners/BounceLoader";
 const Container = styled.div<ITheme>`
   width: ${props => {
     if (props.type === "feed") {
-      return "22px";
+      return "20px";
     } else {
       return "25px";
     }
   }};
   height: ${props => {
     if (props.type === "feed") {
-      return "22px";
+      return "20px";
     } else {
       return "25px";
     }
   }};
   display: block;
-  padding-left 3px;
+  padding-top: 6px;
 `;
 
 interface ITheme {
@@ -36,7 +36,7 @@ const Loader: React.FunctionComponent<IProps> = ({ type }) => (
     {type !== "feed" ? (
       <LoadingOverlay
         active={true}
-        spinner={<BounceLoader size={20} color={"#999"} />}
+        spinner={<BounceLoader size={12} color={"#999"} />}
         fadeSpeed={500}
       />
     ) : null}

@@ -62,6 +62,8 @@ def resolve_trip_profile(self, info, **kwargs):
     except models.City.DoesNotExist:
         raise GraphQLError('Trip not found')
 
+    count = user.movenotification.values('id').filter(city__city_id=cityId).count()
+
     usersBefore = city.movenotification.filter(Q(start_date__lte=(endDate)) |
                                                Q(end_date__gte=(startDate))).order_by('actor_id').distinct('actor_id')
 
@@ -69,7 +71,7 @@ def resolve_trip_profile(self, info, **kwargs):
 
     coffees = city.coffee.filter(created_at__range=(startDate, endDate))[:42]
 
-    return types.TripProfileResponse(city=city, usersBefore=usersBefore, userCount=userCount, coffees=coffees)
+    return types.TripProfileResponse(count=count, city=city, usersBefore=usersBefore, userCount=userCount, coffees=coffees)
 
 
 @login_required
@@ -361,4 +363,3 @@ def resolve_get_city_photo(self, info, **kwargs):
 
     except models.City.DoesNotExist:
         return types.PhotoResponse(photo=None)
-

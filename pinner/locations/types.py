@@ -68,6 +68,7 @@ class CityProfileResponse(graphene.ObjectType):
 
 class TripProfileResponse(graphene.ObjectType):
     city = graphene.Field(CityType)
+    count = graphene.Int()
     usersBefore = graphene.List(notification_types.MoveNotificationType)
     userCount = graphene.Int()
     coffees = graphene.List(coffee_types.CoffeeType)
