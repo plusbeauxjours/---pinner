@@ -298,6 +298,7 @@ const LocationMapContainer = styled.div`
 
 const MapModal = styled(Modal)`
   border: 1px solid ${props => props.theme.borderColor};
+  border-radius: 3px;
   display: flex;
   height: 701px;
   width: 701px;

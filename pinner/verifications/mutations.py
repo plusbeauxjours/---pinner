@@ -54,17 +54,18 @@ class StartPhoneVerification(graphene.Mutation):
 
         try:
             existingVerification = models.Verification.objects.get(
-                payload=phoneNumber
+                payload=phoneNumber,
+                target="phone"
             )
             existingVerification.delete()
 
         except IntegrityError as e:
             raise Exception("Wrong Phone Number")
 
-        finally:
+        except models.Verification.DoesNotExist:
             newVerification = models.Verification.objects.create(
                 payload=phoneNumber,
-                target="Phone"
+                target="phone"
             )
             newVerification.save()
             try:
@@ -72,6 +73,9 @@ class StartPhoneVerification(graphene.Mutation):
                 return types.StartPhoneVerificationResponse(ok=True)
             except:
                 return types.StartPhoneVerificationResponse(ok=False)
+
+        except:
+            raise Exception('Phone number is already verified')
 
 
 class CompletePhoneVerification(graphene.Mutation):
@@ -110,6 +114,8 @@ class CompletePhoneVerification(graphene.Mutation):
                 exstingUserProfile = users_models.Profile.objects.get(phone_number=phoneNumber)
                 exstingUserProfile.is_verified_phone_number = True
                 exstingUserProfile.save()
+                verification.verified = True
+                verification.save()
                 token = get_token(exstingUserProfile.user)
                 return types.CompletePhoneVerificationResponse(ok=True, token=token)
 
@@ -131,10 +137,10 @@ class CompletePhoneVerification(graphene.Mutation):
                         )
                         newUserProfile.is_verified_phone_number = True
                         newUserProfile.save()
+                        verification.verified = True
+                        verification.save()
                         return types.CompletePhoneVerificationResponse(ok=True, token=token)
 
-            verification.verified = True
-            verification.save()
         except models.Verification.DoesNotExist:
             raise Exception('Verification key not valid')
 
@@ -161,12 +167,12 @@ class StartEditPhoneVerification(graphene.Mutation):
         try:
             existingPhoneNumber = users_models.Profile.objects.get(phone_number=phoneNumber)
             if existingPhoneNumber:
-                return types.StartEditPhoneVerificationResponse(ok=False)
+                raise Exception('Phone number is already verified')
 
         except users_models.Profile.DoesNotExist:
             newVerification = models.Verification.objects.create(
                 payload=payload,
-                target="Phone"
+                target="phone"
             )
             newVerification.save()
             try:
@@ -174,8 +180,6 @@ class StartEditPhoneVerification(graphene.Mutation):
                 return types.StartEditPhoneVerificationResponse(ok=True)
             except:
                 return types.StartEditPhoneVerificationResponse(ok=False)
-        except:
-            raise Exception('Phone number is already verified')
 
 
 class CompleteEditPhoneVerification(graphene.Mutation):
@@ -208,6 +212,8 @@ class CompleteEditPhoneVerification(graphene.Mutation):
             profile.country_phone_code = countryPhoneCode
             profile.is_verified_phone_number = True
             profile.save()
+            verification.verified = True
+            verification.save()
             return types.CompleteEditPhoneVerificationResponse(ok=True,
                                                                phoneNumber=phoneNumber,
                                                                countryPhoneNumber=countryPhoneNumber,
