@@ -192,6 +192,15 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       verificationKey: ""
     };
   }
+  public componentDidUpdate(prevProps) {
+    const newProps = this.props;
+    if (prevProps.match.params !== newProps.match.params) {
+      this.setState({
+        imagePreviewUrl: "",
+        file: ""
+      });
+    }
+  }
   public render() {
     const { history } = this.props;
     const {
@@ -583,6 +592,10 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                                                                     this
                                                                       .closeVerifyPhoneNumberModal
                                                                   }
+                                                                  markAsMain={
+                                                                    this
+                                                                      .markAsMain
+                                                                  }
                                                                 />
                                                               );
                                                             }}
@@ -615,6 +628,10 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       </LogUserInMutation>
     );
   }
+  public markAsMain = (uuid, avatarUrl) => {
+    this.markAsMainFn({ variables: { uuid } });
+    this.setState({ avatarUrl });
+  };
   public onCompletedEditProfile = data => {
     const { editProfile } = data;
     if (editProfile) {
@@ -1004,9 +1021,11 @@ class EditProfileContainer extends React.Component<IProps, IState> {
         variables: { userName: username }
       });
       if (data) {
-        data.getAvatars.avatars.find(i => i.isMain === true).isMain = false;
         data.getAvatars.avatars.find(
-          i => i.uuid === markAsMain.uuid
+          i => i.uuid === markAsMain.preAvatarUUID
+        ).isMain = false;
+        data.getAvatars.avatars.find(
+          i => i.uuid === markAsMain.newAvatarUUID
         ).isMain = true;
         cache.writeQuery({
           query: GET_AVATARS,

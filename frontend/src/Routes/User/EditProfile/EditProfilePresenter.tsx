@@ -363,7 +363,7 @@ const AvatarDeleteIcon = styled.div`
   svg {
     opacity: 0;
     transition: all 0.1s ease-in-out;
-    fill: ${props => props.theme.iconColor};
+    fill: ${props => props.theme.whiteColor};
   }
 `;
 
@@ -379,16 +379,19 @@ const ModalAvatarImage = styled.img`
 const RedDotIcon = styled.div`
   z-index: 20;
   position: absolute;
-  top: 18px;
-  left: 18px;
+  top: 10px;
+  left: 10px;
   cursor: pointer;
+  svg {
+    fill: #cc0000;
+  }
 `;
 
 const WhiteDotIcon = styled(RedDotIcon)`
   svg {
     opacity: 0;
     transition: all 0.1s ease-in-out;
-    fill: ${props => props.theme.iconColor};
+    fill: ${props => props.theme.whiteColor};
   }
 `;
 
@@ -663,6 +666,7 @@ interface IProps {
   onSubmitVerifyPhone: (event: React.FormEvent<HTMLFormElement>) => void;
   onChangeVerifyPhone: (event: React.ChangeEvent<HTMLInputElement>) => void;
   closeVerifyPhoneNumberModal: () => void;
+  markAsMain: (uuid: string, avatarUrl: string) => void;
 }
 
 const EditProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -736,7 +740,8 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   verificationKey,
   onSubmitVerifyPhone,
   onChangeVerifyPhone,
-  closeVerifyPhoneNumberModal
+  closeVerifyPhoneNumberModal,
+  markAsMain
 }) => {
   return (
     <>
@@ -890,9 +895,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                     {!avatarS.isMain && isSelf ? (
                       <WhiteDotIcon
                         onClick={() =>
-                          markAsMainFn({
-                            variables: { uuid: avatarS.uuid }
-                          })
+                          markAsMain(avatarS.uuid, avatarS.thumbnail)
                         }
                       >
                         <WhiteDot />

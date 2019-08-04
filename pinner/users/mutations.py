@@ -363,6 +363,7 @@ class MarkAsMain(graphene.Mutation):
                 prevMainAvatar.is_main = False
                 newMainAvatar.is_main = True
                 user.profile.avatarUrl = newMainAvatar.thumbnail
+                user.profile.save()
                 prevMainAvatar.save()
                 newMainAvatar.save()
                 print(prevMainAvatar.uuid)
@@ -371,6 +372,7 @@ class MarkAsMain(graphene.Mutation):
                 newMainAvatar = models.Avatar.objects.get(uuid=uuid)
                 newMainAvatar.is_main = True
                 user.profile.avatarUrl = newMainAvatar.thumbnail
+                user.profile.save()
                 newMainAvatar.save()
                 return types.MarkAsMainResponse(ok=True, avatar=newMainAvatar,  preAvatarUUID=None, newAvatarUUID=uuid)
 
@@ -378,6 +380,7 @@ class MarkAsMain(graphene.Mutation):
             newMainAvatar = models.Avatar.objects.get(uuid=uuid)
             newMainAvatar.is_main = True
             user.profile.avatarUrl = newMainAvatar.thumbnail
+            user.profile.save()
             newMainAvatar.save()
             return types.MarkAsMainResponse(ok=True, avatar=newMainAvatar, preAvatarUUID=None, newAvatarUUID=uuid)
 
