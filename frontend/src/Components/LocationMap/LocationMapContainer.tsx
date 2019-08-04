@@ -2,14 +2,13 @@ import React from "react";
 import LocationMapPresenter from "./LocationMapPresenter";
 import ReactDOM from "react-dom";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { geoCode } from "../../mapHelpers";
 
 interface IProps extends RouteComponentProps<any> {
   google: any;
-  latitude?: number;
-  longitude?: number;
+  latitude: number;
+  longitude: number;
   modal: boolean;
-  countryName?: string;
+  type: string;
 }
 
 class LocationMapContainer extends React.Component<IProps> {
@@ -19,40 +18,27 @@ class LocationMapContainer extends React.Component<IProps> {
   constructor(props) {
     super(props);
     this.mapRef = React.createRef();
-    const { latitude, longitude, countryName } = this.props;
-    console.log(countryName);
-    if (countryName) {
-      this.getPosition(countryName);
-    } else {
-      this.loadMap(latitude, longitude);
-    }
+    const { latitude, longitude, type } = this.props;
+    this.loadMap(latitude, longitude, type);
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
     if (prevProps.match.params.cityId !== newProps.match.params.cityId) {
-      const { latitude, longitude } = this.props;
-      this.loadMap(latitude, longitude);
+      const { latitude, longitude, type } = this.props;
+      this.loadMap(latitude, longitude, type);
     }
   }
   public render() {
     const { modal } = this.props;
     return <LocationMapPresenter modal={modal} mapRef={this.mapRef} />;
   }
-  public getPosition = async countryName => {
-    console.log(countryName);
-    const result = await geoCode(countryName);
-    console.log(result);
-    if (result !== false) {
-      const { latitude, longitude } = result;
-      this.loadMap(latitude, longitude, "country");
-    }
-  };
-  public loadMap = async (lat, lng, zoom?: string) => {
+
+  public loadMap = async (lat: number, lng: number, type: string) => {
     const { google } = this.props;
     const maps = await google.maps;
     const mapNode = await ReactDOM.findDOMNode(this.mapRef.current);
     if (!mapNode) {
-      this.loadMap(lat, lng, zoom);
+      this.loadMap(lat, lng, type);
       return;
     }
     const mapConfig: google.maps.MapOptions = {
@@ -61,7 +47,7 @@ class LocationMapContainer extends React.Component<IProps> {
         lng
       },
       disableDefaultUI: true,
-      zoom: zoom === "country" ? 5 : 13,
+      zoom: type === "country" ? 5 : 13,
       styles:
         localStorage.getItem("isDarkMode") === "true"
           ? [

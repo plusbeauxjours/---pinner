@@ -382,7 +382,12 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleMapMopdal} />
             <MapModal>
-              <LocationMap countryName={country.countryName} modal={true} />
+            <LocationMap
+                  latitude={country.latitude}
+                  longitude={country.longitude}
+                  type={"country"}
+                  modal={true}
+                />
             </MapModal>
           </ModalContainer>
         )}
@@ -477,7 +482,12 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
                 </LocationHeader>
               </Link>
               <LocationMapContainer onClick={toggleMapMopdal}>
-                <LocationMap countryName={country.countryName} modal={false} />
+                <LocationMap
+                  latitude={country.latitude}
+                  longitude={country.longitude}
+                  type={"country"}
+                  modal={false}
+                />
               </LocationMapContainer>
             </AvatarContainer>
             <UserContainer>

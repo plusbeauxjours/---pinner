@@ -11,6 +11,8 @@ export const COUNTRY_PROFILE = gql`
     countryProfile(page: $page, countryCode: $countryCode) {
       count
       country {
+        latitude
+        longitude
         countryName
         countryCode
         countryPhoto
