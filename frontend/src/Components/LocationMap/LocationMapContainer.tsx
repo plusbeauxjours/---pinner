@@ -53,34 +53,10 @@ class LocationMapContainer extends React.Component<IProps> {
           ? [
               {
                 featureType: "all",
-                elementType: "geometry",
-                stylers: [
-                  {
-                    saturation: 0
-                  },
-                  {
-                    lightness: 0
-                  },
-                  {
-                    visibility: "on"
-                  },
-                  {
-                    gamma: 1
-                  }
-                ]
-              },
-              {
-                featureType: "all",
                 elementType: "labels.text.fill",
                 stylers: [
                   {
-                    saturation: 36
-                  },
-                  {
-                    color: "#e0e9f2"
-                  },
-                  {
-                    lightness: 40
+                    color: "#e6e6e6"
                   }
                 ]
               },
@@ -89,13 +65,16 @@ class LocationMapContainer extends React.Component<IProps> {
                 elementType: "labels.text.stroke",
                 stylers: [
                   {
-                    visibility: "off"
+                    visibility: "on"
                   },
                   {
-                    color: "#000000"
+                    color: "#193341"
                   },
                   {
-                    lightness: 0
+                    weight: 0.2
+                  },
+                  {
+                    gamma: 0.84
                   }
                 ]
               },
@@ -109,17 +88,22 @@ class LocationMapContainer extends React.Component<IProps> {
                 ]
               },
               {
-                featureType: "administrative",
-                elementType: "labels.text",
+                featureType: "all",
                 stylers: [
                   {
-                    visibility: "simplified"
+                    saturation: 0
                   },
                   {
-                    saturation: -100
-                  },
+                    hue: "#003569"
+                  }
+                ]
+              },
+              {
+                featureType: "administrative",
+                elementType: "geometry",
+                stylers: [
                   {
-                    lightness: -43
+                    color: "#1a3541"
                   }
                 ]
               },
@@ -128,286 +112,51 @@ class LocationMapContainer extends React.Component<IProps> {
                 elementType: "geometry",
                 stylers: [
                   {
-                    color: "#5a5858"
-                  },
-                  {
-                    lightness: 0
-                  },
-                  {
-                    visibility: "on"
-                  },
-                  {
-                    weight: 1.0
-                  },
-                  {
-                    gamma: 1
-                  },
-                  {
-                    saturation: -54
+                    color: "#212121"
                   }
                 ]
               },
-              {
-                featureType: "poi",
-                elementType: "geometry",
-                stylers: [
-                  {
-                    color: "#6a6969"
-                  },
-                  {
-                    lightness: 0
-                  }
-                ]
-              },
-              {
-                featureType: "poi.attraction",
-                elementType: "geometry",
-                stylers: [
-                  {
-                    visibility: "on"
-                  }
-                ]
-              },
-              {
-                featureType: "poi.attraction",
-                elementType: "geometry.fill",
-                stylers: [
-                  {
-                    visibility: "off"
-                  }
-                ]
-              },
-              {
-                featureType: "poi.attraction",
-                elementType: "geometry.stroke",
-                stylers: [
-                  {
-                    visibility: "off"
-                  }
-                ]
-              },
-              {
-                featureType: "poi.business",
-                elementType: "geometry.fill",
-                stylers: [
-                  {
-                    visibility: "on"
-                  }
-                ]
-              },
+
               {
                 featureType: "poi.park",
                 elementType: "geometry",
                 stylers: [
                   {
-                    color: "#698577"
-                  }
-                ]
-              },
-              {
-                featureType: "poi.park",
-                elementType: "labels",
-                stylers: [
-                  {
-                    visibility: "off"
+                    color: "#193341"
                   }
                 ]
               },
               {
                 featureType: "road",
-                elementType: "geometry.stroke",
                 stylers: [
                   {
-                    visibility: "simplified"
-                  }
+                    saturation: -70
+                  },
+                  { lightness: -70 }
                 ]
               },
               {
                 featureType: "road",
-                elementType: "labels",
-                stylers: [
-                  {
-                    invert_lightness: true
-                  }
-                ]
-              },
-              {
-                featureType: "road",
-                elementType: "labels.icon",
+                elementType: "labels.text",
                 stylers: [
                   {
                     visibility: "off"
-                  },
-                  {
-                    saturation: -100
-                  }
-                ]
-              },
-              {
-                featureType: "road.highway",
-                elementType: "geometry.fill",
-                stylers: [
-                  {
-                    lightness: 0
-                  },
-                  {
-                    color: "#474747"
-                  }
-                ]
-              },
-              {
-                featureType: "road.highway",
-                elementType: "geometry.stroke",
-                stylers: [
-                  {
-                    color: "#000000"
-                  },
-                  {
-                    lightness: 0
-                  },
-                  {
-                    weight: 0.2
-                  },
-                  {
-                    visibility: "off"
-                  }
-                ]
-              },
-              {
-                featureType: "road.highway",
-                elementType: "labels.text.fill",
-                stylers: [
-                  {
-                    invert_lightness: true
-                  }
-                ]
-              },
-              {
-                featureType: "road.highway",
-                elementType: "labels.icon",
-                stylers: [
-                  {
-                    visibility: "off"
-                  },
-                  {
-                    saturation: -100
-                  }
-                ]
-              },
-              {
-                featureType: "road.highway.controlled_access",
-                elementType: "geometry.fill",
-                stylers: [
-                  {
-                    color: "#a1a1a1"
-                  },
-                  {
-                    visibility: "off"
-                  }
-                ]
-              },
-              {
-                featureType: "road.highway.controlled_access",
-                elementType: "labels",
-                stylers: [
-                  {
-                    visibility: "off"
-                  }
-                ]
-              },
-              {
-                featureType: "road.arterial",
-                elementType: "geometry",
-                stylers: [
-                  {
-                    lightness: 0
-                  },
-                  {
-                    visibility: "on"
-                  },
-                  {
-                    color: "#474747"
-                  }
-                ]
-              },
-              {
-                featureType: "road.arterial",
-                elementType: "geometry.fill",
-                stylers: [
-                  {
-                    color: "#454545"
-                  }
-                ]
-              },
-              {
-                featureType: "road.arterial",
-                elementType: "labels",
-                stylers: [
-                  {
-                    saturation: -80
-                  },
-                  {
-                    lightness: 42
-                  },
-                  {
-                    color: "#989898"
-                  }
-                ]
-              },
-              {
-                featureType: "road.arterial",
-                elementType: "labels.icon",
-                stylers: [
-                  {
-                    saturation: -100
-                  }
-                ]
-              },
-              {
-                featureType: "road.local",
-                elementType: "geometry",
-                stylers: [
-                  {
-                    color: "#474747"
-                  },
-                  {
-                    lightness: 0
-                  }
-                ]
-              },
-              {
-                featureType: "road.local",
-                elementType: "labels",
-                stylers: [
-                  {
-                    lightness: 8
-                  },
-                  {
-                    color: "#909090"
-                  }
-                ]
-              },
-              {
-                featureType: "road.local",
-                elementType: "labels.icon",
-                stylers: [
-                  {
-                    saturation: -100
                   }
                 ]
               },
               {
                 featureType: "transit",
-                elementType: "geometry",
                 stylers: [
                   {
-                    color: "#6d6d6d"
-                  },
+                    visibility: "off"
+                  }
+                ]
+              },
+              {
+                featureType: "poi",
+                stylers: [
                   {
-                    lightness: 0
-                  },
-                  {
-                    visibility: "simplified"
+                    visibility: "off"
                   }
                 ]
               },
@@ -416,10 +165,7 @@ class LocationMapContainer extends React.Component<IProps> {
                 elementType: "geometry",
                 stylers: [
                   {
-                    color: "#616e74"
-                  },
-                  {
-                    lightness: 0
+                    color: "#193341"
                   }
                 ]
               }
@@ -437,10 +183,28 @@ class LocationMapContainer extends React.Component<IProps> {
                 ]
               },
               {
+                featureType: "all",
+                elementType: "labels.icon",
+                stylers: [
+                  {
+                    visibility: "off"
+                  }
+                ]
+              },
+              {
                 featureType: "road",
                 stylers: [
                   {
                     saturation: -70
+                  }
+                ]
+              },
+              {
+                featureType: "road",
+                elementType: "labels.text",
+                stylers: [
+                  {
+                    visibility: "off"
                   }
                 ]
               },
@@ -476,8 +240,11 @@ class LocationMapContainer extends React.Component<IProps> {
     this.map = new maps.Map(mapNode, mapConfig);
     const userMarkerOptions: google.maps.MarkerOptions = {
       icon: {
-        path: maps.SymbolPath.CIRCLE,
-        scale: 7
+        path: google.maps.SymbolPath.CIRCLE,
+        strokeColor: "#999",
+        scale: 25,
+        strokeWeight: 50,
+        strokeOpacity: 0.3
       },
       position: {
         lat,
