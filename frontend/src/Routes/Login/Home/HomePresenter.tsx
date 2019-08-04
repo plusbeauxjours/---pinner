@@ -91,7 +91,7 @@ const ModalLink = styled.div`
   align-items: center;
   justify-content: center;
   :not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -141,7 +141,7 @@ const HomePresenter: React.FunctionComponent<IProps> = ({
             </ModalLink>
             <Link
               to={{
-                pathname: `/phone-login`,
+                pathname: `/approach`,
                 state: {
                   latitude,
                   longitude,

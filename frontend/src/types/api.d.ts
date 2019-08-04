@@ -421,27 +421,6 @@ export interface GetCityPhotoVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetCountryPhoto
-// ====================================================
-
-export interface GetCountryPhoto_getCountryPhoto {
-  __typename: "PhotoResponse";
-  photo: string | null;
-}
-
-export interface GetCountryPhoto {
-  getCountryPhoto: GetCountryPhoto_getCountryPhoto;
-}
-
-export interface GetCountryPhotoVariables {
-  countryCode?: string | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL mutation operation: signUp
 // ====================================================
 
@@ -1027,6 +1006,8 @@ export interface CountryProfile_countryProfile_country_continent {
 
 export interface CountryProfile_countryProfile_country {
   __typename: "CountryType";
+  latitude: number | null;
+  longitude: number | null;
   countryName: string | null;
   countryCode: string | null;
   countryPhoto: string | null;
@@ -1436,6 +1417,48 @@ export interface RecommandUsersVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: StartPhoneVerification
+// ====================================================
+
+export interface StartPhoneVerification_startPhoneVerification {
+  __typename: "StartPhoneVerificationResponse";
+  ok: boolean | null;
+}
+
+export interface StartPhoneVerification {
+  startPhoneVerification: StartPhoneVerification_startPhoneVerification;
+}
+
+export interface StartPhoneVerificationVariables {
+  phoneNumber: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: StartEmailVerification
+// ====================================================
+
+export interface StartEmailVerification_startEmailVerification {
+  __typename: "StartEmailVerificationResponse";
+  ok: boolean | null;
+}
+
+export interface StartEmailVerification {
+  startEmailVerification: StartEmailVerification_startEmailVerification;
+}
+
+export interface StartEmailVerificationVariables {
+  emailAddress: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ReportLocation
 // ====================================================
 
@@ -1454,27 +1477,6 @@ export interface ReportLocationVariables {
   currentCityId?: string | null;
   currentCityName: string;
   currentCountryCode: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: StartPhoneVerification
-// ====================================================
-
-export interface StartPhoneVerification_startPhoneVerification {
-  __typename: "StartPhoneVerificationResponse";
-  ok: boolean | null;
-}
-
-export interface StartPhoneVerification {
-  startPhoneVerification: StartPhoneVerification_startPhoneVerification;
-}
-
-export interface StartPhoneVerificationVariables {
-  phoneNumber: string;
 }
 
 /* tslint:disable */
@@ -1702,6 +1704,39 @@ export interface RequestCoffeeVariables {
 // GraphQL query operation: TripProfile
 // ====================================================
 
+export interface TripProfile_tripProfile_city_country_continent {
+  __typename: "ContinentType";
+  id: string;
+  continentName: string | null;
+  continentCode: string | null;
+  continentPhoto: string | null;
+}
+
+export interface TripProfile_tripProfile_city_country {
+  __typename: "CountryType";
+  countryName: string | null;
+  countryPhoto: string | null;
+  countryCode: string | null;
+  continent: TripProfile_tripProfile_city_country_continent | null;
+}
+
+export interface TripProfile_tripProfile_city {
+  __typename: "CityType";
+  id: string;
+  latitude: number | null;
+  longitude: number | null;
+  cityId: string | null;
+  cityName: string | null;
+  cityPhoto: string | null;
+  country: TripProfile_tripProfile_city_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
+  userCount: number | null;
+  userLogCount: number | null;
+  count: number | null;
+  diff: number | null;
+}
+
 export interface TripProfile_tripProfile_usersBefore_actor_profile_currentCity_country {
   __typename: "CountryType";
   countryName: string | null;
@@ -1756,45 +1791,13 @@ export interface TripProfile_tripProfile_coffees {
   host: TripProfile_tripProfile_coffees_host;
 }
 
-export interface TripProfile_tripProfile_city_country_continent {
-  __typename: "ContinentType";
-  id: string;
-  continentName: string | null;
-  continentCode: string | null;
-  continentPhoto: string | null;
-}
-
-export interface TripProfile_tripProfile_city_country {
-  __typename: "CountryType";
-  countryName: string | null;
-  countryPhoto: string | null;
-  countryCode: string | null;
-  continent: TripProfile_tripProfile_city_country_continent | null;
-}
-
-export interface TripProfile_tripProfile_city {
-  __typename: "CityType";
-  id: string;
-  latitude: number | null;
-  longitude: number | null;
-  cityId: string | null;
-  cityName: string | null;
-  cityPhoto: string | null;
-  country: TripProfile_tripProfile_city_country;
-  likeCount: number | null;
-  isLiked: boolean | null;
-  userCount: number | null;
-  userLogCount: number | null;
-  count: number | null;
-  diff: number | null;
-}
-
 export interface TripProfile_tripProfile {
   __typename: "TripProfileResponse";
+  city: TripProfile_tripProfile_city | null;
+  count: number | null;
   usersBefore: (TripProfile_tripProfile_usersBefore | null)[] | null;
   userCount: number | null;
   coffees: (TripProfile_tripProfile_coffees | null)[] | null;
-  city: TripProfile_tripProfile_city | null;
 }
 
 export interface TripProfile {
@@ -2646,7 +2649,8 @@ export interface MarkAsMain_markAsMain_avatar {
 export interface MarkAsMain_markAsMain {
   __typename: "MarkAsMainResponse";
   ok: boolean | null;
-  uuid: string | null;
+  preAvatarUUID: string | null;
+  newAvatarUUID: string | null;
   avatar: MarkAsMain_markAsMain_avatar | null;
 }
 

@@ -22,7 +22,6 @@ interface IState {
   longitude: number;
   cityId: string;
   cityName: string;
-  countryCode: string;
   countryPhoneNumber: string;
   countryPhoneCode: string;
   phoneNumber: string;
@@ -41,7 +40,6 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
       longitude: state.longitude,
       cityId: state.cityId,
       cityName: state.cityName,
-      countryCode: state.countryCode,
       countryPhoneNumber: state.countryPhoneNumber,
       countryPhoneCode: state.countryPhoneCode,
       phoneNumber: state.phoneNumber,

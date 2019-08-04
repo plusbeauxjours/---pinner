@@ -7,10 +7,9 @@ import Button from "../../../Components/Button";
 import { countries } from "../../../countryData";
 
 const Container = styled.div`
-  display: grid;
-  grid-gap: 20px;
-  grid-template-rows: 2 40px;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   padding: 20px;
   height: 100%;
@@ -79,19 +78,32 @@ const PhoneNumberContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: flex-end;
   align-items: baseline;
+`;
+
+const EmailAddressContainer = styled(PhoneNumberContainer)`
+  border-bottom: 1px solid ${props => props.theme.greyColor};
 `;
 
 const Text = styled.div`
   text-align: inline;
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 30px;
 `;
 
 const TextContainter = styled.div`
   margin: 0 10px 0 10px;
   line-height: 13px;
+`;
+
+const CenterText = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const CountryCode = styled.div`
@@ -122,6 +134,10 @@ const Input = styled.input`
   }
 `;
 
+const EmailInput = styled(Input)`
+  width: 285px;
+`;
+
 const SearchModalContainer = styled(ModalContainer)`
   z-index: 10;
 `;
@@ -140,7 +156,7 @@ const CountryRow = styled.div`
   padding-bottom: 10px;
   cursor: pointer;
   &:not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
   &:hover {
     background-color: ${props => props.theme.hoverColor};
@@ -182,38 +198,128 @@ const CountryPhoneNumber = styled.div`
 `;
 
 interface IProps {
-  countryCode: string;
   countryPhoneNumber: string;
+  countryPhoneCode: string;
   phoneNumber: string;
   modalOpen: boolean;
-  loading: boolean;
+  emailLoading: boolean;
+  phoneLoading: boolean;
+  isEmailSubmitted: boolean;
+  toggleEmailSubmitted: () => void;
   onInputChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onSubmitPhone: (event: React.FormEvent<HTMLFormElement>) => void;
+  onSubmitEmail: (event: React.FormEvent<HTMLFormElement>) => void;
   back: (event) => void;
   toggleModal: () => void;
   onSelectCountry: (
     countryPhoneCode: string,
     countryPhoneNumber: string
   ) => void;
+  emailAddress: string;
+  emailSignIn: boolean;
+  toggleEmailSignIn: () => void;
 }
 
-const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
-  countryCode,
+const ApproachPresenter: React.FunctionComponent<IProps> = ({
   phoneNumber,
   countryPhoneNumber,
+  countryPhoneCode,
   onInputChange,
-  onSubmit,
-  loading,
+  onSubmitPhone,
+  onSubmitEmail,
+  emailLoading,
+  phoneLoading,
+  isEmailSubmitted,
+  toggleEmailSubmitted,
   back,
   modalOpen,
   toggleModal,
-  onSelectCountry
+  onSelectCountry,
+  emailAddress,
+  emailSignIn,
+  toggleEmailSignIn
 }) => {
-  if (loading) {
+  if (emailLoading || phoneLoading) {
     return <Loader />;
-  } else if (!loading) {
+  } else if (!emailLoading && !phoneLoading && emailSignIn) {
+    return (
+      <>
+        {modalOpen && (
+          <SearchModalContainer>
+            <SearchModalOverlay onClick={toggleModal} />
+            <SearchModal />
+          </SearchModalContainer>
+        )}
+        <ModalContainer>
+          <ModalOverlay onClick={back} />
+          <Modal>
+            <Helmet>
+              <title>Email Login . Pinner </title>
+            </Helmet>
+            {isEmailSubmitted ? (
+              <Container>
+                <TextContainter>
+                  <CenterText>
+                    <p>Check your email</p>
+                    <br />
+                    <br />
+                    <p>
+                      If we found as account with &nbsp;{emailAddress}, an email
+                      has been sent.
+                    </p>
+                    <p>Please check your email in a moment.</p>
+                    <br />
+                    <p>Didn't receive a link?</p>
+                    <br />
+                    <Underline onClick={toggleEmailSubmitted}>
+                      &nbsp;Use a different email
+                    </Underline>
+                    <Underline onClick={toggleEmailSignIn}>
+                      &nbsp;Login With Phone.
+                    </Underline>
+                  </CenterText>
+                </TextContainter>
+              </Container>
+            ) : (
+              <Container>
+                <EmailAddressContainer>
+                  <Form onSubmit={onSubmitEmail}>
+                    <EmailInput
+                      type={"email"}
+                      autoFocus={true}
+                      value={emailAddress}
+                      name={"emailAddress"}
+                      onChange={onInputChange}
+                      autoComplete={"off"}
+                    />
+                  </Form>
+                </EmailAddressContainer>
+                <TextContainter>
+                  <Text>
+                    <p>Login with your phone number?</p>
+                    <Underline onClick={toggleEmailSignIn}>
+                      &nbsp;Login With Phone.
+                    </Underline>
+                  </Text>
+                  <p>We'll email you a link that will instantly log you in.</p>
+                  <br />
+                  <ExtendedForm onSubmit={onSubmitEmail}>
+                    <SButton
+                      text={"CONTINUE"}
+                      onClick={null}
+                      inverted={phoneLoading}
+                    />
+                  </ExtendedForm>
+                </TextContainter>
+              </Container>
+            )}
+          </Modal>
+        </ModalContainer>
+      </>
+    );
+  } else if (!emailLoading && !phoneLoading && !emailSignIn) {
     return (
       <>
         {modalOpen && (
@@ -245,14 +351,16 @@ const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
             </Helmet>
             <Container>
               <PhoneNumberContainer>
-                <CountryCode onClick={toggleModal}>{countryCode}</CountryCode>
+                <CountryCode onClick={toggleModal}>
+                  {countryPhoneCode}
+                </CountryCode>
                 <CountryPhone>
                   <CountryPhoneNumber onClick={toggleModal}>
                     &nbsp;{countryPhoneNumber}&nbsp;
                   </CountryPhoneNumber>
-                  <Form onSubmit={onSubmit}>
+                  <Form onSubmit={onSubmitPhone}>
                     <Input
-                      type={"text"}
+                      type={"number"}
                       autoFocus={true}
                       value={phoneNumber}
                       name={"phoneNumber"}
@@ -265,18 +373,20 @@ const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
               <TextContainter>
                 <Text>
                   <p>Changed your phone number?</p>
-                  <Underline>&nbsp;Login With Email.</Underline>
+                  <Underline onClick={toggleEmailSignIn}>
+                    &nbsp;Login with email.
+                  </Underline>
                 </Text>
                 <p>
                   When you tap Continue, Pinner will send a text with
                   verification code. Message and data rates may apply. The
                   verified phone number can be used to login.
                 </p>
-                <ExtendedForm onSubmit={onSubmit}>
+                <ExtendedForm onSubmit={onSubmitPhone}>
                   <SButton
                     text={"CONTINUE"}
                     onClick={null}
-                    inverted={loading}
+                    inverted={phoneLoading}
                   />
                 </ExtendedForm>
               </TextContainter>
@@ -289,4 +399,4 @@ const PhoneLoginPresenter: React.FunctionComponent<IProps> = ({
   return null;
 };
 
-export default PhoneLoginPresenter;
+export default ApproachPresenter;

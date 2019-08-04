@@ -8,7 +8,7 @@ import {
 
 import Home from "../Routes/Login/Home";
 import VerifyPhone from "../Routes/Login/VerifyPhone";
-import PhoneLogin from "../Routes/Login/PhoneLogin";
+import Approach from "../Routes/Login/Approach";
 import NotFound from "./NotFound";
 
 import LoggedInPages from "./LoggedInPages";
@@ -22,8 +22,8 @@ interface IProps {
 const LoggedOutPages = () => (
   <Switch>
     <Route path="/" exact={true} component={Home} />
-    <Route path="/verify-phone" component={VerifyPhone} />
-    <Route path="/phone-login" component={PhoneLogin} />
+    <Route path="/verification" component={VerifyPhone} />
+    <Route path="/approach" component={Approach} />
     <Route path="/404" exact={true} component={NotFound} />
     <Redirect from="*" to="/" />
   </Switch>

@@ -7,3 +7,11 @@ export const PHONE_SIGN_IN = gql`
     }
   }
 `;
+
+export const EMAIL_SIGN_IN = gql`
+  mutation StartEmailVerification($emailAddress: String!) {
+    startEmailVerification(emailAddress: $emailAddress) {
+      ok
+    }
+  }
+`;
