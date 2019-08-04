@@ -210,20 +210,29 @@ class ApproachContainer extends React.Component<
   };
   public onSubmitEmail: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
-    const { isEmailSubmitted } = this.state;
-    if (!isEmailSubmitted) {
-      this.emailSignInFn();
-      this.setState({
-        isEmailSubmitted: true
-      });
+    const { isEmailSubmitted, emailAddress } = this.state;
+    if (emailAddress !== "") {
+      const isValid = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+        emailAddress
+      );
+      if (isValid) {
+        if (!isEmailSubmitted) {
+          this.emailSignInFn();
+          this.setState({
+            isEmailSubmitted: true
+          });
+        }
+      } else {
+        toast.error("Please write a valid email");
+      }
     } else {
-      toast.error("Please write a valid phone number");
+      toast.error("Please write a email");
     }
   };
   public onSubmitPhone: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
     const { countryPhoneNumber, phoneNumber, isPhoneSubmitted } = this.state;
-    if (phoneNumber) {
+    if (phoneNumber !== "") {
       const phone = `${countryPhoneNumber}${
         phoneNumber.startsWith("0") ? phoneNumber.substring(1) : phoneNumber
       }`;
