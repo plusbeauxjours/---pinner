@@ -26,6 +26,8 @@ class Continent (config_models.TimeStampedModel):
 
 class Country (config_models.TimeStampedModel):
 
+    latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
     country_code = models.CharField(max_length=10, null=True, blank=True)
     country_name = models.CharField(max_length=50, null=True, blank=True)
     country_name_native = models.CharField(max_length=50, null=True, blank=True)

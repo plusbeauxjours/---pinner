@@ -194,6 +194,8 @@ class EditProfile(graphene.Mutation):
                     countryPhone = currentCountry['phone']
                     countryEmoji = currentCountry['emoji']
                     continentCode = currentCountry['continent']
+                    latitude = currentCountry['latitude']
+                    longitude = currentCountry['longitude']
 
                     try:
                         continent = location_models.Continent.objects.get(continent_code=continentCode)
@@ -241,6 +243,8 @@ class EditProfile(graphene.Mutation):
                     country_emoji=countryEmoji,
                     country_photo=countryPhotoURL,
                     continent=continent,
+                    latitude=latitude,
+                    longitude=longitude
                 )
 
             try:
@@ -256,6 +260,8 @@ class EditProfile(graphene.Mutation):
                     countryPhone = currentCountry['phone']
                     countryEmoji = currentCountry['emoji']
                     continentCode = currentCountry['continent']
+                    latitude = currentCountry['latitude']
+                    longitude = currentCountry['longitude']
 
                     try:
                         continent = location_models.Continent.objects.get(continent_code=continentCode)
@@ -303,6 +309,8 @@ class EditProfile(graphene.Mutation):
                     country_emoji=countryEmoji,
                     country_photo=countryPhotoURL,
                     continent=continent,
+                    latitude=latitude,
+                    longitude=longitude
                 )
 
             try:
@@ -584,6 +592,8 @@ class FacebookConnect(graphene.Mutation):
                 countryPhone = currentCountry['phone']
                 countryEmoji = currentCountry['emoji']
                 continentCode = currentCountry['continent']
+                latitude = currentCountry['latitude']
+                longitude = currentCountry['longitude']
 
                 try:
                     continent = location_models.Continent.objects.get(continent_code=continentCode)
@@ -619,6 +629,8 @@ class FacebookConnect(graphene.Mutation):
                 country_emoji=countryEmoji,
                 country_photo=countryPhotoURL,
                 continent=continent,
+                latitude=latitude,
+                longitude=longitude
             )
 
         try:

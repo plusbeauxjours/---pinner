@@ -65,6 +65,8 @@ class CreateCity(graphene.Mutation):
                     countryPhone = currentCountry['phone']
                     countryEmoji = currentCountry['emoji']
                     continentCode = currentCountry['continent']
+                    latitude = currentCountry['latitude']
+                    longitude = currentCountry['longitude']
 
                     try:
                         continent = models.Continent.objects.get(continent_code=continentCode)
@@ -101,6 +103,8 @@ class CreateCity(graphene.Mutation):
                     country_emoji=countryEmoji,
                     country_photo=countryPhotoURL,
                     continent=continent,
+                    latitude=latitude,
+                    longitude=longitude
                 )
                 print("countryCC:", country)
 
@@ -175,6 +179,8 @@ class ReportLocation(graphene.Mutation):
                 countryPhone = currentCountry['phone']
                 countryEmoji = currentCountry['emoji']
                 continentCode = currentCountry['continent']
+                latitude = currentCountry['latitude']
+                longitude = currentCountry['longitude']
 
                 try:
                     continent = models.Continent.objects.get(continent_code=continentCode)
@@ -221,6 +227,8 @@ class ReportLocation(graphene.Mutation):
                 country_emoji=countryEmoji,
                 country_photo=countryPhotoURL,
                 continent=continent,
+                latitude=latitude,
+                longitude=longitude
             )
 
         try:
