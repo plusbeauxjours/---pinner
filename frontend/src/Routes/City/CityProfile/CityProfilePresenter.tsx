@@ -292,9 +292,18 @@ const LocationHeader = styled(Header)`
 
 const LocationMapContainer = styled.div`
   display: flex;
+  position: absolute;
   border-radius: 3px;
+  opacity: 0;
   height: 300px;
   width: 300px;
+  &:hover {
+    opacity: 1;
+  }
+  transition: opacity 0.3s ease-in-out;
+  @media screen and (max-width: 700px) {
+    margin-right: 0px;
+  }
 `;
 
 const MapModal = styled(Modal)`
@@ -306,6 +315,12 @@ const MapModal = styled(Modal)`
     width: 100%;
     display: flex;
   }
+`;
+
+const Square = styled.div`
+  display: flex;
+  height: 100%;
+  width: 100%;
 `;
 
 interface IProps {
@@ -462,7 +477,16 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
           </RightIcon> */}
           <PHeader>
             <AvatarContainer>
-              <CAvatar size="lg" url={city.cityPhoto} city={true} />
+              <Square>
+                <CAvatar size="lg" url={city.cityPhoto} city={true} />
+                <LocationMapContainer onClick={toggleMapMopdal}>
+                  <LocationMap
+                    latitude={city.latitude}
+                    longitude={city.longitude}
+                    modal={false}
+                  />
+                </LocationMapContainer>
+              </Square>
               <NameContainer>
                 <LocationName>{city.cityName}</LocationName>{" "}
                 <ListIcon onClick={toggleReportModal}>
@@ -510,13 +534,6 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                   </Header>
                 </Link>
               </LocationHeader>
-              <LocationMapContainer onClick={toggleMapMopdal}>
-                <LocationMap
-                  latitude={city.latitude}
-                  longitude={city.longitude}
-                  modal={false}
-                />
-              </LocationMapContainer>
             </AvatarContainer>
             <UserContainer>
               <UserNameRow>
