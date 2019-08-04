@@ -587,6 +587,8 @@ const CodeInputStyle = {
 };
 
 interface IProps {
+  phoneLoading: boolean;
+uploadAvatarLoading: boolean;
   avatarsData: any;
   avatarsLoading: boolean;
   deleteConfirmModalOpen: boolean;
@@ -670,6 +672,8 @@ interface IProps {
 }
 
 const EditProfilePresenter: React.FunctionComponent<IProps> = ({
+  phoneLoading,
+uploadAvatarLoading,
   avatarsData: { getAvatars: { avatars = null } = {} } = {},
   avatarsLoading,
   deleteConfirmModalOpen,

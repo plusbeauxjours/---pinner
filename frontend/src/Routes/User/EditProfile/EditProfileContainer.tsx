@@ -279,7 +279,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                     }}
                     onCompleted={this.onCompletedStartEditPhoneVerification}
                   >
-                    {phoneVerificationFn => {
+                    {(phoneVerificationFn, { loading: phoneLoading }) => {
                       this.phoneVerificationFn = phoneVerificationFn;
                       return (
                         <MarkAsMainMutation
@@ -369,6 +369,12 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                                                               this.deleteProfileFn = deleteProfileFn;
                                                               return (
                                                                 <EditProfilePresenter
+                                                                  phoneLoading={
+                                                                    phoneLoading
+                                                                  }
+                                                                  uploadAvatarLoading={
+                                                                    uploadAvatarLoading
+                                                                  }
                                                                   deleteConfirmModalOpen={
                                                                     deleteConfirmModalOpen
                                                                   }
@@ -685,7 +691,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     this.setState({ isPhoneSubmitted: false });
     if (startEditPhoneVerification.ok) {
       this.setState({
-        verifyPhoneNumberModalOpen: true,
+        verifyPhoneNumberModalOpen: true
       });
       toast.success("SMS Sent! Redirectiong you...");
     } else {
