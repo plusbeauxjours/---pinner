@@ -142,7 +142,7 @@ const VerifyPhonePresenter: React.FunctionComponent<IProps> = ({
                 <Underline>&nbsp;Login With Email.</Underline>
               </Text>
               <p>
-                When you tap "Continue", Pinnder will send a text with
+                When you tap Continue, Pinner will send a text with
                 verification code. Message and data rates may apply. The
                 verified phone number can be used to login. Learn what happens
                 when your number changes.

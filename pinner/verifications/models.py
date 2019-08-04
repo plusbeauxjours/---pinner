@@ -1,6 +1,7 @@
 import random
 import math
 import uuid
+import secrets
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -18,22 +19,23 @@ class Verification(config_models.TimeStampedModel):
 
     target = models.CharField(max_length=10, choices=TARGETS)
     payload = models.CharField(max_length=30)
-    key = models.CharField(max_length=40, blank=True)
+    key = models.CharField(max_length=300, blank=True)
     verified = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-created_at']
 
     def __str__(self):
-        return '{} target: {} 👉🏻 To: {} Verified:{}'.format(
-            self.id,
-            self.target,
-            self.payload,
-            self.verified,
-        )
+        return self.payload
 
 
 @receiver(pre_save, sender=Verification)
 def create_key(sender, **kwargs):
     instance = kwargs.pop('instance')
-    instance.key = str(math.floor(random.random() * 1000000)).zfill(6)
+    print(instance.target)
+    if instance.target == "phone" and instance.verified == False:
+        instance.key = str(math.floor(random.random() * 1000000)).zfill(6)
+    elif instance.target == "email" and instance.verified == False:
+        instance.key = secrets.token_urlsafe(120)
+    else:
+        pass

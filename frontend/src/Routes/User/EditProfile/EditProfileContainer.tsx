@@ -682,14 +682,13 @@ class EditProfileContainer extends React.Component<IProps, IState> {
   };
   public onCompletedStartEditPhoneVerification = data => {
     const { startEditPhoneVerification } = data;
+    this.setState({ isPhoneSubmitted: false });
     if (startEditPhoneVerification.ok) {
       this.setState({
         verifyPhoneNumberModalOpen: true,
-        isPhoneSubmitted: false
       });
       toast.success("SMS Sent! Redirectiong you...");
     } else {
-      this.setState({ isPhoneSubmitted: false });
       toast.error("Could not send you a Key");
     }
   };

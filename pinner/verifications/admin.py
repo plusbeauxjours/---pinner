@@ -4,4 +4,10 @@ from . import models
 
 @admin.register(models.Verification)
 class Verifications(admin.ModelAdmin):
-    pass
+    list_display = (
+        'id',
+        'target',
+        'payload',
+        'verified',
+        'key',
+    )
