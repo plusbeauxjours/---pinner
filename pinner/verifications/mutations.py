@@ -171,6 +171,9 @@ class StartEditPhoneVerification(graphene.Mutation):
                 raise Exception('Phone number is already verified')
 
         except users_models.Profile.DoesNotExist:
+            preVerification = models.Verification.objects.get(payload=payload,
+                                                              target="phone")
+            preVerification.delete()
             newVerification = models.Verification.objects.create(
                 payload=payload,
                 target="phone"
@@ -318,79 +321,70 @@ class CompleteEmailVerification(graphene.Mutation):
             raise Exception('Verification key not valid')
 
 
-# class StartEditPhoneVerification(graphene.Mutation):
+class StartEditEmailVerification(graphene.Mutation):
 
-#     class Arguments:
-#         phoneNumber = graphene.String(required=True)
-#         countryPhoneNumber = graphene.String(required=True)
+    class Arguments:
+        emailAddress = graphene.String(required=True)
 
-#     Output = types.StartEditPhoneVerificationResponse
+    Output = types.StartEditEmailVerificationResponse
 
-#     def mutate(self, info, **kwargs):
+    def mutate(self, info, **kwargs):
 
-#         phoneNumber = kwargs.get('phoneNumber')
-#         countryPhoneNumber = kwargs.get('countryPhoneNumber')
-#         if phoneNumber.startswith('0'):
-#             phoneNumber = phoneNumber.replace('0', '')
-#             return phoneNumber
-#         payload = countryPhoneNumber + phoneNumber
-#         print(countryPhoneNumber, phoneNumber)
-#         print(payload)
+        emailAddress = kwargs.get('emailAddress')
+        print(emailAddress)
 
-#         try:
-#             existingPhoneNumber = users_models.Profile.objects.get(phone_number=phoneNumber)
-#             if existingPhoneNumber:
-#                 raise Exception('Phone number is already verified')
+        try:
+            existingEmailAddress = users_models.Profile.objects.get(
+                email_address=emailAddress, is_verified_email_address=True)
+            if existingEmailAddress:
+                raise Exception('Email address is already verified')
 
-#         except users_models.Profile.DoesNotExist:
-#             newVerification = models.Verification.objects.create(
-#                 payload=payload,
-#                 target="phone"
-#             )
-#             newVerification.save()
-#             try:
-#                 sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
-#                 return types.StartEditPhoneVerificationResponse(ok=True)
-#             except:
-#                 return types.StartEditPhoneVerificationResponse(ok=False)
+        except users_models.Profile.DoesNotExist:
+            preVerification = models.Verification.objects.get(payload=emailAddress, target="email")
+            preVerification.delete()
+            newVerification = models.Verification.objects.create(
+                payload=emailAddress,
+                target="email"
+            )
+            newVerification.save()
+            try:
+                # sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
+                return types.StartEditEmailVerificationResponse(ok=True)
+            except:
+                newVerification.delete()
+                return types.StartEditEmailVerificationResponse(ok=False)
 
 
-# class CompleteEditPhoneVerification(graphene.Mutation):
+class CompleteEditEmailVerification(graphene.Mutation):
 
-#     class Arguments:
-#         phoneNumber = graphene.String(required=True)
-#         countryPhoneNumber = graphene.String(required=True)
-#         countryPhoneCode = graphene.String(required=True)
-#         key = graphene.String(required=True)
+    class Arguments:
+        emailAddress = graphene.String(required=True)
+        key = graphene.String(required=True)
 
-#     Output = types.CompleteEditPhoneVerificationResponse
+    Output = types.CompleteEditEmailVerificationResponse
 
-#     def mutate(self, info, **kwargs):
+    def mutate(self, info, **kwargs):
 
-#         phoneNumber = kwargs.get('phoneNumber')
-#         countryPhoneNumber = kwargs.get('countryPhoneNumber')
-#         countryPhoneCode = kwargs.get('countryPhoneCode')
-#         key = kwargs.get('key')
-#         payload = countryPhoneNumber + phoneNumber
-#         profile = info.context.user.profile
-#         print(payload)
+        emailAddress = kwargs.get('emailAddress')
+        key = kwargs.get('key')
+        payload = emailAddress
+        profile = info.context.user.profile
+        print(payload)
 
-#         try:
-#             verification = models.Verification.objects.get(
-#                 payload=payload,
-#                 key=key
-#             )
-#             profile.phone_number = phoneNumber
-#             profile.country_phone_number = countryPhoneNumber
-#             profile.country_phone_code = countryPhoneCode
-#             profile.is_verified_phone_number = True
-#             profile.save()
-#             verification.verified = True
-#             verification.save()
-#             return types.CompleteEditPhoneVerificationResponse(ok=True,
-#                                                                phoneNumber=phoneNumber,
-#                                                                countryPhoneNumber=countryPhoneNumber,
-#                                                                countryPhoneCode=countryPhoneCode)
+        try:
+            verification = models.Verification.objects.get(
+                payload=payload,
+                key=key
+            )
+            profile.email_address = emailAddress
+            profile.is_verified_email_address = True
+            profile.save()
+            verification.verified = True
+            verification.save()
+            return types.CompleteEditEmailVerificationResponse(ok=True,
+                                                               emailAddress=emailAddress,
+                                                               isVerifiedEmailAddress=True,
+                                                               )
 
-#         except models.Verification.DoesNotExist:
-#             raise Exception('Verification key not valid')
+        except models.Verification.DoesNotExist:
+            raise Exception('Verification key not valid')
