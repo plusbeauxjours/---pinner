@@ -2200,6 +2200,7 @@ export interface CompleteEditPhoneVerification_completeEditPhoneVerification {
   phoneNumber: string | null;
   countryPhoneNumber: string | null;
   countryPhoneCode: string | null;
+  isVerifiedPhoneNumber: boolean | null;
 }
 
 export interface CompleteEditPhoneVerification {

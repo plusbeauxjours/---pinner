@@ -1029,6 +1029,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
           >
             <GreyText>SETTINGS</GreyText>
           </Link>
+          {console.log(emailAddress)}
           <GreyText onClick={toggleLogoutConfirmModal}>LOGOUT</GreyText>
           <GreyText onClick={back}>CANCEL</GreyText>
         </MenuColumn>
@@ -1127,8 +1128,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
             Your bio is displayed on your profile. You can write about who you
             are and what you're looking for on Pinner. <br />
             You can also add links to your website and profiles on other
-            websites, <br />
-            like Instagram or your blog for example.
+            websites, like Instagram or your blog for example.
           </ExplainText>
           <Conatainer>
             <TitleText>PHONE</TitleText>

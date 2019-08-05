@@ -118,6 +118,7 @@ export const COMPLETE_EDIT_PHONE_VERIFICATION = gql`
       phoneNumber
       countryPhoneNumber
       countryPhoneCode
+      isVerifiedPhoneNumber
     }
   }
 `;

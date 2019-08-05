@@ -134,7 +134,6 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     if (props.history.action === "POP" || !props.location.state) {
       props.history.push(`/${state.username}`);
     }
-    console.log(state);
     this.state = {
       deleteConfirmModalOpen: false,
       logoutConfirmModalOpen: false,
@@ -677,6 +676,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
         countryPhoneNumber: newCountryPhoneNumber,
         countryPhoneCode: newCountryPhoneCode,
         isPhoneSubmitted: false,
+        isVerifiedPhoneNumber: true,
         verificationKey: "",
         newPhoneNumber: "",
         newCountryPhoneCode: localStorage.getItem("countryCode"),
@@ -717,6 +717,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
         variables: { username }
       });
       console.log(completeEditPhoneVerification);
+      console.log(data.userProfile.user.profile);
       if (data) {
         data.userProfile.user.profile.phoneNumber =
           completeEditPhoneVerification.phoneNumber;
@@ -724,6 +725,8 @@ class EditProfileContainer extends React.Component<IProps, IState> {
           completeEditPhoneVerification.countryPhoneNumber;
         data.userProfile.user.profile.countryPhoneCode =
           completeEditPhoneVerification.countryPhoneCode;
+        data.userProfile.user.profile.isVerifiedPhoneNumber = 
+          completeEditPhoneVerification.isVerifiedPhoneNumber;
         cache.writeQuery({
           query: GET_USER,
           variables: { username },

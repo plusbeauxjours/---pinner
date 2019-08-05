@@ -37,6 +37,7 @@ class CompleteEditPhoneVerificationResponse(graphene.ObjectType):
     phoneNumber = graphene.String()
     countryPhoneNumber = graphene.String()
     countryPhoneCode = graphene.String()
+    isVerifiedPhoneNumber = graphene.Boolean()
 
 
 class StartEmailVerificationResponse(graphene.ObjectType):

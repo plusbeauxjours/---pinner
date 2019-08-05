@@ -9,7 +9,6 @@ const ThemeProvider = ({ children }) => {
   const initialMode = localStorage.getItem("isDarkMode")
     ? localStorage.getItem("isDarkMode") === "true"
     : true;
-  console.log(initialMode);
   const [isDarkMode, setDarkMode] = useState<boolean>(initialMode);
   const themeObject = isDarkMode ? darkTheme : lightTheme;
   return (
@@ -25,7 +24,6 @@ function useTheme() {
     throw new Error("useTheme must be used within a ThemeProvider");
   }
   const { isDarkMode, setDarkMode } = context;
-  console.log(isDarkMode);
   const toggleTheme = useCallback(() => {
     if (isDarkMode === false) {
       setDarkMode(true);

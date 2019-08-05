@@ -926,9 +926,9 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                     countryPhoneNumber: user.profile.countryPhoneNumber,
                     countryPhoneCode: user.profile.countryPhoneCode,
                     phoneNumber: user.profile.phoneNumber,
-                    email: user.profile.email,
+                    emailAddress: user.profile.emailAddress,
                     isVerifiedPhoneNumber: user.profile.isVerifiedPhoneNumber,
-                    isVerifiedEmail: user.profile.isVerifiedEmail
+                    isVerifiedEmailAddress: user.profile.isVerifiedEmailAddress
                   }
                 }}
               >
@@ -957,9 +957,9 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                     countryPhoneNumber: user.profile.countryPhoneNumber,
                     countryPhoneCode: user.profile.countryPhoneCode,
                     phoneNumber: user.profile.phoneNumber,
-                    email: user.profile.email,
+                    emailAddress: user.profile.emailAddress,
                     isVerifiedPhoneNumber: user.profile.isVerifiedPhoneNumber,
-                    isVerifiedEmail: user.profile.isVerifiedEmail
+                    isVerifiedEmailAddress: user.profile.isVerifiedEmailAddress
                   }
                 }}
               >

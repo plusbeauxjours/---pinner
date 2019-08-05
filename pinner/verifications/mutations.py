@@ -219,7 +219,8 @@ class CompleteEditPhoneVerification(graphene.Mutation):
             return types.CompleteEditPhoneVerificationResponse(ok=True,
                                                                phoneNumber=phoneNumber,
                                                                countryPhoneNumber=countryPhoneNumber,
-                                                               countryPhoneCode=countryPhoneCode)
+                                                               countryPhoneCode=countryPhoneCode,
+                                                               isVerifiedPhoneNumber=True)
 
         except models.Verification.DoesNotExist:
             raise Exception('Verification key not valid')
