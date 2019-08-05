@@ -2219,6 +2219,27 @@ export interface CompleteEditPhoneVerificationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: StartEditEmailVerification
+// ====================================================
+
+export interface StartEditEmailVerification_startEditEmailVerification {
+  __typename: "StartEditEmailVerificationResponse";
+  ok: boolean | null;
+}
+
+export interface StartEditEmailVerification {
+  startEditEmailVerification: StartEditEmailVerification_startEditEmailVerification;
+}
+
+export interface StartEditEmailVerificationVariables {
+  emailAddress: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ToggleSettings
 // ====================================================
 

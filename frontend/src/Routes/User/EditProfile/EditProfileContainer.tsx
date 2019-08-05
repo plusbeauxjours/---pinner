@@ -16,12 +16,16 @@ import {
   CompleteEditPhoneVerification,
   CompleteEditPhoneVerificationVariables,
   StartEditPhoneVerification,
-  StartEditPhoneVerificationVariables
+  StartEditPhoneVerificationVariables,
+  StartEditEmailVerification,
+  StartEditEmailVerificationVariables
 } from "src/types/api";
 import {
   EDIT_PROFILE,
   DELETE_PROFILE,
-  COMPLETE_EDIT_PHONE_VERIFICATION
+  COMPLETE_EDIT_PHONE_VERIFICATION,
+  START_EDIT_PHONE_VERIFICATION,
+  START_EDIT_EMAIL_VERIFICATION
 } from "./EditProfileQueries";
 import { countries } from "../../../countryData";
 
@@ -30,7 +34,6 @@ import { LOG_USER_OUT } from "src/sharedQueries.local";
 import { toast } from "react-toastify";
 import { ME } from "../../../sharedQueries";
 import { LOG_USER_IN } from "../../../sharedQueries.local";
-import { START_EDIT_PHONE_VERIFICATION } from "./EditProfileQueries";
 import {
   GET_USER,
   MARK_AS_MAIN,
@@ -57,6 +60,10 @@ class StartEditPhoneVerificationMutation extends Mutation<
   StartEditPhoneVerification,
   StartEditPhoneVerificationVariables
 > {}
+class StartEditEmailVerificationMutatiojn extends Mutation<
+  StartEditEmailVerification,
+  StartEditEmailVerificationVariables
+> {}
 class CompleteEditPhoneVerificationMutation extends Mutation<
   CompleteEditPhoneVerification,
   CompleteEditPhoneVerificationVariables
@@ -68,12 +75,14 @@ interface IProps extends RouteComponentProps<any> {}
 interface IState {
   deleteConfirmModalOpen: boolean;
   logoutConfirmModalOpen: boolean;
-  profilFormModalOpen: boolean;
+
   countryModalOpen: boolean;
   editPhoneNumberModalOpen: boolean;
   editEmailAddressModalOpen: boolean;
   verifyPhoneNumberModalOpen: boolean;
+  verifyEmailAddressModalOpen: boolean;
   isPhoneSubmitted: boolean;
+  isEmailSubmitted: boolean;
   isProfileSubmitted: boolean;
 
   file: any;
@@ -103,6 +112,7 @@ interface IState {
   countryPhoneNumber: string;
   countryPhoneCode: string;
   emailAddress: string;
+  newEmailAddress: string;
   isVerifiedPhoneNumber: boolean;
   isVerifiedEmailAddress: boolean;
   confirmUsername: string;
@@ -111,7 +121,6 @@ interface IState {
   newPhoneNumber: string;
   newCountryPhoneCode: string;
   newCountryPhoneNumber: string;
-  newEmailAddress: string;
 
   verificationKey: string;
 }
@@ -126,6 +135,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
   public markAsMainFn: MutationFn;
 
   public phoneVerificationFn: MutationFn;
+  public emailVerificationFn: MutationFn;
   public completeEditPhoneVerificationFn: MutationFn;
   public logUserInFn: MutationFn;
   constructor(props) {
@@ -137,12 +147,14 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     this.state = {
       deleteConfirmModalOpen: false,
       logoutConfirmModalOpen: false,
-      profilFormModalOpen: true,
+
       countryModalOpen: false,
       editPhoneNumberModalOpen: false,
       editEmailAddressModalOpen: false,
       verifyPhoneNumberModalOpen: false,
+      verifyEmailAddressModalOpen: false,
       isPhoneSubmitted: false,
+      isEmailSubmitted: false,
       isProfileSubmitted: false,
 
       imagePreviewUrl: "",
@@ -177,6 +189,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       countryPhoneNumber: state.countryPhoneNumber || "",
       countryPhoneCode: state.countryPhoneCode || "",
       emailAddress: state.emailAddress || "",
+      newEmailAddress: props.newEmailAddress || "",
       isVerifiedPhoneNumber: state.isVerifiedPhoneNumber,
       isVerifiedEmailAddress: state.isVerifiedEmailAddress,
       confirmUsername: props.confirmUsername || "",
@@ -187,7 +200,6 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       newCountryPhoneNumber: countries.find(
         i => i.code === localStorage.getItem("countryCode")
       ).phone,
-      newEmailAddress: props.newEmailAddress || "",
       verificationKey: ""
     };
   }
@@ -205,12 +217,12 @@ class EditProfileContainer extends React.Component<IProps, IState> {
     const {
       deleteConfirmModalOpen,
       logoutConfirmModalOpen,
-      profilFormModalOpen,
+
       countryModalOpen,
       editPhoneNumberModalOpen,
       editEmailAddressModalOpen,
       verifyPhoneNumberModalOpen,
-
+      verifyEmailAddressModalOpen,
       imagePreviewUrl,
 
       avatarPreviewModalOpen,
@@ -237,6 +249,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       countryPhoneNumber,
       countryPhoneCode,
       emailAddress,
+      newEmailAddress,
       isVerifiedPhoneNumber,
       isVerifiedEmailAddress,
       confirmUsername,
@@ -244,7 +257,6 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       newPhoneNumber,
       newCountryPhoneCode,
       newCountryPhoneNumber,
-      newEmailAddress,
       verificationKey
     } = this.state;
     return (
@@ -252,384 +264,409 @@ class EditProfileContainer extends React.Component<IProps, IState> {
         {logUserInFn => {
           this.logUserInFn = logUserInFn;
           return (
-            <CompleteEditPhoneVerificationMutation
-              mutation={COMPLETE_EDIT_PHONE_VERIFICATION}
-              variables={{
-                key: verificationKey,
-                countryPhoneNumber: newCountryPhoneNumber,
-                countryPhoneCode: newCountryPhoneCode,
-                phoneNumber: newPhoneNumber.startsWith("0")
-                  ? newPhoneNumber.substring(1)
-                  : newPhoneNumber
-              }}
-              update={this.updateEditPhoneVerification}
-              onCompleted={this.onCompletedCompleteEditPhoneVerification}
+            <StartEditEmailVerificationMutatiojn
+              mutation={START_EDIT_EMAIL_VERIFICATION}
+              variables={{ emailAddress: newEmailAddress }}
+              update={this.updateEditEmailVerification}
+              onCompleted={this.onCompletedEditEmailVerification}
             >
-              {completeEditPhoneVerificationFn => {
-                this.completeEditPhoneVerificationFn = completeEditPhoneVerificationFn;
+              {(emailVerificationFn, { loading: emailLoading }) => {
+                this.emailVerificationFn = emailVerificationFn;
                 return (
-                  <StartEditPhoneVerificationMutation
-                    mutation={START_EDIT_PHONE_VERIFICATION}
+                  <CompleteEditPhoneVerificationMutation
+                    mutation={COMPLETE_EDIT_PHONE_VERIFICATION}
                     variables={{
+                      key: verificationKey,
                       countryPhoneNumber: newCountryPhoneNumber,
+                      countryPhoneCode: newCountryPhoneCode,
                       phoneNumber: newPhoneNumber.startsWith("0")
                         ? newPhoneNumber.substring(1)
                         : newPhoneNumber
                     }}
-                    onCompleted={this.onCompletedStartEditPhoneVerification}
+                    update={this.updateEditPhoneVerification}
+                    onCompleted={this.onCompletedCompleteEditPhoneVerification}
                   >
-                    {(phoneVerificationFn, { loading: phoneLoading }) => {
-                      this.phoneVerificationFn = phoneVerificationFn;
+                    {completeEditPhoneVerificationFn => {
+                      this.completeEditPhoneVerificationFn = completeEditPhoneVerificationFn;
                       return (
-                        <MarkAsMainMutation
-                          mutation={MARK_AS_MAIN}
-                          update={this.updateMarkAsMain}
-                          onCompleted={this.onCompletedMarkAsMain}
+                        <StartEditPhoneVerificationMutation
+                          mutation={START_EDIT_PHONE_VERIFICATION}
+                          variables={{
+                            countryPhoneNumber: newCountryPhoneNumber,
+                            phoneNumber: newPhoneNumber.startsWith("0")
+                              ? newPhoneNumber.substring(1)
+                              : newPhoneNumber
+                          }}
+                          onCompleted={
+                            this.onCompletedStartEditPhoneVerification
+                          }
                         >
-                          {markAsMainFn => {
-                            this.markAsMainFn = markAsMainFn;
+                          {(phoneVerificationFn, { loading: phoneLoading }) => {
+                            this.phoneVerificationFn = phoneVerificationFn;
                             return (
-                              <DeleteAvatarMutation
-                                mutation={DELETE_AVATAR}
-                                update={this.updateDeleteAvatar}
-                                onCompleted={this.onCompletedDeleteAvatar}
+                              <MarkAsMainMutation
+                                mutation={MARK_AS_MAIN}
+                                update={this.updateMarkAsMain}
+                                onCompleted={this.onCompletedMarkAsMain}
                               >
-                                {deleteAvatarFn => {
-                                  this.deleteAvatarFn = deleteAvatarFn;
+                                {markAsMainFn => {
+                                  this.markAsMainFn = markAsMainFn;
                                   return (
-                                    <UploadAvatarMutation
-                                      mutation={UPLOAD_AVATAR}
-                                      update={this.updatUploadAvatar}
-                                      onCompleted={this.onCompletedUploadAvatar}
+                                    <DeleteAvatarMutation
+                                      mutation={DELETE_AVATAR}
+                                      update={this.updateDeleteAvatar}
+                                      onCompleted={this.onCompletedDeleteAvatar}
                                     >
-                                      {(
-                                        uploadAvatarFn,
-                                        { loading: uploadAvatarLoading }
-                                      ) => {
-                                        this.uploadAvatarFn = uploadAvatarFn;
+                                      {deleteAvatarFn => {
+                                        this.deleteAvatarFn = deleteAvatarFn;
                                         return (
-                                          <GetAvatarsQuery
-                                            query={GET_AVATARS}
-                                            variables={{ userName: username }}
+                                          <UploadAvatarMutation
+                                            mutation={UPLOAD_AVATAR}
+                                            update={this.updatUploadAvatar}
+                                            onCompleted={
+                                              this.onCompletedUploadAvatar
+                                            }
                                           >
-                                            {({
-                                              data: avatarsData,
-                                              loading: avatarsLoading
-                                            }) => (
-                                              <LogOutMutation
-                                                mutation={LOG_USER_OUT}
-                                              >
-                                                {logUserOutFn => {
-                                                  this.logUserOutFn = logUserOutFn;
-                                                  return (
-                                                    <EditProfileMutation
-                                                      mutation={EDIT_PROFILE}
-                                                      update={
-                                                        this.updateEditProfile
-                                                      }
-                                                      onCompleted={
-                                                        this
-                                                          .onCompletedEditProfile
-                                                      }
+                                            {(
+                                              uploadAvatarFn,
+                                              { loading: uploadAvatarLoading }
+                                            ) => {
+                                              this.uploadAvatarFn = uploadAvatarFn;
+                                              return (
+                                                <GetAvatarsQuery
+                                                  query={GET_AVATARS}
+                                                  variables={{
+                                                    userName: username
+                                                  }}
+                                                >
+                                                  {({
+                                                    data: avatarsData,
+                                                    loading: avatarsLoading
+                                                  }) => (
+                                                    <LogOutMutation
+                                                      mutation={LOG_USER_OUT}
                                                     >
-                                                      {editProfileFn => {
-                                                        this.editProfileFn = editProfileFn;
+                                                      {logUserOutFn => {
+                                                        this.logUserOutFn = logUserOutFn;
                                                         return (
-                                                          <DeleteProfileMutation
+                                                          <EditProfileMutation
                                                             mutation={
-                                                              DELETE_PROFILE
+                                                              EDIT_PROFILE
                                                             }
-                                                            onCompleted={deleteResult => {
-                                                              const {
-                                                                deleteProfile
-                                                              } = deleteResult;
-                                                              if (
-                                                                deleteProfile.ok
-                                                              ) {
-                                                                toast.success(
-                                                                  "profile deleted!"
-                                                                );
-                                                                setTimeout(
-                                                                  () => {
-                                                                    history.push(
-                                                                      "/match"
-                                                                    );
-                                                                  },
-                                                                  2000
-                                                                );
-                                                              } else {
-                                                                toast.error(
-                                                                  "cann't delete profile"
-                                                                );
-                                                              }
-                                                            }}
+                                                            update={
+                                                              this
+                                                                .updateEditProfile
+                                                            }
+                                                            onCompleted={
+                                                              this
+                                                                .onCompletedEditProfile
+                                                            }
                                                           >
-                                                            {deleteProfileFn => {
-                                                              this.deleteProfileFn = deleteProfileFn;
+                                                            {editProfileFn => {
+                                                              this.editProfileFn = editProfileFn;
                                                               return (
-                                                                <EditProfilePresenter
-                                                                  phoneLoading={
-                                                                    phoneLoading
-                                                                  }
-                                                                  uploadAvatarLoading={
-                                                                    uploadAvatarLoading
-                                                                  }
-                                                                  deleteConfirmModalOpen={
-                                                                    deleteConfirmModalOpen
-                                                                  }
-                                                                  logoutConfirmModalOpen={
-                                                                    logoutConfirmModalOpen
-                                                                  }
-                                                                  toggleDeleteConfirmModal={
-                                                                    this
-                                                                      .toggleDeleteConfirmModal
-                                                                  }
-                                                                  toggleLogoutConfirmModal={
-                                                                    this
-                                                                      .toggleLogoutConfirmModal
-                                                                  }
-                                                                  profilFormModalOpen={
-                                                                    profilFormModalOpen
-                                                                  }
-                                                                  editPhoneNumberModalOpen={
-                                                                    editPhoneNumberModalOpen
-                                                                  }
-                                                                  editEmailAddressModalOpen={
-                                                                    editEmailAddressModalOpen
-                                                                  }
-                                                                  verifyPhoneNumberModalOpen={
-                                                                    verifyPhoneNumberModalOpen
-                                                                  }
-                                                                  toggleProfileFormModal={
-                                                                    this
-                                                                      .toggleProfileFormModal
-                                                                  }
-                                                                  countryModalOpen={
-                                                                    countryModalOpen
-                                                                  }
-                                                                  toggleCountryModal={
-                                                                    this
-                                                                      .toggleCountryModal
-                                                                  }
-                                                                  deleteProfile={
-                                                                    this
-                                                                      .deleteProfile
-                                                                  }
-                                                                  onInputChange={
-                                                                    this
-                                                                      .onInputChange
-                                                                  }
-                                                                  onInputUsernameChange={
-                                                                    this
-                                                                      .onInputUsernameChange
-                                                                  }
-                                                                  onSelectChange={
-                                                                    this
-                                                                      .onSelectChange
-                                                                  }
-                                                                  logUserOutFn={
-                                                                    this
-                                                                      .logUserOutFn
-                                                                  }
-                                                                  back={
-                                                                    this.back
-                                                                  }
-                                                                  onSubmit={
-                                                                    this
-                                                                      .onSubmit
-                                                                  }
-                                                                  // avatars
-                                                                  deleteAvatarFn={
-                                                                    deleteAvatarFn
-                                                                  }
-                                                                  markAsMainFn={
-                                                                    markAsMainFn
-                                                                  }
-                                                                  avatarsData={
-                                                                    avatarsData
-                                                                  }
-                                                                  avatarsLoading={
-                                                                    avatarsLoading
-                                                                  }
-                                                                  imagePreviewUrl={
-                                                                    imagePreviewUrl
-                                                                  }
-                                                                  avatarPreviewModalOpen={
-                                                                    avatarPreviewModalOpen
-                                                                  }
-                                                                  avatarModalOpen={
-                                                                    avatarModalOpen
-                                                                  }
-                                                                  toggleAvatarModal={
-                                                                    this
-                                                                      .toggleAvatarModal
-                                                                  }
-                                                                  togglePreviewAvatarModal={
-                                                                    this
-                                                                      .togglePreviewAvatarModal
-                                                                  }
-                                                                  onChangeImage={
-                                                                    this
-                                                                      .onChangeImage
-                                                                  }
-                                                                  onSubmitImage={
-                                                                    this
-                                                                      .onSubmitImage
-                                                                  }
-                                                                  removeImagePreviewUrl={
-                                                                    this
-                                                                      .removeImagePreviewUrl
-                                                                  }
-                                                                  // settings
-                                                                  isSelf={
-                                                                    isSelf
-                                                                  }
-                                                                  isDarkMode={
-                                                                    isDarkMode
-                                                                  }
-                                                                  isHideTrips={
-                                                                    isHideTrips
-                                                                  }
-                                                                  isHideCoffees={
-                                                                    isHideCoffees
-                                                                  }
-                                                                  isHideCities={
-                                                                    isHideCities
-                                                                  }
-                                                                  isHideCountries={
-                                                                    isHideCountries
-                                                                  }
-                                                                  isHideContinents={
-                                                                    isHideContinents
-                                                                  }
-                                                                  isAutoLocationReport={
-                                                                    isAutoLocationReport
-                                                                  }
-                                                                  // new
-                                                                  username={
-                                                                    username
-                                                                  }
-                                                                  bio={bio}
-                                                                  gender={
-                                                                    gender
-                                                                  }
-                                                                  firstName={
-                                                                    firstName
-                                                                  }
-                                                                  lastName={
-                                                                    lastName
-                                                                  }
-                                                                  nationalityCode={
-                                                                    nationalityCode
-                                                                  }
-                                                                  residenceCode={
-                                                                    residenceCode
-                                                                  }
-                                                                  avatarUrl={
-                                                                    avatarUrl
-                                                                  }
-                                                                  phoneNumber={
-                                                                    phoneNumber
-                                                                  }
-                                                                  countryPhoneNumber={
-                                                                    countryPhoneNumber
-                                                                  }
-                                                                  countryPhoneCode={
-                                                                    countryPhoneCode
-                                                                  }
-                                                                  emailAddress={
-                                                                    emailAddress
-                                                                  }
-                                                                  isVerifiedPhoneNumber={
-                                                                    isVerifiedPhoneNumber
-                                                                  }
-                                                                  isVerifiedEmailAddress={
-                                                                    isVerifiedEmailAddress
-                                                                  }
-                                                                  confirmUsername={
-                                                                    confirmUsername
-                                                                  }
-                                                                  onSelectCountry={
-                                                                    this
-                                                                      .onSelectCountry
-                                                                  }
-                                                                  newUsername={
-                                                                    newUsername
-                                                                  }
-                                                                  newPhoneNumber={
-                                                                    newPhoneNumber
-                                                                  }
-                                                                  newCountryPhoneCode={
-                                                                    newCountryPhoneCode
-                                                                  }
-                                                                  newCountryPhoneNumber={
-                                                                    newCountryPhoneNumber
-                                                                  }
-                                                                  newEmailAddress={
-                                                                    newEmailAddress
-                                                                  }
-                                                                  toggleEditPhoneNumberModal={
-                                                                    this
-                                                                      .toggleEditPhoneNumberModal
-                                                                  }
-                                                                  toggleEditEmailAddressModal={
-                                                                    this
-                                                                      .toggleEditEmailAddressModal
-                                                                  }
-                                                                  toggleVerifyPhoneNumberModal={
-                                                                    this
-                                                                      .toggleVerifyPhoneNumberModal
-                                                                  }
-                                                                  onSubmitPhoneNumber={
-                                                                    this
-                                                                      .onSubmitPhoneNumber
-                                                                  }
-                                                                  verificationKey={
-                                                                    verificationKey
-                                                                  }
-                                                                  onChangeVerifyPhone={
-                                                                    this
-                                                                      .onChangeVerifyPhone
-                                                                  }
-                                                                  onSubmitVerifyPhone={
-                                                                    this
-                                                                      .onSubmitVerifyPhone
-                                                                  }
-                                                                  closeVerifyPhoneNumberModal={
-                                                                    this
-                                                                      .closeVerifyPhoneNumberModal
-                                                                  }
-                                                                  markAsMain={
-                                                                    this
-                                                                      .markAsMain
-                                                                  }
-                                                                />
+                                                                <DeleteProfileMutation
+                                                                  mutation={
+                                                                    DELETE_PROFILE
+                                                                  }
+                                                                  onCompleted={deleteResult => {
+                                                                    const {
+                                                                      deleteProfile
+                                                                    } = deleteResult;
+                                                                    if (
+                                                                      deleteProfile.ok
+                                                                    ) {
+                                                                      toast.success(
+                                                                        "profile deleted!"
+                                                                      );
+                                                                      setTimeout(
+                                                                        () => {
+                                                                          history.push(
+                                                                            "/match"
+                                                                          );
+                                                                        },
+                                                                        2000
+                                                                      );
+                                                                    } else {
+                                                                      toast.error(
+                                                                        "cann't delete profile"
+                                                                      );
+                                                                    }
+                                                                  }}
+                                                                >
+                                                                  {deleteProfileFn => {
+                                                                    this.deleteProfileFn = deleteProfileFn;
+                                                                    return (
+                                                                      <EditProfilePresenter
+                                                                        phoneLoading={
+                                                                          phoneLoading
+                                                                        }
+                                                                        uploadAvatarLoading={
+                                                                          uploadAvatarLoading
+                                                                        }
+                                                                        deleteConfirmModalOpen={
+                                                                          deleteConfirmModalOpen
+                                                                        }
+                                                                        logoutConfirmModalOpen={
+                                                                          logoutConfirmModalOpen
+                                                                        }
+                                                                        toggleDeleteConfirmModal={
+                                                                          this
+                                                                            .toggleDeleteConfirmModal
+                                                                        }
+                                                                        toggleLogoutConfirmModal={
+                                                                          this
+                                                                            .toggleLogoutConfirmModal
+                                                                        }
+                                                                        editPhoneNumberModalOpen={
+                                                                          editPhoneNumberModalOpen
+                                                                        }
+                                                                        editEmailAddressModalOpen={
+                                                                          editEmailAddressModalOpen
+                                                                        }
+                                                                        verifyPhoneNumberModalOpen={
+                                                                          verifyPhoneNumberModalOpen
+                                                                        }
+                                                                        verifyEmailAddressModalOpen={
+                                                                          verifyEmailAddressModalOpen
+                                                                        }
+                                                                        countryModalOpen={
+                                                                          countryModalOpen
+                                                                        }
+                                                                        toggleCountryModal={
+                                                                          this
+                                                                            .toggleCountryModal
+                                                                        }
+                                                                        deleteProfile={
+                                                                          this
+                                                                            .deleteProfile
+                                                                        }
+                                                                        onInputChange={
+                                                                          this
+                                                                            .onInputChange
+                                                                        }
+                                                                        onInputUsernameChange={
+                                                                          this
+                                                                            .onInputUsernameChange
+                                                                        }
+                                                                        onSelectChange={
+                                                                          this
+                                                                            .onSelectChange
+                                                                        }
+                                                                        logUserOutFn={
+                                                                          this
+                                                                            .logUserOutFn
+                                                                        }
+                                                                        back={
+                                                                          this
+                                                                            .back
+                                                                        }
+                                                                        onSubmit={
+                                                                          this
+                                                                            .onSubmit
+                                                                        }
+                                                                        // avatars
+                                                                        deleteAvatarFn={
+                                                                          deleteAvatarFn
+                                                                        }
+                                                                        avatarsData={
+                                                                          avatarsData
+                                                                        }
+                                                                        avatarsLoading={
+                                                                          avatarsLoading
+                                                                        }
+                                                                        imagePreviewUrl={
+                                                                          imagePreviewUrl
+                                                                        }
+                                                                        avatarPreviewModalOpen={
+                                                                          avatarPreviewModalOpen
+                                                                        }
+                                                                        avatarModalOpen={
+                                                                          avatarModalOpen
+                                                                        }
+                                                                        toggleAvatarModal={
+                                                                          this
+                                                                            .toggleAvatarModal
+                                                                        }
+                                                                        togglePreviewAvatarModal={
+                                                                          this
+                                                                            .togglePreviewAvatarModal
+                                                                        }
+                                                                        onChangeImage={
+                                                                          this
+                                                                            .onChangeImage
+                                                                        }
+                                                                        onSubmitImage={
+                                                                          this
+                                                                            .onSubmitImage
+                                                                        }
+                                                                        removeImagePreviewUrl={
+                                                                          this
+                                                                            .removeImagePreviewUrl
+                                                                        }
+                                                                        // settings
+                                                                        isSelf={
+                                                                          isSelf
+                                                                        }
+                                                                        isDarkMode={
+                                                                          isDarkMode
+                                                                        }
+                                                                        isHideTrips={
+                                                                          isHideTrips
+                                                                        }
+                                                                        isHideCoffees={
+                                                                          isHideCoffees
+                                                                        }
+                                                                        isHideCities={
+                                                                          isHideCities
+                                                                        }
+                                                                        isHideCountries={
+                                                                          isHideCountries
+                                                                        }
+                                                                        isHideContinents={
+                                                                          isHideContinents
+                                                                        }
+                                                                        isAutoLocationReport={
+                                                                          isAutoLocationReport
+                                                                        }
+                                                                        // new
+                                                                        username={
+                                                                          username
+                                                                        }
+                                                                        bio={
+                                                                          bio
+                                                                        }
+                                                                        gender={
+                                                                          gender
+                                                                        }
+                                                                        firstName={
+                                                                          firstName
+                                                                        }
+                                                                        lastName={
+                                                                          lastName
+                                                                        }
+                                                                        nationalityCode={
+                                                                          nationalityCode
+                                                                        }
+                                                                        residenceCode={
+                                                                          residenceCode
+                                                                        }
+                                                                        avatarUrl={
+                                                                          avatarUrl
+                                                                        }
+                                                                        phoneNumber={
+                                                                          phoneNumber
+                                                                        }
+                                                                        countryPhoneNumber={
+                                                                          countryPhoneNumber
+                                                                        }
+                                                                        countryPhoneCode={
+                                                                          countryPhoneCode
+                                                                        }
+                                                                        emailAddress={
+                                                                          emailAddress
+                                                                        }
+                                                                        newEmailAddress={
+                                                                          newEmailAddress
+                                                                        }
+                                                                        isVerifiedPhoneNumber={
+                                                                          isVerifiedPhoneNumber
+                                                                        }
+                                                                        isVerifiedEmailAddress={
+                                                                          isVerifiedEmailAddress
+                                                                        }
+                                                                        confirmUsername={
+                                                                          confirmUsername
+                                                                        }
+                                                                        onSelectCountry={
+                                                                          this
+                                                                            .onSelectCountry
+                                                                        }
+                                                                        newUsername={
+                                                                          newUsername
+                                                                        }
+                                                                        newPhoneNumber={
+                                                                          newPhoneNumber
+                                                                        }
+                                                                        newCountryPhoneCode={
+                                                                          newCountryPhoneCode
+                                                                        }
+                                                                        newCountryPhoneNumber={
+                                                                          newCountryPhoneNumber
+                                                                        }
+                                                                        toggleEditPhoneNumberModal={
+                                                                          this
+                                                                            .toggleEditPhoneNumberModal
+                                                                        }
+                                                                        toggleEditEmailAddressModal={
+                                                                          this
+                                                                            .toggleEditEmailAddressModal
+                                                                        }
+                                                                        onSubmitPhoneNumber={
+                                                                          this
+                                                                            .onSubmitPhoneNumber
+                                                                        }
+                                                                        onSubmitEmailAddress={
+                                                                          this
+                                                                            .onSubmitEmailAddress
+                                                                        }
+                                                                        verificationKey={
+                                                                          verificationKey
+                                                                        }
+                                                                        onChangeVerifyPhone={
+                                                                          this
+                                                                            .onChangeVerifyPhone
+                                                                        }
+                                                                        onSubmitVerifyPhone={
+                                                                          this
+                                                                            .onSubmitVerifyPhone
+                                                                        }
+                                                                        closeVerifyPhoneNumberModal={
+                                                                          this
+                                                                            .closeVerifyPhoneNumberModal
+                                                                        }
+                                                                        closeVerifyEmailAddressModal={
+                                                                          this
+                                                                            .closeVerifyEmailAddressModal
+                                                                        }
+                                                                        toggleVerifyEmailAddressModal={
+                                                                          this
+                                                                            .toggleVerifyEmailAddressModal
+                                                                        }
+                                                                        markAsMain={
+                                                                          this
+                                                                            .markAsMain
+                                                                        }
+                                                                      />
+                                                                    );
+                                                                  }}
+                                                                </DeleteProfileMutation>
                                                               );
                                                             }}
-                                                          </DeleteProfileMutation>
+                                                          </EditProfileMutation>
                                                         );
                                                       }}
-                                                    </EditProfileMutation>
-                                                  );
-                                                }}
-                                              </LogOutMutation>
-                                            )}
-                                          </GetAvatarsQuery>
+                                                    </LogOutMutation>
+                                                  )}
+                                                </GetAvatarsQuery>
+                                              );
+                                            }}
+                                          </UploadAvatarMutation>
                                         );
                                       }}
-                                    </UploadAvatarMutation>
+                                    </DeleteAvatarMutation>
                                   );
                                 }}
-                              </DeleteAvatarMutation>
+                              </MarkAsMainMutation>
                             );
                           }}
-                        </MarkAsMainMutation>
+                        </StartEditPhoneVerificationMutation>
                       );
                     }}
-                  </StartEditPhoneVerificationMutation>
+                  </CompleteEditPhoneVerificationMutation>
                 );
               }}
-            </CompleteEditPhoneVerificationMutation>
+            </StartEditEmailVerificationMutatiojn>
           );
         }}
       </LogUserInMutation>
@@ -700,10 +737,26 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       toast.error("Could not send you a Key");
     }
   };
+  public toggleVerifyEmailAddressModal = () => {
+    this.setState({
+      verifyEmailAddressModalOpen: false,
+      editEmailAddressModalOpen: true,
+      isPhoneSubmitted: false,
+      newEmailAddress: ""
+    });
+  };
+
   public closeVerifyPhoneNumberModal = () => {
     this.setState({
       isPhoneSubmitted: false,
       verifyPhoneNumberModalOpen: false
+    });
+  };
+  public closeVerifyEmailAddressModal = () => {
+    this.setState({
+      isEmailSubmitted: false,
+      verifyEmailAddressModalOpen: false,
+      newEmailAddress: ""
     });
   };
   public updateEditPhoneVerification = (
@@ -725,7 +778,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
           completeEditPhoneVerification.countryPhoneNumber;
         data.userProfile.user.profile.countryPhoneCode =
           completeEditPhoneVerification.countryPhoneCode;
-        data.userProfile.user.profile.isVerifiedPhoneNumber = 
+        data.userProfile.user.profile.isVerifiedPhoneNumber =
           completeEditPhoneVerification.isVerifiedPhoneNumber;
         cache.writeQuery({
           query: GET_USER,
@@ -744,10 +797,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       verificationKey: value
     } as any);
   };
-  public toggleVerifyPhoneNumberModal = () => {
-    const { verifyPhoneNumberModalOpen } = this.state;
-    this.setState({ verifyPhoneNumberModalOpen: !verifyPhoneNumberModalOpen });
-  };
+
   public toggleEditPhoneNumberModal = () => {
     const { editPhoneNumberModalOpen } = this.state;
     this.setState({
@@ -873,11 +923,6 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       logoutConfirmModalOpen: !logoutConfirmModalOpen
     } as any);
   };
-  public toggleProfileFormModal = () => {
-    this.setState({
-      profilFormModalOpen: false
-    } as any);
-  };
   public onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value }
@@ -986,7 +1031,29 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       toast.error("Please write a phone number");
     }
   };
-
+  public onSubmitEmailAddress: React.FormEventHandler<
+    HTMLFormElement
+  > = event => {
+    event.preventDefault();
+    const { isEmailSubmitted, newEmailAddress } = this.state;
+    if (newEmailAddress !== "") {
+      const isValid = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+        newEmailAddress
+      );
+      if (isValid) {
+        if (!isEmailSubmitted) {
+          this.emailVerificationFn();
+          this.setState({
+            isEmailSubmitted: true
+          });
+        }
+      } else {
+        toast.error("Please write a valid email");
+      }
+    } else {
+      toast.error("Please write a email");
+    }
+  };
   public back = async event => {
     const { history } = this.props;
     const { username } = this.state;
@@ -1131,6 +1198,26 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       console.log(e);
     }
     this.setState({ avatarUrl: uploadAvatar.avatar.thumbnail });
+  };
+  public onCompletedEditEmailVerification = data => {
+    this.setState({
+      isEmailSubmitted: false,
+      verifyEmailAddressModalOpen: true,
+      editEmailAddressModalOpen: false
+    });
+    this.setState({});
+    if (data.startEditEmailVerification.ok) {
+      toast.success("Email Sent! Please ");
+    } else {
+      toast.error("Could not send you a Key");
+    }
+  };
+  public updateEditEmailVerification = (
+    cache,
+    { data: { startEditEmailVerification } }
+  ) => {
+    console.log(cache);
+    console.log(startEditEmailVerification);
   };
   public onCompletedUploadAvatar = data => {
     if (data.uploadAvatar.ok) {

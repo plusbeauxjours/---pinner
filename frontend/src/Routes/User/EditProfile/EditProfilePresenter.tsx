@@ -124,6 +124,12 @@ const Input = styled.input`
   }
 `;
 
+
+const EmailInput = styled(Input)`
+  width: 285px;
+`;
+
+
 const UsernameInput = styled(Input)`
   ime-mode: disabled;
 `;
@@ -404,26 +410,7 @@ const CheckIcon = styled.div`
   }
 `;
 
-// const PhoneNumberContainer = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: center;
-//   align-items: baseline;
-// `;
 
-// const CountryCode = styled.div`
-//   font-size: 18px;
-//   margin-right: 12px;
-//   cursor: pointer;
-// `;
-
-// const CountryPhone = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   align-items: baseline;
-//   border-bottom: 1px solid ${props => props.theme.greyColor};
-//   font-size: 18px;
-// `;
 
 const Underline = styled.span`
   text-decoration: underline;
@@ -523,6 +510,12 @@ const PhoneNumberContainer = styled.div`
   align-items: baseline;
 `;
 
+const EmailAddressContainer = styled(PhoneNumberContainer)`
+  border-bottom: 1px solid ${props => props.theme.greyColor};
+`;
+
+const Form = styled.form``;
+
 const CountryCode = styled.div`
   font-size: 18px;
   margin-right: 12px;
@@ -571,6 +564,13 @@ const ExtendedForm = styled(BaseForm)`
   align-items: center;
 `;
 
+const CenterText = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 const CodeInputStyle = {
   fontFamily: "monospace",
   borderRadius: "6px",
@@ -598,11 +598,9 @@ interface IProps {
   editPhoneNumberModalOpen: boolean;
   editEmailAddressModalOpen: boolean;
   verifyPhoneNumberModalOpen: boolean;
-  toggleVerifyPhoneNumberModal: () => void;
+  verifyEmailAddressModalOpen: boolean;
   toggleEditPhoneNumberModal: () => void;
   toggleEditEmailAddressModal: () => void;
-  profilFormModalOpen: boolean;
-  toggleProfileFormModal: () => void;
   deleteProfile: () => void;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onInputUsernameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -621,7 +619,6 @@ interface IProps {
   onChangeImage: (currentTarget) => void;
   onSubmitImage: (event) => void;
   removeImagePreviewUrl: () => void;
-  markAsMainFn: MutationFn;
   deleteAvatarFn: MutationFn;
 
   isSelf: boolean;
@@ -645,6 +642,7 @@ interface IProps {
   countryPhoneNumber: string;
   countryPhoneCode: string;
   emailAddress: string;
+  newEmailAddress: string;
   isVerifiedPhoneNumber: boolean;
   isVerifiedEmailAddress: boolean;
   confirmUsername: string;
@@ -654,7 +652,6 @@ interface IProps {
   newPhoneNumber: string;
   newCountryPhoneCode: string;
   newCountryPhoneNumber: string;
-  newEmailAddress: string;
 
   onSelectCountry: (
     countryPhoneNumber: string,
@@ -663,11 +660,13 @@ interface IProps {
   back: (event: any) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onSubmitPhoneNumber: (event: React.FormEvent<HTMLFormElement>) => void;
-
+  onSubmitEmailAddress: (event: React.FormEvent<HTMLFormElement>) => void;
   verificationKey: string;
   onSubmitVerifyPhone: (event: React.FormEvent<HTMLFormElement>) => void;
   onChangeVerifyPhone: (event: React.ChangeEvent<HTMLInputElement>) => void;
   closeVerifyPhoneNumberModal: () => void;
+  closeVerifyEmailAddressModal: () => void;
+  toggleVerifyEmailAddressModal: () => void;
   markAsMain: (uuid: string, avatarUrl: string) => void;
 }
 
@@ -683,16 +682,14 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   editPhoneNumberModalOpen,
   editEmailAddressModalOpen,
   verifyPhoneNumberModalOpen,
-  toggleVerifyPhoneNumberModal,
+  verifyEmailAddressModalOpen,
   toggleEditPhoneNumberModal,
   toggleEditEmailAddressModal,
   newUsername,
   newPhoneNumber,
   newCountryPhoneCode,
   newCountryPhoneNumber,
-  newEmailAddress,
-  profilFormModalOpen,
-  toggleProfileFormModal,
+
   deleteProfile,
   onInputChange,
   onInputUsernameChange,
@@ -707,7 +704,6 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   onChangeImage,
   onSubmitImage,
   removeImagePreviewUrl,
-  markAsMainFn,
   deleteAvatarFn,
 
   isSelf,
@@ -731,6 +727,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   countryPhoneNumber,
   countryPhoneCode,
   emailAddress,
+  newEmailAddress,
   isVerifiedPhoneNumber,
   isVerifiedEmailAddress,
   confirmUsername,
@@ -740,15 +737,79 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   back,
   onSubmit,
   onSubmitPhoneNumber,
+  onSubmitEmailAddress,
 
   verificationKey,
   onSubmitVerifyPhone,
   onChangeVerifyPhone,
   closeVerifyPhoneNumberModal,
+  closeVerifyEmailAddressModal,
+  toggleVerifyEmailAddressModal,
   markAsMain
 }) => {
   return (
     <>
+      {verifyEmailAddressModalOpen && (
+        <PhoneVerifyModalContainer>
+          <PhoneVerifyModalOverlay onClick={closeVerifyEmailAddressModal} />
+          <PhoneVerifyModal>
+            <Container>
+              <TextContainter>
+                <CenterText>
+                  <p>Check your email</p>
+                  <br />
+                  <br />
+                  <p>
+                    If we found as account with &nbsp;{emailAddress}, an email
+                    has been sent, otherwise new account with &nbsp;
+                    {emailAddress} will be created.
+                  </p>
+                  <p>
+                    Please check your email in a moment to verify email address.
+                  </p>
+                  <br />
+                  <p>Didn't receive a link?</p>
+                  <br />
+                  <Underline onClick={toggleVerifyEmailAddressModal}>
+                    &nbsp;Use a different email
+                  </Underline>
+                </CenterText>
+              </TextContainter>
+            </Container>
+          </PhoneVerifyModal>
+        </PhoneVerifyModalContainer>
+      )}
+      {editEmailAddressModalOpen && (
+        <EditPhoneModalContainer>
+          <EditPhoneModalOverlay onClick={toggleEditEmailAddressModal} />
+          <EditPhoneModal>
+          <Container>
+                <EmailAddressContainer>
+                  <Form onSubmit={onSubmitEmailAddress}>
+                    <EmailInput
+                      type={"email"}
+                      autoFocus={true}
+                      value={newEmailAddress}
+                      name={"newEmailAddress"}
+                      onChange={onInputChange}
+                      autoComplete={"off"}
+                    />
+                  </Form>
+                </EmailAddressContainer>
+                <TextContainter>
+                  <p>We'll email you a link that will instantly log you in.</p>
+                  <br />
+                  <ExtendedForm onSubmit={onSubmitEmailAddress}>
+                    <SButton
+                      text={"CONTINUE"}
+                      onClick={null}
+                    />
+                  </ExtendedForm>
+                </TextContainter>
+              </Container>
+          </EditPhoneModal>
+        </EditPhoneModalContainer>
+      )}
       {verifyPhoneNumberModalOpen && (
         <PhoneVerifyModalContainer>
           <PhoneVerifyModalOverlay onClick={closeVerifyPhoneNumberModal} />
@@ -766,8 +827,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                 <ExplainText>
                   When you tap Continue, Pinner will send a text with
                   verification code. Message and data rates may apply. The
-                  verified phone number can be used to login. Learn what happens
-                  when your number changes.
+                  verified phone number can be used to login.
                 </ExplainText>
                 <ExtendedForm onSubmit={onSubmitVerifyPhone}>
                   <SButton text={"VERIFY"} onClick={null} />
@@ -816,7 +876,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
           </EditPhoneModal>
         </EditPhoneModalContainer>
       )}
-      {/* editEmailAddressModalOpen */}
+
       {countryModalOpen && (
         <SearchModalContainer>
           <SearchModalOverlay onClick={toggleCountryModal} />

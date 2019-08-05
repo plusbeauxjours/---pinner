@@ -122,3 +122,11 @@ export const COMPLETE_EDIT_PHONE_VERIFICATION = gql`
     }
   }
 `;
+
+export const START_EDIT_EMAIL_VERIFICATION = gql`
+  mutation StartEditEmailVerification($emailAddress: String!) {
+    startEditEmailVerification(emailAddress: $emailAddress) {
+      ok
+    }
+  }
+`;

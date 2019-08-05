@@ -267,7 +267,8 @@ const ApproachPresenter: React.FunctionComponent<IProps> = ({
                     <br />
                     <p>
                       If we found as account with &nbsp;{emailAddress}, an email
-                      has been sent.
+                      has been sent, otherwise new account with &nbsp;
+                      {emailAddress} will be created.
                     </p>
                     <p>Please check your email in a moment.</p>
                     <br />
@@ -309,7 +310,7 @@ const ApproachPresenter: React.FunctionComponent<IProps> = ({
                     <SButton
                       text={"CONTINUE"}
                       onClick={null}
-                      inverted={phoneLoading}
+                      inverted={emailLoading}
                     />
                   </ExtendedForm>
                 </TextContainter>

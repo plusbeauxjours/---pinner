@@ -171,20 +171,33 @@ class StartEditPhoneVerification(graphene.Mutation):
                 raise Exception('Phone number is already verified')
 
         except users_models.Profile.DoesNotExist:
-            preVerification = models.Verification.objects.get(payload=payload,
-                                                              target="phone")
-            preVerification.delete()
-            newVerification = models.Verification.objects.create(
-                payload=payload,
-                target="phone"
-            )
-            newVerification.save()
             try:
-                sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
-                return types.StartEditPhoneVerificationResponse(ok=True)
-            except:
-                newVerification.delete()
-                return types.StartEditPhoneVerificationResponse(ok=False)
+                preVerification = models.Verification.objects.get(payload=payload,
+                                                                  target="phone")
+                preVerification.delete()
+                newVerification = models.Verification.objects.create(
+                    payload=payload,
+                    target="phone"
+                )
+                newVerification.save()
+                try:
+                    sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
+                    return types.StartEditPhoneVerificationResponse(ok=True)
+                except:
+                    newVerification.delete()
+                    return types.StartEditPhoneVerificationResponse(ok=False)
+            except models.Verification.DoesNotExist:
+                newVerification = models.Verification.objects.create(
+                    payload=payload,
+                    target="phone"
+                )
+                newVerification.save()
+                try:
+                    sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
+                    return types.StartEditPhoneVerificationResponse(ok=True)
+                except:
+                    newVerification.delete()
+                    return types.StartEditPhoneVerificationResponse(ok=False)
 
 
 class CompleteEditPhoneVerification(graphene.Mutation):
@@ -340,19 +353,32 @@ class StartEditEmailVerification(graphene.Mutation):
                 raise Exception('Email address is already verified')
 
         except users_models.Profile.DoesNotExist:
-            preVerification = models.Verification.objects.get(payload=emailAddress, target="email")
-            preVerification.delete()
-            newVerification = models.Verification.objects.create(
-                payload=emailAddress,
-                target="email"
-            )
-            newVerification.save()
             try:
-                # sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
-                return types.StartEditEmailVerificationResponse(ok=True)
-            except:
-                newVerification.delete()
-                return types.StartEditEmailVerificationResponse(ok=False)
+                preVerification = models.Verification.objects.get(payload=emailAddress, target="email")
+                preVerification.delete()
+                newVerification = models.Verification.objects.create(
+                    payload=emailAddress,
+                    target="email"
+                )
+                newVerification.save()
+                try:
+                    # sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
+                    return types.StartEditEmailVerificationResponse(ok=True)
+                except:
+                    newVerification.delete()
+                    return types.StartEditEmailVerificationResponse(ok=False)
+            except models.Verification.DoesNotExist:
+                newVerification = models.Verification.objects.create(
+                    payload=emailAddress,
+                    target="email"
+                )
+                newVerification.save()
+                try:
+                    # sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
+                    return types.StartEditEmailVerificationResponse(ok=True)
+                except:
+                    newVerification.delete()
+                    return types.StartEditEmailVerificationResponse(ok=False)
 
 
 class CompleteEditEmailVerification(graphene.Mutation):
