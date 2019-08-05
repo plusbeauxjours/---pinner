@@ -18,9 +18,9 @@ export const GET_USER = gql`
           countryPhoneNumber
           countryPhoneCode
           phoneNumber
-          email
+          emailAddress
           isVerifiedPhoneNumber
-          isVerifiedEmail
+          isVerifiedEmailAddress
           nationality {
             countryEmoji
             ...CountryParts

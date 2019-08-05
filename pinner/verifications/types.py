@@ -47,9 +47,9 @@ class StartEmailVerificationResponse(graphene.ObjectType):
 #     ok = graphene.Boolean()
 
 
-# class CompleteEmailVerificationResponse(graphene.ObjectType):
-#     ok = graphene.Boolean()
-#     token = graphene.String()
+class CompleteEmailVerificationResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
+    token = graphene.String()
 
 
 # class CompleteEditEmailVerificationResponse(graphene.ObjectType):

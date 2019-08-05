@@ -36,9 +36,9 @@ export const EDIT_PROFILE = gql`
           countryPhoneNumber
           countryPhoneCode
           phoneNumber
-          email
+          emailAddress
           isVerifiedPhoneNumber
-          isVerifiedEmail
+          isVerifiedEmailAddress
           nationality {
             countryEmoji
             ...CountryParts

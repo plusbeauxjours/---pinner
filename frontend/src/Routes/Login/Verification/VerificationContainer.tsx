@@ -1,12 +1,12 @@
 import React from "react";
-import VerifyPhonePresenter from "./VerifyPhonePresenter";
+import VerificationPresenter from "./VerificationPresenter";
 import { RouteComponentProps } from "react-router";
 import { Mutation } from "react-apollo";
 import {
   CompletePhoneVerification,
   CompletePhoneVerificationVariables
 } from "../../../types/api";
-import { COMPLETE_PHONE_SIGN_IN } from "./VerifyPhoneQueries";
+import { COMPLETE_PHONE_SIGN_IN } from "./VerificationQueries";
 import { toast } from "react-toastify";
 import { LOG_USER_IN } from "../../../sharedQueries.local";
 
@@ -28,7 +28,7 @@ interface IState {
   verificationKey: string;
 }
 
-class VerifyPhoneContainer extends React.Component<IProps, IState> {
+class VerificationContainer extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     const { location: { state = {} } = {} } = ({} = props);
@@ -91,7 +91,7 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
             }}
           >
             {(mutation, { loading }) => (
-              <VerifyPhonePresenter
+              <VerificationPresenter
                 onSubmit={mutation}
                 verificationKey={verificationKey}
                 loading={loading}
@@ -116,4 +116,4 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
   };
 }
 
-export default VerifyPhoneContainer;
+export default VerificationContainer;

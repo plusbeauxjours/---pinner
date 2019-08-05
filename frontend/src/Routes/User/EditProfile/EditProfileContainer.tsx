@@ -102,9 +102,9 @@ interface IState {
   phoneNumber: string;
   countryPhoneNumber: string;
   countryPhoneCode: string;
-  email: string;
+  emailAddress: string;
   isVerifiedPhoneNumber: boolean;
-  isVerifiedEmail: boolean;
+  isVerifiedEmailAddress: boolean;
   confirmUsername: string;
 
   newUsername: string;
@@ -177,9 +177,9 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       phoneNumber: state.phoneNumber || "",
       countryPhoneNumber: state.countryPhoneNumber || "",
       countryPhoneCode: state.countryPhoneCode || "",
-      email: state.email || "",
+      emailAddress: state.emailAddress || "",
       isVerifiedPhoneNumber: state.isVerifiedPhoneNumber,
-      isVerifiedEmail: state.isVerifiedEmail,
+      isVerifiedEmailAddress: state.isVerifiedEmailAddress,
       confirmUsername: props.confirmUsername || "",
       newUsername: state.username || "",
       newPhoneNumber: props.newPhoneNumber || "",
@@ -237,9 +237,9 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       phoneNumber,
       countryPhoneNumber,
       countryPhoneCode,
-      email,
+      emailAddress,
       isVerifiedPhoneNumber,
-      isVerifiedEmail,
+      isVerifiedEmailAddress,
       confirmUsername,
       newUsername,
       newPhoneNumber,
@@ -538,12 +538,14 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                                                                   countryPhoneCode={
                                                                     countryPhoneCode
                                                                   }
-                                                                  email={email}
+                                                                  emailAddress={
+                                                                    emailAddress
+                                                                  }
                                                                   isVerifiedPhoneNumber={
                                                                     isVerifiedPhoneNumber
                                                                   }
-                                                                  isVerifiedEmail={
-                                                                    isVerifiedEmail
+                                                                  isVerifiedEmailAddress={
+                                                                    isVerifiedEmailAddress
                                                                   }
                                                                   confirmUsername={
                                                                     confirmUsername

@@ -24,7 +24,7 @@ class ProfileAdmin(admin.ModelAdmin):
         'nationality',
         'residence',
         'is_verified_phone_number',
-        'is_verified_email',
+        'is_verified_email_address',
     )
 
 

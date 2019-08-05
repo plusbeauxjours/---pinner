@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import Home from "../Routes/Login/Home";
-import VerifyPhone from "../Routes/Login/VerifyPhone";
+import Verification from "../Routes/Login/Verification";
 import Approach from "../Routes/Login/Approach";
 import NotFound from "./NotFound";
 
@@ -22,7 +22,8 @@ interface IProps {
 const LoggedOutPages = () => (
   <Switch>
     <Route path="/" exact={true} component={Home} />
-    <Route path="/verification" component={VerifyPhone} />
+    <Route path="/verification/:key" component={Verification} />
+    <Route path="/verification" component={Verification} />
     <Route path="/approach" component={Approach} />
     <Route path="/404" exact={true} component={NotFound} />
     <Redirect from="*" to="/" />

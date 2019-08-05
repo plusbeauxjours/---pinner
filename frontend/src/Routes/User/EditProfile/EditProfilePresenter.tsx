@@ -588,7 +588,7 @@ const CodeInputStyle = {
 
 interface IProps {
   phoneLoading: boolean;
-uploadAvatarLoading: boolean;
+  uploadAvatarLoading: boolean;
   avatarsData: any;
   avatarsLoading: boolean;
   deleteConfirmModalOpen: boolean;
@@ -644,9 +644,9 @@ uploadAvatarLoading: boolean;
   phoneNumber: string;
   countryPhoneNumber: string;
   countryPhoneCode: string;
-  email: string;
+  emailAddress: string;
   isVerifiedPhoneNumber: boolean;
-  isVerifiedEmail: boolean;
+  isVerifiedEmailAddress: boolean;
   confirmUsername: string;
   countryModalOpen: boolean;
   toggleCountryModal: () => void;
@@ -673,7 +673,7 @@ uploadAvatarLoading: boolean;
 
 const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   phoneLoading,
-uploadAvatarLoading,
+  uploadAvatarLoading,
   avatarsData: { getAvatars: { avatars = null } = {} } = {},
   avatarsLoading,
   deleteConfirmModalOpen,
@@ -730,9 +730,9 @@ uploadAvatarLoading,
   phoneNumber,
   countryPhoneNumber,
   countryPhoneCode,
-  email,
+  emailAddress,
   isVerifiedPhoneNumber,
-  isVerifiedEmail,
+  isVerifiedEmailAddress,
   confirmUsername,
   countryModalOpen,
   toggleCountryModal,
@@ -990,9 +990,9 @@ uploadAvatarLoading,
                 phoneNumber,
                 countryPhoneNumber,
                 countryPhoneCode,
-                email,
+                emailAddress,
                 isVerifiedPhoneNumber,
-                isVerifiedEmail
+                isVerifiedEmailAddress
               }
             }}
           >
@@ -1021,9 +1021,9 @@ uploadAvatarLoading,
                 phoneNumber,
                 countryPhoneNumber,
                 countryPhoneCode,
-                email,
+                emailAddress,
                 isVerifiedPhoneNumber,
-                isVerifiedEmail
+                isVerifiedEmailAddress
               }
             }}
           >
@@ -1125,9 +1125,10 @@ uploadAvatarLoading,
           </Conatainer>
           <ExplainText>
             Your bio is displayed on your profile. You can write about who you
-            are and what you're looking for on Pinner. You can also add links to
-            your website and profiles on other websites, like Instagram or your
-            blog for example.
+            are and what you're looking for on Pinner. <br />
+            You can also add links to your website and profiles on other
+            websites, <br />
+            like Instagram or your blog for example.
           </ExplainText>
           <Conatainer>
             <TitleText>PHONE</TitleText>
@@ -1169,18 +1170,18 @@ uploadAvatarLoading,
           <Conatainer>
             <TitleText>EMAIL</TitleText>
             <NumberUnderline>
-              {email}
-              {isVerifiedEmail && (
+              {emailAddress}
+              {isVerifiedEmailAddress && (
                 <CheckIcon>
                   <Check />
                 </CheckIcon>
               )}
             </NumberUnderline>
           </Conatainer>
-          {isVerifiedEmail ? (
+          {isVerifiedEmailAddress ? (
             <ExplainText>
-              Your Email is already verified. If you want to change your
-              Email,&nbsp;
+              Your email address is already verified. If you want to change your
+              email address,&nbsp;
               <Underline onClick={toggleEditEmailAddressModal}>
                 click here
               </Underline>
@@ -1191,7 +1192,7 @@ uploadAvatarLoading,
               <Underline onClick={toggleEditEmailAddressModal}>
                 click here
               </Underline>
-              &nbsp; to verify your email to login.
+              &nbsp; to verify your email address to login.
             </ExplainText>
           )}
           <DeleteConatainer>

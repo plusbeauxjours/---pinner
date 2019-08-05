@@ -20,3 +20,4 @@ class Mutation(object):
     start_edit_phone_verification = mutations.StartEditPhoneVerification.Field(required=True)
     complete_edit_phone_verification = mutations.CompleteEditPhoneVerification.Field(required=True)
     start_email_verification = mutations.StartEmailVerification.Field(required=True)
+    complete_email_verification = mutations.CompleteEmailVerification.Field(required=True)

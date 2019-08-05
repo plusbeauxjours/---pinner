@@ -1510,6 +1510,30 @@ export interface CompletePhoneVerificationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CompleteEmailVerification
+// ====================================================
+
+export interface CompleteEmailVerification_completeEmailVerification {
+  __typename: "CompleteEmailVerificationResponse";
+  ok: boolean | null;
+  token: string | null;
+}
+
+export interface CompleteEmailVerification {
+  completeEmailVerification: CompleteEmailVerification_completeEmailVerification;
+}
+
+export interface CompleteEmailVerificationVariables {
+  key: string;
+  emailAddress: string;
+  cityId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetMatches
 // ====================================================
 
@@ -2068,9 +2092,9 @@ export interface EditProfile_editProfile_user_profile {
   countryPhoneNumber: string | null;
   countryPhoneCode: string | null;
   phoneNumber: string | null;
-  email: string | null;
+  emailAddress: string | null;
   isVerifiedPhoneNumber: boolean;
-  isVerifiedEmail: boolean;
+  isVerifiedEmailAddress: boolean;
   nationality: EditProfile_editProfile_user_profile_nationality | null;
   residence: EditProfile_editProfile_user_profile_residence | null;
   postCount: number | null;
@@ -2332,9 +2356,9 @@ export interface UserProfile_userProfile_user_profile {
   countryPhoneNumber: string | null;
   countryPhoneCode: string | null;
   phoneNumber: string | null;
-  email: string | null;
+  emailAddress: string | null;
   isVerifiedPhoneNumber: boolean;
-  isVerifiedEmail: boolean;
+  isVerifiedEmailAddress: boolean;
   nationality: UserProfile_userProfile_user_profile_nationality | null;
   residence: UserProfile_userProfile_user_profile_residence | null;
   postCount: number | null;

@@ -260,71 +260,61 @@ class StartEmailVerification(graphene.Mutation):
             raise Exception('Phone number is already verified')
 
 
-# class CompletePhoneVerification(graphene.Mutation):
+class CompleteEmailVerification(graphene.Mutation):
 
-#     class Arguments:
-#         phoneNumber = graphene.String(required=True)
-#         countryPhoneNumber = graphene.String(required=True)
-#         countryPhoneCode = graphene.String(required=True)
-#         key = graphene.String(required=True)
-#         cityId = graphene.String(required=True)
+    class Arguments:
+        key = graphene.String(required=True)
+        emailAddress = graphene.String(required=True)
+        cityId = graphene.String(required=True)
 
-#     Output = types.CompletePhoneVerificationResponse
+    Output = types.CompleteEmailVerificationResponse
 
-#     def mutate(self, info, **kwargs):
+    def mutate(self, info, **kwargs):
 
-#         phoneNumber = kwargs.get('phoneNumber')
-#         countryPhoneNumber = kwargs.get('countryPhoneNumber')
-#         countryPhoneCode = kwargs.get('countryPhoneCode')
-#         key = kwargs.get('key')
-#         cityId = kwargs.get('cityId')
+        key = kwargs.get('key')
+        emailAddress = kwargs.get('emailAddress')
+        cityId = kwargs.get('cityId')
 
-#         if phoneNumber.startswith('0'):
-#             phoneNumber = phoneNumber.replace('0', '')
-#             return phoneNumber
+        payload = emailAddress
+        print(payload)
 
-#         payload = countryPhoneNumber + phoneNumber
-#         print(payload)
+        try:
+            verification = models.Verification.objects.get(
+                payload=payload,
+                key=key
+            )
 
-#         try:
-#             verification = models.Verification.objects.get(
-#                 payload=payload,
-#                 key=key
-#             )
+            try:
+                exstingUserProfile = users_models.Profile.objects.get(email_address=emailAddress)
+                exstingUserProfile.is_verified_email_address = True
+                exstingUserProfile.save()
+                verification.verified = True
+                verification.save()
+                token = get_token(exstingUserProfile.user)
+                return types.CompleteEmailVerificationResponse(ok=True, token=token)
 
-#             try:
-#                 exstingUserProfile = users_models.Profile.objects.get(phone_number=phoneNumber)
-#                 exstingUserProfile.is_verified_phone_number = True
-#                 exstingUserProfile.save()
-#                 verification.verified = True
-#                 verification.save()
-#                 token = get_token(exstingUserProfile.user)
-#                 return types.CompletePhoneVerificationResponse(ok=True, token=token)
+            except users_models.Profile.DoesNotExist:
+                with open('pinner/users/adjectives.json', mode='rt', encoding='utf-8') as adjectives:
+                    with open('pinner/users/nouns.json', mode='rt', encoding='utf-8') as nouns:
+                        adjectives = json.load(adjectives)
+                        nouns = json.load(nouns)
+                        username = random.choice(adjectives) + random.choice(nouns).capitalize()
+                        newUser = User.objects.create_user(username=username)
+                        token = get_token(newUser)
+                        city = location_models.City.objects.get(city_id=cityId)
+                        newUserProfile = users_models.Profile.objects.create(
+                            user=newUser,
+                            email_address=emailAddress,
+                            current_city=city
+                        )
+                        newUserProfile.is_verified_email_address = True
+                        newUserProfile.save()
+                        verification.verified = True
+                        verification.save()
+                        return types.CompleteEmailVerificationResponse(ok=True, token=token)
 
-#             except users_models.Profile.DoesNotExist:
-#                 with open('pinner/users/adjectives.json', mode='rt', encoding='utf-8') as adjectives:
-#                     with open('pinner/users/nouns.json', mode='rt', encoding='utf-8') as nouns:
-#                         adjectives = json.load(adjectives)
-#                         nouns = json.load(nouns)
-#                         username = random.choice(adjectives) + random.choice(nouns).capitalize()
-#                         newUser = User.objects.create_user(username=username)
-#                         token = get_token(newUser)
-#                         city = location_models.City.objects.get(city_id=cityId)
-#                         newUserProfile = users_models.Profile.objects.create(
-#                             user=newUser,
-#                             country_phone_number=countryPhoneNumber,
-#                             country_phone_code=countryPhoneCode,
-#                             phone_number=phoneNumber,
-#                             current_city=city
-#                         )
-#                         newUserProfile.is_verified_phone_number = True
-#                         newUserProfile.save()
-#                         verification.verified = True
-#                         verification.save()
-#                         return types.CompletePhoneVerificationResponse(ok=True, token=token)
-
-#         except models.Verification.DoesNotExist:
-#             raise Exception('Verification key not valid')
+        except models.Verification.DoesNotExist:
+            raise Exception('Verification key not valid')
 
 
 # class StartEditPhoneVerification(graphene.Mutation):

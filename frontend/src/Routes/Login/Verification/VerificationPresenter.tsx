@@ -110,7 +110,7 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const VerifyPhonePresenter: React.FunctionComponent<IProps> = ({
+const VerificationPresenter: React.FunctionComponent<IProps> = ({
   verificationKey,
   onSubmit,
   loading,
@@ -142,10 +142,10 @@ const VerifyPhonePresenter: React.FunctionComponent<IProps> = ({
                 <Underline>&nbsp;Login With Email.</Underline>
               </Text>
               <p>
-                When you tap Continue, Pinner will send a text with
-                verification code. Message and data rates may apply. The
-                verified phone number can be used to login. Learn what happens
-                when your number changes.
+                When you tap Continue, Pinner will send a text with verification
+                code. Message and data rates may apply. The verified phone
+                number can be used to login. Learn what happens when your number
+                changes.
               </p>
               <ExtendedForm onSubmit={onSubmit}>
                 <SButton text={"VERIFY"} onClick={null} inverted={loading} />
@@ -159,4 +159,4 @@ const VerifyPhonePresenter: React.FunctionComponent<IProps> = ({
   return null;
 };
 
-export default VerifyPhonePresenter;
+export default VerificationPresenter;
