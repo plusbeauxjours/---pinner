@@ -32,7 +32,7 @@ class MarkAsVerified(graphene.Mutation):
             verification = models.Verification.objects.get(
                 id=verificationId
             )
-            verification.verified = True
+            verification.is_verified = True
             verification.save()
             return types.MarkAsVerifiedResponse(ok=True)
 
@@ -56,9 +56,19 @@ class StartPhoneVerification(graphene.Mutation):
             existingVerification = models.Verification.objects.get(
                 payload=phoneNumber,
                 target="phone",
-                verified=False
+                is_verified=False
             )
             existingVerification.delete()
+            newVerification = models.Verification.objects.create(
+                payload=phoneNumber,
+                target="phone"
+            )
+            newVerification.save()
+            try:
+                sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
+                return types.StartPhoneVerificationResponse(ok=True)
+            except:
+                return types.StartPhoneVerificationResponse(ok=False)
 
         except IntegrityError as e:
             raise Exception("Wrong Phone Number")
@@ -115,7 +125,7 @@ class CompletePhoneVerification(graphene.Mutation):
                 exstingUserProfile = users_models.Profile.objects.get(phone_number=phoneNumber)
                 exstingUserProfile.is_verified_phone_number = True
                 exstingUserProfile.save()
-                verification.verified = True
+                verification.is_verified = True
                 verification.save()
                 token = get_token(exstingUserProfile.user)
                 return types.CompletePhoneVerificationResponse(ok=True, token=token)
@@ -138,7 +148,7 @@ class CompletePhoneVerification(graphene.Mutation):
                         )
                         newUserProfile.is_verified_phone_number = True
                         newUserProfile.save()
-                        verification.verified = True
+                        verification.is_verified = True
                         verification.save()
                         return types.CompletePhoneVerificationResponse(ok=True, token=token)
 
@@ -230,7 +240,7 @@ class CompleteEditPhoneVerification(graphene.Mutation):
             profile.country_phone_code = countryPhoneCode
             profile.is_verified_phone_number = True
             profile.save()
-            verification.verified = True
+            verification.is_verified = True
             verification.save()
             return types.CompleteEditPhoneVerificationResponse(ok=True,
                                                                phoneNumber=phoneNumber,
@@ -260,6 +270,16 @@ class StartEmailVerification(graphene.Mutation):
                 target="email"
             )
             existingVerification.delete()
+            newVerification = models.Verification.objects.create(
+                payload=emailAddress,
+                target="email"
+            )
+            newVerification.save()
+            try:
+                # sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
+                return types.StartEmailVerificationResponse(ok=True)
+            except:
+                return types.StartEmailVerificationResponse(ok=False)
 
         except models.Verification.DoesNotExist:
             newVerification = models.Verification.objects.create(
@@ -281,7 +301,6 @@ class CompleteEmailVerification(graphene.Mutation):
 
     class Arguments:
         key = graphene.String(required=True)
-        emailAddress = graphene.String(required=True)
         cityId = graphene.String(required=True)
 
     Output = types.CompleteEmailVerificationResponse
@@ -289,23 +308,20 @@ class CompleteEmailVerification(graphene.Mutation):
     def mutate(self, info, **kwargs):
 
         key = kwargs.get('key')
-        emailAddress = kwargs.get('emailAddress')
         cityId = kwargs.get('cityId')
-
-        payload = emailAddress
-        print(payload)
 
         try:
             verification = models.Verification.objects.get(
-                payload=payload,
-                key=key
+                key=key,
+                target="email",
+                is_verified=False
             )
 
             try:
-                exstingUserProfile = users_models.Profile.objects.get(email_address=emailAddress)
+                exstingUserProfile = users_models.Profile.objects.get(email_address=verification.payload)
                 exstingUserProfile.is_verified_email_address = True
                 exstingUserProfile.save()
-                verification.verified = True
+                verification.is_verified = True
                 verification.save()
                 token = get_token(exstingUserProfile.user)
                 return types.CompleteEmailVerificationResponse(ok=True, token=token)
@@ -321,12 +337,12 @@ class CompleteEmailVerification(graphene.Mutation):
                         city = location_models.City.objects.get(city_id=cityId)
                         newUserProfile = users_models.Profile.objects.create(
                             user=newUser,
-                            email_address=emailAddress,
+                            email_address=verification.payload,
                             current_city=city
                         )
                         newUserProfile.is_verified_email_address = True
                         newUserProfile.save()
-                        verification.verified = True
+                        verification.is_verified = True
                         verification.save()
                         return types.CompleteEmailVerificationResponse(ok=True, token=token)
 
@@ -405,7 +421,7 @@ class CompleteEditEmailVerification(graphene.Mutation):
             profile.email_address = emailAddress
             profile.is_verified_email_address = True
             profile.save()
-            verification.verified = True
+            verification.is_verified = True
             verification.save()
             return types.CompleteEditEmailVerificationResponse(ok=True,
                                                                emailAddress=emailAddress,

@@ -8,6 +8,6 @@ class Verifications(admin.ModelAdmin):
         'id',
         'target',
         'payload',
-        'verified',
+        'is_verified',
         'key',
     )

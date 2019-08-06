@@ -22,16 +22,8 @@ export const COMPLETE_PHONE_SIGN_IN = gql`
 `;
 
 export const COMPLETE_EMAIL_SIGN_IN = gql`
-  mutation CompleteEmailVerification(
-    $key: String!
-    $emailAddress: String!
-    $cityId: String!
-  ) {
-    completeEmailVerification(
-      key: $key
-      emailAddress: $emailAddress
-      cityId: $cityId
-    ) {
+  mutation CompleteEmailVerification($key: String!, $cityId: String!) {
+    completeEmailVerification(key: $key, cityId: $cityId) {
       ok
       token
     }

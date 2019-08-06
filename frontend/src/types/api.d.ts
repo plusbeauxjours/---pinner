@@ -1525,7 +1525,6 @@ export interface CompleteEmailVerification {
 
 export interface CompleteEmailVerificationVariables {
   key: string;
-  emailAddress: string;
   cityId: string;
 }
 
