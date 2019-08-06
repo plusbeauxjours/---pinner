@@ -8,6 +8,7 @@ import {
 
 import Home from "../Routes/Login/Home";
 import Verification from "../Routes/Login/Verification";
+import EditEmailAddress from "../Routes/User/EditEmailAddress";
 import Approach from "../Routes/Login/Approach";
 import NotFound from "./NotFound";
 
@@ -23,6 +24,7 @@ const LoggedOutPages = () => (
   <Switch>
     <Route path="/" exact={true} component={Home} />
     <Route path="/verification/:key" component={Verification} />
+    <Route path="/confirm/:key" component={EditEmailAddress} />
     <Route path="/verification" component={Verification} />
     <Route path="/approach" component={Approach} />
     <Route path="/404" exact={true} component={NotFound} />

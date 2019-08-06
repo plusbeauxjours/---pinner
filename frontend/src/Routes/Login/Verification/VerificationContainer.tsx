@@ -156,11 +156,9 @@ class VerificationContainer extends React.Component<IProps, IState> {
         });
       }
       toast.success("You're verified, loggin in now");
-      setTimeout(() => {
-        history.push({
-          pathname: "/"
-        });
-      }, 500);
+      history.push({
+        pathname: "/"
+      });
     } else {
       toast.error("Could not be Verified you");
     }
@@ -177,11 +175,9 @@ class VerificationContainer extends React.Component<IProps, IState> {
         });
       }
       toast.success("You're verified, loggin in now");
-      setTimeout(() => {
-        history.push({
-          pathname: "/"
-        });
-      }, 500);
+      history.push({
+        pathname: "/"
+      });
     } else {
       toast.error("Could not be Verified you");
     }

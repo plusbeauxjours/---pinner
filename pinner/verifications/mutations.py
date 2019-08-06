@@ -164,6 +164,7 @@ class StartEditPhoneVerification(graphene.Mutation):
 
     Output = types.StartEditPhoneVerificationResponse
 
+    @login_required
     def mutate(self, info, **kwargs):
 
         phoneNumber = kwargs.get('phoneNumber')
@@ -294,7 +295,7 @@ class StartEmailVerification(graphene.Mutation):
                 return types.StartEmailVerificationResponse(ok=False)
 
         except:
-            raise Exception('Phone number is already verified')
+            raise Exception('Email address is already verified')
 
 
 class CompleteEmailVerification(graphene.Mutation):
@@ -314,7 +315,8 @@ class CompleteEmailVerification(graphene.Mutation):
             verification = models.Verification.objects.get(
                 key=key,
                 target="email",
-                is_verified=False
+                is_verified=False,
+                is_edit=False
             )
 
             try:
@@ -357,9 +359,11 @@ class StartEditEmailVerification(graphene.Mutation):
 
     Output = types.StartEditEmailVerificationResponse
 
+    @login_required
     def mutate(self, info, **kwargs):
 
         emailAddress = kwargs.get('emailAddress')
+        user = info.context.user
         print(emailAddress)
 
         try:
@@ -374,7 +378,9 @@ class StartEditEmailVerification(graphene.Mutation):
                 preVerification.delete()
                 newVerification = models.Verification.objects.create(
                     payload=emailAddress,
-                    target="email"
+                    user=user,
+                    target="email",
+                    is_edit=True
                 )
                 newVerification.save()
                 try:
@@ -386,6 +392,7 @@ class StartEditEmailVerification(graphene.Mutation):
             except models.Verification.DoesNotExist:
                 newVerification = models.Verification.objects.create(
                     payload=emailAddress,
+                    user=user,
                     target="email"
                 )
                 newVerification.save()
@@ -400,31 +407,29 @@ class StartEditEmailVerification(graphene.Mutation):
 class CompleteEditEmailVerification(graphene.Mutation):
 
     class Arguments:
-        emailAddress = graphene.String(required=True)
         key = graphene.String(required=True)
 
     Output = types.CompleteEditEmailVerificationResponse
 
     def mutate(self, info, **kwargs):
 
-        emailAddress = kwargs.get('emailAddress')
         key = kwargs.get('key')
-        payload = emailAddress
-        profile = info.context.user.profile
-        print(payload)
 
         try:
             verification = models.Verification.objects.get(
-                payload=payload,
-                key=key
+                key=key,
+                target="email",
+                is_verified=False,
+                is_edit=True
             )
-            profile.email_address = emailAddress
-            profile.is_verified_email_address = True
-            profile.save()
+            verification.user.profile.email_address = verification.payload
+            verification.user.profile.is_verified_email_address = True
+            verification.user.profile.save()
             verification.is_verified = True
             verification.save()
             return types.CompleteEditEmailVerificationResponse(ok=True,
-                                                               emailAddress=emailAddress,
+                                                               username=verification.user.username,
+                                                               emailAddress=verification.payload,
                                                                isVerifiedEmailAddress=True,
                                                                )
 

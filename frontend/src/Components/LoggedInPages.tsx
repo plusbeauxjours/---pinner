@@ -11,6 +11,7 @@ import Match from "../Routes/Match";
 
 import UserProfile from "../Routes/User/UserProfile";
 import EditProfile from "../Routes/User/EditProfile";
+import EditEmailAddress from "../Routes/User/EditEmailAddress";
 import ToggleSettings from "../Routes/User/ToggleSettings";
 import UserAvatarDetail from "../Routes/User/UserAvatarDetail";
 import Coffees from "../Routes/User/Coffees";
@@ -180,6 +181,7 @@ class LoggedInPages extends React.Component<IProps> {
           <Route path="/city/:cityId/usersBefore" component={CityUsersBefore} />
           <Route path="/city/:cityId/:duration" component={TripProfile} />
           <Route path="/city/:cityId" component={CityProfile} />
+          <Route path="/confirm/:key" component={EditEmailAddress} />
           <Route path="/account/edit" component={EditProfile} />
           <Route path="/account/settings" component={ToggleSettings} />
 

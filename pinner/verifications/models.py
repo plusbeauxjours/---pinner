@@ -16,11 +16,12 @@ class Verification(config_models.TimeStampedModel):
         ('phone', 'Phone'),
         ('email', 'Email')
     )
-
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name='verification')
     target = models.CharField(max_length=10, choices=TARGETS)
     payload = models.CharField(max_length=30)
     key = models.CharField(max_length=300, blank=True)
     is_verified = models.BooleanField(default=False)
+    is_edit = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-created_at']

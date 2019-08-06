@@ -56,4 +56,5 @@ class CompleteEmailVerificationResponse(graphene.ObjectType):
 class CompleteEditEmailVerificationResponse(graphene.ObjectType):
     ok = graphene.Boolean()
     emailAddress = graphene.String()
+    username = graphene.String()
     isVerifiedEmailAddress = graphene.Boolean()

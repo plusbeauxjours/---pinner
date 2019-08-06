@@ -2028,6 +2028,30 @@ export interface TopCountriesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CompleteEditEmailVerification
+// ====================================================
+
+export interface CompleteEditEmailVerification_completeEditEmailVerification {
+  __typename: "CompleteEditEmailVerificationResponse";
+  ok: boolean | null;
+  username: string | null;
+  emailAddress: string | null;
+  isVerifiedEmailAddress: boolean | null;
+}
+
+export interface CompleteEditEmailVerification {
+  completeEditEmailVerification: CompleteEditEmailVerification_completeEditEmailVerification;
+}
+
+export interface CompleteEditEmailVerificationVariables {
+  key: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: EditProfile
 // ====================================================
 
