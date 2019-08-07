@@ -51,7 +51,7 @@ const SButton = styled(Button)`
 
 const back = event => {
   event.stopPropagation();
-  browserHistory.push("/match");
+  browserHistory.push("/");
 };
 
 const NotFound: React.FunctionComponent<any> = () => (

@@ -78,6 +78,7 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'twilio',
     'cached_property',
+    "anymail",
 ]
 LOCAL_APPS = [
     'users.apps.UsersConfig',
@@ -236,7 +237,6 @@ X_FRAME_OPTIONS = 'DENY'
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
 
 # ADMIN
 # ------------------------------------------------------------------------------
@@ -244,7 +244,7 @@ EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.s
 ADMIN_URL = 'admin/'
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [
-    ("""plusbeauxjours""", 'plusbeauxjours@gmail.com'),
+    ("plusbeauxjours", 'plusbeauxjours@gmail.com'),
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
@@ -302,3 +302,12 @@ sentry_sdk.init(
     environment='production',
     integrations=[DjangoIntegration()]
 )
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'pinner.superuser@gmail.com'
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+SERVER_EMAIL = 'pinner.superuser@gmail.com'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

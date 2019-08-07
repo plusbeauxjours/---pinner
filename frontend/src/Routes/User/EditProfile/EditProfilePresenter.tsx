@@ -11,6 +11,8 @@ import Button from "src/Components/Button";
 import { Upload, Delete, RedDot, WhiteDot, Check } from "../../../Icons";
 import { MutationFn } from "react-apollo";
 import ReactCodeInput from "react-code-input";
+import LoadingOverlay from "react-loading-overlay";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const PAvatar = styled(Avatar)`
   display: flex;
@@ -52,6 +54,10 @@ const ModalContainer = styled.div`
   width: 100%;
 `;
 
+const LoaderContainer = styled(ModalContainer)`
+  z-index: 20;
+`;
+
 const Modal = styled.div`
   background-color: ${props => props.theme.modalBgColor};
   border: 1px solid ${props => props.theme.borderColor};
@@ -75,6 +81,10 @@ const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
   background-color: ${props => props.theme.modalOverlayColor};
+`;
+
+const LoaderModalOverlay = styled(ModalOverlay)`
+  z-index: 21;
 `;
 
 const ModalLink = styled.div`
@@ -124,11 +134,9 @@ const Input = styled.input`
   }
 `;
 
-
 const EmailInput = styled(Input)`
   width: 285px;
 `;
-
 
 const UsernameInput = styled(Input)`
   ime-mode: disabled;
@@ -410,8 +418,6 @@ const CheckIcon = styled.div`
   }
 `;
 
-
-
 const Underline = styled.span`
   text-decoration: underline;
   cursor: pointer;
@@ -589,6 +595,7 @@ const CodeInputStyle = {
 interface IProps {
   phoneLoading: boolean;
   uploadAvatarLoading: boolean;
+  emailLoading: boolean;
   avatarsData: any;
   avatarsLoading: boolean;
   deleteConfirmModalOpen: boolean;
@@ -673,6 +680,7 @@ interface IProps {
 const EditProfilePresenter: React.FunctionComponent<IProps> = ({
   phoneLoading,
   uploadAvatarLoading,
+  emailLoading,
   avatarsData: { getAvatars: { avatars = null } = {} } = {},
   avatarsLoading,
   deleteConfirmModalOpen,
@@ -749,6 +757,19 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
 }) => {
   return (
     <>
+      {(phoneLoading ||
+        uploadAvatarLoading ||
+        avatarsLoading ||
+        emailLoading) && (
+        <LoaderContainer>
+          <LoaderModalOverlay />
+          <LoadingOverlay
+            active={true}
+            spinner={<ClipLoader color={"#999"} />}
+            fadeSpeed={500}
+          />
+        </LoaderContainer>
+      )}
       {verifyEmailAddressModalOpen && (
         <PhoneVerifyModalContainer>
           <PhoneVerifyModalOverlay onClick={closeVerifyEmailAddressModal} />
@@ -783,30 +804,27 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
         <EditPhoneModalContainer>
           <EditPhoneModalOverlay onClick={toggleEditEmailAddressModal} />
           <EditPhoneModal>
-          <Container>
-                <EmailAddressContainer>
-                  <Form onSubmit={onSubmitEmailAddress}>
-                    <EmailInput
-                      type={"email"}
-                      autoFocus={true}
-                      value={newEmailAddress}
-                      name={"newEmailAddress"}
-                      onChange={onInputChange}
-                      autoComplete={"off"}
-                    />
-                  </Form>
-                </EmailAddressContainer>
-                <TextContainter>
-                  <p>We'll email you a link that will instantly log you in.</p>
-                  <br />
-                  <ExtendedForm onSubmit={onSubmitEmailAddress}>
-                    <SButton
-                      text={"CONTINUE"}
-                      onClick={null}
-                    />
-                  </ExtendedForm>
-                </TextContainter>
-              </Container>
+            <Container>
+              <EmailAddressContainer>
+                <Form onSubmit={onSubmitEmailAddress}>
+                  <EmailInput
+                    type={"email"}
+                    autoFocus={true}
+                    value={newEmailAddress}
+                    name={"newEmailAddress"}
+                    onChange={onInputChange}
+                    autoComplete={"off"}
+                  />
+                </Form>
+              </EmailAddressContainer>
+              <TextContainter>
+                <p>We'll email you a link that will instantly log you in.</p>
+                <br />
+                <ExtendedForm onSubmit={onSubmitEmailAddress}>
+                  <SButton text={"CONTINUE"} onClick={null} />
+                </ExtendedForm>
+              </TextContainter>
+            </Container>
           </EditPhoneModal>
         </EditPhoneModalContainer>
       )}
@@ -968,7 +986,9 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                     {!avatarS.isMain && isSelf ? (
                       <AvatarDeleteIcon
                         onClick={() =>
-                          deleteAvatarFn({ variables: { uuid: avatarS.uuid } })
+                          deleteAvatarFn({
+                            variables: { uuid: avatarS.uuid }
+                          })
                         }
                       >
                         <Delete />
@@ -1272,7 +1292,6 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
       </Wrapper>
     </>
   );
-  return null;
 };
 
 export default EditProfilePresenter;

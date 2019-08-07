@@ -223,7 +223,7 @@ const HeaderPresenter: React.FunctionComponent<IProps> = ({
         <SWrapper>
           <Column>
             <Icon>
-              <Link to="/match">
+              <Link to="/">
                 <Compass />
               </Link>
             </Icon>

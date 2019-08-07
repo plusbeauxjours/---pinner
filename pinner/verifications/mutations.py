@@ -13,6 +13,7 @@ from locations import models as location_models
 from django.contrib.auth.models import User
 from . import models, types
 from . import sendSMS
+from . import sendEMAIL
 
 
 class MarkAsVerified(graphene.Mutation):
@@ -277,7 +278,7 @@ class StartEmailVerification(graphene.Mutation):
             )
             newVerification.save()
             try:
-                # sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
+                sendEMAIL.sendVerificationEMAIL(emailAddress)
                 return types.StartEmailVerificationResponse(ok=True)
             except:
                 return types.StartEmailVerificationResponse(ok=False)
@@ -289,7 +290,7 @@ class StartEmailVerification(graphene.Mutation):
             )
             newVerification.save()
             try:
-                # sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
+                sendEMAIL.sendVerificationEMAIL(emailAddress)
                 return types.StartEmailVerificationResponse(ok=True)
             except:
                 return types.StartEmailVerificationResponse(ok=False)
@@ -384,7 +385,7 @@ class StartEditEmailVerification(graphene.Mutation):
                 )
                 newVerification.save()
                 try:
-                    # sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
+                    sendEMAIL.sendConfirmEMAIL(emailAddress, newVerification.key)
                     return types.StartEditEmailVerificationResponse(ok=True)
                 except:
                     newVerification.delete()
@@ -393,11 +394,12 @@ class StartEditEmailVerification(graphene.Mutation):
                 newVerification = models.Verification.objects.create(
                     payload=emailAddress,
                     user=user,
-                    target="email"
+                    target="email",
+                    is_edit=True
                 )
                 newVerification.save()
                 try:
-                    # sendSMS.sendVerificationSMS(newVerification.payload, newVerification.key)
+                    sendEMAIL.sendConfirmEMAIL(emailAddress, newVerification.key)
                     return types.StartEditEmailVerificationResponse(ok=True)
                 except:
                     newVerification.delete()

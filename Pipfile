@@ -66,6 +66,8 @@ raven = "*"
 pip = "*"
 install = "*"
 django-graphql-extensions = "*"
+django-anymail = "*"
+sendmail = "*"
 
 [requires]
 python_version = "3.7"

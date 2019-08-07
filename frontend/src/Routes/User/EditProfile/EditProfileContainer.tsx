@@ -382,7 +382,7 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                                                                       setTimeout(
                                                                         () => {
                                                                           history.push(
-                                                                            "/match"
+                                                                            "/"
                                                                           );
                                                                         },
                                                                         2000
@@ -400,6 +400,9 @@ class EditProfileContainer extends React.Component<IProps, IState> {
                                                                       <EditProfilePresenter
                                                                         phoneLoading={
                                                                           phoneLoading
+                                                                        }
+                                                                        emailLoading={
+                                                                          emailLoading
                                                                         }
                                                                         uploadAvatarLoading={
                                                                           uploadAvatarLoading
@@ -807,7 +810,10 @@ class EditProfileContainer extends React.Component<IProps, IState> {
   };
   public toggleEditEmailAddressModal = () => {
     const { editEmailAddressModalOpen } = this.state;
-    this.setState({ editEmailAddressModalOpen: !editEmailAddressModalOpen });
+    this.setState({
+      editEmailAddressModalOpen: !editEmailAddressModalOpen,
+      newEmailAddress: ""
+    });
   };
   public onSelectCountry = (
     newCountryPhoneNumber: string,
@@ -1202,11 +1208,14 @@ class EditProfileContainer extends React.Component<IProps, IState> {
   public onCompletedEditEmailVerification = data => {
     this.setState({
       isEmailSubmitted: false,
-      verifyEmailAddressModalOpen: true,
-      editEmailAddressModalOpen: false
+      newEmailAddress: ""
     });
     this.setState({});
     if (data.startEditEmailVerification.ok) {
+      this.setState({
+        verifyEmailAddressModalOpen: true,
+        editEmailAddressModalOpen: false
+      });
       toast.success("Email Sent! Please ");
     } else {
       toast.error("Could not send you a Key");
