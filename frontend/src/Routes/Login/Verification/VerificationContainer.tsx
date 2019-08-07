@@ -49,9 +49,9 @@ class VerificationContainer extends React.Component<IProps, IState> {
       this.handleGeoError
     );
     const { location: { state = {} } = {} } = ({} = props);
-    // if (!props.location.state) {
-    //   props.history.push("/");
-    // }
+    if (!props.location.state) {
+      props.history.push("/");
+    }
     this.state = {
       latitude: state.latitude,
       longitude: state.longitude,

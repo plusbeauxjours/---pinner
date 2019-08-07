@@ -1,17 +1,25 @@
-from django.core.mail.message import EmailMessage
+from django.conf import settings
 from django.core.mail import send_mail
+from django.template import loader
+from django.template.loader import get_template
+from django.template.loader import render_to_string
 
 
 def sendVerificationEMAIL(to, key):
     print(to)
-    send_mail('Verify Your Email🔒', 'Please verify your email to secure your account. Or paste this link into your browser: http://localhost:3000/verification/{}'.format(
-        key), 'no-reply@pinner.fun', ['plusbeauxjours.home@gmail.com', ])
-
-    return "koko"
-
+    subject = 'Verify Your Email🔒'
+    to = [to,'plusbeauxjours.home@gmail.com', ]
+    key = 'http://localhost:3000/verification/{}'.format(key)
+    ctx = {'key': key}
+    msg_html = render_to_string('account/email_confirm.html', ctx)
+    send_mail(subject, msg_html, 'no-reply@pinner.fun', to, html_message=msg_html)
+    return;
 
 def sendConfirmEMAIL(to, key):
-    print(to)
-    send_mail('Verify Your Email🔒', 'Please verify your email to secure your account. Or paste this link into your browser: http://localhost:3000/confirm/{}'.format(
-        key), 'no-reply@pinner.fun', ['plusbeauxjours.home@gmail.com', ])
-    return "koko"
+    subject = 'Verify Your Email🔒'
+    to = [to,'plusbeauxjours.home@gmail.com', ]
+    key = 'http://localhost:3000/confirm/{}'.format(key)
+    ctx = {'key': key}
+    msg_html = render_to_string('account/email_confirm.html', ctx)
+    send_mail(subject, msg_html, 'no-reply@pinner.fun', to, html_message=msg_html)
+    return;
