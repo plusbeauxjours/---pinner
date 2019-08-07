@@ -781,9 +781,8 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                   <br />
                   <br />
                   <p>
-                    If we found as account with &nbsp;{emailAddress}, an email
-                    has been sent, otherwise new account with &nbsp;
-                    {emailAddress} will be created.
+                     &nbsp;{emailAddress}, an email 
+                    has been sent
                   </p>
                   <p>
                     Please check your email in a moment to verify email address.

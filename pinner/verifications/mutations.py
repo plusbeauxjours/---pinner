@@ -278,7 +278,7 @@ class StartEmailVerification(graphene.Mutation):
             )
             newVerification.save()
             try:
-                sendEMAIL.sendVerificationEMAIL(emailAddress)
+                sendEMAIL.sendVerificationEMAIL(emailAddress, newVerification.key)
                 return types.StartEmailVerificationResponse(ok=True)
             except:
                 return types.StartEmailVerificationResponse(ok=False)
@@ -290,7 +290,7 @@ class StartEmailVerification(graphene.Mutation):
             )
             newVerification.save()
             try:
-                sendEMAIL.sendVerificationEMAIL(emailAddress)
+                sendEMAIL.sendVerificationEMAIL(emailAddress, newVerification.key)
                 return types.StartEmailVerificationResponse(ok=True)
             except:
                 return types.StartEmailVerificationResponse(ok=False)
@@ -375,7 +375,12 @@ class StartEditEmailVerification(graphene.Mutation):
 
         except users_models.Profile.DoesNotExist:
             try:
-                preVerification = models.Verification.objects.get(payload=emailAddress, target="email")
+                preVerification = models.Verification.objects.get(
+                    target="email",
+                    user=user,
+                    is_verified=False,
+                    is_edit=True
+                )
                 preVerification.delete()
                 newVerification = models.Verification.objects.create(
                     payload=emailAddress,
@@ -393,8 +398,9 @@ class StartEditEmailVerification(graphene.Mutation):
             except models.Verification.DoesNotExist:
                 newVerification = models.Verification.objects.create(
                     payload=emailAddress,
-                    user=user,
                     target="email",
+                    user=user,
+                    is_verified=False,
                     is_edit=True
                 )
                 newVerification.save()

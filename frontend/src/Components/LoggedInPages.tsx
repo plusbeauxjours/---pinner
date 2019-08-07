@@ -34,6 +34,8 @@ import CountryUsersBefore from "../Routes/Country/CountryUsersBefore";
 
 import Header from "./Header";
 import NotFound from "./NotFound";
+import NoValid from "./NoValid";
+
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
 const Wrapper = styled.div`
@@ -184,6 +186,7 @@ class LoggedInPages extends React.Component<IProps> {
           <Route path="/confirm/:key" component={EditEmailAddress} />
           <Route path="/account/edit" component={EditProfile} />
           <Route path="/account/settings" component={ToggleSettings} />
+          <Route path="/verification/:key" component={NoValid} />
 
           {/* USER */}
           <Route path="/:username" exact={true} component={UserProfile} />

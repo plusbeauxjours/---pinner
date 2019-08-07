@@ -2,9 +2,10 @@ import React from "react";
 import Helmet from "react-helmet";
 import styled from "src/Styles/typed-components";
 import { keyframes } from "styled-components";
-import Loader from "src/Components/Loader";
 import Button from "../../../Components/Button";
 import { countries } from "../../../countryData";
+import LoadingOverlay from "react-loading-overlay";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Container = styled.div`
   display: flex;
@@ -197,6 +198,14 @@ const CountryPhoneNumber = styled.div`
   font-size: 18px;
 `;
 
+const LoaderContainer = styled(ModalContainer)`
+  z-index: 20;
+`;
+
+const LoaderModalOverlay = styled(ModalOverlay)`
+  z-index: 21;
+`;
+
 interface IProps {
   countryPhoneNumber: string;
   countryPhoneCode: string;
@@ -241,11 +250,19 @@ const ApproachPresenter: React.FunctionComponent<IProps> = ({
   emailSignIn,
   toggleEmailSignIn
 }) => {
-  if (emailLoading || phoneLoading) {
-    return <Loader />;
-  } else if (!emailLoading && !phoneLoading && emailSignIn) {
+  if (emailSignIn) {
     return (
       <>
+        {(emailLoading || phoneLoading) && (
+          <LoaderContainer>
+            <LoaderModalOverlay />
+            <LoadingOverlay
+              active={true}
+              spinner={<ClipLoader color={"#999"} />}
+              fadeSpeed={500}
+            />
+          </LoaderContainer>
+        )}
         {modalOpen && (
           <SearchModalContainer>
             <SearchModalOverlay onClick={toggleModal} />
@@ -321,9 +338,19 @@ const ApproachPresenter: React.FunctionComponent<IProps> = ({
         </ModalContainer>
       </>
     );
-  } else if (!emailLoading && !phoneLoading && !emailSignIn) {
+  } else if (!emailSignIn) {
     return (
       <>
+        {(emailLoading || phoneLoading) && (
+          <LoaderContainer>
+            <LoaderModalOverlay />
+            <LoadingOverlay
+              active={true}
+              spinner={<ClipLoader color={"#999"} />}
+              fadeSpeed={500}
+            />
+          </LoaderContainer>
+        )}
         {modalOpen && (
           <SearchModalContainer>
             <SearchModalOverlay onClick={toggleModal} />

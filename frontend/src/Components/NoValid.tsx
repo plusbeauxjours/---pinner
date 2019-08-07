@@ -57,20 +57,20 @@ const back = event => {
 const NotFound: React.FunctionComponent<any> = () => (
   <Container>
     <SWrapper>
-      <Image src={require(`../Images/notFound/Astronaut-big.png`)} />
-      <Bold>This page is lost in space </Bold>
+      <Image src={require(`../Images/notFound/Balloon Lost-big.png`)} />
+      <Bold>This link appears to be expired and is no longer valid</Bold>
       <GreyText>
-        You thought this mission to the moon would be a quick six month thing.
+        The child had looked so excited when the clown had presented a large red
+        balloon.
+        <br /> You had seen this, but in the throes of your morning commute you
+        didn’t register it until it was too late.
+        <br /> Who asked the government to support a fair right through Main
+        Street during a week day anyway?
         <br />
-        Your neighbor offered to look after your dog. Your high school math
-        teacher was impressed.
-        <br />
-        He once said you wouldn’t amount to anything. <br />
-        You sure showed him. But now here you are, fifty feet from your
-        spaceship with no way to get back.
-        <br />
-        Your dog will be so sad. Your math teacher will be so smug. Pretty
-        devastating.
+        Your bike barrelled right between the child and the clown and sent the
+        balloon on its merry way.
+        <br /> You didn’t turn back to see the damage you had done. Later you
+        saw the balloon floating outside your office window.
         <br />
       </GreyText>
       <SButton onClick={back} text={"HOME"} />

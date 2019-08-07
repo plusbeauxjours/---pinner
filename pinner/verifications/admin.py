@@ -6,8 +6,10 @@ from . import models
 class Verifications(admin.ModelAdmin):
     list_display = (
         'id',
+        'user',
         'target',
-        'payload',
+        'is_edit',
         'is_verified',
+        'payload',
         'key',
     )
