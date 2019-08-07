@@ -426,14 +426,14 @@ class UploadAvatar(graphene.Mutation):
             user.profile.avatarUrl = newMainAvatar.thumbnail
             prevMainAvatar.save()
             user.profile.save()
-            return types.UploadAvatarResponse(ok=True, avatar=newMainAvatar)
+            return types.UploadAvatarResponse(ok=True, preAvatarUUID=prevMainAvatar.uuid ,newAvatarUUID=newMainAvatar.uuid, avatar=newMainAvatar)
 
         except models.Avatar.DoesNotExist:
             newMainAvatar = models.Avatar.objects.create(
                 is_main=True, image=file, thumbnail=file, creator=user)
             user.profile.avatarUrl = newMainAvatar.thumbnail
             user.profile.save()
-            return types.UploadAvatarResponse(ok=True, avatar=newMainAvatar)
+            return types.UploadAvatarResponse(ok=True, preAvatarUUID=prevMainAvatar.uuid ,newAvatarUUID=newMainAvatar.uuid, avatar=newMainAvatar) 
 
 
 class DeleteAvatar(graphene.Mutation):

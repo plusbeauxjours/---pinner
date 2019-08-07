@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import HeaderPresenter from "./HeaderPresenter";
-import { reverseGeoCode, reversePlaceId } from '../../mapHelpers';
+import { reverseGeoCode, reversePlaceId } from "../../mapHelpers";
 import {
   Me,
   Header,
@@ -48,9 +48,9 @@ class HeaderContainer extends React.Component<IProps, IState> {
     this.state = {
       currentLat: 0,
       currentLng: 0,
-      currentCityId: null,
+      currentCityId: localStorage.getItem("cityId"),
       currentCityName: null,
-      currentCountryCode: null,
+      currentCountryCode: localStorage.getItem("countryCode"),
       modalOpen: false,
       search: ""
     };

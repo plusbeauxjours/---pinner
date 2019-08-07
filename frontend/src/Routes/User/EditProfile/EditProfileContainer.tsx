@@ -1164,6 +1164,12 @@ class EditProfileContainer extends React.Component<IProps, IState> {
       });
       if (data) {
         data.getAvatars.avatars.unshift(uploadAvatar.avatar);
+        data.getAvatars.avatars.find(
+          i => i.uuid === uploadAvatar.preAvatarUUID
+        ).isMain = false;
+        data.getAvatars.avatars.find(
+          i => i.uuid === uploadAvatar.newAvatarUUID
+        ).isMain = true;
         cache.writeQuery({
           query: GET_AVATARS,
           variables: { userName: username },

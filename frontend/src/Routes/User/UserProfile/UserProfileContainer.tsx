@@ -1199,6 +1199,12 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       });
       if (data) {
         data.getAvatars.avatars.unshift(uploadAvatar.avatar);
+        data.getAvatars.avatars.find(
+          i => i.uuid === uploadAvatar.preAvatarUUID
+        ).isMain = false;
+        data.getAvatars.avatars.find(
+          i => i.uuid === uploadAvatar.newAvatarUUID
+        ).isMain = true;
         cache.writeQuery({
           query: GET_AVATARS,
           variables: { userName: username },
@@ -1323,7 +1329,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         variables: { userName: username }
       });
       if (data) {
-        data.getAvatars.avatars.find(i => i.uuid === markAsMain.preAvatarUUID).isMain = false;
+        data.getAvatars.avatars.find(
+          i => i.uuid === markAsMain.preAvatarUUID
+        ).isMain = false;
         data.getAvatars.avatars.find(
           i => i.uuid === markAsMain.newAvatarUUID
         ).isMain = true;
@@ -1337,7 +1345,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       console.log(e);
     }
   };
-
   public onCompletedMarkAsMain = data => {
     if (data.markAsMain.ok) {
       toast.success("Mark As Main updated");

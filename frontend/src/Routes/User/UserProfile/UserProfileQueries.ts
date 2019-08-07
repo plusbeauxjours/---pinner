@@ -173,6 +173,8 @@ export const UPLOAD_AVATAR = gql`
   mutation UploadAvatar($file: Upload!) {
     uploadAvatar(file: $file) {
       ok
+      preAvatarUUID
+      newAvatarUUID
       avatar {
         id
         uuid

@@ -2664,6 +2664,8 @@ export interface UploadAvatar_uploadAvatar_avatar {
 export interface UploadAvatar_uploadAvatar {
   __typename: "UploadAvatarResponse";
   ok: boolean | null;
+  preAvatarUUID: string | null;
+  newAvatarUUID: string | null;
   avatar: UploadAvatar_uploadAvatar_avatar | null;
 }
 

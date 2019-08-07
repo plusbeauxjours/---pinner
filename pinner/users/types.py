@@ -63,6 +63,8 @@ class MarkAsMainResponse(graphene.ObjectType):
 
 class UploadAvatarResponse(graphene.ObjectType):
     ok = graphene.Boolean()
+    preAvatarUUID = graphene.String()
+    newAvatarUUID = graphene.String()
     avatar = graphene.Field(AvatarType)
 
 
