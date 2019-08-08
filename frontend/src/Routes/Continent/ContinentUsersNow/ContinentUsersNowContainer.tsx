@@ -86,13 +86,14 @@ class ContinentUsersNowContainer extends React.Component<IProps, IState> {
       target: { value }
     } = event;
     const {
-      recommandUsers: { users = null }
+      continentUsersNow: { usersNow }
     } = this.data;
+    console.log(usersNow);
     const userSearch = (list, text) =>
       list.filter(i =>
         i.profile.username.toLowerCase().includes(text.toLowerCase())
       );
-    const usersNowList = userSearch(users, value);
+    const usersNowList = userSearch(usersNow, value);
     console.log(usersNowList);
     this.setState({
       search: value,
@@ -118,7 +119,7 @@ class ContinentUsersNowContainer extends React.Component<IProps, IState> {
         const data = {
           continentUsersNow: {
             ...previousResult.continentUsersNow,
-            usersNow: [
+            continentUsersNow: [
               ...previousResult.continentUsersNow.usersNow,
               ...fetchMoreResult.continentUsersNow.usersNow
             ]
