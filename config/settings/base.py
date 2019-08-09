@@ -303,11 +303,14 @@ sentry_sdk.init(
     integrations=[DjangoIntegration()]
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.sendgrid.net'
+SENDGRID_API_KEY = env('SENDGRID_API_KEY')
 EMAIL_HOST_USER = 'pinner.superuser@gmail.com'
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 SERVER_EMAIL = 'pinner.superuser@gmail.com'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SENDGRID_SANDBOX_MODE_IN_DEBUG=False

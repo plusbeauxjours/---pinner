@@ -9,6 +9,7 @@ class ProfileAdmin(admin.ModelAdmin):
         'username',
         'gender',
         'phone_number',
+        'email_address',
         'is_dark_mode',
         'is_hide_trips',
         'is_hide_coffees',

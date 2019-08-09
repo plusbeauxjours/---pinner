@@ -11,6 +11,7 @@ import Verification from "../Routes/Login/Verification";
 import EditEmailAddress from "../Routes/User/EditEmailAddress";
 import Approach from "../Routes/Login/Approach";
 import NotFound from "./NotFound";
+import NoValid from "./NoValid";
 
 import LoggedInPages from "./LoggedInPages";
 
@@ -28,6 +29,7 @@ const LoggedOutPages = () => (
     <Route path="/verification" component={Verification} />
     <Route path="/approach" component={Approach} />
     <Route path="/404" exact={true} component={NotFound} />
+    <Route path="/novalid" exact={true} component={NoValid} />
     <Redirect from="*" to="/" />
   </Switch>
 );

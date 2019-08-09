@@ -26,6 +26,16 @@ export const COMPLETE_EMAIL_SIGN_IN = gql`
     completeEmailVerification(key: $key, cityId: $cityId) {
       ok
       token
+      user {
+        username
+        profile {
+          avatarUrl
+          currentCity {
+            cityId
+            cityName
+          }
+        }
+      }
     }
   }
 `;

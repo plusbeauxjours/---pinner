@@ -2,8 +2,8 @@ import gql from "graphql-tag";
 
 export const FACEBOOK_CONNECT = gql`
   mutation FacebookConnect(
-    $firstName: String!
-    $lastName: String!
+    $firstName: String
+    $lastName: String
     $email: String
     $gender: String
     $latitude: Float!

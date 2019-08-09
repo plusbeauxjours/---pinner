@@ -5,6 +5,8 @@ import { Mutation, MutationFn } from "react-apollo";
 import { toast } from "react-toastify";
 import Loader from "src/Components/Loader";
 import { COMPLETE_EDIT_EMAIL_VERIFICATION } from "./EditEmailAddressQueries";
+import { LOG_USER_IN } from "../../../sharedQueries.local";
+import { ME } from "../../../sharedQueries";
 import {
   CompleteEditEmailVerification,
   CompleteEditEmailVerificationVariables
@@ -18,7 +20,7 @@ class CompleteEditEmailVerificationMutation extends Mutation<
 interface IProps extends RouteComponentProps<any> {}
 
 class VerificationContainer extends React.Component<IProps> {
-  public logUserIn: MutationFn;
+  public logUserInFn: MutationFn;
   public verifyEmailFn: MutationFn;
   constructor(props: IProps) {
     super(props);
@@ -35,16 +37,24 @@ class VerificationContainer extends React.Component<IProps> {
     console.log(key);
     if (key) {
       return (
-        <CompleteEditEmailVerificationMutation
-          mutation={COMPLETE_EDIT_EMAIL_VERIFICATION}
-          variables={{ key }}
-          onCompleted={this.onCompletedCompleteEditEmailVerification}
-        >
-          {verifyEmailFn => {
-            this.verifyEmailFn = verifyEmailFn;
-            return <Loader />;
+        <Mutation mutation={LOG_USER_IN}>
+          {logUserInFn => {
+            this.logUserInFn = logUserInFn;
+            return (
+              <CompleteEditEmailVerificationMutation
+                mutation={COMPLETE_EDIT_EMAIL_VERIFICATION}
+                variables={{ key }}
+                update={this.updateCompleteEditEmailVerification}
+                onCompleted={this.onCompletedCompleteEditEmailVerification}
+              >
+                {verifyEmailFn => {
+                  this.verifyEmailFn = verifyEmailFn;
+                  return <Loader />;
+                }}
+              </CompleteEditEmailVerificationMutation>
+            );
           }}
-        </CompleteEditEmailVerificationMutation>
+        </Mutation>
       );
     } else {
       return <Loader />;
@@ -55,18 +65,41 @@ class VerificationContainer extends React.Component<IProps> {
     const { completeEditEmailVerification } = data;
     if (completeEditEmailVerification.ok) {
       if (completeEditEmailVerification.token) {
-        this.logUserIn({
+        this.logUserInFn({
           variables: {
             token: completeEditEmailVerification.token
           }
         });
+        history.push({
+          pathname: `/${completeEditEmailVerification.user.username}`
+        });
       }
       toast.success("Your new email address is verified");
+    } else if (completeEditEmailVerification.ok === false) {
       history.push({
-        pathname: `/${completeEditEmailVerification.username}`
+        pathname: "/novalid"
       });
     } else {
       toast.error("Could not be Verified you");
+    }
+  };
+  public updateCompleteEditEmailVerification = (
+    cache,
+    { data: { completeEditEmailVerification } }
+  ) => {
+    try {
+      const data = cache.readQuery({
+        query: ME
+      });
+      if (data) {
+        data.me.user = completeEditEmailVerification.user;
+        cache.writeQuery({
+          query: ME,
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 }

@@ -11,6 +11,7 @@ const SeeAll = styled.p`
   font-size: 12px;
   font-weight: 100;
   cursor: pointer;
+  color: ${props => props.theme.greyColor};
 `;
 
 const Container = styled.div`
@@ -89,6 +90,9 @@ const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid ${props => props.theme.borderColor};
+  @media screen and (max-width: 935px) {
+    margin: 10px 15px 0 15px;
+  }
 `;
 
 const SText = styled(Bold)`
@@ -102,7 +106,7 @@ const Title = styled.div`
   justify-content: space-between;
   margin-top: 10px;
   @media screen and (max-width: 935px) {
-    margin-left: 10px;
+    margin: 10px 15px 0 15px;
   }
 `;
 

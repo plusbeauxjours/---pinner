@@ -4,9 +4,17 @@ export const COMPLETE_EDIT_EMAIL_VERIFICATION = gql`
   mutation CompleteEditEmailVerification($key: String!) {
     completeEditEmailVerification(key: $key) {
       ok
-      username
-      emailAddress
-      isVerifiedEmailAddress
+      token
+      user {
+        username
+        profile {
+          avatarUrl
+          currentCity {
+            cityId
+            cityName
+          }
+        }
+      }
     }
   }
 `;

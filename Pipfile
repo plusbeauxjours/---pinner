@@ -68,6 +68,8 @@ install = "*"
 django-graphql-extensions = "*"
 django-anymail = "*"
 sendmail = "*"
+sendgrid = "*"
+django-sendgrid-v5 = "*"
 
 [requires]
 python_version = "3.7"

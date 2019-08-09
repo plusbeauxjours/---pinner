@@ -171,4 +171,4 @@ Pipfile.lock
 migrations
 uploads
 .*
-.DS_Store
+.DS_Storesendgrid.env

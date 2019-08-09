@@ -96,13 +96,13 @@ class CityUsersNowContainer extends React.Component<IProps, IState> {
   public loadMore = page => {
     const {
       match: {
-        params: { cityName }
+        params: { cityId }
       }
     } = this.props;
     this.fetchMore({
       query: CITY_USERS_NOW,
       variables: {
-        cityName,
+        cityId,
         page
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {

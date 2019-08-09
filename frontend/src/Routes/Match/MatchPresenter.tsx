@@ -31,6 +31,7 @@ const MatchUserRow = styled.div`
   height: 50px;
   grid-template-columns: 2fr 1fr 0.5fr;
   padding: 0 5px 0 5px;
+  margin: 0 15px 0 15px;
   grid-gap: 15px;
   align-items: center;
   cursor: pointer;
@@ -41,20 +42,6 @@ const MatchUserRow = styled.div`
   &:not(:last-child) {
     border-bottom: 1px solid ${props => props.theme.borderColor};
   }
-`;
-
-const Username = styled.span`
-  text-align: center;
-  font-size: 22px;
-  font-weight: 100;
-`;
-
-const UserNameRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
 `;
 
 const Input = styled.input`
@@ -143,6 +130,9 @@ const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid ${props => props.theme.borderColor};
+  @media screen and (max-width: 935px) {
+    margin: 10px 15px 0 15px;
+  }
 `;
 
 const UserRow = styled.div`
@@ -151,6 +141,7 @@ const UserRow = styled.div`
   width: 400px;
   grid-template-columns: 4fr 1fr;
   padding: 0 5px 0 5px;
+  margin: 0 15px 0 15px;
   grid-gap: 15px;
   align-items: center;
   cursor: pointer;
@@ -197,6 +188,7 @@ const SeeAll = styled.p`
   font-size: 12px;
   font-weight: 100;
   cursor: pointer;
+  color: ${props => props.theme.greyColor};
 `;
 
 const AvatarContainer = styled.div`
@@ -220,6 +212,20 @@ const Explain = styled(Location)`
   color: grey;
 `;
 
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  @media screen and (max-width: 935px) {
+    margin: 10px 15px 10px 15px;
+  }
+`;
+
+const SText = styled(Bold)`
+  font-size: 18px;
+  font-weight: 100;
+  text-transform: uppercase;
+`;
+
 interface IProps {
   matchData: any;
   matchLoading: boolean;
@@ -239,7 +245,7 @@ interface IProps {
   toggleRequestModal: () => void;
   submitCoffee: any;
   isStaying: boolean;
-  searchSet: () =>void
+  searchSet: () => void;
 }
 
 const MatchPresenter: React.FunctionComponent<IProps> = ({
@@ -298,12 +304,13 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
         )}
         <SWrapper>
           <UserContainer>
-            <UserNameRow>
-              <Username>RECOMMAND USER</Username>
+            <Title>
+              <SText text={"RECOMMAND USER"} />
               <Link to={`/people`}>
                 <SeeAll>SEE ALL</SeeAll>
               </Link>
-            </UserNameRow>
+            </Title>
+
             <Container>
               <Box>
                 {users &&
@@ -334,14 +341,14 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
           />
           <GreyLine />
           <UserContainer>
-            <UserNameRow>
-              <Username>MATCHES</Username>
+            <Title>
+              <SText text={"MATCHES"} />
               <Input
                 placeholder="Search matched users"
                 value={search}
                 onChange={onChange}
               />
-            </UserNameRow>
+            </Title>
             {matchList.length !== 0 &&
               matchList.map(match => {
                 return (

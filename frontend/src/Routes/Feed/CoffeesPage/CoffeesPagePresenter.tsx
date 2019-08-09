@@ -12,29 +12,11 @@ const SWrapper = styled(Wrapper)`
   max-width: 650px;
 `;
 
-const PHeader = styled.header`
-  display: flex;
-  margin-top: 30px;
-  @media screen and (max-width: 600px) {
-    padding: 0 15px 0 15px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-`;
-
-const Username = styled.span`
-  text-align: center;
-  font-size: 22px;
-  font-weight: 100;
-`;
-
 const UserContainer = styled.div`
+  margin-top: 30px;
   display: flex;
   width: 100%;
   flex-direction: column;
-  @media screen and (max-width: 800px) {
-    min-width: 300px;
-  }
 `;
 
 const UserRow = styled.div`
@@ -42,6 +24,7 @@ const UserRow = styled.div`
   height: 50px;
   grid-template-columns: 4fr 1fr;
   padding: 0 5px 0 5px;
+  margin: 0 15px 0 15px;
   grid-gap: 15px;
   align-items: center;
   cursor: pointer;
@@ -83,14 +66,6 @@ const HeaderColumn = styled.div`
 
 const SAvatar = styled(Avatar)``;
 
-const UserNameRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-`;
-
 const Input = styled.input`
   width: 215px;
   border: 0;
@@ -110,6 +85,20 @@ const Input = styled.input`
     color: ${props => props.theme.greyColor};
     text-align: right;
   }
+`;
+
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  @media screen and (max-width: 935px) {
+    margin: 10px 15px 10px 15px;
+  }
+`;
+
+const SText = styled(Bold)`
+  font-size: 18px;
+  font-weight: 100;
+  text-transform: uppercase;
 `;
 
 interface IProps {
@@ -134,102 +123,106 @@ const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
   } else if (!coffeeLoading && coffees) {
     return (
       <SWrapper>
-        <PHeader>
-          <UserContainer>
-            <UserNameRow>
-              <Username>NEED SOME COFFEE NOW</Username>
-              <Input
-                placeholder="Search users who wants coffee"
-                value={search}
-                onChange={onChange}
-              />
-            </UserNameRow>
-            {coffeesList.length !== 0 &&
-              coffeesList.map(coffee => {
-                return (
-                  <UserRow key={coffee.uuid}>
-                    <Link
-                      to={{
-                        pathname: `/c/${coffee.uuid}`,
-                        state: { from: location.pathname, coffeeModalOpen: true }
-                      }}
-                    >
-                      <AvatarContainer>
-                        <SAvatar
-                          size={"sm"}
-                          url={coffee.host.profile.avatarUrl}
-                        />
-                        <HeaderColumn>
-                          <CText text={coffee.host.username} />
-                          {(() => {
-                            switch (coffee.target) {
-                              case "EVERYONE":
-                                return <Explain>with Someone</Explain>;
-                              case "GENDER":
-                                return <Explain>with same gender</Explain>;
-                              case "NATIONALITY":
-                                return <Explain>with same nationality</Explain>;
-                              default:
-                                return null;
-                            }
-                          })()}
-                        </HeaderColumn>
-                      </AvatarContainer>
-                    </Link>
-                    <CoffeeBtn
-                      coffeeId={coffee.uuid}
-                      isMatching={coffee.isMatching}
-                      isSelf={coffee.host.profile.isSelf}
-                      searchSet={searchSet}
-                    />
-                  </UserRow>
-                );
-              })}
-            {coffeesList.length === 0 &&
-              !search &&
-              coffees &&
-              coffees.map(coffee => {
-                return (
-                  <UserRow key={coffee.uuid}>
-                    <Link
-                      to={{
-                        pathname: `/c/${coffee.uuid}`,
-                        state: { from: location.pathname, coffeeModalOpen: true }
-                      }}
-                    >
-                      <AvatarContainer>
-                        <SAvatar
-                          size={"sm"}
-                          url={coffee.host.profile.avatarUrl}
-                        />
-                        <HeaderColumn>
-                          <CText text={coffee.host.username} />
-                          {(() => {
-                            switch (coffee.target) {
-                              case "EVERYONE":
-                                return <Explain>with Someone</Explain>;
-                              case "GENDER":
-                                return <Explain>with same gender</Explain>;
-                              case "NATIONALITY":
-                                return <Explain>with same nationality</Explain>;
-                              default:
-                                return null;
-                            }
-                          })()}
-                        </HeaderColumn>
-                      </AvatarContainer>
-                    </Link>
-                    <CoffeeBtn
-                      coffeeId={coffee.uuid}
-                      isMatching={coffee.isMatching}
-                      isSelf={coffee.host.profile.isSelf}
-                      searchSet={searchSet}
-                    />
-                  </UserRow>
-                );
-              })}
-          </UserContainer>
-        </PHeader>
+        <UserContainer>
+          <Title>
+            <SText text={"NEED SOME COFFEE NOW"} />
+            <Input
+              placeholder="Search users who wants coffee"
+              value={search}
+              onChange={onChange}
+            />
+          </Title>
+          {coffeesList.length !== 0 &&
+            coffeesList.map(coffee => {
+              return (
+                <UserRow key={coffee.uuid}>
+                  <Link
+                    to={{
+                      pathname: `/c/${coffee.uuid}`,
+                      state: {
+                        from: location.pathname,
+                        coffeeModalOpen: true
+                      }
+                    }}
+                  >
+                    <AvatarContainer>
+                      <SAvatar
+                        size={"sm"}
+                        url={coffee.host.profile.avatarUrl}
+                      />
+                      <HeaderColumn>
+                        <CText text={coffee.host.username} />
+                        {(() => {
+                          switch (coffee.target) {
+                            case "EVERYONE":
+                              return <Explain>with Someone</Explain>;
+                            case "GENDER":
+                              return <Explain>with same gender</Explain>;
+                            case "NATIONALITY":
+                              return <Explain>with same nationality</Explain>;
+                            default:
+                              return null;
+                          }
+                        })()}
+                      </HeaderColumn>
+                    </AvatarContainer>
+                  </Link>
+                  <CoffeeBtn
+                    coffeeId={coffee.uuid}
+                    isMatching={coffee.isMatching}
+                    isSelf={coffee.host.profile.isSelf}
+                    searchSet={searchSet}
+                  />
+                </UserRow>
+              );
+            })}
+          {coffeesList.length === 0 &&
+            !search &&
+            coffees &&
+            coffees.map(coffee => {
+              return (
+                <UserRow key={coffee.uuid}>
+                  <Link
+                    to={{
+                      pathname: `/c/${coffee.uuid}`,
+                      state: {
+                        from: location.pathname,
+                        coffeeModalOpen: true
+                      }
+                    }}
+                  >
+                    <AvatarContainer>
+                      <SAvatar
+                        size={"sm"}
+                        url={coffee.host.profile.avatarUrl}
+                      />
+                      <HeaderColumn>
+                        <CText text={coffee.host.username} />
+                        {(() => {
+                          switch (coffee.target) {
+                            case "EVERYONE":
+                              return <Explain>with Someone</Explain>;
+                            case "GENDER":
+                              return <Explain>with same gender</Explain>;
+                            case "NATIONALITY":
+                              return <Explain>with same nationality</Explain>;
+                            default:
+                              return null;
+                          }
+                        })()}
+                      </HeaderColumn>
+                    </AvatarContainer>
+                  </Link>
+                  <CoffeeBtn
+                    coffeeId={coffee.uuid}
+                    isMatching={coffee.isMatching}
+                    isSelf={coffee.host.profile.isSelf}
+                    searchSet={searchSet}
+                  />
+                </UserRow>
+              );
+            })}
+        </UserContainer>
       </SWrapper>
     );
   }

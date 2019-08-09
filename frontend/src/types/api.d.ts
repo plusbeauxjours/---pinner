@@ -459,8 +459,8 @@ export interface FacebookConnect {
 }
 
 export interface FacebookConnectVariables {
-  firstName: string;
-  lastName: string;
+  firstName?: string | null;
+  lastName?: string | null;
   email?: string | null;
   gender?: string | null;
   latitude: number;
@@ -1513,10 +1513,32 @@ export interface CompletePhoneVerificationVariables {
 // GraphQL mutation operation: CompleteEmailVerification
 // ====================================================
 
+export interface CompleteEmailVerification_completeEmailVerification_user_profile_currentCity {
+  __typename: "CityType";
+  cityId: string | null;
+  cityName: string | null;
+}
+
+export interface CompleteEmailVerification_completeEmailVerification_user_profile {
+  __typename: "ProfileType";
+  avatarUrl: string | null;
+  currentCity: CompleteEmailVerification_completeEmailVerification_user_profile_currentCity | null;
+}
+
+export interface CompleteEmailVerification_completeEmailVerification_user {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: CompleteEmailVerification_completeEmailVerification_user_profile | null;
+}
+
 export interface CompleteEmailVerification_completeEmailVerification {
   __typename: "CompleteEmailVerificationResponse";
   ok: boolean | null;
   token: string | null;
+  user: CompleteEmailVerification_completeEmailVerification_user | null;
 }
 
 export interface CompleteEmailVerification {
@@ -2031,12 +2053,32 @@ export interface TopCountriesVariables {
 // GraphQL mutation operation: CompleteEditEmailVerification
 // ====================================================
 
+export interface CompleteEditEmailVerification_completeEditEmailVerification_user_profile_currentCity {
+  __typename: "CityType";
+  cityId: string | null;
+  cityName: string | null;
+}
+
+export interface CompleteEditEmailVerification_completeEditEmailVerification_user_profile {
+  __typename: "ProfileType";
+  avatarUrl: string | null;
+  currentCity: CompleteEditEmailVerification_completeEditEmailVerification_user_profile_currentCity | null;
+}
+
+export interface CompleteEditEmailVerification_completeEditEmailVerification_user {
+  __typename: "UserType";
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  profile: CompleteEditEmailVerification_completeEditEmailVerification_user_profile | null;
+}
+
 export interface CompleteEditEmailVerification_completeEditEmailVerification {
   __typename: "CompleteEditEmailVerificationResponse";
   ok: boolean | null;
-  username: string | null;
-  emailAddress: string | null;
-  isVerifiedEmailAddress: boolean | null;
+  token: string | null;
+  user: CompleteEditEmailVerification_completeEditEmailVerification_user | null;
 }
 
 export interface CompleteEditEmailVerification {

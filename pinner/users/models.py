@@ -110,7 +110,7 @@ class Profile(config_models.TimeStampedModel):
     phone_number = models.CharField(max_length=20, blank=True, null=True, unique=True)
     is_verified_phone_number = models.BooleanField(default=False)
     is_verified_email_address = models.BooleanField(default=False)
-    email_address = models.EmailField(blank=True, null=True, max_length=50, unique=True)
+    email_address = models.EmailField(blank=True, null=True, max_length=50)
     fbId = models.CharField(blank=True, null=True, max_length=20)
     is_dark_mode = models.BooleanField(default=True)
     is_hide_trips = models.BooleanField(default=False)

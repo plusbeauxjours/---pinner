@@ -51,7 +51,6 @@ class StartPhoneVerification(graphene.Mutation):
     def mutate(self, info, **kwargs):
 
         phoneNumber = kwargs.get('phoneNumber')
-        print(phoneNumber)
 
         try:
             existingVerification = models.Verification.objects.get(
@@ -62,7 +61,8 @@ class StartPhoneVerification(graphene.Mutation):
             existingVerification.delete()
             newVerification = models.Verification.objects.create(
                 payload=phoneNumber,
-                target="phone"
+                target="phone",
+                is_verified=False
             )
             newVerification.save()
             try:
@@ -77,7 +77,8 @@ class StartPhoneVerification(graphene.Mutation):
         except models.Verification.DoesNotExist:
             newVerification = models.Verification.objects.create(
                 payload=phoneNumber,
-                target="phone"
+                target="phone",
+                is_verified=False
             )
             newVerification.save()
             try:
@@ -114,12 +115,14 @@ class CompletePhoneVerification(graphene.Mutation):
             return phoneNumber
 
         payload = countryPhoneNumber + phoneNumber
-        print(payload)
 
         try:
             verification = models.Verification.objects.get(
+                key=key,
+                target="phone",
                 payload=payload,
-                key=key
+                is_verified=False,
+                is_edit=False
             )
 
             try:
@@ -127,6 +130,7 @@ class CompletePhoneVerification(graphene.Mutation):
                 exstingUserProfile.is_verified_phone_number = True
                 exstingUserProfile.save()
                 verification.is_verified = True
+                verification.user = exstingUserProfile.user
                 verification.save()
                 token = get_token(exstingUserProfile.user)
                 return types.CompletePhoneVerificationResponse(ok=True, token=token)
@@ -150,6 +154,7 @@ class CompletePhoneVerification(graphene.Mutation):
                         newUserProfile.is_verified_phone_number = True
                         newUserProfile.save()
                         verification.is_verified = True
+                        verification.user = newUser
                         verification.save()
                         return types.CompletePhoneVerificationResponse(ok=True, token=token)
 
@@ -174,8 +179,7 @@ class StartEditPhoneVerification(graphene.Mutation):
             phoneNumber = phoneNumber.replace('0', '')
             return phoneNumber
         payload = countryPhoneNumber + phoneNumber
-        print(countryPhoneNumber, phoneNumber)
-        print(payload)
+        user = info.context.user
 
         try:
             existingPhoneNumber = users_models.Profile.objects.get(phone_number=phoneNumber)
@@ -185,11 +189,17 @@ class StartEditPhoneVerification(graphene.Mutation):
         except users_models.Profile.DoesNotExist:
             try:
                 preVerification = models.Verification.objects.get(payload=payload,
-                                                                  target="phone")
+                                                                  target="phone",
+                                                                  user=user,
+                                                                  is_verified=False,
+                                                                  is_edit=True)
                 preVerification.delete()
                 newVerification = models.Verification.objects.create(
                     payload=payload,
-                    target="phone"
+                    target="phone",
+                    user=user,
+                    is_verified=False,
+                    is_edit=True
                 )
                 newVerification.save()
                 try:
@@ -201,7 +211,10 @@ class StartEditPhoneVerification(graphene.Mutation):
             except models.Verification.DoesNotExist:
                 newVerification = models.Verification.objects.create(
                     payload=payload,
-                    target="phone"
+                    target="phone",
+                    user=user,
+                    is_verified=False,
+                    is_edit=True
                 )
                 newVerification.save()
                 try:
@@ -230,12 +243,14 @@ class CompleteEditPhoneVerification(graphene.Mutation):
         key = kwargs.get('key')
         payload = countryPhoneNumber + phoneNumber
         profile = info.context.user.profile
-        print(payload)
 
         try:
             verification = models.Verification.objects.get(
                 payload=payload,
-                key=key
+                key=key,
+                target="phone",
+                is_verified=False,
+                is_edit=True
             )
             profile.phone_number = phoneNumber
             profile.country_phone_number = countryPhoneNumber
@@ -264,17 +279,18 @@ class StartEmailVerification(graphene.Mutation):
     def mutate(self, info, **kwargs):
 
         emailAddress = kwargs.get('emailAddress')
-        print(emailAddress)
 
         try:
             existingVerification = models.Verification.objects.get(
                 payload=emailAddress,
-                target="email"
+                target="email",
+                is_verified=False
             )
             existingVerification.delete()
             newVerification = models.Verification.objects.create(
                 payload=emailAddress,
-                target="email"
+                target="email",
+                is_verified=False
             )
             newVerification.save()
             try:
@@ -286,7 +302,8 @@ class StartEmailVerification(graphene.Mutation):
         except models.Verification.DoesNotExist:
             newVerification = models.Verification.objects.create(
                 payload=emailAddress,
-                target="email"
+                target="email",
+                is_verified=False
             )
             newVerification.save()
             try:
@@ -325,6 +342,7 @@ class CompleteEmailVerification(graphene.Mutation):
                 exstingUserProfile.is_verified_email_address = True
                 exstingUserProfile.save()
                 verification.is_verified = True
+                verification.user = exstingUserProfile.user
                 verification.save()
                 token = get_token(exstingUserProfile.user)
                 return types.CompleteEmailVerificationResponse(ok=True, token=token)
@@ -346,11 +364,15 @@ class CompleteEmailVerification(graphene.Mutation):
                         newUserProfile.is_verified_email_address = True
                         newUserProfile.save()
                         verification.is_verified = True
+                        verification.user = newUser
                         verification.save()
-                        return types.CompleteEmailVerificationResponse(ok=True, token=token)
+                        return types.CompleteEmailVerificationResponse(ok=True, token=token, user=verification.user)
 
         except models.Verification.DoesNotExist:
-            raise Exception('Verification key not valid')
+            return types.CompleteEditEmailVerificationResponse(ok=False,
+                                                               token=None,
+                                                               user=None,
+                                                               )
 
 
 class StartEditEmailVerification(graphene.Mutation):
@@ -365,7 +387,6 @@ class StartEditEmailVerification(graphene.Mutation):
 
         emailAddress = kwargs.get('emailAddress')
         user = info.context.user
-        print(emailAddress)
 
         try:
             existingEmailAddress = users_models.Profile.objects.get(
@@ -434,12 +455,15 @@ class CompleteEditEmailVerification(graphene.Mutation):
             verification.user.profile.is_verified_email_address = True
             verification.user.profile.save()
             verification.is_verified = True
+            token = get_token(verification.user)
             verification.save()
             return types.CompleteEditEmailVerificationResponse(ok=True,
-                                                               username=verification.user.username,
-                                                               emailAddress=verification.payload,
-                                                               isVerifiedEmailAddress=True,
+                                                               token=token,
+                                                               user=verification.user,
                                                                )
 
         except models.Verification.DoesNotExist:
-            raise Exception('Verification key not valid')
+            return types.CompleteEditEmailVerificationResponse(ok=False,
+                                                               token=None,
+                                                               user=None,
+                                                               )

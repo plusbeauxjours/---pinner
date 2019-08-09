@@ -25,6 +25,7 @@ const UserRow = styled.div`
   height: 50px;
   grid-template-columns: 4fr 1fr;
   padding: 0 5px 0 5px;
+  margin: 0 15px 0 15px;
   grid-gap: 15px;
   align-items: center;
   cursor: pointer;
@@ -33,28 +34,14 @@ const UserRow = styled.div`
     background-color: ${props => props.theme.hoverColor};
   }
   &:not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
-`;
-
-const UserNameRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-`;
-
-const Username = styled.span`
-  text-align: center;
-  font-size: 22px;
-  font-weight: 100;
 `;
 
 const Input = styled.input`
   width: 215px;
   border: 0;
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   padding: 5px;
   color: ${props => props.theme.color};
   font-size: 12px;
@@ -96,6 +83,20 @@ const Explain = styled(Location)`
   color: grey;
 `;
 
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  @media screen and (max-width: 935px) {
+    margin: 10px 15px 10px 15px;
+  }
+`;
+
+const SText = styled(Bold)`
+  font-size: 18px;
+  font-weight: 100;
+  text-transform: uppercase;
+`;
+
 interface IProps {
   recommandUsersData: any;
   recommandUsersLoading: boolean;
@@ -123,14 +124,14 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
       <SWrapper>
         {console.log}
         <UserContainer>
-          <UserNameRow>
-            <Username>RECOMMAND USERS</Username>
+          <Title>
+            <SText text={"RECOMMAND USERS"} />
             <Input
               placeholder="Search users who is recommanded"
               value={search}
               onChange={onChange}
             />
-          </UserNameRow>
+          </Title>
           {recommandUsersLoading && <Loader />}
           {!recommandUsersLoading && (
             <InfiniteScroll

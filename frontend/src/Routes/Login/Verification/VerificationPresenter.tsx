@@ -5,8 +5,8 @@ import { MutationFn } from "react-apollo";
 import Form from "src/Components/Form";
 import styled from "src/Styles/typed-components";
 import { keyframes } from "styled-components";
-import Loader from "src/Components/Loader";
 import ReactCodeInput from "react-code-input";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: grid;
@@ -117,45 +117,45 @@ const VerificationPresenter: React.FunctionComponent<IProps> = ({
   back,
   onChange
 }) => {
-  if (loading) {
-    return <Loader />;
-  } else if (!loading && verificationKey && onSubmit && back && onChange) {
-    return (
-      <ModalContainer>
-        <ModalOverlay onClick={back} />
-        <Modal>
-          <Helmet>
-            <title>Verify Phone . Pinner</title>
-          </Helmet>
-          <Container>
-            <ReactCodeInput
-              type={"number"}
-              value={verificationKey}
-              autoFocus={true}
-              fields={6}
-              onChange={onChange}
-              inputStyle={CodeInputStyle}
-            />
-            <TextContainter>
-              <Text>
-                <p>Lost your phone?</p>
+  return (
+    <ModalContainer>
+      <ModalOverlay onClick={back} />
+      <Modal>
+        <Helmet>
+          <title>Verify Phone . Pinner</title>
+        </Helmet>
+        <Container>
+          <ReactCodeInput
+            type={"number"}
+            value={verificationKey}
+            autoFocus={true}
+            fields={6}
+            onChange={onChange}
+            inputStyle={CodeInputStyle}
+          />
+          <TextContainter>
+            <Text>
+              <p>Lost your phone?</p>
+              <Link
+                to={{ pathname: "/approach", state: { emailSignIn: true } }}
+              >
+                {" "}
                 <Underline>&nbsp;Login With Email.</Underline>
-              </Text>
-              <p>
-                When you tap Continue, Pinner will send a text with verification
-                code. Message and data rates may apply. The verified phone
-                number can be used to login.
-              </p>
-              <ExtendedForm onSubmit={onSubmit}>
-                <SButton text={"VERIFY"} onClick={null} inverted={loading} />
-              </ExtendedForm>
-            </TextContainter>
-          </Container>
-        </Modal>
-      </ModalContainer>
-    );
-  }
-  return <Loader />;
+              </Link>
+            </Text>
+            <p>
+              When you tap Continue, Pinner will send a text with verification
+              code. Message and data rates may apply. The verified phone number
+              can be used to login.
+            </p>
+            <ExtendedForm onSubmit={onSubmit}>
+              <SButton text={"VERIFY"} onClick={null} inverted={loading} />
+            </ExtendedForm>
+          </TextContainter>
+        </Container>
+      </Modal>
+    </ModalContainer>
+  );
 };
 
 export default VerificationPresenter;

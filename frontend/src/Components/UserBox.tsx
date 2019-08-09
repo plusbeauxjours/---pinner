@@ -9,6 +9,9 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+  @media screen and (max-width: 935px) {
+    margin: 10px 15px 0 15px;
+  }
 `;
 
 const SText = styled(Bold)`
@@ -21,6 +24,7 @@ const SeeAll = styled.p`
   font-size: 12px;
   font-weight: 100;
   cursor: pointer;
+  color: ${props => props.theme.greyColor};
 `;
 
 const Container = styled.div`

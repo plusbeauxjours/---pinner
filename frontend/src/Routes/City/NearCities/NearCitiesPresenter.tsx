@@ -26,6 +26,7 @@ const UserRow = styled.div`
   height: 50px;
   grid-template-columns: 4fr 1fr 1fr;
   padding: 0 5px 0 5px;
+  margin: 0 15px 0 15px;
   grid-gap: 15px;
   align-items: center;
   cursor: pointer;
@@ -38,18 +39,18 @@ const UserRow = styled.div`
   }
 `;
 
-const UserNameRow = styled.div`
+const Title = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  @media screen and (max-width: 935px) {
+    margin: 10px 15px 10px 15px;
+  }
 `;
 
-const Username = styled.span`
-  text-align: center;
-  font-size: 22px;
+const SText = styled(Bold)`
+  font-size: 18px;
   font-weight: 100;
+  text-transform: uppercase;
 `;
 
 const Input = styled.input`
@@ -134,14 +135,14 @@ const NearCitiesPresenter: React.FunctionComponent<IProps> = ({
     <>
       <SWrapper>
         <UserContainer>
-          <UserNameRow>
-            <Username>NEAR CITIES</Username>
+          <Title>
+            <SText text={"NEAR CITIES"} />
             <Input
               placeholder="Search near city"
               value={search}
               onChange={onChange}
             />
-          </UserNameRow>
+          </Title>
           {loading && <Loader />}
           {!loading && (
             <InfiniteScroll

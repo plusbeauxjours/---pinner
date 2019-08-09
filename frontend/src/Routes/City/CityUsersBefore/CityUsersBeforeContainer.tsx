@@ -39,7 +39,6 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
   }
   public render() {
     console.log(this.props);
-
     const {
       match: {
         params: { cityId }
@@ -100,13 +99,13 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
   public loadMore = page => {
     const {
       match: {
-        params: { cityName }
+        params: { cityId }
       }
     } = this.props;
     this.fetchMore({
       query: CITY_USERS_BEFORE,
       variables: {
-        cityName,
+        cityId,
         page
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {

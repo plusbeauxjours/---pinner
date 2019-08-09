@@ -540,8 +540,8 @@ class CreateAccount(graphene.Mutation):
 class FacebookConnect(graphene.Mutation):
 
     class Arguments:
-        first_name = graphene.String(required=True)
-        last_name = graphene.String(required=True)
+        first_name = graphene.String()
+        last_name = graphene.String()
         email = graphene.String()
         gender = graphene.String()
         latitude = graphene.Float(required=True)

@@ -98,13 +98,13 @@ class CountryUsersNowContainer extends React.Component<IProps, IState> {
   public loadMore = page => {
     const {
       match: {
-        params: { countryName }
+        params: { countryCode }
       }
     } = this.props;
     this.fetchMore({
       query: COUNTRY_USERS_NOW,
       variables: {
-        countryName,
+        countryCode,
         page
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {

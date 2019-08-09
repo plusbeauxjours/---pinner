@@ -117,6 +117,9 @@ def resolve_recommand_users(self, info, **kwargs):
 
     nextPage = page+1
 
+    userLocations = user.movenotification.values('city').all()
+    print(userLocations.filter())
+
     users = models.User.objects.all().exclude(id=user.id).order_by('-profile__created_at')
 
     hasNextPage = offset < users.count()

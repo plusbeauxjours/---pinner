@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import { LOG_USER_IN } from "../../../sharedQueries.local";
 import { reverseGeoCode } from "../../../mapHelpers";
 import Loader from "src/Components/Loader";
+import { ME } from "../../../sharedQueries";
 
 class CompletePhoneVerificationMutation extends Mutation<
   CompletePhoneVerification,
@@ -40,16 +41,17 @@ interface IState {
 }
 
 class VerificationContainer extends React.Component<IProps, IState> {
-  public logUserIn: MutationFn;
+  public logUserInFn: MutationFn;
   public verifyEmailFn: MutationFn;
   constructor(props: IProps) {
     super(props);
-    navigator.geolocation.getCurrentPosition(
-      this.handleGeoSuccess,
-      this.handleGeoError
-    );
     const { location: { state = {} } = {} } = ({} = props);
-    if (!props.location.state) {
+    const {
+      match: {
+        params: { key = null }
+      }
+    } = this.props;
+    if (!props.location.state && !key) {
       props.history.push("/");
     }
     this.state = {
@@ -89,8 +91,8 @@ class VerificationContainer extends React.Component<IProps, IState> {
       } = this.state;
       return (
         <Mutation mutation={LOG_USER_IN}>
-          {logUserIn => {
-            this.logUserIn = logUserIn;
+          {logUserInFn => {
+            this.logUserInFn = logUserInFn;
             return (
               <CompletePhoneVerificationMutation
                 mutation={COMPLETE_PHONE_SIGN_IN}
@@ -119,16 +121,19 @@ class VerificationContainer extends React.Component<IProps, IState> {
           }}
         </Mutation>
       );
-    } else if (key && this.state.cityId) {
-      const { cityId } = this.state;
+    } else if (key) {
+      navigator.geolocation.getCurrentPosition(
+        this.handleGeoSuccess,
+        this.handleGeoError
+      );
       return (
         <Mutation mutation={LOG_USER_IN}>
-          {logUserIn => {
-            this.logUserIn = logUserIn;
+          {logUserInFn => {
+            this.logUserInFn = logUserInFn;
             return (
               <CompleteEmailVerificationMutation
                 mutation={COMPLETE_EMAIL_SIGN_IN}
-                variables={{ key, cityId }}
+                update={this.updateCompleteEmailVerification}
                 onCompleted={this.onCompletedCompleteEmailVerification}
               >
                 {verifyEmailFn => {
@@ -149,13 +154,13 @@ class VerificationContainer extends React.Component<IProps, IState> {
     const { completePhoneVerification } = data;
     if (completePhoneVerification.ok) {
       if (completePhoneVerification.token) {
-        this.logUserIn({
+        this.logUserInFn({
           variables: {
             token: completePhoneVerification.token
           }
         });
+        toast.success("You're verified, loggin in now");
       }
-      toast.success("You're verified, loggin in now");
       history.push({
         pathname: "/"
       });
@@ -166,17 +171,22 @@ class VerificationContainer extends React.Component<IProps, IState> {
   public onCompletedCompleteEmailVerification = data => {
     const { history } = this.props;
     const { completeEmailVerification } = data;
+    console.log(completeEmailVerification);
     if (completeEmailVerification.ok) {
       if (completeEmailVerification.token) {
-        this.logUserIn({
+        this.logUserInFn({
           variables: {
             token: completeEmailVerification.token
           }
         });
+        toast.success("You're verified, loggin in now");
       }
-      toast.success("You're verified, loggin in now");
       history.push({
         pathname: "/"
+      });
+    } else if (completeEmailVerification.ok === false) {
+      history.push({
+        pathname: "/novalid"
       });
     } else {
       toast.error("Could not be Verified you");
@@ -201,14 +211,37 @@ class VerificationContainer extends React.Component<IProps, IState> {
   public getAddress = async (latitude: number, longitude: number) => {
     const address = await reverseGeoCode(latitude, longitude);
     if (address) {
-      this.setState({
-        cityId: address.storableLocation.cityId
+      const {
+        match: {
+          params: { key = null }
+        }
+      } = this.props;
+      await this.verifyEmailFn({
+        variables: { key, cityId: address.storableLocation.cityId }
       });
-      this.verifyEmailFn();
     }
   };
   public handleGeoError = () => {
     console.log("No location");
+  };
+  public updateCompleteEmailVerification = (
+    cache,
+    { data: { completeEmailVerification } }
+  ) => {
+    try {
+      const data = cache.readQuery({
+        query: ME
+      });
+      if (data) {
+        data.me.user = completeEmailVerification.user;
+        cache.writeQuery({
+          query: ME,
+          data
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 }
 

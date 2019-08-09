@@ -55,8 +55,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 
   if (graphQLErrors) {
-    browserHistory.push("/404");
-    console.log(graphQLErrors);
     graphQLErrors.map(({ message, locations, path }) => {
       graphQLErrors.forEach(error => toast.error(error.message));
       console.log(

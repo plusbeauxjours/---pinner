@@ -34,6 +34,7 @@ import CountryUsersBefore from "../Routes/Country/CountryUsersBefore";
 
 import Header from "./Header";
 import NotFound from "./NotFound";
+import Verification from "../Routes/Login/Verification";
 import NoValid from "./NoValid";
 
 import { RouteComponentProps, withRouter } from "react-router-dom";
@@ -145,6 +146,7 @@ class LoggedInPages extends React.Component<IProps> {
           <Route path="/" exact={true} component={Match} />
           <Route path="/people" exact={true} component={PeoplePage} />
           <Route path="/404" exact={true} component={NotFound} />
+          <Route path="/novalid" exact={true} component={NoValid} />
 
           {/* CONTINENT */}
           <Route
@@ -186,7 +188,7 @@ class LoggedInPages extends React.Component<IProps> {
           <Route path="/confirm/:key" component={EditEmailAddress} />
           <Route path="/account/edit" component={EditProfile} />
           <Route path="/account/settings" component={ToggleSettings} />
-          <Route path="/verification/:key" component={NoValid} />
+          <Route path="/verification/:key" component={Verification} />
 
           {/* USER */}
           <Route path="/:username" exact={true} component={UserProfile} />
