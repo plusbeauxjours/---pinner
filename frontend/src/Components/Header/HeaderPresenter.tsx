@@ -92,9 +92,7 @@ const Modal = styled.div`
   top: 30%;
   width: 400px;
   @media screen and (max-width: 965px) {
-    width: 100%;
-    margin-right: 15px;
-    margin-left: 15px;
+    width: 90%;
   }
   z-index: 10;
   position: absolute;
@@ -153,6 +151,13 @@ const HeaderColumn = styled.div`
   height: 45px;
 `;
 
+const WeatherContainer = styled.div`
+  @media screen and (max-width: 500px) {
+    display: none;
+    visibility: hidden;
+  }
+`;
+
 const CText = styled(Bold)`
   display: flex;
 `;
@@ -161,6 +166,11 @@ const HeaderRow = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 5px;
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+    margin-top: 0;
+    justify-content: center;
+  }
 `;
 
 interface IProps extends RouteComponentProps<any> {
@@ -238,16 +248,17 @@ const HeaderPresenter: React.FunctionComponent<IProps> = ({
                 <SAvatar url={city.cityPhoto} size={"sm"} city={true} />
                 <HeaderColumn>
                   <HeaderRow>
-                    <CText text={city.cityName} />
-                    <CText text={", "} />
+                    <CText text={`${city.cityName}${", "}`} />
                     <CText text={city.country.countryName} />
                   </HeaderRow>
-                  <Weather
-                    latitude={currentLat}
-                    longitude={currentLng}
-                    size={"sm"}
-                    type={"feed"}
-                  />
+                  <WeatherContainer>
+                    <Weather
+                      latitude={currentLat}
+                      longitude={currentLng}
+                      size={"sm"}
+                      type={"feed"}
+                    />
+                  </WeatherContainer>
                 </HeaderColumn>
               </LocationHeader>
             </Link>
