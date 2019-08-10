@@ -83,3 +83,8 @@ class DeleteCoffeeResponse(graphene.ObjectType):
     username = graphene.String()
     coffeeId = graphene.String()
     ok = graphene.Boolean()
+
+
+class MarkAsReadMatchResponse(graphene.ObjectType):
+    ok = graphene.Boolean()
+    matchId = graphene.Int()

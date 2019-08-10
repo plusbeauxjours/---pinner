@@ -276,7 +276,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "FirstAnnotateResponse",
+                "name": "CityProfileResponse",
                 "ofType": null
               }
             },
@@ -399,7 +399,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "SecondAnnotateResponse",
+                "name": "CountryProfileResponse",
                 "ofType": null
               }
             },
@@ -522,7 +522,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "ThirdAnnotateResponse",
+                "name": "ContinentProfileResponse",
                 "ofType": null
               }
             },
@@ -1188,22 +1188,6 @@
         "description": null,
         "fields": [
           {
-            "name": "id",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "createdAt",
             "description": "",
             "args": [],
@@ -1229,6 +1213,22 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
                 "ofType": null
               }
             },
@@ -1371,8 +1371,8 @@
       },
       {
         "kind": "SCALAR",
-        "name": "ID",
-        "description": "The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `\"4\"`) or integer (such as `4`) input value will be accepted as an ID.",
+        "name": "DateTime",
+        "description": "The `DateTime` scalar type represents a DateTime\nvalue as specified by\n[iso8601](https://en.wikipedia.org/wiki/ISO_8601).",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1381,8 +1381,8 @@
       },
       {
         "kind": "SCALAR",
-        "name": "DateTime",
-        "description": "The `DateTime` scalar type represents a DateTime\nvalue as specified by\n[iso8601](https://en.wikipedia.org/wiki/ISO_8601).",
+        "name": "ID",
+        "description": "The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `\"4\"`) or integer (such as `4`) input value will be accepted as an ID.",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2198,6 +2198,22 @@
         "description": null,
         "fields": [
           {
+            "name": "id",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "createdAt",
             "description": "",
             "args": [],
@@ -2223,22 +2239,6 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "DateTime",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "ID",
                 "ofType": null
               }
             },
@@ -3511,7 +3511,7 @@
             "deprecationReason": null
           },
           {
-            "name": "read",
+            "name": "isRead",
             "description": "",
             "args": [],
             "type": {
@@ -3574,12 +3574,6 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
-          {
-            "name": "UPLOAD",
-            "description": "UPLOAD",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
           {
             "name": "MATCH",
             "description": "MATCH",
@@ -3719,22 +3713,6 @@
             "deprecationReason": null
           },
           {
-            "name": "read",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "naturalTime",
             "description": null,
             "args": [],
@@ -3762,7 +3740,13 @@
         "enumValues": [
           {
             "name": "MOVE",
-            "description": "Move",
+            "description": "MOVE",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UPLOAD",
+            "description": "UPLOAD",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -4155,7 +4139,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "FirstAnnotateResponse",
+        "name": "CityProfileResponse",
         "description": null,
         "fields": [
           {
@@ -4324,7 +4308,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "SecondAnnotateResponse",
+        "name": "CountryProfileResponse",
         "description": null,
         "fields": [
           {
@@ -4407,7 +4391,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "ThirdAnnotateResponse",
+        "name": "ContinentProfileResponse",
         "description": null,
         "fields": [
           {

@@ -61,6 +61,8 @@ class Match (config_models.TimeStampedModel):
     city = models.ForeignKey(location_models.City, on_delete=models.CASCADE, null=True, blank=True)
     host = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='host')
     guest = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='guest')
+    is_read_by_host = models.BooleanField(default=False)
+    is_read_by_guest = models.BooleanField(default=False)
 
     @cached_property
     def country_count(self):

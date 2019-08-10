@@ -568,7 +568,7 @@ export interface CityProfile_cityProfile_city {
 }
 
 export interface CityProfile_cityProfile {
-  __typename: "FirstAnnotateResponse";
+  __typename: "CityProfileResponse";
   count: number | null;
   usersNow: (CityProfile_cityProfile_usersNow | null)[] | null;
   usersBefore: (CityProfile_cityProfile_usersBefore | null)[] | null;
@@ -866,7 +866,7 @@ export interface ContinentProfile_continentProfile_countries {
 }
 
 export interface ContinentProfile_continentProfile {
-  __typename: "ThirdAnnotateResponse";
+  __typename: "ContinentProfileResponse";
   count: number | null;
   usersNow: (ContinentProfile_continentProfile_usersNow | null)[] | null;
   usersBefore: (ContinentProfile_continentProfile_usersBefore | null)[] | null;
@@ -1094,7 +1094,7 @@ export interface CountryProfile_countryProfile_cities {
 }
 
 export interface CountryProfile_countryProfile {
-  __typename: "SecondAnnotateResponse";
+  __typename: "CountryProfileResponse";
   count: number | null;
   country: CountryProfile_countryProfile_country | null;
   usersNow: (CountryProfile_countryProfile_usersNow | null)[] | null;

@@ -141,6 +141,39 @@ class UnMatch(graphene.Mutation):
                                          continentCode=continentCode)
 
         else:
-
             return types.UnMatchResponse(ok=False, matchId=None, coffee=None, cityId=None, countryCode=None,
                                          continentCode=None)
+
+
+class MarkAsReadMatch(graphene.Mutation):
+
+    class Arguments:
+        matchId = graphene.Int(required=True)
+
+    Output = types.MarkAsReadMatchResponse
+
+    @login_required
+    def mutate(self, info, **kwargs):
+
+        matchId = kwargs.get('matchId')
+        user = info.context.user
+
+        try:
+            match = models.Match.objects.get(
+                id=matchId
+            )
+            if user is match.host:
+                print('im host')
+                match.is_read_by_host = True
+                match.save()
+                return types.MarkAsReadResponse(ok=True, matchId=matchId)
+            elif user is match.guest:
+                print('im guest')
+                match.is_read_by_guest = True
+                match.save()
+                return types.MarkAsReadResponse(ok=True, matchId=matchId)
+            else:
+                return types.MarkAsReadResponse(ok=False, matchId=None)
+
+        except models.Match.DoesNotExist:
+            raise Exception('This match is already unmatched ')

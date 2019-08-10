@@ -40,3 +40,4 @@ class Mutation(object):
     delete_coffee = mutations.DeleteCoffee.Field(required=True)
     match = mutations.Match.Field(required=True)
     un_match = mutations.UnMatch.Field(required=True)
+    mark_as_read_match = mutations.MarkAsReadMatch.Field(required=True)

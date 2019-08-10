@@ -27,15 +27,13 @@ def resolve_get_coffees(self, info, **kwargs):
 
         try:
             profile = me.profile
-            matches = me.guest.values('id').all()
-
-            # matches = me.host.values('id').values('guest').all()
-            # not allow to join. only showing is allowed if they already matched
+            matchedGuests = me.guest.values('host__id').all()
+            matchedHosts= me.host.values('guest__id').all()
 
             coffees = city.coffee.filter((Q(target='everyone') |
                                           Q(target='nationality', host__profile__nationality=profile.nationality) |
                                           Q(target='gender', host__profile__gender=profile.gender)) &
-                                         Q(expires__gt=timezone.now())).exclude(match__id__in=matches).order_by('-created_at')
+                                         Q(expires__gt=timezone.now())).exclude(host__id__in=matchedGuests).exclude(host__id__in=matchedHosts).order_by('-created_at')
 
             return types.GetCoffeesResponse(coffees=coffees)
 
@@ -81,12 +79,12 @@ def resolve_get_coffees(self, info, **kwargs):
 
         try:
             profile = me.profile
-            matches = me.guest.values('id').all()
+            matchedMatch = me.guest.values('id').all()
 
             coffees = coffee_models.Coffee.objects.filter((Q(target='everyone') |
                                                            Q(target='nationality', host__profile__nationality=profile.nationality) |
                                                            Q(target='gender', host__profile__gender=profile.gender)) &
-                                                          Q(expires__gt=timezone.now()) & Q(city__id__in=allCities)).exclude(match__id__in=matches).order_by('-created_at')
+                                                          Q(expires__gt=timezone.now()) & Q(city__id__in=allCities)).exclude(match__id__in=matchedMatch).order_by('-created_at')
 
             return types.GetCoffeesResponse(coffees=coffees)
 
@@ -103,11 +101,11 @@ def resolve_get_coffees(self, info, **kwargs):
 
         try:
             profile = me.profile
-            matches = me.guest.values('id').all()
+            matchedMatch = me.guest.values('id').all()
             coffees = coffee_models.Coffee.objects.filter((Q(target='everyone') |
                                                            Q(target='nationality', host__profile__nationality=profile.nationality) |
                                                            Q(target='gender', host__profile__gender=profile.gender)) &
-                                                          Q(expires__gt=timezone.now()) & Q(city__id__in=allCities)).exclude(match__id__in=matches).order_by('-created_at')
+                                                          Q(expires__gt=timezone.now()) & Q(city__id__in=allCities)).exclude(match__id__in=matchedMatch).order_by('-created_at')
 
             return types.GetCoffeesResponse(coffees=coffees)
 
