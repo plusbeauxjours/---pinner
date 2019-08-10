@@ -48,6 +48,7 @@ export interface Match_match_match_city_country {
 
 export interface Match_match_match_city {
   __typename: "CityType";
+  cityId: string | null;
   cityName: string | null;
   country: Match_match_match_city_country;
 }
@@ -217,7 +218,7 @@ export interface UnMatch_unMatch_coffee {
 export interface UnMatch_unMatch {
   __typename: "UnMatchResponse";
   ok: boolean | null;
-  matchId: number | null;
+  matchId: string | null;
   cityId: string | null;
   countryCode: string | null;
   continentCode: string | null;
@@ -229,7 +230,7 @@ export interface UnMatch {
 }
 
 export interface UnMatchVariables {
-  matchId: number;
+  matchId: string;
 }
 
 /* tslint:disable */
@@ -1565,6 +1566,7 @@ export interface GetMatches_getMatches_matches_city_country {
 
 export interface GetMatches_getMatches_matches_city {
   __typename: "CityType";
+  cityId: string | null;
   cityName: string | null;
   country: GetMatches_getMatches_matches_city_country;
 }
@@ -3046,6 +3048,7 @@ export interface MatchParts_city_country {
 
 export interface MatchParts_city {
   __typename: "CityType";
+  cityId: string | null;
   cityName: string | null;
   country: MatchParts_city_country;
 }

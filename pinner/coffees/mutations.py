@@ -110,7 +110,7 @@ class Match(graphene.Mutation):
 class UnMatch(graphene.Mutation):
 
     class Arguments:
-        matchId = graphene.Int(required=True)
+        matchId = graphene.String(required=True)
 
     Output = types.UnMatchResponse
 
@@ -133,9 +133,9 @@ class UnMatch(graphene.Mutation):
                                          continentCode=None)
 
         if match.host.id == user.id or match.guest.id == user.id:
-            cityId = match.coffee.city.city_id
-            countryCode = match.coffee.city.country.country_code
-            continentCode = match.coffee.city.country.continent.continent_code
+            cityId = match.city.city_id
+            countryCode = match.city.country.country_code
+            continentCode = match.city.country.continent.continent_code
             match.delete()
             return types.UnMatchResponse(ok=True, matchId=matchId, coffee=coffee, cityId=cityId, countryCode=countryCode,
                                          continentCode=continentCode)
@@ -148,7 +148,7 @@ class UnMatch(graphene.Mutation):
 class MarkAsReadMatch(graphene.Mutation):
 
     class Arguments:
-        matchId = graphene.Int(required=True)
+        matchId = graphene.String(required=True)
 
     Output = types.MarkAsReadMatchResponse
 

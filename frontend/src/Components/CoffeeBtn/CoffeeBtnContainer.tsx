@@ -49,7 +49,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
     return (
       <UnMatchMutation
         mutation={UNMATCH}
-        variables={{ matchId: parseInt(matchId, 10) }}
+        variables={{ matchId }}
         onCompleted={this.onCompletedUnMatch}
         update={this.updateUnMatch}
       >
@@ -237,13 +237,12 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
       console.log(matchData.getMatches.matches, unMatch.matchId);
       if (matchData) {
         matchData.getMatches.matches = matchData.getMatches.matches.filter(
-          i => parseInt(i.id, 10) !== unMatch.matchId
+          i => id !== unMatch.matchId
         );
         cache.writeQuery({
           query: GET_MATCHES,
           data: matchData
         });
-        console.log(matchData.getMatches.matches, unMatch.matchId);
       }
     } catch (e) {
       console.log(e);

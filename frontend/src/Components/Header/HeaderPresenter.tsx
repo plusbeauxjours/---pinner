@@ -44,6 +44,7 @@ const Column = styled.div`
     display: flex;
     justify-content: center;
   }
+  margin: 0 15px 0 15px;
 `;
 
 const Icon = styled.span`

@@ -110,6 +110,7 @@ export const MATCH_FRAGMENT = gql`
     id
     naturalTime
     city {
+      cityId
       cityName
       country {
         countryName

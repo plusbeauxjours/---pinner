@@ -18,7 +18,7 @@ export const MATCH = gql`
 `;
 
 export const UNMATCH = gql`
-  mutation UnMatch($matchId: Int!) {
+  mutation UnMatch($matchId: String!) {
     unMatch(matchId: $matchId) {
       ok
       matchId

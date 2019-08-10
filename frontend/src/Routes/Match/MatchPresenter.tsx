@@ -370,12 +370,14 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                           />
                         </Link>
                         <Column>
-                          <GreyText text={match.coffee.target} />
+                          <GreyText
+                            text={`Matched in ${match.city.cityName}`}
+                          />
                           <GreyText text={match.naturalTime} />
                         </Column>
                         {match.isMatching ? (
                           <CoffeeBtn
-                            cityId={match.coffee.city.cityId}
+                            cityId={match.city.cityId}
                             isMatching={match.isMatching}
                             matchId={match.id}
                             searchSet={searchSet}
@@ -399,12 +401,14 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                           />
                         </Link>
                         <Column>
-                          <GreyText text={match.coffee.target} />
+                          <GreyText
+                            text={`Matched in ${match.city.cityName}`}
+                          />
                           <GreyText text={match.naturalTime} />
                         </Column>
                         {match.isMatching ? (
                           <CoffeeBtn
-                            cityId={match.coffee.city.cityId}
+                            cityId={match.city.cityId}
                             isMatching={match.isMatching}
                             matchId={match.id}
                             searchSet={searchSet}
@@ -437,12 +441,14 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                           />
                         </Link>
                         <Column>
-                          <GreyText text={match.coffee.target} />
+                          <GreyText
+                            text={`Matched in ${match.city.cityName}`}
+                          />
                           <GreyText text={match.naturalTime} />
                         </Column>
                         {match.isMatching ? (
                           <CoffeeBtn
-                            cityId={match.coffee.city.cityId}
+                            cityId={match.city.cityId}
                             isMatching={match.isMatching}
                             matchId={match.id}
                             searchSet={searchSet}
@@ -466,12 +472,14 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                           />
                         </Link>
                         <Column>
-                          <GreyText text={match.coffee.target} />
+                          <GreyText
+                            text={`Matched in ${match.city.cityName}`}
+                          />
                           <GreyText text={match.naturalTime} />
                         </Column>
                         {match.isMatching ? (
                           <CoffeeBtn
-                            cityId={match.coffee.city.cityId}
+                            cityId={match.city.cityId}
                             isMatching={match.isMatching}
                             matchId={match.id}
                             searchSet={searchSet}

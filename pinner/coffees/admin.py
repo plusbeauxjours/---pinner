@@ -20,6 +20,8 @@ class MatchAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'city',
-        'host',
         'guest',
+        'is_read_by_guest',
+        'host',
+        'is_read_by_host',
     )
