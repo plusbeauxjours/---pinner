@@ -2,6 +2,7 @@ import graphene
 from graphene_django.types import DjangoObjectType
 from config import types as config_types
 from coffees import types as coffee_types
+from users import types as user_types
 from . import models
 
 
@@ -51,11 +52,11 @@ class StartEditEmailVerificationResponse(graphene.ObjectType):
 
 class CompleteEmailVerificationResponse(graphene.ObjectType):
     ok = graphene.Boolean()
-    user = graphene.Field(coffee_types.UserType)
+    user = graphene.Field(user_types.UserType)
     token = graphene.String()
 
 
 class CompleteEditEmailVerificationResponse(graphene.ObjectType):
     ok = graphene.Boolean()
-    user = graphene.Field(coffee_types.UserType)
+    user = graphene.Field(user_types.UserType)
     token = graphene.String()

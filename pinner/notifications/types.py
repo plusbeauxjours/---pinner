@@ -58,3 +58,9 @@ class GetNotificationsResponse(graphene.ObjectType):
 
 class DurationTripsResponse(graphene.ObjectType):
     moveNotifications = graphene.List(MoveNotificationType)
+
+
+class usersBeforeResponse(graphene.ObjectType):
+    page = graphene.Int()
+    hasNextPage = graphene.Boolean()
+    usersBefore = graphene.List(MoveNotificationType)

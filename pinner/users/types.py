@@ -4,7 +4,13 @@ from . import models
 from django.contrib.auth.models import User
 from config import types as config_types
 from locations import types as location_types
-from coffees import types as coffee_types
+
+
+class UserType(DjangoObjectType):
+
+    class Meta:
+        model = User
+        exclude_fields = ('password',)
 
 
 class ProfileType(DjangoObjectType):
@@ -43,7 +49,7 @@ class LikeType(DjangoObjectType):
 
 class ToggleSettingsResponse(graphene.ObjectType):
     ok = graphene.Boolean()
-    user = graphene.Field(coffee_types.UserType)
+    user = graphene.Field(UserType)
 
 
 class AvatarListResponse(graphene.ObjectType):
@@ -69,13 +75,13 @@ class UploadAvatarResponse(graphene.ObjectType):
 
 
 class UserProfileResponse(graphene.ObjectType):
-    user = graphene.Field(coffee_types.UserType)
+    user = graphene.Field(UserType)
 
 
 class EditProfileResponse(graphene.ObjectType):
     ok = graphene.Boolean()
     token = graphene.String()
-    user = graphene.Field(coffee_types.UserType)
+    user = graphene.Field(UserType)
 
 
 class DeleteProfileResponse(graphene.ObjectType):
@@ -92,7 +98,7 @@ class ChangePasswordResponse(graphene.ObjectType, config_types.ResponseFields):
 
 
 class SearchUsersResponse(graphene.ObjectType):
-    users = graphene.List(coffee_types.UserType)
+    users = graphene.List(UserType)
 
 
 class CreateAccountResponse(graphene.ObjectType):
@@ -107,7 +113,7 @@ class FacebookConnectResponse(graphene.ObjectType):
 class RecommandUsersResponse(graphene.ObjectType):
     page = graphene.Int()
     hasNextPage = graphene.Boolean()
-    users = graphene.List(coffee_types.UserType)
+    users = graphene.List(UserType)
 
 
 class ReportLocationResponse(graphene.ObjectType):
@@ -115,8 +121,14 @@ class ReportLocationResponse(graphene.ObjectType):
 
 
 class UserListResponse(graphene.ObjectType):
-    users = graphene.List(coffee_types.UserType)
+    users = graphene.List(UserType)
 
 
 class SlackReportUsersResponse(graphene.ObjectType):
     ok = graphene.Boolean()
+
+
+class UsersNowResponse(graphene.ObjectType):
+    page = graphene.Int()
+    hasNextPage = graphene.Boolean()
+    usersNow = graphene.List(UserType)

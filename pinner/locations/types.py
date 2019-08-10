@@ -61,8 +61,9 @@ class PhotoResponse(graphene.ObjectType):
 
 
 class CityProfileResponse(graphene.ObjectType):
+    count = graphene.Int()
     city = graphene.Field(CityType)
-    usersNow = graphene.List(coffee_types.UserType)
+    usersNow = graphene.List(user_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 
@@ -75,15 +76,20 @@ class TripProfileResponse(graphene.ObjectType):
 
 
 class CountryProfileResponse(graphene.ObjectType):
+    count = graphene.Int()
     country = graphene.Field(CountryType)
     cities = graphene.List(CityType)
-    usersNow = graphene.List(coffee_types.UserType)
+    usersNow = graphene.List(user_types.UserType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
 
 
 class ContinentProfileResponse(graphene.ObjectType):
-    continent = graphene.Field(ContinentType)
+    count = graphene.Int()
     countries = graphene.List(CountryType)
+    usersNow = graphene.List(user_types.UserType)
+    usersBefore = graphene.List(notification_types.MoveNotificationType)
+    continent = graphene.Field(ContinentType)
+    continents = graphene.List(ContinentType)
 
 
 class CitiesResponse(graphene.ObjectType):

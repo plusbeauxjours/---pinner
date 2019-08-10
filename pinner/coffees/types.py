@@ -5,13 +5,6 @@ from django.contrib.auth.models import User
 from config import types as config_types
 
 
-class UserType(DjangoObjectType):
-
-    class Meta:
-        model = User
-        exclude_fields = ('password',)
-
-
 class CoffeeType(DjangoObjectType):
     natural_time = graphene.String(source='natural_time')
     status = graphene.String(source='status')

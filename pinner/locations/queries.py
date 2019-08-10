@@ -7,9 +7,12 @@ from django.db.models import Q
 from django.db.models.expressions import RawSQL
 
 from django.contrib.auth.models import User
-from cards import types as card_types
 from notifications import models as notification_models
+from notifications import types as notification_types
+from locations import types as location_types
+
 from coffees import models as coffee_models
+from users import types as user_types
 
 from graphql_extensions.exceptions import GraphQLError
 
@@ -96,7 +99,7 @@ def resolve_city_profile(self, info, **kwargs):
     usersBefore = notification_models.MoveNotification.objects.filter(
         city__city_id=cityId).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
 
-    return card_types.FirstAnnotateResponse(count=count, usersNow=usersNow, usersBefore=usersBefore, city=city)
+    return location_types.CityProfileResponse(count=count, usersNow=usersNow, usersBefore=usersBefore, city=city)
 
 
 @login_required
@@ -144,7 +147,7 @@ def resolve_city_users_now(self, info, **kwargs):
 
     usersNow = usersNow[offset:20 + offset]
 
-    return card_types.UsersNowResponse(usersNow=usersNow,  page=nextPage, hasNextPage=hasNextPage)
+    return user_types.UsersNowResponse(usersNow=usersNow,  page=nextPage, hasNextPage=hasNextPage)
 
 
 @login_required
@@ -164,7 +167,7 @@ def resolve_city_users_before(self, info, **kwargs):
 
     usersBefore = usersBefore[offset:20 + offset]
 
-    return card_types.usersBeforeResponse(usersBefore=usersBefore,  page=nextPage, hasNextPage=hasNextPage)
+    return notification_types.usersBeforeResponse(usersBefore=usersBefore,  page=nextPage, hasNextPage=hasNextPage)
 
 
 @login_required
@@ -189,7 +192,7 @@ def resolve_country_profile(self, info, **kwargs):
 
     cities = models.City.objects.filter(country__country_code=countryCode)
 
-    return card_types.SecondAnnotateResponse(count=count, cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country)
+    return location_types.CountryProfileResponse(count=count, cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country)
 
 
 @login_required
@@ -209,7 +212,7 @@ def resolve_country_users_now(self, info, **kwargs):
 
     usersNow = usersNow[offset:20 + offset]
 
-    return card_types.UsersNowResponse(usersNow=usersNow,  page=nextPage, hasNextPage=hasNextPage)
+    return user_types.UsersNowResponse(usersNow=usersNow,  page=nextPage, hasNextPage=hasNextPage)
 
 
 @login_required
@@ -229,7 +232,7 @@ def resolve_country_users_before(self, info, **kwargs):
 
     usersBefore = usersBefore[offset:20 + offset]
 
-    return card_types.usersBeforeResponse(usersBefore=usersBefore,  page=nextPage, hasNextPage=hasNextPage)
+    return notification_types.usersBeforeResponse(usersBefore=usersBefore,  page=nextPage, hasNextPage=hasNextPage)
 
 
 @login_required
@@ -270,7 +273,7 @@ def resolve_continent_profile(self, info, **kwargs):
 
     continents = models.Continent.objects.all()
 
-    return card_types.ThirdAnnotateResponse(count=count, countries=countries,  usersNow=usersNow, usersBefore=usersBefore, continent=continent, continents=continents)
+    return location_types.ContinentProfileResponse(count=count, countries=countries,  usersNow=usersNow, usersBefore=usersBefore, continent=continent, continents=continents)
 
 
 @login_required
@@ -290,7 +293,7 @@ def resolve_continent_users_now(self, info, **kwargs):
 
     usersNow = usersNow[offset:20 + offset]
 
-    return card_types.UsersNowResponse(usersNow=usersNow,  page=nextPage, hasNextPage=hasNextPage)
+    return user_types.UsersNowResponse(usersNow=usersNow,  page=nextPage, hasNextPage=hasNextPage)
 
 
 @login_required
@@ -310,7 +313,7 @@ def resolve_continent_users_before(self, info, **kwargs):
 
     usersBefore = usersBefore[offset:20 + offset]
 
-    return card_types.usersBeforeResponse(usersBefore=usersBefore,  page=nextPage, hasNextPage=hasNextPage)
+    return notification_types.usersBeforeResponse(usersBefore=usersBefore,  page=nextPage, hasNextPage=hasNextPage)
 
 
 @login_required

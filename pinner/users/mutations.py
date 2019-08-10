@@ -18,7 +18,6 @@ from locations import models as location_models
 from . import models, types
 
 from utils import notify_slack
-from cards import types as card_mo
 from notifications import models as notification_models
 
 from django.core.files.base import ContentFile
