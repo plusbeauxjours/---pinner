@@ -87,7 +87,7 @@ const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   height: 50px;
-  grid-template-columns: 5fr 1fr 1fr;
+  grid-template-columns: 1fr;
   padding: 0 5px 0 5px;
   grid-gap: 15px;
   align-items: center;

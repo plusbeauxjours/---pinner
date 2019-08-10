@@ -76,7 +76,8 @@ const ModalAnimation = keyframes`
 const Modal = styled.div`
   background-color: ${props => props.theme.modalBgColor};
   border: 1px solid ${props => props.theme.borderColor};
-  width: 30%;
+  margin: 0 15px 0 15px;
+  width: 340px;
   border-radius: 12px;
   z-index: 5;
   animation: ${ModalAnimation} 0.1s linear;

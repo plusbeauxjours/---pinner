@@ -53,7 +53,8 @@ const ModalAnimation = keyframes`
 const Modal = styled.div`
   background-color: ${props => props.theme.modalBgColor};
   border: 1px solid ${props => props.theme.borderColor};
-  width: 30%;
+  margin: 0 15px 0 15px;
+  width: 340px;
   border-radius: 12px;
   z-index: 101;
   animation: ${ModalAnimation} 0.1s linear;
@@ -219,9 +220,6 @@ const CoffeeDetailPresenter: React.FunctionComponent<IProps> = ({
             <MenuModal>
               {coffee.host.profile.isSelf ? (
                 <>
-                  <MenuModalLink onClick={() => console.log("Edit Coffee")}>
-                    EDIT COFFEE
-                  </MenuModalLink>
                   <MenuModalLink onClick={() => deleteCoffee()}>
                     DELETE COFFEE
                   </MenuModalLink>

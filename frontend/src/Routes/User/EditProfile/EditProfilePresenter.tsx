@@ -171,6 +171,10 @@ const MenuColumn = styled.div`
   flex-direction: column;
   min-width: 200px;
   margin-top: 10px;
+  @media screen and (max-width: 735px) {
+    display: none;
+    visibility: hidden;
+  }
 `;
 
 const Column = styled.div`
@@ -178,6 +182,10 @@ const Column = styled.div`
   flex-direction: column;
   margin-left: 10px;
   width: 735px;
+  @media screen and (max-width: 735px) {
+    width: 100%;
+    margin-right: 10px;
+  }
 `;
 
 const MenuText = styled.p`
@@ -191,6 +199,10 @@ const GreyLine = styled.div`
   border-left: 1px solid ${props => props.theme.hoverColor};
   height: 80vh;
   margin: 0px 10px;
+  @media screen and (max-width: 735px) {
+    display: none;
+    visibility: hidden;
+  }
 `;
 
 const TitleText = styled.p`
@@ -210,7 +222,6 @@ const ExplainText = styled.p`
 const Conatainer = styled.div`
   height: 35px;
   display: flex;
-  width: 600px;
   justify-content: space-between;
   align-content: center;
   flex-wrap: nowrap;
@@ -221,7 +232,6 @@ const Conatainer = styled.div`
 
 const AvatarConatainer = styled(Conatainer)`
   display: flex;
-  width: 600px;
   height: 200px;
   justify-content: center;
   align-content: center;
@@ -229,7 +239,6 @@ const AvatarConatainer = styled(Conatainer)`
 `;
 
 const DeleteConatainer = styled.div`
-  width: 600px;
   border: 1px solid ${props => props.theme.borderColor};
   padding: 10px 15px 4px 15px;
   margin-top: 30px;

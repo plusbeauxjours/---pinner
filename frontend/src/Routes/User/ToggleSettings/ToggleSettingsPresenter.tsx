@@ -17,6 +17,10 @@ const MenuColumn = styled.div`
   flex-direction: column;
   min-width: 200px;
   margin-top: 10px;
+  @media screen and (max-width: 735px) {
+    display: none;
+    visibility: hidden;
+  }
 `;
 
 const Column = styled.div`
@@ -24,6 +28,10 @@ const Column = styled.div`
   flex-direction: column;
   margin-left: 10px;
   width: 735px;
+  @media screen and (max-width: 735px) {
+    width: 100%;
+    margin-right: 10px;
+  }
 `;
 
 const ToggleContainer = styled.div`
@@ -55,6 +63,10 @@ const GreyLine = styled.div`
   border-left: 1px solid ${props => props.theme.hoverColor};
   height: 80vh;
   margin: 0px 10px;
+  @media screen and (max-width: 735px) {
+    display: none;
+    visibility: hidden;
+  }
 `;
 
 const ToggleIcon = styled.div`
@@ -90,12 +102,14 @@ const Modal = styled.div`
   background-color: ${props => props.theme.modalBgColor};
   border: 1px solid ${props => props.theme.borderColor};
   border-radius: 12px;
-  width: 312px;
+  margin: 0 15px 0 15px;
+  width: 540px;
   z-index: 10;
   animation: ${ModalAnimation} 0.1s linear;
-  @media screen and (max-width: 935px) {
-    width: 30%;
-  }
+`;
+
+const ConfirmModal = styled(Modal)`
+  max-width: 340px;
 `;
 
 const ModalOverlay = styled.div`
@@ -196,10 +210,10 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
       {logoutConfirmModalOpen && (
         <ModalContainer>
           <ModalOverlay onClick={toggleConfirmModal} />
-          <Modal>
+          <ConfirmModal>
             <ModalLink onClick={logUserOutFn}>Yes</ModalLink>
             <ModalLink onClick={toggleConfirmModal}>No</ModalLink>
-          </Modal>
+          </ConfirmModal>
         </ModalContainer>
       )}
       <Wrapper>

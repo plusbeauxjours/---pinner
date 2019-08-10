@@ -118,6 +118,7 @@ const Header = styled.header`
 const LocationHeader = styled(Header)`
   margin-top: 5px;
   padding-left: 15px;
+  margin-bottom: 30px;
 `;
 
 const HeaderText = styled(Bold)`
@@ -249,7 +250,8 @@ const ModalLink = styled.div`
 const Modal = styled.div`
   background-color: ${props => props.theme.modalBgColor};
   border: 1px solid ${props => props.theme.borderColor};
-  width: 30%;
+  margin: 0 15px 0 15px;
+  width: 340px;
   border-radius: 12px;
   z-index: 10;
   animation: ${ModalAnimation} 0.1s linear;
