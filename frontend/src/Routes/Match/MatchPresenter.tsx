@@ -9,6 +9,7 @@ import Bold from "../../Components/Bold";
 import { keyframes } from "styled-components";
 import Avatar from "../../Components/Avatar";
 import CoffeeBox from "src/Components/CoffeeBox";
+import { RedDot } from "../../Icons";
 
 const SWrapper = styled(Wrapper)``;
 
@@ -227,6 +228,11 @@ const SText = styled(Bold)`
   text-transform: uppercase;
 `;
 
+const RedDotICon = styled.div`
+  position: absolute;
+  margin-top: 1px;
+`;
+
 interface IProps {
   matchData: any;
   matchLoading: boolean;
@@ -356,6 +362,11 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                   <React.Fragment key={match.id}>
                     {match.isGuest ? (
                       <MatchUserRow>
+                        {!match.is_read_by_guest && (
+                          <RedDotICon>
+                            <RedDot />
+                          </RedDotICon>
+                        )}
                         <Link to={`/${match.host.profile.username}`}>
                           <UserHeader
                             username={match.host.profile.username}
@@ -386,6 +397,11 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                       </MatchUserRow>
                     ) : (
                       <MatchUserRow>
+                        {!match.is_read_by_host && (
+                          <RedDotICon>
+                            <RedDot />
+                          </RedDotICon>
+                        )}
                         <Link to={`/${match.guest.profile.username}`}>
                           <UserHeader
                             username={match.guest.profile.username}
@@ -427,6 +443,16 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                   <React.Fragment key={match.id}>
                     {match.isGuest ? (
                       <MatchUserRow>
+                        {!match.is_read_by_guest && (
+                          <RedDotICon>
+                            <RedDot />
+                          </RedDotICon>
+                        )}
+                        {!match.is_read_by_host && (
+                          <RedDotICon>
+                            <RedDot />
+                          </RedDotICon>
+                        )}
                         <Link to={`/${match.host.profile.username}`}>
                           <UserHeader
                             username={match.host.profile.username}
@@ -457,6 +483,16 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                       </MatchUserRow>
                     ) : (
                       <MatchUserRow>
+                        {!match.is_read_by_guest && (
+                          <RedDotICon>
+                            <RedDot />
+                          </RedDotICon>
+                        )}
+                        {!match.is_read_by_host && (
+                          <RedDotICon>
+                            <RedDot />
+                          </RedDotICon>
+                        )}
                         <Link to={`/${match.guest.profile.username}`}>
                           <UserHeader
                             username={match.guest.profile.username}

@@ -1,5 +1,5 @@
 import React from "react";
-import { RedDot } from "src/Icons";
+import { RedPin } from "src/Icons";
 import styled from "src/Styles/typed-components";
 
 const Container = styled.div`
@@ -31,7 +31,7 @@ class Read extends React.Component<IProps, IState> {
     return (
       <Container>
         {console.log(isRead)}
-        {!isRead ? <RedDot /> : null}
+        {!isRead ? <RedPin /> : null}
       </Container>
     );
   }

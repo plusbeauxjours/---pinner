@@ -162,18 +162,18 @@ class MarkAsReadMatch(graphene.Mutation):
             match = models.Match.objects.get(
                 id=matchId
             )
-            if user is match.host:
+            if user == match.host:
                 print('im host')
                 match.is_read_by_host = True
                 match.save()
-                return types.MarkAsReadResponse(ok=True, matchId=matchId)
-            elif user is match.guest:
+                return types.MarkAsReadMatchResponse(ok=True, matchId=matchId)
+            elif user == match.guest:
                 print('im guest')
                 match.is_read_by_guest = True
                 match.save()
-                return types.MarkAsReadResponse(ok=True, matchId=matchId)
+                return types.MarkAsReadMatchResponse(ok=True, matchId=matchId)
             else:
-                return types.MarkAsReadResponse(ok=False, matchId=None)
+                return types.MarkAsReadMatchResponse(ok=False, matchId=None)
 
         except models.Match.DoesNotExist:
             raise Exception('This match is already unmatched ')

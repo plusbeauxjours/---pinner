@@ -8,7 +8,7 @@ import Avatar from "../../../Components/Avatar";
 import { BACKEND_URL } from "src/constants";
 import { Link } from "react-router-dom";
 import Button from "src/Components/Button";
-import { Upload, Delete, RedDot, WhiteDot, Check } from "../../../Icons";
+import { Upload, Delete, RedPin, WhiteDot, Check } from "../../../Icons";
 import { MutationFn } from "react-apollo";
 import ReactCodeInput from "react-code-input";
 import LoadingOverlay from "react-loading-overlay";
@@ -399,7 +399,7 @@ const ModalAvatarImage = styled.img`
   object-fit: cover;
 `;
 
-const RedDotIcon = styled.div`
+const RedPinIcon = styled.div`
   z-index: 20;
   position: absolute;
   top: 10px;
@@ -410,7 +410,7 @@ const RedDotIcon = styled.div`
   }
 `;
 
-const WhiteDotIcon = styled(RedDotIcon)`
+const WhiteDotIcon = styled(RedPinIcon)`
   svg {
     opacity: 0;
     transition: all 0.1s ease-in-out;
@@ -975,9 +975,9 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                       </Link>
                     </AvatarImage>
                     {avatarS.isMain && isSelf ? (
-                      <RedDotIcon>
-                        <RedDot />
-                      </RedDotIcon>
+                      <RedPinIcon>
+                        <RedPin />
+                      </RedPinIcon>
                     ) : null}
                     {!avatarS.isMain && isSelf ? (
                       <WhiteDotIcon
