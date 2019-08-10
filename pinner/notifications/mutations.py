@@ -24,7 +24,7 @@ class MarkAsRead(graphene.Mutation):
             notification = models.Notification.objects.get(
                 id=notificationId
             )
-            notification.read = True
+            notification.is_read = True
             notification.save()
             return types.MarkAsReadResponse(ok=True, notificationId=notificationId)
 

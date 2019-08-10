@@ -19,6 +19,10 @@ const MapBox = styled.div<ITheme>`
       return "300px";
     }
   }};
+  @media screen and (max-width: 700px) {
+    width: 100%;
+    display: flex;
+  }
 `;
 
 interface ITheme {

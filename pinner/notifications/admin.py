@@ -13,10 +13,9 @@ class NotificationAdmin(admin.ModelAdmin):
         'id',
         'actor',
         'target',
-        'read',
+        'is_read',
         'verb',
     )
-
 
 
 @admin.register(models.MoveNotification)
@@ -30,7 +29,6 @@ class MoveNotificationAdmin(admin.ModelAdmin):
         'id',
         'actor',
         'city',
-        'read',
         'start_date',
         'end_date',
         'verb',

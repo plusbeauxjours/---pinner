@@ -313,6 +313,7 @@ const MapModal = styled(Modal)`
   display: flex;
   height: 701px;
   width: 701px;
+  margin: 0;
   @media screen and (max-width: 700px) {
     width: 100%;
     display: flex;

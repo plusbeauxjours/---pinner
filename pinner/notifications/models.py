@@ -18,15 +18,14 @@ from django.dispatch import receiver
 class Notification(config_models.TimeStampedModel):
 
     VERBS = (
-        ('upload', 'UPLOAD'),
         ('match', 'MATCH'),
     )
 
     actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notification_from')
     target = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, blank=True, related_name='notification_to')
-    verb = models.CharField(max_length=15, choices=VERBS)
-    read = models.BooleanField(default=False)
+    verb = models.CharField(max_length=10, choices=VERBS, default='match')
+    is_read = models.BooleanField(default=False)
     match = models.ForeignKey(
         coffee_models.Match, on_delete=models.CASCADE, null=True, blank=True, related_name='notification')
 
@@ -42,14 +41,15 @@ class Notification(config_models.TimeStampedModel):
             self.id,
             self.actor.username,
             self.verb,
-            self.read
+            self.is_read
         )
 
 
 class MoveNotification(config_models.TimeStampedModel):
 
     VERBS = (
-        ('move', 'Move'),
+        ('move', 'MOVE'),        ('upload', 'UPLOAD'),
+
     )
 
     actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='movenotification')
@@ -59,7 +59,6 @@ class MoveNotification(config_models.TimeStampedModel):
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     diff_days = models.IntegerField(null=True, blank=True)
-    read = models.BooleanField(default=False)
 
     @property
     def natural_time(self):

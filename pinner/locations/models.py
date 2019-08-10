@@ -64,7 +64,7 @@ class City (config_models.TimeStampedModel):
     near_city = models.ManyToManyField(
         'self',  blank=True, symmetrical=False, related_name='near_cities')
 
-    @cached_property
+    @property
     def like_count(self):
         return self.likes.all().count()
 
