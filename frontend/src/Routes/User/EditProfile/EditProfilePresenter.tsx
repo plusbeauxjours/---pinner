@@ -8,7 +8,7 @@ import Avatar from "../../../Components/Avatar";
 import { BACKEND_URL } from "src/constants";
 import { Link } from "react-router-dom";
 import Button from "src/Components/Button";
-import { Upload, Delete, RedPin, WhiteDot, Check } from "../../../Icons";
+import { Upload, Delete, RedPin, WhitePin, Check } from "../../../Icons";
 import { MutationFn } from "react-apollo";
 import ReactCodeInput from "react-code-input";
 import LoadingOverlay from "react-loading-overlay";
@@ -410,7 +410,7 @@ const RedPinIcon = styled.div`
   }
 `;
 
-const WhiteDotIcon = styled(RedPinIcon)`
+const WhitePinIcon = styled(RedPinIcon)`
   svg {
     opacity: 0;
     transition: all 0.1s ease-in-out;
@@ -980,13 +980,13 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                       </RedPinIcon>
                     ) : null}
                     {!avatarS.isMain && isSelf ? (
-                      <WhiteDotIcon
+                      <WhitePinIcon
                         onClick={() =>
                           markAsMain(avatarS.uuid, avatarS.thumbnail)
                         }
                       >
-                        <WhiteDot />
-                      </WhiteDotIcon>
+                        <WhitePin />
+                      </WhitePinIcon>
                     ) : null}
                     {!avatarS.isMain && isSelf ? (
                       <AvatarDeleteIcon

@@ -124,7 +124,7 @@ class CoffeeBtnContainer extends React.Component<IProps, IState> {
       });
       console.log(matchData.getMatches.matches, match.match);
       if (matchData) {
-        matchData.getMatches.matches.push(match.match);
+        matchData.getMatches.matches.unshift(match.match);
         cache.writeQuery({
           query: GET_MATCHES,
           data: matchData

@@ -3,7 +3,7 @@ import styled from "src/Styles/typed-components";
 import UserHeader from "./UserHeader";
 import Bold from "./Bold";
 import { Link } from "react-router-dom";
-import { RedDot } from "../Icons";
+import { Noti } from "../Icons";
 
 const UserRow = styled.div`
   display: grid;
@@ -18,11 +18,11 @@ const UserRow = styled.div`
   &:hover {
     background-color: ${props => props.theme.hoverColor};
   }
-  border-bottom:  1px solid ${props => props.theme.borderColor};
+  border-bottom: 1px solid ${props => props.theme.borderColor};
 `;
 
 const GreyText = styled(Bold)`
-  color: ${props => props.theme.greyColor};;
+  color: ${props => props.theme.greyColor};
   margin-top: 5px;
 `;
 
@@ -66,7 +66,7 @@ const NotificationRow: React.FunctionComponent<IProps> = ({
                     <UserRow>
                       {!isRead ? (
                         <ICon>
-                          <RedDot />
+                          <Noti />
                         </ICon>
                       ) : null}
                       <UserHeader

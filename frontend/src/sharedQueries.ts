@@ -159,6 +159,8 @@ export const MATCH_FRAGMENT = gql`
     isHost
     isGuest
     isMatching
+    isReadByHost
+    isReadByGuest
   }
 `;
 

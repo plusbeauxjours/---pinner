@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { List, Delete, RedPin, WhiteDot } from "../../../Icons";
+import { List, Delete, RedPin, WhitePin } from "../../../Icons";
 import styled, { keyframes } from "../../../Styles/typed-components";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
@@ -568,7 +568,7 @@ const RedPinIcon = styled.div`
   }
 `;
 
-const WhiteDotIcon = styled(RedPinIcon)`
+const WhitePinIcon = styled(RedPinIcon)`
   svg {
     opacity: 0;
     transition: all 0.1s ease-in-out;
@@ -855,15 +855,15 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                         </RedPinIcon>
                       ) : null}
                       {!avatar.isMain && user.profile.isSelf ? (
-                        <WhiteDotIcon
+                        <WhitePinIcon
                           onClick={() =>
                             markAsMainFn({
                               variables: { uuid: avatar.uuid }
                             })
                           }
                         >
-                          <WhiteDot />
-                        </WhiteDotIcon>
+                          <WhitePin />
+                        </WhitePinIcon>
                       ) : null}
                       {!avatar.isMain && user.profile.isSelf ? (
                         <AvatarDeleteIcon

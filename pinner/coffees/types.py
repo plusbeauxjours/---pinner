@@ -88,3 +88,5 @@ class DeleteCoffeeResponse(graphene.ObjectType):
 class MarkAsReadMatchResponse(graphene.ObjectType):
     ok = graphene.Boolean()
     matchId = graphene.String()
+    isReadByHost = graphene.Boolean()
+    isReadByGuest = graphene.Boolean()

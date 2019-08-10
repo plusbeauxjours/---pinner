@@ -1748,6 +1748,30 @@ export interface RequestCoffeeVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: MarkAsReadMatch
+// ====================================================
+
+export interface MarkAsReadMatch_markAsReadMatch {
+  __typename: "MarkAsReadMatchResponse";
+  ok: boolean | null;
+  matchId: string | null;
+  isReadByHost: boolean | null;
+  isReadByGuest: boolean | null;
+}
+
+export interface MarkAsReadMatch {
+  markAsReadMatch: MarkAsReadMatch_markAsReadMatch;
+}
+
+export interface MarkAsReadMatchVariables {
+  matchId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: TripProfile
 // ====================================================
 

@@ -23,3 +23,14 @@ export const REQUEST_COFFEE = gql`
   }
   ${COFFEE_FRAGMENT}
 `;
+
+export const MARK_AS_READ_MATCH = gql`
+  mutation MarkAsReadMatch($matchId: String!) {
+    markAsReadMatch(matchId: $matchId) {
+      ok
+      matchId
+      isReadByHost
+      isReadByGuest
+    }
+  }
+`;

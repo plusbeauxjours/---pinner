@@ -9,7 +9,7 @@ import Bold from "../../Components/Bold";
 import { keyframes } from "styled-components";
 import Avatar from "../../Components/Avatar";
 import CoffeeBox from "src/Components/CoffeeBox";
-import { RedDot } from "../../Icons";
+import { Noti } from "../../Icons";
 
 const SWrapper = styled(Wrapper)``;
 
@@ -228,9 +228,11 @@ const SText = styled(Bold)`
   text-transform: uppercase;
 `;
 
-const RedDotICon = styled.div`
+const NotiICon = styled.div`
   position: absolute;
   margin-top: 1px;
+
+  color: ${props => props.theme.color};
 `;
 
 interface IProps {
@@ -253,8 +255,8 @@ interface IProps {
   submitCoffee: any;
   isStaying: boolean;
   searchSet: () => void;
+  markAsReadMatchFn: any;
 }
-
 const MatchPresenter: React.FunctionComponent<IProps> = ({
   matchData: { getMatches: { matches = null } = {} } = {},
   matchLoading,
@@ -274,7 +276,8 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
   toggleRequestModal,
   submitCoffee,
   isStaying,
-  searchSet
+  searchSet,
+  markAsReadMatchFn
 }) => {
   if (matchLoading || recommandUsersLoading) {
     return <Loader />;
@@ -317,7 +320,6 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                 <SeeAll>SEE ALL</SeeAll>
               </Link>
             </Title>
-
             <Container>
               <Box>
                 {users &&
@@ -361,11 +363,17 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                 return (
                   <React.Fragment key={match.id}>
                     {match.isGuest ? (
-                      <MatchUserRow>
-                        {!match.is_read_by_guest && (
-                          <RedDotICon>
-                            <RedDot />
-                          </RedDotICon>
+                      <MatchUserRow
+                        onClick={() =>
+                          markAsReadMatchFn({
+                            variables: { matchId: match.id }
+                          })
+                        }
+                      >
+                        {!match.isReadByGuest && (
+                          <NotiICon>
+                            <Noti />
+                          </NotiICon>
                         )}
                         <Link to={`/${match.host.profile.username}`}>
                           <UserHeader
@@ -396,11 +404,17 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                         ) : null}
                       </MatchUserRow>
                     ) : (
-                      <MatchUserRow>
-                        {!match.is_read_by_host && (
-                          <RedDotICon>
-                            <RedDot />
-                          </RedDotICon>
+                      <MatchUserRow
+                        onClick={() =>
+                          markAsReadMatchFn({
+                            variables: { matchId: match.id }
+                          })
+                        }
+                      >
+                        {!match.isReadByHost && (
+                          <NotiICon>
+                            <Noti />
+                          </NotiICon>
                         )}
                         <Link to={`/${match.guest.profile.username}`}>
                           <UserHeader
@@ -441,17 +455,19 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
               matches.map(match => {
                 return (
                   <React.Fragment key={match.id}>
+                    {console.log(match)}
                     {match.isGuest ? (
-                      <MatchUserRow>
-                        {!match.is_read_by_guest && (
-                          <RedDotICon>
-                            <RedDot />
-                          </RedDotICon>
-                        )}
-                        {!match.is_read_by_host && (
-                          <RedDotICon>
-                            <RedDot />
-                          </RedDotICon>
+                      <MatchUserRow
+                        onClick={() =>
+                          markAsReadMatchFn({
+                            variables: { matchId: match.id }
+                          })
+                        }
+                      >
+                        {!match.isReadByGuest && (
+                          <NotiICon>
+                            <Noti />
+                          </NotiICon>
                         )}
                         <Link to={`/${match.host.profile.username}`}>
                           <UserHeader
@@ -482,17 +498,19 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                         ) : null}
                       </MatchUserRow>
                     ) : (
-                      <MatchUserRow>
-                        {!match.is_read_by_guest && (
-                          <RedDotICon>
-                            <RedDot />
-                          </RedDotICon>
+                      <MatchUserRow
+                        onClick={() =>
+                          markAsReadMatchFn({
+                            variables: { matchId: match.id }
+                          })
+                        }
+                      >
+                        {!match.isReadByHost && (
+                          <NotiICon>
+                            <Noti />
+                          </NotiICon>
                         )}
-                        {!match.is_read_by_host && (
-                          <RedDotICon>
-                            <RedDot />
-                          </RedDotICon>
-                        )}
+
                         <Link to={`/${match.guest.profile.username}`}>
                           <UserHeader
                             username={match.guest.profile.username}

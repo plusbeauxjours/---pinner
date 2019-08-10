@@ -8,10 +8,16 @@ import {
   GetMatches,
   GetMatchesVariables,
   GetCoffees,
-  GetCoffeesVariables
+  GetCoffeesVariables,
+  MarkAsReadMatch,
+  MarkAsReadMatchVariables
 } from "src/types/api";
 import { toast } from "react-toastify";
-import { GET_MATCHES, REQUEST_COFFEE } from "./MatchQueries";
+import {
+  GET_MATCHES,
+  REQUEST_COFFEE,
+  MARK_AS_READ_MATCH
+} from "./MatchQueries";
 import { GET_COFFEES } from "../User/Coffees/CoffeesQueries";
 import { RECOMMAND_USERS } from "../Feed/PeoplePage/PeoplePageQueries";
 import { RouteComponentProps, withRouter } from "react-router";
@@ -22,6 +28,10 @@ class RecommandUsersQuery extends Query<RecommandUsers> {}
 class RequestCoffeeMutation extends Mutation<
   RequestCoffee,
   RequestCoffeeVariables
+> {}
+class MarkAsReadMatchMutation extends Mutation<
+  MarkAsReadMatch,
+  MarkAsReadMatchVariables
 > {}
 
 interface IProps extends RouteComponentProps<any> {}
@@ -37,11 +47,11 @@ interface IState {
 
 class MatchContainer extends React.Component<IProps, IState> {
   public requestCoffeeFn: MutationFn;
+  public markAsReadMatchFn: MutationFn;
   public matchData;
   constructor(props) {
     super(props);
     const { location: { state = {} } = {} } = ({} = props);
-    console.log(state);
     this.state = {
       search: "",
       matchList: [],
@@ -56,8 +66,6 @@ class MatchContainer extends React.Component<IProps, IState> {
     const newProps = this.props;
     if (prevProps.match.params !== newProps.match.params) {
       this.setState({ search: "" });
-      console.log("bonjour");
-      console.log(this.state);
     }
   }
   public render = () => {
@@ -72,68 +80,91 @@ class MatchContainer extends React.Component<IProps, IState> {
     } = this.state;
     const isStaying = this.state.currentCityId === currentCityId;
     return (
-      <RecommandUsersQuery query={RECOMMAND_USERS}>
-        {({ data: recommandUsersData, loading: recommandUsersLoading }) => {
+      <MarkAsReadMatchMutation
+        mutation={MARK_AS_READ_MATCH}
+        update={this.updateMarkAsReadMatch}
+      >
+        {markAsReadMatchFn => {
+          this.markAsReadMatchFn = markAsReadMatchFn;
           return (
-            <GetCoffeesQuery
-              query={GET_COFFEES}
-              variables={{
-                cityId: currentCityId,
-                location: "city"
-              }}
-            >
-              {({ data: coffeeData, loading: coffeeLoading }) => {
+            <RecommandUsersQuery query={RECOMMAND_USERS}>
+              {({
+                data: recommandUsersData,
+                loading: recommandUsersLoading
+              }) => {
                 return (
-                  <RequestCoffeeMutation
-                    mutation={REQUEST_COFFEE}
+                  <GetCoffeesQuery
+                    query={GET_COFFEES}
                     variables={{
-                      currentCityId
+                      cityId: currentCityId,
+                      location: "city"
                     }}
-                    onCompleted={this.onCompletedRequestCoffee}
-                    update={this.updateRequestCoffee}
                   >
-                    {requestCoffeeFn => {
-                      this.requestCoffeeFn = requestCoffeeFn;
+                    {({ data: coffeeData, loading: coffeeLoading }) => {
                       return (
-                        <GetMatchesQuery query={GET_MATCHES}>
-                          {({ data: matchData, loading: matchLoading }) => {
-                            this.matchData = matchData;
+                        <RequestCoffeeMutation
+                          mutation={REQUEST_COFFEE}
+                          variables={{
+                            currentCityId
+                          }}
+                          onCompleted={this.onCompletedRequestCoffee}
+                          update={this.updateRequestCoffee}
+                        >
+                          {requestCoffeeFn => {
+                            this.requestCoffeeFn = requestCoffeeFn;
                             return (
-                              <MatchPresenter
-                                matchData={matchData}
-                                matchLoading={matchLoading}
-                                recommandUsersData={recommandUsersData}
-                                recommandUsersLoading={recommandUsersLoading}
-                                coffeeData={coffeeData}
-                                coffeeLoading={coffeeLoading}
-                                search={search}
-                                matchList={matchList}
-                                currentLat={currentLat}
-                                currentLng={currentLng}
-                                currentCityId={currentCityId}
-                                onChange={this.onChange}
-                                requestModalOpen={requestModalOpen}
-                                coffeeReportModalOpen={coffeeReportModalOpen}
-                                toggleCoffeeReportModal={
-                                  this.toggleCoffeeReportModal
-                                }
-                                toggleRequestModal={this.toggleRequestModal}
-                                submitCoffee={this.submitCoffee}
-                                isStaying={isStaying}
-                                searchSet={this.searchSet}
-                              />
+                              <GetMatchesQuery query={GET_MATCHES}>
+                                {({
+                                  data: matchData,
+                                  loading: matchLoading
+                                }) => {
+                                  this.matchData = matchData;
+                                  return (
+                                    <MatchPresenter
+                                      matchData={matchData}
+                                      matchLoading={matchLoading}
+                                      recommandUsersData={recommandUsersData}
+                                      recommandUsersLoading={
+                                        recommandUsersLoading
+                                      }
+                                      coffeeData={coffeeData}
+                                      coffeeLoading={coffeeLoading}
+                                      search={search}
+                                      matchList={matchList}
+                                      currentLat={currentLat}
+                                      currentLng={currentLng}
+                                      currentCityId={currentCityId}
+                                      onChange={this.onChange}
+                                      requestModalOpen={requestModalOpen}
+                                      coffeeReportModalOpen={
+                                        coffeeReportModalOpen
+                                      }
+                                      toggleCoffeeReportModal={
+                                        this.toggleCoffeeReportModal
+                                      }
+                                      toggleRequestModal={
+                                        this.toggleRequestModal
+                                      }
+                                      submitCoffee={this.submitCoffee}
+                                      isStaying={isStaying}
+                                      searchSet={this.searchSet}
+                                      markAsReadMatchFn={this.markAsReadMatchFn}
+                                    />
+                                  );
+                                }}
+                              </GetMatchesQuery>
                             );
                           }}
-                        </GetMatchesQuery>
+                        </RequestCoffeeMutation>
                       );
                     }}
-                  </RequestCoffeeMutation>
+                  </GetCoffeesQuery>
                 );
               }}
-            </GetCoffeesQuery>
+            </RecommandUsersQuery>
           );
         }}
-      </RecommandUsersQuery>
+      </MarkAsReadMatchMutation>
     );
   };
   public searchSet = () => {
@@ -143,7 +174,6 @@ class MatchContainer extends React.Component<IProps, IState> {
     const {
       target: { value }
     } = event;
-    console.log(this.matchData);
     const {
       getMatches: { matches = null }
     } = this.matchData;
@@ -233,6 +263,28 @@ class MatchContainer extends React.Component<IProps, IState> {
           query: GET_COFFEES,
           variables: { userName: username, location: "profile" },
           data: profileData
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  public updateMarkAsReadMatch = (cache, { data: { markAsReadMatch } }) => {
+    try {
+      const matchData = cache.readQuery({
+        query: GET_MATCHES
+      });
+      console.log(markAsReadMatch);
+      if (matchData) {
+        matchData.getMatches.matches.find(
+          i => i.id === markAsReadMatch.matchId
+        ).isReadByHost = markAsReadMatch.isReadByHost;
+        matchData.getMatches.matches.find(
+          i => i.id === markAsReadMatch.matchId
+        ).isReadByGuest = markAsReadMatch.isReadByGuest;
+        cache.writeQuery({
+          query: GET_MATCHES,
+          data: matchData
         });
       }
     } catch (e) {
