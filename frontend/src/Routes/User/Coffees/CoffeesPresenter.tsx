@@ -49,6 +49,9 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-self: center;
+  @media screen and (max-width: 440px) {
+    width: 90%;
+  }
 `;
 
 const SearchCitiesInput = styled.input`
@@ -178,11 +181,27 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
                         {(() => {
                           switch (coffee.target) {
                             case "EVERYONE":
-                              return <CText text={"with Someone"} />;
+                              return (
+                                <CText
+                                  text={`${coffee.city.cityName} with Someone`}
+                                />
+                              );
                             case "GENDER":
-                              return <CText text={"with same gender"} />;
+                              return (
+                                <CText
+                                  text={`${
+                                    coffee.city.cityName
+                                  }with same gender`}
+                                />
+                              );
                             case "NATIONALITY":
-                              return <CText text={"with same nationality"} />;
+                              return (
+                                <CText
+                                  text={`${
+                                    coffee.city.cityName
+                                  }with same nationality`}
+                                />
+                              );
                             default:
                               return null;
                           }
@@ -209,11 +228,27 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
                         {(() => {
                           switch (coffee.target) {
                             case "EVERYONE":
-                              return <CText text={"with Someone"} />;
+                              return (
+                                <CText
+                                  text={`${coffee.city.cityName} with Someone`}
+                                />
+                              );
                             case "GENDER":
-                              return <CText text={"with same gender"} />;
+                              return (
+                                <CText
+                                  text={`${
+                                    coffee.city.cityName
+                                  }with same gender`}
+                                />
+                              );
                             case "NATIONALITY":
-                              return <CText text={"with same nationality"} />;
+                              return (
+                                <CText
+                                  text={`${
+                                    coffee.city.cityName
+                                  }with same nationality`}
+                                />
+                              );
                             default:
                               return null;
                           }

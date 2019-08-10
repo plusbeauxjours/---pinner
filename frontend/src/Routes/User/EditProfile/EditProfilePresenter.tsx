@@ -34,6 +34,7 @@ const EditPhoneModal = styled.div`
   background-color: ${props => props.theme.modalBgColor};
   border: 1px solid ${props => props.theme.borderColor};
   border-radius: 12px;
+  margin: 0 15px 0 15px;
   width: 540px;
   height: 240px;
   z-index: 5;
@@ -62,16 +63,14 @@ const Modal = styled.div`
   background-color: ${props => props.theme.modalBgColor};
   border: 1px solid ${props => props.theme.borderColor};
   border-radius: 12px;
-  width: 312px;
+  margin: 0 15px 0 15px;
+  width: 540px;
   z-index: 10;
   animation: ${ModalAnimation} 0.1s linear;
-  @media screen and (max-width: 935px) {
-    width: 30%;
-  }
 `;
 
 const ConfirmModal = styled(Modal)`
-  width: 400px;
+  max-width: 340px;
 `;
 
 const ModalOverlay = styled.div`
@@ -135,7 +134,7 @@ const Input = styled.input`
 `;
 
 const EmailInput = styled(Input)`
-  width: 285px;
+  max-width: 285px;
 `;
 
 const UsernameInput = styled(Input)`
@@ -244,6 +243,7 @@ const DConatainer = styled(Conatainer)`
 const SButton = styled(Button)`
   display: flex;
   width: 120px;
+  align-self: center;
 `;
 
 const DButton = styled.button`
@@ -780,10 +780,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                   <p>Check your email</p>
                   <br />
                   <br />
-                  <p>
-                     &nbsp;{emailAddress}, an email 
-                    has been sent
-                  </p>
+                  <p>&nbsp;{emailAddress}, an email has been sent</p>
                   <p>
                     Please check your email in a moment to verify email address.
                   </p>
@@ -869,7 +866,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
                   </CountryPhoneNumber>
                   <BaseForm onSubmit={onSubmitPhoneNumber}>
                     <PhoneNumberInput
-                      type={"text"}
+                      type={"number"}
                       autoFocus={true}
                       value={newPhoneNumber}
                       name={"newPhoneNumber"}
@@ -1002,7 +999,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
       {deleteConfirmModalOpen && (
         <ModalContainer>
           <ModalOverlay onClick={toggleDeleteConfirmModal} />
-          <ConfirmModal>
+          <Modal>
             <ModalInputContainer>
               <ConfirmText>Are you absolutely sure?</ConfirmText>
 
@@ -1029,16 +1026,16 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
             )}
 
             <ModalLink onClick={toggleDeleteConfirmModal}>No</ModalLink>
-          </ConfirmModal>
+          </Modal>
         </ModalContainer>
       )}
       {logoutConfirmModalOpen && (
         <ModalContainer>
           <ModalOverlay onClick={toggleLogoutConfirmModal} />
-          <Modal>
+          <ConfirmModal>
             <ModalLink onClick={logUserOutFn}>Yes</ModalLink>
             <ModalLink onClick={toggleLogoutConfirmModal}>No</ModalLink>
-          </Modal>
+          </ConfirmModal>
         </ModalContainer>
       )}
       {/* 

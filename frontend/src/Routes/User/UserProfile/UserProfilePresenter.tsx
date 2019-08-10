@@ -308,12 +308,10 @@ const Modal = styled.div`
   background-color: ${props => props.theme.modalBgColor};
   border: 1px solid ${props => props.theme.borderColor};
   border-radius: 12px;
-  width: 312px;
+  margin: 0 15px 0 15px;
+  width: 340px;
   z-index: 10;
   animation: ${ModalAnimation} 0.1s linear;
-  @media screen and (max-width: 935px) {
-    width: 30%;
-  }
 `;
 
 const ModalOverlay = styled.div`

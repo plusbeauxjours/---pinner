@@ -49,6 +49,9 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-self: center;
+  @media screen and (max-width: 440px) {
+    width: 90%;
+  }
 `;
 
 const SearchContinentInput = styled.input`
@@ -94,7 +97,7 @@ const UserRow = styled.div`
     background-color: ${props => props.theme.hoverColor};
   }
   &:not(:last-child) {
-    border-bottom:  1px solid ${props => props.theme.borderColor};
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -119,7 +122,7 @@ const SAvatar = styled(Avatar)`
 `;
 
 const GreyText = styled(Bold)`
-  color: ${props => props.theme.greyColor};;
+  color: ${props => props.theme.greyColor};
 `;
 
 interface IProps {
