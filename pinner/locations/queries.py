@@ -156,7 +156,7 @@ def resolve_city_users_before(self, info, **kwargs):
     user = info.context.user
     cityId = kwargs.get('cityId')
     page = kwargs.get('page', 0)
-    offset = 20 * page
+    offset = 3 * page
 
     nextPage = page+1
 
@@ -165,7 +165,7 @@ def resolve_city_users_before(self, info, **kwargs):
 
     hasNextPage = offset < usersBefore.count()
 
-    usersBefore = usersBefore[offset:20 + offset]
+    usersBefore = usersBefore[offset:3 + offset]
 
     return notification_types.usersBeforeResponse(usersBefore=usersBefore,  page=nextPage, hasNextPage=hasNextPage)
 

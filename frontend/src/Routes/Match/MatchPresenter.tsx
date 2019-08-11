@@ -143,7 +143,6 @@ const UserRow = styled.div`
   width: 400px;
   grid-template-columns: 4fr 1fr;
   padding: 0 5px 0 5px;
-  margin: 0 15px 0 15px;
   grid-gap: 15px;
   align-items: center;
   cursor: pointer;
