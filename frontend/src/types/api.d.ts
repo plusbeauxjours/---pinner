@@ -134,6 +134,8 @@ export interface Match_match_match {
   isHost: boolean | null;
   isGuest: boolean | null;
   isMatching: boolean | null;
+  isReadByHost: boolean;
+  isReadByGuest: boolean;
 }
 
 export interface Match_match {
@@ -480,29 +482,24 @@ export interface FacebookConnectVariables {
 // GraphQL query operation: CityProfile
 // ====================================================
 
-export interface CityProfile_cityProfile_usersNow_profile_currentCity_country {
+export interface CityProfile_cityProfile_usersNow_currentCity_country {
   __typename: "CountryType";
   countryName: string | null;
 }
 
-export interface CityProfile_cityProfile_usersNow_profile_currentCity {
+export interface CityProfile_cityProfile_usersNow_currentCity {
   __typename: "CityType";
   cityName: string | null;
-  country: CityProfile_cityProfile_usersNow_profile_currentCity_country;
+  country: CityProfile_cityProfile_usersNow_currentCity_country;
 }
 
-export interface CityProfile_cityProfile_usersNow_profile {
+export interface CityProfile_cityProfile_usersNow {
   __typename: "ProfileType";
   id: string;
   username: string | null;
   avatarUrl: string | null;
   isSelf: boolean | null;
-  currentCity: CityProfile_cityProfile_usersNow_profile_currentCity | null;
-}
-
-export interface CityProfile_cityProfile_usersNow {
-  __typename: "UserType";
-  profile: CityProfile_cityProfile_usersNow_profile | null;
+  currentCity: CityProfile_cityProfile_usersNow_currentCity | null;
 }
 
 export interface CityProfile_cityProfile_usersBefore_actor_profile_currentCity_country {
@@ -688,29 +685,24 @@ export interface CityUsersBeforeVariables {
 // GraphQL query operation: CityUsersNow
 // ====================================================
 
-export interface CityUsersNow_cityUsersNow_usersNow_profile_currentCity_country {
+export interface CityUsersNow_cityUsersNow_usersNow_currentCity_country {
   __typename: "CountryType";
   countryName: string | null;
 }
 
-export interface CityUsersNow_cityUsersNow_usersNow_profile_currentCity {
+export interface CityUsersNow_cityUsersNow_usersNow_currentCity {
   __typename: "CityType";
   cityName: string | null;
-  country: CityUsersNow_cityUsersNow_usersNow_profile_currentCity_country;
+  country: CityUsersNow_cityUsersNow_usersNow_currentCity_country;
 }
 
-export interface CityUsersNow_cityUsersNow_usersNow_profile {
+export interface CityUsersNow_cityUsersNow_usersNow {
   __typename: "ProfileType";
   id: string;
   username: string | null;
   avatarUrl: string | null;
   isSelf: boolean | null;
-  currentCity: CityUsersNow_cityUsersNow_usersNow_profile_currentCity | null;
-}
-
-export interface CityUsersNow_cityUsersNow_usersNow {
-  __typename: "UserType";
-  profile: CityUsersNow_cityUsersNow_usersNow_profile | null;
+  currentCity: CityUsersNow_cityUsersNow_usersNow_currentCity | null;
 }
 
 export interface CityUsersNow_cityUsersNow {
@@ -777,29 +769,24 @@ export interface NearCitiesVariables {
 // GraphQL query operation: ContinentProfile
 // ====================================================
 
-export interface ContinentProfile_continentProfile_usersNow_profile_currentCity_country {
+export interface ContinentProfile_continentProfile_usersNow_currentCity_country {
   __typename: "CountryType";
   countryName: string | null;
 }
 
-export interface ContinentProfile_continentProfile_usersNow_profile_currentCity {
+export interface ContinentProfile_continentProfile_usersNow_currentCity {
   __typename: "CityType";
   cityName: string | null;
-  country: ContinentProfile_continentProfile_usersNow_profile_currentCity_country;
+  country: ContinentProfile_continentProfile_usersNow_currentCity_country;
 }
 
-export interface ContinentProfile_continentProfile_usersNow_profile {
+export interface ContinentProfile_continentProfile_usersNow {
   __typename: "ProfileType";
   id: string;
   username: string | null;
   avatarUrl: string | null;
   isSelf: boolean | null;
-  currentCity: ContinentProfile_continentProfile_usersNow_profile_currentCity | null;
-}
-
-export interface ContinentProfile_continentProfile_usersNow {
-  __typename: "UserType";
-  profile: ContinentProfile_continentProfile_usersNow_profile | null;
+  currentCity: ContinentProfile_continentProfile_usersNow_currentCity | null;
 }
 
 export interface ContinentProfile_continentProfile_usersBefore_actor_profile_currentCity_country {
@@ -948,29 +935,24 @@ export interface ContinentUsersBeforeVariables {
 // GraphQL query operation: ContinentUsersNow
 // ====================================================
 
-export interface ContinentUsersNow_continentUsersNow_usersNow_profile_currentCity_country {
+export interface ContinentUsersNow_continentUsersNow_usersNow_currentCity_country {
   __typename: "CountryType";
   countryName: string | null;
 }
 
-export interface ContinentUsersNow_continentUsersNow_usersNow_profile_currentCity {
+export interface ContinentUsersNow_continentUsersNow_usersNow_currentCity {
   __typename: "CityType";
   cityName: string | null;
-  country: ContinentUsersNow_continentUsersNow_usersNow_profile_currentCity_country;
+  country: ContinentUsersNow_continentUsersNow_usersNow_currentCity_country;
 }
 
-export interface ContinentUsersNow_continentUsersNow_usersNow_profile {
+export interface ContinentUsersNow_continentUsersNow_usersNow {
   __typename: "ProfileType";
   id: string;
   username: string | null;
   avatarUrl: string | null;
   isSelf: boolean | null;
-  currentCity: ContinentUsersNow_continentUsersNow_usersNow_profile_currentCity | null;
-}
-
-export interface ContinentUsersNow_continentUsersNow_usersNow {
-  __typename: "UserType";
-  profile: ContinentUsersNow_continentUsersNow_usersNow_profile | null;
+  currentCity: ContinentUsersNow_continentUsersNow_usersNow_currentCity | null;
 }
 
 export interface ContinentUsersNow_continentUsersNow {
@@ -1020,29 +1002,24 @@ export interface CountryProfile_countryProfile_country {
   continent: CountryProfile_countryProfile_country_continent | null;
 }
 
-export interface CountryProfile_countryProfile_usersNow_profile_currentCity_country {
+export interface CountryProfile_countryProfile_usersNow_currentCity_country {
   __typename: "CountryType";
   countryName: string | null;
 }
 
-export interface CountryProfile_countryProfile_usersNow_profile_currentCity {
+export interface CountryProfile_countryProfile_usersNow_currentCity {
   __typename: "CityType";
   cityName: string | null;
-  country: CountryProfile_countryProfile_usersNow_profile_currentCity_country;
+  country: CountryProfile_countryProfile_usersNow_currentCity_country;
 }
 
-export interface CountryProfile_countryProfile_usersNow_profile {
+export interface CountryProfile_countryProfile_usersNow {
   __typename: "ProfileType";
   id: string;
   username: string | null;
   avatarUrl: string | null;
   isSelf: boolean | null;
-  currentCity: CountryProfile_countryProfile_usersNow_profile_currentCity | null;
-}
-
-export interface CountryProfile_countryProfile_usersNow {
-  __typename: "UserType";
-  profile: CountryProfile_countryProfile_usersNow_profile | null;
+  currentCity: CountryProfile_countryProfile_usersNow_currentCity | null;
 }
 
 export interface CountryProfile_countryProfile_usersBefore_actor_profile_currentCity_country {
@@ -1212,29 +1189,24 @@ export interface CountryUsersBeforeVariables {
 // GraphQL query operation: CountryUsersNow
 // ====================================================
 
-export interface CountryUsersNow_countryUsersNow_usersNow_profile_currentCity_country {
+export interface CountryUsersNow_countryUsersNow_usersNow_currentCity_country {
   __typename: "CountryType";
   countryName: string | null;
 }
 
-export interface CountryUsersNow_countryUsersNow_usersNow_profile_currentCity {
+export interface CountryUsersNow_countryUsersNow_usersNow_currentCity {
   __typename: "CityType";
   cityName: string | null;
-  country: CountryUsersNow_countryUsersNow_usersNow_profile_currentCity_country;
+  country: CountryUsersNow_countryUsersNow_usersNow_currentCity_country;
 }
 
-export interface CountryUsersNow_countryUsersNow_usersNow_profile {
+export interface CountryUsersNow_countryUsersNow_usersNow {
   __typename: "ProfileType";
   id: string;
   username: string | null;
   avatarUrl: string | null;
   isSelf: boolean | null;
-  currentCity: CountryUsersNow_countryUsersNow_usersNow_profile_currentCity | null;
-}
-
-export interface CountryUsersNow_countryUsersNow_usersNow {
-  __typename: "UserType";
-  profile: CountryUsersNow_countryUsersNow_usersNow_profile | null;
+  currentCity: CountryUsersNow_countryUsersNow_usersNow_currentCity | null;
 }
 
 export interface CountryUsersNow_countryUsersNow {
@@ -1652,6 +1624,8 @@ export interface GetMatches_getMatches_matches {
   isHost: boolean | null;
   isGuest: boolean | null;
   isMatching: boolean | null;
+  isReadByHost: boolean;
+  isReadByGuest: boolean;
 }
 
 export interface GetMatches_getMatches {
@@ -3158,6 +3132,8 @@ export interface MatchParts {
   isHost: boolean | null;
   isGuest: boolean | null;
   isMatching: boolean | null;
+  isReadByHost: boolean;
+  isReadByGuest: boolean;
 }
 
 /* tslint:disable */

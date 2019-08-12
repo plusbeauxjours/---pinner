@@ -7,9 +7,7 @@ export const COUNTRY_USERS_NOW = gql`
       page
       hasNextPage
       usersNow {
-        profile {
-          ...ProfileParts
-        }
+        ...ProfileParts
       }
     }
   }

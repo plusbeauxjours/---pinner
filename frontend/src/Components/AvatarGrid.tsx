@@ -63,8 +63,8 @@ const AvatarGrid: React.FunctionComponent<IProps> = ({
       {usersNow &&
         usersNow.map(user => (
           <AvatarContainer key={user.id}>
-            <Link to={`/${user.profile.username}`}>
-              <SAvatar size={"md"} url={user.profile.avatarUrl} />
+            <Link to={`/${user.username}`}>
+              <SAvatar size={"md"} url={user.avatarUrl} />
             </Link>
           </AvatarContainer>
         ))}

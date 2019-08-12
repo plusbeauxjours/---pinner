@@ -26,9 +26,7 @@ export const COUNTRY_PROFILE = gql`
         }
       }
       usersNow {
-        profile {
-          ...ProfileParts
-        }
+        ...ProfileParts
       }
       usersBefore {
         actor {

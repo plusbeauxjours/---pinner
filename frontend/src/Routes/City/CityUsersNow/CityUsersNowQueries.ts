@@ -7,9 +7,7 @@ export const CITY_USERS_NOW = gql`
       page
       hasNextPage
       usersNow {
-        profile {
-          ...ProfileParts
-        }
+        ...ProfileParts
       }
     }
   }

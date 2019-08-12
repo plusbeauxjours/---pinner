@@ -559,15 +559,13 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
               )}
               {usersNowList.length !== 0 &&
                 usersNowList.map(user => (
-                  <UserRow key={user.profile.id}>
-                    <Link to={`/${user.profile.username}`}>
+                  <UserRow key={user.id}>
+                    <Link to={`/${user.username}`}>
                       <UserHeader
-                        username={user.profile.username}
-                        currentCity={user.profile.currentCity.cityName}
-                        currentCountry={
-                          user.profile.currentCity.country.countryName
-                        }
-                        avatar={user.profile.avatarUrl}
+                        username={user.username}
+                        currentCity={user.currentCity.cityName}
+                        currentCountry={user.currentCity.country.countryName}
+                        avatar={user.avatarUrl}
                         size={"sm"}
                       />
                     </Link>
@@ -577,15 +575,13 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                 !search &&
                 usersNow &&
                 usersNow.map(user => (
-                  <UserRow key={user.profile.id}>
-                    <Link to={`/${user.profile.username}`}>
+                  <UserRow key={user.id}>
+                    <Link to={`/${user.username}`}>
                       <UserHeader
-                        username={user.profile.username}
-                        currentCity={user.profile.currentCity.cityName}
-                        currentCountry={
-                          user.profile.currentCity.country.countryName
-                        }
-                        avatar={user.profile.avatarUrl}
+                        username={user.username}
+                        currentCity={user.currentCity.cityName}
+                        currentCountry={user.currentCity.country.countryName}
+                        avatar={user.avatarUrl}
                         size={"sm"}
                       />
                     </Link>

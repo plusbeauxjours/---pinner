@@ -53,6 +53,8 @@ class AddTrip(graphene.Mutation):
             moveNotification = models.MoveNotification.objects.create(
                 actor=user,
                 city=location_models.City.objects.get(city_id=cityId),
+                country=location_models.Country.objects.get(cities__city_id=cityId),
+                continent=location_models.Continent.objects.get(countries__cities__city_id=cityId),
                 start_date=startDate,
                 end_date=endDate
             )
@@ -93,6 +95,8 @@ class EditTrip(graphene.Mutation):
                 endDate = kwargs.get('endDate', moveNotification.end_date)
 
                 moveNotification.city = location_models.City.objects.get(city_id=cityId)
+                moveNotification.country = location_models.Country.objects.get(cities__city_id=cityId)
+                moveNotification.continent = location_models.Continent.objects.get(countries__cities__city_id=cityId)
                 moveNotification.start_date = startDate
                 moveNotification.end_date = endDate
 

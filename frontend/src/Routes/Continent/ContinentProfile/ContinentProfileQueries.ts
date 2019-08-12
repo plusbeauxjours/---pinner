@@ -10,9 +10,7 @@ export const CONTINENT_PROFILE = gql`
     continentProfile(page: $page, continentCode: $continentCode) {
       count
       usersNow {
-        profile {
-          ...ProfileParts
-        }
+        ...ProfileParts
       }
       usersBefore {
         actor {

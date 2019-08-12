@@ -148,15 +148,15 @@ const UserBox: React.FunctionComponent<IProps> = ({
                   {users &&
                     users.map(user => {
                       return (
-                        <UserRow key={user.profile.id}>
-                          <Link to={`/${user.profile.username}`}>
+                        <UserRow key={user.id}>
+                          <Link to={`/${user.username}`}>
                             <UserHeader
-                              username={user.profile.username}
-                              currentCity={user.profile.currentCity.cityName}
+                              username={user.username}
+                              currentCity={user.currentCity.cityName}
                               currentCountry={
-                                user.profile.currentCity.country.countryName
+                                user.currentCity.country.countryName
                               }
-                              avatar={user.profile.avatarUrl}
+                              avatar={user.avatarUrl}
                               size={"sm"}
                             />
                             <Explain>{user.createdAt}</Explain>

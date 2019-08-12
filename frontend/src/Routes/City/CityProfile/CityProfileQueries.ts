@@ -10,9 +10,7 @@ export const CITY_PROFILE = gql`
     cityProfile(page: $page, cityId: $cityId) {
       count
       usersNow {
-        profile {
-          ...ProfileParts
-        }
+        ...ProfileParts
       }
       usersBefore {
         actor {

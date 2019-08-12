@@ -117,14 +117,12 @@ const CityUsersNowPresenter: React.FunctionComponent<IProps> = ({
               {usersNowList.length !== 0 &&
                 usersNowList.map((user, index) => (
                   <UserRow key={user.id}>
-                    <Link to={`/${user.profile.username}`}>
+                    <Link to={`/${user.username}`}>
                       <UserHeader
-                        username={user.profile.username}
-                        currentCity={user.profile.currentCity.cityName}
-                        currentCountry={
-                          user.profile.currentCity.country.countryName
-                        }
-                        avatar={user.profile.avatarUrl}
+                        username={user.username}
+                        currentCity={user.currentCity.cityName}
+                        currentCountry={user.currentCity.country.countryName}
+                        avatar={user.avatarUrl}
                         size={"sm"}
                       />
                     </Link>
@@ -136,14 +134,12 @@ const CityUsersNowPresenter: React.FunctionComponent<IProps> = ({
                 usersNow &&
                 usersNow.map((user, index) => (
                   <UserRow key={user.id}>
-                    <Link to={`/${user.profile.username}`}>
+                    <Link to={`/${user.username}`}>
                       <UserHeader
-                        username={user.profile.username}
-                        currentCity={user.profile.currentCity.cityName}
-                        currentCountry={
-                          user.profile.currentCity.country.countryName
-                        }
-                        avatar={user.profile.avatarUrl}
+                        username={user.username}
+                        currentCity={user.currentCity.cityName}
+                        currentCountry={user.currentCity.country.countryName}
+                        avatar={user.avatarUrl}
                         size={"sm"}
                       />
                     </Link>
