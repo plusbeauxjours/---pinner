@@ -48,14 +48,19 @@ class Notification(config_models.TimeStampedModel):
 class MoveNotification(config_models.TimeStampedModel):
 
     VERBS = (
-        ('move', 'MOVE'),        ('upload', 'UPLOAD'),
+        ('move', 'MOVE'),
+        ('upload', 'UPLOAD'),
 
     )
 
-    actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='movenotification')
+    actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moveNotificationUser')
     verb = models.CharField(max_length=10, choices=VERBS, default='move')
     city = models.ForeignKey(
-        location_models.City, on_delete=models.CASCADE, null=True, blank=True, related_name='movenotification')
+        location_models.City, on_delete=models.CASCADE, null=True, blank=True, related_name='moveNotificationCity')
+    country = models.ForeignKey(
+        location_models.Country, on_delete=models.CASCADE, null=True, blank=True, related_name='moveNotificationCountry')
+    continent = models.ForeignKey(
+        location_models.Continent, on_delete=models.CASCADE, null=True, blank=True, related_name='moveNotificationContinent')
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     diff_days = models.IntegerField(null=True, blank=True)

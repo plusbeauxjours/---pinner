@@ -234,6 +234,8 @@ class ReportLocation(graphene.Mutation):
         try:
             city = models.City.objects.get(city_id=currentCityId)
             profile.current_city = city
+            profile.current_country = city.country
+            profile.current_continent = city.country.continent
             profile.save()
             if city.near_city.count() < 20:
                 nearCities = get_locations_nearby_coords(currentLat, currentLng, 3000)[:20]
@@ -267,12 +269,14 @@ class ReportLocation(graphene.Mutation):
                 city.near_city.add(i)
                 city.save()
             profile.current_city = city
+            profile.current_country = city.country
+            profile.current_continent = city.country.continent
             profile.save()
             return city
 
         if profile.is_auto_location_report is True:
             try:
-                latest = user.movenotification.latest('start_date', 'created_at')
+                latest = user.moveNotificationUser.latest('start_date', 'created_at')
                 print(latest)
                 if latest.city != city:
                     notification_models.MoveNotification.objects.create(actor=user, city=city)

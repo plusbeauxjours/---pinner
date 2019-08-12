@@ -131,4 +131,4 @@ class SlackReportUsersResponse(graphene.ObjectType):
 class UsersNowResponse(graphene.ObjectType):
     page = graphene.Int()
     hasNextPage = graphene.Boolean()
-    usersNow = graphene.List(UserType)
+    usersNow = graphene.List(ProfileType)

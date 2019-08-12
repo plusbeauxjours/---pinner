@@ -668,6 +668,8 @@ class FacebookConnect(graphene.Mutation):
             )
             if profile:
                 profile.current_city = city
+                profile.current_country = city.country
+                profile.current_continent = city.country.continent
                 profile.save()
 
             token = get_token(profile.user)
@@ -698,7 +700,9 @@ class FacebookConnect(graphene.Mutation):
                     is_verified_email=True,
                     gender=gender,
                     avatarUrl=avatar.thumbnail,
-                    current_city=city
+                    current_city=city,
+                    current_country = city.country,
+                    current_continent = city.country.continent,
                 )
 
                 token = get_token(profile.user)

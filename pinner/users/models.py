@@ -121,6 +121,10 @@ class Profile(config_models.TimeStampedModel):
     is_auto_location_report = models.BooleanField(default=True)
     current_city = models.ForeignKey(
         location_models.City, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCity', )
+    current_country = models.ForeignKey(
+        location_models.Country, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentCountry', )
+    current_continent = models.ForeignKey(
+        location_models.Continent, on_delete=models.SET_NULL, null=True, blank=True, related_name='currentContinent', )
 
     def __str__(self):
         return self.user.username
@@ -131,19 +135,19 @@ class Profile(config_models.TimeStampedModel):
 
     @cached_property
     def city_count(self):
-        return self.user.movenotification.all().order_by('city').distinct('city').count()
+        return self.user.moveNotificationUser.all().order_by('city').distinct('city').count()
 
     @cached_property
     def country_count(self):
-        return self.user.movenotification.all().order_by('city__country').distinct('city__country').count()
+        return self.user.moveNotificationUser.all().order_by('city__country').distinct('city__country').count()
 
     @cached_property
     def continent_count(self):
-        return self.user.movenotification.all().order_by('city__country__continent').distinct('city__country__continent').count()
+        return self.user.moveNotificationUser.all().order_by('city__country__continent').distinct('city__country__continent').count()
 
     @cached_property
     def trip_count(self):
-        return self.user.movenotification.all().count()
+        return self.user.moveNotificationUser.all().count()
 
     @cached_property
     def coffee_count(self):

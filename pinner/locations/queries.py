@@ -61,14 +61,15 @@ def resolve_trip_profile(self, info, **kwargs):
     endDate = kwargs.get('endDate')
 
     try:
-        city = models.City.objects.prefetch_related('movenotification').prefetch_related('coffee').get(city_id=cityId)
+        city = models.City.objects.prefetch_related(
+            'moveNotificationCity').prefetch_related('coffee').get(city_id=cityId)
     except models.City.DoesNotExist:
         raise GraphQLError('Trip not found')
 
-    count = user.movenotification.values('id').filter(city__city_id=cityId).count()
+    count = user.moveNotificationUser.values('id').filter(city__city_id=cityId).count()
 
-    usersBefore = city.movenotification.filter(Q(start_date__lte=(endDate)) |
-                                               Q(end_date__gte=(startDate))).order_by('actor_id').distinct('actor_id')
+    usersBefore = city.moveNotificationCity.filter(Q(start_date__lte=(endDate)) |
+                                                   Q(end_date__gte=(startDate))).order_by('actor_id').distinct('actor_id')
 
     userCount = usersBefore.count()
 
@@ -85,19 +86,17 @@ def resolve_city_profile(self, info, **kwargs):
     page = kwargs.get('page', 0)
 
     try:
-        city = models.City.objects.prefetch_related('coffee').get(city_id=cityId)
+        city = models.City.objects.prefetch_related('coffee').prefetch_related('currentCity').get(city_id=cityId)
     except models.City.DoesNotExist:
         raise GraphQLError('City not found')
 
-    count = user.movenotification.values('id').filter(city__city_id=cityId).count()
-
-    usersNow = User.objects.filter(
-        profile__current_city__city_id=cityId).order_by('-id').distinct('id')[:12]
+    count = user.moveNotificationUser.values('id').filter(city__city_id=cityId).count()
 
     coffees = city.coffee.filter(expires__gt=timezone.now())
 
-    usersBefore = notification_models.MoveNotification.objects.filter(
-        city__city_id=cityId).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
+    usersNow = city.currentCity.order_by('-id').distinct('id')[:12]
+    usersBefore = city.moveNotificationCity.exclude(
+        actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
 
     return location_types.CityProfileResponse(count=count, usersNow=usersNow, usersBefore=usersBefore, city=city)
 
@@ -140,8 +139,7 @@ def resolve_city_users_now(self, info, **kwargs):
 
     nextPage = page+1
 
-    usersNow = User.objects.filter(
-        profile__current_city__city_id=cityId).order_by('-id').distinct('id')
+    usersNow = city.currentCity.order_by('-id').distinct('id')
 
     hasNextPage = offset < usersNow.count()
 
@@ -160,8 +158,8 @@ def resolve_city_users_before(self, info, **kwargs):
 
     nextPage = page+1
 
-    usersBefore = notification_models.MoveNotification.objects.filter(
-        city__city_id=cityId).order_by('-actor_id').distinct('actor_id')
+    usersNow = city.currentCity.order_by('-id').distinct('id')[:12]
+    usersBefore = city.moveNotificationCity.exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')
 
     hasNextPage = offset < usersBefore.count()
 
@@ -182,13 +180,11 @@ def resolve_country_profile(self, info, **kwargs):
     except Country.DoesNotExist:
         raise GraphQLError('Country not found')
 
-    count = user.movenotification.values('id').filter(city__country__country_code=countryCode).count()
+    count = user.moveNotificationUser.values('id').filter(city__country__country_code=countryCode).count()
 
-    usersNow = User.objects.filter(
-        profile__current_city__country__country_code=countryCode).order_by('-id').distinct('id')[:12]
-
-    usersBefore = notification_models.MoveNotification.objects.filter(
-        city__country__country_code=countryCode).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
+    usersNow = country.currentCountry.order_by('-id').distinct('id')[:12]
+    usersBefore = country.moveNotificationCountry.exclude(
+        actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
 
     cities = models.City.objects.filter(country__country_code=countryCode)
 
@@ -205,8 +201,12 @@ def resolve_country_users_now(self, info, **kwargs):
 
     nextPage = page+1
 
-    usersNow = User.objects.filter(
-        profile__current_city__country__country_code=countryCode).order_by('-id').distinct('id')
+    try:
+        country = models.Country.objects.get(country_code=countryCode)
+    except Country.DoesNotExist:
+        raise GraphQLError('Country not found')
+
+    usersNow = country.currentCountry.order_by('-id').distinct('id')
 
     hasNextPage = offset < usersNow.count()
 
@@ -225,8 +225,8 @@ def resolve_country_users_before(self, info, **kwargs):
 
     nextPage = page+1
 
-    usersBefore = notification_models.MoveNotification.objects.filter(
-        city__country__country_code=countryCode).order_by('-actor_id').distinct('actor_id')
+    usersBefore = country.moveNotificationCountry.exclude(
+        actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')
 
     hasNextPage = offset < usersBefore.count()
 
@@ -261,13 +261,12 @@ def resolve_continent_profile(self, info, **kwargs):
     except Continent.DoesNotExist:
         raise GraphQLError('Continent not found')
 
-    count = user.movenotification.values('id').filter(city__country__continent__continent_code=continentCode).count()
+    count = user.moveNotificationUser.values('id').filter(
+        city__country__continent__continent_code=continentCode).count()
 
-    usersNow = User.objects.filter(
-        profile__current_city__country__continent__continent_code=continentCode).order_by('-id').distinct('id')[:12]
-
-    usersBefore = notification_models.MoveNotification.objects.filter(
-        city__country__continent__continent_code=continentCode).exclude(actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
+    usersNow = continent.currentContinent.order_by('-id').distinct('id')[:12]
+    usersBefore = continent.moveNotificationContinent.exclude(
+        actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
 
     countries = models.Country.objects.filter(continent__continent_code=continentCode)
 
@@ -286,8 +285,12 @@ def resolve_continent_users_now(self, info, **kwargs):
 
     nextPage = page+1
 
-    usersNow = User.objects.filter(
-        profile__current_city__country__continent__continent_code=continentCode).order_by('-id').distinct('id')
+    try:
+        continent = models.Continent.objects.get(continent_code=continentCode)
+    except Continent.DoesNotExist:
+        raise GraphQLError('Continent not found')
+
+    usersNow = continent.currentContinent.order_by('-id').distinct('id')
 
     hasNextPage = offset < usersNow.count()
 
@@ -306,8 +309,8 @@ def resolve_continent_users_before(self, info, **kwargs):
 
     nextPage = page+1
 
-    usersBefore = notification_models.MoveNotification.objects.filter(
-        city__country__continent__continent_code=continentCode).order_by('-actor_id').distinct('actor_id')
+    usersBefore = continent.moveNotificationContinent.exclude(
+        actor__id__in=usersNow).order_by('-actor_id').distinct('actor_id')
 
     hasNextPage = offset < usersBefore.count()
 

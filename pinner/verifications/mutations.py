@@ -149,7 +149,9 @@ class CompletePhoneVerification(graphene.Mutation):
                             country_phone_number=countryPhoneNumber,
                             country_phone_code=countryPhoneCode,
                             phone_number=phoneNumber,
-                            current_city=city
+                            current_city=city,
+                            current_country=city.country,
+                            current_continent=city.country.continent,
                         )
                         newUserProfile.is_verified_phone_number = True
                         newUserProfile.save()
@@ -359,7 +361,9 @@ class CompleteEmailVerification(graphene.Mutation):
                         newUserProfile = users_models.Profile.objects.create(
                             user=newUser,
                             email_address=verification.payload,
-                            current_city=city
+                            current_city=city,
+                            current_country=city.country,
+                            current_continent=city.country.continent,
                         )
                         newUserProfile.is_verified_email_address = True
                         newUserProfile.save()

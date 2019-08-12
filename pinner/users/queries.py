@@ -53,9 +53,9 @@ def resolve_top_countries(self, info, **kwargs):
     userName = kwargs.get('userName')
 
     countries = location_models.Country.objects.filter(
-        cities__movenotification__actor__username=userName).annotate(
-        count=Count('cities__movenotification', distinct=True)).annotate(
-        diff=Sum('cities__movenotification__diff_days')).order_by('-count', '-diff')
+        cities__moveNotificationCity__actor__username=userName).annotate(
+        count=Count('cities__moveNotificationCity', distinct=True)).annotate(
+        diff=Sum('cities__moveNotificationCity__diff_days')).order_by('-count', '-diff')
 
     return location_types.CountriesResponse(countries=countries)
 
@@ -67,9 +67,9 @@ def resolve_frequent_visits(self, info, **kwargs):
     userName = kwargs.get('userName')
 
     cities = location_models.City.objects.filter(
-        movenotification__actor__username=userName).annotate(
-        count=Count('movenotification', distinct=True)).annotate(
-        diff=Sum('movenotification__diff_days')).order_by('-count', '-diff')
+        moveNotificationCity__actor__username=userName).annotate(
+        count=Count('moveNotificationCity', distinct=True)).annotate(
+        diff=Sum('moveNotificationCity__diff_days')).order_by('-count', '-diff')
 
     return location_types.CitiesResponse(cities=cities)
 
@@ -81,9 +81,9 @@ def resolve_top_continents(self, info, **kwargs):
     userName = kwargs.get('userName')
 
     continents = location_models.Continent.objects.filter(
-        countries__cities__movenotification__actor__username=userName).annotate(
-        count=Count('countries__cities__movenotification', distinct=True)).annotate(
-        diff=Sum('countries__cities__movenotification__diff_days')).order_by('-count', '-diff')
+        countries__cities__moveNotificationCity__actor__username=userName).annotate(
+        count=Count('countries__cities__moveNotificationCity', distinct=True)).annotate(
+        diff=Sum('countries__cities__moveNotificationCity__diff_days')).order_by('-count', '-diff')
 
     return location_types.ContinentsResponse(continents=continents)
 
@@ -117,7 +117,7 @@ def resolve_recommand_users(self, info, **kwargs):
 
     nextPage = page+1
 
-    userLocations = user.movenotification.values('city').all()
+    userLocations = user.moveNotificationUser.values('city').all()
     print(userLocations.filter())
 
     users = models.User.objects.all().exclude(id=user.id).order_by('-profile__created_at')

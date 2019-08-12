@@ -19,6 +19,8 @@ class ProfileAdmin(admin.ModelAdmin):
         'is_hide_continents',
         'is_auto_location_report',
         'current_city',
+        'current_country',
+        'current_continent',
         'city_count',
         'trip_count',
         'country_count',

@@ -79,8 +79,8 @@ class EditTrip(graphene.Mutation):
         user = info.context.user
 
         try:
-            moveNotification = user.movenotification.get(id=moveNotificationId)
-        except user.movenotification.DoesNotExist:
+            moveNotification = user.moveNotificationUser.get(id=moveNotificationId)
+        except user.moveNotificationUser.DoesNotExist:
             raise Exception('Trip Not Found')
 
         if moveNotification.actor.id != user.id:
@@ -117,8 +117,8 @@ class DeleteTrip(graphene.Mutation):
         user = info.context.user
 
         try:
-            moveNotification = user.movenotification.get(id=moveNotificationId)
-        except user.movenotification.DoesNotExist:
+            moveNotification = user.moveNotificationUser.get(id=moveNotificationId)
+        except user.moveNotificationUser.DoesNotExist:
             raise Exception('Trip Not Found')
 
         if moveNotification.actor.id == user.id:
@@ -143,7 +143,7 @@ class CalculateDistance(graphene.Mutation):
 
         try:
             trips = models.MoveNotification.objects.filter(actor=user).order_by('-start_date', '-created_at')
-        except user.movenotification.DoesNotExist:
+        except user.moveNotificationUser.DoesNotExist:
             raise Exception('Trips Not Found')
 
         try:

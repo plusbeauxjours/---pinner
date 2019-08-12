@@ -8,6 +8,7 @@ class ContinentAdmin(admin.ModelAdmin):
         'continent_name',
         'continent_photo',
         'country_count',
+        'user_log_count'
     )
 
 
@@ -19,6 +20,7 @@ class CountryAdmin(admin.ModelAdmin):
         'country_photo',
         'total_like_count',
         'city_count',
+        'user_log_count',
         'country_capital',
         'country_name_native',
         'country_phone',
@@ -29,8 +31,8 @@ class CountryAdmin(admin.ModelAdmin):
 @admin.register(models.City)
 class CityAdmin(admin.ModelAdmin):
     list_display = (
-        'city_name',
         'id',
+        'city_name',
         'country',
         'like_count',
         'user_count',
