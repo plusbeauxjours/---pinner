@@ -372,11 +372,11 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
               {countryList.length === 0 && countries.length === 0 && (
                 <EmptyContainer>
                   <Earth
-                    src={
-                      localStorage.getItem("isDarkMode") === "true"
-                        ? require(`../../../Images/animations/darkEarth.gif`)
-                        : require(`../../../Images/animations/lightEarth.gif`)
-                    }
+                  src={
+                    localStorage.getItem("isDarkMode") === "false"
+                      ? require(`../../../Images/animations/lightEarth.gif`)
+                      : require(`../../../Images/animations/darkEarth.gif`)
+                  }
                   />
                   There is no city yet
                 </EmptyContainer>

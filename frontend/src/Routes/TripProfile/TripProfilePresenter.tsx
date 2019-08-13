@@ -496,9 +496,9 @@ const TripProfilePresenter: React.FunctionComponent<IProps> = ({
                 <EmptyContainer>
                   <Earth
                     src={
-                      localStorage.getItem("isDarkMode") === "true"
-                        ? require(`../../Images/animations/darkEarth.gif`)
-                        : require(`../../Images/animations/lightEarth.gif`)
+                      localStorage.getItem("isDarkMode") === "false"
+                        ? require(`../../Images/animations/lightEarth.gif`)
+                        : require(`../../Images/animations/darkEarth.gif`)
                     }
                   />
                   There is no user now
