@@ -2,7 +2,7 @@ import React from "react";
 import MatchPresenter from "./MatchPresenter";
 import { Query, Mutation, MutationFn } from "react-apollo";
 import {
-  RecommandUsers,
+  RecommendUsers,
   RequestCoffee,
   RequestCoffeeVariables,
   GetMatches,
@@ -24,7 +24,7 @@ import { RouteComponentProps, withRouter } from "react-router";
 
 class GetMatchesQuery extends Query<GetMatches, GetMatchesVariables> {}
 class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
-class RecommandUsersQuery extends Query<RecommandUsers> {}
+class RecommendUsersQuery extends Query<RecommendUsers> {}
 class RequestCoffeeMutation extends Mutation<
   RequestCoffee,
   RequestCoffeeVariables
@@ -87,10 +87,10 @@ class MatchContainer extends React.Component<IProps, IState> {
         {markAsReadMatchFn => {
           this.markAsReadMatchFn = markAsReadMatchFn;
           return (
-            <RecommandUsersQuery query={RECOMMAND_USERS}>
+            <RecommendUsersQuery query={RECOMMAND_USERS}>
               {({
-                data: recommandUsersData,
-                loading: recommandUsersLoading
+                data: recommendUsersData,
+                loading: recommendUsersLoading
               }) => {
                 return (
                   <GetCoffeesQuery
@@ -123,9 +123,9 @@ class MatchContainer extends React.Component<IProps, IState> {
                                     <MatchPresenter
                                       matchData={matchData}
                                       matchLoading={matchLoading}
-                                      recommandUsersData={recommandUsersData}
-                                      recommandUsersLoading={
-                                        recommandUsersLoading
+                                      recommendUsersData={recommendUsersData}
+                                      recommendUsersLoading={
+                                        recommendUsersLoading
                                       }
                                       coffeeData={coffeeData}
                                       coffeeLoading={coffeeLoading}
@@ -161,7 +161,7 @@ class MatchContainer extends React.Component<IProps, IState> {
                   </GetCoffeesQuery>
                 );
               }}
-            </RecommandUsersQuery>
+            </RecommendUsersQuery>
           );
         }}
       </MarkAsReadMatchMutation>

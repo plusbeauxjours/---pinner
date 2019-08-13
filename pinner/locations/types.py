@@ -125,3 +125,9 @@ class ToggleLikeCityResponse(graphene.ObjectType):
 
 class SlackReportLocationResponse(graphene.ObjectType):
     ok = graphene.Boolean()
+
+
+class RecommendLocationsResponse(graphene.ObjectType):
+    page = graphene.Int()
+    hasNextPage = graphene.Boolean()
+    cities = graphene.List(CityType)

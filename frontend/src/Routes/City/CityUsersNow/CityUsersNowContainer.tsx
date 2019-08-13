@@ -80,7 +80,7 @@ class CityUsersNowContainer extends React.Component<IProps, IState> {
       target: { value }
     } = event;
     const {
-      recommandUsers: { users = null }
+      recommendUsers: { users = null }
     } = this.data;
     const userSearch = (list, text) =>
       list.filter(i =>

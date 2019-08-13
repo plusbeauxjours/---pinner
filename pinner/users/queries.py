@@ -3,7 +3,7 @@ from graphql_jwt.decorators import login_required
 from graphql_extensions.exceptions import GraphQLError
 from django.contrib.auth.models import User
 from . import types, models
-from django.db.models import Count, F, Sum
+from django.db.models import Count, F, Sum, Q
 from locations import types as location_types
 from locations import models as location_models
 from notifications import models as notification_models
@@ -109,37 +109,45 @@ def resolve_search_users(self, info, **kwargs):
 
 
 @login_required
-def resolve_recommand_users(self, info, **kwargs):
+def resolve_recommend_users(self, info, **kwargs):
 
     user = info.context.user
     page = kwargs.get('page', 0)
     offset = 20 * page
 
     nextPage = page+1
+    userGuest = user.guest.all()
+    print(userGuest)
+    userHost = user.host.all()
+    print(userHost)
 
-    userNationality = user.profile.nationality.nationality.all().order_by('-distance')[:10]
-    userResidence = user.profile.residence.residence.all().order_by('-distance')[:10]
+    userNationality = user.profile.nationality.nationality.all().exclude(
+        id=user.profile.id).exclude(user__host__in=userGuest).exclude(user__host__in=userHost).exclude(user__guest__in=userGuest).exclude(user__guest__in=userHost).order_by('-distance')[:10]
+    userResidence = user.profile.residence.residence.all().exclude(
+        id=user.profile.id).exclude(user__host__in=userGuest).exclude(user__host__in=userHost).exclude(user__guest__in=userGuest).exclude(user__guest__in=userHost).order_by('-distance')[:10]
     combined = userNationality.union(userResidence)
 
     userLocation = user.moveNotificationUser.all().order_by('-created_at').order_by('city').distinct('city')[:10]
     for i in userLocation:
         userLocations = models.Profile.objects.filter(
-            user__moveNotificationUser__city=i.city).order_by('-distance')[:10]
+            user__moveNotificationUser__city=i.city).exclude(id=user.profile.id).exclude(user__host__in=userGuest).exclude(user__host__in=userHost).exclude(user__guest__in=userGuest).exclude(user__guest__in=userHost).order_by('-distance')[:10]
         combined = combined.union(userLocations)
 
-    userLike = user.likes.all().exclude(id=user.profile.id).order_by(
+    userLike = user.likes.all().order_by(
         '-created_at').order_by('city').distinct('city')[:10]
     for i in userLike:
-        userLikes = models.Profile.objects.filter(user__likes__city=i.city).order_by('-distance')[:10]
+        userLikes = models.Profile.objects.filter(user__likes__city=i.city).exclude(id=user.profile.id).exclude(user__host__in=userGuest).exclude(
+            user__host__in=userHost).exclude(user__guest__in=userGuest).exclude(user__guest__in=userHost).order_by('-distance')[:10]
         combined = combined.union(userLikes)
 
-    combined = combined.order_by('id').distinct('id').exclude(id=user.profile.id)
+    combined = combined.order_by('id').distinct('id')
+    # .exclude(id=user.profile.id).exclude(id=user.host.id).exclude(id=user.guest.id)
 
     hasNextPage = offset < combined.count()
 
     combined = combined[offset:20 + offset]
 
-    return types.RecommandUsersResponse(users=combined, page=nextPage, hasNextPage=hasNextPage)
+    return types.RecommendUsersResponse(users=combined, page=nextPage, hasNextPage=hasNextPage)
 
 
 @login_required

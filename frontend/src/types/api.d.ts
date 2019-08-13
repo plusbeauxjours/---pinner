@@ -1345,46 +1345,41 @@ export interface DeleteCoffeeVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: RecommandUsers
+// GraphQL query operation: RecommendUsers
 // ====================================================
 
-export interface RecommandUsers_recommandUsers_users_profile_currentCity_country {
+export interface RecommendUsers_recommendUsers_users_currentCity_country {
   __typename: "CountryType";
   countryName: string | null;
 }
 
-export interface RecommandUsers_recommandUsers_users_profile_currentCity {
+export interface RecommendUsers_recommendUsers_users_currentCity {
   __typename: "CityType";
   cityName: string | null;
-  country: RecommandUsers_recommandUsers_users_profile_currentCity_country;
+  country: RecommendUsers_recommendUsers_users_currentCity_country;
 }
 
-export interface RecommandUsers_recommandUsers_users_profile {
+export interface RecommendUsers_recommendUsers_users {
   __typename: "ProfileType";
   id: string;
   username: string | null;
   avatarUrl: string | null;
   isSelf: boolean | null;
-  currentCity: RecommandUsers_recommandUsers_users_profile_currentCity | null;
+  currentCity: RecommendUsers_recommendUsers_users_currentCity | null;
 }
 
-export interface RecommandUsers_recommandUsers_users {
-  __typename: "UserType";
-  profile: RecommandUsers_recommandUsers_users_profile | null;
-}
-
-export interface RecommandUsers_recommandUsers {
-  __typename: "RecommandUsersResponse";
+export interface RecommendUsers_recommendUsers {
+  __typename: "RecommendUsersResponse";
   page: number | null;
   hasNextPage: boolean | null;
-  users: (RecommandUsers_recommandUsers_users | null)[] | null;
+  users: (RecommendUsers_recommendUsers_users | null)[] | null;
 }
 
-export interface RecommandUsers {
-  recommandUsers: RecommandUsers_recommandUsers;
+export interface RecommendUsers {
+  recommendUsers: RecommendUsers_recommendUsers;
 }
 
-export interface RecommandUsersVariables {
+export interface RecommendUsersVariables {
   page?: number | null;
 }
 

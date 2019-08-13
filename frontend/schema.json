@@ -942,7 +942,7 @@
             "deprecationReason": null
           },
           {
-            "name": "recommandUsers",
+            "name": "recommendUsers",
             "description": null,
             "args": [
               {
@@ -961,7 +961,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "RecommandUsersResponse",
+                "name": "RecommendUsersResponse",
                 "ofType": null
               }
             },
@@ -4905,7 +4905,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "RecommandUsersResponse",
+        "name": "RecommendUsersResponse",
         "description": null,
         "fields": [
           {
@@ -4941,7 +4941,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "UserType",
+                "name": "ProfileType",
                 "ofType": null
               }
             },

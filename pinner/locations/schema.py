@@ -147,6 +147,12 @@ class Query(object):
         required=True,
         args={'cityId': graphene.String()}
     )
+    recoomend_locationss = graphene.Field(
+        types.RecommendLocationsResponse,
+        resolver=queries.resolve_recommend_locations,
+        required=True,
+        args={'page': graphene.Int()}
+    )
 
 
 class Mutation(object):

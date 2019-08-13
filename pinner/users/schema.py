@@ -25,9 +25,9 @@ class Query(object):
         required=True,
         args={'search': graphene.String(required=True)}
     )
-    recommand_users = graphene.Field(
-        types.RecommandUsersResponse,
-        resolver=queries.resolve_recommand_users,
+    recommend_users = graphene.Field(
+        types.RecommendUsersResponse,
+        resolver=queries.resolve_recommend_users,
         required=True,
         args={'page': graphene.Int()}
     )

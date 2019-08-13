@@ -388,3 +388,44 @@ def resolve_get_city_photo(self, info, **kwargs):
 
     except models.City.DoesNotExist:
         return types.PhotoResponse(photo=None)
+
+
+@login_required
+def resolve_recommend_locations(self, info, **kwargs):
+
+    user = info.context.user
+    page = kwargs.get('page', 0)
+    offset = 20 * page
+
+    nextPage = page+1
+
+    combined = combined.uion(user.profile.current_city)
+    cityNationality = user.profile.nationality.nationality.all().order_by('-distance')[:10]
+    print(cityNationality)
+    for i in cityNationality:
+        combined = combined.union(i.current_city)
+        print(combined)
+
+    cityResidence = user.profile.residence.residence.all().order_by('-distance')[:10]
+    for i in cityResidence:
+        combined = combined.union(i.current_city)
+
+    # userLocation = user.moveNotificationUser.all().order_by('-created_at').order_by('city').distinct('city')[:10]
+    # for i in userLocation:
+    #     userLocations = models.Profile.objects.filter(
+    #         user__moveNotificationUser__city=i.city).order_by('-distance')[:10]
+    #     combined = combined.union(userLocations)
+
+    # userLike = user.likes.all().exclude(id=user.profile.id).order_by(
+    #     '-created_at').order_by('city').distinct('city')[:10]
+    # for i in userLike:
+    #     userLikes = models.Profile.objects.filter(user__likes__city=i.city).order_by('-distance')[:10]
+    #     combined = combined.union(userLikes)
+
+    combined = combined.order_by('id').distinct('id').exclude(id=user.profile.current_city.id)
+
+    hasNextPage = offset < combined.count()
+
+    combined = combined[offset:20 + offset]
+
+    return types.RecommendLocationsResponse(cities=combined, page=nextPage, hasNextPage=hasNextPage)

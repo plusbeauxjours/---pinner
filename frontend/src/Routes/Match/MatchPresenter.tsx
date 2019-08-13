@@ -211,8 +211,8 @@ const NotiICon = styled.div`
 interface IProps {
   matchData: any;
   matchLoading: boolean;
-  recommandUsersData: any;
-  recommandUsersLoading: boolean;
+  recommendUsersData: any;
+  recommendUsersLoading: boolean;
   coffeeData: any;
   coffeeLoading: boolean;
   search: string;
@@ -233,8 +233,8 @@ interface IProps {
 const MatchPresenter: React.FunctionComponent<IProps> = ({
   matchData: { getMatches: { matches = null } = {} } = {},
   matchLoading,
-  recommandUsersData: { recommandUsers: { users = null } = {} } = {},
-  recommandUsersLoading,
+  recommendUsersData: { recommendUsers: { users = null } = {} } = {},
+  recommendUsersLoading,
   coffeeData: { getCoffees: { coffees = null } = {} } = {},
   coffeeLoading,
   search,
@@ -252,9 +252,9 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
   searchSet,
   markAsReadMatchFn
 }) => {
-  if (matchLoading || recommandUsersLoading) {
+  if (matchLoading || recommendUsersLoading) {
     return <Loader />;
-  } else if (!matchLoading && !recommandUsersLoading && matches) {
+  } else if (!matchLoading && !recommendUsersLoading && matches) {
     return (
       <>
         {coffeeReportModalOpen && (
@@ -288,7 +288,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
         <SWrapper>
           <UserContainer>
             <Title>
-              <SText text={"RECOMMAND USER"} />
+              <SText text={"RECOMMEND USERS"} />
               <Link to={`/people`}>
                 <SeeAll>SEE ALL</SeeAll>
               </Link>

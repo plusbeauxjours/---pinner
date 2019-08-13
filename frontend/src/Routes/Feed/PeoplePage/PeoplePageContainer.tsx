@@ -1,24 +1,24 @@
 import React from "react";
 import { Query } from "react-apollo";
-import { RecommandUsers } from "../../../types/api";
+import { RecommendUsers } from "../../../types/api";
 import PeoplePagePresenter from "./PeoplePagePresenter";
 import { RECOMMAND_USERS } from "./PeoplePageQueries";
 
-class RecommandUsersQuery extends Query<RecommandUsers> {}
+class RecommendUsersQuery extends Query<RecommendUsers> {}
 
 interface IState {
   search: string;
-  recommandUserList: any;
+  recommendUserList: any;
 }
 
 class PeoplePageContainer extends React.Component<any, IState> {
-  public recommandUsersFetchMore;
-  public recommandUsersData;
+  public recommendUsersFetchMore;
+  public recommendUsersData;
   constructor(props) {
     super(props);
     this.state = {
       search: "",
-      recommandUserList: []
+      recommendUserList: []
     };
   }
   public componentDidUpdate(prevProps) {
@@ -26,33 +26,33 @@ class PeoplePageContainer extends React.Component<any, IState> {
     console.log(prevProps);
     console.log(newProps);
     if (prevProps.match !== newProps.match) {
-      this.setState({ search: "", recommandUserList: [] });
+      this.setState({ search: "", recommendUserList: [] });
       console.log(this.state);
     }
   }
   public render() {
-    const { search, recommandUserList } = this.state;
+    const { search, recommendUserList } = this.state;
     return (
-      <RecommandUsersQuery query={RECOMMAND_USERS}>
+      <RecommendUsersQuery query={RECOMMAND_USERS}>
         {({
-          data: recommandUsersData,
-          loading: recommandUsersLoading,
-          fetchMore: recommandUsersFetchMore
+          data: recommendUsersData,
+          loading: recommendUsersLoading,
+          fetchMore: recommendUsersFetchMore
         }) => {
-          this.recommandUsersData = recommandUsersData;
-          this.recommandUsersFetchMore = recommandUsersFetchMore;
+          this.recommendUsersData = recommendUsersData;
+          this.recommendUsersFetchMore = recommendUsersFetchMore;
           return (
             <PeoplePagePresenter
-              recommandUsersData={recommandUsersData}
-              recommandUsersLoading={recommandUsersLoading}
+              recommendUsersData={recommendUsersData}
+              recommendUsersLoading={recommendUsersLoading}
               search={search}
-              recommandUserList={recommandUserList}
+              recommendUserList={recommendUserList}
               onChange={this.onChange}
               loadMore={this.loadMore}
             />
           );
         }}
-      </RecommandUsersQuery>
+      </RecommendUsersQuery>
     );
   }
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
@@ -60,19 +60,19 @@ class PeoplePageContainer extends React.Component<any, IState> {
       target: { value }
     } = event;
     const {
-      recommandUsers: { users = null }
-    } = this.recommandUsersData;
+      recommendUsers: { users = null }
+    } = this.recommendUsersData;
     const userSearch = (list, text) =>
       list.filter(i => i.username.toLowerCase().includes(text.toLowerCase()));
-    const recommandUserList = userSearch(users, value);
-    console.log(recommandUserList);
+    const recommendUserList = userSearch(users, value);
+    console.log(recommendUserList);
     this.setState({
       search: value,
-      recommandUserList
+      recommendUserList
     } as any);
   };
   public loadMore = page => {
-    this.recommandUsersFetchMore({
+    this.recommendUsersFetchMore({
       query: RECOMMAND_USERS,
       variables: {
         page
@@ -82,14 +82,14 @@ class PeoplePageContainer extends React.Component<any, IState> {
           return previousResult;
         }
         const data = {
-          recommandUsers: {
-            ...previousResult.recommandUsers,
+          recommendUsers: {
+            ...previousResult.recommendUsers,
             users: [
-              ...previousResult.recommandUsers.users,
-              ...fetchMoreResult.recommandUsers.users
+              ...previousResult.recommendUsers.users,
+              ...fetchMoreResult.recommendUsers.users
             ],
-            page: fetchMoreResult.recommandUsers.page,
-            hasNextPage: fetchMoreResult.recommandUsers.hasNextPage
+            page: fetchMoreResult.recommendUsers.page,
+            hasNextPage: fetchMoreResult.recommendUsers.hasNextPage
           }
         };
         return data;

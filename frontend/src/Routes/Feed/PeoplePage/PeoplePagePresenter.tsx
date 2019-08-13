@@ -73,21 +73,21 @@ const SText = styled(Bold)`
 `;
 
 interface IProps {
-  recommandUsersData: any;
-  recommandUsersLoading: boolean;
+  recommendUsersData: any;
+  recommendUsersLoading: boolean;
   search: string;
-  recommandUserList: any;
+  recommendUserList: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   loadMore: any;
 }
 
 const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
-  recommandUsersData: {
-    recommandUsers: { users = null, hasNextPage = null } = {}
+  recommendUsersData: {
+    recommendUsers: { users = null, hasNextPage = null } = {}
   } = {},
-  recommandUsersLoading,
+  recommendUsersLoading,
   search,
-  recommandUserList,
+  recommendUserList,
   onChange,
   loadMore
 }) => {
@@ -97,22 +97,22 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
         {console.log}
         <UserContainer>
           <Title>
-            <SText text={"RECOMMAND USERS"} />
+            <SText text={"RECOMMEND USERS"} />
             <Input
-              placeholder="Search users who is recommanded"
+              placeholder="Search users who is recommended"
               value={search}
               onChange={onChange}
             />
           </Title>
-          {recommandUsersLoading && <Loader />}
-          {!recommandUsersLoading && (
+          {recommendUsersLoading && <Loader />}
+          {!recommendUsersLoading && (
             <InfiniteScroll
               hasMore={hasNextPage}
               loadMore={loadMore}
               pageStart={0}
             >
-              {recommandUserList.length !== 0 &&
-                recommandUserList.map(user => {
+              {recommendUserList.length !== 0 &&
+                recommendUserList.map(user => {
                   return (
                     <UserRow key={user.id}>
                       <Link to={`/${user.username}`}>
@@ -128,7 +128,7 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
                   );
                 })}
               {console.log("hasNextPage:  ", hasNextPage)}
-              {recommandUserList.length === 0 &&
+              {recommendUserList.length === 0 &&
                 !search &&
                 users &&
                 users.map(user => {
