@@ -139,7 +139,7 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
               {recommandUserList.length !== 0 &&
                 recommandUserList.map(user => {
                   return (
-                    <UserRow key={user.id}>
+                    <UserRow key={user.profile.id}>
                       <Link to={`/${user.profile.username}`}>
                         <AvatarContainer>
                           <Avatar size={"sm"} url={user.profile.avatarUrl} />
@@ -158,7 +158,7 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
                 users &&
                 users.map(user => {
                   return (
-                    <UserRow key={user.id}>
+                    <UserRow key={user.profile.id}>
                       <Link to={`/${user.profile.username}`}>
                         <AvatarContainer>
                           <Avatar size={"sm"} url={user.profile.avatarUrl} />

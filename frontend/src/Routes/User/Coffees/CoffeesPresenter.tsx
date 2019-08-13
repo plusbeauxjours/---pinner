@@ -81,6 +81,20 @@ const Modal = styled.div`
   display: flex;
   flex-direction: column;
   animation: ${ModalAnimation} 0.1s linear;
+  height: 500px;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 3px;
+    background: none;
+  }
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
+  @media screen and (max-height: 800px) {
+    height: 100%;
+  }
 `;
 
 const UserRow = styled.div`
