@@ -5,8 +5,8 @@ import Loader from "src/Components/Loader";
 
 import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
-import Avatar from "../../../Components/Avatar";
 import Bold from "../../../Components/Bold";
+import UserHeader from "src/Components/UserHeader";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -56,31 +56,6 @@ const Input = styled.input`
     color: ${props => props.theme.greyColor};
     text-align: right;
   }
-`;
-const Location = styled.span`
-  display: flex;
-  margin-top: 5px;
-  position: block;
-  font-size: 12px;
-  font-weight: 200;
-`;
-
-const AvatarContainer = styled.div`
-  display: flex;
-  position: relative;
-  align-items: center;
-`;
-
-const HeaderColumn = styled.div`
-  margin-left: 15px;
-`;
-
-const CText = styled(Bold)`
-  display: flex;
-`;
-
-const Explain = styled(Location)`
-  color: grey;
 `;
 
 const Title = styled.div`
@@ -139,15 +114,15 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
               {recommandUserList.length !== 0 &&
                 recommandUserList.map(user => {
                   return (
-                    <UserRow key={user.profile.id}>
-                      <Link to={`/${user.profile.username}`}>
-                        <AvatarContainer>
-                          <Avatar size={"sm"} url={user.profile.avatarUrl} />
-                          <HeaderColumn>
-                            <CText text={user.profile.username} />
-                            <Explain>with same nationality</Explain>
-                          </HeaderColumn>
-                        </AvatarContainer>
+                    <UserRow key={user.id}>
+                      <Link to={`/${user.username}`}>
+                        <UserHeader
+                          username={user.username}
+                          currentCity={user.currentCity.cityName}
+                          currentCountry={user.currentCity.country.countryName}
+                          avatar={user.avatarUrl}
+                          size={"sm"}
+                        />
                       </Link>
                     </UserRow>
                   );
@@ -158,15 +133,15 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
                 users &&
                 users.map(user => {
                   return (
-                    <UserRow key={user.profile.id}>
-                      <Link to={`/${user.profile.username}`}>
-                        <AvatarContainer>
-                          <Avatar size={"sm"} url={user.profile.avatarUrl} />
-                          <HeaderColumn>
-                            <CText text={user.profile.username} />
-                            <Explain>with same nationality</Explain>
-                          </HeaderColumn>
-                        </AvatarContainer>
+                    <UserRow key={user.id}>
+                      <Link to={`/${user.username}`}>
+                        <UserHeader
+                          username={user.username}
+                          currentCity={user.currentCity.cityName}
+                          currentCountry={user.currentCity.country.countryName}
+                          avatar={user.avatarUrl}
+                          size={"sm"}
+                        />
                       </Link>
                     </UserRow>
                   );

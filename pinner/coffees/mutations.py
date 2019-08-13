@@ -23,7 +23,7 @@ class RequestCoffee(graphene.Mutation):
         currentCityId = kwargs.get('currentCityId')
         target = kwargs.get('target', 'everyone')
 
-        if not user.coffee.filter(expires__gt=timezone.now()):
+        if not user.coffee.filter(expires__gte=timezone.now()):
 
             try:
                 currentCity = location_models.City.objects.get(city_id=currentCityId)

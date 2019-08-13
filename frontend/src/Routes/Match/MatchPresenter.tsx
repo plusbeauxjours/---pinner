@@ -7,7 +7,6 @@ import CoffeeBtn from "src/Components/CoffeeBtn";
 import Wrapper from "src/Components/Wrapper";
 import Bold from "../../Components/Bold";
 import { keyframes } from "styled-components";
-import Avatar from "../../Components/Avatar";
 import CoffeeBox from "src/Components/CoffeeBox";
 import { Noti } from "../../Icons";
 
@@ -124,10 +123,6 @@ const ModalLink = styled.div`
   }
 `;
 
-const CText = styled(Bold)`
-  display: flex;
-`;
-
 const GreyLine = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
@@ -190,27 +185,6 @@ const SeeAll = styled.p`
   font-weight: 100;
   cursor: pointer;
   color: ${props => props.theme.greyColor};
-`;
-
-const AvatarContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const HeaderColumn = styled.div`
-  margin-left: 15px;
-`;
-
-const Location = styled.span`
-  display: flex;
-  margin-top: 5px;
-  position: block;
-  font-size: 12px;
-  font-weight: 200;
-`;
-
-const Explain = styled(Location)`
-  color: grey;
 `;
 
 const Title = styled.div`
@@ -324,15 +298,15 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                 {users &&
                   users.length !== 0 &&
                   users.map(user => (
-                    <UserRow key={user.profile.id}>
-                      <Link to={`/${user.profile.username}`}>
-                        <AvatarContainer>
-                          <Avatar size={"sm"} url={user.profile.avatarUrl} />
-                          <HeaderColumn>
-                            <CText text={user.profile.username} />
-                            <Explain>with same nationality</Explain>
-                          </HeaderColumn>
-                        </AvatarContainer>
+                    <UserRow key={user.id}>
+                      <Link to={`/${user.username}`}>
+                        <UserHeader
+                          username={user.username}
+                          currentCity={user.currentCity.cityName}
+                          currentCountry={user.currentCity.country.countryName}
+                          avatar={user.avatarUrl}
+                          size={"sm"}
+                        />
                       </Link>
                     </UserRow>
                   ))}

@@ -117,16 +117,29 @@ def resolve_recommand_users(self, info, **kwargs):
 
     nextPage = page+1
 
-    userLocations = user.moveNotificationUser.values('city').all()
-    print(userLocations.filter())
+    userNationality = user.profile.nationality.nationality.all().order_by('-distance')[:10]
+    userResidence = user.profile.residence.residence.all().order_by('-distance')[:10]
+    combined = userNationality.union(userResidence)
 
-    users = models.User.objects.all().exclude(id=user.id).order_by('-profile__created_at')
+    userLocation = user.moveNotificationUser.all().order_by('-created_at').order_by('city').distinct('city')[:10]
+    for i in userLocation:
+        userLocations = models.Profile.objects.filter(
+            user__moveNotificationUser__city=i.city).order_by('-distance')[:10]
+        combined = combined.union(userLocations)
 
-    hasNextPage = offset < users.count()
+    userLike = user.likes.all().exclude(id=user.profile.id).order_by(
+        '-created_at').order_by('city').distinct('city')[:10]
+    for i in userLike:
+        userLikes = models.Profile.objects.filter(user__likes__city=i.city).order_by('-distance')[:10]
+        combined = combined.union(userLikes)
 
-    users = users[offset:20 + offset]
+    combined = combined.order_by('id').distinct('id').exclude(id=user.profile.id)
 
-    return types.RecommandUsersResponse(users=users, page=nextPage, hasNextPage=hasNextPage)
+    hasNextPage = offset < combined.count()
+
+    combined = combined[offset:20 + offset]
+
+    return types.RecommandUsersResponse(users=combined, page=nextPage, hasNextPage=hasNextPage)
 
 
 @login_required

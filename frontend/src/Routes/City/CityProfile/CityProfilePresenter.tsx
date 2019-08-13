@@ -599,6 +599,7 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
               />
             </>
           ) : null}
+          {console.log(coffees)}
           <CoffeeBox
             coffeeLoading={coffeeLoading}
             currentCityId={cityId}

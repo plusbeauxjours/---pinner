@@ -28,13 +28,11 @@ def resolve_get_coffees(self, info, **kwargs):
         try:
             profile = me.profile
             matchedGuests = me.guest.values('host__id').all()
-            matchedHosts= me.host.values('guest__id').all()
-
+            matchedHosts = me.host.values('guest__id').all()
             coffees = city.coffee.filter((Q(target='everyone') |
                                           Q(target='nationality', host__profile__nationality=profile.nationality) |
                                           Q(target='gender', host__profile__gender=profile.gender)) &
-                                         Q(expires__gt=timezone.now())).exclude(host__id__in=matchedGuests).exclude(host__id__in=matchedHosts).order_by('-created_at')
-
+                                         Q(expires__gte=timezone.now())).exclude(host__id__in=matchedGuests).exclude(host__id__in=matchedHosts).order_by('-created_at')
             return types.GetCoffeesResponse(coffees=coffees)
 
         except models.Coffee.DoesNotExist:
@@ -43,14 +41,12 @@ def resolve_get_coffees(self, info, **kwargs):
     elif location == "profile":
         try:
             user = User.objects.prefetch_related('coffee').get(username=userName)
-            print(user)
         except User.DoesNotExist:
             return types.GetCoffeesResponse(coffees=None)
 
         try:
-            coffees = models.Coffee.objects.filter(host=user, expires__gt=timezone.now()).order_by(
+            coffees = models.Coffee.objects.filter(host=user, expires__gte=timezone.now()).order_by(
                 '-created_at')
-            print(coffees)
             return types.GetCoffeesResponse(coffees=coffees)
 
         except models.Coffee.DoesNotExist:
@@ -84,7 +80,7 @@ def resolve_get_coffees(self, info, **kwargs):
             coffees = coffee_models.Coffee.objects.filter((Q(target='everyone') |
                                                            Q(target='nationality', host__profile__nationality=profile.nationality) |
                                                            Q(target='gender', host__profile__gender=profile.gender)) &
-                                                          Q(expires__gt=timezone.now()) & Q(city__id__in=allCities)).exclude(match__id__in=matchedMatch).order_by('-created_at')
+                                                          Q(expires__gte=timezone.now()) & Q(city__id__in=allCities)).exclude(match__id__in=matchedMatch).order_by('-created_at')
 
             return types.GetCoffeesResponse(coffees=coffees)
 
@@ -105,7 +101,7 @@ def resolve_get_coffees(self, info, **kwargs):
             coffees = coffee_models.Coffee.objects.filter((Q(target='everyone') |
                                                            Q(target='nationality', host__profile__nationality=profile.nationality) |
                                                            Q(target='gender', host__profile__gender=profile.gender)) &
-                                                          Q(expires__gt=timezone.now()) & Q(city__id__in=allCities)).exclude(match__id__in=matchedMatch).order_by('-created_at')
+                                                          Q(expires__gte=timezone.now()) & Q(city__id__in=allCities)).exclude(match__id__in=matchedMatch).order_by('-created_at')
 
             return types.GetCoffeesResponse(coffees=coffees)
 
