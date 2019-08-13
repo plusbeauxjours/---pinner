@@ -84,13 +84,10 @@ const SText = styled(Bold)`
 interface IProps {
   data: any;
   loading: boolean;
-  modalOpen: boolean;
-  toggleModal: () => void;
   search: string;
   usersBeforeList: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   loadMore: any;
-  continentCode: string;
 }
 
 const ContinentUsersBeforePresenter: React.FunctionComponent<IProps> = ({
@@ -98,13 +95,10 @@ const ContinentUsersBeforePresenter: React.FunctionComponent<IProps> = ({
     continentUsersBefore: { usersBefore = null, hasNextPage = null } = {}
   } = {},
   loading,
-  modalOpen,
-  toggleModal,
   search,
   usersBeforeList,
   onChange,
-  loadMore,
-  continentCode
+  loadMore
 }) => {
   return (
     <>
@@ -124,7 +118,6 @@ const ContinentUsersBeforePresenter: React.FunctionComponent<IProps> = ({
               hasMore={hasNextPage}
               loadMore={loadMore}
               pageStart={0}
-              initialLoad={false}
             >
               {usersBeforeList.length !== 0 &&
                 usersBeforeList.map(user => (

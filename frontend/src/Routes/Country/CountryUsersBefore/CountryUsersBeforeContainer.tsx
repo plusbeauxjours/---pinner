@@ -15,7 +15,6 @@ class CountryUsersBeforeQuery extends Query<
 
 interface IProps extends RouteComponentProps<any> {}
 interface IState {
-  modalOpen: boolean;
   search: string;
   usersBeforeList: any;
 }
@@ -26,7 +25,6 @@ class CountryUsersBeforeContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: false,
       search: "",
       usersBeforeList: []
     };
@@ -46,7 +44,7 @@ class CountryUsersBeforeContainer extends React.Component<IProps, IState> {
         params: { countryCode }
       }
     } = this.props;
-    const { modalOpen, search, usersBeforeList } = this.state;
+    const { search, usersBeforeList } = this.state;
     return (
       <CountryUsersBeforeQuery
         query={COUNTRY_USERS_BEFORE}
@@ -61,8 +59,6 @@ class CountryUsersBeforeContainer extends React.Component<IProps, IState> {
             <CountryUsersBeforePresenter
               data={data}
               loading={loading}
-              modalOpen={modalOpen}
-              toggleModal={this.toggleModal}
               search={search}
               usersBeforeList={usersBeforeList}
               onChange={this.onChange}
@@ -73,12 +69,6 @@ class CountryUsersBeforeContainer extends React.Component<IProps, IState> {
       </CountryUsersBeforeQuery>
     );
   }
-  public toggleModal = () => {
-    const { modalOpen } = this.state;
-    this.setState({
-      modalOpen: !modalOpen
-    } as any);
-  };
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
     const {
       target: { value }
@@ -119,7 +109,9 @@ class CountryUsersBeforeContainer extends React.Component<IProps, IState> {
             usersBefore: [
               ...previousResult.countryUsersBefore.usersBefore,
               ...fetchMoreResult.countryUsersBefore.usersBefore
-            ]
+            ],
+            page: fetchMoreResult.countryUsersBefore.page,
+            hasNextPage: fetchMoreResult.countryUsersBefore.hasNextPage
           }
         };
         return data;

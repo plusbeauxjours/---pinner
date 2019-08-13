@@ -100,8 +100,6 @@ const SText = styled(Bold)`
 interface IProps {
   recommandUsersData: any;
   recommandUsersLoading: boolean;
-  modalOpen: boolean;
-  toggleModal: () => void;
   search: string;
   recommandUserList: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -113,7 +111,6 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
     recommandUsers: { users = null, hasNextPage = null } = {}
   } = {},
   recommandUsersLoading,
-  modalOpen,
   search,
   recommandUserList,
   onChange,
@@ -138,7 +135,6 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
               hasMore={hasNextPage}
               loadMore={loadMore}
               pageStart={0}
-              initialLoad={false}
             >
               {recommandUserList.length !== 0 &&
                 recommandUserList.map(user => {

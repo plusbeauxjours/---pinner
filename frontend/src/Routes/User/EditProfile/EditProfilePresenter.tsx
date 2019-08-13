@@ -318,11 +318,12 @@ const ModalAvatars = styled.div`
   margin-top: 85px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(auto-fit, 300px);
   grid-gap: 10px;
   justify-content: center;
   align-items: center;
   animation: ${ModalAnimation} 0.1s linear;
-  /* height: 100vh; */
+  max-height: calc(100vh - 10px);
   height: auto;
   overflow-y: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;

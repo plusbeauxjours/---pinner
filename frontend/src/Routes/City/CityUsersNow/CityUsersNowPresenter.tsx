@@ -112,7 +112,6 @@ const CityUsersNowPresenter: React.FunctionComponent<IProps> = ({
               hasMore={hasNextPage}
               loadMore={loadMore}
               pageStart={0}
-              initialLoad={false}
             >
               {usersNowList.length !== 0 &&
                 usersNowList.map((user, index) => (

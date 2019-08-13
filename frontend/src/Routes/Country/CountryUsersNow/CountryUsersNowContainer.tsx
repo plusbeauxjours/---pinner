@@ -12,7 +12,6 @@ class CountryUsersNowQuery extends Query<
 
 interface IProps extends RouteComponentProps<any> {}
 interface IState {
-  modalOpen: boolean;
   search: string;
   usersNowList: any;
 }
@@ -23,7 +22,6 @@ class CountryUsersNowContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: false,
       search: "",
       usersNowList: []
     };
@@ -44,7 +42,7 @@ class CountryUsersNowContainer extends React.Component<IProps, IState> {
       }
     } = this.props;
     console.log(this.props);
-    const { modalOpen, search, usersNowList } = this.state;
+    const { search, usersNowList } = this.state;
     return (
       <CountryUsersNowQuery
         query={COUNTRY_USERS_NOW}
@@ -59,8 +57,6 @@ class CountryUsersNowContainer extends React.Component<IProps, IState> {
             <CountryUsersNowPresenter
               data={data}
               loading={loading}
-              modalOpen={modalOpen}
-              toggleModal={this.toggleModal}
               search={search}
               usersNowList={usersNowList}
               onChange={this.onChange}
@@ -71,12 +67,7 @@ class CountryUsersNowContainer extends React.Component<IProps, IState> {
       </CountryUsersNowQuery>
     );
   }
-  public toggleModal = () => {
-    const { modalOpen } = this.state;
-    this.setState({
-      modalOpen: !modalOpen
-    } as any);
-  };
+
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
     const {
       target: { value }
@@ -117,7 +108,9 @@ class CountryUsersNowContainer extends React.Component<IProps, IState> {
             usersNow: [
               ...previousResult.countryUsersNow.usersNow,
               ...fetchMoreResult.countryUsersNow.usersNow
-            ]
+            ],
+            page: fetchMoreResult.countryUsersNow.page,
+            hasNextPage: fetchMoreResult.countryUsersNow.hasNextPage
           }
         };
         return data;

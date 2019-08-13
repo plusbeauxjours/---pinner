@@ -7,7 +7,6 @@ import { RECOMMAND_USERS } from "./PeoplePageQueries";
 class RecommandUsersQuery extends Query<RecommandUsers> {}
 
 interface IState {
-  modalOpen: boolean;
   search: string;
   recommandUserList: any;
 }
@@ -18,7 +17,6 @@ class PeoplePageContainer extends React.Component<any, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: false,
       search: "",
       recommandUserList: []
     };
@@ -33,7 +31,7 @@ class PeoplePageContainer extends React.Component<any, IState> {
     }
   }
   public render() {
-    const { modalOpen, search, recommandUserList } = this.state;
+    const { search, recommandUserList } = this.state;
     return (
       <RecommandUsersQuery query={RECOMMAND_USERS}>
         {({
@@ -47,8 +45,6 @@ class PeoplePageContainer extends React.Component<any, IState> {
             <PeoplePagePresenter
               recommandUsersData={recommandUsersData}
               recommandUsersLoading={recommandUsersLoading}
-              modalOpen={modalOpen}
-              toggleModal={this.toggleModal}
               search={search}
               recommandUserList={recommandUserList}
               onChange={this.onChange}
@@ -59,12 +55,6 @@ class PeoplePageContainer extends React.Component<any, IState> {
       </RecommandUsersQuery>
     );
   }
-  public toggleModal = () => {
-    const { modalOpen } = this.state;
-    this.setState({
-      modalOpen: !modalOpen
-    } as any);
-  };
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
     const {
       target: { value }
@@ -94,11 +84,12 @@ class PeoplePageContainer extends React.Component<any, IState> {
         const data = {
           recommandUsers: {
             ...previousResult.recommandUsers,
-            hasNextPage: fetchMoreResult.recommandUsers.hasNextPage,
             users: [
               ...previousResult.recommandUsers.users,
               ...fetchMoreResult.recommandUsers.users
-            ]
+            ],
+            page: fetchMoreResult.recommandUsers.page,
+            hasNextPage: fetchMoreResult.recommandUsers.hasNextPage
           }
         };
         return data;

@@ -115,7 +115,9 @@ class CityUsersNowContainer extends React.Component<IProps, IState> {
             usersNow: [
               ...previousResult.cityUsersNow.usersNow,
               ...fetchMoreResult.cityUsersNow.usersNow
-            ]
+            ],
+            page: fetchMoreResult.cityUsersNow.page,
+            hasNextPage: fetchMoreResult.cityUsersNow.hasNextPage
           }
         };
         return data;

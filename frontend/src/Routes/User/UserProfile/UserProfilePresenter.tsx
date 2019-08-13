@@ -145,7 +145,7 @@ const TripOverlay = styled.div`
     fill: ${props => props.theme.iconColor};
     transition: fill 0.3s ease-in-out;
     &:hover {
-      fill: red;
+      fill: ${props => props.theme.color};
     }
   }
   transition: opacity 0.3s ease-in-out;
@@ -455,15 +455,14 @@ const AvatarKeyContainer = styled.div`
 
 const ModalAvatars = styled.div`
   z-index: 10;
-  margin-top: 85px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(auto-fit, 300px);
   grid-gap: 10px;
   justify-content: center;
   align-items: center;
   animation: ${ModalAnimation} 0.1s linear;
-  /* height: 100vh; */
-  height: auto;
+  max-height: calc(100vh - 10px);
   overflow-y: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   ::-webkit-scrollbar {

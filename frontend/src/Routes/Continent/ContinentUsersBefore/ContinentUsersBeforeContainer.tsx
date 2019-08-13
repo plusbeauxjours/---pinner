@@ -15,7 +15,6 @@ class ContinentUsersBeforeQuery extends Query<
 
 interface IProps extends RouteComponentProps<any> {}
 interface IState {
-  modalOpen: boolean;
   search: string;
   usersBeforeList: any;
 }
@@ -26,7 +25,6 @@ class ContinentUsersBeforeContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: false,
       search: "",
       usersBeforeList: []
     };
@@ -46,7 +44,7 @@ class ContinentUsersBeforeContainer extends React.Component<IProps, IState> {
         params: { continentCode }
       }
     } = this.props;
-    const { modalOpen, search, usersBeforeList } = this.state;
+    const { search, usersBeforeList } = this.state;
     return (
       <ContinentUsersBeforeQuery
         query={CONTINENT_USERS_BEFORE}
@@ -61,25 +59,16 @@ class ContinentUsersBeforeContainer extends React.Component<IProps, IState> {
             <ContinentUsersBeforePresenter
               data={data}
               loading={loading}
-              modalOpen={modalOpen}
-              toggleModal={this.toggleModal}
               search={search}
               usersBeforeList={usersBeforeList}
               onChange={this.onChange}
               loadMore={this.loadMore}
-              continentCode={continentCode}
             />
           );
         }}
       </ContinentUsersBeforeQuery>
     );
   }
-  public toggleModal = () => {
-    const { modalOpen } = this.state;
-    this.setState({
-      modalOpen: !modalOpen
-    } as any);
-  };
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
     const {
       target: { value }
@@ -120,7 +109,9 @@ class ContinentUsersBeforeContainer extends React.Component<IProps, IState> {
             usersBefore: [
               ...previousResult.continentUsersBefore.usersBefore,
               ...fetchMoreResult.continentUsersBefore.usersBefore
-            ]
+            ],
+            page: fetchMoreResult.continentUsersBefore.page,
+            hasNextPage: fetchMoreResult.continentUsersBefore.hasNextPage
           }
         };
         return data;
