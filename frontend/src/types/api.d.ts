@@ -750,6 +750,8 @@ export interface NearCities_nearCities_cities {
 
 export interface NearCities_nearCities {
   __typename: "NearCitiesResponse";
+  page: number | null;
+  hasNextPage: boolean | null;
   cities: (NearCities_nearCities_cities | null)[] | null;
 }
 
@@ -759,6 +761,7 @@ export interface NearCities {
 
 export interface NearCitiesVariables {
   cityId: string;
+  page?: number | null;
 }
 
 /* tslint:disable */

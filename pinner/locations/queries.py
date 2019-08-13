@@ -83,7 +83,6 @@ def resolve_city_profile(self, info, **kwargs):
 
     user = info.context.user
     cityId = kwargs.get('cityId')
-    page = kwargs.get('page', 0)
 
     try:
         city = models.City.objects.prefetch_related('coffee').prefetch_related('currentCity').get(city_id=cityId)
@@ -159,7 +158,7 @@ def resolve_city_users_before(self, info, **kwargs):
     user = info.context.user
     cityId = kwargs.get('cityId')
     page = kwargs.get('page', 0)
-    offset = 3 * page
+    offset = 20 * page
 
     nextPage = page+1
 
@@ -171,9 +170,10 @@ def resolve_city_users_before(self, info, **kwargs):
     usersNow = city.currentCity.order_by('-id').distinct('id')
     usersBefore = city.moveNotificationCity.exclude(
         actor__profile__in=usersNow).order_by('-actor_id').distinct('actor_id')
+
     hasNextPage = offset < usersBefore.count()
 
-    usersBefore = usersBefore[offset:3 + offset]
+    usersBefore = usersBefore[offset:20 + offset]
 
     return notification_types.usersBeforeResponse(usersBefore=usersBefore,  page=nextPage, hasNextPage=hasNextPage)
 
@@ -183,7 +183,6 @@ def resolve_country_profile(self, info, **kwargs):
 
     user = info.context.user
     countryCode = kwargs.get('countryCode')
-    page = kwargs.get('page', 0)
 
     try:
         country = models.Country.objects.get(country_code=countryCode)
@@ -256,11 +255,10 @@ def resolve_get_countries(self, info, **kwargs):
 
     user = info.context.user
     countryCode = kwargs.get('countryCode')
-    page = kwargs.get('page', 0)
 
     country = models.Country.objects.get(country_code=countryCode)
 
-    countries = country.continent.countries.all()
+    countries = country.continent.countries.all()[:20]
 
     return types.CountriesResponse(countries=countries)
 
@@ -270,7 +268,6 @@ def resolve_continent_profile(self, info, **kwargs):
 
     user = info.context.user
     continentCode = kwargs.get('continentCode')
-    page = kwargs.get('page', 0)
 
     try:
         continent = models.Continent.objects.get(continent_code=continentCode)
@@ -347,7 +344,7 @@ def resolve_near_cities(self, info, **kwargs):
     user = info.context.user
     cityId = kwargs.get('cityId')
     page = kwargs.get('page', 0)
-    offset = 3 * page
+    offset = 20 * page
 
     nextPage = page+1
 
@@ -373,7 +370,7 @@ def resolve_near_cities(self, info, **kwargs):
 
     hasNextPage = offset < combined.count()
 
-    combined = combined[offset:3 + offset]
+    combined = combined[offset:20 + offset]
 
     return types.NearCitiesResponse(cities=combined, page=nextPage, hasNextPage=hasNextPage)
 

@@ -120,8 +120,13 @@ const UserNameRow = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 100%;
+  padding: 0 5px 0 5px;
   justify-content: space-between;
   margin-bottom: 10px;
+  @media screen and (min-width: 935px) {
+    min-width: 715px;
+  }
 `;
 
 const Username = styled.span`
@@ -167,6 +172,9 @@ const TripRow = styled.div<ITheme>`
   }
   &:not(:last-child) {
     border-bottom: 1px solid ${props => props.theme.borderColor};
+  }
+  @media screen and (min-width: 935px) {
+    min-width: 715px;
   }
 `;
 

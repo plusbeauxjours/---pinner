@@ -9,7 +9,6 @@ class NearCitiesQuery extends Query<NearCities, NearCitiesVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
 interface IState {
-  modalOpen: boolean;
   search: string;
   nearCitiesList: any;
 }
@@ -20,7 +19,6 @@ class NearCitiesContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: false,
       search: "",
       nearCitiesList: []
     };
@@ -42,13 +40,14 @@ class NearCitiesContainer extends React.Component<IProps, IState> {
         params: { cityId }
       }
     } = this.props;
-    const { modalOpen, search, nearCitiesList } = this.state;
+    const { search, nearCitiesList } = this.state;
     return (
       <NearCitiesQuery
         query={NEAR_CITIES}
         variables={{
           cityId
         }}
+        fetchPolicy="no-cache"
       >
         {({ data, loading, fetchMore }) => {
           this.data = data;
@@ -57,25 +56,16 @@ class NearCitiesContainer extends React.Component<IProps, IState> {
             <NearCitiesPresenter
               data={data}
               loading={loading}
-              modalOpen={modalOpen}
-              toggleModal={this.toggleModal}
               search={search}
               nearCitiesList={nearCitiesList}
               onChange={this.onChange}
               loadMore={this.loadMore}
-              cityId={cityId}
             />
           );
         }}
       </NearCitiesQuery>
     );
   }
-  public toggleModal = () => {
-    const { modalOpen } = this.state;
-    this.setState({
-      modalOpen: !modalOpen
-    } as any);
-  };
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
     const {
       target: { value }
@@ -118,7 +108,9 @@ class NearCitiesContainer extends React.Component<IProps, IState> {
             cities: [
               ...previousResult.nearCities.cities,
               ...fetchMoreResult.nearCities.cities
-            ]
+            ],
+            page: fetchMoreResult.nearCities.page,
+            hasNextPage: fetchMoreResult.nearCities.hasNextPage
           }
         };
         return data;

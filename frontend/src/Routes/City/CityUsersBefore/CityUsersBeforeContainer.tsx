@@ -15,7 +15,6 @@ interface IState {
   modalOpen: boolean;
   search: string;
   usersBeforeList: any;
-  page: number;
 }
 
 class CityUsersBeforeContainer extends React.Component<IProps, IState> {
@@ -26,8 +25,7 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
     this.state = {
       modalOpen: false,
       search: "",
-      usersBeforeList: [],
-      page: 0
+      usersBeforeList: []
     };
   }
   public componentDidUpdate(prevProps) {
@@ -98,13 +96,12 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
       usersBeforeList
     } as any);
   };
-  public loadMore = () => {
+  public loadMore = page => {
     const {
       match: {
         params: { cityId }
       }
     } = this.props;
-    const { page } = this.state;
     this.fetchMore({
       query: CITY_USERS_BEFORE,
       variables: {
@@ -121,13 +118,14 @@ class CityUsersBeforeContainer extends React.Component<IProps, IState> {
             usersBefore: [
               ...previousResult.cityUsersBefore.usersBefore,
               ...fetchMoreResult.cityUsersBefore.usersBefore
-            ]
+            ],
+            page: fetchMoreResult.cityUsersBefore.page,
+            hasNextPage: fetchMoreResult.cityUsersBefore.hasNextPage
           }
         };
         return data;
       }
     });
-    this.setState({ page: page + 1 });
   };
 }
 

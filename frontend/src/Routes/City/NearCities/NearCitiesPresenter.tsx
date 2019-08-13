@@ -111,25 +111,19 @@ const HeaderColumn = styled.div`
 interface IProps {
   data: any;
   loading: boolean;
-  modalOpen: boolean;
-  toggleModal: () => void;
   search: string;
   nearCitiesList: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   loadMore: any;
-  cityId: string;
 }
 
 const NearCitiesPresenter: React.FunctionComponent<IProps> = ({
   data: { nearCities: { cities = null, hasNextPage = null } = {} } = {},
   loading,
-  modalOpen,
-  toggleModal,
   search,
   nearCitiesList,
   onChange,
-  loadMore,
-  cityId
+  loadMore
 }) => {
   return (
     <>
@@ -149,7 +143,6 @@ const NearCitiesPresenter: React.FunctionComponent<IProps> = ({
               hasMore={hasNextPage}
               loadMore={loadMore}
               pageStart={0}
-              initialLoad={false}
             >
               {nearCitiesList.length !== 0 &&
                 nearCitiesList.map(nearCity => (

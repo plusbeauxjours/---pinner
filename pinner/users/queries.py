@@ -113,7 +113,7 @@ def resolve_recommand_users(self, info, **kwargs):
 
     user = info.context.user
     page = kwargs.get('page', 0)
-    offset = 12 * page
+    offset = 20 * page
 
     nextPage = page+1
 
@@ -124,7 +124,7 @@ def resolve_recommand_users(self, info, **kwargs):
 
     hasNextPage = offset < users.count()
 
-    users = users[offset:12 + offset]
+    users = users[offset:20 + offset]
 
     return types.RecommandUsersResponse(users=users, page=nextPage, hasNextPage=hasNextPage)
 

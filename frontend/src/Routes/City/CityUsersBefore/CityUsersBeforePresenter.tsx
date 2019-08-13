@@ -125,7 +125,6 @@ const CityUsersBeforePresenter: React.FunctionComponent<IProps> = ({
               hasMore={hasNextPage}
               loadMore={loadMore}
               pageStart={0}
-              initialLoad={false}
             >
               {usersBeforeList.length !== 0 &&
                 usersBeforeList.map(user => (

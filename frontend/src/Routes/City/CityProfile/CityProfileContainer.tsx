@@ -70,13 +70,11 @@ class CityProfileContainer extends React.Component<IProps, IState> {
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
-    console.log("updating");
     if (prevProps.match.params.cityId !== newProps.match.params.cityId) {
       this.setState({ search: "", usersNowList: [] });
     }
   }
   public render() {
-    console.log(this.props);
     const {
       match: {
         params: { cityId }
@@ -128,6 +126,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                               <NearCitiesQuery
                                 query={NEAR_CITIES}
                                 variables={{ cityId }}
+                                fetchPolicy="no-cache"
                               >
                                 {({
                                   data: nearCitiesData,
@@ -258,9 +257,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       cityProfile: { usersNow = null }
     } = this.data;
     const nowSearch = (list, text) =>
-      list.filter(i =>
-        i.profile.username.toLowerCase().includes(text.toLowerCase())
-      );
+      list.filter(i => i.username.toLowerCase().includes(text.toLowerCase()));
     const usersNowList = nowSearch(usersNow, value);
     this.setState({
       search: value,

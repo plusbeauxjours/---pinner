@@ -108,7 +108,7 @@ class TripProfileContainer extends React.Component<IProps, IState> {
                 loading: samenameCitiesLoading
               }) => {
                 return (
-                  <NearCitiesQuery query={NEAR_CITIES} variables={{ cityId }}>
+                  <NearCitiesQuery query={NEAR_CITIES} variables={{ cityId }} fetchPolicy="no-cache">
                     {({ data: nearCitiesData, loading: nearCitiesLoading }) => {
                       return (
                         <TripProfileQuery
