@@ -143,6 +143,7 @@ interface IProps extends RouteComponentProps<any> {
   continentCode?: string;
   samenameCities?: any;
   nearCities?: any;
+  recommendLocations?: any;
   cities?: any;
   countries?: any;
   continents?: any;
@@ -156,6 +157,7 @@ const LocationBox: React.FunctionComponent<IProps> = ({
   continentCode,
   samenameCities,
   nearCities,
+  recommendLocations,
   cities,
   countries,
   continents,
@@ -360,6 +362,50 @@ const LocationBox: React.FunctionComponent<IProps> = ({
                   />
                   <Link to={`/city/${nearCity.cityId}`}>
                     <Text>{nearCity.distance}&nbsp;km</Text>
+                  </Link>
+                </UserRow>
+              </React.Fragment>
+            ))}
+          </Box>
+        </Container>
+      </>
+    );
+  } else if (
+    !loading &&
+    recommendLocations &&
+    recommendLocations.length !== 0
+  ) {
+    return (
+      <>
+        <GreyLine />
+        <Title>
+          <SText text={title} />
+          <Link to={`/locations`}>
+            <SeeAll>SEE ALL</SeeAll>
+          </Link>
+        </Title>
+        <Container>
+          <Box>
+            {recommendLocations.map(city => (
+              <React.Fragment key={city.id}>
+                <UserRow type={"nearCities"}>
+                  <Link to={`/city/${city.cityId}`}>
+                    <Header>
+                      <SAvatar size={"sm"} url={city.cityPhoto} city={true} />
+                      <HeaderColumn>
+                        <HeaderText text={city.cityName} />
+                        <Location>{city.country.countryName}</Location>
+                      </HeaderColumn>
+                    </Header>
+                  </Link>
+                  <CityLikeBtn
+                    isLiked={city.isLiked}
+                    cityId={city.id}
+                    likeCount={city.likeCount}
+                    type={"row"}
+                  />
+                  <Link to={`/city/${city.cityId}`}>
+                    <Text>{city.distance}&nbsp;km</Text>
                   </Link>
                 </UserRow>
               </React.Fragment>

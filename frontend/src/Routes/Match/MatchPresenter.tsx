@@ -9,6 +9,7 @@ import Bold from "../../Components/Bold";
 import { keyframes } from "styled-components";
 import CoffeeBox from "src/Components/CoffeeBox";
 import { Noti } from "../../Icons";
+import LocationBox from "src/Components/LocationBox";
 
 const SWrapper = styled(Wrapper)``;
 
@@ -213,6 +214,8 @@ interface IProps {
   matchLoading: boolean;
   recommendUsersData: any;
   recommendUsersLoading: boolean;
+  recommendLocationsData: any;
+  recommendLocationsLoading: boolean;
   coffeeData: any;
   coffeeLoading: boolean;
   search: string;
@@ -235,6 +238,10 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
   matchLoading,
   recommendUsersData: { recommendUsers: { users = null } = {} } = {},
   recommendUsersLoading,
+  recommendLocationsData: {
+    recommendLocations: { cities: recommendLocations = null } = {}
+  } = {},
+  recommendLocationsLoading,
   coffeeData: { getCoffees: { coffees = null } = {} } = {},
   coffeeLoading,
   search,
@@ -313,6 +320,11 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
               </Box>
             </Container>
           </UserContainer>
+          <LocationBox
+            recommendLocations={recommendLocations}
+            title={"RECOMMEND LOCATIONS"}
+            loading={recommendLocationsLoading}
+          />
           <CoffeeBox
             coffeeLoading={coffeeLoading}
             currentCityId={currentCityId}

@@ -3,6 +3,7 @@ import MatchPresenter from "./MatchPresenter";
 import { Query, Mutation, MutationFn } from "react-apollo";
 import {
   RecommendUsers,
+  RecommendLocations,
   RequestCoffee,
   RequestCoffeeVariables,
   GetMatches,
@@ -21,10 +22,13 @@ import {
 import { GET_COFFEES } from "../User/Coffees/CoffeesQueries";
 import { RECOMMEND_USERS } from "../Feed/PeoplePage/PeoplePageQueries";
 import { RouteComponentProps, withRouter } from "react-router";
+import {} from "../../types/api";
+import { RECOMMEND_LOCATIONS } from "../Feed/LocationsPage/LocationsPageQueries";
 
 class GetMatchesQuery extends Query<GetMatches, GetMatchesVariables> {}
 class GetCoffeesQuery extends Query<GetCoffees, GetCoffeesVariables> {}
 class RecommendUsersQuery extends Query<RecommendUsers> {}
+class RecommendLocationsQuery extends Query<RecommendLocations> {}
 class RequestCoffeeMutation extends Mutation<
   RequestCoffee,
   RequestCoffeeVariables
@@ -93,72 +97,87 @@ class MatchContainer extends React.Component<IProps, IState> {
                 loading: recommendUsersLoading
               }) => {
                 return (
-                  <GetCoffeesQuery
-                    query={GET_COFFEES}
-                    variables={{
-                      cityId: currentCityId,
-                      location: "city"
-                    }}
-                  >
-                    {({ data: coffeeData, loading: coffeeLoading }) => {
+                  <RecommendLocationsQuery query={RECOMMEND_LOCATIONS}>
+                    {({
+                      data: recommendLocationsData,
+                      loading: recommendLocationsLoading
+                    }) => {
                       return (
-                        <RequestCoffeeMutation
-                          mutation={REQUEST_COFFEE}
+                        <GetCoffeesQuery
+                          query={GET_COFFEES}
                           variables={{
-                            currentCityId
+                            cityId: currentCityId,
+                            location: "city"
                           }}
-                          onCompleted={this.onCompletedRequestCoffee}
-                          update={this.updateRequestCoffee}
                         >
-                          {requestCoffeeFn => {
-                            this.requestCoffeeFn = requestCoffeeFn;
+                          {({ data: coffeeData, loading: coffeeLoading }) => {
                             return (
-                              <GetMatchesQuery query={GET_MATCHES}>
-                                {({
-                                  data: matchData,
-                                  loading: matchLoading
-                                }) => {
-                                  this.matchData = matchData;
+                              <RequestCoffeeMutation
+                                mutation={REQUEST_COFFEE}
+                                variables={{
+                                  currentCityId
+                                }}
+                                onCompleted={this.onCompletedRequestCoffee}
+                                update={this.updateRequestCoffee}
+                              >
+                                {requestCoffeeFn => {
+                                  this.requestCoffeeFn = requestCoffeeFn;
                                   return (
-                                    <MatchPresenter
-                                      matchData={matchData}
-                                      matchLoading={matchLoading}
-                                      recommendUsersData={recommendUsersData}
-                                      recommendUsersLoading={
-                                        recommendUsersLoading
-                                      }
-                                      coffeeData={coffeeData}
-                                      coffeeLoading={coffeeLoading}
-                                      search={search}
-                                      matchList={matchList}
-                                      currentLat={currentLat}
-                                      currentLng={currentLng}
-                                      currentCityId={currentCityId}
-                                      onChange={this.onChange}
-                                      requestModalOpen={requestModalOpen}
-                                      coffeeReportModalOpen={
-                                        coffeeReportModalOpen
-                                      }
-                                      toggleCoffeeReportModal={
-                                        this.toggleCoffeeReportModal
-                                      }
-                                      toggleRequestModal={
-                                        this.toggleRequestModal
-                                      }
-                                      submitCoffee={this.submitCoffee}
-                                      isStaying={isStaying}
-                                      searchSet={this.searchSet}
-                                      markAsReadMatchFn={this.markAsReadMatchFn}
-                                    />
+                                    <GetMatchesQuery query={GET_MATCHES}>
+                                      {({
+                                        data: matchData,
+                                        loading: matchLoading
+                                      }) => {
+                                        this.matchData = matchData;
+                                        return (
+                                          <MatchPresenter
+                                            matchData={matchData}
+                                            matchLoading={matchLoading}
+                                            recommendUsersData={
+                                              recommendUsersData
+                                            }
+                                            recommendUsersLoading={
+                                              recommendUsersLoading
+                                            }
+              recommendLocationsData={recommendLocationsData}
+              recommendLocationsLoading={recommendLocationsLoading}
+                                            coffeeData={coffeeData}
+                                            coffeeLoading={coffeeLoading}
+                                            search={search}
+                                            matchList={matchList}
+                                            currentLat={currentLat}
+                                            currentLng={currentLng}
+                                            currentCityId={currentCityId}
+                                            onChange={this.onChange}
+                                            requestModalOpen={requestModalOpen}
+                                            coffeeReportModalOpen={
+                                              coffeeReportModalOpen
+                                            }
+                                            toggleCoffeeReportModal={
+                                              this.toggleCoffeeReportModal
+                                            }
+                                            toggleRequestModal={
+                                              this.toggleRequestModal
+                                            }
+                                            submitCoffee={this.submitCoffee}
+                                            isStaying={isStaying}
+                                            searchSet={this.searchSet}
+                                            markAsReadMatchFn={
+                                              this.markAsReadMatchFn
+                                            }
+                                          />
+                                        );
+                                      }}
+                                    </GetMatchesQuery>
                                   );
                                 }}
-                              </GetMatchesQuery>
+                              </RequestCoffeeMutation>
                             );
                           }}
-                        </RequestCoffeeMutation>
+                        </GetCoffeesQuery>
                       );
                     }}
-                  </GetCoffeesQuery>
+                  </RecommendLocationsQuery>
                 );
               }}
             </RecommendUsersQuery>
