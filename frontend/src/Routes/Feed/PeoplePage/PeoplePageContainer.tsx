@@ -2,7 +2,7 @@ import React from "react";
 import { Query } from "react-apollo";
 import { RecommendUsers } from "../../../types/api";
 import PeoplePagePresenter from "./PeoplePagePresenter";
-import { RECOMMAND_USERS } from "./PeoplePageQueries";
+import { RECOMMEND_USERS } from "./PeoplePageQueries";
 
 class RecommendUsersQuery extends Query<RecommendUsers> {}
 
@@ -33,7 +33,7 @@ class PeoplePageContainer extends React.Component<any, IState> {
   public render() {
     const { search, recommendUserList } = this.state;
     return (
-      <RecommendUsersQuery query={RECOMMAND_USERS}>
+      <RecommendUsersQuery query={RECOMMEND_USERS}>
         {({
           data: recommendUsersData,
           loading: recommendUsersLoading,
@@ -73,7 +73,7 @@ class PeoplePageContainer extends React.Component<any, IState> {
   };
   public loadMore = page => {
     this.recommendUsersFetchMore({
-      query: RECOMMAND_USERS,
+      query: RECOMMEND_USERS,
       variables: {
         page
       },

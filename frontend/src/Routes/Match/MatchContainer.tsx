@@ -19,7 +19,7 @@ import {
   MARK_AS_READ_MATCH
 } from "./MatchQueries";
 import { GET_COFFEES } from "../User/Coffees/CoffeesQueries";
-import { RECOMMAND_USERS } from "../Feed/PeoplePage/PeoplePageQueries";
+import { RECOMMEND_USERS } from "../Feed/PeoplePage/PeoplePageQueries";
 import { RouteComponentProps, withRouter } from "react-router";
 
 class GetMatchesQuery extends Query<GetMatches, GetMatchesVariables> {}
@@ -87,7 +87,7 @@ class MatchContainer extends React.Component<IProps, IState> {
         {markAsReadMatchFn => {
           this.markAsReadMatchFn = markAsReadMatchFn;
           return (
-            <RecommendUsersQuery query={RECOMMAND_USERS}>
+            <RecommendUsersQuery query={RECOMMEND_USERS}>
               {({
                 data: recommendUsersData,
                 loading: recommendUsersLoading

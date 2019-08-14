@@ -20,6 +20,7 @@ import Countries from "../Routes/User/Countries";
 import Continents from "../Routes/User/Continents";
 
 import PeoplePage from "../Routes/Feed/PeoplePage";
+import LocationsPage from "../Routes/Feed/LocationsPage";
 import CoffeesPage from "../Routes/Feed/CoffeesPage";
 
 import CityUsersNow from "../Routes/City/CityUsersNow";
@@ -145,6 +146,7 @@ class LoggedInPages extends React.Component<IProps> {
         >
           <Route path="/" exact={true} component={Match} />
           <Route path="/people" exact={true} component={PeoplePage} />
+          <Route path="/location" exact={true} component={LocationsPage} />
           <Route path="/404" exact={true} component={NotFound} />
           <Route path="/novalid" exact={true} component={NoValid} />
 

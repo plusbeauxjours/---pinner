@@ -1345,6 +1345,48 @@ export interface DeleteCoffeeVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: RecommendLocations
+// ====================================================
+
+export interface RecommendLocations_recommendLocations_cities_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface RecommendLocations_recommendLocations_cities {
+  __typename: "CityType";
+  id: string;
+  latitude: number | null;
+  longitude: number | null;
+  cityName: string | null;
+  cityId: string | null;
+  cityPhoto: string | null;
+  distance: number | null;
+  country: RecommendLocations_recommendLocations_cities_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
+}
+
+export interface RecommendLocations_recommendLocations {
+  __typename: "RecommendLocationsResponse";
+  page: number | null;
+  hasNextPage: boolean | null;
+  cities: (RecommendLocations_recommendLocations_cities | null)[] | null;
+}
+
+export interface RecommendLocations {
+  recommendLocations: RecommendLocations_recommendLocations;
+}
+
+export interface RecommendLocationsVariables {
+  page?: number | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: RecommendUsers
 // ====================================================
 
