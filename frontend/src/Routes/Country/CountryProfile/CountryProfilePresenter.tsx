@@ -190,9 +190,6 @@ const NameContainer = styled.span`
 `;
 
 const ListIcon = styled.span`
-  display: flex;
-  flex-direction: row;
-  display: flex;
   cursor: pointer;
   svg {
     fill: ${props => props.theme.iconColor};
@@ -474,11 +471,14 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
               </Square>
               <LocationContainer>
                 <NameContainer>
-                  <LocationName>{country.countryName}</LocationName>
-                  <Flag>{country.countryEmoji}</Flag>
+                  <LocationName>
+                    {country.countryName}
+                    <Flag>{country.countryEmoji}</Flag>
                   <ListIcon onClick={toggleReportModal}>
                     <List />
                   </ListIcon>
+                  </LocationName>
+
                 </NameContainer>
                 {count !== 0 ? (
                   <CountText>
