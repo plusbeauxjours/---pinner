@@ -403,38 +403,33 @@ def resolve_recommend_locations(self, info, **kwargs):
     nextPage = page+1
 
     city = user.profile.current_city
-    combined = models.City.objects.all() | models.City.objects.filter().order_by('-created_at')[:3]
-    print(combined)
+    combined = models.City.objects.order_by('-created_at')[:3]
 
-    nationalityUser = user.profile.nationality.nationality.all().order_by('-distance')[:10]
+    nationalityUser = user.profile.nationality.nationality.order_by('-distance')[:10]
     for i in nationalityUser:
-        userNationalities = models.City.objects.filter()
-        print(i.current_city)
-        combined = combined |userNationalities
-    print(combined)
+        nationalityUsers = models.City.objects.filter(id=i.user.profile.current_city.id)
+        combined = combined | nationalityUsers
 
     residenceUser = user.profile.residence.residence.all().order_by('-distance')[:10]
     for i in residenceUser:
-        combined = combined | residenceUser
-    print(combined)
+        residenceUsers = models.City.objects.filter(id=i.user.profile.current_city.id)
+        combined = combined | residenceUsers
 
-    userLocation = user_models.Profile.objects.filter(
+    locationUser = user_models.Profile.objects.filter(
         user__moveNotificationUser__city=city).order_by('-distance')[:20]
-    for i in userLocation:
-        combined = combined | i.current_city
-        print(i.current_city)
+    for i in locationUser:
+        locationUsers = models.City.objects.filter(id=i.user.profile.current_city.id)
+        combined = combined | locationUsers
 
-    userLike = user_models.Profile.objects.filter(
+    likeUser = user_models.Profile.objects.filter(
         user__likes__city=city).order_by('-distance')[:20]
-    for i in userLike:
-        combined = combined | i.current_city
+    for i in likeUser:
+        likeUsers = models.City.objects.filter(id=i.user.profile.current_city.id)
+        combined = combined | likeUsers
 
-    print(combined)
-    combined = combined.exclude(id=city.id).exclude(id__in=user.profile.moveNotificationCity.city.id)
-    print(combined)
+    combined = combined.exclude(id=city.id)
 
     hasNextPage = offset < combined.count()
-
     combined = combined[offset:20 + offset]
 
     return types.RecommendLocationsResponse(cities=combined, page=nextPage, hasNextPage=hasNextPage)
