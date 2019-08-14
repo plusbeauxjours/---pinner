@@ -403,7 +403,22 @@ def resolve_recommend_locations(self, info, **kwargs):
     nextPage = page+1
 
     city = user.profile.current_city
+    print(city.latitude, city.longitude)
     combined = models.City.objects.order_by('-created_at')[:3]
+
+    def get_locations_nearby_coords(latitude, longitude, max_distance=None):
+
+        gcd_formula = "6371 * acos(cos(radians(%s)) * \
+        cos(radians(latitude)) \
+        * cos(radians(longitude) - radians(%s)) + \
+        sin(radians(%s)) * sin(radians(latitude)))"
+        distance_raw_sql = RawSQL(
+            gcd_formula,
+            (latitude, longitude, latitude)
+        )
+
+        qs = combined.exclude(id=city.id).annotate(distance=distance_raw_sql).order_by('distance')
+        return qs
 
     nationalityUser = user.profile.nationality.nationality.order_by('-distance')[:10]
     for i in nationalityUser:
@@ -427,9 +442,9 @@ def resolve_recommend_locations(self, info, **kwargs):
         likeUsers = models.City.objects.filter(id=i.user.profile.current_city.id)
         combined = combined | likeUsers
 
-    combined = combined.exclude(id=city.id)
+    cities = get_locations_nearby_coords(city.latitude, city.longitude)
 
-    hasNextPage = offset < combined.count()
-    combined = combined[offset:20 + offset]
+    hasNextPage = offset < cities.count()
+    cities = cities[offset:20 + offset]
 
-    return types.RecommendLocationsResponse(cities=combined, page=nextPage, hasNextPage=hasNextPage)
+    return types.RecommendLocationsResponse(cities=cities, page=nextPage, hasNextPage=hasNextPage)

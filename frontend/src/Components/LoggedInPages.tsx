@@ -146,7 +146,7 @@ class LoggedInPages extends React.Component<IProps> {
         >
           <Route path="/" exact={true} component={Match} />
           <Route path="/people" exact={true} component={PeoplePage} />
-          <Route path="/location" exact={true} component={LocationsPage} />
+          <Route path="/locations" exact={true} component={LocationsPage} />
           <Route path="/404" exact={true} component={NotFound} />
           <Route path="/novalid" exact={true} component={NoValid} />
 

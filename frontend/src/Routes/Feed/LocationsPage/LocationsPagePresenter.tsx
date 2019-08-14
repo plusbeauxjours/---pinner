@@ -22,10 +22,11 @@ const UserContainer = styled.div`
 
 const UserRow = styled.div`
   display: grid;
+  flex-direction: row;
   height: 50px;
-  width: 400px;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 4fr 1fr 1fr;
   padding: 0 5px 0 5px;
+  margin: 0 15px 0 15px;
   grid-gap: 15px;
   align-items: center;
   cursor: pointer;
@@ -33,9 +34,8 @@ const UserRow = styled.div`
   &:hover {
     background-color: ${props => props.theme.hoverColor};
   }
-  border-bottom: 1px solid ${props => props.theme.borderColor};
-  &:last-child {
-    margin-bottom: 15px;
+  &:not(:last-child) {
+    border-bottom: 1px solid ${props => props.theme.borderColor};
   }
 `;
 
@@ -96,11 +96,11 @@ const Title = styled.div`
   }
 `;
 
-// const Text = styled.p`
-//   font-weight: 300;
-//   display: flex;
-//   align-items: center;
-// `;
+const Text = styled.p`
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+`;
 
 const SText = styled(Bold)`
   font-size: 18px;
@@ -150,32 +150,30 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
               {recommendLocationList.length !== 0 &&
                 recommendLocationList.map(city => {
                   return (
-                    <React.Fragment key={city.id}>
-                      <UserRow>
-                        <Link to={`/city/${city.cityId}`}>
-                          <Header>
-                            <SAvatar
-                              size={"sm"}
-                              url={city.cityPhoto}
-                              city={true}
-                            />
-                            <HeaderColumn>
-                              <HeaderText text={city.cityName} />
-                              <Location>{city.country.countryName}</Location>
-                            </HeaderColumn>
-                          </Header>
-                        </Link>
-                        <CityLikeBtn
-                          isLiked={city.isLiked}
-                          cityId={city.id}
-                          likeCount={city.likeCount}
-                          type={"row"}
-                        />
-                        <Link to={`/city/${city.cityId}`}>
-                          {/* <Text>{city.distance}km</Text> */}
-                        </Link>
-                      </UserRow>
-                    </React.Fragment>
+                    <UserRow key={city.id}>
+                      <Link to={`/city/${city.cityId}`}>
+                        <Header>
+                          <SAvatar
+                            size={"sm"}
+                            url={city.cityPhoto}
+                            city={true}
+                          />
+                          <HeaderColumn>
+                            <HeaderText text={city.cityName} />
+                            <Location>{city.country.countryName}</Location>
+                          </HeaderColumn>
+                        </Header>
+                      </Link>
+                      <CityLikeBtn
+                        isLiked={city.isLiked}
+                        cityId={city.id}
+                        likeCount={city.likeCount}
+                        type={"row"}
+                      />
+                      <Link to={`/city/${city.cityId}`}>
+                        <Text>{city.distance}km</Text>
+                      </Link>
+                    </UserRow>
                   );
                 })}
               {console.log("hasNextPage:  ", hasNextPage)}
@@ -184,32 +182,30 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
                 cities &&
                 cities.map(city => {
                   return (
-                    <React.Fragment key={city.id}>
-                      <UserRow>
-                        <Link to={`/city/${city.cityId}`}>
-                          <Header>
-                            <SAvatar
-                              size={"sm"}
-                              url={city.cityPhoto}
-                              city={true}
-                            />
-                            <HeaderColumn>
-                              <HeaderText text={city.cityName} />
-                              <Location>{city.country.countryName}</Location>
-                            </HeaderColumn>
-                          </Header>
-                        </Link>
-                        <CityLikeBtn
-                          isLiked={city.isLiked}
-                          cityId={city.id}
-                          likeCount={city.likeCount}
-                          type={"row"}
-                        />
-                        <Link to={`/city/${city.cityId}`}>
-                          {/* <Text>{city.distance}km</Text> */}
-                        </Link>
-                      </UserRow>
-                    </React.Fragment>
+                    <UserRow key={city.id}>
+                      <Link to={`/city/${city.cityId}`}>
+                        <Header>
+                          <SAvatar
+                            size={"sm"}
+                            url={city.cityPhoto}
+                            city={true}
+                          />
+                          <HeaderColumn>
+                            <HeaderText text={city.cityName} />
+                            <Location>{city.country.countryName}</Location>
+                          </HeaderColumn>
+                        </Header>
+                      </Link>
+                      <CityLikeBtn
+                        isLiked={city.isLiked}
+                        cityId={city.id}
+                        likeCount={city.likeCount}
+                        type={"row"}
+                      />
+                      <Link to={`/city/${city.cityId}`}>
+                        <Text>{city.distance}km</Text>
+                      </Link>
+                    </UserRow>
                   );
                 })}
             </InfiniteScroll>
