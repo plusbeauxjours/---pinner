@@ -147,7 +147,7 @@ class Query(object):
         required=True,
         args={'cityId': graphene.String()}
     )
-    recoomend_locationss = graphene.Field(
+    recommend_locations = graphene.Field(
         types.RecommendLocationsResponse,
         resolver=queries.resolve_recommend_locations,
         required=True,

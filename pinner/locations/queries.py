@@ -7,12 +7,15 @@ from django.db.models import Q
 from django.db.models.expressions import RawSQL
 
 from django.contrib.auth.models import User
+
 from notifications import models as notification_models
 from notifications import types as notification_types
-from locations import types as location_types
 
+from locations import types as location_types
 from coffees import models as coffee_models
+
 from users import types as user_types
+from users import models as user_models
 
 from graphql_extensions.exceptions import GraphQLError
 
@@ -399,30 +402,36 @@ def resolve_recommend_locations(self, info, **kwargs):
 
     nextPage = page+1
 
-    combined = combined.uion(user.profile.current_city)
-    cityNationality = user.profile.nationality.nationality.all().order_by('-distance')[:10]
-    print(cityNationality)
-    for i in cityNationality:
-        combined = combined.union(i.current_city)
-        print(combined)
+    city = user.profile.current_city
+    combined = models.City.objects.all() | models.City.objects.filter().order_by('-created_at')[:3]
+    print(combined)
 
-    cityResidence = user.profile.residence.residence.all().order_by('-distance')[:10]
-    for i in cityResidence:
-        combined = combined.union(i.current_city)
+    nationalityUser = user.profile.nationality.nationality.all().order_by('-distance')[:10]
+    for i in nationalityUser:
+        userNationalities = models.City.objects.filter()
+        print(i.current_city)
+        combined = combined |userNationalities
+    print(combined)
 
-    # userLocation = user.moveNotificationUser.all().order_by('-created_at').order_by('city').distinct('city')[:10]
-    # for i in userLocation:
-    #     userLocations = models.Profile.objects.filter(
-    #         user__moveNotificationUser__city=i.city).order_by('-distance')[:10]
-    #     combined = combined.union(userLocations)
+    residenceUser = user.profile.residence.residence.all().order_by('-distance')[:10]
+    for i in residenceUser:
+        combined = combined | residenceUser
+    print(combined)
 
-    # userLike = user.likes.all().exclude(id=user.profile.id).order_by(
-    #     '-created_at').order_by('city').distinct('city')[:10]
-    # for i in userLike:
-    #     userLikes = models.Profile.objects.filter(user__likes__city=i.city).order_by('-distance')[:10]
-    #     combined = combined.union(userLikes)
+    userLocation = user_models.Profile.objects.filter(
+        user__moveNotificationUser__city=city).order_by('-distance')[:20]
+    for i in userLocation:
+        combined = combined | i.current_city
+        print(i.current_city)
 
-    combined = combined.order_by('id').distinct('id').exclude(id=user.profile.current_city.id)
+    userLike = user_models.Profile.objects.filter(
+        user__likes__city=city).order_by('-distance')[:20]
+    for i in userLike:
+        combined = combined | i.current_city
+
+    print(combined)
+    combined = combined.exclude(id=city.id).exclude(id__in=user.profile.moveNotificationCity.city.id)
+    print(combined)
 
     hasNextPage = offset < combined.count()
 

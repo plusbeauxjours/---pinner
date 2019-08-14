@@ -117,34 +117,28 @@ def resolve_recommend_users(self, info, **kwargs):
 
     nextPage = page+1
     userGuest = user.guest.all()
-    print(userGuest)
     userHost = user.host.all()
-    print(userHost)
 
-    userNationality = user.profile.nationality.nationality.all().exclude(
-        id=user.profile.id).exclude(user__host__in=userGuest).exclude(user__host__in=userHost).exclude(user__guest__in=userGuest).exclude(user__guest__in=userHost).order_by('-distance')[:10]
-    userResidence = user.profile.residence.residence.all().exclude(
-        id=user.profile.id).exclude(user__host__in=userGuest).exclude(user__host__in=userHost).exclude(user__guest__in=userGuest).exclude(user__guest__in=userHost).order_by('-distance')[:10]
-    combined = userNationality.union(userResidence)
+    nationalityUser = user.profile.nationality.nationality.all().order_by('-distance')[:10]
+    residenceUser = user.profile.residence.residence.all().order_by('-distance')[:10]
+    combined = nationalityUser | residenceUser
 
-    userLocation = user.moveNotificationUser.all().order_by('-created_at').order_by('city').distinct('city')[:10]
-    for i in userLocation:
+    locationUser = user.moveNotificationUser.all().order_by('-created_at').order_by('city').distinct('city')[:10]
+    for i in locationUser:
         userLocations = models.Profile.objects.filter(
-            user__moveNotificationUser__city=i.city).exclude(id=user.profile.id).exclude(user__host__in=userGuest).exclude(user__host__in=userHost).exclude(user__guest__in=userGuest).exclude(user__guest__in=userHost).order_by('-distance')[:10]
-        combined = combined.union(userLocations)
+            user__moveNotificationUser__city=i.city).order_by('-distance')[:10]
+        combined = combined | userLocations
 
-    userLike = user.likes.all().order_by(
+    likeUser = user.likes.all().order_by(
         '-created_at').order_by('city').distinct('city')[:10]
-    for i in userLike:
-        userLikes = models.Profile.objects.filter(user__likes__city=i.city).exclude(id=user.profile.id).exclude(user__host__in=userGuest).exclude(
-            user__host__in=userHost).exclude(user__guest__in=userGuest).exclude(user__guest__in=userHost).order_by('-distance')[:10]
-        combined = combined.union(userLikes)
+    for i in likeUser:
+        userLikes = models.Profile.objects.filter(user__likes__city=i.city).order_by('-distance')[:10]
+        combined = combined | userLikes
 
-    combined = combined.order_by('id').distinct('id')
-    # .exclude(id=user.profile.id).exclude(id=user.host.id).exclude(id=user.guest.id)
+    combined = combined.exclude(id=user.profile.id).exclude(Q(user__host__in=userGuest) | Q(
+        user__host__in=userHost) | Q(user__guest__in=userGuest) | Q(user__guest__in=userHost))
 
     hasNextPage = offset < combined.count()
-
     combined = combined[offset:20 + offset]
 
     return types.RecommendUsersResponse(users=combined, page=nextPage, hasNextPage=hasNextPage)
