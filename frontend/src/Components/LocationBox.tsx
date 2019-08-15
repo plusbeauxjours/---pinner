@@ -133,6 +133,12 @@ const Text = styled.p`
   align-items: center;
 `;
 
+const Div = styled.div`
+  display: flex;
+  align-items: center;
+  height: 49px;
+`;
+
 interface ITheme {
   type: string;
 }
@@ -244,7 +250,9 @@ const LocationBox: React.FunctionComponent<IProps> = ({
                     type={"row"}
                   />
                   <Link to={`/city/${samenameCity.cityId}`}>
-                    <Text>{samenameCity.distance}km</Text>
+                    <Div>
+                      <Text>{samenameCity.distance}km</Text>
+                    </Div>
                   </Link>
                 </UserRow>
               </React.Fragment>
@@ -361,7 +369,9 @@ const LocationBox: React.FunctionComponent<IProps> = ({
                     type={"row"}
                   />
                   <Link to={`/city/${nearCity.cityId}`}>
-                    <Text>{nearCity.distance}&nbsp;km</Text>
+                    <Div>
+                      <Text>{nearCity.distance}&nbsp;km</Text>
+                    </Div>
                   </Link>
                 </UserRow>
               </React.Fragment>
@@ -405,7 +415,9 @@ const LocationBox: React.FunctionComponent<IProps> = ({
                     type={"row"}
                   />
                   <Link to={`/city/${city.cityId}`}>
-                    <Text>{city.distance}&nbsp;km</Text>
+                    <Div>
+                      <Text>{city.distance}&nbsp;km</Text>
+                    </Div>
                   </Link>
                 </UserRow>
               </React.Fragment>

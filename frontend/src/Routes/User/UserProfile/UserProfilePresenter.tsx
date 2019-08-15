@@ -596,6 +596,30 @@ const ConfirmModalLink = styled(ModalLink)`
   z-index: 12;
 `;
 
+const EmptyContainer = styled.div`
+  font-weight: 100;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin-left: 125px;
+  @media screen and (max-width: 600px) {
+    align-items: center;
+    margin: 0;
+  }
+`;
+
+const HideEarth = styled(Earth)`
+  height: 80px;
+  width: 200px;
+  @media screen and (max-width: 600px) {
+    height: 80px;
+    width: 200px;
+  }
+`;
+
 interface ITheme {
   size?: string;
 }
@@ -1351,15 +1375,22 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
             </LocationAvatarContainer>
 
             {!user.profile.isSelf && user.profile.isHideTrips ? (
-              <p>😎</p>
+              <TripContainer>
+                <EmptyContainer>
+                  <HideEarth
+                    src={require(`../../../Images/animations/hideTrip.png`)}
+                  />
+                  Trips are hideen by {user.username}
+                </EmptyContainer>
+              </TripContainer>
             ) : (
               <Container>
                 <Earth
                   src={
-                      localStorage.getItem("isDarkMode") === "false"
-                        ? require(`../../../Images/animations/lightEarth.gif`)
-                        : require(`../../../Images/animations/darkEarth.gif`)
-                    }
+                    localStorage.getItem("isDarkMode") === "false"
+                      ? require(`../../../Images/animations/lightEarth.gif`)
+                      : require(`../../../Images/animations/darkEarth.gif`)
+                  }
                 />
                 <TripContainer>
                   <UserNameRow>
