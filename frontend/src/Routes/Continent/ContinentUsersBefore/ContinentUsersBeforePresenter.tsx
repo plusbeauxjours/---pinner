@@ -24,7 +24,7 @@ const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   height: 50px;
-  grid-template-columns: 4fr 1fr;
+  grid-template-columns: 4fr;
   padding: 0 5px 0 5px;
   margin: 0 15px 0 15px;
   grid-gap: 15px;

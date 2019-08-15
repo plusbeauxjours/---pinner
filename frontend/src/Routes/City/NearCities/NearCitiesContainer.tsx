@@ -47,7 +47,6 @@ class NearCitiesContainer extends React.Component<IProps, IState> {
         variables={{
           cityId
         }}
-        fetchPolicy="no-cache"
       >
         {({ data, loading, fetchMore }) => {
           this.data = data;

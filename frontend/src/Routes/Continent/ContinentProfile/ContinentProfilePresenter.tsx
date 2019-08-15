@@ -54,9 +54,7 @@ const UserRow = styled.div`
   &:hover {
     background-color: ${props => props.theme.hoverColor};
   }
-  &:not(:last-child) {
-    border-bottom: 1px solid ${props => props.theme.borderColor};
-  }
+  border-bottom: 1px solid ${props => props.theme.borderColor};
 `;
 
 const CAvatar = styled(Avatar)`

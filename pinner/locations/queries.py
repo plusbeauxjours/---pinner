@@ -96,9 +96,11 @@ def resolve_city_profile(self, info, **kwargs):
 
     coffees = city.coffee.filter(expires__gt=timezone.now())
 
-    usersNow = city.currentCity.order_by('-id').distinct('id')[:12]
+    usersNow = city.currentCity.order_by('-id').distinct('id')
+    print(usersNow)
     usersBefore = city.moveNotificationCity.exclude(
-        actor__profile__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
+        actor__profile__in=usersNow).order_by('-actor_id').distinct('actor_id')[:20]
+    print(usersBefore)
 
     return location_types.CityProfileResponse(count=count, usersNow=usersNow, usersBefore=usersBefore, city=city)
 
@@ -194,9 +196,9 @@ def resolve_country_profile(self, info, **kwargs):
 
     count = user.moveNotificationUser.values('id').filter(city__country__country_code=countryCode).count()
 
-    usersNow = country.currentCountry.order_by('-id').distinct('id')[:12]
+    usersNow = country.currentCountry.order_by('-id').distinct('id')
     usersBefore = country.moveNotificationCountry.exclude(
-        actor__profile__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
+        actor__profile__in=usersNow).order_by('-actor_id').distinct('actor_id')[:20]
 
     cities = models.City.objects.filter(country__country_code=countryCode)
 
@@ -280,9 +282,9 @@ def resolve_continent_profile(self, info, **kwargs):
     count = user.moveNotificationUser.values('id').filter(
         city__country__continent__continent_code=continentCode).count()
 
-    usersNow = continent.currentContinent.order_by('-id').distinct('id')[:12]
+    usersNow = continent.currentContinent.order_by('-id').distinct('id')
     usersBefore = continent.moveNotificationContinent.exclude(
-        actor__profile__in=usersNow).order_by('-actor_id').distinct('actor_id')[:12]
+        actor__profile__in=usersNow).order_by('-actor_id').distinct('actor_id')[:20]
 
     countries = models.Country.objects.filter(continent__continent_code=continentCode)
 

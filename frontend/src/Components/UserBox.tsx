@@ -60,7 +60,7 @@ const UserRow = styled.div`
   display: grid;
   height: 50px;
   width: 400px;
-  grid-template-columns: 4fr 1fr;
+  grid-template-columns: 4fr;
   padding: 0 5px 0 5px;
   grid-gap: 15px;
   align-items: center;

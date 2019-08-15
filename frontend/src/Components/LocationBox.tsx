@@ -49,9 +49,9 @@ const UserRow = styled.div<ITheme>`
   width: 400px;
   grid-template-columns: ${props => {
     if (props.type === "continents") {
-      return "2fr 1fr";
+      return "3fr 1fr";
     } else if (props.type === "countries") {
-      return "2fr 1fr";
+      return "3fr 1fr";
     } else if (props.type === "samenameCities") {
       return "2fr 1fr 1fr";
     } else if (props.type === "nearCities") {

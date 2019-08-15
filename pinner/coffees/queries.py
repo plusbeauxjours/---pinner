@@ -58,13 +58,10 @@ def resolve_get_coffees(self, info, **kwargs):
         except User.DoesNotExist:
             return types.GetCoffeesResponse(coffees=None)
 
-        if(me.username == userName):
-            try:
-                coffees = user.coffee.all()
-                return types.GetCoffeesResponse(coffees=coffees)
-            except models.Coffee.DoesNotExist:
-                return types.GetCoffeesResponse(coffees=None)
-        else:
+        try:
+            coffees = user.coffee.all()
+            return types.GetCoffeesResponse(coffees=coffees)
+        except models.Coffee.DoesNotExist:
             return types.GetCoffeesResponse(coffees=None)
 
     elif location == "country":

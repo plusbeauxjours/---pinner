@@ -115,7 +115,7 @@ const UserContainer = styled.div`
 const UserRow = styled.div`
   display: grid;
   flex-direction: row;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 1fr;
   padding: 0 5px 0 5px;
   grid-gap: 15px;
   align-items: center;

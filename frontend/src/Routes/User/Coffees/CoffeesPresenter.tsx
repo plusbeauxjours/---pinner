@@ -205,7 +205,7 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
                                 <CText
                                   text={`${
                                     coffee.city.cityName
-                                  }with same gender`}
+                                  } with same gender`}
                                 />
                               );
                             case "NATIONALITY":
@@ -213,7 +213,7 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
                                 <CText
                                   text={`${
                                     coffee.city.cityName
-                                  }with same nationality`}
+                                  } with same nationality`}
                                 />
                               );
                             default:
