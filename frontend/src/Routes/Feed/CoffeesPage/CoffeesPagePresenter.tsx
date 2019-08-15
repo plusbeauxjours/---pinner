@@ -7,6 +7,7 @@ import Loader from "../../../Components/Loader";
 import Bold from "../../../Components/Bold";
 import CoffeeBtn from "src/Components/CoffeeBtn";
 import Avatar from "../../../Components/Avatar";
+import Helmet from "react-helmet";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -123,6 +124,9 @@ const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
   } else if (!coffeeLoading && coffees) {
     return (
       <SWrapper>
+        <Helmet>
+          <title>City | Pinner</title>
+        </Helmet>
         <UserContainer>
           <Title>
             <SText text={"NEED SOME COFFEE NOW"} />

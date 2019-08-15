@@ -273,7 +273,7 @@ const ApproachPresenter: React.FunctionComponent<IProps> = ({
           <ModalOverlay onClick={back} />
           <Modal>
             <Helmet>
-              <title>Email Login . Pinner </title>
+              <title>Email Login | Pinner </title>
             </Helmet>
             {isEmailSubmitted ? (
               <Container>
@@ -376,7 +376,7 @@ const ApproachPresenter: React.FunctionComponent<IProps> = ({
           <ModalOverlay onClick={back} />
           <Modal>
             <Helmet>
-              <title>Phone Login . Pinner </title>
+              <title>Phone Login | Pinner </title>
             </Helmet>
             <Container>
               <PhoneNumberContainer>

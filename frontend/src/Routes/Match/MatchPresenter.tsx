@@ -10,6 +10,7 @@ import { keyframes } from "styled-components";
 import CoffeeBox from "src/Components/CoffeeBox";
 import { Noti } from "../../Icons";
 import LocationBox from "src/Components/LocationBox";
+import Helmet from "react-helmet";
 
 const SWrapper = styled(Wrapper)``;
 
@@ -192,7 +193,7 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   @media screen and (max-width: 935px) {
-    margin: 10px 15px 10px 15px;
+    margin: 10px 15px 0 15px;
   }
 `;
 
@@ -294,6 +295,9 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
         )}
         <SWrapper>
           <UserContainer>
+            <Helmet>
+              <title>Home | Pinner</title>
+            </Helmet>
             <Title>
               <SText text={"RECOMMEND USERS"} />
               <Link to={`/people`}>

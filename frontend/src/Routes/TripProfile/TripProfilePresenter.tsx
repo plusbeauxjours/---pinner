@@ -15,6 +15,7 @@ import CoffeeBox from "src/Components/CoffeeBox";
 import { List } from "../../Icons";
 import LocationMap from "src/Components/LocationMap";
 import { keyframes } from "styled-components";
+import Helmet from "react-helmet";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -414,6 +415,9 @@ const TripProfilePresenter: React.FunctionComponent<IProps> = ({
         )}
         <SWrapper>
           <PHeader>
+            <Helmet>
+              <title>City | Pinner</title>
+            </Helmet>
             <AvatarContainer>
               <Square>
                 <CAvatar size="lg" url={cityPhoto} city={true} />

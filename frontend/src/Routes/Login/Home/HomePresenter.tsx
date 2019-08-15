@@ -8,14 +8,13 @@ import { Phone } from "../../../Icons";
 
 import Wrapper from "../../../Components/Wrapper";
 import LogIn from "../../../Components/LogIn";
-import SignUp from "../../../Components/SignUp";
 import SocialLogin from "../../../Components/SocialLogin";
 
 const Container = styled(Wrapper)`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-top: 125px;
+  height: 100vh;
   max-width: 745px;
 `;
 
@@ -26,22 +25,15 @@ const Box = styled.div`
   text-align: center;
 `;
 
-const Column = styled.div`
-  width: 45%;
-`;
-
 const SwitchBox = styled(Box)`
+  width: 45%;
   padding: 30px 0px;
-  margin-top: 15px;
-`;
-
-const SwitchLink = styled.span`
-  color: ${props => props.theme.blueColor};
   cursor: pointer;
 `;
 
-const FormBox = styled(Box)`
-  padding: 40px;
+const SwitchLink = styled.span`
+  color: ${props => props.theme.color};
+  cursor: pointer;
 `;
 
 const ModalOverlay = styled.div`
@@ -98,6 +90,17 @@ const ModalLink = styled.div`
 
 const Icon = styled.span`
   margin-right: 10px;
+`;
+
+const Image = styled.img`
+  z-index: -5;
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+  object-fit: cover;
+  opacity: 0.6;
 `;
 
 interface IProps {
@@ -163,26 +166,12 @@ const HomePresenter: React.FunctionComponent<IProps> = ({
           </Modal>
         </ModalContainer>
       )}
+      <Image src={require(`../../../Images/animations/homeA.jpg`)} />
       <Container>
-        <Column>
-          <FormBox>{isLogIn ? <LogIn /> : <SignUp />}</FormBox>
-          <SwitchBox>
-            {isLogIn ? (
-              <>
-                Don't have an account?
-                <SwitchLink onClick={changeMode}>Sign up</SwitchLink>
-              </>
-            ) : (
-              <>
-                Have an account?{" "}
-                <SwitchLink onClick={changeMode}>Log in</SwitchLink>
-              </>
-            )}
-          </SwitchBox>
-          <SwitchBox>
-            <SwitchLink onClick={toggleModal}>Modal</SwitchLink>
-          </SwitchBox>
-        </Column>
+        <LogIn />
+        <SwitchBox>
+          <SwitchLink onClick={toggleModal}>Modal</SwitchLink>
+        </SwitchBox>
       </Container>
     </>
   );

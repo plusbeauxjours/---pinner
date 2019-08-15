@@ -7,6 +7,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
 import Bold from "../../../Components/Bold";
 import UserHeader from "src/Components/UserHeader";
+import Helmet from "react-helmet";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -94,7 +95,9 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
   return (
     <>
       <SWrapper>
-        {console.log}
+        <Helmet>
+          <title>Recommend Users | Pinner</title>
+        </Helmet>
         <UserContainer>
           <Title>
             <SText text={"RECOMMEND USERS"} />

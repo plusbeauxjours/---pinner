@@ -32,7 +32,7 @@ const LogInPresenter: React.FunctionComponent<IProps> = ({
 }) => (
   <Container>
     <Helmet>
-      <title> Log In . Pinner</title>
+      <title> Log In | Pinner</title>
     </Helmet>
     <Form onSubmit={username !== "" && password !== "" ? logInFn : null}>
       <SInput

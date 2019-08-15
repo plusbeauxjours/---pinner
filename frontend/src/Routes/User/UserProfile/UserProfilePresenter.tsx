@@ -18,6 +18,7 @@ import useGoogleAutocomplete from "../../../autocompleteHelpers";
 import { BACKEND_URL } from "src/constants";
 import { MutationFn } from "react-apollo";
 import Thin from "src/Components/Thin";
+import Helmet from "react-helmet";
 
 const Header = styled.header`
   display: flex;
@@ -1213,6 +1214,9 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
         */}
         <SWrapper>
           <PHeader>
+            <Helmet>
+              <title>Profile | Pinner</title>
+            </Helmet>
             <LocationAvatarContainer>
               <Link to={`/city/${user.profile.currentCity.cityId}`}>
                 <CAvatar

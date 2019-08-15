@@ -11,6 +11,7 @@ import CoffeeBox from "src/Components/CoffeeBox";
 import LocationBox from "src/Components/LocationBox";
 import { List } from "../../../Icons";
 import { keyframes } from "styled-components";
+import Helmet from "react-helmet";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -341,6 +342,9 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
         )}
         <SWrapper>
           <PHeader>
+            <Helmet>
+              <title>Continent | Pinner</title>
+            </Helmet>
             <AvatarContainer>
               <CAvatar size="lg" url={continent.continentPhoto} city={true} />
               <LocationContainer>
@@ -372,11 +376,11 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
               {countryList.length === 0 && countries.length === 0 && (
                 <EmptyContainer>
                   <Earth
-                  src={
-                    localStorage.getItem("isDarkMode") === "false"
-                      ? require(`../../../Images/animations/lightEarth.gif`)
-                      : require(`../../../Images/animations/darkEarth.gif`)
-                  }
+                    src={
+                      localStorage.getItem("isDarkMode") === "false"
+                        ? require(`../../../Images/animations/lightEarth.gif`)
+                        : require(`../../../Images/animations/darkEarth.gif`)
+                    }
                   />
                   There is no city yet
                 </EmptyContainer>

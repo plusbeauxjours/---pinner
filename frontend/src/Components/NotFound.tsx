@@ -3,6 +3,7 @@ import styled from "src/Styles/typed-components";
 import Wrapper from "./Wrapper";
 import browserHistory from "../Apollo/browserHistory";
 import Button from "src/Components/Button";
+import Helmet from "react-helmet";
 
 const Container = styled.div`
   margin-top: 50px;
@@ -56,6 +57,9 @@ const back = event => {
 
 const NotFound: React.FunctionComponent<any> = () => (
   <Container>
+    <Helmet>
+      <title>404 | Pinner</title>
+    </Helmet>
     <SWrapper>
       <Image src={require(`../Images/notFound/Astronaut-big.png`)} />
       <Bold>This page is lost in space </Bold>

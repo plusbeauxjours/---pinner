@@ -122,7 +122,7 @@ const VerificationPresenter: React.FunctionComponent<IProps> = ({
       <ModalOverlay onClick={back} />
       <Modal>
         <Helmet>
-          <title>Verify Phone . Pinner</title>
+          <title>Verify Phone | Pinner</title>
         </Helmet>
         <Container>
           <ReactCodeInput

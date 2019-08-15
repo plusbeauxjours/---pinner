@@ -13,6 +13,7 @@ import LocationBox from "src/Components/LocationBox";
 import { List } from "../../../Icons";
 import { keyframes } from "styled-components";
 import LocationMap from "src/Components/LocationMap";
+import Helmet from "react-helmet";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -457,6 +458,9 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
             </Link>
           </RightIcon> */}
           <PHeader>
+            <Helmet>
+              <title>Country | Pinner</title>
+            </Helmet>
             <AvatarContainer>
               <Square>
                 <CAvatar size="lg" url={country.countryPhoto} city={true} />
@@ -474,11 +478,10 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
                   <LocationName>
                     {country.countryName}
                     <Flag>{country.countryEmoji}</Flag>
-                  <ListIcon onClick={toggleReportModal}>
-                    <List />
-                  </ListIcon>
+                    <ListIcon onClick={toggleReportModal}>
+                      <List />
+                    </ListIcon>
                   </LocationName>
-
                 </NameContainer>
                 {count !== 0 ? (
                   <CountText>

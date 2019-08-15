@@ -13,6 +13,7 @@ import { MutationFn } from "react-apollo";
 import ReactCodeInput from "react-code-input";
 import LoadingOverlay from "react-loading-overlay";
 import ClipLoader from "react-spinners/ClipLoader";
+import Helmet from "react-helmet";
 
 const PAvatar = styled(Avatar)`
   display: flex;
@@ -1052,6 +1053,9 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
         ////////////// BODY //////////////
         */}
       <Wrapper>
+        <Helmet>
+          <title>Edit Profile | Pinner</title>
+        </Helmet>
         <MenuColumn>
           <Link
             to={{

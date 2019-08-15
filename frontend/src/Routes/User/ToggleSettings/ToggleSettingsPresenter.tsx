@@ -4,6 +4,7 @@ import styled from "src/Styles/typed-components";
 import { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import { useTheme } from "src/Styles/theme-context";
+import Helmet from "react-helmet";
 
 const Wrapper = styled.div`
   display: flex;
@@ -217,6 +218,9 @@ const ToggleSettingsPresenter: React.FunctionComponent<IProps> = ({
         </ModalContainer>
       )}
       <Wrapper>
+        <Helmet>
+          <title>Settings | Pinner</title>
+        </Helmet>
         <MenuColumn>
           <Link
             to={{

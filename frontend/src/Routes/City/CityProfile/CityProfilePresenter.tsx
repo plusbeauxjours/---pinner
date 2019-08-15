@@ -15,6 +15,7 @@ import CoffeeBox from "src/Components/CoffeeBox";
 import LocationBox from "src/Components/LocationBox";
 import { List } from "../../../Icons";
 import LocationMap from "src/Components/LocationMap";
+import Helmet from "react-helmet";
 
 const SWrapper = styled(Wrapper)`
   z-index: 1;
@@ -477,6 +478,9 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
             </Link>
           </RightIcon> */}
           <PHeader>
+            <Helmet>
+              <title>City | Pinner</title>
+            </Helmet>
             <AvatarContainer>
               <Square>
                 <CAvatar size="lg" url={city.cityPhoto} city={true} />

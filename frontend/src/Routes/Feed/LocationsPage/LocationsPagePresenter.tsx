@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import Bold from "../../../Components/Bold";
 import Avatar from "../../../Components/Avatar";
 import CityLikeBtn from "../../../Components/CityLikeBtn";
+import Helmet from "react-helmet";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -130,7 +131,9 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
   return (
     <>
       <SWrapper>
-        {console.log}
+        <Helmet>
+          <title>Recommend Locations | Pinner</title>
+        </Helmet>
         <UserContainer>
           <Title>
             <SText text={"RECOMMEND LOCATIONS"} />

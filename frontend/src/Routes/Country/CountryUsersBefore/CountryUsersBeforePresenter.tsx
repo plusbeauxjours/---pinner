@@ -7,6 +7,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
 import UserHeader from "../../../Components/UserHeader";
 import Bold from "../../../Components/Bold";
+import Helmet from "react-helmet";
 
 const SWrapper = styled(Wrapper)`
   max-width: 650px;
@@ -105,6 +106,9 @@ const CountryUsersBeforePresenter: React.FunctionComponent<IProps> = ({
   return (
     <>
       <SWrapper>
+        <Helmet>
+          <title>Country | Pinner</title>
+        </Helmet>
         <UserContainer>
           <Title>
             <SText text={"USERS BEFORE"} />
