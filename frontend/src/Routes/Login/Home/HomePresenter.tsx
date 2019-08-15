@@ -169,8 +169,8 @@ const HomePresenter: React.FunctionComponent<IProps> = ({
       <Image src={require(`../../../Images/animations/homeA.jpg`)} />
       <Container>
         <LogIn />
-        <SwitchBox>
-          <SwitchLink onClick={toggleModal}>Modal</SwitchLink>
+        <SwitchBox onClick={toggleModal}>
+          <SwitchLink>Modal</SwitchLink>
         </SwitchBox>
       </Container>
     </>

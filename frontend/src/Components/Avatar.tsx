@@ -221,6 +221,7 @@ const Avatar: React.FunctionComponent<IProps> = ({
       // </ProgressiveImage>
     );
   } else {
+    const imageNumber = Math.round(Math.random() * 9);
     return (
       // <ProgressiveImage delay={0} src={url} placeholder="">
       //   {(src, loading) => {
@@ -239,7 +240,7 @@ const Avatar: React.FunctionComponent<IProps> = ({
           src={
             url
               ? `${BACKEND_URL}/media/${url}`
-              : "https://banner2.kisspng.com/20180613/vtt/kisspng-computer-icons-avatar-user-profile-icon-design-cli-5b2114b0368752.5561258815288946402234.jpg"
+              : require(`../Images/avatars/earth${imageNumber}.png`)
           }
           size={size}
           onClick={onClick}
