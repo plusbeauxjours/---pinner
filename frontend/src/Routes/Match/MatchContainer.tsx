@@ -139,8 +139,12 @@ class MatchContainer extends React.Component<IProps, IState> {
                                             recommendUsersLoading={
                                               recommendUsersLoading
                                             }
-              recommendLocationsData={recommendLocationsData}
-              recommendLocationsLoading={recommendLocationsLoading}
+                                            recommendLocationsData={
+                                              recommendLocationsData
+                                            }
+                                            recommendLocationsLoading={
+                                              recommendLocationsLoading
+                                            }
                                             coffeeData={coffeeData}
                                             coffeeLoading={coffeeLoading}
                                             search={search}

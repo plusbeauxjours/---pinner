@@ -249,8 +249,8 @@ const CountText = styled(Location)`
 
 const Earth = styled.img`
   display: flex;
-  width: 267px;
-  height: 200px;
+  width: 200px;
+  height: 80px;
   background-position: center center;
   object-fit: cover;
   align-self: center;
@@ -499,11 +499,7 @@ const TripProfilePresenter: React.FunctionComponent<IProps> = ({
               {usersBeforeList.length === 0 && usersBefore.length === 0 && (
                 <EmptyContainer>
                   <Earth
-                    src={
-                      localStorage.getItem("isDarkMode") === "false"
-                        ? require(`../../Images/animations/lightEarth.gif`)
-                        : require(`../../Images/animations/darkEarth.gif`)
-                    }
+                    src={require(`../../Images/animations/hideTrip.png`)}
                   />
                   There is no user now
                 </EmptyContainer>

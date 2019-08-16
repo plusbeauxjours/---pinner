@@ -6,6 +6,17 @@ export const ME = gql`
       user {
         username
         profile {
+          gender
+          residence {
+            countryCode
+            countryName
+            countryEmoji
+          }
+          nationality {
+            countryCode
+            countryName
+            countryEmoji
+          }
           avatarUrl
           currentCity {
             cityId

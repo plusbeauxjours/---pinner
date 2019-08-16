@@ -432,7 +432,7 @@ class UploadAvatar(graphene.Mutation):
                 is_main=True, image=file, thumbnail=file, creator=user)
             user.profile.avatarUrl = newMainAvatar.thumbnail
             user.profile.save()
-            return types.UploadAvatarResponse(ok=True, preAvatarUUID=prevMainAvatar.uuid ,newAvatarUUID=newMainAvatar.uuid, avatar=newMainAvatar) 
+            return types.UploadAvatarResponse(ok=True, preAvatarUUID=None ,newAvatarUUID=newMainAvatar.uuid, avatar=newMainAvatar) 
 
 
 class DeleteAvatar(graphene.Mutation):

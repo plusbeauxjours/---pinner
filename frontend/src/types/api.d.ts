@@ -2862,6 +2862,20 @@ export interface SlackReportUsersVariables {
 // GraphQL query operation: Me
 // ====================================================
 
+export interface Me_me_user_profile_residence {
+  __typename: "CountryType";
+  countryCode: string | null;
+  countryName: string | null;
+  countryEmoji: string | null;
+}
+
+export interface Me_me_user_profile_nationality {
+  __typename: "CountryType";
+  countryCode: string | null;
+  countryName: string | null;
+  countryEmoji: string | null;
+}
+
 export interface Me_me_user_profile_currentCity {
   __typename: "CityType";
   cityId: string | null;
@@ -2870,6 +2884,9 @@ export interface Me_me_user_profile_currentCity {
 
 export interface Me_me_user_profile {
   __typename: "ProfileType";
+  gender: ProfileGender | null;
+  residence: Me_me_user_profile_residence | null;
+  nationality: Me_me_user_profile_nationality | null;
   avatarUrl: string | null;
   currentCity: Me_me_user_profile_currentCity | null;
 }
