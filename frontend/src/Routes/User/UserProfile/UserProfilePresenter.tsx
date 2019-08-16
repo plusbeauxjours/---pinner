@@ -19,6 +19,7 @@ import { BACKEND_URL } from "src/constants";
 import { MutationFn } from "react-apollo";
 import Thin from "src/Components/Thin";
 import Helmet from "react-helmet";
+import { countries } from "../../../countryData";
 
 const Header = styled.header`
   display: flex;
@@ -533,19 +534,6 @@ const Img = styled.img`
   }
 `;
 
-const Earth = styled.img`
-  display: flex;
-  width: 267px;
-  height: 200px;
-  background-position: center center;
-  object-fit: cover;
-  @media screen and (max-width: 600px) {
-    align-self: center;
-    height: 300px;
-    width: 300px;
-  }
-`;
-
 const PreviewModalContainer = styled(ModalContainer)`
   z-index: 11;
 `;
@@ -612,13 +600,78 @@ const EmptyContainer = styled.div`
   }
 `;
 
-const HideEarth = styled(Earth)`
+const HideEarth = styled.img`
+  display: flex;
+  background-position: center center;
+  object-fit: cover;
   height: 80px;
   width: 200px;
   @media screen and (max-width: 600px) {
     height: 80px;
     width: 200px;
   }
+`;
+
+const EditPhoneModal = styled.div`
+  background-color: ${props => props.theme.modalBgColor};
+  border: 1px solid ${props => props.theme.borderColor};
+  border-radius: 12px;
+  margin: 0 15px 0 15px;
+  width: 540px;
+  height: 240px;
+  z-index: 5;
+  animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const SearchModalContainer = styled(ModalContainer)`
+  z-index: 10;
+`;
+const SearchModalOverlay = styled(ModalOverlay)`
+  z-index: 10;
+`;
+const SearchModal = styled(EditPhoneModal)`
+  z-index: 5;
+  padding: 30px;
+  height: 700px;
+  z-index: 10;
+`;
+const CountryContainer = styled.div`
+  z-index: 10;
+  display: flex;
+  align-content: center;
+  width: 480px;
+  height: 640px;
+  flex-direction: column;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 3px;
+    background: none;
+  }
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
+`;
+const CountryRow = styled.div`
+  z-index: 10;
+  height: 40px;
+  width: 480px;
+  font-size: 18px;
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  &:not(:last-child) {
+    border-bottom: 1px solid ${props => props.theme.borderColor};
+  }
+  &:hover {
+    background-color: ${props => props.theme.hoverColor};
+  }
+`;
+const CountryText = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 interface ITheme {
@@ -718,6 +771,11 @@ interface IProps {
   logoutConfirmModal: boolean;
   toggleLogoutConfirmModal: () => void;
   slackReportUsers: (payload: string) => void;
+  countryModalOpen: boolean;
+  openCountryModal: (taget: string) => void;
+  closeCountryModal: () => void;
+  onSelectCountry: (countryPhoneCode: string) => void;
+  target: string;
 }
 
 const UserProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -795,7 +853,12 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   logUserOutFn,
   logoutConfirmModal,
   toggleLogoutConfirmModal,
-  slackReportUsers
+  slackReportUsers,
+  countryModalOpen,
+  openCountryModal,
+  closeCountryModal,
+  onSelectCountry,
+  target
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
     apiKey: `${GOOGLE_PLACE_KEY}`,
@@ -810,6 +873,27 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   } else if (user && coffees && avatars) {
     return (
       <>
+        {countryModalOpen && (
+          <SearchModalContainer>
+            <SearchModalOverlay onClick={closeCountryModal} />
+            <SearchModal>
+              <CountryContainer>
+                Set your {target}
+                {countries.map((country, index) => (
+                  <CountryRow
+                    key={index}
+                    onClick={() => onSelectCountry(country.code)}
+                  >
+                    <CountryText>
+                      <p>&nbsp;{country.name}</p>
+                      <p>&nbsp;{country.emoji}</p>
+                    </CountryText>
+                  </CountryRow>
+                ))}
+              </CountryContainer>
+            </SearchModal>
+          </SearchModalContainer>
+        )}
         {logoutConfirmModal && (
           <ConfirmModalContainer>
             <ConfirmModalOverlay onClick={toggleLogoutConfirmModal} />
@@ -919,10 +1003,31 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               <ModalLink onClick={() => submitCoffee("everyone")}>
                 EVERYONE
               </ModalLink>
-              <ModalLink onClick={() => submitCoffee("nationality")}>
+              <ModalLink
+                onClick={
+                  user.profile.nationality
+                    ? () => submitCoffee("nationality")
+                    : () => openCountryModal("nationality")
+                }
+              >
                 NATIONALITY
               </ModalLink>
-              <ModalLink onClick={() => submitCoffee("gender")}>
+              <ModalLink
+                onClick={
+                  user.profile.residence
+                    ? () => submitCoffee("residence")
+                    : () => openCountryModal("residence")
+                }
+              >
+                RESIDENCE
+              </ModalLink>
+              <ModalLink
+                onClick={
+                  user.profile.gender
+                    ? () => submitCoffee("gender")
+                    : () => openCountryModal("gender")
+                }
+              >
                 GENDER
               </ModalLink>
               <ModalLink onClick={toggleRequestModal}>Cancel</ModalLink>
@@ -1389,11 +1494,6 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               </TripContainer>
             ) : (
               <Container>
-                <Earth
-                  src={
-                    require(`../../../Images/animations/hideTrip.png`)
-                  }
-                />
                 <TripContainer>
                   <UserNameRow>
                     <SText text={"TRIPS"} />

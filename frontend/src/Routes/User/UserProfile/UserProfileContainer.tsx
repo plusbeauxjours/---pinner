@@ -126,6 +126,10 @@ interface IState {
   file: any;
   imagePreviewUrl: any;
   logoutConfirmModal: boolean;
+  countryModalOpen: boolean;
+  countryCode: string;
+  gender: string;
+  target: string;
 }
 
 class UserProfileContainer extends React.Component<IProps, IState> {
@@ -182,7 +186,11 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       currentCityId: state.currentCityId || localStorage.getItem("cityId"),
       file: null,
       imagePreviewUrl: "",
-      logoutConfirmModal: false
+      logoutConfirmModal: false,
+      countryModalOpen: false,
+      countryCode: "",
+      gender: "",
+      target: ""
     };
   }
   public componentDidUpdate(prevProps) {
@@ -229,7 +237,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       search,
       tripList,
       imagePreviewUrl,
-      logoutConfirmModal
+      logoutConfirmModal,
+      countryModalOpen,
+      target
     } = this.state;
     return (
       <SlackReportUsersMutation
@@ -657,6 +667,24 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                 this
                                                                                                   .slackReportUsers
                                                                                               }
+                                                                                              countryModalOpen={
+                                                                                                countryModalOpen
+                                                                                              }
+                                                                                              openCountryModal={
+                                                                                                this
+                                                                                                  .openCountryModal
+                                                                                              }
+                                                                                              closeCountryModal={
+                                                                                                this
+                                                                                                  .closeCountryModal
+                                                                                              }
+                                                                                              onSelectCountry={
+                                                                                                this
+                                                                                                  .onSelectCountry
+                                                                                              }
+                                                                                              target={
+                                                                                                target
+                                                                                              }
                                                                                             />
                                                                                           );
                                                                                         }}
@@ -703,6 +731,25 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       </SlackReportUsersMutation>
     );
   }
+  public onSelectCountry = (countryCode: string) => {
+    const { target } = this.state;
+    console.log(this.state);
+    this.requestCoffeeFn({ variables: { target, countryCode } });
+    this.setState({
+      countryModalOpen: false
+    });
+  };
+  public openCountryModal = target => {
+    this.setState({
+      countryModalOpen: true,
+      target
+    });
+  };
+  public closeCountryModal = () => {
+    this.setState({
+      countryModalOpen: false
+    });
+  };
   public toggleLogoutConfirmModal = () => {
     const { logoutConfirmModal } = this.state;
     this.setState({
@@ -862,22 +909,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       getTrips: { trip }
     } = this.getTripsData;
     console.log(trip);
-    // const Moment = require("moment");
-    // const MomentRange = require("moment-range");
-    // const moments = MomentRange.extendMoment(Moment);
-    // const a = moments.Moment;
-    // console.log(a);
-
-    // for (const i of trip) {
-    //   console.log(i.startDate, i.endDate);
-    // }
-    // const start = trip[19].startDate;
-    // const end = trip[19].endDate;
-    // const range = moments.range(start, end);
-    // console.log(range);
-    // const arrayOfDates = Array.from(range.by("days"));
-    // console.log(arrayOfDates);
-    // return arrayOfDates;
   };
 
   public onFocusChange = focusedInput => {
@@ -1007,30 +1038,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       console.log(e);
     }
   };
-  // public updateEditProfile = (cache, { data: { editProfile } }) => {
-  //   const {
-  //     match: {
-  //       params: { username }
-  //     }
-  //   } = this.props;
-  //   try {
-  //     const data = cache.readQuery({
-  //       query: GET_USER,
-  //       variables: { username }
-  //     });
-  //     if (data) {
-  //       console.log(data);
-  //       data.userProfile.user = editProfile.user;
-  //       cache.writeQuery({
-  //         query: GET_USER,
-  //         variables: { username },
-  //         data
-  //       });
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+
   public toggleRequestModal = () => {
     const { requestModalOpen } = this.state;
     this.setState({
@@ -1045,6 +1053,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } as any);
   };
   public onCompletedRequestCoffee = data => {
+    this.setState({ requestModalOpen: false, countryModalOpen: false });
     if (data.requestCoffee.coffee) {
       toast.success("Coffee requested, finding a guest");
     } else {

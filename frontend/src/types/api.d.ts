@@ -1753,6 +1753,8 @@ export interface RequestCoffee {
 }
 
 export interface RequestCoffeeVariables {
+  countryCode?: string | null;
+  gender?: string | null;
   currentCityId: string;
   target?: string | null;
 }

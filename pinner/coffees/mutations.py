@@ -13,6 +13,8 @@ class RequestCoffee(graphene.Mutation):
     class Arguments:
         currentCityId = graphene.String(required=True)
         target = graphene.String()
+        countryCode = graphene.String()
+        gender = graphene.String()
 
     Output = types.RequestCoffeeResponse
 
@@ -22,11 +24,21 @@ class RequestCoffee(graphene.Mutation):
         user = info.context.user
         currentCityId = kwargs.get('currentCityId')
         target = kwargs.get('target', 'everyone')
-
+        countryCode = kwargs.get('countryCode')
+        gender = kwargs.get('gender')
         if not user.coffee.filter(expires__gte=timezone.now()):
 
             try:
                 currentCity = location_models.City.objects.get(city_id=currentCityId)
+                if target == "nationality" and countryCode:
+                    country = location_models.Country.objects.get(country_code=countryCode)
+                    user.profile.nationality = country
+                    user.profile.save()
+                if target == "residence" and countryCode:
+                    print(countryCode)
+                    country = location_models.Country.objects.get(country_code=countryCode)
+                    user.profile.residence = country
+                    user.profile.save()
 
                 coffee = models.Coffee.objects.create(
                     city=currentCity,

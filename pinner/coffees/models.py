@@ -20,6 +20,7 @@ class Coffee (config_models.TimeStampedModel):
         ('everyone', 'EVERYONE'),
         ('gender', 'GENDER'),
         ('nationality', 'NATIONALITY'),
+        ('residence', 'RESIDENCE'),
     )
 
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, blank=True, null=True)
