@@ -405,7 +405,7 @@ def resolve_recommend_locations(self, info, **kwargs):
     nextPage = page+1
 
     city = user.profile.current_city
-    print(city.latitude, city.longitude)
+
     combined = models.City.objects.order_by('-created_at')[:3]
 
     def get_locations_nearby_coords(latitude, longitude, max_distance=None):
@@ -422,27 +422,42 @@ def resolve_recommend_locations(self, info, **kwargs):
         qs = combined.exclude(id=city.id).annotate(distance=distance_raw_sql).order_by('distance')
         return qs
 
-    nationalityUser = user.profile.nationality.nationality.order_by('-distance')[:10]
-    for i in nationalityUser:
-        nationalityUsers = models.City.objects.filter(id=i.user.profile.current_city.id)
-        combined = combined | nationalityUsers
+    try:
+        nationalityUser = user.profile.nationality.nationality.all().order_by('-distance')[:10]
+        for i in nationalityUser:
+            nationalityUsers = models.City.objects.filter(id=i.user.profile.current_city.id)
+            combined = combined | nationalityUsers
+    except:
+        nationalityUser = user_models.Profile.objects.none()
+        combined = combined | nationalityUser
 
-    residenceUser = user.profile.residence.residence.all().order_by('-distance')[:10]
-    for i in residenceUser:
-        residenceUsers = models.City.objects.filter(id=i.user.profile.current_city.id)
-        combined = combined | residenceUsers
+    try:
+        residenceUser = user.profile.residence.residence.all().order_by('-distance')[:10]
+        for i in residenceUser:
+            residenceUsers = models.City.objects.filter(id=i.user.profile.current_city.id)
+            combined = combined | residenceUsers
+    except:
+        residenceUser = user_models.Profile.objects.none()
+        combined = combined | residenceUser
 
-    locationUser = user_models.Profile.objects.filter(
-        user__moveNotificationUser__city=city).order_by('-distance')[:20]
-    for i in locationUser:
-        locationUsers = models.City.objects.filter(id=i.user.profile.current_city.id)
-        combined = combined | locationUsers
+    try:
+        locationUser = user_models.Profile.objects.filter(
+            user__moveNotificationUser__city=city).order_by('-distance')[:20]
+        for i in locationUser:
+            locationUsers = models.City.objects.filter(id=i.user.profile.current_city.id)
+            combined = combined | locationUsers
+    except:
+        locationUser = user_models.Profile.objects.none()
+        combined = combined | locationUser
 
-    likeUser = user_models.Profile.objects.filter(
-        user__likes__city=city).order_by('-distance')[:20]
-    for i in likeUser:
-        likeUsers = models.City.objects.filter(id=i.user.profile.current_city.id)
-        combined = combined | likeUsers
+    try:
+        likeUser = user_models.Profile.objects.filter(user__likes__city=city).order_by('-distance')[:20]
+        for i in likeUser:
+            likeUsers = models.City.objects.filter(id=i.user.profile.current_city.id)
+            combined = combined | likeUsers
+    except:
+        likeUser = user_models.Profile.objects.none()
+        combined = combined | likeUser
 
     cities = get_locations_nearby_coords(city.latitude, city.longitude)
 

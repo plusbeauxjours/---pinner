@@ -119,24 +119,41 @@ def resolve_recommend_users(self, info, **kwargs):
     userGuest = user.guest.all()
     userHost = user.host.all()
 
-    nationalityUser = user.profile.nationality.nationality.all().order_by('-distance')[:10]
-    residenceUser = user.profile.residence.residence.all().order_by('-distance')[:10]
-    combined = nationalityUser | residenceUser
+    combined = models.Profile.objects.none()
 
-    locationUser = user.moveNotificationUser.all().order_by('-created_at').order_by('city').distinct('city')[:10]
-    for i in locationUser:
-        userLocations = models.Profile.objects.filter(
-            user__moveNotificationUser__city=i.city).order_by('-distance')[:10]
-        combined = combined | userLocations
+    try:
+        nationalityUser = user.profile.nationality.nationality.all().order_by('-distance')[:10]
+        combined = combined | nationalityUser
+    except:
+        nationalityUser = models.Profile.objects.none()
 
-    likeUser = user.likes.all().order_by(
-        '-created_at').order_by('city').distinct('city')[:10]
-    for i in likeUser:
-        userLikes = models.Profile.objects.filter(user__likes__city=i.city).order_by('-distance')[:10]
-        combined = combined | userLikes
+    try:
+        residenceUser = user.profile.residence.residence.all().order_by('-distance')[:10]
+        combined = combined | residenceUser
+    except:
+        residenceUser = models.Profile.objects.none()
+
+    try:
+        locationUser = user.moveNotificationUser.all().order_by('-created_at').order_by('city').distinct('city')[:10]
+        print("hihihi")
+        for i in locationUser:
+            userLocations = models.Profile.objects.filter(user__moveNotificationUser__city=i.city).order_by('-distance')
+            combined = combined | userLocations
+    except:
+        locationUser = models.Profile.objects.none()
+
+    try:
+        likeUser = user.likes.all().order_by(
+            '-created_at').order_by('city').distinct('city')[:10]
+        for i in likeUser:
+            userLikes = models.Profile.objects.filter(user__likes__city=i.city).order_by('-distance')
+            combined = combined | userLikes
+
+    except:
+        likeUser = models.Profile.objects.none()
 
     combined = combined.exclude(id=user.profile.id).exclude(Q(user__host__in=userGuest) | Q(
-        user__host__in=userHost) | Q(user__guest__in=userGuest) | Q(user__guest__in=userHost))
+        user__host__in=userHost) | Q(user__guest__in=userGuest) | Q(user__guest__in=userHost)).order_by('id').distinct('id')
 
     hasNextPage = offset < combined.count()
     combined = combined[offset:20 + offset]
