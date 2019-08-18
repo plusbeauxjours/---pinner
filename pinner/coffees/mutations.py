@@ -2,6 +2,7 @@ import graphene
 from django.db import IntegrityError
 from django.contrib.auth.models import User
 from . import models, types
+import json
 from graphql_jwt.decorators import login_required
 from locations import models as location_models
 from notifications import models as notification_models
@@ -31,12 +32,117 @@ class RequestCoffee(graphene.Mutation):
             try:
                 currentCity = location_models.City.objects.get(city_id=currentCityId)
                 if target == "nationality" and countryCode:
-                    country = location_models.Country.objects.get(country_code=countryCode)
+                    try:
+                        country = location_models.Country.objects.get(country_code=countryCode)
+
+                    except location_models.Country.DoesNotExist:
+                        with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
+                            countryData = json.load(file)
+                            currentCountry = countryData[countryCode]
+                            countryName = currentCountry['name']
+                            countryNameNative = currentCountry['native']
+                            countryCapital = currentCountry['capital']
+                            countryCurrency = currentCountry['currency']
+                            countryPhone = currentCountry['phone']
+                            countryEmoji = currentCountry['emoji']
+                            continentCode = currentCountry['continent']
+                            latitude = currentCountry['latitude']
+                            longitude = currentCountry['longitude']
+
+                            try:
+                                continent = location_models.Continent.objects.get(continent_code=continentCode)
+                            except:
+                                with open('pinner/locations/continentData.json', mode='rt', encoding='utf-8') as file:
+                                    continentData = json.load(file)
+                                    continentName = continentData[continentCode]
+
+                                    try:
+                                        gp = locationThumbnail.get_photos(term=continentName)
+                                        continentPhotoURL = gp.get_urls()
+                                    except:
+                                        continentPhotoURL = None
+
+                                    continent = location_models.Continent.objects.create(
+                                        continent_name=continentName,
+                                        continent_photo=continentPhotoURL,
+                                        continent_code=continentCode
+                                    )
+                        try:
+                            gp = locationThumbnail.get_photos(term=countryName)
+                            countryPhotoURL = gp.get_urls()
+                        except:
+                            countryPhotoURL = None
+
+                        country = location_models.Country.objects.create(
+                            country_code=countryCode,
+                            country_name=countryName,
+                            country_name_native=countryNameNative,
+                            country_capital=countryCapital,
+                            country_currency=countryCurrency,
+                            country_phone=countryPhone,
+                            country_emoji=countryEmoji,
+                            country_photo=countryPhotoURL,
+                            continent=continent,
+                            latitude=latitude,
+                            longitude=longitude
+                        )
                     user.profile.nationality = country
                     user.profile.save()
                 if target == "residence" and countryCode:
-                    print(countryCode)
-                    country = location_models.Country.objects.get(country_code=countryCode)
+                    try:
+                        country = location_models.Country.objects.get(country_code=countryCode)
+
+                    except location_models.Country.DoesNotExist:
+                        with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
+                            countryData = json.load(file)
+                            currentCountry = countryData[countryCode]
+                            countryName = currentCountry['name']
+                            countryNameNative = currentCountry['native']
+                            countryCapital = currentCountry['capital']
+                            countryCurrency = currentCountry['currency']
+                            countryPhone = currentCountry['phone']
+                            countryEmoji = currentCountry['emoji']
+                            continentCode = currentCountry['continent']
+                            latitude = currentCountry['latitude']
+                            longitude = currentCountry['longitude']
+
+                            try:
+                                continent = location_models.Continent.objects.get(continent_code=continentCode)
+                            except:
+                                with open('pinner/locations/continentData.json', mode='rt', encoding='utf-8') as file:
+                                    continentData = json.load(file)
+                                    continentName = continentData[continentCode]
+
+                                    try:
+                                        gp = locationThumbnail.get_photos(term=continentName)
+                                        continentPhotoURL = gp.get_urls()
+                                    except:
+                                        continentPhotoURL = None
+
+                                    continent = location_models.Continent.objects.create(
+                                        continent_name=continentName,
+                                        continent_photo=continentPhotoURL,
+                                        continent_code=continentCode
+                                    )
+                        try:
+                            gp = locationThumbnail.get_photos(term=countryName)
+                            countryPhotoURL = gp.get_urls()
+                        except:
+                            countryPhotoURL = None
+
+                        country = location_models.Country.objects.create(
+                            country_code=countryCode,
+                            country_name=countryName,
+                            country_name_native=countryNameNative,
+                            country_capital=countryCapital,
+                            country_currency=countryCurrency,
+                            country_phone=countryPhone,
+                            country_emoji=countryEmoji,
+                            country_photo=countryPhotoURL,
+                            continent=continent,
+                            latitude=latitude,
+                            longitude=longitude
+                        )
                     user.profile.residence = country
                     user.profile.save()
 

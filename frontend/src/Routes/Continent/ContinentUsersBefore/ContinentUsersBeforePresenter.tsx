@@ -72,7 +72,7 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   @media screen and (max-width: 935px) {
-    margin: 10px 15px 10px 15px;
+    margin: 0 15px 0 15px;
   }
 `;
 

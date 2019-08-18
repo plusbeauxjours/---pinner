@@ -199,6 +199,7 @@ def resolve_country_profile(self, info, **kwargs):
     usersNow = country.currentCountry.order_by('-id').distinct('id')
     usersBefore = country.moveNotificationCountry.exclude(
         actor__profile__in=usersNow).order_by('-actor_id').distinct('actor_id')[:20]
+    print(usersBefore)
 
     cities = models.City.objects.filter(country__country_code=countryCode)
 

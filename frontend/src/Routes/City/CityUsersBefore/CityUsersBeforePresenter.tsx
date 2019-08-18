@@ -24,7 +24,7 @@ const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   height: 50px;
-  grid-template-columns: 4fr;
+  grid-template-columns: 4fr 1fr;
   padding: 0 5px 0 5px;
   margin: 0 15px 0 15px;
   grid-gap: 15px;
@@ -73,7 +73,7 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   @media screen and (max-width: 935px) {
-    margin: 10px 15px 10px 15px;
+    margin: 0 15px 0 15px;
   }
 `;
 

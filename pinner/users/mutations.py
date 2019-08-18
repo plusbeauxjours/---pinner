@@ -3,7 +3,6 @@ import math
 import json
 
 import graphene
-import json
 from django.db import IntegrityError
 from django.db.models import Q
 from django.contrib.auth.models import User

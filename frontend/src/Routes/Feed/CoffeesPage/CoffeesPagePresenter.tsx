@@ -92,7 +92,7 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   @media screen and (max-width: 935px) {
-    margin: 10px 15px 10px 15px;
+    margin: 0 15px 0 15px;
   }
 `;
 
@@ -164,6 +164,8 @@ const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
                               return <Explain>with same gender</Explain>;
                             case "NATIONALITY":
                               return <Explain>with same nationality</Explain>;
+                            case "RESIDENCE":
+                              return <Explain>with same residence</Explain>;
                             default:
                               return null;
                           }
@@ -210,6 +212,8 @@ const CoffeesPagePresenter: React.FunctionComponent<IProps> = ({
                               return <Explain>with same gender</Explain>;
                             case "NATIONALITY":
                               return <Explain>with same nationality</Explain>;
+                            case "RESIDENCE":
+                              return <Explain>with same residence</Explain>;
                             default:
                               return null;
                           }

@@ -11,6 +11,7 @@ import CoffeeBox from "src/Components/CoffeeBox";
 import { Noti } from "../../Icons";
 import LocationBox from "src/Components/LocationBox";
 import Helmet from "react-helmet";
+import { countries } from "../../countryData";
 
 const SWrapper = styled(Wrapper)``;
 
@@ -210,7 +211,70 @@ const NotiICon = styled.div`
   color: ${props => props.theme.color};
 `;
 
+const EditPhoneModal = styled.div`
+  background-color: ${props => props.theme.modalBgColor};
+  border: 1px solid ${props => props.theme.borderColor};
+  border-radius: 12px;
+  margin: 0 15px 0 15px;
+  width: 540px;
+  height: 240px;
+  z-index: 5;
+  animation: ${ModalAnimation} 0.1s linear;
+`;
+
+const SearchModalContainer = styled(ModalContainer)`
+  z-index: 10;
+`;
+const SearchModalOverlay = styled(ModalOverlay)`
+  z-index: 10;
+`;
+const SearchModal = styled(EditPhoneModal)`
+  z-index: 5;
+  padding: 30px;
+  height: 700px;
+  z-index: 10;
+`;
+const CountryContainer = styled.div`
+  z-index: 10;
+  display: flex;
+  align-content: center;
+  width: 480px;
+  height: 640px;
+  flex-direction: column;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 3px;
+    background: none;
+  }
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
+`;
+const CountryRow = styled.div`
+  z-index: 10;
+  height: 40px;
+  width: 480px;
+  font-size: 18px;
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  &:not(:last-child) {
+    border-bottom: 1px solid ${props => props.theme.borderColor};
+  }
+  &:hover {
+    background-color: ${props => props.theme.hoverColor};
+  }
+`;
+const CountryText = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 interface IProps {
+  me: any;
   matchData: any;
   matchLoading: boolean;
   recommendUsersData: any;
@@ -233,8 +297,14 @@ interface IProps {
   isStaying: boolean;
   searchSet: () => void;
   markAsReadMatchFn: any;
+  countryModalOpen: boolean;
+  openCountryModal: (taget: string) => void;
+  closeCountryModal: () => void;
+  onSelectCountry: (countryPhoneCode: string) => void;
+  target: string;
 }
 const MatchPresenter: React.FunctionComponent<IProps> = ({
+  me: { me: { user: me = null } = {} } = {},
   matchData: { getMatches: { matches = null } = {} } = {},
   matchLoading,
   recommendUsersData: { recommendUsers: { users = null } = {} } = {},
@@ -258,13 +328,39 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
   submitCoffee,
   isStaying,
   searchSet,
-  markAsReadMatchFn
+  markAsReadMatchFn,
+  countryModalOpen,
+  openCountryModal,
+  closeCountryModal,
+  onSelectCountry,
+  target
 }) => {
   if (matchLoading || recommendUsersLoading) {
     return <Loader />;
   } else if (!matchLoading && !recommendUsersLoading && matches) {
     return (
       <>
+        {countryModalOpen && (
+          <SearchModalContainer>
+            <SearchModalOverlay onClick={closeCountryModal} />
+            <SearchModal>
+              <CountryContainer>
+                Set your {target}
+                {countries.map((country, index) => (
+                  <CountryRow
+                    key={index}
+                    onClick={() => onSelectCountry(country.code)}
+                  >
+                    <CountryText>
+                      <p>&nbsp;{country.name}</p>
+                      <p>&nbsp;{country.emoji}</p>
+                    </CountryText>
+                  </CountryRow>
+                ))}
+              </CountryContainer>
+            </SearchModal>
+          </SearchModalContainer>
+        )}
         {coffeeReportModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleCoffeeReportModal} />
@@ -280,13 +376,31 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleRequestModal} />
             <Modal>
-              <ModalLink onClick={() => submitCoffee("everyone")}>
-                EVERYONE
-              </ModalLink>
-              <ModalLink onClick={() => submitCoffee("nationality")}>
+              <ModalLink
+                onClick={
+                  me.profile.nationality
+                    ? () => submitCoffee("nationality")
+                    : () => openCountryModal("nationality")
+                }
+              >
                 NATIONALITY
               </ModalLink>
-              <ModalLink onClick={() => submitCoffee("gender")}>
+              <ModalLink
+                onClick={
+                  me.profile.residence
+                    ? () => submitCoffee("residence")
+                    : () => openCountryModal("residence")
+                }
+              >
+                RESIDENCE
+              </ModalLink>
+              <ModalLink
+                onClick={
+                  me.profile.gender
+                    ? () => submitCoffee("gender")
+                    : () => openCountryModal("gender")
+                }
+              >
                 GENDER
               </ModalLink>
               <ModalLink onClick={toggleRequestModal}>Cancel</ModalLink>

@@ -201,6 +201,8 @@ const UserBox: React.FunctionComponent<IProps> = ({
                               return <Explain>with same gender</Explain>;
                             case "NATIONALITY":
                               return <Explain>with same nationality</Explain>;
+                            case "RESIDENCE":
+                              return <Explain>with same residence</Explain>;
                             default:
                               return null;
                           }
@@ -286,6 +288,8 @@ const UserBox: React.FunctionComponent<IProps> = ({
                               return <Explain>with same gender</Explain>;
                             case "NATIONALITY":
                               return <Explain>with same nationality</Explain>;
+                            case "RESIDENCE":
+                              return <Explain>with same residence</Explain>;
                             default:
                               return null;
                           }

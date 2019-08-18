@@ -4152,6 +4152,12 @@
             "description": "NATIONALITY",
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "RESIDENCE",
+            "description": "RESIDENCE",
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "possibleTypes": null

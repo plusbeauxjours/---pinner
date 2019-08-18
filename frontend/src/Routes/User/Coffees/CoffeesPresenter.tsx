@@ -216,6 +216,14 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
                                   } with same nationality`}
                                 />
                               );
+                            case "RESIDENCE":
+                              return (
+                                <CText
+                                  text={`${
+                                    coffee.city.cityName
+                                  }with same residence`}
+                                />
+                              );
                             default:
                               return null;
                           }
@@ -261,6 +269,14 @@ const CoffeesPresenter: React.FunctionComponent<IProps> = ({
                                   text={`${
                                     coffee.city.cityName
                                   }with same nationality`}
+                                />
+                              );
+                            case "RESIDENCE":
+                              return (
+                                <CText
+                                  text={`${
+                                    coffee.city.cityName
+                                  }with same residence`}
                                 />
                               );
                             default:

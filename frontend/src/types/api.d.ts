@@ -3210,6 +3210,7 @@ export enum CoffeeTarget {
   EVERYONE = "EVERYONE",
   GENDER = "GENDER",
   NATIONALITY = "NATIONALITY",
+  RESIDENCE = "RESIDENCE",
 }
 
 /**

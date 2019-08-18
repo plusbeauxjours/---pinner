@@ -168,6 +168,12 @@ class ReportLocation(graphene.Mutation):
 
         try:
             country = models.Country.objects.get(country_code=currentCountryCode)
+            with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
+                countryData = json.load(file)
+                currentCountry = countryData[currentCountryCode]
+                continentCode = currentCountry['continent']
+                continent = models.Continent.objects.get(continent_code=continentCode)
+
         except models.Country.DoesNotExist:
             with open('pinner/locations/countryData.json', mode='rt', encoding='utf-8') as file:
                 countryData = json.load(file)
@@ -195,12 +201,6 @@ class ReportLocation(graphene.Mutation):
                         except:
                             continentPhotoURL = None
 
-                        # DOWNLOAD IMAGE
-                        # continentPhotoURL = gp.get_urls()
-                        # # for i in range(gp.num):
-                        # #     print('Downloading...' + str(i) + '/' + str(gp.num))
-                        # #     gp.download(i)
-
                         continent = models.Continent.objects.create(
                             continent_name=continentName,
                             continent_photo=continentPhotoURL,
@@ -211,11 +211,6 @@ class ReportLocation(graphene.Mutation):
                 countryPhotoURL = gp.get_urls()
             except:
                 countryPhotoURL = None
-
-            # DOWNLOAD IMAGE
-            # for i in range(gp.num):
-            #     print('Downloading...' + str(i) + '/' + str(gp.num))
-            #     gp.download(i)
 
             country = models.Country.objects.create(
                 country_code=currentCountryCode,
@@ -252,11 +247,6 @@ class ReportLocation(graphene.Mutation):
             except:
                 cityPhotoURL = None
 
-            # DOWNLOAD IMAGE
-            # countryPhotoURL = gp.get_urls()
-            # # for i in range(gp.num):
-            # #     print('Downloading...' + str(i) + '/' + str(gp.num))
-            # #     gp.download(i)
             city = models.City.objects.create(
                 city_id=currentCityId,
                 city_name=currentCityName,
@@ -279,10 +269,12 @@ class ReportLocation(graphene.Mutation):
                 latest = user.moveNotificationUser.latest('start_date', 'created_at')
                 print(latest)
                 if latest.city != city:
-                    notification_models.MoveNotification.objects.create(actor=user, city=city)
+                    notification_models.MoveNotification.objects.create(
+                        actor=user, city=city, country=country, continent=continent)
                     return types.ReportLocationResponse(ok=True)
             except notification_models.MoveNotification.DoesNotExist:
-                notification_models.MoveNotification.objects.create(actor=user, city=city)
+                notification_models.MoveNotification.objects.create(
+                    actor=user, city=city, country=country, continent=continent)
                 return types.ReportLocationResponse(ok=True)
 
         return types.ReportLocationResponse(ok=True)
