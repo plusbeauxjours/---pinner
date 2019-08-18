@@ -76,6 +76,18 @@ class TripProfileResponse(graphene.ObjectType):
     coffees = graphene.List(coffee_types.CoffeeType)
 
 
+class GetCitiesPageResponse(graphene.ObjectType):
+    page = graphene.Int()
+    hasNextPage = graphene.Boolean()
+    cities = graphene.List(CityType)
+
+
+class GetCountriesPageResponse(graphene.ObjectType):
+    page = graphene.Int()
+    hasNextPage = graphene.Boolean()
+    countries = graphene.List(CountryType)
+
+
 class CountryProfileResponse(graphene.ObjectType):
     count = graphene.Int()
     country = graphene.Field(CountryType)
@@ -83,6 +95,7 @@ class CountryProfileResponse(graphene.ObjectType):
     usersNow = graphene.List(user_types.ProfileType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
     hasNextPage = graphene.Boolean()
+
 
 class ContinentProfileResponse(graphene.ObjectType):
     count = graphene.Int()

@@ -11,7 +11,6 @@ from django.contrib.auth.models import User
 from notifications import models as notification_models
 from notifications import types as notification_types
 
-from locations import types as location_types
 from coffees import models as coffee_models
 
 from users import types as user_types
@@ -101,7 +100,7 @@ def resolve_city_profile(self, info, **kwargs):
         actor__profile__in=usersNow).order_by('-actor_id').distinct('actor_id')[:20]
     usersNow = usersNow[:20]
 
-    return location_types.CityProfileResponse(count=count, usersNow=usersNow, usersBefore=usersBefore, city=city, hasNextPage=hasNextPage)
+    return types.CityProfileResponse(count=count, usersNow=usersNow, usersBefore=usersBefore, city=city, hasNextPage=hasNextPage)
 
 
 @login_required
@@ -204,7 +203,51 @@ def resolve_country_profile(self, info, **kwargs):
     hasNextPage = 20 < cities.count()
     cities = cities[:20]
 
-    return location_types.CountryProfileResponse(count=count, cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country, hasNextPage=hasNextPage)
+    return types.CountryProfileResponse(count=count, cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country, hasNextPage=hasNextPage)
+
+
+@login_required
+def resolve_get_cities_page(self, info, **kwargs):
+
+    user = info.context.user
+    countryCode = kwargs.get('countryCode')
+    page = kwargs.get('page', 0)
+    offset = 20 * page
+
+    nextPage = page+1
+
+    try:
+        country = models.Country.objects.get(country_code=countryCode)
+    except models.Country.DoesNotExist:
+        raise GraphQLError('Country not found')
+
+    cities = country.cities.all()
+    hasNextPage = offset < cities.count()
+
+    cities = cities[offset:20 + offset]
+    return types.GetCitiesPageResponse(cities=cities, page=nextPage, hasNextPage=hasNextPage)
+
+
+@login_required
+def resolve_get_countries_page(self, info, **kwargs):
+
+    user = info.context.user
+    continentCode = kwargs.get('continentCode')
+    page = kwargs.get('page', 0)
+    offset = 20 * page
+
+    nextPage = page+1
+
+    try:
+        continent = models.Continent.objects.get(continent_code=continentCode)
+    except models.Continent.DoesNotExist:
+        raise GraphQLError('Continent not found')
+
+    countries = continent.countries.all()
+    hasNextPage = offset < countries.count()
+
+    countries = countries[offset:20 + offset]
+    return types.GetCountriesPageResponse(countries=countries, page=nextPage, hasNextPage=hasNextPage)
 
 
 @login_required
@@ -294,7 +337,7 @@ def resolve_continent_profile(self, info, **kwargs):
 
     continents = models.Continent.objects.all()
 
-    return location_types.ContinentProfileResponse(count=count, countries=countries,  usersNow=usersNow, usersBefore=usersBefore, continent=continent, continents=continents, hasNextPage=hasNextPage)
+    return types.ContinentProfileResponse(count=count, countries=countries,  usersNow=usersNow, usersBefore=usersBefore, continent=continent, continents=continents, hasNextPage=hasNextPage)
 
 
 @login_required

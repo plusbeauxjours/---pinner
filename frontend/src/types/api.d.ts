@@ -860,6 +860,7 @@ export interface ContinentProfile_continentProfile_countries {
 export interface ContinentProfile_continentProfile {
   __typename: "ContinentProfileResponse";
   count: number | null;
+  hasNextPage: boolean | null;
   usersNow: (ContinentProfile_continentProfile_usersNow | null)[] | null;
   usersBefore: (ContinentProfile_continentProfile_usersBefore | null)[] | null;
   continent: ContinentProfile_continentProfile_continent | null;
@@ -980,6 +981,49 @@ export interface ContinentUsersNowVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetCitiesPage
+// ====================================================
+
+export interface GetCitiesPage_getCitiesPage_cities_country {
+  __typename: "CountryType";
+  countryName: string | null;
+}
+
+export interface GetCitiesPage_getCitiesPage_cities {
+  __typename: "CityType";
+  id: string;
+  latitude: number | null;
+  longitude: number | null;
+  cityName: string | null;
+  cityId: string | null;
+  cityPhoto: string | null;
+  distance: number | null;
+  country: GetCitiesPage_getCitiesPage_cities_country;
+  likeCount: number | null;
+  isLiked: boolean | null;
+}
+
+export interface GetCitiesPage_getCitiesPage {
+  __typename: "GetCitiesPageResponse";
+  page: number | null;
+  hasNextPage: boolean | null;
+  cities: (GetCitiesPage_getCitiesPage_cities | null)[] | null;
+}
+
+export interface GetCitiesPage {
+  getCitiesPage: GetCitiesPage_getCitiesPage;
+}
+
+export interface GetCitiesPageVariables {
+  page?: number | null;
+  countryCode: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: CountryProfile
 // ====================================================
 
@@ -1078,6 +1122,7 @@ export interface CountryProfile_countryProfile_cities {
 export interface CountryProfile_countryProfile {
   __typename: "CountryProfileResponse";
   count: number | null;
+  hasNextPage: boolean | null;
   country: CountryProfile_countryProfile_country | null;
   usersNow: (CountryProfile_countryProfile_usersNow | null)[] | null;
   usersBefore: (CountryProfile_countryProfile_usersBefore | null)[] | null;

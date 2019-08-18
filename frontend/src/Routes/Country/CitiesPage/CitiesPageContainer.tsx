@@ -1,0 +1,101 @@
+import React from "react";
+import { Query } from "react-apollo";
+import { RecommendLocations } from "../../../types/api";
+import LocationsPagePresenter from "./CitiesPagePresenter";
+import { RECOMMEND_LOCATIONS } from "./CitiesPageQueries";
+
+class CitiesPageQuery extends Query<RecommendLocations> {}
+
+interface IState {
+  search: string;
+  recommendLocationList: any;
+}
+
+class CitiesPageContainer extends React.Component<any, IState> {
+  public recommendLocationsFetchMore;
+  public recommendLocationsData;
+  constructor(props) {
+    super(props);
+    this.state = {
+      search: "",
+      recommendLocationList: []
+    };
+  }
+  public componentDidUpdate(prevProps) {
+    const newProps = this.props;
+    console.log(prevProps);
+    console.log(newProps);
+    if (prevProps.match !== newProps.match) {
+      this.setState({ search: "", recommendLocationList: [] });
+      console.log(this.state);
+    }
+  }
+  public render() {
+    const { search, recommendLocationList } = this.state;
+    return (
+      <CitiesPageQuery query={RECOMMEND_LOCATIONS}>
+        {({
+          data: recommendLocationsData,
+          loading: recommendLocationsLoading,
+          fetchMore: recommendLocationsFetchMore
+        }) => {
+          this.recommendLocationsData = recommendLocationsData;
+          this.recommendLocationsFetchMore = recommendLocationsFetchMore;
+          return (
+            <LocationsPagePresenter
+              recommendLocationsData={recommendLocationsData}
+              recommendLocationsLoading={recommendLocationsLoading}
+              search={search}
+              recommendLocationList={recommendLocationList}
+              onChange={this.onChange}
+              loadMore={this.loadMore}
+            />
+          );
+        }}
+      </CitiesPageQuery>
+    );
+  }
+  public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
+    const {
+      target: { value }
+    } = event;
+    const {
+      recommendLocations: { cities = null }
+    } = this.recommendLocationsData;
+    const locationSearch = (list, text) =>
+      list.filter(i => i.cityName.toLowerCase().includes(text.toLowerCase()));
+    const recommendLocationList = locationSearch(cities, value);
+    console.log(recommendLocationList);
+    this.setState({
+      search: value,
+      recommendLocationList
+    } as any);
+  };
+  public loadMore = page => {
+    this.recommendLocationsFetchMore({
+      query: RECOMMEND_LOCATIONS,
+      variables: {
+        page
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return previousResult;
+        }
+        const data = {
+          recommendLocations: {
+            ...previousResult.recommendLocations,
+            cities: [
+              ...previousResult.recommendLocations.cities,
+              ...fetchMoreResult.recommendLocations.cities
+            ],
+            page: fetchMoreResult.recommendLocations.page,
+            hasNextPage: fetchMoreResult.recommendLocations.hasNextPage
+          }
+        };
+        return data;
+      }
+    });
+  };
+}
+
+export default CitiesPageContainer;

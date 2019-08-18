@@ -153,6 +153,22 @@ class Query(object):
         required=True,
         args={'page': graphene.Int()}
     )
+    get_cities_page = graphene.Field(
+        types.GetCitiesPageResponse,
+        resolver=queries.resolve_get_cities_page,
+        required=True,
+        args={
+            'countryCode': graphene.String(required=True),
+            'page': graphene.Int()}
+    )
+    get_countries_page = graphene.Field(
+        types.GetCountriesPageResponse,
+        resolver=queries.resolve_get_countries_page,
+        required=True,
+        args={
+            'continentCode': graphene.String(required=True),
+            'page': graphene.Int()}
+    )
 
 
 class Mutation(object):
