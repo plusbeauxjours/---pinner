@@ -101,7 +101,6 @@ interface IState {
   tripConfirmModalOpen: boolean;
   tripAddModalOpen: boolean;
   tripEditModalOpen: boolean;
-  profilFormModalOpen: boolean;
   requestModalOpen: boolean;
   editMode: boolean;
   id: string;
@@ -127,6 +126,7 @@ interface IState {
   imagePreviewUrl: any;
   logoutConfirmModal: boolean;
   countryModalOpen: boolean;
+  genderModalOpen: boolean;
   countryCode: string;
   gender: string;
   target: string;
@@ -162,7 +162,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripConfirmModalOpen: false,
       tripAddModalOpen: false,
       tripEditModalOpen: false,
-      profilFormModalOpen: true,
       requestModalOpen: false,
       editMode: false,
       id: props.id,
@@ -188,6 +187,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       imagePreviewUrl: "",
       logoutConfirmModal: false,
       countryModalOpen: false,
+      genderModalOpen: false,
       countryCode: "",
       gender: "",
       target: ""
@@ -219,7 +219,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripConfirmModalOpen,
       tripAddModalOpen,
       tripEditModalOpen,
-      profilFormModalOpen,
       currentCityId,
       requestModalOpen,
       tripCitySearch,
@@ -239,6 +238,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       imagePreviewUrl,
       logoutConfirmModal,
       countryModalOpen,
+      genderModalOpen,
       target
     } = this.state;
     return (
@@ -469,9 +469,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                               tripEditModalOpen={
                                                                                                 tripEditModalOpen
                                                                                               }
-                                                                                              profilFormModalOpen={
-                                                                                                profilFormModalOpen
-                                                                                              }
                                                                                               toggleModal={
                                                                                                 this
                                                                                                   .toggleModal
@@ -496,10 +493,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                 this
                                                                                                   .toggleEditTripModal
                                                                                               }
-                                                                                              toggleProfileFormModal={
-                                                                                                this
-                                                                                                  .toggleProfileFormModal
-                                                                                              }
                                                                                               userProfileData={
                                                                                                 userProfileData
                                                                                               }
@@ -512,17 +505,9 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                               getTipsLoading={
                                                                                                 getTipsLoading
                                                                                               }
-                                                                                              onInputChange={
-                                                                                                this
-                                                                                                  .onInputChange
-                                                                                              }
                                                                                               onSearchInputChange={
                                                                                                 this
                                                                                                   .onSearchInputChange
-                                                                                              }
-                                                                                              onSelectChange={
-                                                                                                this
-                                                                                                  .onSelectChange
                                                                                               }
                                                                                               tripCitySearch={
                                                                                                 tripCitySearch
@@ -682,6 +667,21 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                                 this
                                                                                                   .onSelectCountry
                                                                                               }
+                                                                                              onSelectGender={
+                                                                                                this
+                                                                                                  .onSelectGender
+                                                                                              }
+                                                                                              genderModalOpen={
+                                                                                                genderModalOpen
+                                                                                              }
+                                                                                              openGenderModal={
+                                                                                                this
+                                                                                                  .openGenderModal
+                                                                                              }
+                                                                                              closeGenderModal={
+                                                                                                this
+                                                                                                  .closeGenderModal
+                                                                                              }
                                                                                               target={
                                                                                                 target
                                                                                               }
@@ -731,6 +731,25 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       </SlackReportUsersMutation>
     );
   }
+  public onSelectGender = (gender: string) => {
+    const { target } = this.state;
+    console.log(this.state);
+    this.requestCoffeeFn({ variables: { target, gender } });
+    this.setState({
+      genderModalOpen: false
+    });
+  };
+  public openGenderModal = target => {
+    this.setState({
+      genderModalOpen: true,
+      target
+    });
+  };
+  public closeGenderModal = () => {
+    this.setState({
+      genderModalOpen: true
+    });
+  };
   public onSelectCountry = (countryCode: string) => {
     const { target } = this.state;
     console.log(this.state);
@@ -834,12 +853,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripModalOpen: false
     });
   };
-
-  public toggleProfileFormModal = () => {
-    this.setState({
-      profilFormModalOpen: false
-    } as any);
-  };
   public addTrip = async () => {
     const { tripAddModalOpen, cityId } = this.state;
     await this.setState({
@@ -914,17 +927,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   public onFocusChange = focusedInput => {
     this.setState({ focusedInput });
   };
-
-  public onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      target: { name, value }
-    } = event;
-    this.setState({
-      [name]: value
-    } as any);
-    console.log(this.state);
-  };
-
   public onSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value }
@@ -933,17 +935,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripCitySearch: value
     } as any);
     console.log(this.state);
-  };
-
-  public onSelectChange: React.ChangeEventHandler<
-    HTMLInputElement | HTMLSelectElement
-  > = event => {
-    const {
-      target: { name, value }
-    } = event;
-    this.setState({
-      [name]: value
-    } as any);
   };
   public gotoTrip = (
     cityName,

@@ -49,9 +49,9 @@ interface IState {
   search: string;
   usersNowList: any;
   currentCityId: string;
-  coffeeReportModalOpen: boolean;
   coffeeRequestModalOpen: boolean;
   countryModalOpen: boolean;
+  genderModalOpen: boolean;
   countryCode: string;
   gender: string;
   target: string;
@@ -70,9 +70,9 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       search: "",
       usersNowList: [],
       currentCityId: localStorage.getItem("cityId"),
-      coffeeReportModalOpen: false,
       coffeeRequestModalOpen: false,
       countryModalOpen: false,
+      genderModalOpen: false,
       countryCode: "",
       gender: "",
       target: ""
@@ -96,9 +96,9 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       mapMopdalOpen,
       search,
       usersNowList,
-      coffeeReportModalOpen,
       coffeeRequestModalOpen,
       countryModalOpen,
+      genderModalOpen,
       target
     } = this.state;
     return (
@@ -192,14 +192,8 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                                                   nearCitiesLoading={
                                                     nearCitiesLoading
                                                   }
-                                                  coffeeReportModalOpen={
-                                                    coffeeReportModalOpen
-                                                  }
                                                   coffeeRequestModalOpen={
                                                     coffeeRequestModalOpen
-                                                  }
-                                                  toggleCoffeeReportModal={
-                                                    this.toggleCoffeeReportModal
                                                   }
                                                   toggleCoffeeRequestModal={
                                                     this
@@ -223,8 +217,20 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                                                   closeCountryModal={
                                                     this.closeCountryModal
                                                   }
+                                                  genderModalOpen={
+                                                    genderModalOpen
+                                                  }
+                                                  openGenderModal={
+                                                    this.openGenderModal
+                                                  }
+                                                  closeGenderModal={
+                                                    this.closeGenderModal
+                                                  }
                                                   onSelectCountry={
                                                     this.onSelectCountry
+                                                  }
+                                                  onSelectGender={
+                                                    this.onSelectGender
                                                   }
                                                   target={target}
                                                 />
@@ -251,6 +257,25 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       </MeQuery>
     );
   }
+  public onSelectGender = (gender: string) => {
+    const { target } = this.state;
+    console.log(this.state);
+    this.requestCoffeeFn({ variables: { target, gender } });
+    this.setState({
+      genderModalOpen: false
+    });
+  };
+  public openGenderModal = target => {
+    this.setState({
+      genderModalOpen: true,
+      target
+    });
+  };
+  public closeGenderModal = () => {
+    this.setState({
+      genderModalOpen: true
+    });
+  };
   public onSelectCountry = (countryCode: string) => {
     const { target } = this.state;
     console.log(this.state);
@@ -302,12 +327,6 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     const { coffeeRequestModalOpen } = this.state;
     this.setState({
       coffeeRequestModalOpen: !coffeeRequestModalOpen
-    } as any);
-  };
-  public toggleCoffeeReportModal = () => {
-    const { coffeeReportModalOpen } = this.state;
-    this.setState({
-      coffeeReportModalOpen: !coffeeReportModalOpen
     } as any);
   };
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {

@@ -95,12 +95,10 @@ def resolve_city_profile(self, info, **kwargs):
     count = user.moveNotificationUser.values('id').filter(city__city_id=cityId).count()
 
     coffees = city.coffee.filter(expires__gt=timezone.now())
-
+    print(coffees)
     usersNow = city.currentCity.order_by('-id').distinct('id')
-    print(usersNow)
     usersBefore = city.moveNotificationCity.exclude(
         actor__profile__in=usersNow).order_by('-actor_id').distinct('actor_id')[:20]
-    print(usersBefore)
 
     return location_types.CityProfileResponse(count=count, usersNow=usersNow, usersBefore=usersBefore, city=city)
 

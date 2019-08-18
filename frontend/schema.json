@@ -4108,19 +4108,19 @@
         "enumValues": [
           {
             "name": "MALE",
-            "description": "Male",
+            "description": "MALE",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "FEMALE",
-            "description": "Female",
+            "description": "FEMALE",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "OTHER",
-            "description": "Other",
+            "description": "OTHER",
             "isDeprecated": false,
             "deprecationReason": null
           }

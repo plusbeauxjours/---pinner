@@ -48,8 +48,8 @@ interface IState {
   currentLng: number;
   currentCityId: string;
   requestModalOpen: boolean;
-  coffeeReportModalOpen: boolean;
   countryModalOpen: boolean;
+  genderModalOpen: boolean;
   countryCode: string;
   gender: string;
   target: string;
@@ -69,8 +69,8 @@ class MatchContainer extends React.Component<IProps, IState> {
       currentLng: state.currentLng,
       currentCityId: state.currentCityId || localStorage.getItem("cityId"),
       requestModalOpen: false,
-      coffeeReportModalOpen: false,
       countryModalOpen: false,
+      genderModalOpen: false,
       countryCode: "",
       gender: "",
       target: ""
@@ -90,8 +90,8 @@ class MatchContainer extends React.Component<IProps, IState> {
       currentLat,
       currentLng,
       requestModalOpen,
-      coffeeReportModalOpen,
       countryModalOpen,
+      genderModalOpen,
       target
     } = this.state;
     const isStaying = this.state.currentCityId === currentCityId;
@@ -177,12 +177,6 @@ class MatchContainer extends React.Component<IProps, IState> {
                                                   requestModalOpen={
                                                     requestModalOpen
                                                   }
-                                                  coffeeReportModalOpen={
-                                                    coffeeReportModalOpen
-                                                  }
-                                                  toggleCoffeeReportModal={
-                                                    this.toggleCoffeeReportModal
-                                                  }
                                                   toggleRequestModal={
                                                     this.toggleRequestModal
                                                   }
@@ -203,8 +197,20 @@ class MatchContainer extends React.Component<IProps, IState> {
                                                   closeCountryModal={
                                                     this.closeCountryModal
                                                   }
+                                                  genderModalOpen={
+                                                    genderModalOpen
+                                                  }
+                                                  openGenderModal={
+                                                    this.openGenderModal
+                                                  }
+                                                  closeGenderModal={
+                                                    this.closeGenderModal
+                                                  }
                                                   onSelectCountry={
                                                     this.onSelectCountry
+                                                  }
+                                                  onSelectGender={
+                                                    this.onSelectGender
                                                   }
                                                   target={target}
                                                 />
@@ -230,6 +236,25 @@ class MatchContainer extends React.Component<IProps, IState> {
         }}
       </MeQuery>
     );
+  };
+  public onSelectGender = (gender: string) => {
+    const { target } = this.state;
+    console.log(this.state);
+    this.requestCoffeeFn({ variables: { target, gender } });
+    this.setState({
+      genderModalOpen: false
+    });
+  };
+  public openGenderModal = target => {
+    this.setState({
+      genderModalOpen: true,
+      target
+    });
+  };
+  public closeGenderModal = () => {
+    this.setState({
+      genderModalOpen: true
+    });
   };
   public onSelectCountry = (countryCode: string) => {
     const { target } = this.state;
@@ -284,12 +309,6 @@ class MatchContainer extends React.Component<IProps, IState> {
     this.setState({
       search: value,
       matchList
-    } as any);
-  };
-  public toggleCoffeeReportModal = () => {
-    const { coffeeReportModalOpen } = this.state;
-    this.setState({
-      coffeeReportModalOpen: !coffeeReportModalOpen
     } as any);
   };
   public toggleRequestModal = () => {

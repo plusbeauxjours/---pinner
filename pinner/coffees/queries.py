@@ -34,6 +34,7 @@ def resolve_get_coffees(self, info, **kwargs):
                                           Q(target='residence', host__profile__residence=profile.residence) |
                                           Q(target='gender', host__profile__gender=profile.gender)) &
                                          Q(expires__gte=timezone.now())).exclude(host__id__in=matchedGuests).exclude(host__id__in=matchedHosts).order_by('-created_at')
+            print(coffees)
             return types.GetCoffeesResponse(coffees=coffees)
 
         except models.Coffee.DoesNotExist:

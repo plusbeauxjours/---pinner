@@ -674,6 +674,19 @@ const CountryText = styled.div`
   flex-direction: row;
 `;
 
+const GenderModalContainer = styled(ModalContainer)`
+  z-index: 10;
+`;
+const GenderModalOverlay = styled(ModalOverlay)`
+  z-index: 10;
+`;
+const GenderModal = styled(Modal)`
+  z-index: 10;
+`;
+const GenderModalLink = styled(ModalLink)`
+  z-index: 10;
+`;
+
 interface ITheme {
   size?: string;
 }
@@ -700,7 +713,6 @@ interface IProps {
   tripAddModalOpen: boolean;
   tripEditModalOpen: boolean;
   requestModalOpen: boolean;
-  profilFormModalOpen: boolean;
 
   tripCitySearch: string;
   cityName: string;
@@ -727,7 +739,6 @@ interface IProps {
   toggleEditTripModal: () => void;
 
   toggleRequestModal: () => void;
-  toggleProfileFormModal: () => void;
   avatarModalOpen: boolean;
   toggleAvatarModal: () => void;
   togglePreviewAvatarModal: () => void;
@@ -745,11 +756,7 @@ interface IProps {
   ) => void;
 
   submitCoffee: any;
-  onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSearchInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onSelectChange: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
 
   username: string;
 
@@ -775,6 +782,10 @@ interface IProps {
   openCountryModal: (taget: string) => void;
   closeCountryModal: () => void;
   onSelectCountry: (countryPhoneCode: string) => void;
+  genderModalOpen: boolean;
+  openGenderModal: (taget: string) => void;
+  closeGenderModal: () => void;
+  onSelectGender: (gender: string) => void;
   target: string;
 }
 
@@ -811,14 +822,11 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
 
   toggleRequestModal,
 
-  toggleProfileFormModal,
   addTrip,
   editTrip,
   deleteTrip,
   gotoTrip,
-  onInputChange,
   onSearchInputChange,
-  onSelectChange,
   tripCitySearch,
   cityName,
   cityId,
@@ -858,6 +866,10 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   openCountryModal,
   closeCountryModal,
   onSelectCountry,
+  genderModalOpen,
+  openGenderModal,
+  closeGenderModal,
+  onSelectGender,
   target
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
@@ -873,6 +885,25 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   } else if (user && coffees && avatars) {
     return (
       <>
+        {genderModalOpen && (
+          <GenderModalContainer>
+            <GenderModalOverlay onClick={closeGenderModal} />
+            <GenderModal>
+              <GenderModalLink onClick={() => onSelectGender("MALE")}>
+                MALE
+              </GenderModalLink>
+              <GenderModalLink onClick={() => onSelectGender("FEMALE")}>
+                FEMALE
+              </GenderModalLink>
+              <GenderModalLink onClick={() => onSelectGender("OTHER")}>
+                OTHER
+              </GenderModalLink>
+              <GenderModalLink onClick={closeGenderModal}>
+                CANCEL
+              </GenderModalLink>
+            </GenderModal>
+          </GenderModalContainer>
+        )}
         {countryModalOpen && (
           <SearchModalContainer>
             <SearchModalOverlay onClick={closeCountryModal} />
@@ -1025,7 +1056,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                 onClick={
                   user.profile.gender
                     ? () => submitCoffee("gender")
-                    : () => openCountryModal("gender")
+                    : () => openGenderModal("gender")
                 }
               >
                 GENDER
@@ -1331,6 +1362,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                 />
               </Link>
               <Row>{`${user.profile.bio}`}</Row>
+              {user.profile.gender && <Row>{`${user.profile.gender}`}</Row>}
               <Row>
                 <UBold text={String(user.profile.distance)} />
                 <UBold text={" how many KM"} />

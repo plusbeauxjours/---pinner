@@ -222,6 +222,19 @@ const EditPhoneModal = styled.div`
   animation: ${ModalAnimation} 0.1s linear;
 `;
 
+const GenderModalContainer = styled(ModalContainer)`
+  z-index: 10;
+`;
+const GenderModalOverlay = styled(ModalOverlay)`
+  z-index: 10;
+`;
+const GenderModal = styled(Modal)`
+  z-index: 10;
+`;
+const GenderModalLink = styled(ModalLink)`
+  z-index: 10;
+`;
+
 const SearchModalContainer = styled(ModalContainer)`
   z-index: 10;
 `;
@@ -290,8 +303,6 @@ interface IProps {
   currentCityId: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   requestModalOpen: boolean;
-  coffeeReportModalOpen: boolean;
-  toggleCoffeeReportModal: () => void;
   toggleRequestModal: () => void;
   submitCoffee: any;
   isStaying: boolean;
@@ -301,6 +312,10 @@ interface IProps {
   openCountryModal: (taget: string) => void;
   closeCountryModal: () => void;
   onSelectCountry: (countryPhoneCode: string) => void;
+  genderModalOpen: boolean;
+  openGenderModal: (taget: string) => void;
+  closeGenderModal: () => void;
+  onSelectGender: (gender: string) => void;
   target: string;
 }
 const MatchPresenter: React.FunctionComponent<IProps> = ({
@@ -322,8 +337,6 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
   currentCityId,
   onChange,
   requestModalOpen,
-  coffeeReportModalOpen,
-  toggleCoffeeReportModal,
   toggleRequestModal,
   submitCoffee,
   isStaying,
@@ -333,6 +346,10 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
   openCountryModal,
   closeCountryModal,
   onSelectCountry,
+  genderModalOpen,
+  openGenderModal,
+  closeGenderModal,
+  onSelectGender,
   target
 }) => {
   if (matchLoading || recommendUsersLoading) {
@@ -340,6 +357,25 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
   } else if (!matchLoading && !recommendUsersLoading && matches) {
     return (
       <>
+        {genderModalOpen && (
+          <GenderModalContainer>
+            <GenderModalOverlay onClick={closeGenderModal} />
+            <GenderModal>
+              <GenderModalLink onClick={() => onSelectGender("MALE")}>
+                MALE
+              </GenderModalLink>
+              <GenderModalLink onClick={() => onSelectGender("FEMALE")}>
+                FEMALE
+              </GenderModalLink>
+              <GenderModalLink onClick={() => onSelectGender("OTHER")}>
+                OTHER
+              </GenderModalLink>
+              <GenderModalLink onClick={closeGenderModal}>
+                CANCEL
+              </GenderModalLink>
+            </GenderModal>
+          </GenderModalContainer>
+        )}
         {countryModalOpen && (
           <SearchModalContainer>
             <SearchModalOverlay onClick={closeCountryModal} />
@@ -360,17 +396,6 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
               </CountryContainer>
             </SearchModal>
           </SearchModalContainer>
-        )}
-        {coffeeReportModalOpen && (
-          <ModalContainer>
-            <ModalOverlay onClick={toggleCoffeeReportModal} />
-            <Modal>
-              <ModalLink onClick={() => console.log("REPORT COFFEE")}>
-                REPORT COFFEE
-              </ModalLink>
-              <ModalLink onClick={toggleCoffeeReportModal}>Cancel</ModalLink>
-            </Modal>
-          </ModalContainer>
         )}
         {requestModalOpen && (
           <ModalContainer>
@@ -398,7 +423,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                 onClick={
                   me.profile.gender
                     ? () => submitCoffee("gender")
-                    : () => openCountryModal("gender")
+                    : () => openGenderModal("gender")
                 }
               >
                 GENDER

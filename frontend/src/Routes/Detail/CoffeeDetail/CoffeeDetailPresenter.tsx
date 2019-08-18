@@ -218,16 +218,10 @@ const CoffeeDetailPresenter: React.FunctionComponent<IProps> = ({
           <MenuModalContainer>
             <MenuModalOverlay onClick={toggleModal} />
             <MenuModal>
-              {coffee.host.profile.isSelf ? (
+              {coffee.host.profile.isSelf && (
                 <>
                   <MenuModalLink onClick={() => deleteCoffee()}>
                     DELETE COFFEE
-                  </MenuModalLink>
-                </>
-              ) : (
-                <>
-                  <MenuModalLink onClick={() => console.log("REPORT COFFEE")}>
-                    REPORT COFFEE
                   </MenuModalLink>
                 </>
               )}

@@ -159,6 +159,7 @@ const UserBox: React.FunctionComponent<IProps> = ({
   if (!coffeeLoading && currentCityId && isStaying) {
     return (
       <>
+        {console.log("kokokosex nani")}
         <GreyLine />
         <Title>
           <SText text={"NEED SOME COFFEE NOW"} />
