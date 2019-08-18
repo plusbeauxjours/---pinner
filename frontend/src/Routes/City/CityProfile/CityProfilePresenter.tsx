@@ -13,7 +13,7 @@ import CityLikeBtn from "../../../Components/CityLikeBtn";
 import UserBox from "src/Components/UserBox";
 import CoffeeBox from "src/Components/CoffeeBox";
 import LocationBox from "src/Components/LocationBox";
-import { List } from "../../../Icons";
+import { List, DropDown } from "../../../Icons";
 import LocationMap from "src/Components/LocationMap";
 import Helmet from "react-helmet";
 import { countries } from "src/countryData";
@@ -221,7 +221,21 @@ const NameContainer = styled.span`
 const ListIcon = styled.span`
   display: flex;
   flex-direction: row;
+  cursor: pointer;
+  svg {
+    fill: ${props => props.theme.iconColor};
+    transition: fill 0.2s ease-in-out;
+    &:hover {
+      fill: ${props => props.theme.hoverColor};
+    }
+  }
+`;
+
+const DropDownIcon = styled.span`
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 15px; 
   cursor: pointer;
   svg {
     fill: ${props => props.theme.iconColor};
@@ -442,6 +456,7 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
   coffeeLoading,
   cityData: {
     cityProfile: {
+      hasNextPage = null,
       count = null,
       usersNow = null,
       usersBefore = null,
@@ -726,6 +741,14 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                     </Link>
                   </UserRow>
                 ))}
+              {console.log(hasNextPage)}
+              {hasNextPage && (
+                <Link to={`/city/${cityId}/usersnow`}>
+                  <DropDownIcon>
+                    <DropDown />
+                  </DropDownIcon>
+                </Link>
+              )}
             </UserContainer>
           </PHeader>
           {usersBefore && usersBefore.length !== 0 ? (

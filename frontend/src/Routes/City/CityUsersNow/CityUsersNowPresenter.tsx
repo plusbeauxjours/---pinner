@@ -131,7 +131,6 @@ const CityUsersNowPresenter: React.FunctionComponent<IProps> = ({
                     </Link>
                   </UserRow>
                 ))}
-              {console.log("hasNextPage:  ", hasNextPage)}
               {usersNowList.length === 0 &&
                 !search &&
                 usersNow &&

@@ -568,6 +568,7 @@ export interface CityProfile_cityProfile_city {
 export interface CityProfile_cityProfile {
   __typename: "CityProfileResponse";
   count: number | null;
+  hasNextPage: boolean | null;
   usersNow: (CityProfile_cityProfile_usersNow | null)[] | null;
   usersBefore: (CityProfile_cityProfile_usersBefore | null)[] | null;
   city: CityProfile_cityProfile_city | null;

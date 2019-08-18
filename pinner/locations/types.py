@@ -65,6 +65,7 @@ class CityProfileResponse(graphene.ObjectType):
     city = graphene.Field(CityType)
     usersNow = graphene.List(user_types.ProfileType)
     usersBefore = graphene.List(notification_types.MoveNotificationType)
+    hasNextPage = graphene.Boolean()
 
 
 class TripProfileResponse(graphene.ObjectType):

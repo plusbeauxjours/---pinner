@@ -95,12 +95,13 @@ def resolve_city_profile(self, info, **kwargs):
     count = user.moveNotificationUser.values('id').filter(city__city_id=cityId).count()
 
     coffees = city.coffee.filter(expires__gt=timezone.now())
-    print(coffees)
     usersNow = city.currentCity.order_by('-id').distinct('id')
+    hasNextPage = 20 < usersNow.count()
     usersBefore = city.moveNotificationCity.exclude(
         actor__profile__in=usersNow).order_by('-actor_id').distinct('actor_id')[:20]
+    usersNow = usersNow[:20]
 
-    return location_types.CityProfileResponse(count=count, usersNow=usersNow, usersBefore=usersBefore, city=city)
+    return location_types.CityProfileResponse(count=count, usersNow=usersNow, usersBefore=usersBefore, city=city, hasNextPage=hasNextPage)
 
 
 @login_required
@@ -108,7 +109,6 @@ def resolve_get_samename_cities(self, info, **kwargs):
 
     user = info.context.user
     cityId = kwargs.get('cityId')
-    page = kwargs.get('page', 0)
 
     city = models.City.objects.get(city_id=cityId)
     cities = models.City.objects.filter(city_name=city.city_name)
