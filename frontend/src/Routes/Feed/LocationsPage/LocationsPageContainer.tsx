@@ -3,15 +3,18 @@ import { Query } from "react-apollo";
 import { RecommendLocations } from "../../../types/api";
 import LocationsPagePresenter from "./LocationsPagePresenter";
 import { RECOMMEND_LOCATIONS } from "./LocationsPageQueries";
+import { RouteComponentProps } from "react-router";
 
 class RecommendLocationsQuery extends Query<RecommendLocations> {}
+
+interface IProps extends RouteComponentProps<any> {}
 
 interface IState {
   search: string;
   recommendLocationList: any;
 }
 
-class PeoplePageContainer extends React.Component<any, IState> {
+class PeoplePageContainer extends React.Component<IProps, IState> {
   public recommendLocationsFetchMore;
   public recommendLocationsData;
   constructor(props) {

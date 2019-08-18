@@ -27,9 +27,11 @@ import CityUsersNow from "../Routes/City/CityUsersNow";
 import CityUsersBefore from "../Routes/City/CityUsersBefore";
 import NearCities from "../Routes/City/NearCities";
 
+import CountriesPage from "../Routes/Continent/CountriesPage";
 import ContinentUsersNow from "../Routes/Continent/ContinentUsersNow";
 import ContinentUsersBefore from "../Routes/Continent/ContinentUsersBefore";
 
+import CitiesPage from "../Routes/Country/CitiesPage";
 import CountryUsersNow from "../Routes/Country/CountryUsersNow";
 import CountryUsersBefore from "../Routes/Country/CountryUsersBefore";
 
@@ -152,6 +154,10 @@ class LoggedInPages extends React.Component<IProps> {
 
           {/* CONTINENT */}
           <Route
+            path="/continent/:continentCode/countries"
+            component={CountriesPage}
+          />
+          <Route
             path="/continent/:continentCode/coffees"
             component={CoffeesPage}
           />
@@ -169,6 +175,7 @@ class LoggedInPages extends React.Component<IProps> {
           />
 
           {/* COUNTRY */}
+          <Route path="/country/:countryCode/cities" component={CitiesPage} />
           <Route path="/country/:countryCode/coffees" component={CoffeesPage} />
           <Route
             path="/country/:countryCode/usersNow"

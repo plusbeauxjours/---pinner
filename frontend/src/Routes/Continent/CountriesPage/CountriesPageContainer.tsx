@@ -2,51 +2,63 @@ import React from "react";
 import { Query } from "react-apollo";
 import { RecommendLocations } from "../../../types/api";
 import CountriesPagePresenter from "./CountriesPagePresenter";
-import { RECOMMEND_LOCATIONS } from "./CountriesPageQueries";
+import { GET_COUNTRIES_PAGE } from "./CountriesPageQueries";
+import { RouteComponentProps } from "react-router";
 
 class CountriesPageQuery extends Query<RecommendLocations> {}
 
+interface IProps extends RouteComponentProps<any> {}
+
 interface IState {
   search: string;
-  recommendLocationList: any;
+  countriesList: any;
 }
 
-class CountriesPageContainer extends React.Component<any, IState> {
-  public recommendLocationsFetchMore;
-  public recommendLocationsData;
+class CountriesPageContainer extends React.Component<IProps, IState> {
+  public countriesFetchMore;
+  public countriesData;
   constructor(props) {
     super(props);
     this.state = {
       search: "",
-      recommendLocationList: []
+      countriesList: []
     };
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
-    console.log(prevProps);
-    console.log(newProps);
     if (prevProps.match !== newProps.match) {
-      this.setState({ search: "", recommendLocationList: [] });
+      this.setState({ search: "", countriesList: [] });
       console.log(this.state);
     }
   }
   public render() {
-    const { search, recommendLocationList } = this.state;
+    const {
+      match: {
+        params: { continentCode }
+      }
+    } = this.props;
+    console.log(continentCode);
+    const { search, countriesList } = this.state;
     return (
-      <CountriesPageQuery query={RECOMMEND_LOCATIONS}>
+      <CountriesPageQuery
+        query={GET_COUNTRIES_PAGE}
+        variables={{
+          continentCode
+        }}
+      >
         {({
-          data: recommendLocationsData,
-          loading: recommendLocationsLoading,
-          fetchMore: recommendLocationsFetchMore
+          data: countriesData,
+          loading: countriesLoading,
+          fetchMore: countriesFetchMore
         }) => {
-          this.recommendLocationsData = recommendLocationsData;
-          this.recommendLocationsFetchMore = recommendLocationsFetchMore;
+          this.countriesData = countriesData;
+          this.countriesFetchMore = countriesFetchMore;
           return (
             <CountriesPagePresenter
-              recommendLocationsData={recommendLocationsData}
-              recommendLocationsLoading={recommendLocationsLoading}
+              countriesData={countriesData}
+              countriesLoading={countriesLoading}
               search={search}
-              recommendLocationList={recommendLocationList}
+              countriesList={countriesList}
               onChange={this.onChange}
               loadMore={this.loadMore}
             />
@@ -60,11 +72,13 @@ class CountriesPageContainer extends React.Component<any, IState> {
       target: { value }
     } = event;
     const {
-      recommendLocations: { cities = null }
-    } = this.recommendLocationsData;
+      getCountriesPage: { countries = null }
+    } = this.countriesData;
     const locationSearch = (list, text) =>
-      list.filter(i => i.cityName.toLowerCase().includes(text.toLowerCase()));
-    const recommendLocationList = locationSearch(cities, value);
+      list.filter(i =>
+        i.countryName.toLowerCase().includes(text.toLowerCase())
+      );
+    const recommendLocationList = locationSearch(countries, value);
     console.log(recommendLocationList);
     this.setState({
       search: value,
@@ -72,9 +86,15 @@ class CountriesPageContainer extends React.Component<any, IState> {
     } as any);
   };
   public loadMore = page => {
-    this.recommendLocationsFetchMore({
-      query: RECOMMEND_LOCATIONS,
+    const {
+      match: {
+        params: { continentCode }
+      }
+    } = this.props;
+    this.countriesFetchMore({
+      query: GET_COUNTRIES_PAGE,
       variables: {
+        continentCode,
         page
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
@@ -82,14 +102,14 @@ class CountriesPageContainer extends React.Component<any, IState> {
           return previousResult;
         }
         const data = {
-          recommendLocations: {
-            ...previousResult.recommendLocations,
-            cities: [
-              ...previousResult.recommendLocations.cities,
-              ...fetchMoreResult.recommendLocations.cities
+          getCountriesPage: {
+            ...previousResult.getCountriesPage,
+            countries: [
+              ...previousResult.getCountriesPage.countries,
+              ...fetchMoreResult.getCountriesPage.countries
             ],
-            page: fetchMoreResult.recommendLocations.page,
-            hasNextPage: fetchMoreResult.recommendLocations.hasNextPage
+            page: fetchMoreResult.getCountriesPage.page,
+            hasNextPage: fetchMoreResult.getCountriesPage.hasNextPage
           }
         };
         return data;

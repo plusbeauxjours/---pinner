@@ -222,10 +222,11 @@ def resolve_get_cities_page(self, info, **kwargs):
         raise GraphQLError('Country not found')
 
     cities = country.cities.all()
+    cityCount = cities.count()
     hasNextPage = offset < cities.count()
 
     cities = cities[offset:20 + offset]
-    return types.GetCitiesPageResponse(cities=cities, page=nextPage, hasNextPage=hasNextPage)
+    return types.GetCitiesPageResponse(cities=cities, page=nextPage, hasNextPage=hasNextPage, cityCount=cityCount)
 
 
 @login_required
@@ -237,6 +238,7 @@ def resolve_get_countries_page(self, info, **kwargs):
     offset = 20 * page
 
     nextPage = page+1
+    print(continentCode)
 
     try:
         continent = models.Continent.objects.get(continent_code=continentCode)
@@ -244,10 +246,11 @@ def resolve_get_countries_page(self, info, **kwargs):
         raise GraphQLError('Continent not found')
 
     countries = continent.countries.all()
+    countryCount = countries.count()
     hasNextPage = offset < countries.count()
 
     countries = countries[offset:20 + offset]
-    return types.GetCountriesPageResponse(countries=countries, page=nextPage, hasNextPage=hasNextPage)
+    return types.GetCountriesPageResponse(countries=countries, page=nextPage, hasNextPage=hasNextPage, countryCount=countryCount)
 
 
 @login_required

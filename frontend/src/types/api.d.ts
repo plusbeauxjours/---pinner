@@ -981,6 +981,47 @@ export interface ContinentUsersNowVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetCountriesPage
+// ====================================================
+
+export interface GetCountriesPage_getCountriesPage_countries_continent {
+  __typename: "ContinentType";
+  continentCode: string | null;
+  continentName: string | null;
+}
+
+export interface GetCountriesPage_getCountriesPage_countries {
+  __typename: "CountryType";
+  id: string;
+  countryName: string | null;
+  countryCode: string | null;
+  countryPhoto: string | null;
+  cityCount: number | null;
+  continent: GetCountriesPage_getCountriesPage_countries_continent | null;
+}
+
+export interface GetCountriesPage_getCountriesPage {
+  __typename: "GetCountriesPageResponse";
+  page: number | null;
+  hasNextPage: boolean | null;
+  countryCount: number | null;
+  countries: (GetCountriesPage_getCountriesPage_countries | null)[] | null;
+}
+
+export interface GetCountriesPage {
+  getCountriesPage: GetCountriesPage_getCountriesPage;
+}
+
+export interface GetCountriesPageVariables {
+  page?: number | null;
+  continentCode: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetCitiesPage
 // ====================================================
 
@@ -1007,6 +1048,7 @@ export interface GetCitiesPage_getCitiesPage {
   __typename: "GetCitiesPageResponse";
   page: number | null;
   hasNextPage: boolean | null;
+  cityCount: number | null;
   cities: (GetCitiesPage_getCitiesPage_cities | null)[] | null;
 }
 

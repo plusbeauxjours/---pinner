@@ -79,12 +79,14 @@ class TripProfileResponse(graphene.ObjectType):
 class GetCitiesPageResponse(graphene.ObjectType):
     page = graphene.Int()
     hasNextPage = graphene.Boolean()
+    cityCount = graphene.Int()
     cities = graphene.List(CityType)
 
 
 class GetCountriesPageResponse(graphene.ObjectType):
     page = graphene.Int()
     hasNextPage = graphene.Boolean()
+    countryCount = graphene.Int()
     countries = graphene.List(CountryType)
 
 

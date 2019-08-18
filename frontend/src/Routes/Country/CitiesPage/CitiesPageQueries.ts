@@ -6,6 +6,7 @@ export const GET_CITIES_PAGE = gql`
     getCitiesPage(page: $page, countryCode: $countryCode) {
       page
       hasNextPage
+      cityCount
       cities {
         ...CityParts
       }

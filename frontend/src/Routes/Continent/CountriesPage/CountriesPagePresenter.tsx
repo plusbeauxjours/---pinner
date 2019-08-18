@@ -7,7 +7,6 @@ import InfiniteScroll from "react-infinite-scroller";
 import { Link } from "react-router-dom";
 import Bold from "../../../Components/Bold";
 import Avatar from "../../../Components/Avatar";
-import CityLikeBtn from "../../../Components/CityLikeBtn";
 import Helmet from "react-helmet";
 
 const SWrapper = styled(Wrapper)`
@@ -25,7 +24,7 @@ const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   height: 50px;
-  grid-template-columns: 4fr 1fr 1fr;
+  grid-template-columns: 4fr 1fr;
   padding: 0 5px 0 5px;
   margin: 0 15px 0 15px;
   grid-gap: 15px;
@@ -110,21 +109,25 @@ const SText = styled(Bold)`
 `;
 
 interface IProps {
-  recommendLocationsData: any;
-  recommendLocationsLoading: boolean;
+  countriesData: any;
+  countriesLoading: boolean;
   search: string;
-  recommendLocationList: any;
+  countriesList: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   loadMore: any;
 }
 
 const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
-  recommendLocationsData: {
-    recommendLocations: { cities = null, hasNextPage = null } = {}
+  countriesData: {
+    getCountriesPage: {
+      countries = null,
+      hasNextPage = null,
+      countryCount = null
+    } = {}
   } = {},
-  recommendLocationsLoading,
+  countriesLoading,
   search,
-  recommendLocationList,
+  countriesList,
   onChange,
   loadMore
 }) => {
@@ -136,78 +139,71 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
         </Helmet>
         <UserContainer>
           <Title>
-            <SText text={"RECOMMEND LOCATIONS"} />
+            <SText text={countryCount === 1 ? `COUNTRY` : `COUNTRIES`} />
             <Input
               placeholder="Search locations who is recommended"
               value={search}
               onChange={onChange}
             />
           </Title>
-          {recommendLocationsLoading && <Loader />}
-          {!recommendLocationsLoading && (
+          {countriesLoading && <Loader />}
+          {!countriesLoading && (
             <InfiniteScroll
               hasMore={hasNextPage}
               loadMore={loadMore}
               pageStart={0}
             >
-              {recommendLocationList.length !== 0 &&
-                recommendLocationList.map(city => {
+              {countriesList.length !== 0 &&
+                countriesList.map(country => {
                   return (
-                    <UserRow key={city.id}>
-                      <Link to={`/city/${city.cityId}`}>
+                    <UserRow key={country.id}>
+                      <Link to={`/country/${country.countryCode}`}>
                         <Header>
                           <SAvatar
                             size={"sm"}
-                            url={city.cityPhoto}
+                            url={country.countryPhoto}
                             city={true}
                           />
                           <HeaderColumn>
-                            <HeaderText text={city.cityName} />
-                            <Location>{city.country.countryName}</Location>
+                            <HeaderText text={country.countryName} />
+                            <Location>
+                              {country.continent.continentName}
+                            </Location>
                           </HeaderColumn>
                         </Header>
                       </Link>
-                      <CityLikeBtn
-                        isLiked={city.isLiked}
-                        cityId={city.id}
-                        likeCount={city.likeCount}
-                        type={"row"}
-                      />
-                      <Link to={`/city/${city.cityId}`}>
-                        <Text>{city.distance}km</Text>
-                      </Link>
+                      <Text>
+                        {country.cityCount}{" "}
+                        {country.cityCount === 1 ? "city" : "cities"}
+                      </Text>
                     </UserRow>
                   );
                 })}
-              {console.log("hasNextPage:  ", hasNextPage)}
-              {recommendLocationList.length === 0 &&
+              {countriesList.length === 0 &&
                 !search &&
-                cities &&
-                cities.map(city => {
+                countries &&
+                countries.map(country => {
                   return (
-                    <UserRow key={city.id}>
-                      <Link to={`/city/${city.cityId}`}>
+                    <UserRow key={country.id}>
+                      <Link to={`/country/${country.countryCode}`}>
                         <Header>
                           <SAvatar
                             size={"sm"}
-                            url={city.cityPhoto}
+                            url={country.countryPhoto}
                             city={true}
                           />
                           <HeaderColumn>
-                            <HeaderText text={city.cityName} />
-                            <Location>{city.country.countryName}</Location>
+                            <HeaderText text={country.countryName} />
+                            <Location>
+                              {country.continent.continentName}
+                            </Location>
                           </HeaderColumn>
                         </Header>
                       </Link>
-                      <CityLikeBtn
-                        isLiked={city.isLiked}
-                        cityId={city.id}
-                        likeCount={city.likeCount}
-                        type={"row"}
-                      />
-                      <Link to={`/city/${city.cityId}`}>
-                        <Text>{city.distance}km</Text>
-                      </Link>
+                      <Text>
+                        {country.cityCount}{" "}
+                        {country.cityCount === 1 ? "city" : "cities"}
+                      </Text>
                     </UserRow>
                   );
                 })}

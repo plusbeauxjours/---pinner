@@ -1,52 +1,62 @@
 import React from "react";
 import { Query } from "react-apollo";
 import { RecommendLocations } from "../../../types/api";
-import LocationsPagePresenter from "./CitiesPagePresenter";
-import { RECOMMEND_LOCATIONS } from "./CitiesPageQueries";
+import CitiesPagePresenter from "./CitiesPagePresenter";
+import { GET_CITIES_PAGE } from "./CitiesPageQueries";
+import { RouteComponentProps } from "react-router";
 
 class CitiesPageQuery extends Query<RecommendLocations> {}
 
+interface IProps extends RouteComponentProps<any> {}
+
 interface IState {
   search: string;
-  recommendLocationList: any;
+  citiesList: any;
 }
 
-class CitiesPageContainer extends React.Component<any, IState> {
-  public recommendLocationsFetchMore;
-  public recommendLocationsData;
+class CitiesPageContainer extends React.Component<IProps, IState> {
+  public citiesFetchMore;
+  public citiesData;
   constructor(props) {
     super(props);
     this.state = {
       search: "",
-      recommendLocationList: []
+      citiesList: []
     };
   }
   public componentDidUpdate(prevProps) {
     const newProps = this.props;
-    console.log(prevProps);
-    console.log(newProps);
     if (prevProps.match !== newProps.match) {
-      this.setState({ search: "", recommendLocationList: [] });
-      console.log(this.state);
+      this.setState({ search: "", citiesList: [] });
     }
   }
   public render() {
-    const { search, recommendLocationList } = this.state;
+    const {
+      match: {
+        params: { countryCode }
+      }
+    } = this.props;
+    const { search, citiesList } = this.state;
     return (
-      <CitiesPageQuery query={RECOMMEND_LOCATIONS}>
+      <CitiesPageQuery
+        query={GET_CITIES_PAGE}
+        variables={{
+          countryCode
+        }}
+      >
         {({
-          data: recommendLocationsData,
-          loading: recommendLocationsLoading,
-          fetchMore: recommendLocationsFetchMore
+          data: citiesData,
+          loading: citiesLoading,
+          fetchMore: citiesFetchMore
         }) => {
-          this.recommendLocationsData = recommendLocationsData;
-          this.recommendLocationsFetchMore = recommendLocationsFetchMore;
+          this.citiesData = citiesData;
+          this.citiesFetchMore = citiesFetchMore;
           return (
-            <LocationsPagePresenter
-              recommendLocationsData={recommendLocationsData}
-              recommendLocationsLoading={recommendLocationsLoading}
+            <CitiesPagePresenter
+              citiesData={citiesData}
+              citiesLoading={citiesLoading}
               search={search}
-              recommendLocationList={recommendLocationList}
+              citiesList={citiesList}
               onChange={this.onChange}
               loadMore={this.loadMore}
             />
@@ -60,21 +70,29 @@ class CitiesPageContainer extends React.Component<any, IState> {
       target: { value }
     } = event;
     const {
-      recommendLocations: { cities = null }
-    } = this.recommendLocationsData;
+      getCitiesPage: { cities = null }
+    } = this.citiesData;
     const locationSearch = (list, text) =>
-      list.filter(i => i.cityName.toLowerCase().includes(text.toLowerCase()));
-    const recommendLocationList = locationSearch(cities, value);
-    console.log(recommendLocationList);
+      list.filter(i =>
+        i.countryName.toLowerCase().includes(text.toLowerCase())
+      );
+    const citiesList = locationSearch(cities, value);
+    console.log(citiesList);
     this.setState({
       search: value,
-      recommendLocationList
+      citiesList
     } as any);
   };
   public loadMore = page => {
-    this.recommendLocationsFetchMore({
-      query: RECOMMEND_LOCATIONS,
+    const {
+      match: {
+        params: { countryCode }
+      }
+    } = this.props;
+    this.citiesFetchMore({
+      query: GET_CITIES_PAGE,
       variables: {
+        countryCode,
         page
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
@@ -82,14 +100,14 @@ class CitiesPageContainer extends React.Component<any, IState> {
           return previousResult;
         }
         const data = {
-          recommendLocations: {
-            ...previousResult.recommendLocations,
+          getCitiesPage: {
+            ...previousResult.getCitiesPage,
             cities: [
-              ...previousResult.recommendLocations.cities,
-              ...fetchMoreResult.recommendLocations.cities
+              ...previousResult.getCitiesPage.cities,
+              ...fetchMoreResult.getCitiesPage.cities
             ],
-            page: fetchMoreResult.recommendLocations.page,
-            hasNextPage: fetchMoreResult.recommendLocations.hasNextPage
+            page: fetchMoreResult.getCitiesPage.page,
+            hasNextPage: fetchMoreResult.getCitiesPage.hasNextPage
           }
         };
         return data;

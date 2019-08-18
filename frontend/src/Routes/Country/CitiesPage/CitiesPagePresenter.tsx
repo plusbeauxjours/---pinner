@@ -25,7 +25,7 @@ const UserRow = styled.div`
   display: grid;
   flex-direction: row;
   height: 50px;
-  grid-template-columns: 4fr 1fr 1fr;
+  grid-template-columns: 4fr 1fr;
   padding: 0 5px 0 5px;
   margin: 0 15px 0 15px;
   grid-gap: 15px;
@@ -97,12 +97,6 @@ const Title = styled.div`
   }
 `;
 
-const Text = styled.p`
-  font-weight: 300;
-  display: flex;
-  align-items: center;
-`;
-
 const SText = styled(Bold)`
   font-size: 18px;
   font-weight: 100;
@@ -110,21 +104,21 @@ const SText = styled(Bold)`
 `;
 
 interface IProps {
-  recommendLocationsData: any;
-  recommendLocationsLoading: boolean;
+  citiesData: any;
+  citiesLoading: boolean;
   search: string;
-  recommendLocationList: any;
+  citiesList: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   loadMore: any;
 }
 
 const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
-  recommendLocationsData: {
-    recommendLocations: { cities = null, hasNextPage = null } = {}
+  citiesData: {
+    getCitiesPage: { cities = null, hasNextPage = null, cityCount = null } = {}
   } = {},
-  recommendLocationsLoading,
+  citiesLoading,
   search,
-  recommendLocationList,
+  citiesList,
   onChange,
   loadMore
 }) => {
@@ -136,22 +130,22 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
         </Helmet>
         <UserContainer>
           <Title>
-            <SText text={"RECOMMEND LOCATIONS"} />
+            <SText text={cityCount === 1 ? `CITY` : `CITIES`} />
             <Input
               placeholder="Search locations who is recommended"
               value={search}
               onChange={onChange}
             />
           </Title>
-          {recommendLocationsLoading && <Loader />}
-          {!recommendLocationsLoading && (
+          {citiesLoading && <Loader />}
+          {!citiesLoading && (
             <InfiniteScroll
               hasMore={hasNextPage}
               loadMore={loadMore}
               pageStart={0}
             >
-              {recommendLocationList.length !== 0 &&
-                recommendLocationList.map(city => {
+              {citiesList.length !== 0 &&
+                citiesList.map(city => {
                   return (
                     <UserRow key={city.id}>
                       <Link to={`/city/${city.cityId}`}>
@@ -173,14 +167,11 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
                         likeCount={city.likeCount}
                         type={"row"}
                       />
-                      <Link to={`/city/${city.cityId}`}>
-                        <Text>{city.distance}km</Text>
-                      </Link>
                     </UserRow>
                   );
                 })}
               {console.log("hasNextPage:  ", hasNextPage)}
-              {recommendLocationList.length === 0 &&
+              {citiesList.length === 0 &&
                 !search &&
                 cities &&
                 cities.map(city => {
@@ -205,9 +196,6 @@ const PeoplePagePresenter: React.FunctionComponent<IProps> = ({
                         likeCount={city.likeCount}
                         type={"row"}
                       />
-                      <Link to={`/city/${city.cityId}`}>
-                        <Text>{city.distance}km</Text>
-                      </Link>
                     </UserRow>
                   );
                 })}

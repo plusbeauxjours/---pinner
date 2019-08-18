@@ -590,7 +590,7 @@ const CountryProfilePresenter: React.FunctionComponent<IProps> = ({
                   </UserRow>
                 ))}
               {hasNextPage && (
-                <Link to={`/county/${countryCode}/cities`}>
+                <Link to={`/country/${countryCode}/cities`}>
                   <DropDownIcon>
                     <DropDown />
                   </DropDownIcon>
