@@ -9,7 +9,7 @@ import Bold from "../../../Components/Bold";
 import UserBox from "src/Components/UserBox";
 import CoffeeBox from "src/Components/CoffeeBox";
 import LocationBox from "src/Components/LocationBox";
-import { List } from "../../../Icons";
+import { List, DropDown } from "../../../Icons";
 import { keyframes } from "styled-components";
 import Helmet from "react-helmet";
 
@@ -262,6 +262,21 @@ const EmptyContainer = styled.div`
   height: 100%;
 `;
 
+const DropDownIcon = styled.span`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 15px;
+  cursor: pointer;
+  svg {
+    fill: ${props => props.theme.iconColor};
+    transition: fill 0.2s ease-in-out;
+    &:hover {
+      fill: ${props => props.theme.hoverColor};
+    }
+  }
+`;
+
 interface IProps {
   data?: any;
   loading: boolean;
@@ -282,6 +297,7 @@ interface IProps {
 const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
   data: {
     continentProfile: {
+      hasNextPage = null,
       count = null,
       continent = null,
       countries = null,
@@ -443,6 +459,13 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
                     </Link>
                   </React.Fragment>
                 ))}
+              {hasNextPage && (
+                <Link to={`/continent/${continentCode}/countries`}>
+                  <DropDownIcon>
+                    <DropDown />
+                  </DropDownIcon>
+                </Link>
+              )}
             </UserContainer>
           </PHeader>
           {usersNow && usersNow.length !== 0 ? (

@@ -195,13 +195,16 @@ def resolve_country_profile(self, info, **kwargs):
     count = user.moveNotificationUser.values('id').filter(city__country__country_code=countryCode).count()
 
     usersNow = country.currentCountry.order_by('-id').distinct('id')
+
     usersBefore = country.moveNotificationCountry.exclude(
         actor__profile__in=usersNow).order_by('-actor_id').distinct('actor_id')[:20]
     print(usersBefore)
 
     cities = models.City.objects.filter(country__country_code=countryCode)
+    hasNextPage = 20 < cities.count()
+    cities = cities[:20]
 
-    return location_types.CountryProfileResponse(count=count, cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country)
+    return location_types.CountryProfileResponse(count=count, cities=cities, usersNow=usersNow, usersBefore=usersBefore, country=country, hasNextPage=hasNextPage)
 
 
 @login_required
@@ -286,10 +289,12 @@ def resolve_continent_profile(self, info, **kwargs):
         actor__profile__in=usersNow).order_by('-actor_id').distinct('actor_id')[:20]
 
     countries = models.Country.objects.filter(continent__continent_code=continentCode)
+    hasNextPage = 20 < countries.count()
+    countries = countries[:20]
 
     continents = models.Continent.objects.all()
 
-    return location_types.ContinentProfileResponse(count=count, countries=countries,  usersNow=usersNow, usersBefore=usersBefore, continent=continent, continents=continents)
+    return location_types.ContinentProfileResponse(count=count, countries=countries,  usersNow=usersNow, usersBefore=usersBefore, continent=continent, continents=continents, hasNextPage=hasNextPage)
 
 
 @login_required

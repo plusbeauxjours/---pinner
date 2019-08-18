@@ -741,7 +741,6 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
                     </Link>
                   </UserRow>
                 ))}
-              {console.log(hasNextPage)}
               {hasNextPage && (
                 <Link to={`/city/${cityId}/usersnow`}>
                   <DropDownIcon>

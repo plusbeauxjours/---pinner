@@ -9,6 +9,7 @@ export const CONTINENT_PROFILE = gql`
   query ContinentProfile($page: Int, $continentCode: String!) {
     continentProfile(page: $page, continentCode: $continentCode) {
       count
+      hasNextPage
       usersNow {
         ...ProfileParts
       }
