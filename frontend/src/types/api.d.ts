@@ -2566,6 +2566,8 @@ export interface GetTrips_getTrips_trip {
 
 export interface GetTrips_getTrips {
   __typename: "TripResponse";
+  page: number | null;
+  hasNextPage: boolean | null;
   trip: (GetTrips_getTrips_trip | null)[] | null;
 }
 
@@ -2575,7 +2577,7 @@ export interface GetTrips {
 
 export interface GetTripsVariables {
   username: string;
-  tripPage?: number | null;
+  page?: number | null;
 }
 
 /* tslint:disable */

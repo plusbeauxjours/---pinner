@@ -868,7 +868,7 @@
                 "defaultValue": null
               },
               {
-                "name": "tripPage",
+                "name": "page",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -4108,19 +4108,19 @@
         "enumValues": [
           {
             "name": "MALE",
-            "description": "MALE",
+            "description": "Male",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "FEMALE",
-            "description": "FEMALE",
+            "description": "Female",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "OTHER",
-            "description": "OTHER",
+            "description": "Other",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -4915,6 +4915,30 @@
         "name": "TripResponse",
         "description": null,
         "fields": [
+          {
+            "name": "page",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "hasNextPage",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "trip",
             "description": null,

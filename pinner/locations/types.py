@@ -111,6 +111,8 @@ class ContinentsResponse(graphene.ObjectType):
 
 
 class TripResponse(graphene.ObjectType):
+    page = graphene.Int()
+    hasNextPage = graphene.Boolean()
     trip = graphene.List(notification_types.MoveNotificationType)
 
 

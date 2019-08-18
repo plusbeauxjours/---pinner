@@ -49,13 +49,6 @@ class CalculateDistanceResponse(graphene.ObjectType):
     distance = graphene.Int()
 
 
-# will be removed
-class GetNotificationsResponse(graphene.ObjectType):
-    page = graphene.Int()
-    hasNextPage = graphene.Boolean()
-    notifications = graphene.List(NotificationType)
-
-
 class DurationTripsResponse(graphene.ObjectType):
     moveNotifications = graphene.List(MoveNotificationType)
 

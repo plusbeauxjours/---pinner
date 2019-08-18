@@ -20,6 +20,7 @@ import { MutationFn } from "react-apollo";
 import Thin from "src/Components/Thin";
 import Helmet from "react-helmet";
 import { countries } from "../../../countryData";
+import InfiniteScroll from 'react-infinite-scroller';
 
 const Header = styled.header`
   display: flex;
@@ -787,6 +788,7 @@ interface IProps {
   closeGenderModal: () => void;
   onSelectGender: (gender: string) => void;
   target: string;
+  loadMore: any;
 }
 
 const UserProfilePresenter: React.FunctionComponent<IProps> = ({
@@ -796,7 +798,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   avatarsData: { getAvatars: { avatars = null } = {} } = {},
   avatarsLoading,
 
-  getTripsData: { getTrips: { trip: getTrips = null } = {} } = {},
+  getTripsData: { getTrips: { trip: getTrips = null, hasNextPage=null } = {} } = {},
   getTipsLoading,
 
   coffeeData: { getCoffees: { coffees = null } = {} } = {},
@@ -870,7 +872,8 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
   openGenderModal,
   closeGenderModal,
   onSelectGender,
-  target
+  target,
+  loadMore
 }) => {
   const { results, isLoading } = useGoogleAutocomplete({
     apiKey: `${GOOGLE_PLACE_KEY}`,
@@ -1540,6 +1543,11 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                       <Upload />
                     </TripIcon>
                   )}
+                        <InfiniteScroll
+              hasMore={hasNextPage}
+              loadMore={loadMore}
+              pageStart={0}
+            >
                   {tripList.length !== 0 &&
                     tripList.map(trip => (
                       <TripRow key={trip.id}>
@@ -1690,6 +1698,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                         </TripOverlay>
                       </TripRow>
                     ))}
+                    </InfiniteScroll>
                 </TripContainer>
               </Container>
             )}

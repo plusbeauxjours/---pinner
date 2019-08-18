@@ -11,7 +11,7 @@ class Query(object):
         required=True,
         args={
             'username': graphene.String(required=True),
-            'tripPage': graphene.Int(),
+            'page': graphene.Int(),
         }
     )
 

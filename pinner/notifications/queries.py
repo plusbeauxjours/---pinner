@@ -13,9 +13,17 @@ from locations import types as location_types
 def resolve_get_trips(self, info, **kwargs):
 
     username = kwargs.get('username')
-    user = User.objects.prefetch_related('moveNotificationUser').get(username=username)
-    tripPage = kwargs.get('tripPage', 0)
+    page = kwargs.get('page', 0)
+    offset = 20 * page
 
-    trip = user.moveNotificationUser.all().order_by('-start_date', '-created_at')
+    nextPage = page+1
 
-    return location_types.TripResponse(trip=trip)
+    try:
+        user = User.objects.prefetch_related('moveNotificationUser').get(username=username)
+        trip = user.moveNotificationUser.all().order_by('-start_date', '-created_at')
+        hasNextPage = offset < trip.count()
+        trip = trip[offset:20 + offset]
+
+        return location_types.TripResponse(trip=trip,  page=nextPage, hasNextPage=hasNextPage)
+    except models.City.DoesNotExist:
+        return location_types.TripResponse(trip=None,  page=nextPage, hasNextPage=hasNextPage)

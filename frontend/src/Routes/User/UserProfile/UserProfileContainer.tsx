@@ -116,7 +116,6 @@ interface IState {
   focusedInput: "startDate" | "endDate" | null;
   moveNotificationId: string;
   coffeeId: string;
-  tripPage: number;
   search: string;
   tripList: any;
   currentCityId: string;
@@ -148,6 +147,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   public calculateDistanceFn: MutationFn;
 
   public getTripsData;
+  public getTipsFetchMore;
   public data;
 
   constructor(props) {
@@ -177,7 +177,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       focusedInput: null,
       moveNotificationId: null,
       coffeeId: null,
-      tripPage: 0,
       search: "",
       tripList: [],
       lat: state.currentLat,
@@ -232,7 +231,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       tripEndDate,
       focusedInput,
       moveNotificationId,
-      tripPage,
       search,
       tripList,
       imagePreviewUrl,
@@ -350,15 +348,16 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                         GET_TRIPS
                                                                       }
                                                                       variables={{
-                                                                        username,
-                                                                        tripPage
+                                                                        username
                                                                       }}
                                                                     >
                                                                       {({
                                                                         data: getTripsData,
-                                                                        loading: getTipsLoading
+                                                                        loading: getTipsLoading,
+                                                                        fetchMore: getTipsFetchMore
                                                                       }) => {
                                                                         this.getTripsData = getTripsData;
+                                                                        this.getTipsFetchMore = getTipsFetchMore;
                                                                         return (
                                                                           <AddTripMutation
                                                                             mutation={
@@ -373,8 +372,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                               {
                                                                                 query: GET_TRIPS,
                                                                                 variables: {
-                                                                                  username,
-                                                                                  tripPage
+                                                                                  username
                                                                                 }
                                                                               }
                                                                             ]}
@@ -403,8 +401,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                     {
                                                                                       query: GET_TRIPS,
                                                                                       variables: {
-                                                                                        username,
-                                                                                        tripPage
+                                                                                        username
                                                                                       }
                                                                                     }
                                                                                   ]}
@@ -685,6 +682,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
                                                                                               target={
                                                                                                 target
                                                                                               }
+                                                                                              loadMore={
+                                                                                                this
+                                                                                                  .loadMore
+                                                                                              }
                                                                                             />
                                                                                           );
                                                                                         }}
@@ -731,6 +732,37 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       </SlackReportUsersMutation>
     );
   }
+  public loadMore = page => {
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
+    this.getTipsFetchMore({
+      query: GET_TRIPS,
+      variables: {
+        username,
+        page
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return previousResult;
+        }
+        const data = {
+          getTrips: {
+            ...previousResult.getTrips,
+            trip: [
+              ...previousResult.getTrips.trip,
+              ...fetchMoreResult.getTrips.trip
+            ],
+            page: fetchMoreResult.getTrips.page,
+            hasNextPage: fetchMoreResult.getTrips.hasNextPage
+          }
+        };
+        return data;
+      }
+    });
+  };
   public onSelectGender = (gender: string) => {
     const { target } = this.state;
     console.log(this.state);
@@ -1009,11 +1041,10 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         params: { username }
       }
     } = this.props;
-    const { tripPage } = this.state;
     try {
       const data = cache.readQuery({
         query: GET_TRIPS,
-        variables: { username, tripPage }
+        variables: { username }
       });
       if (data) {
         data.getTrips.trip = data.getTrips.trip.filter(
@@ -1021,7 +1052,7 @@ class UserProfileContainer extends React.Component<IProps, IState> {
         );
         cache.writeQuery({
           query: GET_TRIPS,
-          variables: { username, tripPage },
+          variables: { username },
           data
         });
       }
@@ -1029,7 +1060,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
       console.log(e);
     }
   };
-
   public toggleRequestModal = () => {
     const { requestModalOpen } = this.state;
     this.setState({
