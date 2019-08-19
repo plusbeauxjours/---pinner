@@ -459,7 +459,7 @@ const ContinentProfilePresenter: React.FunctionComponent<IProps> = ({
                     </Link>
                   </React.Fragment>
                 ))}
-              {hasNextPage && (
+              {hasNextPage && !search && (
                 <Link to={`/continent/${continentCode}/countries`}>
                   <DropDownIcon>
                     <DropDown />

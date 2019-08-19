@@ -79,9 +79,7 @@ class ContinentUsersNowContainer extends React.Component<IProps, IState> {
     } = this.data;
     console.log(usersNow);
     const userSearch = (list, text) =>
-      list.filter(i =>
-        i.profile.username.toLowerCase().includes(text.toLowerCase())
-      );
+      list.filter(i => i.username.toLowerCase().includes(text.toLowerCase()));
     const usersNowList = userSearch(usersNow, value);
     console.log(usersNowList);
     this.setState({

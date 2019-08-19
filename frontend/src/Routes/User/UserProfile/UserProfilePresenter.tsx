@@ -42,6 +42,9 @@ const PAvatar = styled(Avatar)`
   align-self: center;
   margin-top: 70px;
   cursor: pointer;
+  box-shadow: 0.5px 0.5px 30px 30px ${props => props.theme.shadowColor};
+  -webkit-box-shadow: 0.5px 0.5px 30px 30px ${props => props.theme.shadowColor};
+  -moz-box-shadow: 0.5px 0.5px 30px 30px ${props => props.theme.shadowColor};
 `;
 
 const Container = styled.div`
@@ -914,7 +917,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
           <SearchModalContainer>
             <SearchModalOverlay onClick={closeCountryModal} />
             <SearchModal>
-                Set your {target}
+              Set your {target}
               <CountryContainer>
                 {countries.map((country, index) => (
                   <CountryRow

@@ -76,9 +76,7 @@ class CountryUsersNowContainer extends React.Component<IProps, IState> {
       countryUsersNow: { usersNow = null }
     } = this.data;
     const userSearch = (list, text) =>
-      list.filter(i =>
-        i.profile.username.toLowerCase().includes(text.toLowerCase())
-      );
+      list.filter(i => i.username.toLowerCase().includes(text.toLowerCase()));
     const usersNowList = userSearch(usersNow, value);
     console.log(usersNowList);
     this.setState({

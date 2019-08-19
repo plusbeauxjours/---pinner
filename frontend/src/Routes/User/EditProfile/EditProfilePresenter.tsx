@@ -19,6 +19,9 @@ const PAvatar = styled(Avatar)`
   display: flex;
   margin-left: 20px;
   align-self: center;
+  box-shadow: 0.5px 0.5px 30px 30px ${props => props.theme.shadowColor};
+  -webkit-box-shadow: 0.5px 0.5px 30px 30px ${props => props.theme.shadowColor};
+  -moz-box-shadow: 0.5px 0.5px 30px 30px ${props => props.theme.shadowColor};
 `;
 
 const ModalAnimation = keyframes`

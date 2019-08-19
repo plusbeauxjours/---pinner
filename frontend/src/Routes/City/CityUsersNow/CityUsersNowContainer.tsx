@@ -80,13 +80,11 @@ class CityUsersNowContainer extends React.Component<IProps, IState> {
       target: { value }
     } = event;
     const {
-      recommendUsers: { users = null }
+      cityUsersNow: { usersNow = null }
     } = this.data;
     const userSearch = (list, text) =>
-      list.filter(i =>
-        i.profile.username.toLowerCase().includes(text.toLowerCase())
-      );
-    const usersNowList = userSearch(users, value);
+      list.filter(i => i.username.toLowerCase().includes(text.toLowerCase()));
+    const usersNowList = userSearch(usersNow, value);
     console.log(usersNowList);
     this.setState({
       search: value,
