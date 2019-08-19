@@ -105,16 +105,32 @@ class LoggedInPages extends React.Component<IProps> {
       <Wrapper>
         <Header />
         {coffeeModalOpen && (
-          <Route path="/c/:uuid" exact={true} component={CoffeeDetail} />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/c/:uuid"
+            exact={true}
+            component={CoffeeDetail}
+          />
         )}
         {coffeesModalOpen && (
-          <Route path="/:username/coffees" exact={true} component={Coffees} />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/:username/coffees"
+            exact={true}
+            component={Coffees}
+          />
         )}
         {cityModalOpen && (
-          <Route path="/:username/cities" exact={true} component={Cities} />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/:username/cities"
+            exact={true}
+            component={Cities}
+          />
         )}
         {countryModalOpen && (
           <Route
+            onUpdate={window.scrollTo(0, 0)}
             path="/:username/countries"
             exact={true}
             component={Countries}
@@ -122,6 +138,7 @@ class LoggedInPages extends React.Component<IProps> {
         )}
         {continentModalOpen && (
           <Route
+            onUpdate={window.scrollTo(0, 0)}
             path="/:username/continents"
             exact={true}
             component={Continents}
@@ -129,6 +146,7 @@ class LoggedInPages extends React.Component<IProps> {
         )}
         {avatarModalOpen && (
           <Route
+            onUpdate={window.scrollTo(0, 0)}
             path="/:username/:uuid"
             exact={true}
             component={UserAvatarDetail}
@@ -146,61 +164,150 @@ class LoggedInPages extends React.Component<IProps> {
               : location
           }
         >
-          <Route path="/" exact={true} component={Match} />
-          <Route path="/people" exact={true} component={PeoplePage} />
-          <Route path="/locations" exact={true} component={LocationsPage} />
-          <Route path="/404" exact={true} component={NotFound} />
-          <Route path="/novalid" exact={true} component={NoValid} />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/"
+            exact={true}
+            component={Match}
+          />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/people"
+            exact={true}
+            component={PeoplePage}
+          />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/locations"
+            exact={true}
+            component={LocationsPage}
+          />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/404"
+            exact={true}
+            component={NotFound}
+          />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/novalid"
+            exact={true}
+            component={NoValid}
+          />
 
           {/* CONTINENT */}
           <Route
+            onUpdate={window.scrollTo(0, 0)}
             path="/continent/:continentCode/countries"
             component={CountriesPage}
           />
           <Route
+            onUpdate={window.scrollTo(0, 0)}
             path="/continent/:continentCode/coffees"
             component={CoffeesPage}
           />
           <Route
+            onUpdate={window.scrollTo(0, 0)}
             path="/continent/:continentCode/usersNow"
             component={ContinentUsersNow}
           />
           <Route
+            onUpdate={window.scrollTo(0, 0)}
             path="/continent/:continentCode/usersBefore"
             component={ContinentUsersBefore}
           />
           <Route
+            onUpdate={window.scrollTo(0, 0)}
             path="/continent/:continentCode"
             component={ContinentProfile}
           />
 
           {/* COUNTRY */}
-          <Route path="/country/:countryCode/cities" component={CitiesPage} />
-          <Route path="/country/:countryCode/coffees" component={CoffeesPage} />
           <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/country/:countryCode/cities"
+            component={CitiesPage}
+          />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/country/:countryCode/coffees"
+            component={CoffeesPage}
+          />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
             path="/country/:countryCode/usersNow"
             component={CountryUsersNow}
           />
           <Route
+            onUpdate={window.scrollTo(0, 0)}
             path="/country/:countryCode/usersBefore"
             component={CountryUsersBefore}
           />
-          <Route path="/country/:countryCode" component={CountryProfile} />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/country/:countryCode"
+            component={CountryProfile}
+          />
 
           {/* CITY */}
-          <Route path="/city/:cityId/coffees" component={CoffeesPage} />
-          <Route path="/city/:cityId/nearCities" component={NearCities} />
-          <Route path="/city/:cityId/usersNow" component={CityUsersNow} />
-          <Route path="/city/:cityId/usersBefore" component={CityUsersBefore} />
-          <Route path="/city/:cityId/:duration" component={TripProfile} />
-          <Route path="/city/:cityId" component={CityProfile} />
-          <Route path="/confirm/:key" component={EditEmailAddress} />
-          <Route path="/account/edit" component={EditProfile} />
-          <Route path="/account/settings" component={ToggleSettings} />
-          <Route path="/verification/:key" component={Verification} />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/city/:cityId/coffees"
+            component={CoffeesPage}
+          />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/city/:cityId/nearCities"
+            component={NearCities}
+          />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/city/:cityId/usersNow"
+            component={CityUsersNow}
+          />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/city/:cityId/usersBefore"
+            component={CityUsersBefore}
+          />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/city/:cityId/:duration"
+            component={TripProfile}
+          />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/city/:cityId"
+            component={CityProfile}
+          />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/confirm/:key"
+            component={EditEmailAddress}
+          />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/account/edit"
+            component={EditProfile}
+          />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/account/settings"
+            component={ToggleSettings}
+          />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/verification/:key"
+            component={Verification}
+          />
 
           {/* USER */}
-          <Route path="/:username" exact={true} component={UserProfile} />
+          <Route
+            onUpdate={window.scrollTo(0, 0)}
+            path="/:username"
+            exact={true}
+            component={UserProfile}
+          />
           <Redirect exact={true} from="*" to="/404" />
         </Switch>
       </Wrapper>

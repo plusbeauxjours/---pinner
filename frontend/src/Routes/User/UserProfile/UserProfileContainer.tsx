@@ -765,7 +765,6 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   };
   public onSelectGender = (gender: string) => {
     const { target } = this.state;
-    console.log(this.state);
     this.setState({
       genderModalOpen: false
     });

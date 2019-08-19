@@ -1,6 +1,5 @@
 import React from "react";
 import { Query } from "react-apollo";
-// import { ThemeProvider } from "styled-components";
 import { ToastContainer, toast } from "react-toastify";
 import Router from "../Router";
 import GlobalStyles from "../../Styles/global-styles";
