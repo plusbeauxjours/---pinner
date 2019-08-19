@@ -149,7 +149,7 @@ class RequestCoffee(graphene.Mutation):
 
                 elif target == "gender" and gender:
                     user.profile.gender = gender
-                    user.profile.save()
+                    # user.profile.save()
 
                 coffee = models.Coffee.objects.create(
                     city=currentCity,

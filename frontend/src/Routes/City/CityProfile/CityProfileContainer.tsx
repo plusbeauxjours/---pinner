@@ -49,7 +49,7 @@ interface IState {
   search: string;
   usersNowList: any;
   currentCityId: string;
-  coffeeRequestModalOpen: boolean;
+  requestModalOpen: boolean;
   countryModalOpen: boolean;
   genderModalOpen: boolean;
   countryCode: string;
@@ -70,7 +70,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       search: "",
       usersNowList: [],
       currentCityId: localStorage.getItem("cityId"),
-      coffeeRequestModalOpen: false,
+      requestModalOpen: false,
       countryModalOpen: false,
       genderModalOpen: false,
       countryCode: "",
@@ -96,7 +96,7 @@ class CityProfileContainer extends React.Component<IProps, IState> {
       mapMopdalOpen,
       search,
       usersNowList,
-      coffeeRequestModalOpen,
+      requestModalOpen,
       countryModalOpen,
       genderModalOpen,
       target
@@ -192,8 +192,8 @@ class CityProfileContainer extends React.Component<IProps, IState> {
                                                   nearCitiesLoading={
                                                     nearCitiesLoading
                                                   }
-                                                  coffeeRequestModalOpen={
-                                                    coffeeRequestModalOpen
+                                                  requestModalOpen={
+                                                    requestModalOpen
                                                   }
                                                   toggleCoffeeRequestModal={
                                                     this
@@ -259,40 +259,43 @@ class CityProfileContainer extends React.Component<IProps, IState> {
   }
   public onSelectGender = (gender: string) => {
     const { target } = this.state;
-    console.log(this.state);
-    this.requestCoffeeFn({ variables: { target, gender } });
     this.setState({
       genderModalOpen: false
     });
+    this.requestCoffeeFn({ variables: { target, gender } });
   };
   public openGenderModal = target => {
     this.setState({
       genderModalOpen: true,
+      requestModalOpen: false,
       target
     });
   };
   public closeGenderModal = () => {
     this.setState({
-      genderModalOpen: true
+      genderModalOpen: false,
+      requestModalOpen: false
     });
   };
   public onSelectCountry = (countryCode: string) => {
     const { target } = this.state;
     console.log(this.state);
-    this.requestCoffeeFn({ variables: { target, countryCode } });
     this.setState({
       countryModalOpen: false
     });
+    this.requestCoffeeFn({ variables: { target, countryCode } });
   };
   public openCountryModal = target => {
     this.setState({
       countryModalOpen: true,
+      requestModalOpen: false,
       target
     });
   };
   public closeCountryModal = () => {
     this.setState({
-      countryModalOpen: false
+      countryModalOpen: false,
+      requestModalOpen: false
     });
   };
   public searchSet = () => {
@@ -324,9 +327,9 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     });
   };
   public toggleCoffeeRequestModal = () => {
-    const { coffeeRequestModalOpen } = this.state;
+    const { requestModalOpen } = this.state;
     this.setState({
-      coffeeRequestModalOpen: !coffeeRequestModalOpen
+      requestModalOpen: !requestModalOpen
     } as any);
   };
   public onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
@@ -345,14 +348,18 @@ class CityProfileContainer extends React.Component<IProps, IState> {
     } as any);
   };
   public submitCoffee = target => {
-    const { coffeeRequestModalOpen } = this.state;
+    const { requestModalOpen } = this.state;
     this.requestCoffeeFn({ variables: { target } });
     this.setState({
-      coffeeRequestModalOpen: !coffeeRequestModalOpen
+      requestModalOpen: !requestModalOpen
     } as any);
   };
   public onCompletedRequestCoffee = data => {
-    this.setState({ coffeeRequestModalOpen: false, countryModalOpen: false });
+    this.setState({
+      requestModalOpen: false,
+      countryModalOpen: false,
+      genderModalOpen: false
+    });
     if (data.requestCoffee.coffee) {
       toast.success("Coffee requested, finding a guest");
     } else {

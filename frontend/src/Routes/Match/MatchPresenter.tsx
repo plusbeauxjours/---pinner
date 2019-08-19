@@ -361,6 +361,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
           <GenderModalContainer>
             <GenderModalOverlay onClick={closeGenderModal} />
             <GenderModal>
+            Set your {target}
               <GenderModalLink onClick={() => onSelectGender("MALE")}>
                 MALE
               </GenderModalLink>
@@ -380,8 +381,8 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
           <SearchModalContainer>
             <SearchModalOverlay onClick={closeCountryModal} />
             <SearchModal>
+            Set your {target}
               <CountryContainer>
-                Set your {target}
                 {countries.map((country, index) => (
                   <CountryRow
                     key={index}

@@ -235,7 +235,7 @@ const DropDownIcon = styled.span`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 15px; 
+  margin-top: 15px;
   cursor: pointer;
   svg {
     fill: ${props => props.theme.iconColor};
@@ -425,7 +425,7 @@ interface IProps {
   nearCitiesLoading: boolean;
   samenameCitiesData: any;
   samenameCitiesLoading: boolean;
-  coffeeRequestModalOpen: boolean;
+  requestModalOpen: boolean;
   toggleCoffeeRequestModal: () => void;
   isStaying: boolean;
   cityId: string;
@@ -470,7 +470,7 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
     getSamenameCities: { cities: samenameCities = null } = {}
   } = {},
   samenameCitiesLoading,
-  coffeeRequestModalOpen,
+  requestModalOpen,
   toggleCoffeeRequestModal,
   toggleMapMopdal,
   isStaying,
@@ -503,6 +503,7 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
           <GenderModalContainer>
             <GenderModalOverlay onClick={closeGenderModal} />
             <GenderModal>
+            Set your {target}
               <GenderModalLink onClick={() => onSelectGender("MALE")}>
                 MALE
               </GenderModalLink>
@@ -522,8 +523,8 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
           <SearchModalContainer>
             <SearchModalOverlay onClick={closeCountryModal} />
             <SearchModal>
+            Set your {target}
               <CountryContainer>
-                Set your {target}
                 {countries.map((country, index) => (
                   <CountryRow
                     key={index}
@@ -575,7 +576,7 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
             </Modal>
           </ModalContainer>
         )}
-        {coffeeRequestModalOpen && (
+        {requestModalOpen && (
           <ModalContainer>
             <ModalOverlay onClick={toggleCoffeeRequestModal} />
             <Modal>

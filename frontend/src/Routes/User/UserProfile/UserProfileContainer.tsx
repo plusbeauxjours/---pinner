@@ -766,39 +766,42 @@ class UserProfileContainer extends React.Component<IProps, IState> {
   public onSelectGender = (gender: string) => {
     const { target } = this.state;
     console.log(this.state);
-    this.requestCoffeeFn({ variables: { target, gender } });
     this.setState({
       genderModalOpen: false
     });
+    this.requestCoffeeFn({ variables: { target, gender } });
   };
   public openGenderModal = target => {
     this.setState({
       genderModalOpen: true,
+      requestModalOpen: false,
       target
     });
   };
   public closeGenderModal = () => {
     this.setState({
-      genderModalOpen: true
+      genderModalOpen: false,
+      requestModalOpen: false
     });
   };
   public onSelectCountry = (countryCode: string) => {
     const { target } = this.state;
-    console.log(this.state);
-    this.requestCoffeeFn({ variables: { target, countryCode } });
     this.setState({
       countryModalOpen: false
     });
+    this.requestCoffeeFn({ variables: { target, countryCode } });
   };
   public openCountryModal = target => {
     this.setState({
       countryModalOpen: true,
+      requestModalOpen: false,
       target
     });
   };
   public closeCountryModal = () => {
     this.setState({
-      countryModalOpen: false
+      countryModalOpen: false,
+      requestModalOpen: false
     });
   };
   public toggleLogoutConfirmModal = () => {
@@ -1074,7 +1077,11 @@ class UserProfileContainer extends React.Component<IProps, IState> {
     } as any);
   };
   public onCompletedRequestCoffee = data => {
-    this.setState({ requestModalOpen: false, countryModalOpen: false });
+    this.setState({
+      requestModalOpen: false,
+      countryModalOpen: false,
+      genderModalOpen: false
+    });
     if (data.requestCoffee.coffee) {
       toast.success("Coffee requested, finding a guest");
     } else {
