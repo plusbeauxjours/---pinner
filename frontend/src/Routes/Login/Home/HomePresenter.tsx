@@ -10,6 +10,17 @@ import Wrapper from "../../../Components/Wrapper";
 import LogIn from "../../../Components/LogIn";
 import SocialLogin from "../../../Components/SocialLogin";
 
+import ProgressiveImage from "react-progressive-image";
+
+const Animation = keyframes`
+	  from{
+	    opacity:0;
+	  }
+	  to{
+	    opacity:1;
+	  }
+  `;
+
 const Container = styled(Wrapper)`
   display: flex;
   justify-content: center;
@@ -101,6 +112,7 @@ const Image = styled.img`
   background-position: center center;
   object-fit: cover;
   opacity: 0.6;
+  animation: ${Animation} 0.2s linear;
 `;
 
 interface IProps {
@@ -166,7 +178,21 @@ const HomePresenter: React.FunctionComponent<IProps> = ({
           </Modal>
         </ModalContainer>
       )}
-      <Image src={require(`../../../Images/animations/homeA.jpg`)} />
+      <ProgressiveImage
+        delay={0}
+        src={require(`../../../Images/animations/homeA_loading.jpg`)}
+        placeholder={require(`../../../Images/animations/homeA_loading.jpg`)}
+      >
+        {(src, loading) => {
+          return loading ? (
+            <Image
+              src={require(`../../../Images/animations/homeA_loading.jpg`)}
+            />
+          ) : (
+            <Image src={require(`../../../Images/animations/homeA.jpg`)} />
+          );
+        }}
+      </ProgressiveImage>
       <Container>
         <LogIn />
         <SwitchBox onClick={toggleModal}>
