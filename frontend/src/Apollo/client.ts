@@ -10,7 +10,7 @@ import { ApolloClient } from "apollo-boost";
 
 const cache = new InMemoryCache();
 
-const API_SERVER = "http://localhost:8000/graphql/";
+const API_SERVER = "https://pinner-fun.herokuapp.com/graphql/";
 
 const uploadLink = createUploadLink({
   uri: API_SERVER,
