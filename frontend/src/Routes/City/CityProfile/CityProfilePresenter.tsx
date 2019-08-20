@@ -503,7 +503,7 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
           <GenderModalContainer>
             <GenderModalOverlay onClick={closeGenderModal} />
             <GenderModal>
-            Set your {target}
+              Set your {target}
               <GenderModalLink onClick={() => onSelectGender("MALE")}>
                 MALE
               </GenderModalLink>
@@ -523,7 +523,7 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
           <SearchModalContainer>
             <SearchModalOverlay onClick={closeCountryModal} />
             <SearchModal>
-            Set your {target}
+              Set your {target}
               <CountryContainer>
                 {countries.map((country, index) => (
                   <CountryRow
@@ -580,6 +580,9 @@ const CityProfilePresenter: React.FunctionComponent<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleCoffeeRequestModal} />
             <Modal>
+              <ModalLink onClick={() => submitCoffee("everyone")}>
+                EVERYONE
+              </ModalLink>
               <ModalLink
                 onClick={
                   me.profile.nationality

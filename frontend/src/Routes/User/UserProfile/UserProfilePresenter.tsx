@@ -1592,6 +1592,9 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                             }
                           }}
                         >
+                          <VBold
+                          text={"☕️"}
+                        />
                           <UBold text={"COFFEE"} />
                         </Link>
                       </Row>
@@ -1618,6 +1621,9 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                             }
                           }}
                         >
+                          <VBold
+                          text={"☕️"}
+                        />
                           <UBold text={"COFFEE"} />
                         </Link>
                       </Row>
