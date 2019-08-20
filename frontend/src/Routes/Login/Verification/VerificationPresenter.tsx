@@ -86,6 +86,16 @@ const Underline = styled.p`
   text-decoration: underline;
   cursor: pointer;
 `;
+const Image = styled.img`
+  z-index: -5;
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+  object-fit: cover;
+  opacity: 0.6;
+`;
 
 const CodeInputStyle = {
   fontFamily: "monospace",
@@ -118,43 +128,46 @@ const VerificationPresenter: React.FunctionComponent<IProps> = ({
   onChange
 }) => {
   return (
-    <ModalContainer>
-      <ModalOverlay onClick={back} />
-      <Modal>
-        <Helmet>
-          <title>Verify Phone | Pinner</title>
-        </Helmet>
-        <Container>
-          <ReactCodeInput
-            type={"number"}
-            value={verificationKey}
-            autoFocus={true}
-            fields={6}
-            onChange={onChange}
-            inputStyle={CodeInputStyle}
-          />
-          <TextContainter>
-            <Text>
-              <p>Lost your phone?</p>
-              <Link
-                to={{ pathname: "/approach", state: { emailSignIn: true } }}
-              >
-                {" "}
-                <Underline>&nbsp;Login With Email.</Underline>
-              </Link>
-            </Text>
-            <p>
-              When you tap Continue, Pinner will send a text with verification
-              code. Message and data rates may apply. The verified phone number
-              can be used to login.
-            </p>
-            <ExtendedForm onSubmit={onSubmit}>
-              <SButton text={"VERIFY"} onClick={null} inverted={loading} />
-            </ExtendedForm>
-          </TextContainter>
-        </Container>
-      </Modal>
-    </ModalContainer>
+    <>
+      <Image src={require(`../../../Images/animations/homeA.jpg`)} />
+      <ModalContainer>
+        <ModalOverlay onClick={back} />
+        <Modal>
+          <Helmet>
+            <title>Verify Phone | Pinner</title>
+          </Helmet>
+          <Container>
+            <ReactCodeInput
+              type={"number"}
+              value={verificationKey}
+              autoFocus={true}
+              fields={6}
+              onChange={onChange}
+              inputStyle={CodeInputStyle}
+            />
+            <TextContainter>
+              <Text>
+                <p>Lost your phone?</p>
+                <Link
+                  to={{ pathname: "/approach", state: { emailSignIn: true } }}
+                >
+                  {" "}
+                  <Underline>&nbsp;Login With Email.</Underline>
+                </Link>
+              </Text>
+              <p>
+                When you tap Continue, Pinner will send a text with verification
+                code. Message and data rates may apply. The verified phone
+                number can be used to login.
+              </p>
+              <ExtendedForm onSubmit={onSubmit}>
+                <SButton text={"VERIFY"} onClick={null} inverted={loading} />
+              </ExtendedForm>
+            </TextContainter>
+          </Container>
+        </Modal>
+      </ModalContainer>
+    </>
   );
 };
 

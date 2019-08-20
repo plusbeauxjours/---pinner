@@ -20,6 +20,7 @@ const UserContainer = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
+  margin-bottom: 50px;
 `;
 
 const GreyText = styled(Bold)`
@@ -402,7 +403,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
           <ModalContainer>
             <ModalOverlay onClick={toggleRequestModal} />
             <Modal>
-            <ModalLink onClick={() => submitCoffee("everyone")}>
+              <ModalLink onClick={() => submitCoffee("everyone")}>
                 EVERYONE
               </ModalLink>
               <ModalLink

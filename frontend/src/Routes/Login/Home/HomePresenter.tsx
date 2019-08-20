@@ -10,6 +10,7 @@ import Wrapper from "../../../Components/Wrapper";
 import SocialLogin from "../../../Components/SocialLogin";
 
 import ProgressiveImage from "react-progressive-image";
+import Bold from "../../../Components/Bold";
 
 const Animation = keyframes`
 	  from{
@@ -20,6 +21,17 @@ const Animation = keyframes`
 	  }
   `;
 
+const ModalAnimation = keyframes`
+from{
+  opacity:0;
+  transform:scale(1.1);
+}
+to{
+  opacity:1;
+  transform:none;
+}
+`;
+
 const Container = styled(Wrapper)`
   display: flex;
   justify-content: center;
@@ -28,25 +40,20 @@ const Container = styled(Wrapper)`
   max-width: 745px;
 `;
 
-const Box = styled.div`
-  background-color: ${props => props.theme.modalBgColor};
-  border: 1px solid ${props => props.theme.borderColor};
-  border: ${props => props.theme.boxBorder};
-  text-align: center;
-`;
-
-const SwitchBox = styled(Box)`
-  width: 45%;
-  padding: 30px 0px;
-  cursor: pointer;
-`;
-
 const SwitchLink = styled.span`
-  color: ${props => props.theme.color};
+  z-index: 4;
+  text-align: center;
+  min-height: 50px;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 `;
 
 const ModalOverlay = styled.div`
+  z-index: 4;
   height: 100%;
   width: 100%;
   position: fixed;
@@ -56,6 +63,7 @@ const ModalOverlay = styled.div`
 
 const ModalContainer = styled.div`
   display: flex;
+  z-index: 5;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -63,17 +71,6 @@ const ModalContainer = styled.div`
   width: 100%;
   top: 0;
 `;
-
-const ModalAnimation = keyframes`
-	  from{
-	    opacity:0;
-	    transform:scale(1.1);
-	  }
-	  to{
-	    opacity:1;
-	    transform:none;
-	  }
-	`;
 
 const Modal = styled.div`
   background-color: ${props => props.theme.modalBgColor};
@@ -86,6 +83,7 @@ const Modal = styled.div`
 `;
 
 const ModalLink = styled.div`
+  z-index: 5;
   text-align: center;
   min-height: 50px;
   width: 100%;
@@ -110,8 +108,28 @@ const Image = styled.img`
   height: 100%;
   background-position: center center;
   object-fit: cover;
-  opacity: 0.6;
+  opacity: 0.4;
   animation: ${Animation} 0.2s linear;
+`;
+
+const SwitchModal = styled(Modal)`
+  z-index: 3;
+`;
+
+const Logo = styled.img`
+  width: 20px;
+  height: 20px;
+`;
+const MBold = styled(Bold)`
+  font-size: 28px;
+  font-weight: 600;
+  color: #3fa893;
+`;
+
+const LogoContnainer = styled.span`
+  display: flex;
+  align-items: center;
+  padding: 10px 0 0 10px;
 `;
 
 interface IProps {
@@ -192,10 +210,15 @@ const HomePresenter: React.FunctionComponent<IProps> = ({
           );
         }}
       </ProgressiveImage>
+      <LogoContnainer>
+        <Logo src={require(`../../../Images/animations/logo.png`)} />
+        &nbsp;
+        <MBold text={"PINNER"} />
+      </LogoContnainer>
       <Container>
-        <SwitchBox onClick={toggleModal}>
-          <SwitchLink>Modal</SwitchLink>
-        </SwitchBox>
+        <SwitchModal>
+          <SwitchLink onClick={toggleModal}>SIGN IN</SwitchLink>
+        </SwitchModal>
       </Container>
     </>
   );

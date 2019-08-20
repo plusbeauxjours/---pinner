@@ -206,6 +206,17 @@ const LoaderModalOverlay = styled(ModalOverlay)`
   z-index: 21;
 `;
 
+const Image = styled.img`
+  z-index: -5;
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+  object-fit: cover;
+  opacity: 0.6;
+`;
+
 interface IProps {
   countryPhoneNumber: string;
   countryPhoneCode: string;
@@ -269,6 +280,7 @@ const ApproachPresenter: React.FunctionComponent<IProps> = ({
             <SearchModal />
           </SearchModalContainer>
         )}
+        <Image src={require(`../../../Images/animations/homeA.jpg`)} />
         <ModalContainer>
           <ModalOverlay onClick={back} />
           <Modal>
@@ -372,6 +384,7 @@ const ApproachPresenter: React.FunctionComponent<IProps> = ({
             </SearchModal>
           </SearchModalContainer>
         )}
+        <Image src={require(`../../../Images/animations/homeA.jpg`)} />
         <ModalContainer>
           <ModalOverlay onClick={back} />
           <Modal>

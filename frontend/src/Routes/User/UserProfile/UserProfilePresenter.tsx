@@ -289,6 +289,9 @@ const VBold = styled(Bold)`
   font-weight: 400;
   justify-content: center;
   margin-bottom: 5px;
+  text-shadow: 0 0 10px ${props => props.theme.borderColor};
+  -webkit-text-shadow: 0 0 10px ${props => props.theme.borderColor};
+  -moz-text-shadow: 0 0 10px ${props => props.theme.borderColor};
 `;
 
 const UBold = styled(Bold)`
@@ -727,7 +730,6 @@ const InfoContainer = styled.div`
   }
   margin-bottom: 20px;
 `;
-
 
 interface ITheme {
   size?: string;
@@ -1617,12 +1619,12 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                   ))}
               </InfoContainer>
               {!user.profile.isSelf && user.profile.isHideTrips ? (
-                  <EmptyContainer>
-                    <HideEarth
-                      src={require(`../../../Images/animations/hideTrip.png`)}
-                    />
-                    Trips are hideen by {user.username}
-                  </EmptyContainer>
+                <EmptyContainer>
+                  <HideEarth
+                    src={require(`../../../Images/animations/hideTrip.png`)}
+                  />
+                  Trips are hideen by {user.username}
+                </EmptyContainer>
               ) : (
                 <TripContainer>
                   <UserNameRow>
