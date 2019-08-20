@@ -24,6 +24,8 @@ export const COFFEE_DETAIL = gql`
             isSelf
             avatarUrl
             gender
+            distance
+            coffeeCount
             currentCity {
               cityId
               cityName

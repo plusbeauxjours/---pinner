@@ -132,7 +132,7 @@ const CAvatar = styled(Avatar)`
   width: 200px;
   margin-right: 20px;
   @media screen and (max-width: 700px) {
-  display: none;
+    display: none;
   }
 `;
 
@@ -615,7 +615,7 @@ const EmptyContainer = styled.div`
   font-size: 12px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   height: 100%;
   margin-left: 125px;
@@ -727,6 +727,7 @@ const InfoContainer = styled.div`
   }
   margin-bottom: 20px;
 `;
+
 
 interface ITheme {
   size?: string;
@@ -1412,223 +1413,217 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               </Link>
             </LocationAvatarContainer>
 
-            {!user.profile.isSelf && user.profile.isHideTrips ? (
-              <TripContainer>
-                <EmptyContainer>
-                  <HideEarth
-                    src={require(`../../../Images/animations/hideTrip.png`)}
-                  />
-                  Trips are hideen by {user.username}
-                </EmptyContainer>
-              </TripContainer>
-            ) : (
-              <Container>
-                {console.log(user.profile.gender)}
-                <InfoContainer>
-                  {user.profile.gender && (
-                    <Row>
-                      {(() => {
-                        switch (user.profile.gender) {
-                          case "MALE":
-                            return <VBold text={"M"} />;
-                          case "FEMALE":
-                            return <VBold text={"F"} />;
-                          case "OTHER":
-                            return <VBold text={"O"} />;
-                          default:
-                            return null;
-                        }
-                      })()}
-                      <UBold text={"GENDER"} />
-                    </Row>
-                  )}
-                  {user.profile.distance !== 0 && (
-                    <Row>
-                      <VBold text={user.profile.distance} />
-                      <UBold text={"KM"} />
-                    </Row>
-                  )}
+            <Container>
+              {console.log(user.profile.gender)}
+              <InfoContainer>
+                {user.profile.gender && (
                   <Row>
-                    <VBold text={String(user.profile.tripCount)} />
-                    <UBold text={"TRIPS"} />
+                    {(() => {
+                      switch (user.profile.gender) {
+                        case "MALE":
+                          return <VBold text={"M"} />;
+                        case "FEMALE":
+                          return <VBold text={"F"} />;
+                        case "OTHER":
+                          return <VBold text={"O"} />;
+                        default:
+                          return null;
+                      }
+                    })()}
+                    <UBold text={"GENDER"} />
                   </Row>
-                  {user.profile.isHideCoffees ? (
-                    <Row>
+                )}
+                {user.profile.distance !== 0 && (
+                  <Row>
+                    <VBold text={user.profile.distance} />
+                    <UBold text={"KM"} />
+                  </Row>
+                )}
+                <Row>
+                  <VBold text={String(user.profile.tripCount)} />
+                  <UBold text={"TRIPS"} />
+                </Row>
+                {user.profile.isHideCoffees ? (
+                  <Row>
+                    <VBold text={String(user.profile.coffeeCount)} />
+                    {user.profile.cityCount === 1 ? (
+                      <GreyUBold text={"COFFEE🔒"} />
+                    ) : (
+                      <GreyUBold text={"COFFEES🔒"} />
+                    )}
+                  </Row>
+                ) : (
+                  <Row>
+                    <Link
+                      to={{
+                        pathname: `/${username}/coffees`,
+                        state: { coffeesModalOpen: true }
+                      }}
+                    >
                       <VBold text={String(user.profile.coffeeCount)} />
                       {user.profile.cityCount === 1 ? (
-                        <GreyUBold text={"COFFEE🔒"} />
+                        <UBold text={"COFFEE"} />
                       ) : (
-                        <GreyUBold text={"COFFEES🔒"} />
+                        <UBold text={"COFFEES"} />
                       )}
-                    </Row>
-                  ) : (
-                    <Row>
-                      <Link
-                        to={{
-                          pathname: `/${username}/coffees`,
-                          state: { coffeesModalOpen: true }
-                        }}
-                      >
-                        <VBold text={String(user.profile.coffeeCount)} />
-                        {user.profile.cityCount === 1 ? (
-                          <UBold text={"COFFEE"} />
-                        ) : (
-                          <UBold text={"COFFEES"} />
-                        )}
-                      </Link>
-                    </Row>
-                  )}
-                  {user.profile.isHideCities ? (
-                    <Row>
+                    </Link>
+                  </Row>
+                )}
+                {user.profile.isHideCities ? (
+                  <Row>
+                    <VBold text={String(user.profile.cityCount)} />
+                    {user.profile.cityCount === 1 ? (
+                      <GreyUBold text={"CITY🔒"} />
+                    ) : (
+                      <GreyUBold text={"CITIES🔒"} />
+                    )}
+                  </Row>
+                ) : (
+                  <Row>
+                    <Link
+                      to={{
+                        pathname: `/${username}/cities`,
+                        state: { cityModalOpen: true }
+                      }}
+                    >
                       <VBold text={String(user.profile.cityCount)} />
                       {user.profile.cityCount === 1 ? (
-                        <GreyUBold text={"CITY🔒"} />
+                        <UBold text={"CITY"} />
                       ) : (
-                        <GreyUBold text={"CITIES🔒"} />
+                        <UBold text={"CITIES"} />
                       )}
-                    </Row>
-                  ) : (
-                    <Row>
-                      <Link
-                        to={{
-                          pathname: `/${username}/cities`,
-                          state: { cityModalOpen: true }
-                        }}
-                      >
-                        <VBold text={String(user.profile.cityCount)} />
-                        {user.profile.cityCount === 1 ? (
-                          <UBold text={"CITY"} />
-                        ) : (
-                          <UBold text={"CITIES"} />
-                        )}
-                      </Link>
-                    </Row>
-                  )}
-                  {user.profile.isHideCountries ? (
-                    <Row>
+                    </Link>
+                  </Row>
+                )}
+                {user.profile.isHideCountries ? (
+                  <Row>
+                    <VBold text={String(user.profile.countryCount)} />
+                    {user.profile.countryCount === 1 ? (
+                      <GreyUBold text={"COUNTRY🔒"} />
+                    ) : (
+                      <GreyUBold text={"COUNTRIES🔒"} />
+                    )}
+                  </Row>
+                ) : (
+                  <Row>
+                    <Link
+                      to={{
+                        pathname: `/${username}/countries`,
+                        state: { countryModalOpen: true }
+                      }}
+                    >
                       <VBold text={String(user.profile.countryCount)} />
                       {user.profile.countryCount === 1 ? (
-                        <GreyUBold text={"COUNTRY🔒"} />
+                        <UBold text={"COUNTRY"} />
                       ) : (
-                        <GreyUBold text={"COUNTRIES🔒"} />
+                        <UBold text={"COUNTRIES"} />
                       )}
-                    </Row>
-                  ) : (
-                    <Row>
-                      <Link
-                        to={{
-                          pathname: `/${username}/countries`,
-                          state: { countryModalOpen: true }
-                        }}
-                      >
-                        <VBold text={String(user.profile.countryCount)} />
-                        {user.profile.countryCount === 1 ? (
-                          <UBold text={"COUNTRY"} />
-                        ) : (
-                          <UBold text={"COUNTRIES"} />
-                        )}
-                      </Link>
-                    </Row>
-                  )}
-                  {user.profile.isHideContinents ? (
-                    <Row>
+                    </Link>
+                  </Row>
+                )}
+                {user.profile.isHideContinents ? (
+                  <Row>
+                    <VBold text={String(user.profile.continentCount)} />
+                    {user.profile.continentCount === 1 ? (
+                      <GreyUBold text={"CONTINENT🔒"} />
+                    ) : (
+                      <GreyUBold text={"CONTINENTS🔒"} />
+                    )}
+                  </Row>
+                ) : (
+                  <Row>
+                    <Link
+                      to={{
+                        pathname: `/${username}/continents`,
+                        state: { continentModalOpen: true }
+                      }}
+                    >
                       <VBold text={String(user.profile.continentCount)} />
                       {user.profile.continentCount === 1 ? (
-                        <GreyUBold text={"CONTINENT🔒"} />
+                        <UBold text={"CONTINENT"} />
                       ) : (
-                        <GreyUBold text={"CONTINENTS🔒"} />
+                        <UBold text={"CONTINENTS"} />
                       )}
-                    </Row>
-                  ) : (
+                    </Link>
+                  </Row>
+                )}
+                {user.profile.nationality && (
+                  <Row>
+                    <Link
+                      to={`/country/${user.profile.nationality.countryCode}`}
+                    >
+                      <VBold
+                        text={String(user.profile.nationality.countryEmoji)}
+                      />
+                      <UBold text={"NATIONALITY"} />
+                    </Link>
+                  </Row>
+                )}
+                {user.profile.residence && (
+                  <Row>
+                    <Link to={`/country/${user.profile.residence.countryCode}`}>
+                      <VBold
+                        text={String(user.profile.residence.countryEmoji)}
+                      />
+                      <UBold text={"RESIDENCE"} />
+                    </Link>
+                  </Row>
+                )}
+                {user.profile.isSelf && coffees && coffees.length === 0 && (
+                  <Row>
+                    <CoffeeIcon onClick={toggleRequestModal}>
+                      <Upload />
+                    </CoffeeIcon>
+                    <UBold text={"COFFEE"} />
+                  </Row>
+                )}
+                {user.profile.isSelf &&
+                  coffees &&
+                  coffees.length !== 0 &&
+                  coffees.map(coffee => (
                     <Row>
                       <Link
                         to={{
-                          pathname: `/${username}/continents`,
-                          state: { continentModalOpen: true }
+                          pathname: `/c/${coffee.uuid}`,
+                          state: {
+                            from: location.pathname,
+                            coffeeModalOpen: true
+                          }
                         }}
                       >
-                        <VBold text={String(user.profile.continentCount)} />
-                        {user.profile.continentCount === 1 ? (
-                          <UBold text={"CONTINENT"} />
-                        ) : (
-                          <UBold text={"CONTINENTS"} />
-                        )}
+                        <VBold text={"☕️"} />
+                        <UBold text={"COFFEE"} />
                       </Link>
                     </Row>
-                  )}
-                  {user.profile.nationality && (
+                  ))}
+                {!user.profile.isSelf &&
+                  coffees &&
+                  coffees.length !== 0 &&
+                  coffees.map(coffee => (
                     <Row>
                       <Link
-                        to={`/country/${user.profile.nationality.countryCode}`}
+                        to={{
+                          pathname: `/c/${coffee.uuid}`,
+                          state: {
+                            from: location.pathname,
+                            coffeeModalOpen: true
+                          }
+                        }}
                       >
-                        <VBold
-                          text={String(user.profile.nationality.countryEmoji)}
-                        />
-                        <UBold text={"NATIONALITY"} />
+                        <VBold text={"☕️"} />
+                        <UBold text={"COFFEE"} />
                       </Link>
                     </Row>
-                  )}
-                  {user.profile.residence && (
-                    <Row>
-                      <Link
-                        to={`/country/${user.profile.residence.countryCode}`}
-                      >
-                        <VBold
-                          text={String(user.profile.residence.countryEmoji)}
-                        />
-                        <UBold text={"RESIDENCE"} />
-                      </Link>
-                    </Row>
-                  )}
-                  {user.profile.isSelf && coffees && coffees.length !== 0 ? (
-                    coffees.map(coffee => (
-                      <Row>
-                        <Link
-                          to={{
-                            pathname: `/c/${coffee.uuid}`,
-                            state: {
-                              from: location.pathname,
-                              coffeeModalOpen: true
-                            }
-                          }}
-                        >
-                          <VBold
-                          text={"☕️"}
-                        />
-                          <UBold text={"COFFEE"} />
-                        </Link>
-                      </Row>
-                    ))
-                  ) : (
-                    <Row>
-                      <CoffeeIcon onClick={toggleRequestModal}>
-                        <Upload />
-                      </CoffeeIcon>
-                      <UBold text={"COFFEE"} />
-                    </Row>
-                  )}
-                  {!user.profile.isSelf &&
-                    coffees &&
-                    coffees.length !== 0 &&
-                    coffees.map(coffee => (
-                      <Row>
-                        <Link
-                          to={{
-                            pathname: `/c/${coffee.uuid}`,
-                            state: {
-                              from: location.pathname,
-                              coffeeModalOpen: true
-                            }
-                          }}
-                        >
-                          <VBold
-                          text={"☕️"}
-                        />
-                          <UBold text={"COFFEE"} />
-                        </Link>
-                      </Row>
-                    ))}
-                </InfoContainer>
+                  ))}
+              </InfoContainer>
+              {!user.profile.isSelf && user.profile.isHideTrips ? (
+                  <EmptyContainer>
+                    <HideEarth
+                      src={require(`../../../Images/animations/hideTrip.png`)}
+                    />
+                    Trips are hideen by {user.username}
+                  </EmptyContainer>
+              ) : (
                 <TripContainer>
                   <UserNameRow>
                     <SText text={"TRIPS"} />
@@ -1804,8 +1799,8 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
                       ))}
                   </InfiniteScroll>
                 </TripContainer>
-              </Container>
-            )}
+              )}
+            </Container>
           </PHeader>
         </SWrapper>
       </>

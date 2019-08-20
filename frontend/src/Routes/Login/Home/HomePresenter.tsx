@@ -7,7 +7,6 @@ import styled from "../../../Styles/typed-components";
 import { Phone } from "../../../Icons";
 
 import Wrapper from "../../../Components/Wrapper";
-import LogIn from "../../../Components/LogIn";
 import SocialLogin from "../../../Components/SocialLogin";
 
 import ProgressiveImage from "react-progressive-image";
@@ -194,7 +193,6 @@ const HomePresenter: React.FunctionComponent<IProps> = ({
         }}
       </ProgressiveImage>
       <Container>
-        <LogIn />
         <SwitchBox onClick={toggleModal}>
           <SwitchLink>Modal</SwitchLink>
         </SwitchBox>

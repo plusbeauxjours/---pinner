@@ -121,28 +121,6 @@ const Location = styled.span`
   font-weight: 200;
 `;
 
-const Text = styled.p`
-  margin-bottom: 10px;
-  display: flex;
-  font-size: 12px;
-  font-weight: 200;
-`;
-
-const NText = styled.p`
-  margin-bottom: 10px;
-  display: flex;
-  font-size: 30px;
-  font-weight: 400;
-`;
-
-const CText = styled.p`
-  text-align: center;
-  margin-bottom: 10px;
-  display: flex;
-  font-size: 18px;
-  font-weight: 400;
-`;
-
 const GreyText = styled.p`
   color: ${props => props.theme.greyColor};
   font-weight: 100;
@@ -150,27 +128,46 @@ const GreyText = styled.p`
   margin-bottom: 20px;
 `;
 
-const NumberContainer = styled.div`
-  width: 250px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 2fr 1fr;
-  grid-gap: 5px;
-  justify-items: center;
-  align-items: flex-end;
-  margin: 10px 0 10px 0;
-`;
-
 const InfoContainer = styled.div`
   width: 250px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 0.5fr;
-  grid-auto-flow: column;
   grid-gap: 5px;
   justify-items: center;
   align-items: flex-end;
+  margin: 5px 0 5px 10px;
+`;
+
+const NumberContainer = styled.div`
+  width: 500px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  justify-items: center;
   margin: 5px 0 5px 0;
+`;
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  text-align: center;
+`;
+
+const VBold = styled(Bold)`
+  display: flex;
+  align-self: center;
+  font-size: 30px;
+  font-weight: 400;
+  justify-content: center;
+  margin-bottom: 5px;
+`;
+
+const UBold = styled(Bold)`
+  align-self: center;
+  font-weight: 100;
+  font-size: 12px;
 `;
 
 const Icon = styled.span`
@@ -240,40 +237,83 @@ const CoffeeDetailPresenter: React.FunctionComponent<IProps> = ({
               <Link to={`/${coffee.host.profile.username}`}>
                 <SAvatar url={coffee.host.profile.avatarUrl} size="lg" />
               </Link>
-
-              <SText text={coffee.host.username} />
+              <SText text={coffee.host.profile.username} />
               <Location>
                 {coffee.host.profile.currentCity.cityName},
                 {coffee.host.profile.currentCity.country.countryName}
               </Location>
-              {coffee.target === "GENDER" ? (
-                <Text>{coffee.host.profile.gender}</Text>
-              ) : (
-                <Text>{coffee.target}</Text>
-              )}
               <NumberContainer>
-                <NText> {coffee.host.profile.tripCount} </NText>
-                <Text>TRIPS</Text>
+                {coffee.host.profile.gender && (
+                  <Row>
+                    {(() => {
+                      switch (coffee.host.profile.gender) {
+                        case "MALE":
+                          return <VBold text={"M"} />;
+                        case "FEMALE":
+                          return <VBold text={"F"} />;
+                        case "OTHER":
+                          return <VBold text={"O"} />;
+                        default:
+                          return null;
+                      }
+                    })()}
+                    <UBold text={"GENDER"} />
+                  </Row>
+                )}
+                {coffee.host.profile.distance !== 0 && (
+                  <Row>
+                    <VBold text={coffee.host.profile.distance} />
+                    <UBold text={"KM"} />
+                  </Row>
+                )}
+                {coffee.host.profile.coffeeCount !== 0 && (
+                  <Row>
+                    <VBold text={String(coffee.host.profile.coffeeCount)} />
+                    {coffee.host.profile.cityCount === 1 ? (
+                      <UBold text={"COFFEE"} />
+                    ) : (
+                      <UBold text={"COFFEES"} />
+                    )}
+                  </Row>
+                )}
+                <Row>
+                  <VBold text={String(coffee.host.profile.tripCount)} />
+                  <UBold text={"TRIPS"} />
+                </Row>
               </NumberContainer>
               <InfoContainer>
-                {coffee.host.profile.nationality ? (
-                  <>
-                    <CText>
-                      {coffee.host.profile.nationality.countryName}
-                      {coffee.host.profile.nationality.countryEmoji}
-                    </CText>
-                    <Text>NATIONALITY</Text>
-                  </>
-                ) : null}
-                {coffee.host.profile.residence ? (
-                  <>
-                    <CText>
-                      {coffee.host.profile.residence.countryName}
-                      {coffee.host.profile.residence.countryEmoji}
-                    </CText>
-                    <Text>RESIDENCE</Text>
-                  </>
-                ) : null}
+                {coffee.host.profile.nationality && (
+                  <Row>
+                    <Link
+                      to={`/country/${
+                        coffee.host.profile.nationality.countryCode
+                      }`}
+                    >
+                      <VBold
+                        text={String(
+                          coffee.host.profile.nationality.countryEmoji
+                        )}
+                      />
+                      <UBold text={"NATIONALITY"} />
+                    </Link>
+                  </Row>
+                )}
+                {coffee.host.profile.residence && (
+                  <Row>
+                    <Link
+                      to={`/country/${
+                        coffee.host.profile.residence.countryCode
+                      }`}
+                    >
+                      <VBold
+                        text={String(
+                          coffee.host.profile.residence.countryEmoji
+                        )}
+                      />
+                      <UBold text={"RESIDENCE"} />
+                    </Link>
+                  </Row>
+                )}
               </InfoContainer>
               <GreyText>until {coffee.naturalTime}</GreyText>
               {coffee.status !== "expired" && (
