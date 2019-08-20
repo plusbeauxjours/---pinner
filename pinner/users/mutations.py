@@ -729,9 +729,9 @@ class SlackReportUsers(graphene.Mutation):
                 "color": "#80318c",
                 # "pretext": "Optional text that appears above the attachment block",
                 "author_name": reportUsername,
-                "author_link": "https://pinner-fun.herokuapp.com/%s" % (reportUsername),
+                "author_link": "http://localhost:3000/%s" % (reportUsername),
                 "title":  "reported user: %s" % (targetUsername),
-                "title_link": "https://pinner-fun.herokuapp.com/%s" % (targetUsername),
+                "title_link": "http://localhost:3000/%s" % (targetUsername),
                 "text": "%s reports that %s has inappropriate PHOTO" % (reportUsername, targetUsername),
                 "footer": "🙅🏻‍♂️ Inappropriate Photo!"
             }]
@@ -744,9 +744,9 @@ class SlackReportUsers(graphene.Mutation):
                 "color": "#80318c",
                 # "pretext": "Optional text that appears above the attachment block",
                 "author_name": reportUsername,
-                "author_link": "https://pinner-fun.herokuapp.com/%s" % (reportUsername),
+                "author_link": "http://localhost:3000/%s" % (reportUsername),
                 "title":  "reported user: %s" % (targetUsername),
-                "title_link": "https://pinner-fun.herokuapp.com/%s" % (targetUsername),
+                "title_link": "http://localhost:3000/%s" % (targetUsername),
                 "text": "%s reports that %s looks like SPAM" % (reportUsername, targetUsername),
                 "footer": "🤦🏻‍♂️ Spam User!"
             }]
@@ -759,9 +759,9 @@ class SlackReportUsers(graphene.Mutation):
                 "color": "#80318c",
                 # "pretext": "Optional text that appears above the attachment block",
                 "author_name": reportUsername,
-                "author_link": "https://pinner-fun.herokuapp.com/%s" % (reportUsername),
+                "author_link": "http://localhost:3000/%s" % (reportUsername),
                 "title":  "reported user: %s" % (targetUsername),
-                "title_link": "https://pinner-fun.herokuapp.com/%s" % (targetUsername),
+                "title_link": "http://localhost:3000/%s" % (targetUsername),
                 "text": "%s reports that %s sent inappropriate MESSAGE" % (reportUsername, targetUsername),
                 "footer": "🙅🏻‍♂️ Inappropriate Message!"
             }]
@@ -774,9 +774,9 @@ class SlackReportUsers(graphene.Mutation):
                 "color": "#80318c",
                 # "pretext": "Optional text that appears above the attachment block",
                 "author_name": reportUsername,
-                "author_link": "https://pinner-fun.herokuapp.com/%s" % (reportUsername),
+                "author_link": "http://localhost:3000/%s" % (reportUsername),
                 "title":  "reported user: %s" % (targetUsername),
-                "title_link": "https://pinner-fun.herokuapp.com/%s" % (targetUsername),
+                "title_link": "http://localhost:3000/%s" % (targetUsername),
                 "text": "%s reports %s" % (reportUsername, targetUsername),
                 "footer": "🤦🏻‍♂️ Other Report!"
             }]
