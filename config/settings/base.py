@@ -22,7 +22,7 @@ load_dotenv(dotenv_path)
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = True
+DEBUG = False
 # Local time zone. Choices are
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # though not all of them may be available with every OS.
@@ -313,4 +313,6 @@ EMAIL_HOST_USER = 'pinner.superuser@gmail.com'
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 SERVER_EMAIL = 'pinner.superuser@gmail.com'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-SENDGRID_SANDBOX_MODE_IN_DEBUG=False
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+
+ALLOWED_HOSTS = ['*']
