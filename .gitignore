@@ -172,3 +172,5 @@ migrations
 uploads
 .*
 .DS_Storesendgrid.env
+
+keys.ts
