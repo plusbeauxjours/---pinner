@@ -55,7 +55,7 @@
     "precodegen": "apollo schema:download --endpoint=http://localhost:8000/graphql/",
     "codegen": "apollo codegen:generate src/types/api.d.ts --localSchemaFile=schema.json --includes='src/**/!(*.local).ts' --target typescript --outputFlat",
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "@types/googlemaps": "^3.36.6",
