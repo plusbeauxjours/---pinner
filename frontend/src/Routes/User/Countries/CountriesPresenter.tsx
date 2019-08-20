@@ -81,7 +81,7 @@ const Modal = styled.div`
   display: flex;
   flex-direction: column;
   animation: ${ModalAnimation} 0.1s linear;
-  height: 500px;
+  height: 44vh;
   overflow-y: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   ::-webkit-scrollbar {
@@ -93,7 +93,7 @@ const Modal = styled.div`
     background: none;
   }
   @media screen and (max-height: 800px) {
-    height: 100%;
+    height: 44vh;
   }
 `;
 

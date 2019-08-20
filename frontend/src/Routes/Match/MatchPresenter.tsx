@@ -361,7 +361,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
           <GenderModalContainer>
             <GenderModalOverlay onClick={closeGenderModal} />
             <GenderModal>
-            Set your {target}
+              Set your {target}
               <GenderModalLink onClick={() => onSelectGender("MALE")}>
                 MALE
               </GenderModalLink>
@@ -381,7 +381,7 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
           <SearchModalContainer>
             <SearchModalOverlay onClick={closeCountryModal} />
             <SearchModal>
-            Set your {target}
+              Set your {target}
               <CountryContainer>
                 {countries.map((country, index) => (
                   <CountryRow
@@ -517,12 +517,14 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                             size={"sm"}
                           />
                         </Link>
-                        <Column>
-                          <GreyText
-                            text={`Matched in ${match.city.cityName}`}
-                          />
-                          <GreyText text={match.naturalTime} />
-                        </Column>
+                        <Link to={`/${match.host.profile.username}`}>
+                          <Column>
+                            <GreyText
+                              text={`Matched in ${match.city.cityName}`}
+                            />
+                            <GreyText text={match.naturalTime} />
+                          </Column>
+                        </Link>
                         {match.isMatching ? (
                           <CoffeeBtn
                             cityId={match.city.cityId}
@@ -559,12 +561,14 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                             size={"sm"}
                           />
                         </Link>
-                        <Column>
-                          <GreyText
-                            text={`Matched in ${match.city.cityName}`}
-                          />
-                          <GreyText text={match.naturalTime} />
-                        </Column>
+                        <Link to={`/${match.host.profile.username}`}>
+                          <Column>
+                            <GreyText
+                              text={`Matched in ${match.city.cityName}`}
+                            />
+                            <GreyText text={match.naturalTime} />
+                          </Column>
+                        </Link>
                         {match.isMatching ? (
                           <CoffeeBtn
                             cityId={match.city.cityId}
@@ -611,12 +615,14 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                             size={"sm"}
                           />
                         </Link>
-                        <Column>
-                          <GreyText
-                            text={`Matched in ${match.city.cityName}`}
-                          />
-                          <GreyText text={match.naturalTime} />
-                        </Column>
+                        <Link to={`/${match.host.profile.username}`}>
+                          <Column>
+                            <GreyText
+                              text={`Matched in ${match.city.cityName}`}
+                            />
+                            <GreyText text={match.naturalTime} />
+                          </Column>
+                        </Link>
                         {match.isMatching ? (
                           <CoffeeBtn
                             cityId={match.city.cityId}
@@ -654,12 +660,14 @@ const MatchPresenter: React.FunctionComponent<IProps> = ({
                             size={"sm"}
                           />
                         </Link>
-                        <Column>
-                          <GreyText
-                            text={`Matched in ${match.city.cityName}`}
-                          />
-                          <GreyText text={match.naturalTime} />
-                        </Column>
+                        <Link to={`/${match.host.profile.username}`}>
+                          <Column>
+                            <GreyText
+                              text={`Matched in ${match.city.cityName}`}
+                            />
+                            <GreyText text={match.naturalTime} />
+                          </Column>
+                        </Link>
                         {match.isMatching ? (
                           <CoffeeBtn
                             cityId={match.city.cityId}

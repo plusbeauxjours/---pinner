@@ -3,6 +3,7 @@ import styled, { keyframes } from "../../../Styles/typed-components";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import { countries } from "../../../countryData";
+import Textarea from "react-expanding-textarea";
 
 import Avatar from "../../../Components/Avatar";
 import { BACKEND_URL } from "src/constants";
@@ -591,6 +592,17 @@ const CenterText = styled.div`
   align-items: center;
 `;
 
+const STextArea = styled(Textarea)`
+  width: 100%;
+  border: 0;
+  resize: none;
+  font-size: 12px;
+  font-weight: 100;
+  padding: 10px 15px 4px 15px;
+  margin-bottom: 10px;
+  border: 1px solid ${props => props.theme.borderColor};
+`;
+
 const CodeInputStyle = {
   fontFamily: "monospace",
   borderRadius: "6px",
@@ -1142,7 +1154,11 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
               autoComplete={"off"}
             />
           </Conatainer>
-          <ExplainText>nani</ExplainText>
+          <ExplainText>
+            Default username is automatically generated. Set your own username
+            here. <br />
+            Your username cannot be any combination of numbers or symbols.{" "}
+          </ExplainText>
           <Conatainer>
             <TitleText>NATIONALITY</TitleText>
             <Select
@@ -1157,7 +1173,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
               ))}
             </Select>
           </Conatainer>
-          <ExplainText>nani</ExplainText>
+          <ExplainText>Your Nationality to match</ExplainText>
           <Conatainer>
             <TitleText>RESIDENCE</TitleText>
             <Select
@@ -1172,7 +1188,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
               ))}
             </Select>
           </Conatainer>
-          <ExplainText>nani</ExplainText>
+          <ExplainText>Your Residence to match</ExplainText>
           <Conatainer>
             <TitleText>GENDER</TitleText>
             <Select value={gender} name={"gender"} onChange={onSelectChange}>
@@ -1181,7 +1197,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
               <Option value={"OTHER"}>Other</Option>
             </Select>
           </Conatainer>
-          <ExplainText>nani</ExplainText>
+          <ExplainText>Your gender to match</ExplainText>
           <Conatainer>
             <TitleText>FIRST NAME</TitleText>
             <Input
@@ -1193,7 +1209,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
               autoComplete={"off"}
             />
           </Conatainer>
-          <ExplainText>nani</ExplainText>
+          <ExplainText>Your first name</ExplainText>
           <Conatainer>
             <TitleText>LAST NAME</TitleText>
             <Input
@@ -1205,17 +1221,9 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
               autoComplete={"off"}
             />
           </Conatainer>
-          <ExplainText>nani</ExplainText>
+          <ExplainText>Your last name</ExplainText>
           <Conatainer>
             <TitleText>BIO</TitleText>
-            <Input
-              onChange={onInputChange}
-              type={"text"}
-              value={bio}
-              placeholder={bio || "Bio"}
-              name={"bio"}
-              autoComplete={"off"}
-            />
           </Conatainer>
           <ExplainText>
             Your bio is displayed on your profile. You can write about who you
@@ -1223,6 +1231,13 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
             You can also add links to your website and profiles on other
             websites, like Instagram or your blog for example.
           </ExplainText>
+          <STextArea
+            placeholder="..."
+            onChange={onInputChange}
+            value={bio}
+            name={"bio"}
+            autoComplete={"off"}
+          />
           <Conatainer>
             <TitleText>PHONE</TitleText>
             <NumberUnderline>
@@ -1296,7 +1311,7 @@ const EditProfilePresenter: React.FunctionComponent<IProps> = ({
               </DButton>
             </DConatainer>
             <ExplainText>
-              Once you delete a repository, there is no going back. Please be
+              Once you delete an account, there is no going back. Please be
               certain.
             </ExplainText>
           </DeleteConatainer>
