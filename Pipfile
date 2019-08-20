@@ -70,6 +70,7 @@ django-anymail = "*"
 sendmail = "*"
 sendgrid = "*"
 django-sendgrid-v5 = "*"
+dj-database-url = "*"
 
 [requires]
 python_version = "3.7"
