@@ -593,13 +593,12 @@ const CenterText = styled.div`
 `;
 
 const STextArea = styled(Textarea)`
-  width: 400px;
   display: flex;
   border: 0;
   resize: none;
   font-size: 12px;
   font-weight: 100;
-  padding: 5px 15px 5px 15px;
+  padding: 10px 15px 4px 15px;
   margin-bottom: 10px;
   border: 1px solid ${props => props.theme.borderColor};
   overflow-y: auto;
