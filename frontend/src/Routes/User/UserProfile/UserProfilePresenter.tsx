@@ -25,6 +25,7 @@ import InfiniteScroll from "react-infinite-scroller";
 const Header = styled.header`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   height: 365px;
   background: ${props => props.theme.headerColor};
 `;
@@ -51,17 +52,46 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  width: 100%;
 `;
 
 const NameContainer = styled.span`
-  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const BioContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   margin: 0px auto;
   padding: 0 15px 0 15px;
   max-width: 935px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
+  width: 100%;
+`;
+
+const Bio = styled.div`
+  max-width: 935px;
+  max-height: 54px;
+  width: 368px;
+  margin-top: 3px;
+  font-size: 12px;
+  font-weight: 100;
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+  /* overflow-wrap: break-word; */
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 3px;
+    background: none;
+  }
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
 `;
 
 const SWrapper = styled(Wrapper)``;
@@ -697,16 +727,6 @@ const InfoContainer = styled.div`
   grid-template-rows: repeat(5 fr);
   grid-template-columns: repeat(auto-fit, 95px);
   grid-gap: 10px;
-`;
-
-const Bio = styled.span`
-  display: flex;
-  width: 300px;
-  justify-content: flex-start;
-  padding: 5px;
-  @media screen and (max-width: 600px) {
-    width: 300px;
-  }
 `;
 
 interface ITheme {
@@ -1359,7 +1379,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               onClick={toggleAvatarModal}
             />
           </AvatarContainer>
-          <Container>
+          <BioContainer>
             <NameContainer>
               <Username>{user.username}</Username>
               {user.profile.isSelf ? (
@@ -1373,7 +1393,7 @@ const UserProfilePresenter: React.FunctionComponent<IProps> = ({
               )}
             </NameContainer>
             {user.profile.bio && <Bio>{`${user.profile.bio}`}</Bio>}
-          </Container>
+          </BioContainer>
         </Header>
         {/* 
         ////////////// BODY //////////////
