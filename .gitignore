@@ -166,11 +166,10 @@ typings/
 .next
 
 node_modules/**/*
+frontend/*
 .expo/**/*
 Pipfile.lock
 migrations
 uploads
 .*
 .DS_Storesendgrid.env
-
-keys.ts
