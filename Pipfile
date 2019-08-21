@@ -6,7 +6,6 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-cookiecutter = "*"
 pytz = "==2018.9"
 python-slugify = "==2.0.1"
 argon2-cffi = "==18.3.0"
@@ -67,7 +66,6 @@ django-anymail = "*"
 sendmail = "*"
 sendgrid = "*"
 django-sendgrid-v5 = "*"
-dj-database-url = "*"
 
 [requires]
 python_version = "3.7"
