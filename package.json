@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "react-apollo-hooks": "^0.4.5",
-    "uuid4": "^1.1.4"
-  }
-}
