@@ -166,7 +166,7 @@ typings/
 .next
 
 node_modules/**/*
-frontend/*
+frontend/**/*
 .expo/**/*
 Pipfile.lock
 migrations
