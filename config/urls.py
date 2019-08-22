@@ -11,13 +11,13 @@ from . import views
 
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
+    path('', csrf_exempt(FileUploadGraphQLView.as_view(graphiql=True))),
     path(
         "users/",
         include("pinner.users.urls", namespace="users"),
     ),
     path("accounts/", include("allauth.urls")),
     # path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True))),
-    path('graphql/', csrf_exempt(FileUploadGraphQLView.as_view(graphiql=True))),
     # path("s3Upload/", csrf_exempt(views.sign_s3))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
