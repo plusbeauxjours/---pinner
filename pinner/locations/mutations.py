@@ -36,7 +36,6 @@ class CreateCity(graphene.Mutation):
                 gcd_formula,
                 (latitude, longitude, latitude)
             )
-            print('get_locations_nearby_coords')
             qs = models.City.objects.all().annotate(distance=distance_raw_sql).order_by('distance')
             if max_distance is not None:
                 qs = qs.filter(distance__lt=max_distance)
@@ -86,13 +85,11 @@ class CreateCity(graphene.Mutation):
                                 continent_photo=continentPhotoURL,
                                 continent_code=continentCode
                             )
-                            print("continentsAA")
                 try:
                     gp = locationThumbnail.get_photos(term=countryName)
                     countryPhotoURL = gp.get_urls()
                 except:
                     countryPhotoURL = None
-                print("countryAA")
                 country = models.Country.objects.create(
                     country_code=countryCode,
                     country_name=countryName,
@@ -106,14 +103,12 @@ class CreateCity(graphene.Mutation):
                     latitude=latitude,
                     longitude=longitude
                 )
-                print("countryCC:", country)
 
             try:
                 gp = locationThumbnail.get_photos(term=cityName)
                 cityPhotoURL = gp.get_urls()
             except:
                 cityPhotoURL = None
-            print("countryBB")
             city = models.City.objects.create(
                 city_id=cityId,
                 city_name=cityName,
@@ -267,7 +262,6 @@ class ReportLocation(graphene.Mutation):
         if profile.is_auto_location_report is True:
             try:
                 latest = user.moveNotificationUser.latest('start_date', 'created_at')
-                print(latest)
                 if latest.city != city:
                     notification_models.MoveNotification.objects.create(
                         actor=user, city=city, country=country, continent=continent)

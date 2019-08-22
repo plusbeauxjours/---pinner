@@ -33,7 +33,6 @@ class Verification(config_models.TimeStampedModel):
 @receiver(pre_save, sender=Verification)
 def create_key(sender, **kwargs):
     instance = kwargs.pop('instance')
-    print(instance.target)
     if instance.target == "phone" and instance.is_verified == False:
         instance.key = str(math.floor(random.random() * 1000000)).zfill(6)
     elif instance.target == "email" and instance.is_verified == False:

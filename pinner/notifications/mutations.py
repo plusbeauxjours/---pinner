@@ -152,17 +152,13 @@ class CalculateDistance(graphene.Mutation):
 
         try:
             for i, trip in enumerate(trips):
-                print(i, len(trips))
                 try:
                     lon1, lat1, lon2, lat2 = map(
                         radians, [trips[i].city.longitude, trips[i].city.latitude, trips[i+1].city.longitude, trips[i+1].city.latitude])
                     dist = 6371 * (
                         acos(sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(lon1 - lon2))
                     )
-                    print(dist, trips[i].city.city_name, trips[i+1].city.city_name)
-                    print(dist)
                     distance += dist
-                    print(distance)
                 except (ZeroDivisionError, IndexError) as e:
                     print(e)
 

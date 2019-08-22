@@ -36,7 +36,6 @@ class ToggleSettings(graphene.Mutation):
 
         user = info.context.user
         payload = kwargs.get('payload')
-        print('clicked')
         if payload == "DARK_MODE":
             if user.profile.is_dark_mode == True:
                 try:
@@ -164,7 +163,6 @@ class EditProfile(graphene.Mutation):
         user = info.context.user
 
         profile = user.profile
-        print('clicked')
 
         if user.is_authenticated and profile is not None:
 
@@ -211,7 +209,6 @@ class EditProfile(graphene.Mutation):
                             # DOWNLOAD IMAGE
                             # continentPhotoURL = gp.get_urls()
                             # # for i in range(gp.num):
-                            # #     print('Downloading...' + str(i) + '/' + str(gp.num))
                             # #     gp.download(i)
 
                             continent = location_models.Continent.objects.create(
@@ -228,7 +225,6 @@ class EditProfile(graphene.Mutation):
 
                 # DOWNLOAD IMAGE
                 # for i in range(gp.num):
-                #     print('Downloading...' + str(i) + '/' + str(gp.num))
                 #     gp.download(i)
 
                 nationality = location_models.Country.objects.create(
@@ -277,7 +273,6 @@ class EditProfile(graphene.Mutation):
                             # DOWNLOAD IMAGE
                             # continentPhotoURL = gp.get_urls()
                             # # for i in range(gp.num):
-                            # #     print('Downloading...' + str(i) + '/' + str(gp.num))
                             # #     gp.download(i)
 
                             continent = location_models.Continent.objects.create(
@@ -294,7 +289,6 @@ class EditProfile(graphene.Mutation):
 
                 # DOWNLOAD IMAGE
                 # for i in range(gp.num):
-                #     print('Downloading...' + str(i) + '/' + str(gp.num))
                 #     gp.download(i)
 
                 residence = location_models.Country.objects.create(
@@ -364,7 +358,6 @@ class MarkAsMain(graphene.Mutation):
                 user.profile.save()
                 prevMainAvatar.save()
                 newMainAvatar.save()
-                print(prevMainAvatar.uuid)
                 return types.MarkAsMainResponse(ok=True, avatar=newMainAvatar,  preAvatarUUID=prevMainAvatar.uuid, newAvatarUUID=uuid)
             else:
                 newMainAvatar = models.Avatar.objects.get(uuid=uuid)
@@ -420,7 +413,6 @@ class UploadAvatar(graphene.Mutation):
             prevMainAvatar.is_main = False
             newMainAvatar = models.Avatar.objects.create(
                 is_main=True, image=file, thumbnail=file, creator=user)
-            print(newMainAvatar.thumbnail)
             user.profile.avatarUrl = newMainAvatar.thumbnail
             prevMainAvatar.save()
             user.profile.save()

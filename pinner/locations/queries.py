@@ -197,7 +197,6 @@ def resolve_country_profile(self, info, **kwargs):
 
     usersBefore = country.moveNotificationCountry.exclude(
         actor__profile__in=usersNow).order_by('-actor_id').distinct('actor_id')[:20]
-    print(usersBefore)
 
     cities = models.City.objects.filter(country__country_code=countryCode)
     hasNextPage = 20 < cities.count()
@@ -238,7 +237,6 @@ def resolve_get_countries_page(self, info, **kwargs):
     offset = 20 * page
 
     nextPage = page+1
-    print(continentCode)
 
     try:
         continent = models.Continent.objects.get(continent_code=continentCode)
@@ -438,7 +436,6 @@ def resolve_get_city_photo(self, info, **kwargs):
     try:
         city = models.City.objects.get(city_id=cityId)
         photo = city.city_photo
-        print(photo)
         return types.PhotoResponse(photo=photo)
 
     except models.City.DoesNotExist:

@@ -286,12 +286,10 @@ class MarkAsReadMatch(graphene.Mutation):
                 id=matchId
             )
             if user == match.host:
-                print('im host')
                 match.is_read_by_host = True
                 match.save()
                 return types.MarkAsReadMatchResponse(ok=True, matchId=matchId, isReadByHost=match.is_read_by_host, isReadByGuest=match.is_read_by_guest)
             elif user == match.guest:
-                print('im guest')
                 match.is_read_by_guest = True
                 match.save()
                 return types.MarkAsReadMatchResponse(ok=True, matchId=matchId, isReadByHost=match.is_read_by_host, isReadByGuest=match.is_read_by_guest)

@@ -135,7 +135,6 @@ def resolve_recommend_users(self, info, **kwargs):
 
     try:
         locationUser = user.moveNotificationUser.all().order_by('-created_at').order_by('city').distinct('city')[:10]
-        print("hihihi")
         for i in locationUser:
             userLocations = models.Profile.objects.filter(user__moveNotificationUser__city=i.city).order_by('-distance')
             combined = combined | userLocations
