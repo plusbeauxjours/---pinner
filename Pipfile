@@ -66,6 +66,11 @@ django-anymail = "*"
 sendmail = "*"
 sendgrid = "*"
 django-sendgrid-v5 = "*"
+rx = "*"
+aniso8601 = "*"
+sqlparse = "*"
+requests = "*"
+idna = "*"
 
 [requires]
 python_version = "3.7"
