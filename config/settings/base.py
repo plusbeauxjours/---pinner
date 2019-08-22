@@ -2,6 +2,8 @@
 Base settings to build other settings files upon.
 """
 
+from sentry_sdk.integrations.django import DjangoIntegration
+import sentry_sdk
 import dj_database_url
 import os
 
@@ -356,13 +358,10 @@ LOGGING = {
 }
 
 
-# import sentry_sdk
-# from sentry_sdk.integrations.django import DjangoIntegration
+SENTRY_DSN = env('SENTRY_DSN')
 
-# SENTRY_DSN = env('SENTRY_DSN')
-
-# sentry_sdk.init(
-#     dsn=SENTRY_DSN,
-#     environment='production',
-#     integrations=[DjangoIntegration()]
-# )
+sentry_sdk.init(
+    dsn=SENTRY_DSN,
+    environment='production',
+    integrations=[DjangoIntegration()]
+)
