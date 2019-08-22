@@ -10,9 +10,7 @@ from graphene_file_upload.django import FileUploadGraphQLView
 from . import views
 
 urlpatterns = [
-    # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
-    # User management
     path(
         "users/",
         include("pinner.users.urls", namespace="users"),

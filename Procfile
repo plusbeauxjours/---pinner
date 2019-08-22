@@ -1,1 +1,1 @@
-web: gunicorn pinner.wsgi --log-file -
+web: gunicorn pinner-fun.wsgi --log-file -
