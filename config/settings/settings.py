@@ -5,9 +5,6 @@ Base settings to build other settings files upon.
 import dj_database_url
 import os
 
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
-
 import environ
 from os.path import join, dirname
 from dotenv import load_dotenv
@@ -297,13 +294,7 @@ GOOGLE_MAPS_KEY = env('GOOGLE_MAPS_KEY')
 APPEND_SLASH = False
 ADMIN_ID = env('ADMIN_ID')
 SLACK_TOKEN = env('SLACK_TOKEN')
-SENTRY_DSN = env('SENTRY_DSN')
 
-sentry_sdk.init(
-    dsn=SENTRY_DSN,
-    environment='production',
-    integrations=[DjangoIntegration()]
-)
 
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 
@@ -363,3 +354,15 @@ LOGGING = {
         }
     }
 }
+
+
+# import sentry_sdk
+# from sentry_sdk.integrations.django import DjangoIntegration
+
+# SENTRY_DSN = env('SENTRY_DSN')
+
+# sentry_sdk.init(
+#     dsn=SENTRY_DSN,
+#     environment='production',
+#     integrations=[DjangoIntegration()]
+# )
