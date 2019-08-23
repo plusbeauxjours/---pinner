@@ -72,8 +72,6 @@ THIRD_PARTY_APPS = [
     'crispy_forms',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
-    'rest_framework',
     'imagekit',
     'graphene_django',
     'corsheaders',
@@ -311,9 +309,9 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 ALLOWED_HOSTS = ['*']
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
-DATABASES['default']['CONN_MAX_AGE'] = 500
+# db_from_env = dj_database_url.config()
+# DATABASES['default'].update(db_from_env)
+# DATABASES['default']['CONN_MAX_AGE'] = 500
 
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
@@ -366,4 +364,4 @@ sentry_sdk.init(
     integrations=[DjangoIntegration()]
 )
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())

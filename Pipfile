@@ -71,6 +71,8 @@ aniso8601 = "*"
 sqlparse = "*"
 requests = "*"
 idna = "*"
+pg = "*"
+argon2 = "*"
 
 [requires]
 python_version = "3.7"
