@@ -6,6 +6,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 import sentry_sdk
 import dj_database_url
 import os
+import django_heroku
 
 import environ
 from os.path import join, dirname
@@ -364,3 +365,5 @@ sentry_sdk.init(
     environment='production',
     integrations=[DjangoIntegration()]
 )
+
+django_heroku.settings(locals())
