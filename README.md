@@ -1,2 +1,1 @@
-www.pinner.fun
-# pinner-backend
+pinner-backend
