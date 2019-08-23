@@ -2,6 +2,7 @@ import boto3
 import uuid
 from django.http import JsonResponse, HttpResponseBadRequest
 
+
 def sign_s3(request):
 
     if request.method != 'POST':
@@ -22,8 +23,6 @@ def sign_s3(request):
         url = f'https://s3-ap-northeast-1.amazonaws.com/plusbeauxjours/{file_name}'
 
         return JsonResponse({'ok': True, 'URL': url})
-    
-    except Exception as e:
 
-        print(e)
+    except Exception as e:
         return HttpResponseBadRequest
